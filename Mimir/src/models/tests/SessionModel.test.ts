@@ -13,6 +13,7 @@ import { EventEntity } from '../../entities/Event.entity.js';
 import { SessionEntity } from '../../entities/Session.entity.js';
 import { RulesetEntity } from '../../entities/Ruleset.entity.js';
 import { RoundEntity } from '../../entities/Round.entity.js';
+import { EventRegisteredPlayersEntity } from '../../entities/EventRegisteredPlayers.entity.js';
 import { SessionState } from '../../helpers/SessionState.js';
 import { roundFixtures } from '../../tests/roundFixtures.js';
 import { init } from '../../tests/initOrm.js';
@@ -193,6 +194,29 @@ describe('Session previews and finalization', () => {
       expect(flush).not.toHaveBeenCalled();
     }
   );
+
+  it('saves replacements by original player ID when finalizing', async () => {
+    const { event, session, saved } = makeSession(EndingPolicy.ENDING_POLICY_EP_UNSPECIFIED);
+    const state = new SessionState(event.ruleset, players, saved);
+    jest
+      .spyOn(Model.getModel(repo, EventRegistrationModel), 'findByPlayerAndEvent')
+      .mockResolvedValue([
+        Object.assign(new EventRegisteredPlayersEntity(), {
+          id: 901,
+          playerId: 1,
+          replacementId: 101,
+        }),
+      ]);
+    const history = jest
+      .spyOn(Model.getModel(repo, PlayerHistoryModel), 'makeNewHistoryItem')
+      .mockResolvedValue();
+
+    await model.finalizeGame(event, session, state);
+
+    expect(session.intermediateResults?.replacements).toEqual({ 1: 101 });
+    expect(session.intermediateResults?.playerIds).toEqual(players);
+    expect(history).toHaveBeenCalledWith(event.ruleset, 1, event.id, session.id, -30000, 1, 0);
+  });
 
   it('waits for every player history before finalization completes', async () => {
     const { event, session, saved } = makeSession(EndingPolicy.ENDING_POLICY_EP_UNSPECIFIED);

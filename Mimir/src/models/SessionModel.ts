@@ -268,7 +268,7 @@ export class SessionModel extends Model {
       .flat();
   }
 
-  async getFinishedGame(representationalHash: string, substituteReplacementPlayers = false) {
+  async getFinishedGame(representationalHash: string, substituteReplacementPlayers = true) {
     return this.repo.em.transactional(
       async () => {
         const playerModel = this.getModel(PlayerModel);
@@ -344,7 +344,10 @@ export class SessionModel extends Model {
       for (const player of players) {
         if (player.id === playerId) {
           // should already be ordered by table order in findPlayersForSessions
-          result.set(sessionId, [...(result.get(sessionId) ?? []), player]);
+          result.set(sessionId, [
+            ...(result.get(sessionId) ?? []),
+            ...playerModel.substituteReplacements([player], replaceMap),
+          ]);
           break;
         }
       }
@@ -387,9 +390,9 @@ export class SessionModel extends Model {
           tableIndex: session[0].tableIndex,
           players: players.map((player) => ({
             id: player.id,
-            title: player.title,
-            hasAvatar: player.hasAvatar,
-            lastUpdate: player.lastUpdate,
+            title: (replaceMap.get(player.id) ?? player).title,
+            hasAvatar: (replaceMap.get(player.id) ?? player).hasAvatar,
+            lastUpdate: (replaceMap.get(player.id) ?? player).lastUpdate,
             score: sessionState.getScores()[player.id],
             yakitori: sessionState.getYakitori()[player.id],
             ratingDelta: 0, // probably unused, check and remove some day
@@ -771,14 +774,10 @@ export class SessionModel extends Model {
         session.intermediateResults?.playerIds ?? [],
         session.event.id
       );
-      const replacements = players.reduce(
-        (acc, player) => {
-          if (player.replacementId) {
-            acc[player.id] = player.replacementId;
-          }
-          return acc;
-        },
-        {} as Record<number, number>
+      const replacements = Object.fromEntries(
+        players
+          .filter((player) => player.replacementId)
+          .map((player) => [player.playerId, player.replacementId!])
       );
       sessionState.setReplacements(replacements);
     }

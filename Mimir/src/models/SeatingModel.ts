@@ -61,8 +61,15 @@ export class SeatingModel extends Model {
         const historyModel = this.getModel(PlayerHistoryModel);
         const playerInSessionModel = this.getModel(PlayerInSessionModel);
 
-        const [players, history, seating] = await Promise.all([
-          playerModel.findById(playerIds),
+        const [{ players, replaceMap }, history, seating] = await Promise.all([
+          playerModel._findPlayers(
+            playerIds,
+            new Map(
+              registrations
+                .filter((r) => r.replacementId)
+                .map((r) => [r.replacementId!, r.playerId])
+            )
+          ),
           historyModel.findLastByEvent([eventId]),
           playerInSessionModel.getPlayersSeatingInEvent(eventId, playerIds.length),
         ]);
@@ -79,7 +86,7 @@ export class SeatingModel extends Model {
 
         const playerById = players.reduce(
           (acc, player) => {
-            acc[player.id] = player;
+            acc[player.id] = replaceMap.get(player.id) ?? player;
             return acc;
           },
           {} as Record<number, (typeof players)[0]>
@@ -402,12 +409,10 @@ export class SeatingModel extends Model {
     for (const table of chunks) {
       sessionModel.startSession(event, table, tableIndex);
 
-      for (const idx in table) {
-        if (replacements[table[idx]]) {
-          table[idx] = replacements[table[idx]];
-        }
-      }
-      promises.push(this.repo.skirnir.messageSeatingReady(table, tableIndex, eventId));
+      const notificationPlayers = table.map((id) => replacements[id] ?? id);
+      promises.push(
+        this.repo.skirnir.messageSeatingReady(notificationPlayers, tableIndex, eventId)
+      );
       tableIndex++;
     }
 

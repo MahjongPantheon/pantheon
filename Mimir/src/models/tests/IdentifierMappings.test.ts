@@ -10,6 +10,8 @@ import { SessionPlayerEntity } from '../../entities/SessionPlayer.entity.js';
 import { SessionResultsEntity } from '../../entities/SessionResults.entity.js';
 import { RulesetEntity } from '../../entities/Ruleset.entity.js';
 import { makeReplayLink } from '../../helpers/formatters.js';
+import { SessionState } from '../../helpers/SessionState.js';
+import { PenaltyModel } from '../PenaltyModel.js';
 import { Model } from '../Model.js';
 import { PlayerModel } from '../PlayerModel.js';
 import { PlayerStatsModel } from '../PlayerStatsModel.js';
@@ -104,7 +106,31 @@ describe('Identifier mappings', () => {
     const { playersData } = await players.findPlayersForSessions(['session-501'], true);
 
     expect(players.substituteReplacements(playersData.players, playersData.replaceMap)).toEqual([
-      makePlayer(202),
+      { ...makePlayer(202), id: 101 },
+    ]);
+  });
+
+  it('uses replacement names in game getters while keeping original score IDs', async () => {
+    jest.spyOn(sessions, 'findByRepresentationalHash').mockResolvedValue([session]);
+    jest.spyOn(players, 'findPlayerIdsForSessions').mockResolvedValue([
+      [101, session.id],
+      [102, session.id],
+    ]);
+    jest.spyOn(registrations, 'fetchPlayersRegDataByIds').mockResolvedValue([registration]);
+    jest.spyOn(players, 'findById').mockImplementation(async (ids) => ids.map(makePlayer));
+
+    const display = await sessions.getPlayersOfGames([session]);
+    const rating = await sessions.getPlayersOfGames([session], false);
+    expect(display.players.get(session.id)).toEqual([
+      { ...makePlayer(202), id: 101 },
+      makePlayer(102),
+    ]);
+    expect(rating.players.get(session.id)).toEqual([makePlayer(101), makePlayer(102)]);
+
+    jest.spyOn(registrations, 'fetchPlayersRegDataByIds').mockResolvedValue([]);
+    expect((await sessions.getPlayersOfGames([session])).players.get(session.id)).toEqual([
+      makePlayer(101),
+      makePlayer(102),
     ]);
   });
 
@@ -120,8 +146,53 @@ describe('Identifier mappings', () => {
     const result = await Model.getModel(repo, SeatingModel).getCurrentSeating(event.id);
 
     expect(result.seating).toEqual([
-      expect.objectContaining({ playerId: 101, playerTitle: 'Player 101' }),
+      expect.objectContaining({ playerId: 101, playerTitle: 'Player 202' }),
     ]);
+  });
+
+  it('keeps original IDs in session state when notifying replacement players of seating', async () => {
+    jest.spyOn(repo.meta, 'personId', 'get').mockReturnValue(1);
+    jest.spyOn(players, 'isEventAdmin').mockResolvedValue(true);
+    jest.spyOn(repo.em, 'findOne').mockResolvedValue(event);
+    jest.spyOn(sessions, 'findByEventAndStatus').mockResolvedValue([]);
+    jest
+      .spyOn(registrations, 'findByEventId')
+      .mockResolvedValue([
+        registration,
+        ...[102, 103, 104].map((playerId) =>
+          Object.assign(new EventRegisteredPlayersEntity(), { playerId })
+        ),
+      ]);
+    jest.spyOn(registrations, 'findIgnoredPlayersIdsByEvent').mockResolvedValue([]);
+    jest.spyOn(Model.getModel(repo, PenaltyModel), 'findByEventId').mockResolvedValue([]);
+    jest.spyOn(Model.getModel(repo, PlayerHistoryModel), 'findLastByEvent').mockResolvedValue([]);
+    jest
+      .spyOn(Model.getModel(repo, PlayerInSessionModel), 'getPlayersSeatingInEvent')
+      .mockResolvedValue([]);
+    jest.spyOn(repo.skirnir, 'messageSeatingReady').mockResolvedValue();
+    let state: SessionState | undefined;
+    jest.spyOn(sessions, 'startSession').mockImplementation((_event, ids) => {
+      state = new SessionState(event.ruleset, ids);
+      return session;
+    });
+
+    await Model.getModel(repo, SeatingModel).makeShuffledSeating({
+      eventId: event.id,
+      groupsCount: 1,
+      seed: 1,
+    });
+
+    expect(state?.state.playerIds.slice().sort((a, b) => a - b)).toEqual([101, 102, 103, 104]);
+    expect(
+      Object.keys(state!.getScores())
+        .map(Number)
+        .sort((a, b) => a - b)
+    ).toEqual([101, 102, 103, 104]);
+    expect(repo.skirnir.messageSeatingReady).toHaveBeenCalledWith(
+      expect.arrayContaining([202, 102, 103, 104]),
+      1,
+      event.id
+    );
   });
 
   it('returns local IDs even when they differ from global player IDs', async () => {

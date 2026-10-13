@@ -53,17 +53,15 @@ export class SessionResultsModel extends Model {
       const score = state.getScores()[currentPlayerId];
       const place = placesMap[currentPlayerId];
 
-      // TODO: почему-то тут пусто, видимо не назначается замена при сохранении стейта в раунд и сессию
-      console.error(place, state.getReplacements());
-
+      const isReplaced = !!state.getReplacements()?.[currentPlayerId];
       let ratingDeltaForPlayer = ratingDelta[currentPlayerId];
-      if (ruleset.rules.chipsValue > 0) {
+      if (!isReplaced && ruleset.rules.chipsValue > 0) {
         ratingDeltaForPlayer += chips * ruleset.rules.chipsValue;
       }
-      if (state.getChombo()[currentPlayerId]) {
+      if (!isReplaced && state.getChombo()[currentPlayerId]) {
         ratingDeltaForPlayer += state.getChombo()[currentPlayerId];
       }
-      if (ruleset.rules.withYakitori && state.getYakitori()[currentPlayerId]) {
+      if (!isReplaced && ruleset.rules.withYakitori && state.getYakitori()[currentPlayerId]) {
         ratingDeltaForPlayer -= ruleset.rules.yakitoriPenalty;
       }
 
@@ -114,15 +112,12 @@ export class SessionResultsModel extends Model {
       .sort((a, b) => b[1] - a[1])
       .forEach(([playerId, score], idx) => {
         const pId = parseInt(playerId.toString(), 10);
-        const scoreSub =
-          replacements[pId] && ruleset.rules.replacementPlayerFixedPoints !== 0
-            ? ruleset.rules.replacementPlayerFixedPoints
-            : score - ruleset.rules.startPoints;
-        const uma =
-          replacements[pId] && ruleset.rules.replacementPlayerOverrideUma !== 0
-            ? ruleset.rules.replacementPlayerOverrideUma
-            : umaList[idx];
-        ratingDelta[pId] = scoreSub + ruleset.getOka(placesMap[pId]) + uma;
+        const scoreSub = replacements[pId]
+          ? ruleset.rules.replacementPlayerFixedPoints
+          : score - ruleset.rules.startPoints;
+        const uma = replacements[pId] ? ruleset.rules.replacementPlayerOverrideUma : umaList[idx];
+        ratingDelta[pId] =
+          scoreSub + (replacements[pId] ? 0 : ruleset.getOka(placesMap[pId])) + uma;
       });
     return ratingDelta;
   }
@@ -173,14 +168,23 @@ export class SessionResultsModel extends Model {
 
     if (lastPlayerResult) {
       const results = await this.findBySession([lastPlayerResult.sessionId]);
+      if (results.length === 0) {
+        return [[], {}];
+      }
       const playerModel = this.getModel(PlayerModel);
-      const players = (await playerModel.findById(results.map((result) => result.playerId))).reduce(
-        (acc, p) => {
-          acc[p.id] = p;
-          return acc;
-        },
-        {} as Record<number, PersonEx>
+      const { playersData } = await playerModel.findPlayersForSessions(
+        [results[0].session.representationalHash!],
+        true
       );
+      const players = playerModel
+        .substituteReplacements(playersData.players, playersData.replaceMap)
+        .reduce(
+          (acc, p) => {
+            acc[p.id] = p;
+            return acc;
+          },
+          {} as Record<number, PersonEx>
+        );
       return [results, players];
     }
     return [[], {}];
@@ -205,13 +209,22 @@ export class SessionResultsModel extends Model {
         lastSession[0].intermediateResults
       );
       const playerModel = this.getModel(PlayerModel);
-      const players = (await playerModel.findById(playerIds)).reduce(
-        (acc, p) => {
-          acc[p.id] = p;
-          return acc;
-        },
-        {} as Record<number, PersonEx>
+      const { playersData } = await playerModel.findPlayersForSessions(
+        [lastSession[0].representationalHash!],
+        true
       );
+      sessionState.setReplacements(
+        Object.fromEntries([...playersData.replaceMap].map(([id, player]) => [id, player.id]))
+      );
+      const players = playerModel
+        .substituteReplacements(playersData.players, playersData.replaceMap)
+        .reduce(
+          (acc, p) => {
+            acc[p.id] = p;
+            return acc;
+          },
+          {} as Record<number, PersonEx>
+        );
       return [
         this.getUnfinishedSessionResults(
           event.ruleset,

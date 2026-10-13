@@ -159,7 +159,8 @@ export class PlayerModel extends Model {
   substituteReplacements(players: PersonEx[], replacements: Map<number, PersonEx>) {
     return players.map((p) => {
       if (replacements.has(p.id)) {
-        return replacements.get(p.id)!;
+        // Scores and rounds still refer to the original player ID.
+        return { ...replacements.get(p.id)!, id: p.id };
       }
       return p;
     });

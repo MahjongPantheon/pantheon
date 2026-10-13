@@ -1205,14 +1205,14 @@ export class EventModel extends Model {
               const reg = registeredPlayers.find((r) => r.playerId === p.playerId)!;
               return {
                 id: p.playerId,
-                title: players[p.playerId].title,
+                title: (replacements[reg.replacementId!] ?? players[p.playerId]).title,
                 localId: reg.localId,
                 teamName: reg.teamName,
-                tenhouId: players[p.playerId].tenhouId,
+                tenhouId: (replacements[reg.replacementId!] ?? players[p.playerId]).tenhouId,
                 ignoreSeating: !!reg.ignoreSeating,
                 replacedBy: reg.replacementId ? replacements[reg.replacementId] : undefined,
-                hasAvatar: players[p.playerId].hasAvatar,
-                lastUpdate: players[p.playerId].lastUpdate,
+                hasAvatar: (replacements[reg.replacementId!] ?? players[p.playerId]).hasAvatar,
+                lastUpdate: (replacements[reg.replacementId!] ?? players[p.playerId]).lastUpdate,
               };
             }),
           extraTime: game.extraTime,
