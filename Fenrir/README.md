@@ -34,7 +34,7 @@ See [Playwright's UI Mode documentation](https://playwright.dev/docs/test-ui-mod
 
 #### Account-backed test setup
 
-SMOKE-004 creates nine fresh ordinary accounts through Frey before browser actions. On the development stack, configure `FREY_URL` with its `.pantheon.local` URL. The helper uses `RequestRegistration` and `ApproveRegistration` with Frey's development confirmation codes, without requiring superadmin credentials or sending email.
+SMOKE-004 and SMOKE-005 each create nine fresh ordinary accounts through Frey before browser actions. On the development stack, configure `FREY_URL` with its `.pantheon.local` URL. The helper uses `RequestRegistration` and `ApproveRegistration` with Frey's development confirmation codes, without requiring superadmin credentials or sending email.
 
 Alternatively, provide both `E2E_SUPERADMIN_EMAIL` and `E2E_SUPERADMIN_PASSWORD` for an existing Frey superadmin through the Fenrir process environment or an ignored `Fenrir/.env.e2e.local` file. This selects the guarded `E2eCreateAccounts` RPC and requires Frey to run with `E2E_TEST_MODE=1`. Playwright reads the local file when run from the Fenrir directory, including inside the container; exported environment variables take precedence. Do not put credentials in tracked environment files. Incomplete or invalid credentials fail explicitly; setup does not bootstrap or grant superadmin rights. Without credentials, setup requires a `.pantheon.local` Frey URL and actual development confirmation codes.
 
@@ -44,7 +44,9 @@ Follow the root README's development `make e2e_dev` flow. To run only this case 
 CI=true ./node_modules/.bin/playwright test tests/events.spec.ts --grep SMOKE-004
 ```
 
-The test uses a fresh ordinary account as the event administrator. Accounts and the uniquely named TEST event are retained in the test environment. See [the case description](testcases/smoke-004-create-event-with-users.md) for assertions and coverage limits.
+SMOKE-005 follows the same account setup, records a complete local session in Tyr, and compares the finished results with Sigrun. Run it with `CI=true ./node_modules/.bin/playwright test tests/local-session.spec.ts --grep SMOKE-005`; see [its case description](testcases/smoke-005-local-session-round-outcomes.md) for the round sequence and score checkpoints.
+
+The tests use a fresh ordinary account as the event administrator. Accounts and the uniquely named TEST event are retained in the test environment. See [the case description](testcases/smoke-004-create-event-with-users.md) for assertions and coverage limits.
 
 #### Legend
 
