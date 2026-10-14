@@ -25,10 +25,14 @@ shell: get_container_id
 kill:
 	$(CONTAINER_COMMAND) rmi `$(CONTAINER_COMMAND) images | grep 'pantheon' | grep 'fenrir' | awk '{print $$3}'` || exit 0
 
-PHONY: deps
+.PHONY: deps
 deps:
-	rm -rf node_modules
-	pnpm install
+	pnpm install --frozen-lockfile
+	pnpm exec playwright install --with-deps
+
+.PHONY: dev_deps
+dev_deps:
+	pnpm install --no-frozen-lockfile
 	pnpm exec playwright install --with-deps
 
 PHONY: oxlint
@@ -105,12 +109,20 @@ container_run: get_container_id
 		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Fenrir && make run' ; \
 	fi
 
-PHONY: container_deps
+.PHONY: container_deps
 container_deps: get_container_id
 	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
 		echo "${RED}Fenrir container is not running.${NC}"; \
 	else \
 		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Fenrir && make deps' ; \
+	fi
+
+.PHONY: container_dev_deps
+container_dev_deps: get_container_id
+	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
+		echo "${RED}Fenrir container is not running.${NC}"; \
+	else \
+		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Fenrir && make dev_deps' ; \
 	fi
 
 PHONY: container_autofix

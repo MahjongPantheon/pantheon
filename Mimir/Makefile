@@ -53,8 +53,11 @@ logs: get_container_id
 
 .PHONY: deps
 deps:
-	rm -rf node_modules
-	pnpm install
+	pnpm install --frozen-lockfile
+
+.PHONY: dev_deps
+dev_deps:
+	pnpm install --no-frozen-lockfile
 
 .PHONY: container_deps
 container_deps: get_container_id
@@ -62,6 +65,14 @@ container_deps: get_container_id
 		echo "${RED}Mimir container is not running.${NC}"; \
 	else \
 		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Mimir && HOME=/home/user su-exec user make deps' ; \
+	fi
+
+.PHONY: container_dev_deps
+container_dev_deps: get_container_id
+	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
+		echo "${RED}Mimir container is not running.${NC}"; \
+	else \
+		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Mimir && HOME=/home/user su-exec user make dev_deps' ; \
 	fi
 
 .PHONY: oxlint

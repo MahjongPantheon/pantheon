@@ -37,6 +37,21 @@ deps:
 	cd Skirnir && ${MAKE} container_deps
 	cd Fenrir && ${MAKE} container_deps
 
+.PHONY: dev_deps
+dev_deps:
+	@echo "Hint: you may need to run this as root on some linux distros. Try it in case of any error."
+	cd Tyr && ${MAKE} container_dev_deps
+	cd Mimir && ${MAKE} container_dev_deps
+	cd Frey && ${MAKE} container_dev_deps
+	cd Forseti && ${MAKE} container_dev_deps
+	cd Bragi && ${MAKE} container_dev_deps
+	cd Sigrun && ${MAKE} container_dev_deps
+	cd Hugin && ${MAKE} container_deps
+	cd Gullveig && ${MAKE} container_deps
+	cd Meili && ${MAKE} container_deps
+	cd Skirnir && ${MAKE} container_dev_deps
+	cd Fenrir && ${MAKE} container_dev_deps
+
 .PHONY: kill_dev
 kill_dev: export ENV_FILENAME=.env.development
 kill_dev:
@@ -212,7 +227,7 @@ mimir_stop:
 dev: build_reverse_proxy pantheon_run
 	${MAKE} reverse_proxy_stop
 	${MAKE} reverse_proxy_start
-	${MAKE} deps
+	${MAKE} dev_deps
 	${MAKE} migrate
 	bash ./parallel_dev.sh
 
@@ -487,7 +502,7 @@ autofix:
 .PHONY: proto_gen
 proto_gen:
 	cd Frey && ${MAKE} container_proto_gen
-	${MAKE} deps
+	${MAKE} dev_deps
 
 # Db import/export
 
