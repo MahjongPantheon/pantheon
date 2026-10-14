@@ -77,6 +77,26 @@ autofix:
 run:
 	CI=true ./node_modules/.bin/playwright test
 
+.PHONY: ui_proxy
+ui_proxy:
+	cp fenrir-container.nginx.conf /etc/nginx/conf.d/fenrir.conf
+	nginx -t
+	nginx -s reload
+
+.PHONY: ui
+ui: ui_proxy
+	@echo 'Open Playwright UI at http://localhost:4017 (Ctrl+C to stop).'
+	env -u CI ./node_modules/.bin/playwright test --ui --ui-host=127.0.0.1 --ui-port=4017 --workers=1 --retries=0
+
+.PHONY: container_ui
+container_ui: get_container_id
+	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
+		echo "${RED}Fenrir container is not running. Start the e2e container before opening UI mode.${NC}"; \
+		exit 1; \
+	else \
+		$(CONTAINER_COMMAND) exec -it $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Fenrir && make ui' ; \
+	fi
+
 .PHONY: container_run
 container_run: get_container_id
 	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \

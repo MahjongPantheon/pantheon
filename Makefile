@@ -636,6 +636,11 @@ e2e: export ENV_FILENAME=.env.e2e
 e2e:
 	cd Fenrir && ${MAKE} container_run
 
+.PHONY: e2e_ui
+e2e_ui: export ENV_FILENAME=.env.e2e
+e2e_ui:
+	cd Fenrir && ${MAKE} container_ui
+
 .PHONY: e2e_local
 e2e_dev: export ENV_FILENAME=.env.e2e
 e2e_dev:

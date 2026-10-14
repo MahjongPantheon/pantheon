@@ -48,7 +48,7 @@ RUN dos2unix /entrypoint.sh
 RUN chmod 755 /entrypoint.sh
 
 # copy nginx configs
-COPY fenrir-container.nginx.conf /etc/nginx/http.d/fenrir.conf
+COPY fenrir-container.nginx.conf /etc/nginx/conf.d/fenrir.conf
 
 # Folders init
 RUN mkdir -p /run/nginx

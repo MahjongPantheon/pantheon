@@ -8,6 +8,30 @@ Goals:
 
 Fenrir uses Playwright as testing framework.
 
+#### Debugging with Playwright UI
+
+With the development stack and Fenrir container running, execute from the repository root:
+
+```sh
+make e2e_ui
+```
+
+Open [http://localhost:4017](http://localhost:4017) in your host browser and keep the command running. Use the localhost URL so browser features such as service workers have a secure context. No custom hostname, hosts-file entry, HTTPS setup, or external reverse proxy is needed.
+
+Select a test (for example, filter by `SMOKE-004`), press its run button, and inspect the action timeline, DOM snapshots, source, network requests, and errors. Enable the eye icon to rerun tests when their source changes. Tests and their browsers execute inside Fenrir, so the host browser does not need to resolve the service domains. UI runs use one worker and no retries. They create test data just like normal E2E runs.
+
+Press Ctrl+C in the terminal to stop the UI server. You can also use `make -C Fenrir container_ui` from the host, or `make ui` from `/var/www/html/Fenrir` inside the container. The UI uses port 4017 inside Fenrir and the Nginx/WebSocket proxy to container port 80, published at host `127.0.0.1:4017`. The target copies the mounted proxy configuration into Ubuntu Nginx's `conf.d` directory, validates it, and reloads Nginx before starting Playwright. This also fixes existing containers whose image copied the configuration into the unused `http.d` directory. No additional port mapping or container recreation is needed. Run only one UI server at a time; no desktop display or X server is required.
+
+If Fenrir is not running, start only its container against the already-running development stack:
+
+```sh
+ENV_FILENAME=.env.e2e docker compose -f docker-compose-amd64.yml --profile e2e up -d --no-deps fenrir.pantheon.internal
+```
+
+Use `docker-compose-arm64.yml` on ARM. For missing dependencies or browser executables, run `make -C Fenrir container_deps`. Starting UI mode does not rebuild services or automatically run the test suite.
+
+See [Playwright's UI Mode documentation](https://playwright.dev/docs/test-ui-mode) for the debugging controls.
+
 #### Account-backed test setup
 
 SMOKE-004 creates nine fresh ordinary accounts through Frey before browser actions. On the development stack, configure `FREY_URL` with its `.pantheon.local` URL. The helper uses `RequestRegistration` and `ApproveRegistration` with Frey's development confirmation codes, without requiring superadmin credentials or sending email.
