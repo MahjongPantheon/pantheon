@@ -32,12 +32,12 @@ import {
 import { IconX } from '@tabler/icons-react';
 import { PlayerAvatar } from '../../components/PlayerAvatar';
 import { CancelConfirmation } from './CancelConfirmation';
-import { Chombo, Penalty, Player } from 'tsclients/proto/atoms.pb';
+import { Chombo, Penalty, Player, RegisteredPlayer } from 'tsclients/proto/atoms.pb';
 
 type PenaltiesListProps = {
   penaltiesList: Penalty[];
   setPenaltiesList: (list: Penalty[]) => void;
-  playersListFull: Record<number, Player>;
+  playersListFull: Record<number, RegisteredPlayer>;
   refereesList: Record<number, Player>;
   chomboList: Chombo[];
   chomboPlayersList: Record<number, Player>;
@@ -82,6 +82,7 @@ export const PenaltiesList: React.FC<PenaltiesListProps> = ({
       {penaltiesList.length === 0 && <Text>{i18n._t('No penalties assigned yet')}</Text>}
       {penaltiesList.map((p, idx) => (
         <Group
+          data-testid={`forseti-penalty-row-${p.id}`}
           key={`ev_${p.id}`}
           style={{
             flex: 1,
@@ -118,6 +119,7 @@ export const PenaltiesList: React.FC<PenaltiesListProps> = ({
             )}
           </Stack>
           <CancelConfirmation
+            testId={`forseti-penalty-cancel-${p.id}`}
             disabled={p.isCancelled}
             icon={<IconX />}
             title={i18n._t('Cancel penalty')}

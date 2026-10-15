@@ -134,10 +134,12 @@ is displayed, try adding `sudo` before `make`._
 
 1. Run `make pull` to fetch all the containers from registry. This is optional, though, it will allow you to skip container build process.
    - As an option, you can run `make container_dev` to build containers from scratch on you local machine. This may take a long time.
-2. Run `make dev` to start all containers, install dependencies for all projects, run database migrations and start webpack dev servers for Tyr and Forseti.
+2. Run `make dev` to start all containers, install dependencies for all projects, run database migrations and start development servers.
 3. After everything is build, you can use `make logs` and `make php_logs` in each subsystem folder to view logs in real-time. Also you may use `make shell` to get
    to container shell, if you want to. Notice that killing php-fpm, postgres or nginx will ruin the container entirely.
 4. You can use `make pantheon_stop` to stop all containers (without deleting the data) and `make kill` to stop the container AND clean images (e.g. this will remove all db data).
+
+Development dependency installation (`make dev_deps` from the root or inside a service) reuses existing `node_modules` and the shared pnpm store. Local `file:` packages such as `Common/tsclients` are refreshed on each run, including added and removed files. The install uses `--no-frozen-lockfile` so local package manifest changes are also resolved, even when `CI` is set. To reinstall a service from scratch, remove its `node_modules` and run `make dev_deps` again. Production builds and CI prepare source-project dependencies with `make deps` and `--frozen-lockfile`, which fails if manifests and lockfiles differ. Existing `prod_deps` targets continue to prepare runtime dependencies in the built output folders.
 
 Please note: if you're using podman, trying to stop a single service container will result in also stopping all containers it depends on. Docker has no such issue.
 
@@ -181,16 +183,9 @@ Please note:
 - If you change the protocols, you should run `make proto_gen` in root repo folder to regenerate all protocol related code.
 - You always should change the proto files and never should change the generated code by hand.
 
-#### Upgrade to Frey v2
+#### Upgrade to Mimir v2 and Frey v2
 
-Frey has been rewritten from scratch for better maintainability. To migrate to new version you'll need to:
-
-- Update containers with `make pull`
-- Update the code using `git fetch && git checkout origin/master`
-- Restart and rebuild everything using `make prod_restart && make prod_compile`
-- Run migration script using `make migrate_frey1`
-
-After the steps are completed, you may want to remove old `frey` database. To do so, use `make shell_db` and drop the database using `psql`.
+Please see UPDATE.md for details.
 
 #### End-to-end tests
 

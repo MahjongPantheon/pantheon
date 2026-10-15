@@ -39,6 +39,7 @@ import {
   IconSortAscending2,
   IconSquareX,
 } from '@tabler/icons-react';
+import { EventsGetPrescriptedEventConfigResponse } from 'tsclients/proto/mimir.pb';
 enum Stage {
   NOT_READY = 'not_ready',
   READY_BUT_NOT_STARTED = 'ready_not_started',
@@ -52,6 +53,7 @@ type TournamentControlsProps = {
   players: RegisteredPlayer[];
   tablesState: TableState[];
   eventConfig: GameConfig | null;
+  prescriptedConfig: EventsGetPrescriptedEventConfigResponse | null;
   toggleResults: () => void;
   makeRandomSeating: (windShuffleMode: WindShuffleMode) => void;
   makeIntervalSeating: (interval: number, windShuffleMode: WindShuffleMode) => void;
@@ -68,6 +70,7 @@ export function TournamentControls({
   players,
   tablesState,
   eventConfig,
+  prescriptedConfig,
   toggleResults,
   makeIntervalSeating,
   makeRandomSeating,
@@ -83,13 +86,20 @@ export function TournamentControls({
   const i18n = useI18n();
   const [interval, setInterval] = useState<string | null>('1');
   const [extraTime, setExtraTime] = useState<string | null>('60');
-  const currentStage = determineStage(tablesState, players, eventConfig, seatingLoading);
+  const currentStage = determineStage(
+    tablesState,
+    players,
+    eventConfig,
+    prescriptedConfig,
+    seatingLoading
+  );
 
   return (
     <>
       <Text weight='bold'>{i18n._t('Current status')}</Text>
       <Group align='flex-start'>
         <SegmentedControl
+          data-testid='forseti-tournament-stage'
           color='blue'
           orientation='vertical'
           value={currentStage}
@@ -109,12 +119,17 @@ export function TournamentControls({
         )}
         {currentStage === Stage.READY_BUT_NOT_STARTED && !eventConfig?.isPrescripted && (
           <Stack>
-            <Button color={eventConfig?.hideResults ? 'red' : 'gray'} onClick={toggleResults}>
+            <Button
+              data-testid='forseti-tournament-toggle-results-before-seating'
+              color={eventConfig?.hideResults ? 'red' : 'gray'}
+              onClick={toggleResults}
+            >
               {eventConfig?.hideResults
                 ? i18n._t('Show results table and achievements')
                 : i18n._t('Hide results table and achievements')}
             </Button>
             <Confirmation
+              testId='forseti-tournament-random-seating'
               i18n={i18n}
               title={i18n._t('Use random seating for next session')}
               text={i18n._t('Random seating')}
@@ -128,6 +143,7 @@ export function TournamentControls({
               }}
             />
             <Confirmation
+              testId='forseti-tournament-interval-seating'
               disabled={tablesState.length === 0}
               i18n={i18n}
               title={
@@ -139,6 +155,7 @@ export function TournamentControls({
               warning={
                 <>
                   <Select
+                    data-testid='forseti-tournament-seating-interval'
                     label={i18n._t('Select interval')}
                     value={interval}
                     onChange={setInterval}
@@ -165,6 +182,7 @@ export function TournamentControls({
               }}
             />
             <Confirmation
+              testId='forseti-tournament-swiss-seating'
               disabled={tablesState.length === 0}
               i18n={i18n}
               title={
@@ -186,12 +204,17 @@ export function TournamentControls({
         )}
         {currentStage === Stage.READY_BUT_NOT_STARTED && !!eventConfig?.isPrescripted && (
           <Stack>
-            <Button color={eventConfig?.hideResults ? 'red' : 'gray'} onClick={toggleResults}>
+            <Button
+              data-testid='forseti-tournament-toggle-results-prescripted'
+              color={eventConfig?.hideResults ? 'red' : 'gray'}
+              onClick={toggleResults}
+            >
               {eventConfig?.hideResults
                 ? i18n._t('Show results table')
                 : i18n._t('Hide results table')}
             </Button>
             <Confirmation
+              testId='forseti-tournament-next-prescripted-seating'
               i18n={i18n}
               title={i18n._t('Generate seating for next session')}
               text={i18n._t('Next seating')}
@@ -216,6 +239,7 @@ export function TournamentControls({
         {currentStage === Stage.SEATING_READY && (
           <Stack>
             <Confirmation
+              testId='forseti-tournament-reset-seating'
               disabled={tablesState.length === 0}
               i18n={i18n}
               title={i18n._t('Reset generated seating')}
@@ -227,6 +251,7 @@ export function TournamentControls({
             />
             {!!import.meta.env.VITE_BOT_NICKNAME && (
               <Confirmation
+                testId='forseti-tournament-notify-players'
                 disabled={tablesState.length === 0}
                 i18n={i18n}
                 title={i18n._t('Notify players to come to their tables')}
@@ -240,6 +265,7 @@ export function TournamentControls({
               />
             )}
             <Confirmation
+              testId='forseti-tournament-start-timer'
               disabled={tablesState.length === 0}
               i18n={i18n}
               title={i18n._t('Start timer and sessions')}
@@ -254,6 +280,7 @@ export function TournamentControls({
         {currentStage === Stage.STARTED && (
           <Stack>
             <Confirmation
+              testId='forseti-tournament-add-extra-time'
               disabled={tablesState.length === 0}
               i18n={i18n}
               title={i18n._t('Add extra time')}
@@ -261,6 +288,7 @@ export function TournamentControls({
               warning={
                 <>
                   <Select
+                    data-testid='forseti-tournament-extra-time'
                     label={i18n._t('Select extra time')}
                     value={extraTime}
                     onChange={setExtraTime}
@@ -281,7 +309,11 @@ export function TournamentControls({
               color='orange'
               onConfirm={() => addExtraTime(parseInt(extraTime ?? '60', 10))}
             />
-            <Button color={eventConfig?.hideResults ? 'red' : 'gray'} onClick={toggleResults}>
+            <Button
+              data-testid='forseti-tournament-toggle-results-running'
+              color={eventConfig?.hideResults ? 'red' : 'gray'}
+              onClick={toggleResults}
+            >
               {eventConfig?.hideResults
                 ? i18n._t('Show results table')
                 : i18n._t('Hide results table')}
@@ -291,6 +323,7 @@ export function TournamentControls({
         {currentStage === Stage.PREFINISHED && (
           <Stack>
             <Confirmation
+              testId='forseti-tournament-approve-sessions'
               disabled={tablesState.length === 0}
               i18n={i18n}
               title={i18n._t('Approve session results and go on to next session')}
@@ -302,7 +335,11 @@ export function TournamentControls({
               color='red'
               onConfirm={approveResults}
             />
-            <Button color={eventConfig?.hideResults ? 'red' : 'gray'} onClick={toggleResults}>
+            <Button
+              data-testid='forseti-tournament-toggle-results-before-approval'
+              color={eventConfig?.hideResults ? 'red' : 'gray'}
+              onClick={toggleResults}
+            >
               {eventConfig?.hideResults
                 ? i18n._t('Show results table')
                 : i18n._t('Hide results table')}
@@ -319,6 +356,7 @@ function determineStage(
   tablesState: TableState[],
   players: RegisteredPlayer[],
   eventConfig: GameConfig | null,
+  prescriptedConfig: EventsGetPrescriptedEventConfigResponse | null,
   seatingLoading: boolean
 ) {
   if (seatingLoading) {
@@ -343,7 +381,7 @@ function determineStage(
 
   const playersFiltered = players.filter((p) => !p.ignoreSeating);
 
-  if (playersFiltered.length % 4 !== 0) {
+  if (playersFiltered.length % 4 !== 0 && !eventConfig?.isPrescripted) {
     return Stage.NOT_READY;
   }
 
@@ -363,8 +401,11 @@ function determineStage(
         return Stage.SEATING_INPROGRESS;
       }
     } else {
-      const assignedPlayersCount = playersFiltered.reduce((acc, p) => acc + (p.localId ? 1 : 0), 0);
-      if (notFinishedTablesCount === Math.round(assignedPlayersCount / 4)) {
+      const expectedTablesCount =
+        prescriptedConfig?.prescript
+          ?.split('\n\n')
+          [prescriptedConfig?.nextSessionIndex - 1]?.split('\n')?.length ?? 0;
+      if (notFinishedTablesCount === expectedTablesCount) {
         return Stage.SEATING_READY;
       } else {
         return Stage.SEATING_INPROGRESS;

@@ -24,7 +24,7 @@ export const EventSelect = (props: IProps) => {
   const { player, events, onBackClick, onSettingClick, onSelectEvent, currentEvent } = props;
 
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.wrapper} data-testid='tyr-event-select'>
       <div className={styles.topBar}>
         <Button
           variant='light'
@@ -32,9 +32,16 @@ export const EventSelect = (props: IProps) => {
           icon={<BackIcon />}
           size='lg'
           onClick={onBackClick}
+          testId='tyr-event-select-back'
         />
         {player.id && <Player {...player} size='md' />}
-        <Button variant='light' icon={<SettingsIcon />} size='lg' onClick={onSettingClick} />
+        <Button
+          variant='light'
+          icon={<SettingsIcon />}
+          size='lg'
+          onClick={onSettingClick}
+          testId='tyr-event-select-settings'
+        />
       </div>
       <div className={styles.eventSelect}>
         {events.length > 0 ? (
@@ -42,6 +49,7 @@ export const EventSelect = (props: IProps) => {
             <div className={styles.eventSelectTitle}>{loc._t('Select event')}</div>
             <div className={styles.eventSelectContent}>
               <SelectList
+                testIdPrefix='tyr-event-select-event'
                 items={events.map((e) => ({
                   id: e.id,
                   label: e.title,
@@ -52,7 +60,7 @@ export const EventSelect = (props: IProps) => {
             </div>
           </>
         ) : (
-          <div style={{ textAlign: 'center' }}>
+          <div style={{ textAlign: 'center' }} data-testid='tyr-event-select-empty'>
             {loc._t('There are no events you participate in right now')}
           </div>
         )}

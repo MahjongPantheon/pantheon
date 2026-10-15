@@ -146,7 +146,6 @@ export interface GameConfig {
   autoSeating: boolean;
   syncStart: boolean;
   syncEnd: boolean;
-  sortByGames: boolean;
   allowPlayerAppend: boolean;
   seriesLength: number;
   minGamesCount: number;
@@ -300,9 +299,9 @@ export interface GameResult {
   sessionHash: string;
   date?: string | null | undefined;
   replayLink: string;
-  players: number[];
   finalResults: FinalResultOfSession[];
   rounds: Round[];
+  players: PersonEx[];
 }
 
 export interface PlayerPlaceInSeries {
@@ -345,11 +344,13 @@ export interface RegisteredPlayer {
   title: string;
   localId?: number | null | undefined;
   teamName?: string | null | undefined;
-  tenhouId: string;
+  tenhouId?: string | null | undefined;
   ignoreSeating: boolean;
   replacedBy?: ReplacementPlayer | null | undefined;
   hasAvatar: boolean;
   lastUpdate: string;
+  majsoulId?: number | null | undefined;
+  majsoulNickname?: string | null | undefined;
 }
 
 export interface SessionHistoryResult {
@@ -456,7 +457,6 @@ export interface EventData {
   minGames: number;
   isTeam: boolean;
   isPrescripted: boolean;
-  autostart: number;
   rulesetConfig: RulesetConfig;
   isListed: boolean;
   isRatingShown: boolean;
@@ -507,7 +507,6 @@ export interface PlayerSeating {
 
 export interface PlayerSeatingSwiss {
   playerId: number;
-  rating: number;
 }
 
 export interface TableItemSwiss {
@@ -1927,7 +1926,6 @@ export const GameConfig = {
       autoSeating: false,
       syncStart: false,
       syncEnd: false,
-      sortByGames: false,
       allowPlayerAppend: false,
       seriesLength: 0,
       minGamesCount: 0,
@@ -1989,9 +1987,6 @@ export const GameConfig = {
     }
     if (msg.syncEnd) {
       writer.writeBool(40, msg.syncEnd);
-    }
-    if (msg.sortByGames) {
-      writer.writeBool(41, msg.sortByGames);
     }
     if (msg.allowPlayerAppend) {
       writer.writeBool(42, msg.allowPlayerAppend);
@@ -2092,10 +2087,6 @@ export const GameConfig = {
         }
         case 40: {
           msg.syncEnd = reader.readBool();
-          break;
-        }
-        case 41: {
-          msg.sortByGames = reader.readBool();
           break;
         }
         case 42: {
@@ -3793,9 +3784,9 @@ export const GameResult = {
       sessionHash: "",
       date: undefined,
       replayLink: "",
-      players: [],
       finalResults: [],
       rounds: [],
+      players: [],
       ...msg,
     };
   },
@@ -3816,9 +3807,6 @@ export const GameResult = {
     if (msg.replayLink) {
       writer.writeString(3, msg.replayLink);
     }
-    if (msg.players?.length) {
-      writer.writePackedInt32(4, msg.players);
-    }
     if (msg.finalResults?.length) {
       writer.writeRepeatedMessage(
         5,
@@ -3828,6 +3816,13 @@ export const GameResult = {
     }
     if (msg.rounds?.length) {
       writer.writeRepeatedMessage(7, msg.rounds as any, Round._writeMessage);
+    }
+    if (msg.players?.length) {
+      writer.writeRepeatedMessage(
+        8,
+        msg.players as any,
+        PersonEx._writeMessage,
+      );
     }
     return writer;
   },
@@ -3854,14 +3849,6 @@ export const GameResult = {
           msg.replayLink = reader.readString();
           break;
         }
-        case 4: {
-          if (reader.isDelimited()) {
-            msg.players.push(...reader.readPackedInt32());
-          } else {
-            msg.players.push(reader.readInt32());
-          }
-          break;
-        }
         case 5: {
           const m = FinalResultOfSession.initialize();
           reader.readMessage(m, FinalResultOfSession._readMessage);
@@ -3872,6 +3859,12 @@ export const GameResult = {
           const m = Round.initialize();
           reader.readMessage(m, Round._readMessage);
           msg.rounds.push(m);
+          break;
+        }
+        case 8: {
+          const m = PersonEx.initialize();
+          reader.readMessage(m, PersonEx._readMessage);
+          msg.players.push(m);
           break;
         }
         default: {
@@ -4353,11 +4346,13 @@ export const RegisteredPlayer = {
       title: "",
       localId: undefined,
       teamName: undefined,
-      tenhouId: "",
+      tenhouId: undefined,
       ignoreSeating: false,
       replacedBy: undefined,
       hasAvatar: false,
       lastUpdate: "",
+      majsoulId: undefined,
+      majsoulNickname: undefined,
       ...msg,
     };
   },
@@ -4381,7 +4376,7 @@ export const RegisteredPlayer = {
     if (msg.teamName != undefined) {
       writer.writeString(4, msg.teamName);
     }
-    if (msg.tenhouId) {
+    if (msg.tenhouId != undefined) {
       writer.writeString(5, msg.tenhouId);
     }
     if (msg.ignoreSeating) {
@@ -4395,6 +4390,12 @@ export const RegisteredPlayer = {
     }
     if (msg.lastUpdate) {
       writer.writeString(9, msg.lastUpdate);
+    }
+    if (msg.majsoulId != undefined) {
+      writer.writeInt32(10, msg.majsoulId);
+    }
+    if (msg.majsoulNickname != undefined) {
+      writer.writeString(11, msg.majsoulNickname);
     }
     return writer;
   },
@@ -4444,6 +4445,14 @@ export const RegisteredPlayer = {
         }
         case 9: {
           msg.lastUpdate = reader.readString();
+          break;
+        }
+        case 10: {
+          msg.majsoulId = reader.readInt32();
+          break;
+        }
+        case 11: {
+          msg.majsoulNickname = reader.readString();
           break;
         }
         default: {
@@ -5714,7 +5723,6 @@ export const EventData = {
       minGames: 0,
       isTeam: false,
       isPrescripted: false,
-      autostart: 0,
       rulesetConfig: RulesetConfig.initialize(),
       isListed: false,
       isRatingShown: false,
@@ -5763,9 +5771,6 @@ export const EventData = {
     }
     if (msg.isPrescripted) {
       writer.writeBool(11, msg.isPrescripted);
-    }
-    if (msg.autostart) {
-      writer.writeInt32(12, msg.autostart);
     }
     if (msg.rulesetConfig) {
       writer.writeMessage(14, msg.rulesetConfig, RulesetConfig._writeMessage);
@@ -5842,10 +5847,6 @@ export const EventData = {
         }
         case 11: {
           msg.isPrescripted = reader.readBool();
-          break;
-        }
-        case 12: {
-          msg.autostart = reader.readInt32();
           break;
         }
         case 14: {
@@ -6414,7 +6415,6 @@ export const PlayerSeatingSwiss = {
   initialize: function (msg?: Partial<PlayerSeatingSwiss>): PlayerSeatingSwiss {
     return {
       playerId: 0,
-      rating: 0,
       ...msg,
     };
   },
@@ -6428,9 +6428,6 @@ export const PlayerSeatingSwiss = {
   ): protoscript.BinaryWriter {
     if (msg.playerId) {
       writer.writeInt32(1, msg.playerId);
-    }
-    if (msg.rating) {
-      writer.writeFloat(2, msg.rating);
     }
     return writer;
   },
@@ -6447,10 +6444,6 @@ export const PlayerSeatingSwiss = {
       switch (field) {
         case 1: {
           msg.playerId = reader.readInt32();
-          break;
-        }
-        case 2: {
-          msg.rating = reader.readFloat();
           break;
         }
         default: {
@@ -8941,7 +8934,6 @@ export const GameConfigJSON = {
       autoSeating: false,
       syncStart: false,
       syncEnd: false,
-      sortByGames: false,
       allowPlayerAppend: false,
       seriesLength: 0,
       minGamesCount: 0,
@@ -9003,9 +8995,6 @@ export const GameConfigJSON = {
     }
     if (msg.syncEnd) {
       json["syncEnd"] = msg.syncEnd;
-    }
-    if (msg.sortByGames) {
-      json["sortByGames"] = msg.sortByGames;
     }
     if (msg.allowPlayerAppend) {
       json["allowPlayerAppend"] = msg.allowPlayerAppend;
@@ -9107,10 +9096,6 @@ export const GameConfigJSON = {
     const _syncEnd_ = json["syncEnd"] ?? json["sync_end"];
     if (_syncEnd_) {
       msg.syncEnd = _syncEnd_;
-    }
-    const _sortByGames_ = json["sortByGames"] ?? json["sort_by_games"];
-    if (_sortByGames_) {
-      msg.sortByGames = _sortByGames_;
     }
     const _allowPlayerAppend_ =
       json["allowPlayerAppend"] ?? json["allow_player_append"];
@@ -10557,9 +10542,9 @@ export const GameResultJSON = {
       sessionHash: "",
       date: undefined,
       replayLink: "",
-      players: [],
       finalResults: [],
       rounds: [],
+      players: [],
       ...msg,
     };
   },
@@ -10580,9 +10565,6 @@ export const GameResultJSON = {
     if (msg.replayLink) {
       json["replayLink"] = msg.replayLink;
     }
-    if (msg.players?.length) {
-      json["players"] = msg.players;
-    }
     if (msg.finalResults?.length) {
       json["finalResults"] = msg.finalResults.map(
         FinalResultOfSessionJSON._writeMessage,
@@ -10590,6 +10572,9 @@ export const GameResultJSON = {
     }
     if (msg.rounds?.length) {
       json["rounds"] = msg.rounds.map(RoundJSON._writeMessage);
+    }
+    if (msg.players?.length) {
+      json["players"] = msg.players.map(PersonExJSON._writeMessage);
     }
     return json;
   },
@@ -10610,10 +10595,6 @@ export const GameResultJSON = {
     if (_replayLink_) {
       msg.replayLink = _replayLink_;
     }
-    const _players_ = json["players"];
-    if (_players_) {
-      msg.players = _players_.map(protoscript.parseNumber);
-    }
     const _finalResults_ = json["finalResults"] ?? json["final_results"];
     if (_finalResults_) {
       for (const item of _finalResults_) {
@@ -10628,6 +10609,14 @@ export const GameResultJSON = {
         const m = RoundJSON.initialize();
         RoundJSON._readMessage(m, item);
         msg.rounds.push(m);
+      }
+    }
+    const _players_ = json["players"];
+    if (_players_) {
+      for (const item of _players_) {
+        const m = PersonExJSON.initialize();
+        PersonExJSON._readMessage(m, item);
+        msg.players.push(m);
       }
     }
     return msg;
@@ -11056,11 +11045,13 @@ export const RegisteredPlayerJSON = {
       title: "",
       localId: undefined,
       teamName: undefined,
-      tenhouId: "",
+      tenhouId: undefined,
       ignoreSeating: false,
       replacedBy: undefined,
       hasAvatar: false,
       lastUpdate: "",
+      majsoulId: undefined,
+      majsoulNickname: undefined,
       ...msg,
     };
   },
@@ -11084,7 +11075,7 @@ export const RegisteredPlayerJSON = {
     if (msg.teamName != undefined) {
       json["teamName"] = msg.teamName;
     }
-    if (msg.tenhouId) {
+    if (msg.tenhouId != undefined) {
       json["tenhouId"] = msg.tenhouId;
     }
     if (msg.ignoreSeating) {
@@ -11099,6 +11090,12 @@ export const RegisteredPlayerJSON = {
     }
     if (msg.lastUpdate) {
       json["lastUpdate"] = msg.lastUpdate;
+    }
+    if (msg.majsoulId != undefined) {
+      json["majsoulId"] = msg.majsoulId;
+    }
+    if (msg.majsoulNickname != undefined) {
+      json["majsoulNickname"] = msg.majsoulNickname;
     }
     return json;
   },
@@ -11143,6 +11140,15 @@ export const RegisteredPlayerJSON = {
     const _lastUpdate_ = json["lastUpdate"] ?? json["last_update"];
     if (_lastUpdate_) {
       msg.lastUpdate = _lastUpdate_;
+    }
+    const _majsoulId_ = json["majsoulId"] ?? json["majsoul_id"];
+    if (_majsoulId_) {
+      msg.majsoulId = protoscript.parseNumber(_majsoulId_);
+    }
+    const _majsoulNickname_ =
+      json["majsoulNickname"] ?? json["majsoul_nickname"];
+    if (_majsoulNickname_) {
+      msg.majsoulNickname = _majsoulNickname_;
     }
     return msg;
   },
@@ -12236,7 +12242,6 @@ export const EventDataJSON = {
       minGames: 0,
       isTeam: false,
       isPrescripted: false,
-      autostart: 0,
       rulesetConfig: RulesetConfigJSON.initialize(),
       isListed: false,
       isRatingShown: false,
@@ -12285,9 +12290,6 @@ export const EventDataJSON = {
     }
     if (msg.isPrescripted) {
       json["isPrescripted"] = msg.isPrescripted;
-    }
-    if (msg.autostart) {
-      json["autostart"] = msg.autostart;
     }
     if (msg.rulesetConfig) {
       const _rulesetConfig_ = RulesetConfigJSON._writeMessage(
@@ -12364,10 +12366,6 @@ export const EventDataJSON = {
     const _isPrescripted_ = json["isPrescripted"] ?? json["is_prescripted"];
     if (_isPrescripted_) {
       msg.isPrescripted = _isPrescripted_;
-    }
-    const _autostart_ = json["autostart"];
-    if (_autostart_) {
-      msg.autostart = protoscript.parseNumber(_autostart_);
     }
     const _rulesetConfig_ = json["rulesetConfig"] ?? json["ruleset_config"];
     if (_rulesetConfig_) {
@@ -12856,7 +12854,6 @@ export const PlayerSeatingSwissJSON = {
   initialize: function (msg?: Partial<PlayerSeatingSwiss>): PlayerSeatingSwiss {
     return {
       playerId: 0,
-      rating: 0,
       ...msg,
     };
   },
@@ -12871,9 +12868,6 @@ export const PlayerSeatingSwissJSON = {
     if (msg.playerId) {
       json["playerId"] = msg.playerId;
     }
-    if (msg.rating) {
-      json["rating"] = msg.rating;
-    }
     return json;
   },
 
@@ -12887,10 +12881,6 @@ export const PlayerSeatingSwissJSON = {
     const _playerId_ = json["playerId"] ?? json["player_id"];
     if (_playerId_) {
       msg.playerId = protoscript.parseNumber(_playerId_);
-    }
-    const _rating_ = json["rating"];
-    if (_rating_) {
-      msg.rating = protoscript.parseDouble(_rating_);
     }
     return msg;
   },

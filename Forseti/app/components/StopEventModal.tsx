@@ -20,6 +20,7 @@ export const StopEventModal = () => {
 
   return (
     <Modal
+      data-testid='forseti-stop-event-modal'
       opened={modals.stopEventModalShown}
       onClose={modals.hideStopEventModal}
       size='auto'
@@ -32,10 +33,15 @@ export const StopEventModal = () => {
         ])}
       </Text>
       <Group mt='xl' grow>
-        <Button variant='outline' onClick={modals.hideStopEventModal}>
+        <Button
+          data-testid='forseti-stop-event-cancel'
+          variant='outline'
+          onClick={modals.hideStopEventModal}
+        >
           {i18n._t('Cancel')}
         </Button>
         <Button
+          data-testid='forseti-stop-event-confirm'
           color='red'
           variant='filled'
           onClick={() => {

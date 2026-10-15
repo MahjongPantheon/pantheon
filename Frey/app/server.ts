@@ -40,6 +40,6 @@ redisConstructor().then((redis) => {
   createServer(app).listen(env.port, () => console.log(`Server listening on port ${env.port}`));
 });
 
-process.on('uncaughtExceptionMonitor', (err, origin) => {
+process.on('uncaughtException', (err, origin) => {
   logger.error('Uncaught exception: ', origin, wrapErrorObject(err));
 });

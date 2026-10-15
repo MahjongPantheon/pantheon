@@ -154,6 +154,14 @@ services:
       - ./Env/${ENV_FILENAME:-.env.production}
     ports:
       - "127.0.0.1:4001:80"
+      - "4201:4201"
+      - "4201:4201/udp"
+      - "4301:4301"
+      - "4301:4301/udp"
+      - "4401:4401"
+      - "4401:4401/udp"
+      - "4411:4411"
+      - "4411:4411/udp"
     depends_on:
       - frey.pantheon.internal
       - db.pantheon.internal
@@ -161,9 +169,13 @@ services:
     volumes:
       - ./Mimir:/var/www/html/Mimir
       - ./Common:/var/www/html/Common
+      - ./Mimir-dist:/var/www/html/Mimir-dist
+      - pnpmstore01:/.pnpm
     environment:
       PHINX_DB_PORT: 5432
       PHINX_DB_HOST: db.pantheon.internal
+      PNPM_HOME: /.pnpm
+      npm_config_store_dir: /.pnpm
     networks:
       internal_net:
         aliases:
@@ -470,7 +482,7 @@ services:
     ports:
       - "127.0.0.1:3000:3000"
     volumes:
-      - 'grafanastorage01:/var/lib/grafana'
+      - "grafanastorage01:/var/lib/grafana"
     networks:
       internal_net:
         aliases:

@@ -89,7 +89,10 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
         minGames: 0, // local/online
         lobbyId: 0, // online
         allowViewOtherTables: false,
-        platformId: PlatformType.PLATFORM_TYPE_UNSPECIFIED,
+        platformId:
+          privilegesLevel === PrivilegesLevel.SUPERADMIN
+            ? PlatformType.PLATFORM_TYPE_UNSPECIFIED
+            : PlatformType.PLATFORM_TYPE_TENHOUNET, // regular users can create only tenhou-based games
         allowManualAddReplay: true,
         windShuffleMode: WindShuffleMode.WIND_SHUFFLE_MODE_RANDOM, // so it's chosen by default when shown
       },
@@ -257,7 +260,7 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
 
   return (
     <>
-      <Container pos='relative'>
+      <Container data-testid='forseti-event-settings-page' pos='relative'>
         <LoadingOverlay visible={isLoading} overlayOpacity={1} />
         <form ref={formRef} onSubmit={form.onSubmit(submitForm)}>
           <Tabs keepMounted={false} defaultValue='basic'>
@@ -299,6 +302,7 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
           </Tabs>
           {!isFinished && (
             <TopActionButton
+              testId='forseti-event-settings-save'
               title={isSaved ? i18n._t('Changes saved!') : i18n._t('Save changes')}
               loading={isSaving || isLoading || isSaved}
               icon={isSaved ? <IconCircleCheck /> : <IconDeviceFloppy />}
@@ -328,7 +332,6 @@ function setConsistentWindShuffleMode(eventData: EventCustom | EventData) {
 function makeEventData(vals: FormFields): EventData {
   const eventData: EventData = {
     ...vals.event,
-    autostart: 0, // TODO: https://github.com/MahjongPantheon/pantheon/issues/282
     rulesetConfig: {
       ...vals.ruleset,
       allowedYaku: Object.keys(vals.ruleset.allowedYaku)

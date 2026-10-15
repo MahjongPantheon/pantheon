@@ -104,7 +104,7 @@ export const TablesState: React.FC<{ params: { eventId: string } }> = ({ params:
     .sort((a, b) => a.index - b.index);
 
   return (
-    <Container w='100%' m={10} maw='100%'>
+    <Container data-testid='sigrun-tables-state-page' w='100%' m={10} maw='100%'>
       <Meta
         title={`${i18n._t('Tables state')} - ${events?.[0].title} - Sigrun`}
         description={i18n._t(

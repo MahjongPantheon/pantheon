@@ -88,12 +88,13 @@ export const ManagementTab: React.FC<{
 
   return (
     <>
-      <Container pos='relative' sx={{ minHeight: '400px' }}>
+      <Container data-testid='forseti-privileges-page' pos='relative' sx={{ minHeight: '400px' }}>
         <Space h='xl' />
         <Title order={5}>{i18n._t('Event referees list')}</Title>
         <Space h='xl' />
         <Group grow>
           <PlayerSelector
+            testId='forseti-privileges-add-referee'
             eventId={eventId}
             excludePlayers={eventReferees.map((p) => p.personId)}
             placeholder={i18n._t('Find and add referee by name...')}
@@ -128,6 +129,7 @@ export const ManagementTab: React.FC<{
         <Stack justify='flex-start' spacing='0'>
           {eventReferees.map((p, idx) => (
             <Group
+              data-testid={`forseti-privileges-referee-row-${p.personId}`}
               key={`ev_${p.personId}`}
               style={{
                 padding: '10px',
@@ -149,6 +151,7 @@ export const ManagementTab: React.FC<{
               <Group>
                 {p.personId !== personId && (
                   <ActionIcon
+                    data-testid={`forseti-privileges-remove-referee-${p.personId}`}
                     title={i18n._t('Remove referee from event')}
                     variant='filled'
                     size='lg'
@@ -167,6 +170,7 @@ export const ManagementTab: React.FC<{
         <Space h='xl' />
         <Group grow>
           <PlayerSelector
+            testId='forseti-privileges-add-admin'
             eventId={eventId}
             excludePlayers={eventAdmins.map((p) => p.personId)}
             placeholder={i18n._t('Find and add administrator by name...')}
@@ -201,6 +205,7 @@ export const ManagementTab: React.FC<{
         <Stack justify='flex-start' spacing='0'>
           {eventAdmins.map((p, idx) => (
             <Group
+              data-testid={`forseti-privileges-admin-row-${p.personId}`}
               key={`ev_${p.personId}`}
               style={{
                 padding: '10px',
@@ -222,6 +227,7 @@ export const ManagementTab: React.FC<{
               <Group>
                 {p.personId !== personId && (
                   <ActionIcon
+                    data-testid={`forseti-privileges-remove-admin-${p.personId}`}
                     title={i18n._t('Remove administrator from event')}
                     variant='filled'
                     size='lg'

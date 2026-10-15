@@ -4,6 +4,7 @@ import { createDbConstructor, createRedisConstructor } from '../database/db';
 import { createTwirpServer } from 'twirpscript';
 import { Context } from '../context';
 import { createServer, IncomingMessage } from 'http';
+import { takeCoverage } from 'node:v8';
 import { env } from '../helpers/env';
 import { fillRequestVars } from '../middleware/requestVars';
 import { storages } from '../middleware/storages';
@@ -23,7 +24,15 @@ redis.then((r) => {
     .use(fillRequestVars())
     .use(storages(db, r));
 
-  createServer(app).listen(4304, () => {
+  createServer((req, res) => {
+    if (process.env.NODE_V8_COVERAGE && req.method === 'POST' && req.url === '/__test__/coverage') {
+      takeCoverage();
+      res.writeHead(204);
+      res.end();
+      return;
+    }
+    app(req, res);
+  }).listen(4304, () => {
     cleanup()
       .finally(() => migrateToLatest(true))
       .then(() => bootstrapAdmin(true))

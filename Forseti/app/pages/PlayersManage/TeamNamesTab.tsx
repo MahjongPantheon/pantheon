@@ -84,6 +84,7 @@ export const TeamNamesTab: React.FC<{
         <Stack justify='flex-start' spacing='0'>
           {players.map((p, idx) => (
             <Group
+              data-testid={`forseti-players-team-name-row-${p.id}`}
               key={`ev_${p.id}`}
               style={{
                 padding: '10px',
@@ -98,6 +99,7 @@ export const TeamNamesTab: React.FC<{
               <Group sx={{ flex: 1 }}>
                 <Text>{i18n._t('Team:')}</Text>
                 <TextInput
+                  data-testid={`forseti-players-team-name-input-${p.id}`}
                   sx={{ flex: 1 }}
                   value={teamNames[p.id]}
                   onChange={(v) => setTeamNames({ ...teamNames, [p.id]: v.currentTarget.value })}
@@ -108,6 +110,7 @@ export const TeamNamesTab: React.FC<{
         </Stack>
         <Filler h='150px' />
         <TopActionButton
+          testId='forseti-players-team-names-save'
           title={isSaved ? i18n._t('Changes saved!') : i18n._t('Save changes')}
           loading={isSaving || isSaved}
           icon={isSaved ? <IconCircleCheck /> : <IconDeviceFloppy />}

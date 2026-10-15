@@ -41,6 +41,7 @@ export const TableStatus = (props: TableStatusProps) => {
   return (
     <div
       className={styles.wrapper}
+      data-testid='tyr-table-status'
       style={{ width: `${props.width}px`, height: `${props.height}px` }}
     >
       {props.tableIndex && (
@@ -57,6 +58,7 @@ export const TableStatus = (props: TableStatusProps) => {
                 return false;
               }}
               size='lg'
+              testId='tyr-table-call-referee'
             />
           )}
           {props.showRotateButtons && (
@@ -69,6 +71,7 @@ export const TableStatus = (props: TableStatusProps) => {
                   return false;
                 }}
                 size='lg'
+                testId='tyr-table-rotate-counterclockwise'
               />
               <Button
                 variant='light'
@@ -78,19 +81,26 @@ export const TableStatus = (props: TableStatusProps) => {
                   return false;
                 }}
                 size='lg'
+                testId='tyr-table-rotate-clockwise'
               />
             </div>
           )}
-          <div className={styles.roundIndex}>{tableIndex}</div>
+          <div className={styles.roundIndex} data-testid='tyr-table-round'>
+            {tableIndex}
+          </div>
           <div className={styles.sticks}>
-            <div>
+            <div data-testid='tyr-table-riichi-count'>
               <RiichiIcon /> {props.tableStatus.riichiCount || '0'}
             </div>
-            <div>
+            <div data-testid='tyr-table-honba-count'>
               <HonbaIcon /> {props.tableStatus.honbaCount || '0'}
             </div>
           </div>
-          {props.timerState.useTimer && <div className={styles.timer}>{currentTime}</div>}
+          {props.timerState.useTimer && (
+            <div className={styles.timer} data-testid='tyr-table-timer'>
+              {currentTime}
+            </div>
+          )}
           {gamesLeft && (
             <div className={styles.gamesLeft}>
               {loc._nt(['%1 deal left', '%1 deals left'], gamesLeft, [gamesLeft])}

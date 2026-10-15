@@ -10,5 +10,5 @@
   "bracketSpacing": true,
   "arrowParens": "always",
   "sortPackageJson": false,
-  "ignorePatterns": ["app/i18n/*.json", "app/index.html"]
+  "ignorePatterns": ["app/i18n/*.json", "app/index.html", "dev-dist/**"]
 }

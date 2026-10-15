@@ -11,13 +11,13 @@ type IProps = {
 
 export const LoginError = ({ onOkClick, recoveryLink }: IProps) => {
   const loc = useContext(i18n);
-  const regLink = `<a href='${env.urls.forseti}/profile/signup' target='_blank'>${loc._pt(
+  const regLink = `<a href='${env.urls.forseti}/profile/signup' target='_blank' data-testid='tyr-login-error-signup'>${loc._pt(
     'Name of registration link',
     'register'
   )}</a>`;
 
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.wrapper} data-testid='tyr-login-error'>
       <div className={styles.title}>{loc._t('Pantheon')}</div>
       <div className={styles.message}>
         <div>{loc._t('Login attempt has failed. Possible reasons are:')}</div>
@@ -29,7 +29,7 @@ export const LoginError = ({ onOkClick, recoveryLink }: IProps) => {
           />
           <li>
             {loc._t('Password check has failed')} -{' '}
-            <a href={recoveryLink} target='_blank'>
+            <a href={recoveryLink} target='_blank' data-testid='tyr-login-error-recovery'>
               {loc._t('Forgot password?')}
             </a>
           </li>
@@ -40,7 +40,7 @@ export const LoginError = ({ onOkClick, recoveryLink }: IProps) => {
         </div>
       </div>
       <div className={styles.buttons}>
-        <Button variant='primary' size='lg' onClick={onOkClick}>
+        <Button variant='primary' size='lg' onClick={onOkClick} testId='tyr-login-error-ok'>
           {loc._t('OK')}
         </Button>
       </div>

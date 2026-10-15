@@ -1,0 +1,550 @@
+import { TransactionPropagation } from '@mikro-orm/core';
+import { EventRegisteredPlayersEntity } from '../entities/EventRegisteredPlayers.entity.js';
+import { Model } from './Model.js';
+import { EventEntity } from '../entities/Event.entity.js';
+import { PlayerModel } from './PlayerModel.js';
+import { PlayerHistoryModel } from './PlayerHistoryModel.js';
+import { PlayerInSessionModel } from './PlayerInSessionModel.js';
+import {
+  make_seating_shuffled,
+  make_seating_swiss,
+  make_seating_interval,
+  update_wind_placing_only,
+  WindShuffle as MahjongWindShuffle,
+} from 'mahjong-seatings-rs-node';
+import {
+  EventsGetCurrentSeatingResponse,
+  SeatingGenerateSwissSeatingPayload,
+  SeatingGenerateSwissSeatingResponse,
+  SeatingMakeIntervalSeatingPayload,
+  SeatingMakePrescriptedSeatingPayload,
+  SeatingMakeShuffledSeatingPayload,
+  SeatingMakeSwissSeatingPayload,
+} from 'tsclients/proto/mimir.pb.js';
+import {
+  GenericSuccessResponse,
+  SessionStatus,
+  TournamentGamesStatus,
+  WindShuffleMode,
+} from 'tsclients/proto/atoms.pb.js';
+import { SessionModel } from './SessionModel.js';
+import { EventRegistrationModel } from './EventRegistrationModel.js';
+import { PenaltyModel } from './PenaltyModel.js';
+import { EventPrescriptEntity } from '../entities/EventPrescript.entity.js';
+import { unpackScript } from '../helpers/eventPrescript.js';
+import { SessionPlayerEntity } from '../entities/SessionPlayer.entity.js';
+import { randomInt, randomSign } from '../helpers/crypto.js';
+import { PlayerHistoryEntity } from '../entities/PlayerHistory.entity.js';
+
+export class SeatingModel extends Model {
+  public async getCurrentSeating(eventId: number): Promise<EventsGetCurrentSeatingResponse> {
+    return this.repo.em.transactional(
+      async () => {
+        const event = await this.repo.em.findOne(EventEntity, eventId, {
+          populate: ['ruleset'],
+        });
+        if (!event) {
+          throw new Error('Event not found');
+        }
+        const startRating = event.ruleset?.rules.startRating;
+
+        const registrations = await this.repo.em.findAll(EventRegisteredPlayersEntity, {
+          where: {
+            event: this.repo.em.getReference(EventEntity, eventId),
+            ignoreSeating: 0,
+          },
+        });
+
+        const playerIds = registrations.map((r) => r.playerId);
+
+        const playerModel = this.getModel(PlayerModel);
+        const historyModel = this.getModel(PlayerHistoryModel);
+        const playerInSessionModel = this.getModel(PlayerInSessionModel);
+
+        const [{ players, replaceMap }, history, seating] = await Promise.all([
+          playerModel._findPlayers(
+            playerIds,
+            new Map(
+              registrations
+                .filter((r) => r.replacementId)
+                .map((r) => [r.replacementId!, r.playerId])
+            )
+          ),
+          historyModel.findLastByEvent([eventId]),
+          playerInSessionModel.getPlayersSeatingInEvent(eventId, playerIds.length),
+        ]);
+
+        const ratings: Record<number, number> = {};
+        for (const player of players) {
+          ratings[player.id] = startRating;
+        }
+        for (const hItem of history) {
+          if (hItem.rating) {
+            ratings[hItem.playerId] = hItem.rating;
+          }
+        }
+
+        const playerById = players.reduce(
+          (acc, player) => {
+            acc[player.id] = replaceMap.get(player.id) ?? player;
+            return acc;
+          },
+          {} as Record<number, (typeof players)[0]>
+        );
+
+        return {
+          seating: seating
+            .map((seat) => ({
+              playerId: seat.player_id,
+              order: seat.order,
+              tableIndex: seat.table_index,
+              sessionId: seat.session_id,
+              playerTitle: playerById[seat.player_id]?.title,
+              rating: ratings[seat.player_id] ?? 0,
+              hasAvatar: playerById[seat.player_id]?.hasAvatar ?? false,
+              lastUpdate: playerById[seat.player_id]?.lastUpdate,
+            }))
+            .filter((s) => !!s.tableIndex),
+        };
+      },
+      { propagation: TransactionPropagation.REQUIRED }
+    );
+  }
+
+  async makeShuffledSeating(
+    payload: SeatingMakeShuffledSeatingPayload
+  ): Promise<GenericSuccessResponse> {
+    return this.repo.em.transactional(
+      async () => {
+        const { eventId, groupsCount, seed, windShuffleMode } = payload;
+
+        const seatingGetter = (
+          playersMap: Array<[number, number]>,
+          _seed: number,
+          previousSeatings: number[][],
+          _windShuffleMode?: WindShuffleMode
+        ) =>
+          make_seating_shuffled({
+            playersMap,
+            groupsCount,
+            randFactor: _seed,
+            windShuffle: this._getWindShuffleMode(_windShuffleMode),
+            previousSeatings,
+          });
+
+        return this.makeSeatingAndStartGames(
+          eventId,
+          seed,
+          seatingGetter,
+          windShuffleMode ?? undefined
+        );
+      },
+      { propagation: TransactionPropagation.REQUIRED }
+    );
+  }
+
+  async makeSwissSeating(payload: SeatingMakeSwissSeatingPayload): Promise<GenericSuccessResponse> {
+    return this.repo.em.transactional(
+      async () => {
+        const { eventId, windShuffleMode } = payload;
+        const seed = randomInt(999999);
+        const seatingGetter = (
+          playersMap: Array<[number, number]>,
+          _seed: number,
+          previousSeatings: number[][],
+          _windShuffleMode?: WindShuffleMode
+        ) =>
+          make_seating_swiss({
+            playersMap,
+            randFactor: _seed,
+            windShuffle: this._getWindShuffleMode(_windShuffleMode),
+            previousSeatings,
+          });
+        return this.makeSeatingAndStartGames(
+          eventId,
+          seed,
+          seatingGetter,
+          windShuffleMode ?? undefined
+        );
+      },
+      { propagation: TransactionPropagation.REQUIRED }
+    );
+  }
+
+  async makeIntervalSeating(
+    payload: SeatingMakeIntervalSeatingPayload
+  ): Promise<GenericSuccessResponse> {
+    return this.repo.em.transactional(
+      async () => {
+        const { eventId, step, windShuffleMode } = payload;
+        const seed = randomInt(999999);
+        const seatingGetter = (
+          playersMap: Array<[number, number]>,
+          _seed: number,
+          previousSeatings: number[][],
+          _windShuffleMode?: WindShuffleMode
+        ) =>
+          make_seating_interval({
+            playersMap,
+            randFactor: seed,
+            step,
+            windShuffle: this._getWindShuffleMode(_windShuffleMode),
+            previousSeatings,
+          });
+        return this.makeSeatingAndStartGames(
+          eventId,
+          seed,
+          seatingGetter,
+          windShuffleMode ?? undefined
+        );
+      },
+      { propagation: TransactionPropagation.REQUIRED }
+    );
+  }
+
+  async makePrescriptedSeating(
+    payload: SeatingMakePrescriptedSeatingPayload
+  ): Promise<GenericSuccessResponse> {
+    return this.repo.em.transactional(
+      async () => {
+        const { eventId, windShuffleMode } = payload;
+        const seed = randomInt(999999);
+        const prescriptEntity = await this.repo.em.findOne(EventPrescriptEntity, {
+          event: this.repo.em.getReference(EventEntity, eventId),
+        });
+        if (!prescriptEntity) {
+          throw new Error('No prescript entity found for event');
+        }
+        const seating = await this._getNextPrescriptedSeating(
+          eventId,
+          prescriptEntity.script,
+          prescriptEntity.nextGame
+        );
+
+        if (seating.length === 0) {
+          throw new Error('Next session is not defined in script');
+        }
+
+        const seatingGetter = (
+          _playersMap: Array<[number, number]>, // ignored in this case
+          _seed: number,
+          previousSeatings: number[][],
+          _windShuffleMode?: WindShuffleMode
+        ) => {
+          return update_wind_placing_only({
+            playersMap: seating.map((id) => [id, 0]), // zero rating as it does not really matter in case of prescripted seating
+            previousSeatings,
+            randFactor: _seed,
+            windShuffle: this._getWindShuffleMode(_windShuffleMode),
+          });
+        };
+        const result = await this.makeSeatingAndStartGames(
+          eventId,
+          seed,
+          seatingGetter,
+          windShuffleMode ?? undefined
+        );
+        return result;
+      },
+      { propagation: TransactionPropagation.REQUIRED }
+    );
+  }
+
+  public async resetSeating(eventId: number): Promise<GenericSuccessResponse> {
+    return this.repo.em.transactional(
+      async () => {
+        await this._ensureActionAllowed(eventId);
+        const event = await this.repo.em.findOne(EventEntity, eventId);
+        if (
+          !event ||
+          event.gamesStatus !== TournamentGamesStatus.TOURNAMENT_GAMES_STATUS_SEATING_READY
+        ) {
+          throw new Error(`Event #${eventId} not found or not in proper state`);
+        }
+
+        event.gamesStatus = TournamentGamesStatus.TOURNAMENT_GAMES_STATUS_STARTED;
+        this.repo.em.persist(event);
+
+        const sessionModel = this.getModel(SessionModel);
+        const sessions = await sessionModel.findByEventAndStatus(
+          [eventId],
+          [SessionStatus.SESSION_STATUS_INPROGRESS]
+        );
+        const sp = await this.repo.em.findAll(SessionPlayerEntity, {
+          where: { session: { id: { $in: sessions.map((s) => s.id) } } },
+        });
+
+        sp.map((e) => this.repo.em.remove(e));
+        sessions.map((s) => this.repo.em.remove(s));
+
+        return { success: true };
+      },
+      { propagation: TransactionPropagation.REQUIRED }
+    );
+  }
+
+  async generateSwissSeating(
+    payload: SeatingGenerateSwissSeatingPayload
+  ): Promise<SeatingGenerateSwissSeatingResponse> {
+    return this.repo.em.transactional(
+      async () => {
+        const event = await this.repo.em.findOne(EventEntity, payload.eventId);
+        if (!event) {
+          throw new Error(`Event #${payload.eventId} not found`);
+        }
+
+        const seatingGetter = (
+          playersMap: Array<[number, number]>,
+          seed: number,
+          previousSeatings: number[][],
+          windShuffleMode?: WindShuffleMode
+        ) =>
+          make_seating_swiss({
+            playersMap,
+            randFactor: seed,
+            windShuffle: this._getWindShuffleMode(windShuffleMode),
+            previousSeatings,
+          });
+
+        const { chunks, replacements } = await this.makeSeating(
+          event,
+          randomInt(999999),
+          seatingGetter,
+          payload.windShuffleMode ?? WindShuffleMode.WIND_SHUFFLE_MODE_RANDOM
+        );
+
+        if (payload.substituteReplacementPlayers) {
+          for (const table of chunks) {
+            for (const idx in table) {
+              if (replacements[table[idx]]) {
+                table[idx] = replacements[table[idx]];
+              }
+            }
+          }
+        }
+
+        return {
+          tables: chunks.map((table) => ({
+            players: table.map((playerId) => ({ playerId })),
+          })),
+        };
+      },
+      { propagation: TransactionPropagation.REQUIRED }
+    );
+  }
+
+  private async makeSeating(
+    event: EventEntity,
+    seed: number,
+    seatingGetter: (
+      playersMap: Array<[number, number]>,
+      seed: number,
+      previousSeatings: number[][],
+      windShuffleMode?: WindShuffleMode
+    ) => number[][],
+    windShuffleMode?: WindShuffleMode
+  ) {
+    await this._ensureActionAllowed(event.id);
+
+    const sessionModel = this.getModel(SessionModel);
+    const regModel = this.getModel(EventRegistrationModel);
+
+    const sessions = await sessionModel.findByEventAndStatus(
+      [event.id],
+      [SessionStatus.SESSION_STATUS_INPROGRESS, SessionStatus.SESSION_STATUS_PREFINISHED]
+    );
+    if (sessions.length > 0) {
+      throw new Error('Cannot make new seating while games are still in progress');
+    }
+
+    if (event.useTimer) {
+      event.gamesStatus = TournamentGamesStatus.TOURNAMENT_GAMES_STATUS_SEATING_READY;
+      this.repo.em.persist(event);
+    }
+
+    const regs = await regModel.findByEventId([event.id]);
+
+    const [playersMap, previousSeatings] = await this._getData(event, regs);
+    const seating = seatingGetter(playersMap, seed, previousSeatings, windShuffleMode);
+
+    const chunks = [];
+    for (let i = 0; i < seating.length; i += 4) {
+      chunks.push(seating.slice(i, i + 4).map((p) => p[0]));
+    }
+
+    const replacements: Record<number, number> = {};
+    for (const reg of regs) {
+      if (reg.replacementId) {
+        replacements[reg.playerId] = reg.replacementId;
+      }
+    }
+
+    return { chunks, replacements };
+  }
+
+  private async makeSeatingAndStartGames(
+    eventId: number,
+    seed: number,
+    seatingGetter: (
+      playersMap: Array<[number, number]>,
+      seed: number,
+      previousSeatings: number[][],
+      windShuffleMode?: WindShuffleMode
+    ) => number[][],
+    windShuffleMode?: WindShuffleMode
+  ): Promise<GenericSuccessResponse> {
+    const sessionModel = this.getModel(SessionModel);
+    const event = await this.repo.em.findOne(EventEntity, eventId);
+    if (!event) {
+      throw new Error(`Event #${eventId} not found`);
+    }
+    const { chunks, replacements } = await this.makeSeating(
+      event,
+      seed,
+      seatingGetter,
+      windShuffleMode
+    );
+    let tableIndex = 1;
+    const promises = [];
+    for (const table of chunks) {
+      sessionModel.startSession(event, table, tableIndex);
+
+      const notificationPlayers = table.map((id) => replacements[id] ?? id);
+      promises.push(
+        this.repo.skirnir.messageSeatingReady(notificationPlayers, tableIndex, eventId)
+      );
+      tableIndex++;
+    }
+
+    await Promise.all(promises);
+
+    return { success: true };
+  }
+
+  private async _getNextPrescriptedSeating(
+    eventId: number,
+    script: string,
+    nextGameIndex: number
+  ): Promise<number[]> {
+    const seating = (unpackScript(script)[nextGameIndex] ?? []).flat(2);
+    // replace local ids with real ids
+    const regModel = this.getModel(EventRegistrationModel);
+    const localIdMap = await regModel.findLocalIdsMapByEvent(eventId, true);
+    return seating.map((localId) => localIdMap.get(localId)!);
+  }
+
+  private async _ensureActionAllowed(eventId: number): Promise<void> {
+    const event = await this.repo.em.findOne(EventEntity, eventId);
+    if (!event) {
+      throw new Error(`Event #${eventId} not found`);
+    }
+
+    const playerModel = this.getModel(PlayerModel);
+    if (
+      !this.repo.meta.personId ||
+      !((await playerModel.isEventAdmin(eventId)) || (await playerModel.isEventReferee(eventId)))
+    ) {
+      throw new Error("You don't have the necessary permissions to make new seating");
+    }
+
+    if (event.finished) {
+      throw new Error('Event is already finished');
+    }
+  }
+
+  private async _getPlayersMap(
+    event: EventEntity,
+    regs: EventRegisteredPlayersEntity[],
+    history: PlayerHistoryEntity[],
+    ignoredPlayerIds: number[],
+    penaltyByPlayer: Record<number, { amount: number; count: number }>
+  ) {
+    const playersMap: Array<[number, number]> = [];
+    const playersProcessed = new Set<number>();
+
+    // First step is adding players that already played games
+    for (const item of history) {
+      if (ignoredPlayerIds.includes(item.playerId)) {
+        continue;
+      }
+      playersMap.push([item.playerId, item.rating - (penaltyByPlayer[item.playerId]?.amount ?? 0)]);
+      playersProcessed.add(item.playerId);
+    }
+
+    // Second step is adding players that didn't play yet
+    // this situation is possible only in online tournament
+    // when we added replacement player
+    const initialRating = event.ruleset?.rules.startRating ?? 0;
+    for (const reg of regs) {
+      if (ignoredPlayerIds.includes(reg.playerId)) {
+        continue;
+      }
+      if (!playersProcessed.has(reg.playerId)) {
+        playersMap.push([reg.playerId, initialRating]);
+      }
+    }
+
+    // sort by rating desc, random on tiebreak
+    playersMap.sort((a, b) => (b[1] > a[1] ? 1 : b[1] < a[1] ? -1 : randomSign()));
+
+    return playersMap;
+  }
+
+  private async _getData(
+    event: EventEntity,
+    regs: EventRegisteredPlayersEntity[]
+  ): Promise<[Array<[number, number]>, number[][]]> {
+    const regModel = this.getModel(EventRegistrationModel);
+    const penaltyModel = this.getModel(PenaltyModel);
+    const historyModel = this.getModel(PlayerHistoryModel);
+    const playerInSessionModel = this.getModel(PlayerInSessionModel);
+
+    const [ignoredPlayerIds, penalties, history, previousSeatings] = await Promise.all([
+      regModel.findIgnoredPlayersIdsByEvent([event.id]),
+      penaltyModel.findByEventId([event.id], true),
+      historyModel.findLastByEvent([event.id]),
+      playerInSessionModel.getPlayersSeatingInEvent(event.id),
+    ]);
+
+    const penaltyByPlayer = penalties.reduce(
+      (acc, penalty) => {
+        if (!acc[penalty.playerId]) {
+          acc[penalty.playerId] = { amount: 0, count: 0 };
+        }
+        acc[penalty.playerId].amount += penalty.amount;
+        acc[penalty.playerId].count++;
+        return acc;
+      },
+      {} as Record<number, { amount: number; count: number }>
+    );
+
+    const tables = previousSeatings
+      .map((s) => s.player_id)
+      .filter((id) => !ignoredPlayerIds.includes(id));
+    const seatingChunks: number[][] = [];
+    for (let i = 0; i < tables.length; i += 4) {
+      seatingChunks.push(tables.slice(i, i + 4));
+    }
+
+    return [
+      await this._getPlayersMap(event, regs, history, ignoredPlayerIds, penaltyByPlayer),
+      seatingChunks,
+    ];
+  }
+
+  private _getWindShuffleMode(
+    windShuffleMode: WindShuffleMode = WindShuffleMode.WIND_SHUFFLE_MODE_UNSPECIFIED
+  ): MahjongWindShuffle {
+    switch (windShuffleMode) {
+      case WindShuffleMode.WIND_SHUFFLE_MODE_RANDOM:
+        return 'random';
+      case WindShuffleMode.WIND_SHUFFLE_MODE_BALANCED:
+        return 'balanced';
+      case WindShuffleMode.WIND_SHUFFLE_MODE_PRESCRIPTED:
+        return 'prescripted';
+      case WindShuffleMode.WIND_SHUFFLE_MODE_UNSPECIFIED:
+      default:
+        return 'random';
+    }
+  }
+}

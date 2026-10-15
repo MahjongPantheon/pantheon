@@ -36,6 +36,7 @@ process.env.TZ = data.TZ ?? 'UTC';
 
 export const env = {
   development,
+  e2eTestMode: process.env.E2E_TEST_MODE === '1',
   port: parseInt(process.env.PORT ?? data.PORT ?? '4004'),
   db: {
     host: process.env.DB_FREY_HOST ?? data.DB_FREY_HOST ?? 'db.pantheon.internal',

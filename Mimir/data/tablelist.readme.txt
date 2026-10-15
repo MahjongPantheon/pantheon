@@ -1,5 +1,0 @@
-Note: tablelist.txt contains names of tables to be removed during testing.
-
-Names should follow in the deletion order, e.g. a table that relies on some other table
-with foreign key should appear earlier in the list than the table it relies on,
-otherwise the deletion will fail.

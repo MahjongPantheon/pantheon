@@ -63,7 +63,7 @@ export const SeriesRating: React.FC<{ params: { eventId: string } }> = ({
   }
 
   return (
-    <Container>
+    <Container data-testid='sigrun-series-rating-page'>
       <Meta
         title={`${events?.[0].title} - ${i18n._t('Series rating')} - Sigrun`}
         description={i18n._t('Series rating for the event "%1" provided by Mahjong Pantheon', [
@@ -85,6 +85,7 @@ export const SeriesRating: React.FC<{ params: { eventId: string } }> = ({
             <PlayerAvatar p={item.player} />
             <Group gap={2}>
               <Anchor
+                data-testid={`sigrun-series-player-link-${item.player.id}`}
                 href={`/event/${events[0].id}/player/${item.player.id}`}
                 onClick={(e) => {
                   navigate(`/event/${events[0].id}/player/${item.player.id}`);
@@ -111,6 +112,7 @@ export const SeriesRating: React.FC<{ params: { eventId: string } }> = ({
                 <Box style={{ display: 'flex', flexWrap: 'wrap' }}>
                   {item.bestSeries.map((bs, bsidx) => (
                     <Anchor
+                      data-testid={`sigrun-series-best-game-link-${item.player.id}-${bs.sessionHash}`}
                       style={{ textDecoration: 'none', display: 'flex' }}
                       key={`bs_${bsidx}`}
                       href={`/event/${eventId}/game/${bs.sessionHash}`}
@@ -143,6 +145,7 @@ export const SeriesRating: React.FC<{ params: { eventId: string } }> = ({
                 <Box style={{ display: 'flex', flexWrap: 'wrap' }}>
                   {item.currentSeries.map((ls, lsidx) => (
                     <Anchor
+                      data-testid={`sigrun-series-current-game-link-${item.player.id}-${ls.sessionHash}`}
                       style={{ textDecoration: 'none', display: 'flex' }}
                       key={`bs_${lsidx}`}
                       href={`/event/${eventId}/game/${ls.sessionHash}`}

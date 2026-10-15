@@ -25,7 +25,11 @@ export const ThemeSelector = ({ supportedThemes, currentTheme, onThemeSelect }: 
               theme.name === currentTheme ? styles.selected : null
             )}
           >
-            <div className={styles.visual} onClick={() => onThemeSelect(theme.name)}>
+            <div
+              className={styles.visual}
+              onClick={() => onThemeSelect(theme.name)}
+              data-testid={`tyr-settings-theme-${theme.name}`}
+            >
               <div
                 className={styles.visualInner}
                 style={{ backgroundColor: theme.backgroundColor }}

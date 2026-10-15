@@ -1,0 +1,45 @@
+import { EventEntity } from '../../entities/Event.entity';
+import { RoundEntity } from '../../entities/Round.entity';
+import { Repository } from '../../services/Repository';
+
+export async function getMaxFuHand(eventId: number, repo: Repository) {
+  const rounds = await repo.em.findAll(RoundEntity, {
+    fields: ['hands.fu', 'hands.winnerId'],
+    populate: ['hands'],
+    where: {
+      event: repo.em.getReference(EventEntity, eventId),
+      hands: {
+        fu: { $ne: null },
+      },
+    },
+    orderBy: {
+      hands: {
+        fu: -1,
+      },
+    },
+    limit: 20,
+  });
+
+  let maxFu = 0;
+  const playerIds = new Set<number>();
+  for (const round of rounds) {
+    for (const hand of round.hands) {
+      if (!hand.winnerId) {
+        continue;
+      }
+      if (hand.fu && hand.fu > maxFu) {
+        maxFu = hand.fu;
+        playerIds.clear();
+        playerIds.add(hand.winnerId);
+      }
+      if (hand.fu === maxFu) {
+        playerIds.add(hand.winnerId);
+      }
+    }
+  }
+
+  return {
+    playerIds: Array.from(playerIds),
+    fu: maxFu,
+  };
+}

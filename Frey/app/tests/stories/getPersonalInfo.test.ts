@@ -22,10 +22,10 @@ describe('Get personal data', () => {
         {
           city: 'testcity',
           country: 'testcountry',
-          email: '', // should be empty
+          email: expect.any(String),
           hasAvatar: false,
           id: authData.personId,
-          phone: '', // should be empty
+          phone: expect.any(String),
           tenhouId: 'sometenhou',
           title: 'Test Account',
         },

@@ -19,6 +19,7 @@ export const TextFilter = ({
   return (
     <Group>
       <TextInput
+        data-testid='sigrun-events-filter-input'
         style={{ flex: 1 }}
         placeholder={i18n._t('Filter events...')}
         leftSection={<IconSearch size='1.3rem' />}
@@ -30,6 +31,7 @@ export const TextFilter = ({
         rightSection={
           search !== '' && (
             <IconCircleX
+              data-testid='sigrun-events-filter-clear'
               color={theme.colors.dark[2]}
               style={{ cursor: 'pointer' }}
               onClick={() => {
@@ -40,7 +42,12 @@ export const TextFilter = ({
           )
         }
       />
-      <Button size='sm' style={{ flex: 'none' }} onClick={() => onSubmit(search)}>
+      <Button
+        data-testid='sigrun-events-filter-submit'
+        size='sm'
+        style={{ flex: 'none' }}
+        onClick={() => onSubmit(search)}
+      >
         {i18n._t('Filter')}
       </Button>
     </Group>

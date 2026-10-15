@@ -18,7 +18,7 @@
 import { UseFormReturnType } from '@mantine/form';
 import { EventData, RulesetConfig } from 'tsclients/proto/atoms.pb';
 
-export type EventCustom = Omit<Omit<EventData, 'rulesetConfig'>, 'autostart'>;
+export type EventCustom = Omit<EventData, 'rulesetConfig'>;
 
 export type RulesetConfigLocal = Omit<
   Omit<Omit<RulesetConfig, 'allowedYaku'>, 'yakuWithPao'>,

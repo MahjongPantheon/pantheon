@@ -73,6 +73,7 @@ export const AppHeader: React.FC<{
     >
       {!veryLargeScreen && (
         <Drawer
+          data-testid='forseti-menu-drawer'
           size='sm'
           opened={menuOpened}
           closeOnClickOutside={true}
@@ -87,11 +88,13 @@ export const AppHeader: React.FC<{
           styles={{ body: { height: 'calc(100% - 68px)', paddingTop: 0 } }}
         >
           <Drawer.CloseButton
+            data-testid='forseti-menu-drawer-close'
             size='xl'
             pos='absolute'
             style={{ right: 0, backgroundColor: dark ? '#1a1b1e' : '#fff' }}
           />
           <MainMenu
+            testIdScope='drawer'
             title={title}
             dark={dark}
             closeMenu={closeMenu}
@@ -108,6 +111,7 @@ export const AppHeader: React.FC<{
           {!veryLargeScreen &&
             (largeScreen ? (
               <Button
+                data-testid='forseti-menu-open-tablet'
                 title={i18n._t('Open menu')}
                 variant='filled'
                 color='green'
@@ -120,6 +124,7 @@ export const AppHeader: React.FC<{
               </Button>
             ) : (
               <ActionIcon
+                data-testid='forseti-menu-open-mobile'
                 title={i18n._t('Open menu')}
                 variant='filled'
                 color='green'

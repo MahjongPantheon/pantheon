@@ -8,14 +8,16 @@ export type IProps = Omit<PlayerProps, 'size'> &
     buttons?: ButtonsProps;
     onPlayerClick?: () => void;
     upsideDown?: boolean;
+    testIdPrefix?: string;
   };
 
 export const PlayerPlace = (props: IProps) => {
   return (
-    <div className={styles.wrapper} onClick={props.onPlayerClick}>
+    <div className={styles.wrapper} onClick={props.onPlayerClick} data-testid={props.testIdPrefix}>
       {props.buttons && (
         <PlayerButtons
           {...props.buttons}
+          testIdPrefix={props.testIdPrefix}
           rotateActionIcons={props.upsideDown ? 'flip' : props.buttons.rotateActionIcons}
         />
       )}
@@ -34,6 +36,7 @@ export const PlayerPlace = (props: IProps) => {
       )}
       {props.points !== undefined && (
         <PlayerPoints
+          testId={props.testIdPrefix ? `${props.testIdPrefix}-points` : undefined}
           points={props.points}
           penaltyPoints={props.penaltyPoints}
           pointsMode={props.pointsMode}

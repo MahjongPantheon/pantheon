@@ -38,7 +38,10 @@ import { TopActionButton } from '../../components/TopActionButton';
 import { IconRefresh } from '@tabler/icons-react';
 import { Redirect } from 'wouter';
 import { useStorage } from '../../hooks/storage';
-import { EventsGetTimerStateResponse } from 'tsclients/proto/mimir.pb';
+import {
+  EventsGetPrescriptedEventConfigResponse,
+  EventsGetTimerStateResponse,
+} from 'tsclients/proto/mimir.pb';
 
 const DEFAULT_SECS_UNTIL_RELOAD = 60;
 export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { id } }) => {
@@ -50,6 +53,8 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
   const [isLoading, setIsLoading] = useState(false);
   const [seatingLoading, setSeatingLoading] = useState(false);
   const [eventConfig, setEventConfig] = useState<null | GameConfig>(null);
+  const [prescriptedConfig, setPrescriptedConfig] =
+    useState<null | EventsGetPrescriptedEventConfigResponse>(null);
   const [timerState, setTimerState] = useState<null | EventsGetTimerStateResponse>(null);
   const [tablesState, setTablesState] = useState<TableState[]>([]);
   const [players, setPlayers] = useState<RegisteredPlayer[]>([]);
@@ -67,12 +72,14 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
     setIsLoading(true);
     Promise.all([
       api.getGameConfig(eventId),
+      api.getPrescriptedEventConfig(eventId),
       api.getTablesState(eventId),
       api.getAllPlayers(eventId),
       api.getTimerState(eventId),
     ])
-      .then(([config, tables, regs, tState]) => {
+      .then(([config, prescriptConfig, tables, regs, tState]) => {
         setEventConfig(config);
+        setPrescriptedConfig(prescriptConfig);
         setTablesState(tables);
         setPlayers(regs);
         setTimerState(tState);
@@ -355,7 +362,7 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
   }
 
   return (
-    <Container>
+    <Container data-testid='forseti-games-control-page'>
       <LoadingOverlay visible={isLoading} overlayOpacity={1} />
       {eventConfig?.syncStart && (
         <TournamentControls
@@ -363,6 +370,7 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
           players={players}
           tablesState={tablesState}
           eventConfig={eventConfig}
+          prescriptedConfig={prescriptedConfig}
           startTimer={onStartTimer}
           notifyPlayers={notifyPlayers}
           addExtraTime={onAddExtraTime}
@@ -386,6 +394,7 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
         onAddExtraTime={onAddExtraTimeForTable}
       />
       <TopActionButton
+        testId='forseti-games-control-save'
         color='green'
         title={i18n._t('Refresh data [%1]', [secsUntilReload <= 0 ? '0' : secsUntilReload])}
         loading={false}

@@ -382,8 +382,6 @@ interface SetTimerAction {
   payload: {
     waiting: boolean;
     secondsRemaining: number;
-    autostartSecondsRemaining: number;
-    haveAutostart: boolean;
   };
 }
 interface UpdateTimerDataAction {
@@ -392,8 +390,6 @@ interface UpdateTimerDataAction {
     waiting: boolean;
     secondsRemaining?: number;
     lastUpdateTimestamp?: number;
-    autostartSecondsRemaining?: number;
-    autostartLastUpdateTimestamp?: number;
   };
 }
 

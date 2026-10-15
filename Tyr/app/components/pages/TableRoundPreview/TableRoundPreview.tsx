@@ -26,21 +26,39 @@ export const TableRoundPreview = (props: IProps) => {
   const [centerDims, setCenterDims] = useState({ width: 0, height: 0 });
 
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.wrapper} data-testid='tyr-round-preview'>
       <div className={styles.table}>
         <FourSidedScreen
-          sideUp={<PlayerPlace upsideDown={props.topRowUpsideDown} {...props.toimen} />}
-          sideLeft={<PlayerPlace {...props.kamicha} />}
-          sideDown={<PlayerPlace {...props.self} />}
-          sideRight={<PlayerPlace {...props.shimocha} />}
+          sideUp={
+            <PlayerPlace
+              upsideDown={props.topRowUpsideDown}
+              {...props.toimen}
+              testIdPrefix='tyr-preview-player-toimen'
+            />
+          }
+          sideLeft={<PlayerPlace {...props.kamicha} testIdPrefix='tyr-preview-player-kamicha' />}
+          sideDown={<PlayerPlace {...props.self} testIdPrefix='tyr-preview-player-self' />}
+          sideRight={<PlayerPlace {...props.shimocha} testIdPrefix='tyr-preview-player-shimocha' />}
           center={<ResultArrows {...centerDims} arrows={props.results.arrows} />}
           onDimensionChange={setCenterDims}
         />
       </div>
       <BottomPanel>
-        <Button variant='light' icon={<BackIcon />} size='lg' onClick={props.onClickBack} />
+        <Button
+          variant='light'
+          icon={<BackIcon />}
+          size='lg'
+          onClick={props.onClickBack}
+          testId='tyr-round-preview-back'
+        />
         <div className={styles.outcomeTitle}>{props.bottomPanelText}</div>
-        <Button variant='light' icon={<CheckIcon />} size='lg' onClick={props.onSubmit} />
+        <Button
+          variant='light'
+          icon={<CheckIcon />}
+          size='lg'
+          onClick={props.onSubmit}
+          testId='tyr-round-preview-submit'
+        />
       </BottomPanel>
     </div>
   );

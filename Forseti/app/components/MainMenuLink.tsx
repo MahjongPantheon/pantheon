@@ -15,6 +15,7 @@ export const MainMenuLink = ({
   text,
   onClick,
   external,
+  testId,
 }: {
   href: string;
   icon: React.ReactNode;
@@ -22,6 +23,7 @@ export const MainMenuLink = ({
   text: string;
   onClick?: () => void;
   external?: ExternalTarget;
+  testId: string;
 }) => {
   const [, navigate] = useLocation();
   const isDark = useMantineColorScheme().colorScheme === 'dark';
@@ -38,6 +40,7 @@ export const MainMenuLink = ({
         : '#DCA57F';
   return (
     <Anchor
+      data-testid={testId}
       style={{ borderLeft: '10px solid ' + color, marginBottom: '2px', textDecoration: 'none' }}
       href={href}
       onClick={

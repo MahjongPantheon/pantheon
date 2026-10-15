@@ -23,12 +23,13 @@ export type IProps = {
 
 export const TableSelectPlayerStatus = (props: IProps) => {
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.wrapper} data-testid='tyr-select-player-status'>
       <div className={styles.mainArea}>
         <FourSidedScreen
           sideUp={
             <PlayerPlace
               upsideDown={props.topRowUpsideDown}
+              testIdPrefix='tyr-select-player-toimen'
               {...props.toimen}
               points={undefined}
               showYakitori={false}
@@ -37,15 +38,24 @@ export const TableSelectPlayerStatus = (props: IProps) => {
           sideLeft={
             <PlayerPlace
               {...props.kamicha}
+              testIdPrefix='tyr-select-player-kamicha'
               points={undefined}
               showYakitori={false}
               buttons={{ ...props.kamicha.buttons, rotateActionIcons: 'ccw' }}
             />
           }
-          sideDown={<PlayerPlace {...props.self} points={undefined} showYakitori={false} />}
+          sideDown={
+            <PlayerPlace
+              {...props.self}
+              points={undefined}
+              showYakitori={false}
+              testIdPrefix='tyr-select-player-self'
+            />
+          }
           sideRight={
             <PlayerPlace
               {...props.shimocha}
+              testIdPrefix='tyr-select-player-shimocha'
               points={undefined}
               showYakitori={false}
               buttons={{ ...props.shimocha.buttons, rotateActionIcons: 'cw' }}
@@ -55,7 +65,13 @@ export const TableSelectPlayerStatus = (props: IProps) => {
         />
       </div>
       <BottomPanel>
-        <Button variant='light' icon={<BackIcon />} size='lg' onClick={props.onGoBack} />
+        <Button
+          variant='light'
+          icon={<BackIcon />}
+          size='lg'
+          onClick={props.onGoBack}
+          testId='tyr-select-player-back'
+        />
         <div className={styles.outcomeTitle}>{props.bottomPanelText}</div>
         <Button
           variant='light'
@@ -63,6 +79,7 @@ export const TableSelectPlayerStatus = (props: IProps) => {
           disabled={!props.mayGoForward}
           size='lg'
           onClick={props.onGoForward}
+          testId='tyr-select-player-next'
         />
       </BottomPanel>
     </div>

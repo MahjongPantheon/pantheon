@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-05 21:55Z\n"
+"POT-Creation-Date: 2026-10-06 20:39Z\n"
 "PO-Revision-Date: 2024-04-12 22:47+0300\n"
 "Last-Translator: Jesterboxboy <github@jesterbox.org>\n"
 "Language-Team: \n"
@@ -730,7 +730,7 @@ msgstr ""
 "Event konnte nicht gespeichert werden: Server Fehler oder Netzwerk nicht "
 "erreichbar"
 
-#: app/pages/ProfileNotifications.tsx:86:36
+#: app/pages/ProfileNotifications.tsx:95:36
 msgid "Failed to set notifications settings."
 msgstr "Bearbeitungseinstellungen konnten nicht gespeichert werden."
 
@@ -1305,7 +1305,7 @@ msgstr ""
 msgid "Notifications"
 msgstr ""
 
-#: app/pages/ProfileNotifications.tsx:99:10
+#: app/pages/ProfileNotifications.tsx:108:10
 msgid ""
 "Notifications from Pantheon are supported via Telegram. Please configure "
 "your Telegram bot to use the service (see README)."
@@ -1313,7 +1313,7 @@ msgstr ""
 "Benachrichtigungen von Pantheon können via Telegram versendet werden. Bitte "
 "Telegram Bot wie in README beschrieben konfigurieren."
 
-#: app/pages/ProfileNotifications.tsx:155:14
+#: app/pages/ProfileNotifications.tsx:164:14
 msgid ""
 "Notifications from Pantheon are supported via Telegram. Please use the "
 "following link to register with Telegram bot: "
@@ -1341,33 +1341,33 @@ msgstr "Spieler benachrichtigen"
 msgid "Notify players to come to their tables"
 msgstr "Spieler auffordern zu Ihren Platz an den Tischen einzunehmen"
 
-#: app/pages/ProfileNotifications.tsx:132:18
+#: app/pages/ProfileNotifications.tsx:141:18
 msgid "Notify when a hand has been recorded"
 msgstr "Benachrichtigen wenn eine Hand aufgezeichnet wird"
 
-#: app/pages/ProfileNotifications.tsx:137:18
+#: app/pages/ProfileNotifications.tsx:146:18
 msgid ""
 "Notify when any hand has been recorded for any event you are administrator "
 "or referee of"
 msgstr ""
 
-#: app/pages/ProfileNotifications.tsx:122:18
+#: app/pages/ProfileNotifications.tsx:131:18
 msgid "Notify when next tournament session is about to start (except online)"
 msgstr "Benachrichtigen wenn nächste Runde in Kürze startet(ausser Online)"
 
-#: app/pages/ProfileNotifications.tsx:117:18
+#: app/pages/ProfileNotifications.tsx:126:18
 msgid "Notify when seating for tournament sessions is ready"
 msgstr "Benachrichtigen wenn Sitzplatzzuweisung erfolgt ist"
 
-#: app/pages/ProfileNotifications.tsx:144:18
+#: app/pages/ProfileNotifications.tsx:153:18
 msgid "Notify when session in club event has ended"
 msgstr "Benachrichtigen wenn ein Klubmatch beendet wurde"
 
-#: app/pages/ProfileNotifications.tsx:127:18
+#: app/pages/ProfileNotifications.tsx:136:18
 msgid "Notify when session in tournament has ended (except online)"
 msgstr "Benachrichtigen wenn Runde beendet ist(ausser online)"
 
-#: app/pages/ProfileNotifications.tsx:149:18
+#: app/pages/ProfileNotifications.tsx:158:18
 #, fuzzy
 msgid "Notify when you are requested as referee"
 msgstr "Benachrichtigen wenn eine Hand aufgezeichnet wird"
@@ -1402,7 +1402,7 @@ msgstr ""
 msgid "Only for prescripted events, just follow the script"
 msgstr ""
 
-#: app/pages/ProfileNotifications.tsx:160:16
+#: app/pages/ProfileNotifications.tsx:169:16
 msgid "Open Pantheon bot"
 msgstr "Pantheon Bot öffnen"
 
@@ -1980,7 +1980,7 @@ msgstr "Runde gestartet"
 msgid "Settings"
 msgstr "Einstellungen"
 
-#: app/pages/ProfileNotifications.tsx:165:28
+#: app/pages/ProfileNotifications.tsx:174:28
 msgid "Settings saved!"
 msgstr "Einstellunge gespeichert!"
 
@@ -2324,7 +2324,7 @@ msgstr "Account bearbeiten"
 msgid "Update script"
 msgstr "Sitzplan aktualisieren"
 
-#: app/pages/ProfileNotifications.tsx:165:57
+#: app/pages/ProfileNotifications.tsx:174:57
 msgid "Update settings"
 msgstr "Einstelungen bearbeiten"
 
@@ -2514,8 +2514,8 @@ msgstr "Passwort erfolgreich zurückgesetzt. Bitte weiter zur Loginseite."
 msgid "Your password is too weak. Please enter stronger password."
 msgstr "Passwort zu schwach."
 
-#: app/pages/ProfileNotifications.tsx:110:18
-#: app/pages/ProfileNotifications.tsx:112:24
+#: app/pages/ProfileNotifications.tsx:119:18
+#: app/pages/ProfileNotifications.tsx:121:24
 msgid "Your telegram ID"
 msgstr "Deine Telegram ID"
 

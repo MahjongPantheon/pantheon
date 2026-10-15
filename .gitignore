@@ -15,6 +15,7 @@ package-lock.json
 .env.e2e
 
 !Env/.env.e2e
+Fenrir/.env.e2e.local
 Env/.env.development.local
 Env/.env.production
 Tyr/.env.production
@@ -22,6 +23,10 @@ Forseti/.env.production
 Sigrun/.env.production
 Bragi/.env.production
 Skirnir/.env.production
+Mimir/.env.production
+Mimir/.env.development
+Frey/.env.production
+Frey/.env.development
 Tyr/.env.development
 Forseti/.env.development
 Sigrun/.env.development
@@ -38,15 +43,8 @@ Thumbs.db
 Common/protoc-bin/
 Common/node-geoip/node_modules/
 Common/tsclients/node_modules/
-Common/tsclients/proto/*.js
 
 Database/export.tar.gz
-
-Mimir/config/local/*
-Mimir/vendor/
-Mimir/data/db.sqlite
-Mimir/data/verbose.log
-Mimir/tests/data/*
 
 Meili/vendor/
 
@@ -55,6 +53,7 @@ Hugin/vendor/
 Gullveig/vendor/
 
 Frey-old/
+Mimir-old/
 
 Tyr/dist
 Tyr/dev-dist
@@ -87,6 +86,14 @@ Frey/node_modules/*
 Frey/dist/*
 Frey-dist/.env.production
 Frey-dist/node_modules/*
+Frey/coverage/*
+
+Mimir/node_modules/*
+Mimir/dist/*
+Mimir/temp/*
+Mimir/coverage/*
+Mimir-dist/.env.production
+Mimir-dist/node_modules/*
 
 Sigrun/dev-dist
 Sigrun-dist/*

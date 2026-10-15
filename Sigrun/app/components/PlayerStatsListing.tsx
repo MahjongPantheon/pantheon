@@ -48,8 +48,10 @@ export const PlayerStatsListing = ({
     <>
       <List>
         <List.Item>
-          <Text fw={700}>{i18n._t('Common stats')}</Text>
-          <List>
+          <Text fw={700} span>
+            {i18n._t('Common stats')}
+          </Text>
+          <List withPadding listStyleType='disc'>
             <List.Item>
               {i18n._t('Games played: ')}
               <b>{playerStats?.totalPlayedGames ?? 0}</b>
@@ -61,8 +63,10 @@ export const PlayerStatsListing = ({
           </List>
         </List.Item>
         <List.Item>
-          <Text fw={700}>{i18n._t('Places stats')}</Text>
-          <List>
+          <Text fw={700} span>
+            {i18n._t('Places stats')}
+          </Text>
+          <List withPadding listStyleType='disc'>
             {playerStats?.placesSummary
               ?.sort((a, b) => a.place - b.place)
               .map((item, idxp) => (
@@ -78,8 +82,10 @@ export const PlayerStatsListing = ({
           </List>
         </List.Item>
         <List.Item>
-          <Text fw={700}>{i18n._t('Final game score')}</Text>
-          <List>
+          <Text fw={700} span>
+            {i18n._t('Final game score')}
+          </Text>
+          <List withPadding listStyleType='disc'>
             <List.Item>
               {i18n._t('Minimum: ')}
               <b>{scoreSummary.min.toFixed(0)}</b>
@@ -95,8 +101,10 @@ export const PlayerStatsListing = ({
           </List>
         </List.Item>
         <List.Item>
-          <Text fw={700}>{i18n._t('Misc stats')}</Text>
-          <List>
+          <Text fw={700} span>
+            {i18n._t('Misc stats')}
+          </Text>
+          <List withPadding listStyleType='disc'>
             <List.Item>
               {i18n._t('Draws: ')}
               <b>{playerStats?.winSummary?.draw ?? 0}</b> (
@@ -155,7 +163,7 @@ export const PlayerStatsListing = ({
       <List>
         <List.Item>
           <b>{i18n._t('Win stats')}</b>
-          <List>
+          <List withPadding listStyleType='disc'>
             <List.Item>
               {i18n._t('Rounds won: ')}
               <b>{totalWon}</b> ({makePercent(totalWon, playerStats?.totalPlayedRounds ?? 0)})
@@ -201,7 +209,7 @@ export const PlayerStatsListing = ({
         </List.Item>
         <List.Item>
           <b>{i18n._t('Loss stats')}</b>
-          <List>
+          <List withPadding listStyleType='disc'>
             <List.Item>
               {i18n._t('Deal-ins to ron: ')}
               <b>{playerStats?.winSummary?.feed ?? 0}</b> (

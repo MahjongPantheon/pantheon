@@ -25,9 +25,13 @@ shell: get_container_id
 kill:
 	$(CONTAINER_COMMAND) rmi `$(CONTAINER_COMMAND) images | grep 'pantheon' | grep 'bragi' | awk '{print $$3}'` || exit 0
 
-PHONY: deps
+.PHONY: deps
 deps:
-	if [ -e "`which pnpm`" ]; then pnpm install; else npm install; fi
+	pnpm install --frozen-lockfile
+
+.PHONY: dev_deps
+dev_deps:
+	pnpm install --no-frozen-lockfile
 
 PHONY: oxlint
 oxlint:
@@ -95,6 +99,7 @@ build:
 
 .PHONY: prod_deps
 prod_deps:
+	rm -rf node_modules
 	cd ../Bragi-dist && NODE_ENV=production pnpm install
 
 .PHONY: prebuild
@@ -156,12 +161,20 @@ container_stop: get_container_id
 		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'killall node' ; \
 	fi
 
-PHONY: container_deps
+.PHONY: container_deps
 container_deps: get_container_id
 	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
 		echo "${RED}Bragi container is not running.${NC}"; \
 	else \
 		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Bragi && HOME=/home/user su-exec user make deps' ; \
+	fi
+
+.PHONY: container_dev_deps
+container_dev_deps: get_container_id
+	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
+		echo "${RED}Bragi container is not running.${NC}"; \
+	else \
+		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Bragi && HOME=/home/user su-exec user make dev_deps' ; \
 	fi
 
 PHONY: container_prod_deps

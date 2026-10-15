@@ -107,6 +107,7 @@ export const PenaltyForm: React.FC<PenaltyFormProps> = ({
     <form ref={formRef} onSubmit={form.onSubmit(submitForm)}>
       <Text style={{ fontWeight: 'bold' }}>{i18n._t('Add a penalty')}</Text>
       <Select
+        data-testid='forseti-penalty-player'
         withAsterisk
         icon={<IconUserExclamation size='1rem' />}
         label={i18n._t('Select player')}
@@ -117,6 +118,7 @@ export const PenaltyForm: React.FC<PenaltyFormProps> = ({
       />
       <Space h='lg' />
       <NumberInput
+        data-testid='forseti-penalty-amount'
         {...form.getInputProps('amount')}
         icon={<IconAlertOctagon size='1rem' />}
         label={i18n._t('Penalty amount')}
@@ -131,6 +133,7 @@ export const PenaltyForm: React.FC<PenaltyFormProps> = ({
       <Space h='lg' />
       <Group style={{ alignItems: 'flex-end' }}>
         <TextInput
+          data-testid='forseti-penalty-reason'
           style={{ flex: 1 }}
           withAsterisk
           icon={<IconSignature size='1rem' />}
@@ -149,6 +152,7 @@ export const PenaltyForm: React.FC<PenaltyFormProps> = ({
       <Space h='lg' />
       <Group position='right'>
         <Button
+          data-testid='forseti-penalty-submit'
           type='submit'
           style={{ alignSelf: 'flex-end' }}
           title={isSaved ? i18n._t('Penalty applied!') : i18n._t('Apply penalty')}

@@ -48,8 +48,11 @@ logs: get_container_id
 
 .PHONY: deps
 deps:
-	pnpm install
-	cd ../Common/tsclients && pnpm install
+	pnpm install --frozen-lockfile
+
+.PHONY: dev_deps
+dev_deps:
+	pnpm install --no-frozen-lockfile
 
 .PHONY: container_deps
 container_deps: get_container_id
@@ -57,6 +60,14 @@ container_deps: get_container_id
 		echo "${RED}Frey container is not running.${NC}"; \
 	else \
 		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make deps' ; \
+	fi
+
+.PHONY: container_dev_deps
+container_dev_deps: get_container_id
+	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
+		echo "${RED}Frey container is not running.${NC}"; \
+	else \
+		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make dev_deps' ; \
 	fi
 
 .PHONY: oxlint
@@ -101,7 +112,7 @@ container_typecheck: get_container_id
 .PHONY: test
 test:
 	echo "======= Frey: test ======"
-	pnpm exec jest
+	node app/tests/coverage.cjs
 
 .PHONY: container_test
 container_test: get_container_id
@@ -245,8 +256,9 @@ container_build: get_container_id
 
 .PHONY: prod_deps
 prod_deps:
+	cd ../Frey-dist && rm -rf node_modules
 	cd ../Frey-dist && NODE_ENV=production pnpm install
-	cd ../Common/tsclients && pnpm install
+	cd ../Common/tsclients && rm -rf node_modules && pnpm install
 
 .PHONY: container_prod_deps
 container_prod_deps: get_container_id
@@ -274,6 +286,7 @@ container_prebuild: get_container_id
 .PHONY: proto_gen
 proto_gen:
 	pnpm exec twirpscript
+	cd ../Common/tsclients && pnpm run build
 
 .PHONY: container_proto_gen
 container_proto_gen: get_container_id

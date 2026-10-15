@@ -25,6 +25,7 @@ interface DialogProps {
   actionPrimaryLabel?: string;
   actionSecondary?: () => void;
   actionSecondaryLabel?: string;
+  testIdPrefix?: string;
 }
 
 export const ModalDialog = ({
@@ -34,22 +35,33 @@ export const ModalDialog = ({
   actionPrimaryLabel,
   actionSecondary,
   actionSecondaryLabel,
+  testIdPrefix,
 }: PropsWithChildren & DialogProps) => {
   return (
-    <div className={styles.overlay} onClick={onClose}>
+    <div className={styles.overlay} onClick={onClose} data-testid={testIdPrefix}>
       <div className={styles.wrapper}>
         <div className={styles.content}>{children}</div>
         <div className={styles.actions}>
           <div>
             {actionSecondary && (
-              <Button size='md' variant='contained' onClick={actionSecondary}>
+              <Button
+                size='md'
+                variant='contained'
+                onClick={actionSecondary}
+                testId={testIdPrefix ? `${testIdPrefix}-secondary` : undefined}
+              >
                 {actionSecondaryLabel}
               </Button>
             )}
           </div>
           <div>
             {actionPrimary && (
-              <Button size='md' variant='primary' onClick={actionPrimary}>
+              <Button
+                size='md'
+                variant='primary'
+                onClick={actionPrimary}
+                testId={testIdPrefix ? `${testIdPrefix}-primary` : undefined}
+              >
                 {actionPrimaryLabel}
               </Button>
             )}

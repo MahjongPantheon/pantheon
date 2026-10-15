@@ -204,6 +204,7 @@ export function Layout({ children }: { children: ReactNode }) {
                           <AppShell.Navbar p='xs'>
                             <ScrollArea scrollbars='y'>
                               <MainMenu
+                                testIdScope='sidebar'
                                 isLoggedIn={isLoggedIn}
                                 saveLang={saveLang}
                                 toggleDimmed={toggleDimmed}

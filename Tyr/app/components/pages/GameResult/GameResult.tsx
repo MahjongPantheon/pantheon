@@ -20,12 +20,16 @@ export const GameResult = (props: IProps) => {
   const { results, showRepeatButton, onCheckClick, onRepeatClick } = props;
   const loc = useContext(i18n);
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.wrapper} data-testid='tyr-game-result'>
       {results && results.length > 0 && (
         <>
           <div className={styles.players}>
             {results.map((result, i) => (
-              <div key={i} className={styles.playerResult}>
+              <div
+                key={i}
+                className={styles.playerResult}
+                data-testid={`tyr-game-result-player-${result.playerId}`}
+              >
                 <Player
                   id={result.playerId}
                   playerName={result.title}
@@ -34,8 +38,14 @@ export const GameResult = (props: IProps) => {
                   hasAvatar={result.hasAvatar}
                 />
                 <div className={styles.scoreContainer}>
-                  <div className={styles.playerScore}>{result.score}</div>
                   <div
+                    className={styles.playerScore}
+                    data-testid={`tyr-game-result-player-${result.playerId}-score`}
+                  >
+                    {result.score}
+                  </div>
+                  <div
+                    data-testid={`tyr-game-result-player-${result.playerId}-rating-change`}
                     className={clsx(
                       styles.playerRating,
                       result.ratingDelta < 0 ? styles.playerRatingDanger : null,
@@ -50,17 +60,37 @@ export const GameResult = (props: IProps) => {
           </div>
           <div className={styles.buttons}>
             {showRepeatButton && (
-              <Button variant='contained' onClick={onRepeatClick} size='lg' icon={<RepeatIcon />} />
+              <Button
+                variant='contained'
+                onClick={onRepeatClick}
+                size='lg'
+                icon={<RepeatIcon />}
+                testId='tyr-game-result-repeat'
+              />
             )}
-            <Button variant='contained' onClick={onCheckClick} size='lg' icon={<SaveIcon />} />
+            <Button
+              variant='contained'
+              onClick={onCheckClick}
+              size='lg'
+              icon={<SaveIcon />}
+              testId='tyr-game-result-confirm'
+            />
           </div>
         </>
       )}
       {results && results.length === 0 && (
         <>
-          <div className={styles.noGames}>{loc._t('No games found')}</div>
+          <div className={styles.noGames} data-testid='tyr-game-result-empty'>
+            {loc._t('No games found')}
+          </div>
           <div className={styles.buttons}>
-            <Button variant='contained' onClick={onCheckClick} size='lg' icon={<SaveIcon />} />
+            <Button
+              variant='contained'
+              onClick={onCheckClick}
+              size='lg'
+              icon={<SaveIcon />}
+              testId='tyr-game-result-empty-confirm'
+            />
           </div>
         </>
       )}

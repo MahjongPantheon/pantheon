@@ -47,6 +47,7 @@ export function CommonReasons({
     <Popover position='bottom' withArrow shadow='md' opened={opened} onChange={setOpened}>
       <Popover.Target>
         <ActionIcon
+          data-testid='forseti-penalty-common-reasons-open'
           style={{ flex: 0, ...buttonStyles }}
           variant='filled'
           title={title}
@@ -63,6 +64,7 @@ export function CommonReasons({
           </Text>
           {commonReasons.map((r, idx) => (
             <Button
+              data-testid={`forseti-penalty-common-reason-${idx}`}
               key={`btn_${idx}`}
               onClick={() => {
                 setOpened(false);

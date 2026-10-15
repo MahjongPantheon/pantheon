@@ -51,3 +51,27 @@ Follow these steps:
 - After these steps are completed, turn the reverse proxy back on.
 - Basically this is it, congratulations :) Now you may want to remove `frey` database, though we'd advise to not doing this
   for a while, until you verify that everything works find.
+
+## Upgrading to Mimir v2
+
+If you were using Mimir v1 (any release before Sep 1 2025), you will need to do an upgrade to use newer version of the service.
+
+Follow these steps:
+- You may want to disable the services for a while, as the upgrade can't be done without downtime. It'd be best to just
+  turn off your reverse proxy server (e.g. nginx) as you will need running containers to perform the upgrade. Make
+  sure no games are played when you do an upgrade, you may look at monitoring service to verify it.
+- Checkout to recent master using `git checkout origin/master` or update the code the way you do it usually.
+- Pull new containers using `make pull`.
+- Run `make prod_restart` to restart containers.
+- Run `cd Database && make create_mimir2_db` to create the new database for the new service.
+- Run `make prod_compile` to build all the services.
+- Run `make migrate_mimir1` to migrate the database contents. Note that old `mimir` database will not
+  be altered during migration, and the new `mimir2` database will be populated with the data from `mimir` database. In case of
+  any error you may try running the migration again, as it's executed inside the transaction which is rolled back in case of
+  any error. Also if something goes wrong you might want to roll back to some previous commit and everything will work as expected.
+  - Note: you should not run this command twice or run it an already populated database.
+- After these steps are completed, turn the reverse proxy back on.
+- Basically this is it, congratulations :) Now you may want to remove `mimir` database, though we'd advise to not doing this
+  for a while, until you verify that everything works find.
+
+Note that all the actions to upgrade to Frey v2 and Mimir v2 can be done in parallel.

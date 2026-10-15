@@ -37,29 +37,39 @@ export const NewGame = (props: IProps) => {
   } = props;
 
   return (
-    <div className={styles.wrapper}>
-      <Button variant='light' icon={<BackIcon />} size='lg' onClick={onBackClick} />
+    <div className={styles.wrapper} data-testid='tyr-new-game'>
+      <Button
+        variant='light'
+        icon={<BackIcon />}
+        size='lg'
+        onClick={onBackClick}
+        testId='tyr-new-game-back'
+      />
       <div className={styles.content}>
         <div className={styles.players}>
           <StaticSelector
+            testId='tyr-new-game-player-east'
             wind='東'
             placeholder={loc._t('select player')}
             playerName={east}
             onPlayerClick={() => onPlayerClick('東')}
           />
           <StaticSelector
+            testId='tyr-new-game-player-south'
             wind='南'
             placeholder={loc._t('select player')}
             playerName={south}
             onPlayerClick={() => onPlayerClick('南')}
           />
           <StaticSelector
+            testId='tyr-new-game-player-west'
             wind='西'
             placeholder={loc._t('select player')}
             playerName={west}
             onPlayerClick={() => onPlayerClick('西')}
           />
           <StaticSelector
+            testId='tyr-new-game-player-north'
             wind='北'
             placeholder={loc._t('select player')}
             playerName={north}
@@ -68,7 +78,13 @@ export const NewGame = (props: IProps) => {
         </div>
 
         <div className={styles.buttons}>
-          <Button variant='contained' size='fullwidth' icon={<CloseIcon />} onClick={onClearClick}>
+          <Button
+            variant='contained'
+            size='fullwidth'
+            icon={<CloseIcon />}
+            onClick={onClearClick}
+            testId='tyr-new-game-clear'
+          >
             {loc._t('Clear players')}
           </Button>
 
@@ -77,6 +93,7 @@ export const NewGame = (props: IProps) => {
             size='fullwidth'
             icon={<ShuffleIcon />}
             onClick={onShuffleClick}
+            testId='tyr-new-game-shuffle'
           >
             {loc._t('Shuffle players')}
           </Button>
@@ -87,6 +104,7 @@ export const NewGame = (props: IProps) => {
             size='fullwidth'
             icon={<SaveIcon />}
             onClick={onSaveClick}
+            testId='tyr-new-game-start'
           >
             {loc._t('Start game')}
           </Button>

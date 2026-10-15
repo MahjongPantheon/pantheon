@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-05 21:55Z\n"
+"POT-Creation-Date: 2026-10-06 20:39Z\n"
 "PO-Revision-Date: 2025-10-19 23:15+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -721,7 +721,7 @@ msgstr ""
 msgid "Failed to save event: server error or network unreachable"
 msgstr "Не удалось сохранить событие: ошибка сервера или сеть недоступна"
 
-#: app/pages/ProfileNotifications.tsx:86:36
+#: app/pages/ProfileNotifications.tsx:95:36
 msgid "Failed to set notifications settings."
 msgstr "Не удалось применить настройки уведомлений."
 
@@ -1313,7 +1313,7 @@ msgstr "Предупреждение"
 msgid "Notifications"
 msgstr "Уведомления"
 
-#: app/pages/ProfileNotifications.tsx:99:10
+#: app/pages/ProfileNotifications.tsx:108:10
 msgid ""
 "Notifications from Pantheon are supported via Telegram. Please configure "
 "your Telegram bot to use the service (see README)."
@@ -1322,7 +1322,7 @@ msgstr ""
 "сконфигурируйте вашего бота в Telegram чтобы использовать уведомления (см. "
 "файл README)."
 
-#: app/pages/ProfileNotifications.tsx:155:14
+#: app/pages/ProfileNotifications.tsx:164:14
 msgid ""
 "Notifications from Pantheon are supported via Telegram. Please use the "
 "following link to register with Telegram bot: "
@@ -1350,11 +1350,11 @@ msgstr "Оповестить игроков"
 msgid "Notify players to come to their tables"
 msgstr "Оповестить игроков, чтобы они проходили к столам"
 
-#: app/pages/ProfileNotifications.tsx:132:18
+#: app/pages/ProfileNotifications.tsx:141:18
 msgid "Notify when a hand has been recorded"
 msgstr "Уведомлять, когда внесена новая раздача"
 
-#: app/pages/ProfileNotifications.tsx:137:18
+#: app/pages/ProfileNotifications.tsx:146:18
 msgid ""
 "Notify when any hand has been recorded for any event you are administrator "
 "or referee of"
@@ -1362,24 +1362,24 @@ msgstr ""
 "Уведомлять, когда внесена раздача в любом событии, где вы администратор или "
 "судья"
 
-#: app/pages/ProfileNotifications.tsx:122:18
+#: app/pages/ProfileNotifications.tsx:131:18
 msgid "Notify when next tournament session is about to start (except online)"
 msgstr ""
 "Уведомлять когда следующая турнирная игра скоро начнется (кроме онлайна)"
 
-#: app/pages/ProfileNotifications.tsx:117:18
+#: app/pages/ProfileNotifications.tsx:126:18
 msgid "Notify when seating for tournament sessions is ready"
 msgstr "Уведомлять когда рассадка для турнира готова"
 
-#: app/pages/ProfileNotifications.tsx:144:18
+#: app/pages/ProfileNotifications.tsx:153:18
 msgid "Notify when session in club event has ended"
 msgstr "Уведомлять, когда клубная игра завершилась"
 
-#: app/pages/ProfileNotifications.tsx:127:18
+#: app/pages/ProfileNotifications.tsx:136:18
 msgid "Notify when session in tournament has ended (except online)"
 msgstr "Уведомлять, когда турнирная игра завершилась (кроме онлайна)"
 
-#: app/pages/ProfileNotifications.tsx:149:18
+#: app/pages/ProfileNotifications.tsx:158:18
 msgid "Notify when you are requested as referee"
 msgstr "Уведомлять, когда вас вызвали за стол как судью"
 
@@ -1411,9 +1411,10 @@ msgstr ""
 
 #: app/pages/OwnedEventsEdit/BasicSettings.tsx:166:32
 msgid "Only for prescripted events, just follow the script"
-msgstr "Только для событий с предопределенной рассадкой, просто следовать скрипту"
+msgstr ""
+"Только для событий с предопределенной рассадкой, просто следовать скрипту"
 
-#: app/pages/ProfileNotifications.tsx:160:16
+#: app/pages/ProfileNotifications.tsx:169:16
 msgid "Open Pantheon bot"
 msgstr "Открыть бот Pantheon"
 
@@ -1989,7 +1990,7 @@ msgstr "Сессии начаты"
 msgid "Settings"
 msgstr "Настройки"
 
-#: app/pages/ProfileNotifications.tsx:165:28
+#: app/pages/ProfileNotifications.tsx:174:28
 msgid "Settings saved!"
 msgstr "Настройки сохранены!"
 
@@ -2344,7 +2345,7 @@ msgstr "Обновить данные игрока"
 msgid "Update script"
 msgstr "Обновить скрипт"
 
-#: app/pages/ProfileNotifications.tsx:165:57
+#: app/pages/ProfileNotifications.tsx:174:57
 msgid "Update settings"
 msgstr "Обновить настройки"
 
@@ -2537,8 +2538,8 @@ msgstr ""
 msgid "Your password is too weak. Please enter stronger password."
 msgstr "Ваш пароль слишком прост. Введите более сложный пароль."
 
-#: app/pages/ProfileNotifications.tsx:110:18
-#: app/pages/ProfileNotifications.tsx:112:24
+#: app/pages/ProfileNotifications.tsx:119:18
+#: app/pages/ProfileNotifications.tsx:121:24
 msgid "Your telegram ID"
 msgstr "Ваш Telegram ID"
 

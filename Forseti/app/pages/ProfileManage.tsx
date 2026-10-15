@@ -194,7 +194,7 @@ export const ProfileManage: React.FC = () => {
 
   return (
     <>
-      <Container>
+      <Container data-testid='forseti-profile-page'>
         <LoadingOverlay visible={isLoading} overlayOpacity={1} />
         <Box pos='relative'>
           <form ref={formRef} onSubmit={form.onSubmit(submitForm)}>
@@ -205,6 +205,7 @@ export const ProfileManage: React.FC = () => {
               description={i18n._t(
                 'Your e-mail will not be shared with anyone else and will not be visible anywhere. If you want to change your address, contact chief administrator.'
               )}
+              data-testid='forseti-profile-manage-email'
               {...form.getInputProps('email')}
             />
             <Space h='md' />
@@ -214,9 +215,11 @@ export const ProfileManage: React.FC = () => {
               description={i18n._t(
                 "This is a title that will be shown in rating table and in mobile assistant, also event administrators will use this title to find you and add to the event. Please don't use your single name here, as it's not unique enough. Name and surname is fine."
               )}
+              data-testid='forseti-profile-manage-title'
               {...form.getInputProps('title')}
             />
             <TextInput
+              data-testid='forseti-profile-system-id'
               disabled={true}
               icon={<IconNumber size='1rem' />}
               label={i18n._t('System ID')}
@@ -231,24 +234,28 @@ export const ProfileManage: React.FC = () => {
               nothingFound={i18n._t('Nothing found')}
               maxDropdownHeight={280}
               data={countries}
+              data-testid='forseti-profile-manage-country'
               {...form.getInputProps('country')}
             />
             <Space h='md' />
             <TextInput
               icon={<IconMapPin size='1rem' />}
               label={i18n._t('City')}
+              data-testid='forseti-profile-manage-city'
               {...form.getInputProps('city')}
             />
             <Space h='md' />
             <TextInput
               icon={<IconPhoneCall size='1rem' />}
               label={i18n._t('Phone number')}
+              data-testid='forseti-profile-manage-phone'
               {...form.getInputProps('phone')}
             />
             <Space h='md' />
             <TextInput
               icon={<IconIdBadge2 size='1rem' />}
               label={i18n._t('Tenhou nickname')}
+              data-testid='forseti-profile-manage-tenhou-id'
               {...form.getInputProps('tenhouId')}
             />
             <Space h='md' />
@@ -257,6 +264,7 @@ export const ProfileManage: React.FC = () => {
               description={i18n._t(
                 'If checked, uploaded avatar will be shown instead of default circle with initials. If no avatar is uploaded, the default circle will be shown.'
               )}
+              data-testid='forseti-profile-manage-has-avatar'
               {...form.getInputProps('hasAvatar', { type: 'checkbox' })}
             />
             <Space h='md' />
@@ -267,7 +275,11 @@ export const ProfileManage: React.FC = () => {
                     radius='xl'
                     src={avatarData ?? `${env.urls.gullveig}/files/avatars/user_${personId}.jpg`}
                   ></Avatar>
-                  <FileUploadButton i18n={i18n} onChange={updateAvatar} />
+                  <FileUploadButton
+                    i18n={i18n}
+                    onChange={updateAvatar}
+                    testId='forseti-profile-avatar-upload'
+                  />
                 </Group>
                 <div
                   style={{
@@ -287,10 +299,15 @@ export const ProfileManage: React.FC = () => {
             <Space h='md' />
             <Divider label={i18n._t('Danger zone')} labelPosition='center' color='red' />
             <Space h='md' />
-            <Button color='red' onClick={setRemoveConfirmationShown}>
+            <Button
+              data-testid='forseti-profile-remove-open'
+              color='red'
+              onClick={setRemoveConfirmationShown}
+            >
               {i18n._t('Remove my account')}
             </Button>
             <TopActionButton
+              testId='forseti-profile-save'
               title={isSaved ? i18n._t('Changes saved!') : i18n._t('Save changes')}
               loading={isSaving || isLoading || isSaved}
               icon={isSaved ? <IconCircleCheck /> : <IconDeviceFloppy />}
@@ -301,6 +318,7 @@ export const ProfileManage: React.FC = () => {
           </form>
         </Box>
         <Modal
+          data-testid='forseti-profile-remove-modal'
           opened={removeConfirmationShown}
           onClose={hideRemoveConfirmation}
           title={i18n._t('Please confirm account removal')}
@@ -336,12 +354,14 @@ export const ProfileManage: React.FC = () => {
           </Text>
           <Space h='md' />
           <TextInput
+            data-testid='forseti-profile-remove-title-confirmation'
             icon={<IconUserX size='1rem' />}
             label={i18n._t('Please type in your title to proceed with removal')}
             onChange={(e) => setRemoveTitle(e.currentTarget.value)}
           />
           <Space h='md' />
           <Button
+            data-testid='forseti-profile-remove-confirm'
             color='red'
             onClick={confirmRemoval}
             disabled={removeTitle !== userTitle || !userTitle}

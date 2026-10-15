@@ -28,6 +28,9 @@ import {
   AuthRequestResetPasswordPayload,
   AuthRequestResetPasswordResponse,
   DepersonalizePayload,
+  E2eCreateAccountsPayload,
+  E2eCreateAccountsResponse,
+  E2eEventPlayersPayload,
   Frey,
   PersonsCreateAccountPayload,
   PersonsCreateAccountResponse,
@@ -77,8 +80,30 @@ import {
   updatePersonalInfo,
 } from './models/persons';
 import { wrapError } from './helpers/errors';
+import { e2eCreateAccounts, e2eRegisterPlayers, e2eUnregisterPlayers } from './models/e2e';
 
 export const freyClient: Frey<Context> = {
+  E2eCreateAccounts(
+    payload: E2eCreateAccountsPayload,
+    context: Context
+  ): Promise<E2eCreateAccountsResponse> {
+    return wrapError(e2eCreateAccounts(context, payload));
+  },
+
+  E2eRegisterPlayers(
+    payload: E2eEventPlayersPayload,
+    context: Context
+  ): Promise<GenericSuccessResponse> {
+    return wrapError(e2eRegisterPlayers(context, payload));
+  },
+
+  E2eUnregisterPlayers(
+    payload: E2eEventPlayersPayload,
+    context: Context
+  ): Promise<GenericSuccessResponse> {
+    return wrapError(e2eUnregisterPlayers(context, payload));
+  },
+
   async AddRuleForPerson(
     accessAddRuleForPersonPayload: AccessAddRuleForPersonPayload,
     context: Context

@@ -36,7 +36,8 @@ export const PlayerSelector: React.FC<{
   onPlayerSelect: (player: RegisteredPlayer) => void;
   placeholder: string;
   excludePlayers: number[];
-}> = ({ eventId, onPlayerSelect, placeholder, excludePlayers }) => {
+  testId: string;
+}> = ({ eventId, onPlayerSelect, placeholder, excludePlayers, testId }) => {
   const api = useApi();
   const [userAddLoading, setUserAddLoading] = useState(false);
   const [userAddValue, setUserAddValue] = useState('');
@@ -113,6 +114,7 @@ export const PlayerSelector: React.FC<{
 
   return (
     <Autocomplete
+      data-testid={testId}
       value={userAddValue}
       data={userAddData}
       onChange={handleChange}

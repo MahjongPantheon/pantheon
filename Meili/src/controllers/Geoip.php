@@ -23,7 +23,7 @@ class GeoipController extends Controller
 {
     /**
      * @param string $request
-     * @return array
+     * @return array|null
      */
     public function getData($request)
     {
@@ -38,6 +38,8 @@ class GeoipController extends Controller
         if ($action === 'get_timezones') {
             return $this->getTimezones($ip ?: '');
         }
+
+        return null;
     }
 
     /**

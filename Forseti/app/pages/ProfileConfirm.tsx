@@ -73,7 +73,9 @@ function ErrorAlert({ i18n }: { i18n: I18nService }) {
       <Space h='xl' />
       <Group position='right'>
         <Link to='/profile/signup'>
-          <Button variant='filled'>{i18n._t('Go to Signup page')}</Button>
+          <Button data-testid='forseti-confirm-go-to-signup' variant='filled'>
+            {i18n._t('Go to Signup page')}
+          </Button>
         </Link>
       </Group>
     </>
@@ -84,7 +86,7 @@ function SuccessAlert({ i18n }: { i18n: I18nService }) {
   return (
     <>
       <Alert
-        data-testid='confirmation_success'
+        data-testid='forseti-confirm-success'
         icon={<IconCheck size='1rem' />}
         title={i18n._t('Email confirmed')}
         color='green'
@@ -94,7 +96,7 @@ function SuccessAlert({ i18n }: { i18n: I18nService }) {
       <Space h='xl' />
       <Group position='right'>
         <Link to='/profile/login'>
-          <Button variant='filled' data-testid='goto_login'>
+          <Button variant='filled' data-testid='forseti-confirm-go-to-login'>
             {i18n._t('Go to Login page')}
           </Button>
         </Link>

@@ -19,6 +19,33 @@ Frey is a simple authentication service with abilities of personal data storage.
 
 ### Developer information
 
+#### Test coverage
+
+`make test` runs Jest and the external test server with V8 coverage enabled.
+The server flushes its counters before teardown; `c8` maps them back to the
+TypeScript sources, and `nyc` merges them with Jest's coverage. The combined
+text, HTML, LCOV, and JSON reports are written to `Frey/coverage/` (open
+`coverage/index.html` for the HTML report). Each run clears the previous reports
+and preserves Jest's failing exit status while still reporting coverage.
+
+The debug flows (`make test_verbose` and `make test_noserver`) continue to run
+Jest directly without collecting server coverage.
+
+#### E2E test data RPCs
+
+The Frey Twirp API at `/v2/common.Frey/` includes `E2eCreateAccounts`,
+`E2eRegisterPlayers`, and `E2eUnregisterPlayers`. They are enabled only when
+`E2E_TEST_MODE=1`, which is set in `Env/.env.e2e`. Every call also requires the
+`X-Current-Person-Id` and `X-Auth-Token` headers of an authenticated Frey
+superadmin. The internal-query secret does not grant access to these RPCs.
+
+`E2eCreateAccounts` accepts `people`, a list of 1–100 `PersonsCreateAccountPayload`
+records, and returns `personIds` in the same order. Use distinct email addresses
+for each test run. `E2eRegisterPlayers` and `E2eUnregisterPlayers` accept an
+`eventId` and 1–100 distinct `personIds`. Frey validates the IDs, then calls
+Mimir's existing player registration RPC for each person, so Mimir's event rules
+still apply. A failure partway through a batch leaves preceding changes in place.
+
 We accept any help with developing, testing and improving our system, so please feel free to create issues or send
 pull requests for missing functionality.
 

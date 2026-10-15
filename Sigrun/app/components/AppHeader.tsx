@@ -75,6 +75,7 @@ export function AppHeader({ isLoggedIn, saveLang, toggleDimmed }: AppHeaderProps
     <AppShell.Header className={classes.header} pl={veryLargeScreen ? 350 : 0} mb={120}>
       {!veryLargeScreen && (
         <Drawer
+          data-testid='sigrun-menu-drawer'
           size='sm'
           opened={menuOpened}
           closeOnClickOutside={true}
@@ -89,11 +90,13 @@ export function AppHeader({ isLoggedIn, saveLang, toggleDimmed }: AppHeaderProps
           styles={{ body: { height: 'calc(100% - 68px)', paddingTop: 0 } }}
         >
           <Drawer.CloseButton
+            data-testid='sigrun-menu-drawer-close'
             size='lg'
             pos='absolute'
             style={{ right: 0, top: 3, backgroundColor: isDark ? '#242424' : '#fff' }}
           />
           <MainMenu
+            testIdScope='drawer'
             closeMenu={closeMenu}
             isLoggedIn={isLoggedIn}
             saveLang={saveLang}
@@ -107,6 +110,7 @@ export function AppHeader({ isLoggedIn, saveLang, toggleDimmed }: AppHeaderProps
           {!veryLargeScreen &&
             (largeScreen ? (
               <Button
+                data-testid='sigrun-menu-open-tablet'
                 title={i18n._t('Open menu')}
                 variant='filled'
                 color='green'
@@ -119,6 +123,7 @@ export function AppHeader({ isLoggedIn, saveLang, toggleDimmed }: AppHeaderProps
               </Button>
             ) : (
               <ActionIcon
+                data-testid='sigrun-menu-open-mobile'
                 title={i18n._t('Open menu')}
                 variant='filled'
                 color='green'
@@ -135,6 +140,7 @@ export function AppHeader({ isLoggedIn, saveLang, toggleDimmed }: AppHeaderProps
             <div className={classes.userTitle}>
               {matchedEventId ? (
                 <Anchor
+                  data-testid='sigrun-header-current-player'
                   className={classes.userTitle}
                   href={`/event/${matchedEventId[1]}/player/${auth.userInfo.id}`}
                   onClick={(e) => {

@@ -1,0 +1,114 @@
+import { Entity, Index, ManyToOne, PrimaryKey, Property } from '@mikro-orm/core';
+import { EventEntity } from './Event.entity.js';
+
+export type AchievementsData = Partial<{
+  bestHand: {
+    han: number;
+    playerIds: number[];
+  };
+  bestTsumoist: {
+    tsumo: number;
+    playerIds: number[];
+  };
+  dovakins: { count: number; playerIds: number[] };
+  yakumans: Array<{ playerId: number; yakuman?: number[]; kazoe?: boolean }>;
+  shithander: {
+    handsCount: number;
+    playerIds: number[];
+  };
+  bestDealer: {
+    playerIds: number[];
+    bestWinCount: number;
+  };
+  bestFu: {
+    fu: number;
+    playerIds: number[];
+  };
+  impossibleWait: Array<{
+    playerId: number;
+    hand: { han: number; fu?: number };
+    amount: number;
+  }>;
+  braveSapper: {
+    count: number;
+    playerIds: number[];
+  };
+  dieHard: {
+    count: number;
+    playerIds: number[];
+  };
+  justAsPlanned: {
+    count: number;
+    playerIds: number[];
+  };
+  honoredDonor: Array<{ playerId: number; count: number }>;
+  doraLord: Array<{ playerId: number; average: number }>;
+  catchEmAll: { playerIds: number[]; count: number };
+  favoriteAsapinApprentice: Array<{ playerId: number; score: number }>;
+  favoriteTsuchidaApprentice: Array<{ playerId: number; count: number }>;
+  andYourRiichiBet: Array<{ playerId: number; count: number }>;
+  covetousKnight: Array<{ playerId: number; count: number }>;
+  ninja: {
+    count: number;
+    playerIds: number[];
+  };
+  needMoreGold: Array<{ playerId: number; score: number }>;
+  riichiNomi: {
+    count: number;
+    playerIds: number[];
+  };
+  carefulPlanning: Array<{ playerId: number; score: number }>;
+}>;
+
+@Entity({ tableName: 'achievements' })
+@Index({ properties: ['event'] })
+export class AchievementsEntity {
+  @PrimaryKey()
+  id!: number;
+
+  @ManyToOne({ fieldName: 'event_id' })
+  event!: EventEntity;
+
+  @Property({
+    fieldName: 'data',
+    type: 'json',
+    comment: 'achievements precalculated data',
+  })
+  data!: AchievementsData;
+
+  @Property({
+    fieldName: 'last_update',
+    type: 'string',
+    columnType: 'timestamp',
+    nullable: true,
+  })
+  lastUpdate?: string;
+
+  getAllPlayersIds(): number[] {
+    const ids = [
+      this.data.andYourRiichiBet?.map((item) => item.playerId) ?? [],
+      this.data.braveSapper?.playerIds ?? [],
+      this.data.dieHard?.playerIds ?? [],
+      this.data.justAsPlanned?.playerIds ?? [],
+      this.data.honoredDonor?.map((item) => item.playerId) ?? [],
+      this.data.doraLord?.map((item) => item.playerId) ?? [],
+      this.data.catchEmAll?.playerIds ?? [],
+      this.data.favoriteAsapinApprentice?.map((item) => item.playerId) ?? [],
+      this.data.favoriteTsuchidaApprentice?.map((item) => item.playerId) ?? [],
+      this.data.covetousKnight?.map((item) => item.playerId) ?? [],
+      this.data.ninja?.playerIds ?? [],
+      this.data.needMoreGold?.map((item) => item.playerId) ?? [],
+      this.data.riichiNomi?.playerIds ?? [],
+      this.data.carefulPlanning?.map((item) => item.playerId) ?? [],
+      this.data.bestDealer?.playerIds ?? [],
+      this.data.bestFu?.playerIds ?? [],
+      this.data.bestHand?.playerIds ?? [],
+      this.data.bestTsumoist?.playerIds ?? [],
+      this.data.dovakins?.playerIds ?? [],
+      this.data.impossibleWait?.map((item) => item.playerId) ?? [],
+      this.data.yakumans?.map((item) => item.playerId) ?? [],
+      this.data.shithander?.playerIds ?? [],
+    ].flat();
+    return [...new Set(ids)];
+  }
+}

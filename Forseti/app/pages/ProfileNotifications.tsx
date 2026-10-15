@@ -104,7 +104,7 @@ export const ProfileNotifications: React.FC<{ params: { id?: string } }> = ({ pa
 
   if (!import.meta.env.VITE_BOT_NICKNAME) {
     return (
-      <Container>
+      <Container data-testid='forseti-profile-notifications-page'>
         {i18n._t(
           'Notifications from Pantheon are supported via Telegram. Please configure your Telegram bot to use the service (see README).'
         )}
@@ -114,31 +114,36 @@ export const ProfileNotifications: React.FC<{ params: { id?: string } }> = ({ pa
 
   return (
     <form ref={formRef} onSubmit={form.onSubmit(submitForm)}>
-      <Container>
+      <Container data-testid='forseti-profile-notifications-form'>
         <TextInput
           label={i18n._t('Your telegram ID')}
           icon={<IconUserCode size='1rem' />}
           placeholder={i18n._t('Your telegram ID')}
+          data-testid='forseti-profile-notifications-id'
           {...form.getInputProps('id')}
         />
         <Space h='md' />
         <Checkbox
           label={i18n._t('Notify when seating for tournament sessions is ready')}
+          data-testid='forseti-profile-notifications-notifications-sr'
           {...form.getInputProps('notifications.sr', { type: 'checkbox' })}
         />
         <Space h='md' />
         <Checkbox
           label={i18n._t('Notify when next tournament session is about to start (except online)')}
+          data-testid='forseti-profile-notifications-notifications-ss'
           {...form.getInputProps('notifications.ss', { type: 'checkbox' })}
         />
         <Space h='md' />
         <Checkbox
           label={i18n._t('Notify when session in tournament has ended (except online)')}
+          data-testid='forseti-profile-notifications-notifications-te'
           {...form.getInputProps('notifications.te', { type: 'checkbox' })}
         />
         <Space h='md' />
         <Checkbox
           label={i18n._t('Notify when a hand has been recorded')}
+          data-testid='forseti-profile-notifications-notifications-h'
           {...form.getInputProps('notifications.h', { type: 'checkbox' })}
         />
         <Space h='md' />
@@ -146,16 +151,19 @@ export const ProfileNotifications: React.FC<{ params: { id?: string } }> = ({ pa
           label={i18n._t(
             'Notify when any hand has been recorded for any event you are administrator or referee of'
           )}
+          data-testid='forseti-profile-notifications-notifications-ha'
           {...form.getInputProps('notifications.ha', { type: 'checkbox' })}
         />
         <Space h='md' />
         <Checkbox
           label={i18n._t('Notify when session in club event has ended')}
+          data-testid='forseti-profile-notifications-notifications-ce'
           {...form.getInputProps('notifications.ce', { type: 'checkbox' })}
         />
         <Space h='md' />
         <Checkbox
           label={i18n._t('Notify when you are requested as referee')}
+          data-testid='forseti-profile-notifications-notifications-rc'
           {...form.getInputProps('notifications.rc', { type: 'checkbox' })}
         />
         <Space h='xl' />
@@ -171,6 +179,7 @@ export const ProfileNotifications: React.FC<{ params: { id?: string } }> = ({ pa
           </>
         )}
         <TopActionButton
+          testId='forseti-profile-notifications-save'
           title={isSaved ? i18n._t('Settings saved!') : i18n._t('Update settings')}
           loading={isSaving || isLoading || isSaved}
           icon={isSaved ? <IconCircleCheck /> : <IconDeviceFloppy />}

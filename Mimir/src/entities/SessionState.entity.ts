@@ -1,0 +1,82 @@
+import { Embeddable, Property } from '@mikro-orm/postgresql';
+
+@Embeddable()
+export class SessionStateEntity {
+  /** { player_id => score } */
+  @Property({ type: 'json' })
+  scores!: Record<number, number>;
+
+  /** { player_id => chip } */
+  @Property({ type: 'json' })
+  chips!: Record<number, number>;
+
+  /** { player_id => chombo_amount } */
+  @Property({ type: 'json' })
+  chombo!: Record<number, number>;
+
+  /** 1e-4s */
+  @Property()
+  round!: number;
+
+  @Property()
+  honba!: number;
+
+  /** Count of riichi bets on table from previous rounds */
+  @Property()
+  riichiBets!: number;
+
+  /** True if game has been finished prematurely (e.g. by timeout) */
+  @Property()
+  prematurelyFinished!: boolean;
+
+  /** True if round has just changed useful to determine if current 4e or
+   * 4s is first one, no matter what honba count is.
+   * (Possible situation: draw in 3s or 3e, so first 4e or 4s has honba).
+   */
+  @Property()
+  roundJustChanged!: boolean;
+
+  /**
+   * True if ending policy is "oneMoreHand" AND this last hand was started.
+   */
+  @Property()
+  lastHandStarted!: boolean;
+
+  /**
+   * Outcome of previously recorded round. Useful to determine if certain rules
+   * should be applied in current case, e.g., agariyame should not be applied on
+   * chombo or abortive draw.
+   */
+  @Property()
+  lastOutcome!: string;
+
+  /** If player has yakitori indicator */
+  @Property({ type: 'json' })
+  yakitori!: Record<number, boolean>;
+
+  /** Saved current replacements for proper recalculations */
+  @Property({ type: 'json' })
+  replacements!: Record<number, number>;
+
+  /** Player IDs */
+  @Property({ type: 'json' })
+  playerIds!: number[];
+
+  clone(): SessionStateEntity {
+    const clone = new SessionStateEntity();
+    clone.scores = { ...this.scores };
+    clone.chips = { ...this.chips };
+    clone.chombo = { ...this.chombo };
+    clone.round = this.round;
+    clone.honba = this.honba;
+    clone.riichiBets = this.riichiBets;
+    clone.prematurelyFinished = this.prematurelyFinished;
+    clone.roundJustChanged = this.roundJustChanged;
+    clone.lastHandStarted = this.lastHandStarted;
+    clone.lastOutcome = this.lastOutcome;
+    clone.yakitori = { ...this.yakitori };
+    clone.replacements = { ...this.replacements };
+    clone.playerIds = [...this.playerIds];
+    return clone;
+  }
+}

@@ -7,9 +7,10 @@ import styles from './TabbedView.module.css';
 type IProps = {
   tabs: Array<{ title: ReactElement | string; content: ReactElement }>;
   onTabChange?: (index: number) => void;
+  testIdPrefix?: string;
 };
 
-export const TabbedView = ({ tabs, onTabChange }: IProps) => {
+export const TabbedView = ({ tabs, onTabChange, testIdPrefix }: IProps) => {
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: false,
     inViewThreshold: 0,
@@ -57,6 +58,7 @@ export const TabbedView = ({ tabs, onTabChange }: IProps) => {
       <div className={styles.tabHeadScroller}>
         <div
           className={styles.previousTab}
+          data-testid={testIdPrefix ? `${testIdPrefix}-previous` : undefined}
           onClick={scrollPrev}
           style={{ opacity: !canScrollPrev ? '15%' : '100%' }}
         >
@@ -75,6 +77,7 @@ export const TabbedView = ({ tabs, onTabChange }: IProps) => {
         </div>
         <div
           className={styles.nextTab}
+          data-testid={testIdPrefix ? `${testIdPrefix}-next` : undefined}
           onClick={scrollNext}
           style={{ opacity: !canScrollNext ? '15%' : '100%' }}
         >

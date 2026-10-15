@@ -58,7 +58,6 @@ service Mimir {
   rpc UpdatePlayerReplacement(EventsUpdatePlayerReplacementPayload) returns (GenericSuccessResponse);
   rpc UpdatePlayersTeams(EventsUpdatePlayersTeamsPayload) returns (GenericSuccessResponse);
   rpc StartGame(GamesStartGamePayload) returns (GenericSessionPayload);
-  rpc EndGame(GenericSessionPayload) returns (GenericSuccessResponse);
   rpc CancelGame(GenericSessionPayload) returns (GenericSuccessResponse);
   rpc FinalizeSession(GenericEventPayload) returns (GenericSuccessResponse);
   rpc DropLastRound(GamesDropLastRoundPayload) returns (GenericSuccessResponse);
@@ -73,11 +72,8 @@ service Mimir {
   rpc GenerateSwissSeating(SeatingGenerateSwissSeatingPayload) returns (SeatingGenerateSwissSeatingResponse);
   rpc MakeIntervalSeating(SeatingMakeIntervalSeatingPayload) returns (GenericSuccessResponse);
   rpc MakePrescriptedSeating(SeatingMakePrescriptedSeatingPayload) returns (GenericSuccessResponse);
-  rpc GetNextPrescriptedSeating(GenericEventPayload) returns (SeatingGetNextPrescriptedSeatingResponse);
   rpc GetPrescriptedEventConfig(GenericEventPayload) returns (EventsGetPrescriptedEventConfigResponse);
   rpc UpdatePrescriptedEventConfig(EventsUpdatePrescriptedEventConfigPayload) returns (GenericSuccessResponse);
-  rpc InitStartingTimer(GenericEventPayload) returns (GenericSuccessResponse);
-  rpc GetStartingTimer(GenericEventPayload) returns (EventsGetStartingTimerResponse);
   rpc ClearStatCache(ClearStatCachePayload) returns (GenericSuccessResponse);
   rpc ForceFinishGame(GenericSessionPayload) returns (GenericSuccessResponse);
   rpc AddTypedOnlineReplay(TypedGamesAddOnlineReplayPayload) returns (GamesAddOnlineReplayResponse);
@@ -150,13 +146,11 @@ message EventsGetLastGamesPayload {
 
 message EventsGetLastGamesResponse {
   repeated GameResult games = 1;
-  repeated Player players = 2;
   int32 total_games = 3;
 }
 
 message EventsGetGameResponse {
   GameResult game = 1;
-  repeated Player players = 2;
 }
 
 message EventsGetGamesSeriesResponse {
@@ -193,8 +187,6 @@ message EventsGetTimerStateResponse {
   bool finished = 2;
   int32 time_remaining = 3;
   bool waiting_for_timer = 4;
-  bool have_autostart = 5;
-  bool autostart_timer = 6;
   int32 hide_seating_after = 8;
 }
 
@@ -349,6 +341,7 @@ message EventsGetAchievementsPayload {
 message EventsGetAchievementsResponse {
   repeated Achievement achievements = 1;
   string last_update = 2;
+  repeated PersonEx players = 3;
 }
 
 message EventsUpdatePlayersLocalIdsPayload {
@@ -434,10 +427,6 @@ message SeatingMakePrescriptedSeatingPayload {
   optional WindShuffleMode wind_shuffle_mode = 3; // instead of 'bool randomize_at_tables'
 }
 
-message SeatingGetNextPrescriptedSeatingResponse {
-  repeated PrescriptedTable tables = 1;
-}
-
 message EventsGetPrescriptedEventConfigResponse {
   int32 event_id = 1;
   int32 next_session_index = 2;
@@ -451,17 +440,13 @@ message EventsUpdatePrescriptedEventConfigPayload {
   string prescript = 3;
 }
 
-message EventsGetStartingTimerResponse {
-  int32 timer = 1; // seconds to start
-}
-
 message ClearStatCachePayload {
   int32 player_id = 1;
 }
 
 message TypedGamesAddOnlineReplayPayload {
   int32 event_id = 1;
-  int32 platform_id = 2;
+  PlatformType platform_id = 2;
   int32 content_type = 3;
   int32 log_timestamp = 4;
   string replay_hash = 5;

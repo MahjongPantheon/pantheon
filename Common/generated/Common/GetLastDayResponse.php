@@ -6,8 +6,8 @@
 namespace Common;
 
 use Google\Protobuf\Internal\GPBType;
-use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
+use Google\Protobuf\RepeatedField;
 
 /**
  * Generated from protobuf message <code>common.GetLastDayResponse</code>
@@ -25,17 +25,18 @@ class GetLastDayResponse extends \Google\Protobuf\Internal\Message
      * @param array $data {
      *     Optional. Data for populating the Message object.
      *
-     *     @type array<\Common\HuginData>|\Google\Protobuf\Internal\RepeatedField $data
+     *     @type \Common\HuginData[] $data
      * }
      */
-    public function __construct($data = NULL) {
+    public function __construct($data = null)
+    {
         \GPBMetadata\Proto\Hugin::initOnce();
         parent::__construct($data);
     }
 
     /**
      * Generated from protobuf field <code>repeated .common.HuginData data = 1;</code>
-     * @return \Google\Protobuf\Internal\RepeatedField
+     * @return RepeatedField<\Common\HuginData>
      */
     public function getData()
     {
@@ -44,10 +45,10 @@ class GetLastDayResponse extends \Google\Protobuf\Internal\Message
 
     /**
      * Generated from protobuf field <code>repeated .common.HuginData data = 1;</code>
-     * @param array<\Common\HuginData>|\Google\Protobuf\Internal\RepeatedField $var
+     * @param \Common\HuginData[] $var
      * @return $this
      */
-    public function setData($var)
+    public function setData(array|RepeatedField $var)
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Common\HuginData::class);
         $this->data = $arr;

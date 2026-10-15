@@ -15,9 +15,6 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { IAppState } from '../interfaces';
-import { memoize } from '../../helpers/memoize';
-
 // TODO ##2: из-за постоянных обновлений таймера в стейте селекторы могут работать не столь эффективно.
 //  Нужно делать остальные селекторы более специальными.
 export function getTimeRemaining(state: {
@@ -42,29 +39,6 @@ export function getTimeRemaining(state: {
     seconds: (state.secondsRemaining ?? 0) % 60,
   };
 }
-
-function _getAutostartTimeRemaining(
-  state: IAppState
-): { minutes: number; seconds: number } | undefined {
-  if (!state.gameConfig?.useTimer || !state.timer?.waiting) {
-    return undefined;
-  }
-
-  const min = Math.floor((state.timer?.autostartSecondsRemaining || 0) / 60);
-
-  if (min < 0) {
-    return {
-      minutes: 0,
-      seconds: 0,
-    };
-  }
-  return {
-    minutes: min,
-    seconds: (state.timer?.autostartSecondsRemaining || 0) % 60,
-  };
-}
-
-export const getAutostartTimeRemaining = memoize(_getAutostartTimeRemaining);
 
 export function formatTime(minutes: number, seconds: number) {
   return minutes.toString() + ':' + (seconds < 10 ? '0' + seconds.toString() : seconds.toString());

@@ -171,7 +171,7 @@ export const Timer: React.FC<{ params: { eventId: string } }> = ({ params: { eve
     .sort((a, b) => a.index - b.index);
 
   return (
-    <Container w='100%' m={10} maw='100%'>
+    <Container data-testid='sigrun-timer-page' w='100%' m={10} maw='100%'>
       <Meta
         title={`${i18n._t('Timer')} - ${events?.[0].title} - Sigrun`}
         description={i18n._t('Timer page for the event "%1" provided by Mahjong Pantheon', [

@@ -10,5 +10,13 @@
   "bracketSpacing": true,
   "arrowParens": "always",
   "sortPackageJson": false,
-  "ignorePatterns": ["build", "coverage", "app/i18n", "node_modules", "dist", "pnpm-lock.yaml"]
+  "ignorePatterns": [
+    "build",
+    "coverage",
+    "app/i18n",
+    "node_modules",
+    "dist",
+    "dev-dist/**",
+    "pnpm-lock.yaml"
+  ]
 }

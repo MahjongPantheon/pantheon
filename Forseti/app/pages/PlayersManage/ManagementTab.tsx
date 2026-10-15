@@ -125,12 +125,14 @@ export const ManagementTab: React.FC<{
   return (
     <>
       <Modal
+        data-testid='forseti-players-replacement-modal'
         centered
         opened={replacementDlgOpened}
         onClose={replacementDlgCtrl.close}
         title={i18n._t('Select replacement player for %1', [replPlayerData?.title])}
       >
         <PlayerSelector
+          testId='forseti-players-replacement-selector'
           eventId={eventId}
           excludePlayers={players.map((p) => p.id)}
           placeholder={i18n._t('Find replacement player by name...')}
@@ -147,6 +149,7 @@ export const ManagementTab: React.FC<{
             <Space h='xl' />
             <Group grow>
               <PlayerSelector
+                testId='forseti-players-add-selector'
                 eventId={eventId}
                 excludePlayers={players.map((p) => p.id)}
                 placeholder={i18n._t('Find and add player by name...')}
@@ -165,6 +168,7 @@ export const ManagementTab: React.FC<{
         <Stack justify='flex-start' spacing='0'>
           {players.map((p, idx) => (
             <Group
+              data-testid={`forseti-players-row-${p.id}`}
               key={`ev_${p.id}`}
               style={{
                 padding: '10px',
@@ -180,6 +184,7 @@ export const ManagementTab: React.FC<{
                 </Stack>
                 {showReplace && !p.replacedBy && (
                   <ActionIcon
+                    data-testid={`forseti-players-replace-${p.id}`}
                     title={i18n._t('Replace player with someone else')}
                     variant='subtle'
                     size='lg'
@@ -200,6 +205,7 @@ export const ManagementTab: React.FC<{
                     pr={3}
                     rightSection={
                       <ActionIcon
+                        data-testid={`forseti-players-remove-replacement-${p.id}`}
                         size='xs'
                         radius='xl'
                         variant='transparent'
@@ -220,6 +226,7 @@ export const ManagementTab: React.FC<{
               <Group>
                 {mayUseSeatingIgnore && (
                   <ActionIcon
+                    data-testid={`forseti-players-toggle-seating-${p.id}`}
                     title={
                       p.ignoreSeating
                         ? i18n._t('Player is excluded from next seating. Click to include')
@@ -236,6 +243,7 @@ export const ManagementTab: React.FC<{
                 )}
                 {showAddRemove && (
                   <ActionIcon
+                    data-testid={`forseti-players-remove-${p.id}`}
                     title={i18n._t('Remove player from event')}
                     loading={unregisterLoading[p.id]}
                     variant='filled'

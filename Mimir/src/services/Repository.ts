@@ -1,0 +1,99 @@
+import { IncomingHttpHeaders } from 'http';
+import { CacheService } from './Cache.js';
+import { ConfigService } from './Config.js';
+import { FreyService } from './Frey.js';
+import { LogService } from './Log.js';
+import { MetaService } from './Meta.js';
+import { MikroORM } from '@mikro-orm/core';
+import { ISkirnirService, SkirnirService } from './Skirnir.js';
+import { SkirnirServiceMock } from './SkirnirMock.js';
+import { FreyServiceMock } from './FreyMock.js';
+import { EntityManager } from '@mikro-orm/postgresql';
+
+export class Repository {
+  protected _db: MikroORM;
+  protected _em: EntityManager;
+  protected constructor(
+    protected _meta: MetaService,
+    protected _orm: MikroORM
+  ) {
+    this._db = _orm;
+    this._em = _orm.em.fork({ useContext: true }) as EntityManager;
+  } // request/response, cookies, etc
+  // Not a singleton: headers should be new on each request
+  public static instance(headers: IncomingHttpHeaders, orm: MikroORM) {
+    return new Repository(new MetaService(headers, Repository.config), orm);
+  }
+
+  // objects shared between different forks to save a little memory
+  protected static _config?: ConfigService; // mimir service configuration
+  protected static _cache?: CacheService;
+  // Frey calls carry this request's identity and must not be shared between forks.
+  protected _frey?: FreyService;
+  protected static _log?: LogService;
+  protected static _skirnir?: ISkirnirService;
+
+  protected static get config(): ConfigService {
+    Repository._config ??= new ConfigService(true);
+    return Repository._config;
+  }
+
+  protected static get log(): LogService {
+    Repository._log ??= new LogService(Repository.config);
+    return Repository._log;
+  }
+
+  get config(): ConfigService {
+    return Repository.config;
+  }
+
+  get log(): LogService {
+    return Repository.log;
+  }
+
+  get db(): MikroORM {
+    return this._db;
+  }
+
+  get em(): EntityManager {
+    return this._em;
+  }
+
+  get cache(): CacheService {
+    Repository._cache ??= new CacheService(Repository.config);
+    return Repository._cache;
+  }
+
+  get frey(): FreyService {
+    this._frey ??= new FreyService(Repository.config, this.meta);
+    return this._frey;
+  }
+
+  get meta(): MetaService {
+    return this._meta;
+  }
+
+  get skirnir(): ISkirnirService {
+    Repository._skirnir ??= new SkirnirService(Repository.config.skirnirUrl, this);
+    return Repository._skirnir;
+  }
+
+  // For testing purposes
+  mockFrey() {
+    this._frey = new FreyServiceMock(Repository.config, this.meta);
+  }
+
+  mockCache() {
+    Repository._cache ??= new CacheService(Repository.config);
+  }
+
+  mockSkirnir() {
+    Repository._skirnir ??= new SkirnirServiceMock(Repository.config.skirnirUrl, this);
+  }
+
+  // mainly for tests
+  async destroy() {
+    this.log.destroy();
+    await this.db.close();
+  }
+}

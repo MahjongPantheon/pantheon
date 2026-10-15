@@ -73,13 +73,11 @@ export interface EventsGetLastGamesPayload {
 
 export interface EventsGetLastGamesResponse {
   games: protoAtoms.GameResult[];
-  players: protoAtoms.Player[];
   totalGames: number;
 }
 
 export interface EventsGetGameResponse {
   game: protoAtoms.GameResult;
-  players: protoAtoms.Player[];
 }
 
 export interface EventsGetGamesSeriesResponse {
@@ -116,8 +114,6 @@ export interface EventsGetTimerStateResponse {
   finished: boolean;
   timeRemaining: number;
   waitingForTimer: boolean;
-  haveAutostart: boolean;
-  autostartTimer: boolean;
   hideSeatingAfter: number;
 }
 
@@ -284,6 +280,7 @@ export interface EventsGetAchievementsPayload {
 export interface EventsGetAchievementsResponse {
   achievements: protoAtoms.Achievement[];
   lastUpdate: string;
+  players: protoAtoms.PersonEx[];
 }
 
 export interface EventsUpdatePlayersLocalIdsPayload {
@@ -369,10 +366,6 @@ export interface SeatingMakePrescriptedSeatingPayload {
   windShuffleMode?: protoAtoms.WindShuffleMode | null | undefined;
 }
 
-export interface SeatingGetNextPrescriptedSeatingResponse {
-  tables: protoAtoms.PrescriptedTable[];
-}
-
 export interface EventsGetPrescriptedEventConfigResponse {
   eventId: number;
   nextSessionIndex: number;
@@ -386,17 +379,13 @@ export interface EventsUpdatePrescriptedEventConfigPayload {
   prescript: string;
 }
 
-export interface EventsGetStartingTimerResponse {
-  timer: number;
-}
-
 export interface ClearStatCachePayload {
   playerId: number;
 }
 
 export interface TypedGamesAddOnlineReplayPayload {
   eventId: number;
-  platformId: number;
+  platformId: protoAtoms.PlatformType;
   contentType: number;
   logTimestamp: number;
   replayHash: string;
@@ -918,18 +907,6 @@ export async function StartGame(
   return protoAtoms.GenericSessionPayload.decode(response);
 }
 
-export async function EndGame(
-  genericSessionPayload: protoAtoms.GenericSessionPayload,
-  config?: ClientConfiguration,
-): Promise<protoAtoms.GenericSuccessResponse> {
-  const response = await PBrequest(
-    "/common.Mimir/EndGame",
-    protoAtoms.GenericSessionPayload.encode(genericSessionPayload),
-    config,
-  );
-  return protoAtoms.GenericSuccessResponse.decode(response);
-}
-
 export async function CancelGame(
   genericSessionPayload: protoAtoms.GenericSessionPayload,
   config?: ClientConfiguration,
@@ -1102,18 +1079,6 @@ export async function MakePrescriptedSeating(
   return protoAtoms.GenericSuccessResponse.decode(response);
 }
 
-export async function GetNextPrescriptedSeating(
-  genericEventPayload: protoAtoms.GenericEventPayload,
-  config?: ClientConfiguration,
-): Promise<SeatingGetNextPrescriptedSeatingResponse> {
-  const response = await PBrequest(
-    "/common.Mimir/GetNextPrescriptedSeating",
-    protoAtoms.GenericEventPayload.encode(genericEventPayload),
-    config,
-  );
-  return SeatingGetNextPrescriptedSeatingResponse.decode(response);
-}
-
 export async function GetPrescriptedEventConfig(
   genericEventPayload: protoAtoms.GenericEventPayload,
   config?: ClientConfiguration,
@@ -1138,30 +1103,6 @@ export async function UpdatePrescriptedEventConfig(
     config,
   );
   return protoAtoms.GenericSuccessResponse.decode(response);
-}
-
-export async function InitStartingTimer(
-  genericEventPayload: protoAtoms.GenericEventPayload,
-  config?: ClientConfiguration,
-): Promise<protoAtoms.GenericSuccessResponse> {
-  const response = await PBrequest(
-    "/common.Mimir/InitStartingTimer",
-    protoAtoms.GenericEventPayload.encode(genericEventPayload),
-    config,
-  );
-  return protoAtoms.GenericSuccessResponse.decode(response);
-}
-
-export async function GetStartingTimer(
-  genericEventPayload: protoAtoms.GenericEventPayload,
-  config?: ClientConfiguration,
-): Promise<EventsGetStartingTimerResponse> {
-  const response = await PBrequest(
-    "/common.Mimir/GetStartingTimer",
-    protoAtoms.GenericEventPayload.encode(genericEventPayload),
-    config,
-  );
-  return EventsGetStartingTimerResponse.decode(response);
 }
 
 export async function ClearStatCache(
@@ -1802,18 +1743,6 @@ export async function StartGameJSON(
   return protoAtoms.GenericSessionPayloadJSON.decode(response);
 }
 
-export async function EndGameJSON(
-  genericSessionPayload: protoAtoms.GenericSessionPayload,
-  config?: ClientConfiguration,
-): Promise<protoAtoms.GenericSuccessResponse> {
-  const response = await JSONrequest(
-    "/common.Mimir/EndGame",
-    protoAtoms.GenericSessionPayloadJSON.encode(genericSessionPayload),
-    config,
-  );
-  return protoAtoms.GenericSuccessResponseJSON.decode(response);
-}
-
 export async function CancelGameJSON(
   genericSessionPayload: protoAtoms.GenericSessionPayload,
   config?: ClientConfiguration,
@@ -1990,18 +1919,6 @@ export async function MakePrescriptedSeatingJSON(
   return protoAtoms.GenericSuccessResponseJSON.decode(response);
 }
 
-export async function GetNextPrescriptedSeatingJSON(
-  genericEventPayload: protoAtoms.GenericEventPayload,
-  config?: ClientConfiguration,
-): Promise<SeatingGetNextPrescriptedSeatingResponse> {
-  const response = await JSONrequest(
-    "/common.Mimir/GetNextPrescriptedSeating",
-    protoAtoms.GenericEventPayloadJSON.encode(genericEventPayload),
-    config,
-  );
-  return SeatingGetNextPrescriptedSeatingResponseJSON.decode(response);
-}
-
 export async function GetPrescriptedEventConfigJSON(
   genericEventPayload: protoAtoms.GenericEventPayload,
   config?: ClientConfiguration,
@@ -2026,30 +1943,6 @@ export async function UpdatePrescriptedEventConfigJSON(
     config,
   );
   return protoAtoms.GenericSuccessResponseJSON.decode(response);
-}
-
-export async function InitStartingTimerJSON(
-  genericEventPayload: protoAtoms.GenericEventPayload,
-  config?: ClientConfiguration,
-): Promise<protoAtoms.GenericSuccessResponse> {
-  const response = await JSONrequest(
-    "/common.Mimir/InitStartingTimer",
-    protoAtoms.GenericEventPayloadJSON.encode(genericEventPayload),
-    config,
-  );
-  return protoAtoms.GenericSuccessResponseJSON.decode(response);
-}
-
-export async function GetStartingTimerJSON(
-  genericEventPayload: protoAtoms.GenericEventPayload,
-  config?: ClientConfiguration,
-): Promise<EventsGetStartingTimerResponse> {
-  const response = await JSONrequest(
-    "/common.Mimir/GetStartingTimer",
-    protoAtoms.GenericEventPayloadJSON.encode(genericEventPayload),
-    config,
-  );
-  return EventsGetStartingTimerResponseJSON.decode(response);
 }
 
 export async function ClearStatCacheJSON(
@@ -2407,12 +2300,6 @@ export interface Mimir<Context = unknown> {
   ) =>
     | Promise<protoAtoms.GenericSessionPayload>
     | protoAtoms.GenericSessionPayload;
-  EndGame: (
-    genericSessionPayload: protoAtoms.GenericSessionPayload,
-    context: Context,
-  ) =>
-    | Promise<protoAtoms.GenericSuccessResponse>
-    | protoAtoms.GenericSuccessResponse;
   CancelGame: (
     genericSessionPayload: protoAtoms.GenericSessionPayload,
     context: Context,
@@ -2495,12 +2382,6 @@ export interface Mimir<Context = unknown> {
   ) =>
     | Promise<protoAtoms.GenericSuccessResponse>
     | protoAtoms.GenericSuccessResponse;
-  GetNextPrescriptedSeating: (
-    genericEventPayload: protoAtoms.GenericEventPayload,
-    context: Context,
-  ) =>
-    | Promise<SeatingGetNextPrescriptedSeatingResponse>
-    | SeatingGetNextPrescriptedSeatingResponse;
   GetPrescriptedEventConfig: (
     genericEventPayload: protoAtoms.GenericEventPayload,
     context: Context,
@@ -2513,16 +2394,6 @@ export interface Mimir<Context = unknown> {
   ) =>
     | Promise<protoAtoms.GenericSuccessResponse>
     | protoAtoms.GenericSuccessResponse;
-  InitStartingTimer: (
-    genericEventPayload: protoAtoms.GenericEventPayload,
-    context: Context,
-  ) =>
-    | Promise<protoAtoms.GenericSuccessResponse>
-    | protoAtoms.GenericSuccessResponse;
-  GetStartingTimer: (
-    genericEventPayload: protoAtoms.GenericEventPayload,
-    context: Context,
-  ) => Promise<EventsGetStartingTimerResponse> | EventsGetStartingTimerResponse;
   ClearStatCache: (
     clearStatCachePayload: ClearStatCachePayload,
     context: Context,
@@ -3065,18 +2936,6 @@ export function createMimir<Context>(service: Mimir<Context>) {
           json: protoAtoms.GenericSessionPayloadJSON,
         },
       },
-      EndGame: {
-        name: "EndGame",
-        handler: service.EndGame,
-        input: {
-          protobuf: protoAtoms.GenericSessionPayload,
-          json: protoAtoms.GenericSessionPayloadJSON,
-        },
-        output: {
-          protobuf: protoAtoms.GenericSuccessResponse,
-          json: protoAtoms.GenericSuccessResponseJSON,
-        },
-      },
       CancelGame: {
         name: "CancelGame",
         handler: service.CancelGame,
@@ -3245,18 +3104,6 @@ export function createMimir<Context>(service: Mimir<Context>) {
           json: protoAtoms.GenericSuccessResponseJSON,
         },
       },
-      GetNextPrescriptedSeating: {
-        name: "GetNextPrescriptedSeating",
-        handler: service.GetNextPrescriptedSeating,
-        input: {
-          protobuf: protoAtoms.GenericEventPayload,
-          json: protoAtoms.GenericEventPayloadJSON,
-        },
-        output: {
-          protobuf: SeatingGetNextPrescriptedSeatingResponse,
-          json: SeatingGetNextPrescriptedSeatingResponseJSON,
-        },
-      },
       GetPrescriptedEventConfig: {
         name: "GetPrescriptedEventConfig",
         handler: service.GetPrescriptedEventConfig,
@@ -3279,30 +3126,6 @@ export function createMimir<Context>(service: Mimir<Context>) {
         output: {
           protobuf: protoAtoms.GenericSuccessResponse,
           json: protoAtoms.GenericSuccessResponseJSON,
-        },
-      },
-      InitStartingTimer: {
-        name: "InitStartingTimer",
-        handler: service.InitStartingTimer,
-        input: {
-          protobuf: protoAtoms.GenericEventPayload,
-          json: protoAtoms.GenericEventPayloadJSON,
-        },
-        output: {
-          protobuf: protoAtoms.GenericSuccessResponse,
-          json: protoAtoms.GenericSuccessResponseJSON,
-        },
-      },
-      GetStartingTimer: {
-        name: "GetStartingTimer",
-        handler: service.GetStartingTimer,
-        input: {
-          protobuf: protoAtoms.GenericEventPayload,
-          json: protoAtoms.GenericEventPayloadJSON,
-        },
-        output: {
-          protobuf: EventsGetStartingTimerResponse,
-          json: EventsGetStartingTimerResponseJSON,
         },
       },
       ClearStatCache: {
@@ -4371,7 +4194,6 @@ export const EventsGetLastGamesResponse = {
   ): EventsGetLastGamesResponse {
     return {
       games: [],
-      players: [],
       totalGames: 0,
       ...msg,
     };
@@ -4389,13 +4211,6 @@ export const EventsGetLastGamesResponse = {
         1,
         msg.games as any,
         protoAtoms.GameResult._writeMessage,
-      );
-    }
-    if (msg.players?.length) {
-      writer.writeRepeatedMessage(
-        2,
-        msg.players as any,
-        protoAtoms.Player._writeMessage,
       );
     }
     if (msg.totalGames) {
@@ -4418,12 +4233,6 @@ export const EventsGetLastGamesResponse = {
           const m = protoAtoms.GameResult.initialize();
           reader.readMessage(m, protoAtoms.GameResult._readMessage);
           msg.games.push(m);
-          break;
-        }
-        case 2: {
-          const m = protoAtoms.Player.initialize();
-          reader.readMessage(m, protoAtoms.Player._readMessage);
-          msg.players.push(m);
           break;
         }
         case 3: {
@@ -4469,7 +4278,6 @@ export const EventsGetGameResponse = {
   ): EventsGetGameResponse {
     return {
       game: protoAtoms.GameResult.initialize(),
-      players: [],
       ...msg,
     };
   },
@@ -4483,13 +4291,6 @@ export const EventsGetGameResponse = {
   ): protoscript.BinaryWriter {
     if (msg.game) {
       writer.writeMessage(1, msg.game, protoAtoms.GameResult._writeMessage);
-    }
-    if (msg.players?.length) {
-      writer.writeRepeatedMessage(
-        2,
-        msg.players as any,
-        protoAtoms.Player._writeMessage,
-      );
     }
     return writer;
   },
@@ -4506,12 +4307,6 @@ export const EventsGetGameResponse = {
       switch (field) {
         case 1: {
           reader.readMessage(msg.game, protoAtoms.GameResult._readMessage);
-          break;
-        }
-        case 2: {
-          const m = protoAtoms.Player.initialize();
-          reader.readMessage(m, protoAtoms.Player._readMessage);
-          msg.players.push(m);
           break;
         }
         default: {
@@ -5059,8 +4854,6 @@ export const EventsGetTimerStateResponse = {
       finished: false,
       timeRemaining: 0,
       waitingForTimer: false,
-      haveAutostart: false,
-      autostartTimer: false,
       hideSeatingAfter: 0,
       ...msg,
     };
@@ -5084,12 +4877,6 @@ export const EventsGetTimerStateResponse = {
     }
     if (msg.waitingForTimer) {
       writer.writeBool(4, msg.waitingForTimer);
-    }
-    if (msg.haveAutostart) {
-      writer.writeBool(5, msg.haveAutostart);
-    }
-    if (msg.autostartTimer) {
-      writer.writeBool(6, msg.autostartTimer);
     }
     if (msg.hideSeatingAfter) {
       writer.writeInt32(8, msg.hideSeatingAfter);
@@ -5121,14 +4908,6 @@ export const EventsGetTimerStateResponse = {
         }
         case 4: {
           msg.waitingForTimer = reader.readBool();
-          break;
-        }
-        case 5: {
-          msg.haveAutostart = reader.readBool();
-          break;
-        }
-        case 6: {
-          msg.autostartTimer = reader.readBool();
           break;
         }
         case 8: {
@@ -7324,6 +7103,7 @@ export const EventsGetAchievementsResponse = {
     return {
       achievements: [],
       lastUpdate: "",
+      players: [],
       ...msg,
     };
   },
@@ -7344,6 +7124,13 @@ export const EventsGetAchievementsResponse = {
     }
     if (msg.lastUpdate) {
       writer.writeString(2, msg.lastUpdate);
+    }
+    if (msg.players?.length) {
+      writer.writeRepeatedMessage(
+        3,
+        msg.players as any,
+        protoAtoms.PersonEx._writeMessage,
+      );
     }
     return writer;
   },
@@ -7366,6 +7153,12 @@ export const EventsGetAchievementsResponse = {
         }
         case 2: {
           msg.lastUpdate = reader.readString();
+          break;
+        }
+        case 3: {
+          const m = protoAtoms.PersonEx.initialize();
+          reader.readMessage(m, protoAtoms.PersonEx._readMessage);
+          msg.players.push(m);
           break;
         }
         default: {
@@ -8736,86 +8529,6 @@ export const SeatingMakePrescriptedSeatingPayload = {
   },
 };
 
-export const SeatingGetNextPrescriptedSeatingResponse = {
-  /**
-   * Serializes SeatingGetNextPrescriptedSeatingResponse to protobuf.
-   */
-  encode: function (
-    msg: PartialDeep<SeatingGetNextPrescriptedSeatingResponse>,
-  ): Uint8Array {
-    return SeatingGetNextPrescriptedSeatingResponse._writeMessage(
-      msg,
-      new protoscript.BinaryWriter(),
-    ).getResultBuffer();
-  },
-
-  /**
-   * Deserializes SeatingGetNextPrescriptedSeatingResponse from protobuf.
-   */
-  decode: function (
-    bytes: ByteSource,
-  ): SeatingGetNextPrescriptedSeatingResponse {
-    return SeatingGetNextPrescriptedSeatingResponse._readMessage(
-      SeatingGetNextPrescriptedSeatingResponse.initialize(),
-      new protoscript.BinaryReader(bytes),
-    );
-  },
-
-  /**
-   * Initializes SeatingGetNextPrescriptedSeatingResponse with all fields set to their default value.
-   */
-  initialize: function (
-    msg?: Partial<SeatingGetNextPrescriptedSeatingResponse>,
-  ): SeatingGetNextPrescriptedSeatingResponse {
-    return {
-      tables: [],
-      ...msg,
-    };
-  },
-
-  /**
-   * @private
-   */
-  _writeMessage: function (
-    msg: PartialDeep<SeatingGetNextPrescriptedSeatingResponse>,
-    writer: protoscript.BinaryWriter,
-  ): protoscript.BinaryWriter {
-    if (msg.tables?.length) {
-      writer.writeRepeatedMessage(
-        1,
-        msg.tables as any,
-        protoAtoms.PrescriptedTable._writeMessage,
-      );
-    }
-    return writer;
-  },
-
-  /**
-   * @private
-   */
-  _readMessage: function (
-    msg: SeatingGetNextPrescriptedSeatingResponse,
-    reader: protoscript.BinaryReader,
-  ): SeatingGetNextPrescriptedSeatingResponse {
-    while (reader.nextField()) {
-      const field = reader.getFieldNumber();
-      switch (field) {
-        case 1: {
-          const m = protoAtoms.PrescriptedTable.initialize();
-          reader.readMessage(m, protoAtoms.PrescriptedTable._readMessage);
-          msg.tables.push(m);
-          break;
-        }
-        default: {
-          reader.skipField();
-          break;
-        }
-      }
-    }
-    return msg;
-  },
-};
-
 export const EventsGetPrescriptedEventConfigResponse = {
   /**
    * Serializes EventsGetPrescriptedEventConfigResponse to protobuf.
@@ -9004,78 +8717,6 @@ export const EventsUpdatePrescriptedEventConfigPayload = {
   },
 };
 
-export const EventsGetStartingTimerResponse = {
-  /**
-   * Serializes EventsGetStartingTimerResponse to protobuf.
-   */
-  encode: function (
-    msg: PartialDeep<EventsGetStartingTimerResponse>,
-  ): Uint8Array {
-    return EventsGetStartingTimerResponse._writeMessage(
-      msg,
-      new protoscript.BinaryWriter(),
-    ).getResultBuffer();
-  },
-
-  /**
-   * Deserializes EventsGetStartingTimerResponse from protobuf.
-   */
-  decode: function (bytes: ByteSource): EventsGetStartingTimerResponse {
-    return EventsGetStartingTimerResponse._readMessage(
-      EventsGetStartingTimerResponse.initialize(),
-      new protoscript.BinaryReader(bytes),
-    );
-  },
-
-  /**
-   * Initializes EventsGetStartingTimerResponse with all fields set to their default value.
-   */
-  initialize: function (
-    msg?: Partial<EventsGetStartingTimerResponse>,
-  ): EventsGetStartingTimerResponse {
-    return {
-      timer: 0,
-      ...msg,
-    };
-  },
-
-  /**
-   * @private
-   */
-  _writeMessage: function (
-    msg: PartialDeep<EventsGetStartingTimerResponse>,
-    writer: protoscript.BinaryWriter,
-  ): protoscript.BinaryWriter {
-    if (msg.timer) {
-      writer.writeInt32(1, msg.timer);
-    }
-    return writer;
-  },
-
-  /**
-   * @private
-   */
-  _readMessage: function (
-    msg: EventsGetStartingTimerResponse,
-    reader: protoscript.BinaryReader,
-  ): EventsGetStartingTimerResponse {
-    while (reader.nextField()) {
-      const field = reader.getFieldNumber();
-      switch (field) {
-        case 1: {
-          msg.timer = reader.readInt32();
-          break;
-        }
-        default: {
-          reader.skipField();
-          break;
-        }
-      }
-    }
-    return msg;
-  },
-};
-
 export const ClearStatCachePayload = {
   /**
    * Serializes ClearStatCachePayload to protobuf.
@@ -9177,7 +8818,7 @@ export const TypedGamesAddOnlineReplayPayload = {
   ): TypedGamesAddOnlineReplayPayload {
     return {
       eventId: 0,
-      platformId: 0,
+      platformId: protoAtoms.PlatformType._fromInt(0),
       contentType: 0,
       logTimestamp: 0,
       replayHash: "",
@@ -9196,8 +8837,8 @@ export const TypedGamesAddOnlineReplayPayload = {
     if (msg.eventId) {
       writer.writeInt32(1, msg.eventId);
     }
-    if (msg.platformId) {
-      writer.writeInt32(2, msg.platformId);
+    if (msg.platformId && protoAtoms.PlatformType._toInt(msg.platformId)) {
+      writer.writeEnum(2, protoAtoms.PlatformType._toInt(msg.platformId));
     }
     if (msg.contentType) {
       writer.writeInt32(3, msg.contentType);
@@ -9229,7 +8870,7 @@ export const TypedGamesAddOnlineReplayPayload = {
           break;
         }
         case 2: {
-          msg.platformId = reader.readInt32();
+          msg.platformId = protoAtoms.PlatformType._fromInt(reader.readEnum());
           break;
         }
         case 3: {
@@ -10614,7 +10255,6 @@ export const EventsGetLastGamesResponseJSON = {
   ): EventsGetLastGamesResponse {
     return {
       games: [],
-      players: [],
       totalGames: 0,
       ...msg,
     };
@@ -10629,9 +10269,6 @@ export const EventsGetLastGamesResponseJSON = {
     const json: Record<string, unknown> = {};
     if (msg.games?.length) {
       json["games"] = msg.games.map(protoAtoms.GameResultJSON._writeMessage);
-    }
-    if (msg.players?.length) {
-      json["players"] = msg.players.map(protoAtoms.PlayerJSON._writeMessage);
     }
     if (msg.totalGames) {
       json["totalGames"] = msg.totalGames;
@@ -10652,14 +10289,6 @@ export const EventsGetLastGamesResponseJSON = {
         const m = protoAtoms.GameResultJSON.initialize();
         protoAtoms.GameResultJSON._readMessage(m, item);
         msg.games.push(m);
-      }
-    }
-    const _players_ = json["players"];
-    if (_players_) {
-      for (const item of _players_) {
-        const m = protoAtoms.PlayerJSON.initialize();
-        protoAtoms.PlayerJSON._readMessage(m, item);
-        msg.players.push(m);
       }
     }
     const _totalGames_ = json["totalGames"] ?? json["total_games"];
@@ -10696,7 +10325,6 @@ export const EventsGetGameResponseJSON = {
   ): EventsGetGameResponse {
     return {
       game: protoAtoms.GameResultJSON.initialize(),
-      players: [],
       ...msg,
     };
   },
@@ -10714,9 +10342,6 @@ export const EventsGetGameResponseJSON = {
         json["game"] = _game_;
       }
     }
-    if (msg.players?.length) {
-      json["players"] = msg.players.map(protoAtoms.PlayerJSON._writeMessage);
-    }
     return json;
   },
 
@@ -10730,14 +10355,6 @@ export const EventsGetGameResponseJSON = {
     const _game_ = json["game"];
     if (_game_) {
       protoAtoms.GameResultJSON._readMessage(msg.game, _game_);
-    }
-    const _players_ = json["players"];
-    if (_players_) {
-      for (const item of _players_) {
-        const m = protoAtoms.PlayerJSON.initialize();
-        protoAtoms.PlayerJSON._readMessage(m, item);
-        msg.players.push(m);
-      }
     }
     return msg;
   },
@@ -11201,8 +10818,6 @@ export const EventsGetTimerStateResponseJSON = {
       finished: false,
       timeRemaining: 0,
       waitingForTimer: false,
-      haveAutostart: false,
-      autostartTimer: false,
       hideSeatingAfter: 0,
       ...msg,
     };
@@ -11226,12 +10841,6 @@ export const EventsGetTimerStateResponseJSON = {
     }
     if (msg.waitingForTimer) {
       json["waitingForTimer"] = msg.waitingForTimer;
-    }
-    if (msg.haveAutostart) {
-      json["haveAutostart"] = msg.haveAutostart;
-    }
-    if (msg.autostartTimer) {
-      json["autostartTimer"] = msg.autostartTimer;
     }
     if (msg.hideSeatingAfter) {
       json["hideSeatingAfter"] = msg.hideSeatingAfter;
@@ -11262,14 +10871,6 @@ export const EventsGetTimerStateResponseJSON = {
       json["waitingForTimer"] ?? json["waiting_for_timer"];
     if (_waitingForTimer_) {
       msg.waitingForTimer = _waitingForTimer_;
-    }
-    const _haveAutostart_ = json["haveAutostart"] ?? json["have_autostart"];
-    if (_haveAutostart_) {
-      msg.haveAutostart = _haveAutostart_;
-    }
-    const _autostartTimer_ = json["autostartTimer"] ?? json["autostart_timer"];
-    if (_autostartTimer_) {
-      msg.autostartTimer = _autostartTimer_;
     }
     const _hideSeatingAfter_ =
       json["hideSeatingAfter"] ?? json["hide_seating_after"];
@@ -13166,6 +12767,7 @@ export const EventsGetAchievementsResponseJSON = {
     return {
       achievements: [],
       lastUpdate: "",
+      players: [],
       ...msg,
     };
   },
@@ -13184,6 +12786,9 @@ export const EventsGetAchievementsResponseJSON = {
     }
     if (msg.lastUpdate) {
       json["lastUpdate"] = msg.lastUpdate;
+    }
+    if (msg.players?.length) {
+      json["players"] = msg.players.map(protoAtoms.PersonExJSON._writeMessage);
     }
     return json;
   },
@@ -13206,6 +12811,14 @@ export const EventsGetAchievementsResponseJSON = {
     const _lastUpdate_ = json["lastUpdate"] ?? json["last_update"];
     if (_lastUpdate_) {
       msg.lastUpdate = _lastUpdate_;
+    }
+    const _players_ = json["players"];
+    if (_players_) {
+      for (const item of _players_) {
+        const m = protoAtoms.PersonExJSON.initialize();
+        protoAtoms.PersonExJSON._readMessage(m, item);
+        msg.players.push(m);
+      }
     }
     return msg;
   },
@@ -14372,74 +13985,6 @@ export const SeatingMakePrescriptedSeatingPayloadJSON = {
   },
 };
 
-export const SeatingGetNextPrescriptedSeatingResponseJSON = {
-  /**
-   * Serializes SeatingGetNextPrescriptedSeatingResponse to JSON.
-   */
-  encode: function (
-    msg: PartialDeep<SeatingGetNextPrescriptedSeatingResponse>,
-  ): string {
-    return JSON.stringify(
-      SeatingGetNextPrescriptedSeatingResponseJSON._writeMessage(msg),
-    );
-  },
-
-  /**
-   * Deserializes SeatingGetNextPrescriptedSeatingResponse from JSON.
-   */
-  decode: function (json: string): SeatingGetNextPrescriptedSeatingResponse {
-    return SeatingGetNextPrescriptedSeatingResponseJSON._readMessage(
-      SeatingGetNextPrescriptedSeatingResponseJSON.initialize(),
-      JSON.parse(json),
-    );
-  },
-
-  /**
-   * Initializes SeatingGetNextPrescriptedSeatingResponse with all fields set to their default value.
-   */
-  initialize: function (
-    msg?: Partial<SeatingGetNextPrescriptedSeatingResponse>,
-  ): SeatingGetNextPrescriptedSeatingResponse {
-    return {
-      tables: [],
-      ...msg,
-    };
-  },
-
-  /**
-   * @private
-   */
-  _writeMessage: function (
-    msg: PartialDeep<SeatingGetNextPrescriptedSeatingResponse>,
-  ): Record<string, unknown> {
-    const json: Record<string, unknown> = {};
-    if (msg.tables?.length) {
-      json["tables"] = msg.tables.map(
-        protoAtoms.PrescriptedTableJSON._writeMessage,
-      );
-    }
-    return json;
-  },
-
-  /**
-   * @private
-   */
-  _readMessage: function (
-    msg: SeatingGetNextPrescriptedSeatingResponse,
-    json: any,
-  ): SeatingGetNextPrescriptedSeatingResponse {
-    const _tables_ = json["tables"];
-    if (_tables_) {
-      for (const item of _tables_) {
-        const m = protoAtoms.PrescriptedTableJSON.initialize();
-        protoAtoms.PrescriptedTableJSON._readMessage(m, item);
-        msg.tables.push(m);
-      }
-    }
-    return msg;
-  },
-};
-
 export const EventsGetPrescriptedEventConfigResponseJSON = {
   /**
    * Serializes EventsGetPrescriptedEventConfigResponse to JSON.
@@ -14606,66 +14151,6 @@ export const EventsUpdatePrescriptedEventConfigPayloadJSON = {
   },
 };
 
-export const EventsGetStartingTimerResponseJSON = {
-  /**
-   * Serializes EventsGetStartingTimerResponse to JSON.
-   */
-  encode: function (msg: PartialDeep<EventsGetStartingTimerResponse>): string {
-    return JSON.stringify(
-      EventsGetStartingTimerResponseJSON._writeMessage(msg),
-    );
-  },
-
-  /**
-   * Deserializes EventsGetStartingTimerResponse from JSON.
-   */
-  decode: function (json: string): EventsGetStartingTimerResponse {
-    return EventsGetStartingTimerResponseJSON._readMessage(
-      EventsGetStartingTimerResponseJSON.initialize(),
-      JSON.parse(json),
-    );
-  },
-
-  /**
-   * Initializes EventsGetStartingTimerResponse with all fields set to their default value.
-   */
-  initialize: function (
-    msg?: Partial<EventsGetStartingTimerResponse>,
-  ): EventsGetStartingTimerResponse {
-    return {
-      timer: 0,
-      ...msg,
-    };
-  },
-
-  /**
-   * @private
-   */
-  _writeMessage: function (
-    msg: PartialDeep<EventsGetStartingTimerResponse>,
-  ): Record<string, unknown> {
-    const json: Record<string, unknown> = {};
-    if (msg.timer) {
-      json["timer"] = msg.timer;
-    }
-    return json;
-  },
-
-  /**
-   * @private
-   */
-  _readMessage: function (
-    msg: EventsGetStartingTimerResponse,
-    json: any,
-  ): EventsGetStartingTimerResponse {
-    const _timer_ = json["timer"];
-    if (_timer_) {
-      msg.timer = protoscript.parseNumber(_timer_);
-    }
-    return msg;
-  },
-};
-
 export const ClearStatCachePayloadJSON = {
   /**
    * Serializes ClearStatCachePayload to JSON.
@@ -14754,7 +14239,7 @@ export const TypedGamesAddOnlineReplayPayloadJSON = {
   ): TypedGamesAddOnlineReplayPayload {
     return {
       eventId: 0,
-      platformId: 0,
+      platformId: protoAtoms.PlatformType._fromInt(0),
       contentType: 0,
       logTimestamp: 0,
       replayHash: "",
@@ -14773,7 +14258,7 @@ export const TypedGamesAddOnlineReplayPayloadJSON = {
     if (msg.eventId) {
       json["eventId"] = msg.eventId;
     }
-    if (msg.platformId) {
+    if (msg.platformId && protoAtoms.PlatformTypeJSON._toInt(msg.platformId)) {
       json["platformId"] = msg.platformId;
     }
     if (msg.contentType) {
@@ -14804,7 +14289,7 @@ export const TypedGamesAddOnlineReplayPayloadJSON = {
     }
     const _platformId_ = json["platformId"] ?? json["platform_id"];
     if (_platformId_) {
-      msg.platformId = protoscript.parseNumber(_platformId_);
+      msg.platformId = protoAtoms.PlatformType._fromInt(_platformId_);
     }
     const _contentType_ = json["contentType"] ?? json["content_type"];
     if (_contentType_) {

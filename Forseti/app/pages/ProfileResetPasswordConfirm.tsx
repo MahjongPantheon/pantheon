@@ -94,7 +94,9 @@ export const ProfileResetPasswordConfirm: React.FC<{ params: { code: string } }>
           {i18n._t('Please press the button below to proceed with password recovery')}
         </Alert>
         <Space h='xl' />
-        <Button onClick={approveReset}>{i18n._t('Reset my password')}</Button>
+        <Button data-testid='forseti-reset-password-confirm-approve' onClick={approveReset}>
+          {i18n._t('Reset my password')}
+        </Button>
       </Container>
     );
   }
@@ -182,12 +184,15 @@ function ResetForm({
       <Space h='xl' />
       <form onSubmit={form.onSubmit(submitForm)}>
         <PasswordInput
+          data-testid='forseti-reset-password-confirm-new-password'
           placeholder={i18n._t('Enter new strong password')}
           icon={<IconLock size='1rem' />}
           {...form.getInputProps('password')}
         />
         <Group position='right' mt='md'>
-          <Button type='submit'>{i18n._t('Update password')}</Button>
+          <Button data-testid='forseti-reset-password-confirm-submit' type='submit'>
+            {i18n._t('Update password')}
+          </Button>
         </Group>
       </form>
     </>
@@ -209,7 +214,9 @@ function ErrorAlert({ i18n }: { i18n: I18nService }) {
       <Space h='xl' />
       <Group position='right'>
         <Link to='/profile/resetPassword'>
-          <Button variant='filled'>{i18n._t('Recover password')}</Button>
+          <Button data-testid='forseti-reset-password-confirm-retry' variant='filled'>
+            {i18n._t('Recover password')}
+          </Button>
         </Link>
       </Group>
     </>
@@ -229,7 +236,9 @@ function SuccessAlert({ i18n }: { i18n: I18nService }) {
       <Space h='xl' />
       <Group position='right'>
         <Link to='/profile/login'>
-          <Button variant='filled'>{i18n._t('Go to Login page')}</Button>
+          <Button data-testid='forseti-reset-password-confirm-go-to-login' variant='filled'>
+            {i18n._t('Go to Login page')}
+          </Button>
         </Link>
       </Group>
     </>

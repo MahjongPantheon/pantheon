@@ -85,7 +85,7 @@ export const RegisteredPlayers: React.FC<{
   }
 
   return (
-    <Container>
+    <Container data-testid='sigrun-registered-players-page'>
       <Meta
         title={`${i18n._t('Registered players')} - ${event.title} - Sigrun`}
         description={i18n._t('Registered players of the event "%1" provided by Mahjong Pantheon', [
@@ -102,6 +102,7 @@ export const RegisteredPlayers: React.FC<{
           {(players ?? []).map((player, idx) => {
             return (
               <DataCmp
+                data-testid={`sigrun-registered-player-row-${player.id}`}
                 key={`pl_${idx}`}
                 gap='xs'
                 style={{
@@ -121,6 +122,7 @@ export const RegisteredPlayers: React.FC<{
                   <PlayerAvatar p={player} />
                   <Stack gap={2}>
                     <Anchor
+                      data-testid={`sigrun-registered-player-link-${player.id}`}
                       href={`/event/${eventId}/player/${player.id}`}
                       onClick={(e) => {
                         navigate(`/event/${eventId}/player/${player.id}`);

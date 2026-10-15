@@ -39,6 +39,7 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ form, i18n }) 
   return (
     <Stack>
       <NumberInput
+        data-testid='forseti-event-settings-ruleset-settings-ruleset-start-rating'
         {...form.getInputProps('ruleset.startRating')}
         icon={<IconArrowBadgeDownFilled size='1rem' />}
         label={i18n._t('Initial rating')}
@@ -47,6 +48,7 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ form, i18n }) 
         min={0}
       />
       <NumberInput
+        data-testid='forseti-event-settings-ruleset-settings-ruleset-start-points'
         {...form.getInputProps('ruleset.startPoints')}
         icon={<IconCash size='1rem' />}
         label={i18n._t('Initial points')}
@@ -60,6 +62,7 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ form, i18n }) 
       <Checkbox
         label={i18n._t('Tonpuusen')}
         description={i18n._t('Play only east rounds')}
+        data-testid='forseti-event-settings-ruleset-settings-ruleset-tonpuusen'
         {...form.getInputProps('ruleset.tonpuusen', { type: 'checkbox' })}
       />
       <Checkbox
@@ -67,6 +70,7 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ form, i18n }) 
         description={i18n._t(
           'If the dealer holds the 1st place after last hand in session, the game ends regardless of his winning hand or tempai.'
         )}
+        data-testid='forseti-event-settings-ruleset-settings-ruleset-with-leading-dealer-game-over'
         {...form.getInputProps('ruleset.withLeadingDealerGameOver', { type: 'checkbox' })}
       />
       <Checkbox
@@ -74,6 +78,7 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ form, i18n }) 
         description={i18n._t(
           'When dealer wins, or stays tempai after draw, seat winds will be changed. Honba is added only after draw.'
         )}
+        data-testid='forseti-event-settings-ruleset-settings-ruleset-with-winning-dealer-honba-skipped'
         {...form.getInputProps('ruleset.withWinningDealerHonbaSkipped', {
           type: 'checkbox',
         })}
@@ -81,6 +86,7 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ form, i18n }) 
       <Checkbox
         label={i18n._t('Allow bankruptcy')}
         description={i18n._t('When a player runs out of score points, the game immediately ends')}
+        data-testid='forseti-event-settings-ruleset-settings-ruleset-with-buttobi'
         {...form.getInputProps('ruleset.withButtobi', { type: 'checkbox' })}
       />
       <Checkbox
@@ -88,6 +94,7 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ form, i18n }) 
         description={i18n._t(
           'If nobody reaches the goal score at the last hand, the game continues to west rounds (in hanchan) or to south rounds (in tonpuusen), until someone reaches the goal'
         )}
+        data-testid='forseti-event-settings-ruleset-settings-ruleset-play-additional-rounds'
         {...form.getInputProps('ruleset.playAdditionalRounds', { type: 'checkbox' })}
       />
       {!!form.getTransformedValues().ruleset.playAdditionalRounds && (
@@ -97,6 +104,7 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ form, i18n }) 
           description={i18n._t('Amount of score player should get to end the game.')}
           defaultValue={30000}
           min={0}
+          data-testid='forseti-event-settings-ruleset-settings-ruleset-goal-points'
           {...form.getInputProps('ruleset.goalPoints')}
         />
       )}
@@ -106,6 +114,7 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ form, i18n }) 
         description={i18n._t(
           'Only first player by the order of the move from the loser would be considered a winner. If not checked, all players declaring Ron are considered winners.'
         )}
+        data-testid='forseti-event-settings-ruleset-settings-ruleset-with-atamahane'
         {...form.getInputProps('ruleset.withAtamahane', { type: 'checkbox' })}
       />
       <Checkbox
@@ -113,11 +122,13 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ form, i18n }) 
         description={i18n._t(
           'There will be a separate "Abortive draw" outcome to record draws due to four riichi, four kans, suufon renda, kyuushu kyuuhai, etc.'
         )}
+        data-testid='forseti-event-settings-ruleset-settings-ruleset-with-abortives'
         {...form.getInputProps('ruleset.withAbortives', { type: 'checkbox' })}
       />
       <Checkbox
         label={i18n._t('Nagashi mangan')}
         description={i18n._t('Enable "Nagashi" outcome to record this special draw')}
+        data-testid='forseti-event-settings-ruleset-settings-ruleset-with-nagashi-mangan'
         {...form.getInputProps('ruleset.withNagashiMangan', { type: 'checkbox' })}
       />
       <Title order={4}>{i18n._t('Riichi and honba')}</Title>
@@ -126,6 +137,7 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ form, i18n }) 
         description={i18n._t(
           'Riichi left on table in case of draw in the end of the session will be given to session winner'
         )}
+        data-testid='forseti-event-settings-ruleset-settings-ruleset-riichi-goes-to-winner'
         {...form.getInputProps('ruleset.riichiGoesToWinner', { type: 'checkbox' })}
       />
       <Checkbox
@@ -133,6 +145,7 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ form, i18n }) 
         description={i18n._t(
           'Honba payments will be given only to the first winner. If not checked, payment will be given to all winners.'
         )}
+        data-testid='forseti-event-settings-ruleset-settings-ruleset-doubleron-honba-atamahane'
         {...form.getInputProps('ruleset.doubleronHonbaAtamahane', { type: 'checkbox' })}
       />
       <Checkbox
@@ -140,17 +153,20 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ form, i18n }) 
         description={i18n._t(
           'All riichi bets on the table will be given to the first winner. If not checked, winning riichi bets will always be given back, lost bets would be given to the first winner.'
         )}
+        data-testid='forseti-event-settings-ruleset-settings-ruleset-doubleron-riichi-atamahane'
         {...form.getInputProps('ruleset.doubleronRiichiAtamahane', { type: 'checkbox' })}
       />
       <Title order={4}>{i18n._t('Payments and scores')}</Title>
       <Checkbox
         label={i18n._t('Kazoe yakuman')}
         description={i18n._t('13+ han hands are considered yakuman, not sanbaiman.')}
+        data-testid='forseti-event-settings-ruleset-settings-ruleset-with-kazoe'
         {...form.getInputProps('ruleset.withKazoe', { type: 'checkbox' })}
       />
       <Checkbox
         label={i18n._t('Kiriage mangan')}
         description={i18n._t('Hands valued as 4/30 and 3/60 are rounded to mangan.')}
+        data-testid='forseti-event-settings-ruleset-settings-ruleset-with-kiriage-mangan'
         {...form.getInputProps('ruleset.withKiriageMangan', { type: 'checkbox' })}
       />
       <NumberInput
@@ -159,6 +175,7 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ form, i18n }) 
         description={i18n._t('Amount of points given to player at 1st place')}
         defaultValue={20000}
         min={0}
+        data-testid='forseti-event-settings-ruleset-settings-ruleset-oka'
         {...form.getInputProps('ruleset.oka')}
       />
       <NumberInput
@@ -167,6 +184,7 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ form, i18n }) 
         description={i18n._t('Value of one honba stick')}
         defaultValue={300}
         min={0}
+        data-testid='forseti-event-settings-ruleset-settings-ruleset-honba-value'
         {...form.getInputProps('ruleset.honbaValue')}
       />
       <UmaSelect form={form} i18n={i18n} />
@@ -175,22 +193,26 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ form, i18n }) 
         description={i18n._t(
           'If checked, players with equivalent score receive equivalent uma bonus. Otherwise, uma is assigned according to move order.'
         )}
+        data-testid='forseti-event-settings-ruleset-settings-ruleset-equalize-uma'
         {...form.getInputProps('ruleset.equalizeUma', { type: 'checkbox' })}
       />
       <Title order={4}>{i18n._t('Penalties')}</Title>
       <NumberInput
         label={i18n._t('Max arbitrary penalty score')}
         defaultValue={20000}
+        data-testid='forseti-event-settings-ruleset-settings-ruleset-max-penalty'
         {...form.getInputProps('ruleset.maxPenalty')}
       />
       <NumberInput
         label={i18n._t('Min arbitrary penalty score')}
         defaultValue={100}
+        data-testid='forseti-event-settings-ruleset-settings-ruleset-min-penalty'
         {...form.getInputProps('ruleset.minPenalty')}
       />
       <NumberInput
         label={i18n._t('Step of arbitrary penalty scores')}
         defaultValue={100}
+        data-testid='forseti-event-settings-ruleset-settings-ruleset-penalty-step'
         {...form.getInputProps('ruleset.penaltyStep')}
       />
       <Checkbox
@@ -198,6 +220,7 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ form, i18n }) 
         description={i18n._t(
           'Pay chombo right on occasion. If not checked, chombo is subtracted from player score after uma is applied.'
         )}
+        data-testid='forseti-event-settings-ruleset-settings-ruleset-extra-chombo-payments'
         {...form.getInputProps('ruleset.extraChomboPayments', { type: 'checkbox' })}
         onChange={(e) => {
           form.setFieldValue('ruleset.extraChomboPayments', e.target.checked);
@@ -218,12 +241,14 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ form, i18n }) 
           )}
           defaultValue={20000}
           min={0}
+          data-testid='forseti-event-settings-ruleset-settings-ruleset-chombo-amount'
           {...form.getInputProps('ruleset.chomboAmount')}
         />
       )}
       <Checkbox
         label={i18n._t('Yakitori')}
         description={i18n._t('Use yakitori rule')}
+        data-testid='forseti-event-settings-ruleset-settings-ruleset-with-yakitori'
         {...form.getInputProps('ruleset.withYakitori', { type: 'checkbox' })}
       />
       {form.getTransformedValues().ruleset.withYakitori && (
@@ -233,6 +258,7 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ form, i18n }) 
           description={i18n._t("Amount of penalty applied to those who didn't win once in game.")}
           defaultValue={0}
           min={0}
+          data-testid='forseti-event-settings-ruleset-settings-ruleset-yakitori-penalty'
           {...form.getInputProps('ruleset.yakitoriPenalty')}
         />
       )}

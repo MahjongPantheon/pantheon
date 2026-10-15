@@ -24,10 +24,11 @@ type SwitchProps = {
   value: boolean;
   label: string;
   description: string;
+  testId?: string;
 };
 
 export const Switch = (props: SwitchProps) => {
-  const { onChange, value, label, description } = props;
+  const { onChange, value, label, description, testId } = props;
 
   const onClick = useCallback(() => {
     onChange(!value);
@@ -35,7 +36,7 @@ export const Switch = (props: SwitchProps) => {
 
   return (
     <div className={styles.wrapper}>
-      <div className={styles.switch} onClick={onClick}>
+      <div className={styles.switch} onClick={onClick} data-testid={testId}>
         <div className={clsx(styles.switchBox, value ? styles.switchBoxOn : null)} />
         <div className={clsx(styles.switchButton, value ? styles.switchButtonOn : null)} />
       </div>

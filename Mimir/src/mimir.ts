@@ -30,7 +30,6 @@ import {
   EventsGetRatingTablePayload,
   EventsGetRatingTableResponse,
   EventsGetRulesetsResponse,
-  EventsGetStartingTimerResponse,
   EventsGetTablesStatePayload,
   EventsGetTablesStateResponse,
   EventsGetTimerStateResponse,
@@ -73,10 +72,10 @@ import {
   PlayersGetPlayerStatsResponse,
   SeatingGenerateSwissSeatingPayload,
   SeatingGenerateSwissSeatingResponse,
-  SeatingGetNextPrescriptedSeatingResponse,
   SeatingMakeIntervalSeatingPayload,
   SeatingMakePrescriptedSeatingPayload,
   SeatingMakeShuffledSeatingPayload,
+  SeatingMakeSwissSeatingPayload,
   TypedGamesAddOnlineReplayPayload,
 } from 'tsclients/proto/mimir.pb.js';
 import { RulesetEntity } from './entities/Ruleset.entity.js';
@@ -92,12 +91,13 @@ import { SessionResultsModel } from './models/SessionResultsModel.js';
 import { PlayerInSessionModel } from './models/PlayerInSessionModel.js';
 import { EventRegistrationModel } from './models/EventRegistrationModel.js';
 import { PenaltyModel } from './models/PenaltyModel.js';
+import { AchievementsModel } from './models/AchievementsModel.js';
+import { SeatingModel } from './models/SeatingModel.js';
 
 export const mimirServer: Mimir<Context> = {
   GetRulesets: function (): EventsGetRulesetsResponse {
     return [
       RulesetEntity.createRuleset('ema'),
-      RulesetEntity.createRuleset('ema2025'),
       RulesetEntity.createRuleset('jpmlA'),
       RulesetEntity.createRuleset('wrc'),
       RulesetEntity.createRuleset('tenhounet'),
@@ -140,6 +140,7 @@ export const mimirServer: Mimir<Context> = {
     return model.getMyEvents(context.repository.meta.personId);
   },
 
+  // TODO: remove? looks redundant
   GetGameConfig: async function (
     genericEventPayload: GenericEventPayload,
     context: Context
@@ -413,13 +414,6 @@ export const mimirServer: Mimir<Context> = {
     const sessionModel = Model.getModel(context.repository, SessionModel);
     return sessionModel.startGame(gamesStartGamePayload, context);
   },
-  EndGame: function (
-    genericSessionPayload: GenericSessionPayload,
-    context: Context
-  ): Promise<GenericSuccessResponse> {
-    const sessionModel = Model.getModel(context.repository, SessionModel);
-    return sessionModel.endGame(genericSessionPayload, context);
-  },
   CancelGame: function (
     genericSessionPayload: GenericSessionPayload,
     context: Context
@@ -466,150 +460,167 @@ export const mimirServer: Mimir<Context> = {
     eventsGetAchievementsPayload: EventsGetAchievementsPayload,
     context: Context
   ): Promise<EventsGetAchievementsResponse> {
-    throw new Error('Function not implemented.');
+    const achievementsModel = Model.getModel(context.repository, AchievementsModel);
+    return achievementsModel.getAchievements(eventsGetAchievementsPayload);
   },
   GetPlayer: function (
     playersGetPlayerPayload: PlayersGetPlayerPayload,
     context: Context
   ): Promise<PlayersGetPlayerResponse> {
-    throw new Error('Function not implemented.');
+    const playerModel = Model.getModel(context.repository, PlayerModel);
+    return playerModel.getPlayer(playersGetPlayerPayload.id);
   },
   GetCurrentSeating: function (
     genericEventPayload: GenericEventPayload,
     context: Context
   ): Promise<EventsGetCurrentSeatingResponse> {
-    throw new Error('Function not implemented.');
+    const seatingModel = Model.getModel(context.repository, SeatingModel);
+    return seatingModel.getCurrentSeating(genericEventPayload.eventId);
   },
   MakeShuffledSeating: function (
     seatingMakeShuffledSeatingPayload: SeatingMakeShuffledSeatingPayload,
     context: Context
   ): Promise<GenericSuccessResponse> {
-    throw new Error('Function not implemented.');
+    const seatingModel = Model.getModel(context.repository, SeatingModel);
+    return seatingModel.makeShuffledSeating(seatingMakeShuffledSeatingPayload);
   },
   MakeSwissSeating: function (
-    genericEventPayload: GenericEventPayload,
+    seatingMakeSwissSeatingPayload: SeatingMakeSwissSeatingPayload,
     context: Context
   ): Promise<GenericSuccessResponse> {
-    throw new Error('Function not implemented.');
-  },
-  ResetSeating: function (
-    genericEventPayload: GenericEventPayload,
-    context: Context
-  ): Promise<GenericSuccessResponse> {
-    throw new Error('Function not implemented.');
-  },
-  GenerateSwissSeating: function (
-    seatingGenerateSwissSeatingPayload: SeatingGenerateSwissSeatingPayload,
-    context: Context
-  ): Promise<SeatingGenerateSwissSeatingResponse> {
-    throw new Error('Function not implemented.');
+    const seatingModel = Model.getModel(context.repository, SeatingModel);
+    return seatingModel.makeSwissSeating(seatingMakeSwissSeatingPayload);
   },
   MakeIntervalSeating: function (
     seatingMakeIntervalSeatingPayload: SeatingMakeIntervalSeatingPayload,
     context: Context
   ): Promise<GenericSuccessResponse> {
-    throw new Error('Function not implemented.');
+    const seatingModel = Model.getModel(context.repository, SeatingModel);
+    return seatingModel.makeIntervalSeating(seatingMakeIntervalSeatingPayload);
   },
   MakePrescriptedSeating: function (
     seatingMakePrescriptedSeatingPayload: SeatingMakePrescriptedSeatingPayload,
     context: Context
   ): Promise<GenericSuccessResponse> {
-    throw new Error('Function not implemented.');
-  },
-  GetNextPrescriptedSeating: function (
-    genericEventPayload: GenericEventPayload,
-    context: Context
-  ): Promise<SeatingGetNextPrescriptedSeatingResponse> {
-    throw new Error('Function not implemented.');
+    const seatingModel = Model.getModel(context.repository, SeatingModel);
+    return seatingModel.makePrescriptedSeating(seatingMakePrescriptedSeatingPayload);
   },
   GetPrescriptedEventConfig: function (
     genericEventPayload: GenericEventPayload,
     context: Context
   ): Promise<EventsGetPrescriptedEventConfigResponse> {
-    throw new Error('Function not implemented.');
+    const eventModel = Model.getModel(context.repository, EventModel);
+    return eventModel.getPrescriptedConfig(genericEventPayload.eventId);
   },
   UpdatePrescriptedEventConfig: function (
     eventsUpdatePrescriptedEventConfigPayload: EventsUpdatePrescriptedEventConfigPayload,
     context: Context
   ): Promise<GenericSuccessResponse> {
-    throw new Error('Function not implemented.');
+    const eventModel = Model.getModel(context.repository, EventModel);
+    return eventModel.updatePrescriptedConfig(eventsUpdatePrescriptedEventConfigPayload);
   },
-  InitStartingTimer: function (
+  ResetSeating: function (
     genericEventPayload: GenericEventPayload,
     context: Context
   ): Promise<GenericSuccessResponse> {
-    throw new Error('Function not implemented.');
+    const seatingModel = Model.getModel(context.repository, SeatingModel);
+    return seatingModel.resetSeating(genericEventPayload.eventId);
   },
-  GetStartingTimer: function (
-    genericEventPayload: GenericEventPayload,
+  GenerateSwissSeating: function (
+    seatingGenerateSwissSeatingPayload: SeatingGenerateSwissSeatingPayload,
     context: Context
-  ): Promise<EventsGetStartingTimerResponse> {
-    throw new Error('Function not implemented.');
+  ): Promise<SeatingGenerateSwissSeatingResponse> {
+    const seatingModel = Model.getModel(context.repository, SeatingModel);
+    return seatingModel.generateSwissSeating(seatingGenerateSwissSeatingPayload);
   },
   ClearStatCache: function (
     clearStatCachePayload: ClearStatCachePayload,
     context: Context
   ): Promise<GenericSuccessResponse> {
-    throw new Error('Function not implemented.');
+    const statsModel = Model.getModel(context.repository, PlayerStatsModel);
+    return statsModel.invalidatePlayerStats(clearStatCachePayload.playerId);
   },
   ForceFinishGame: function (
     genericSessionPayload: GenericSessionPayload,
     context: Context
   ): Promise<GenericSuccessResponse> {
-    throw new Error('Function not implemented.');
+    const sessionModel = Model.getModel(context.repository, SessionModel);
+    return sessionModel.forceFinishGame(genericSessionPayload.sessionHash);
   },
   NotifyPlayersSessionStartsSoon: function (
     genericEventPayload: GenericEventPayload,
     context: Context
   ): Promise<GenericSuccessResponse> {
-    throw new Error('Function not implemented.');
+    const playerModel = Model.getModel(context.repository, PlayerModel);
+    return playerModel.notifyGameStartingSoon(genericEventPayload.eventId);
   },
   CallReferee: function (
     callRefereePayload: CallRefereePayload,
     context: Context
   ): Promise<GenericSuccessResponse> {
-    throw new Error('Function not implemented.');
+    const playerModel = Model.getModel(context.repository, PlayerModel);
+    return playerModel.callReferee(callRefereePayload.eventId, callRefereePayload.tableIndex);
   },
   RecalcAchievements: function (
     genericEventPayload: GenericEventPayload,
     context: Context
   ): Promise<GenericSuccessResponse> {
-    throw new Error('Function not implemented.');
+    const eventModel = Model.getModel(context.repository, EventModel);
+    return eventModel.recalcAchievements(genericEventPayload.eventId);
   },
   RecalcPlayerStats: function (
     genericEventPayload: GenericEventPayload,
     context: Context
   ): Promise<GenericSuccessResponse> {
-    throw new Error('Function not implemented.');
+    const eventModel = Model.getModel(context.repository, EventModel);
+    return eventModel.recalcPlayerStats(genericEventPayload.eventId);
   },
   ListPenalties: function (
     genericEventPayload: GenericEventPayload,
     context: Context
   ): Promise<PenaltiesResponse> {
-    throw new Error('Function not implemented.');
+    const penaltyModel = Model.getModel(context.repository, PenaltyModel);
+    return penaltyModel.listPenalties(genericEventPayload.eventId);
   },
   CancelPenalty: function (
     cancelPenaltyPayload: CancelPenaltyPayload,
     context: Context
   ): Promise<GenericSuccessResponse> {
-    throw new Error('Function not implemented.');
+    const penaltyModel = Model.getModel(context.repository, PenaltyModel);
+    return penaltyModel.cancelPenalty(cancelPenaltyPayload);
   },
   ListMyPenalties: function (
     genericEventPayload: GenericEventPayload,
     context: Context
   ): Promise<PenaltiesResponse> {
-    throw new Error('Function not implemented.');
+    const penaltyModel = Model.getModel(context.repository, PenaltyModel);
+    return penaltyModel.listMyPenalties(
+      genericEventPayload.eventId,
+      context.repository.meta.personId
+    );
   },
   ListChombo: function (
     genericEventPayload: GenericEventPayload,
     context: Context
   ): Promise<ChomboResponse> {
-    throw new Error('Function not implemented.');
+    const penaltyModel = Model.getModel(context.repository, PenaltyModel);
+    return penaltyModel.listChombo(genericEventPayload.eventId);
   },
-  GetCurrentStateForPlayer: function (
+  GetCurrentStateForPlayer: async function (
     getCurrentStatePayload: GetCurrentStatePayload,
     context: Context
   ): Promise<GetCurrentStateResponse> {
-    throw new Error('Function not implemented.');
+    const model = Model.getModel(context.repository, EventModel);
+    const gameConfig = await model.getGameConfig({ eventId: getCurrentStatePayload.eventId });
+    const eventModel = Model.getModel(context.repository, EventModel);
+    const sessions = await eventModel.getCurrentGames({
+      eventId: getCurrentStatePayload.eventId,
+      playerId: getCurrentStatePayload.playerId,
+    });
+
+    return {
+      sessions: sessions.sessions,
+      config: gameConfig,
+    };
   },
 };

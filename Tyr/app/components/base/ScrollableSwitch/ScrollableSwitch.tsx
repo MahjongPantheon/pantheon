@@ -7,6 +7,7 @@ type IProps = {
     label: string | ReactElement;
     selected?: boolean;
     onSelect: () => void;
+    testId?: string;
   }>;
 };
 
@@ -58,12 +59,13 @@ export const ScrollableSwitch = ({ options }: IProps) => {
         onMouseLeave={mouseLeave}
         onMouseMove={mouseMove}
       >
-        {options.map(({ label, onSelect, selected }, idx) => {
+        {options.map(({ label, onSelect, selected, testId }, idx) => {
           return (
             <div
               key={`label_${idx}`}
               className={clsx(styles.option, selected && styles.optionSelected)}
               onClick={onElementClick(onSelect)}
+              data-testid={testId}
               onMouseUp={(e) => e.preventDefault()}
             >
               {label}

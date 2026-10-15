@@ -33,7 +33,7 @@ import {
 } from '@mantine/core';
 import { EventTypeIcon } from '../components/EventTypeIcon';
 import { useI18n } from '../hooks/i18n';
-import { EventType, Player } from 'tsclients/proto/atoms.pb';
+import { EventType, PersonEx } from 'tsclients/proto/atoms.pb';
 import { GameListing } from '../components/GameListing';
 import { Fragment } from 'react';
 import { useMediaQuery } from '@mantine/hooks';
@@ -69,17 +69,10 @@ export const RecentGames: React.FC<{
   if (!games || !events) {
     return null;
   }
-  const players = games?.players?.reduce(
-    (acc, p) => {
-      acc[p.id] = p;
-      return acc;
-    },
-    {} as Record<number, Player>
-  );
 
   return (
     events && (
-      <Container>
+      <Container data-testid='sigrun-recent-games-page'>
         <Meta
           title={
             events?.length === 1
@@ -114,7 +107,13 @@ export const RecentGames: React.FC<{
                   withYakitori={events?.[0]?.withYakitori}
                   eventId={eventId}
                   game={game}
-                  players={players}
+                  players={game.players.reduce(
+                    (acc, p) => {
+                      acc[p.id] = p;
+                      return acc;
+                    },
+                    {} as Record<number, PersonEx>
+                  )}
                   rowStyle={{
                     padding: '16px',
                     backgroundColor:
@@ -134,6 +133,7 @@ export const RecentGames: React.FC<{
         <Space h='md' />
         <Center>
           <Pagination
+            data-testid='sigrun-recent-games-pagination'
             size={largeScreen ? 'md' : 'sm'}
             value={parseInt(page, 10)}
             onChange={(p) => {

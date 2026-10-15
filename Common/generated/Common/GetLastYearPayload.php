@@ -6,8 +6,8 @@
 namespace Common;
 
 use Google\Protobuf\Internal\GPBType;
-use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
+use Google\Protobuf\RepeatedField;
 
 /**
  * Generated from protobuf message <code>common.GetLastYearPayload</code>
@@ -23,7 +23,8 @@ class GetLastYearPayload extends \Google\Protobuf\Internal\Message
      *
      * }
      */
-    public function __construct($data = NULL) {
+    public function __construct($data = null)
+    {
         \GPBMetadata\Proto\Hugin::initOnce();
         parent::__construct($data);
     }

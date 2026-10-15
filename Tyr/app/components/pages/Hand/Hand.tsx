@@ -29,8 +29,9 @@ export const Hand = ({
   onPlayerChange,
 }: IProps) => {
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.wrapper} data-testid='tyr-hand'>
       <TabbedView
+        testIdPrefix='tyr-hand-player-tab'
         onTabChange={(index) => onPlayerChange?.(hands[index].id!)}
         tabs={hands.map((hand) => ({
           title: (
@@ -46,7 +47,13 @@ export const Hand = ({
         }))}
       />
       <BottomPanel>
-        <Button variant='light' icon={<BackIcon />} size='lg' onClick={onBackClick} />
+        <Button
+          variant='light'
+          icon={<BackIcon />}
+          size='lg'
+          onClick={onBackClick}
+          testId='tyr-hand-back'
+        />
         <div className={styles.outcomeTitle}>{bottomPanelText}</div>
         <Button
           variant='light'
@@ -54,6 +61,7 @@ export const Hand = ({
           size='lg'
           onClick={onNextClick}
           disabled={!canGoNext}
+          testId='tyr-hand-next'
         />
       </BottomPanel>
     </div>

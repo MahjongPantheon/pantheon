@@ -96,6 +96,7 @@ export function GamesList({
         );
         return (
           <Group
+            data-testid={`forseti-game-row-${t.sessionHash}`}
             grow
             key={`ev_${t.sessionHash}`}
             style={{
@@ -110,6 +111,7 @@ export function GamesList({
                 <Stack style={{ flex: 0, minWidth: '30px' }} justify='flex-start'>
                   {!!t.tableIndex && (
                     <ActionIcon
+                      data-testid={`forseti-game-copy-session-${t.sessionHash}`}
                       style={{ cursor: 'default' }}
                       color='lime'
                       size='lg'
@@ -195,12 +197,14 @@ export function GamesList({
                   t.status === SessionStatus.SESSION_STATUS_INPROGRESS &&
                   !timerState?.waitingForTimer && (
                     <Confirmation
+                      testId={`forseti-game-add-extra-time-${t.sessionHash}`}
                       icon={<IconClockHour3 />}
                       title={i18n._t('Add extra time for this table')}
                       text={i18n._t('Add extra time')}
                       warning={
                         <>
                           <Select
+                            data-testid={`forseti-game-extra-time-${t.sessionHash}`}
                             label={i18n._t('Select extra time')}
                             value={extraTime}
                             onChange={setExtraTime}
@@ -233,6 +237,7 @@ export function GamesList({
                     t.status === SessionStatus.SESSION_STATUS_PREFINISHED)) &&
                   t.lastRound && (
                     <Confirmation
+                      testId={`forseti-game-cancel-last-round-${t.sessionHash}`}
                       icon={<IconArrowBackUp />}
                       title={i18n._t('Cancel last played round')}
                       text={i18n._t('Cancel round')}
@@ -248,6 +253,7 @@ export function GamesList({
                   !t.lastRound &&
                   !!onRemoveGame && (
                     <Confirmation
+                      testId={`forseti-game-remove-${t.sessionHash}`}
                       icon={<IconTrashX />}
                       title={i18n._t('Remove the game as it never existed')}
                       text={i18n._t('Remove game')}
@@ -265,6 +271,7 @@ export function GamesList({
                   !eventConfig.syncStart &&
                   !!onForceFinish && (
                     <Confirmation
+                      testId={`forseti-game-force-finish-${t.sessionHash}`}
                       icon={<IconHandStop />}
                       title={i18n._t('Forcefully finish the game')}
                       text={i18n._t('Force finish game')}
@@ -280,6 +287,7 @@ export function GamesList({
                   t.mayDefinalize &&
                   !!onDefinalizeGame && (
                     <Confirmation
+                      testId={`forseti-game-cancel-results-${t.sessionHash}`}
                       icon={<IconArrowBackUp />}
                       title={i18n._t('Remove game results')}
                       text={i18n._t('Cancel results')}

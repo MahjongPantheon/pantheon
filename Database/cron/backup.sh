@@ -1,14 +1,14 @@
 #!/bin/bash
 
 cd ~ || exit
-rm -rf ~/backup/frey2 ~/backup/mimir ~/backup/hugin
+rm -rf ~/backup/frey2 ~/backup/mimir2 ~/backup/hugin
 pg_dump --clean -Z0 -Fd frey2 -f ~/backup/frey2
-pg_dump --clean -Z0 -Fd mimir -f ~/backup/mimir
+pg_dump --clean -Z0 -Fd mimir2 -f ~/backup/mimir2
 pg_dump --clean -Z0 -Fd hugin -f ~/backup/hugin
 cd /var/lib/postgresql/backup || exit
 
 cd frey2 && zstd -T4 -9 --rm * && cd ..
-cd mimir && zstd -T4 -9 --rm * && cd ..
+cd mimir2 && zstd -T4 -9 --rm * && cd ..
 cd hugin && zstd -T4 -9 --rm * && cd ..
 
 git add .

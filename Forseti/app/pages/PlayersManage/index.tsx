@@ -89,11 +89,12 @@ export const PlayersManage: React.FC<{ params: { id: string } }> = ({ params: { 
   }
 
   return (
-    <Container>
+    <Container data-testid='forseti-players-page'>
       <LoadingOverlay visible={isLoading} overlayOpacity={1} />
       <Tabs defaultValue='management' keepMounted={false}>
         <Tabs.List position='left'>
           <Tabs.Tab
+            data-testid='forseti-players-tab-management'
             value='management'
             icon={<IconUserCircle size='0.8rem' />}
             rightSection={
@@ -105,6 +106,7 @@ export const PlayersManage: React.FC<{ params: { id: string } }> = ({ params: { 
             {i18n._t('Players')}
           </Tabs.Tab>
           <Tabs.Tab
+            data-testid='forseti-players-tab-local-ids'
             value='prescripted'
             disabled={!config?.isPrescripted}
             title={i18n._t(
@@ -120,6 +122,7 @@ export const PlayersManage: React.FC<{ params: { id: string } }> = ({ params: { 
             {i18n._t('Local IDs')}
           </Tabs.Tab>
           <Tabs.Tab
+            data-testid='forseti-players-tab-team-names'
             disabled={!config?.isTeam}
             title={i18n._t('Setup team name for each player (for team events)')}
             value='teams'

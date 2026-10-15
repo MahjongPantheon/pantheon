@@ -6,8 +6,8 @@
 namespace Common;
 
 use Google\Protobuf\Internal\GPBType;
-use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
+use Google\Protobuf\RepeatedField;
 
 /**
  * Generated from protobuf message <code>common.HuginData</code>
@@ -88,7 +88,8 @@ class HuginData extends \Google\Protobuf\Internal\Message
      *     @type string $hostname
      * }
      */
-    public function __construct($data = NULL) {
+    public function __construct($data = null)
+    {
         \GPBMetadata\Proto\Hugin::initOnce();
         parent::__construct($data);
     }
@@ -107,9 +108,9 @@ class HuginData extends \Google\Protobuf\Internal\Message
      * @param string $var
      * @return $this
      */
-    public function setDatetime($var)
+    public function setDatetime(string $var)
     {
-        GPBUtil::checkString($var, True);
+        GPBUtil::checkString($var, true);
         $this->datetime = $var;
 
         return $this;
@@ -129,7 +130,7 @@ class HuginData extends \Google\Protobuf\Internal\Message
      * @param int $var
      * @return $this
      */
-    public function setEventCount($var)
+    public function setEventCount(int $var)
     {
         GPBUtil::checkInt32($var);
         $this->event_count = $var;
@@ -151,7 +152,7 @@ class HuginData extends \Google\Protobuf\Internal\Message
      * @param int $var
      * @return $this
      */
-    public function setUniqCount($var)
+    public function setUniqCount(int $var)
     {
         GPBUtil::checkInt32($var);
         $this->uniq_count = $var;
@@ -173,9 +174,9 @@ class HuginData extends \Google\Protobuf\Internal\Message
      * @param string $var
      * @return $this
      */
-    public function setSiteId($var)
+    public function setSiteId(string $var)
     {
-        GPBUtil::checkString($var, True);
+        GPBUtil::checkString($var, true);
         $this->site_id = $var;
 
         return $this;
@@ -195,9 +196,9 @@ class HuginData extends \Google\Protobuf\Internal\Message
      * @param string $var
      * @return $this
      */
-    public function setCountry($var)
+    public function setCountry(string $var)
     {
-        GPBUtil::checkString($var, True);
+        GPBUtil::checkString($var, true);
         $this->country = $var;
 
         return $this;
@@ -217,9 +218,9 @@ class HuginData extends \Google\Protobuf\Internal\Message
      * @param string $var
      * @return $this
      */
-    public function setCity($var)
+    public function setCity(string $var)
     {
-        GPBUtil::checkString($var, True);
+        GPBUtil::checkString($var, true);
         $this->city = $var;
 
         return $this;
@@ -239,9 +240,9 @@ class HuginData extends \Google\Protobuf\Internal\Message
      * @param string $var
      * @return $this
      */
-    public function setBrowser($var)
+    public function setBrowser(string $var)
     {
-        GPBUtil::checkString($var, True);
+        GPBUtil::checkString($var, true);
         $this->browser = $var;
 
         return $this;
@@ -261,9 +262,9 @@ class HuginData extends \Google\Protobuf\Internal\Message
      * @param string $var
      * @return $this
      */
-    public function setOs($var)
+    public function setOs(string $var)
     {
-        GPBUtil::checkString($var, True);
+        GPBUtil::checkString($var, true);
         $this->os = $var;
 
         return $this;
@@ -283,9 +284,9 @@ class HuginData extends \Google\Protobuf\Internal\Message
      * @param string $var
      * @return $this
      */
-    public function setDevice($var)
+    public function setDevice(string $var)
     {
-        GPBUtil::checkString($var, True);
+        GPBUtil::checkString($var, true);
         $this->device = $var;
 
         return $this;
@@ -305,9 +306,9 @@ class HuginData extends \Google\Protobuf\Internal\Message
      * @param string $var
      * @return $this
      */
-    public function setScreen($var)
+    public function setScreen(string $var)
     {
-        GPBUtil::checkString($var, True);
+        GPBUtil::checkString($var, true);
         $this->screen = $var;
 
         return $this;
@@ -327,9 +328,9 @@ class HuginData extends \Google\Protobuf\Internal\Message
      * @param string $var
      * @return $this
      */
-    public function setLanguage($var)
+    public function setLanguage(string $var)
     {
-        GPBUtil::checkString($var, True);
+        GPBUtil::checkString($var, true);
         $this->language = $var;
 
         return $this;
@@ -349,9 +350,9 @@ class HuginData extends \Google\Protobuf\Internal\Message
      * @param string $var
      * @return $this
      */
-    public function setEventType($var)
+    public function setEventType(string $var)
     {
-        GPBUtil::checkString($var, True);
+        GPBUtil::checkString($var, true);
         $this->event_type = $var;
 
         return $this;
@@ -371,9 +372,9 @@ class HuginData extends \Google\Protobuf\Internal\Message
      * @param string $var
      * @return $this
      */
-    public function setHostname($var)
+    public function setHostname(string $var)
     {
-        GPBUtil::checkString($var, True);
+        GPBUtil::checkString($var, true);
         $this->hostname = $var;
 
         return $this;

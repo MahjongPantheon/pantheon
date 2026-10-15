@@ -59,6 +59,7 @@ export const TeamTable = ({ players, events }: { players: PlayerInRating[]; even
       {teamsIterable.map((team, idx) => {
         return (
           <DataCmp
+            data-testid={`sigrun-rating-team-row-${idx}`}
             key={`pl_${idx}`}
             gap='xs'
             style={{
@@ -98,6 +99,7 @@ export const TeamTable = ({ players, events }: { players: PlayerInRating[]; even
                         style={{ width: largeScreen ? 'auto' : 'calc(100vw - 245px)' }}
                       >
                         <Anchor
+                          data-testid={`sigrun-rating-team-player-link-${player.id}`}
                           href={`/event/${events.map((ev) => ev.id).join('.')}/player/${player.id}`}
                           onClick={(e) => {
                             navigate(

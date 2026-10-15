@@ -107,12 +107,14 @@ export const GameListing: React.FC<GameListingProps> = ({
 
   return (
     <DataCmp
+      data-testid={`sigrun-game-row-${game.sessionHash}`}
       grow={largeScreen ? true : undefined}
       style={{ ...rowStyle, alignItems: 'flex-start', position: 'relative' }}
     >
       <div style={{ position: 'absolute', right: '16px' }}>
         {showShareLink && (
           <Anchor
+            data-testid={`sigrun-game-details-link-${game.sessionHash}`}
             href={`/event/${eventId}/game/${game.sessionHash}`}
             onClick={(e) => {
               navigate(`/event/${eventId}/game/${game.sessionHash}`);
@@ -158,6 +160,7 @@ export const GameListing: React.FC<GameListingProps> = ({
             <Group style={{ maxWidth: '230px' }}>
               <Stack gap={0}>
                 <Anchor
+                  data-testid={`sigrun-game-player-link-${game.sessionHash}-${result.playerId}`}
                   href={`/event/${eventId}/player/${result.playerId}`}
                   onClick={(e) => {
                     navigate(`/event/${eventId}/player/${result.playerId}`);
@@ -200,7 +203,11 @@ export const GameListing: React.FC<GameListingProps> = ({
       <Stack style={{ flex: 1, maxWidth: 'unset' }}>
         {isOnline && (
           <>
-            <a href={game.replayLink} target='_blank'>
+            <a
+              data-testid={`sigrun-game-replay-link-${game.sessionHash}`}
+              href={game.replayLink}
+              target='_blank'
+            >
               View replay
             </a>
           </>

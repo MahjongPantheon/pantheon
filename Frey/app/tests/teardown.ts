@@ -1,8 +1,24 @@
-import { spawn } from 'child_process';
+import { once } from 'node:events';
 
-export default async function teardown() {
-  spawn("ps ax | grep app/tests/testserver.ts | awk '{ print $1 }' | xargs kill", [], {
-    shell: true,
-    stdio: 'ignore',
-  });
+export default async function teardown(config: { collectCoverage: boolean }) {
+  const child = globalThis.freyTestServer;
+  if (!child || child.exitCode !== null || child.signalCode !== null) {
+    throw new Error('Test server is no longer running');
+  }
+  try {
+    if (config.collectCoverage) {
+      const response = await fetch('http://localhost:4304/__test__/coverage', {
+        method: 'POST',
+        signal: AbortSignal.timeout(10000),
+      });
+      if (!response.ok) {
+        throw new Error(`Could not flush test server coverage: ${response.status}`);
+      }
+    }
+  } finally {
+    const exited = once(child, 'exit');
+    child.kill();
+    await exited;
+    globalThis.freyTestServer = undefined;
+  }
 }

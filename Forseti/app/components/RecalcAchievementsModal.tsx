@@ -33,6 +33,7 @@ export const RecalcAchievementsModal = () => {
 
   return (
     <Modal
+      data-testid='forseti-recalculate-achievements-modal'
       opened={modals.recalcAchievementsModalShown}
       onClose={modals.hideRecalcAchievementsModal}
       size='auto'
@@ -45,10 +46,15 @@ export const RecalcAchievementsModal = () => {
         )}
       </Text>
       <Group mt='xl' grow>
-        <Button variant='outline' onClick={modals.hideRecalcAchievementsModal}>
+        <Button
+          data-testid='forseti-recalculate-achievements-cancel'
+          variant='outline'
+          onClick={modals.hideRecalcAchievementsModal}
+        >
           {i18n._t('Cancel')}
         </Button>
         <Button
+          data-testid='forseti-recalculate-achievements-confirm'
           color='red'
           variant='filled'
           onClick={() => {

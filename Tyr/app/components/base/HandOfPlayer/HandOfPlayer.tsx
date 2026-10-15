@@ -47,7 +47,7 @@ export const HandOfPlayer = (props: IProps) => {
   };
 
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.wrapper} data-testid={`tyr-hand-player-${props.playerId}`}>
       <div className={clsx(styles.beforeYaku, topShadowDisabled ? styles.noShadow : null)}></div>
       <div className={styles.yakuList} onScroll={onScroll}>
         {props.yaku.map((y, idx) => (
@@ -62,6 +62,7 @@ export const HandOfPlayer = (props: IProps) => {
             selected={props.selectedYaku.includes(y)}
             size={y === YakuId.__OPENHAND ? 'fullwidth' : 'lg'}
             onChange={() => props.onYakuClick(y, props.playerId)}
+            testId={`tyr-hand-player-${props.playerId}-yaku-${y}`}
           >
             {yakuMap[y].name(loc)}
           </Toggle>
@@ -87,7 +88,11 @@ export const HandOfPlayer = (props: IProps) => {
             )}
           >
             <div>{loc._t('Pao')}</div>
-            <div className={styles.playerSelector} onClick={() => setPaoMenuOpen(true)}>
+            <div
+              className={styles.playerSelector}
+              onClick={() => setPaoMenuOpen(true)}
+              data-testid={`tyr-hand-player-${props.playerId}-pao-open`}
+            >
               {props.pao && <Player {...props.paoPlayers.find((p) => p.id === props.pao)} />}
               {!props.pao && loc._t('Nobody selected')}
             </div>
@@ -96,6 +101,12 @@ export const HandOfPlayer = (props: IProps) => {
 
         <div className={styles.selectors}>
           <NumberSelect
+            testId={{
+              arrowDown: `tyr-hand-player-${props.playerId}-fu-less`,
+              dropdownSelector: `tyr-hand-player-${props.playerId}-fu-select`,
+              arrowUp: `tyr-hand-player-${props.playerId}-fu-more`,
+              optionPrefix: `tyr-hand-player-${props.playerId}-fu-option`,
+            }}
             disabled={!props.shouldSelectFu}
             style={{ flex: 1 }}
             options={
@@ -118,6 +129,12 @@ export const HandOfPlayer = (props: IProps) => {
             }
           />
           <NumberSelect
+            testId={{
+              arrowDown: `tyr-hand-player-${props.playerId}-dora-less`,
+              dropdownSelector: `tyr-hand-player-${props.playerId}-dora-select`,
+              arrowUp: `tyr-hand-player-${props.playerId}-dora-more`,
+              optionPrefix: `tyr-hand-player-${props.playerId}-dora-option`,
+            }}
             style={{ flex: 1 }}
             options={props.doraValues.map((value) => ({
               label: loc._t('Dora %1', [value]),
@@ -140,12 +157,14 @@ export const HandOfPlayer = (props: IProps) => {
 
       <PopupMenu isOpen={paoMenuOpen} onClose={() => setPaoMenuOpen(false)}>
         <PopupMenuItem
+          testId={`tyr-hand-player-${props.playerId}-pao-none`}
           label={loc._t('No pao')}
           onClick={() => props.onPaoSelected?.(undefined, props.playerId)}
         />
         {props.paoPlayers?.map((player, idx) => (
           <PopupMenuItem
             key={`ppl_${idx}`}
+            testId={`tyr-hand-player-${props.playerId}-pao-${player.id}`}
             label={<Player {...player} />}
             onClick={() => props.onPaoSelected?.(player.id, props.playerId)}
           />
