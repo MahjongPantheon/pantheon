@@ -1,25 +1,27 @@
 import { test, expect as baseExpect, type Page, type BrowserContext } from '@playwright/test';
-import { randomUUID } from 'node:crypto';
+import { randomUUID, randomInt } from 'node:crypto';
 import { createTestAccounts } from './utils/accounts';
 import { withScreenshotsOnTestFail } from './utils/screenshots';
 import {
   type Account,
-  rounds,
+  rounds as baselineRounds,
   checkRules,
   assertTable,
   enterRound,
-  checkLog,
+  checkTournamentLog,
   assertNumber,
   assertPreview,
   assertPublishedGame,
-  ratingChanges,
+  tournamentScenarios,
+  type Scenario,
+  assertYakuCoverage,
   playerPlace,
 } from './utils/game-flow';
 
 withScreenshotsOnTestFail();
 const expect = baseExpect.configure({ timeout: 30_000 });
-type Table = { hash: string; number: number; players: Account[]; page: Page };
-const initialState = { ...rounds[0], scores: [30000, 30000, 30000, 30000], round: 1 };
+type Table = { hash: string; number: number; players: Account[]; page: Page; scenario: Scenario };
+const initialState = { ...baselineRounds[0], scores: [30000, 30000, 30000, 30000], round: 1 };
 
 async function confirm(page: Page, id: string, method: string, prepare?: () => Promise<void>) {
   await page.getByTestId(`${id}-open`).click();
@@ -60,13 +62,18 @@ async function assertAdminScores(admin: Page, table: Table, scores: number[]) {
 }
 
 async function record(table: Table, index: number) {
-  await test.step(`Table ${table.number}, R${index + 1}: ${rounds[index].outcome}`, async () => {
+  const { scenario } = table;
+  const { rounds } = scenario;
+  await test.step(`Table ${table.number}, R${index + 1}: ${rounds[index].hands?.[0].name ?? rounds[index].outcome}`, async () => {
+    if (index === rounds.length - 1) {
+      await test.step('Compare the complete Tyr log before the final hand', () =>
+        checkTournamentLog(table.page, table.players, scenario));
+    }
     await enterRound(table.page, table.players, rounds[index]);
-    await assertPreview(table.page, table.players, index);
+    await assertPreview(table.page, table.players, index, scenario);
     await table.page.getByTestId('tyr-round-preview-submit').click();
-    if (index < 12) {
+    if (index < rounds.length - 1) {
       await assertTable(table.page, table.players, rounds[index], index >= 4);
-      await checkLog(table.page, table.players, index + 1);
     } else {
       await expect(table.page.getByTestId('tyr-round-preview')).toHaveCount(0);
     }
@@ -80,7 +87,28 @@ test('SMOKE-006: Administrator and players can complete a two-table tournament w
   browser,
   request,
 }, testInfo) => {
-  test.setTimeout(15 * 60_000);
+  test.setTimeout(60 * 60_000);
+  // Shuffle complete fixture subsets without replacement, preserving independent
+  // score checkpoints and guaranteeing all yaku across the six games together.
+  const handPlan = [...tournamentScenarios];
+  for (let index = handPlan.length - 1; index > 0; index--) {
+    const other = randomInt(index + 1);
+    [handPlan[index], handPlan[other]] = [handPlan[other], handPlan[index]];
+  }
+  assertYakuCoverage(handPlan);
+  await testInfo.attach('tournament-hand-plan', {
+    body: JSON.stringify(
+      handPlan.map((scenario, index) => ({
+        seating: Math.floor(index / 2) + 1,
+        table: (index % 2) + 1,
+        fixture: tournamentScenarios.indexOf(scenario) + 1,
+        hands: scenario.rounds.flatMap((round) => round.hands?.map((hand) => hand.name) ?? []),
+      })),
+      null,
+      2
+    ),
+    contentType: 'application/json',
+  });
   context.setDefaultTimeout(30_000);
   const [administrator, ...players] = await test.step('Create independent account fixtures', () =>
     createTestAccounts(request, 9));
@@ -215,7 +243,8 @@ test('SMOKE-006: Administrator and players can complete a two-table tournament w
         )
       );
       expect(hashes.sort()).toEqual(finished.map((table) => table.hash).sort());
-      for (const table of finished) await assertPublishedGame(sigrun, table.hash, table.players);
+      for (const table of finished)
+        await assertPublishedGame(sigrun, table.hash, table.players, table.scenario);
       const [ratingsLoaded] = await Promise.all([
         sigrun.waitForResponse(
           (r) => r.url().endsWith('/common.Mimir/GetRatingTable') && r.request().method() === 'POST'
@@ -302,7 +331,13 @@ test('SMOKE-006: Administrator and players can complete a two-table tournament w
           extraContexts.push(recorderContext);
           const recorder = await recorderContext.newPage();
           recorderPages.push(recorder);
-          const table = { hash, number, players: seated, page: recorder };
+          const table = {
+            hash,
+            number,
+            players: seated,
+            page: recorder,
+            scenario: handPlan[seatingIndex * 2 + number - 1],
+          };
           tables.push(table);
           await recorder.goto(process.env.TYR_URL!);
           await recorder.getByTestId('tyr-login-email').fill(seated[0].email);
@@ -371,12 +406,13 @@ test('SMOKE-006: Administrator and players can complete a two-table tournament w
         }
         expect(Math.abs(seconds[0] - seconds[1])).toBeLessThanOrEqual(30);
       });
-      for (let roundIndex = 0; roundIndex < 12; roundIndex++) {
+      for (let roundIndex = 0; roundIndex < 3; roundIndex++) {
         for (const table of tables) await record(table, roundIndex);
         if (seatingIndex === 0 && roundIndex === 2) {
           await test.step('Cancel table 1 R3 in Forseti and verify rollback without changing table 2', async () => {
             await admin.reload();
-            for (const table of tables) await assertAdminScores(admin, table, rounds[2].scores);
+            for (const table of tables)
+              await assertAdminScores(admin, table, baselineRounds[2].scores);
             await confirm(
               admin,
               `forseti-game-cancel-last-round-${tables[0].hash}`,
@@ -386,16 +422,19 @@ test('SMOKE-006: Administrator and players can complete a two-table tournament w
             for (const [index, table] of tables.entries()) {
               await refreshGame(table);
               const checkpoint = index === 0 ? 1 : 2;
-              await assertTable(table.page, table.players, rounds[checkpoint], false);
-              await checkLog(table.page, table.players, checkpoint + 1);
-              await assertAdminScores(admin, table, rounds[checkpoint].scores);
+              await assertTable(table.page, table.players, baselineRounds[checkpoint], false);
+              await assertAdminScores(admin, table, baselineRounds[checkpoint].scores);
             }
             await record(tables[0], 2);
           });
         }
       }
+      for (const table of tables) {
+        for (let index = 3; index < table.scenario.rounds.length - 1; index++)
+          await record(table, index);
+      }
       await test.step(`Seating ${seatingIndex + 1}: both games must complete before approval`, async () => {
-        await record(tables[0], 12);
+        await record(tables[0], tables[0].scenario.rounds.length - 1);
         await admin.reload();
         await expect(
           admin
@@ -409,7 +448,7 @@ test('SMOKE-006: Administrator and players can complete a two-table tournament w
         ).toBeVisible();
         await expect(admin.getByTestId('forseti-tournament-approve-sessions-open')).toHaveCount(0);
         await checkPublication(seatingIndex);
-        await record(tables[1], 12);
+        await record(tables[1], tables[1].scenario.rounds.length - 1);
         await admin.reload();
         await stage(admin, 'prefinished');
         for (const table of tables) {
@@ -418,7 +457,7 @@ test('SMOKE-006: Administrator and players can complete a two-table tournament w
               .getByTestId(`forseti-game-row-${table.hash}`)
               .getByTitle('Session finished, but not confirmed', { exact: true })
           ).toBeVisible();
-          await assertAdminScores(admin, table, rounds[12].scores);
+          await assertAdminScores(admin, table, table.scenario.rounds.at(-1)!.scores);
           await expect(table.page.getByTestId('tyr-table-add-round')).toHaveCount(0);
         }
         await checkPublication(seatingIndex);
@@ -434,7 +473,7 @@ test('SMOKE-006: Administrator and players can complete a two-table tournament w
               .getByTitle('Session finished', { exact: true })
           ).toBeVisible();
           for (const [index, player] of table.players.entries())
-            ratings.set(player.id, ratings.get(player.id)! + ratingChanges[index]);
+            ratings.set(player.id, ratings.get(player.id)! + table.scenario.ratingChanges[index]);
           finished.push(table);
         }
         await checkPublication(seatingIndex + 1);
@@ -449,7 +488,7 @@ test('SMOKE-006: Administrator and players can complete a two-table tournament w
         await expect(sigrun).toHaveURL(new RegExp(`/event/${eventId}/game/${table.hash}$`));
         await expect(sigrun.getByTestId('sigrun-game-page')).toContainText(title);
         await sigrun.reload();
-        await assertPublishedGame(sigrun, table.hash, table.players);
+        await assertPublishedGame(sigrun, table.hash, table.players, table.scenario);
       }
       await checkPublication(3);
       await sigrun.reload();

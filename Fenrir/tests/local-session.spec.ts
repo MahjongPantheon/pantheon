@@ -5,8 +5,12 @@ import { withScreenshotsOnTestFail } from './utils/screenshots';
 
 import {
   rounds,
+  localScenario,
+  ratingChanges,
+  assertPreview,
+  assertPublishedGame,
+  assertYakuCoverage,
   checkRules,
-  playerPlace,
   assertNumber,
   assertTable,
   enterRound,
@@ -21,7 +25,8 @@ test('SMOKE-005: Registered player can finish a local session and view matching 
   browser,
   request,
 }, testInfo) => {
-  test.setTimeout(240_000);
+  test.setTimeout(30 * 60_000);
+  assertYakuCoverage([localScenario]);
   page.setDefaultTimeout(15_000);
   const [administrator, ...registered] =
     await test.step('Create independent account fixtures', () => createTestAccounts(request, 9));
@@ -136,7 +141,7 @@ test('SMOKE-005: Registered player can finish a local session and view matching 
       );
     });
     for (const [index, entry] of rounds.entries()) {
-      await test.step(`R${index + 1}: ${entry.outcome}${index === 12 ? ' finishes South 4' : ''}`, async () => {
+      await test.step(`R${index + 1}: ${entry.outcome}${index === rounds.length - 1 ? ' finishes South 4' : ''}`, async () => {
         await enterRound(page, players, entry);
         // Previewing the entry must not persist it. Back out to the active table before
         // entering it again, so unchanged scores and log count are verified through UI.
@@ -153,37 +158,9 @@ test('SMOKE-005: Registered player can finish a local session and view matching 
           await checkLog(page, players, 0);
           await enterRound(page, players, entry);
         }
-        const previousScores =
-          index === 0 ? [30000, 30000, 30000, 30000] : rounds[index - 1].scores;
-        for (const [playerIndex, player] of players.entries()) {
-          const place = playerPlace(page, 'tyr-preview-player', player);
-          await expect(place).toHaveCount(1);
-          await assertNumber(place.getByTestId(/-points$/), previousScores[playerIndex]);
-        }
-        const paymentLabels = [
-          ['1000'],
-          ['500', '500', '500'],
-          ['1500', '1500'],
-          [],
-          [],
-          ['2000', '2000', '4000'],
-          ['1000 + 1200', '1000 + 1200'],
-          ['1000'],
-          ['1000'],
-          ['1000'],
-          ['1000'],
-          ['1000'],
-          ['1000'],
-        ][index];
-        await expect
-          .poll(async () =>
-            (
-              await page.getByTestId('tyr-round-preview').locator('svg textPath').allTextContents()
-            ).sort()
-          )
-          .toEqual([...paymentLabels].sort());
+        await assertPreview(page, players, index);
         await page.getByTestId('tyr-round-preview-submit').click();
-        if (index === 12) {
+        if (index === rounds.length - 1) {
           await expect(page.getByTestId('tyr-game-result')).toBeVisible();
           await expect(page.getByTestId('tyr-table')).toHaveCount(0);
         } else {
@@ -199,7 +176,7 @@ test('SMOKE-005: Registered player can finish a local session and view matching 
             await page.getByTestId('tyr-home-current-game').click();
           }
           await assertTable(page, players, entry, true);
-          await checkLog(page, players, 7);
+          await checkLog(page, players, 7, localScenario, true);
         }
       });
     }
@@ -212,8 +189,8 @@ test('SMOKE-005: Registered player can finish a local session and view matching 
         await expect(page.getByTestId(`tyr-game-result-player-${player.id}`)).toContainText(
           player.title
         );
-        await assertNumber(score, rounds[12].scores[index]);
-        await assertNumber(delta, [7200, -5000, -45400, 23200][index]);
+        await assertNumber(score, rounds.at(-1)!.scores[index]);
+        await assertNumber(delta, ratingChanges[index]);
         results.set(player.id, {
           score: (await score.innerText()).replace(/^\+/, ''),
           delta: (await delta.innerText()).replace(/^\+/, ''),
@@ -244,29 +221,8 @@ test('SMOKE-005: Registered player can finish a local session and view matching 
           await assertNumber(badges.nth(0), Number(results.get(player.id)!.delta));
           await assertNumber(badges.nth(1), Number(results.get(player.id)!.score));
         }
-        for (const text of ['Ron: 8', 'Tsumo: 1', 'Draw: 2', 'Chombo: 1', 'Nagashi: 1'])
-          await expect(game).toContainText(text);
-        const log = game.locator('ul').first().locator(':scope > li');
-        await expect(log).toHaveCount(13);
-        for (const [index, entry] of rounds.entries()) {
-          const row = log.nth(index);
-          const startRound = index === 0 ? 1 : rounds[index - 1].round;
-          await expect(row).toContainText(
-            `${startRound <= 4 ? '東' : '南'}${((startRound - 1) % 4) + 1}`
-          );
-          for (const personIndex of entry.outcome === 'draw'
-            ? (entry.tenpai ?? [])
-            : (entry.riichi ?? [])) {
-            await expect(row).toContainText(players[personIndex].title);
-          }
-          if (entry.nagashi !== undefined)
-            await expect(row).toContainText(players[entry.nagashi].title);
-          for (const winner of entry.winners ?? [])
-            await expect(row).toContainText(players[winner].title);
-          if (entry.loser !== undefined)
-            await expect(row).toContainText(players[entry.loser].title);
-        }
-        await expect(log.nth(12)).toContainText('南4');
+        await assertPublishedGame(sigrun, hash, players);
+        await expect(game.locator('ul').first().locator(':scope > li').last()).toContainText('南4');
       }
       await checkGame();
       await sigrun.getByTestId(`sigrun-game-details-link-${hash}`).click();

@@ -1,0 +1,2067 @@
+{
+  "yakuIds": [
+    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27,
+    28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47
+  ],
+  "hands": [
+    {
+      "name": "Tenhou",
+      "yaku": [39],
+      "han": -1,
+      "fu": 0,
+      "dora": 0,
+      "open": false,
+      "labels": ["Tenhou"]
+    },
+    {
+      "name": "Chihou",
+      "yaku": [40],
+      "han": -1,
+      "fu": 0,
+      "dora": 0,
+      "open": false,
+      "labels": ["Chihou"]
+    },
+    {
+      "name": "Renhou",
+      "yaku": [43],
+      "han": 5,
+      "fu": 0,
+      "dora": 0,
+      "open": false,
+      "labels": ["Renhou"]
+    },
+    {
+      "name": "Riichi sequence hand",
+      "yaku": [33, 35, 8, 9],
+      "han": 4,
+      "fu": 30,
+      "dora": 0,
+      "open": false,
+      "labels": ["Riichi", "Ippatsu", "Pinfu", "Iipeikou"]
+    },
+    {
+      "name": "Pinfu tsumo",
+      "yaku": [8, 36],
+      "han": 4,
+      "fu": 20,
+      "dora": 2,
+      "open": false,
+      "labels": ["Pinfu", "Menzentsumo"]
+    },
+    {
+      "name": "Ryanpeikou tanyao",
+      "yaku": [10, 23],
+      "han": 4,
+      "fu": 40,
+      "dora": 0,
+      "open": false,
+      "labels": ["Ryanpeikou", "Tanyao"]
+    },
+    {
+      "name": "Open mixed outside sequences",
+      "yaku": [11, 24],
+      "han": 2,
+      "fu": 50,
+      "dora": 0,
+      "open": true,
+      "labels": ["Sanshoku", "Chanta"]
+    },
+    {
+      "name": "Open straight half flush",
+      "yaku": [12, 27],
+      "han": 3,
+      "fu": 60,
+      "dora": 0,
+      "open": true,
+      "labels": ["Ittsu", "Honitsu"]
+    },
+    {
+      "name": "Pure outside hand",
+      "yaku": [25],
+      "han": 4,
+      "fu": 40,
+      "dora": 1,
+      "open": false,
+      "labels": ["Junchan"]
+    },
+    {
+      "name": "All triplets and terminals/honors",
+      "yaku": [1, 2, 14],
+      "han": 6,
+      "fu": 0,
+      "dora": 0,
+      "open": true,
+      "labels": ["Toitoi", "Honroutou", "Yakuhai x2"]
+    },
+    {
+      "name": "Three concealed triplets and kans",
+      "yaku": [3, 5, 4],
+      "han": 7,
+      "fu": 0,
+      "dora": 1,
+      "open": false,
+      "labels": ["Sanankou", "Sankantsu", "Sanshoku doukou"]
+    },
+    {
+      "name": "Last discard honor hand",
+      "yaku": [13, 41],
+      "han": 2,
+      "fu": 70,
+      "dora": 0,
+      "open": true,
+      "labels": ["Yakuhai x1", "Houtei raoyui"]
+    },
+    {
+      "name": "Three value honors",
+      "yaku": [15],
+      "han": 3,
+      "fu": 80,
+      "dora": 0,
+      "open": true,
+      "labels": ["Yakuhai x3"]
+    },
+    {
+      "name": "Four value honors",
+      "yaku": [16],
+      "han": 4,
+      "fu": 90,
+      "dora": 0,
+      "open": true,
+      "labels": ["Yakuhai x4"]
+    },
+    {
+      "name": "Little three dragons",
+      "yaku": [14, 18],
+      "han": 6,
+      "fu": 0,
+      "dora": 2,
+      "open": false,
+      "labels": ["Yakuhai x2", "Shousangen"]
+    },
+    {
+      "name": "Open full flush",
+      "yaku": [28],
+      "han": 8,
+      "fu": 0,
+      "dora": 3,
+      "open": true,
+      "labels": ["Chinitsu"]
+    },
+    {
+      "name": "Seven pairs",
+      "yaku": [31],
+      "han": 3,
+      "fu": 25,
+      "dora": 1,
+      "open": false,
+      "labels": ["Chiitoitsu"]
+    },
+    {
+      "name": "Double riichi ippatsu",
+      "yaku": [34, 35],
+      "han": 4,
+      "fu": 50,
+      "dora": 1,
+      "open": false,
+      "labels": ["Daburu riichi", "Ippatsu"]
+    },
+    {
+      "name": "Open riichi announcement",
+      "yaku": [33, 44],
+      "han": 2,
+      "fu": 60,
+      "dora": 0,
+      "open": false,
+      "labels": ["Riichi", "Open riichi"]
+    },
+    {
+      "name": "Last tile tsumo",
+      "yaku": [36, 37],
+      "han": 3,
+      "fu": 30,
+      "dora": 1,
+      "open": false,
+      "labels": ["Menzentsumo", "Haitei"]
+    },
+    {
+      "name": "Rinshan honor hand",
+      "yaku": [38, 13],
+      "han": 2,
+      "fu": 100,
+      "dora": 0,
+      "open": true,
+      "labels": ["Rinshan kaihou", "Yakuhai x1"]
+    },
+    {
+      "name": "Robbing a kan",
+      "yaku": [42, 13],
+      "han": 2,
+      "fu": 110,
+      "dora": 0,
+      "open": false,
+      "labels": ["Chankan", "Yakuhai x1"]
+    },
+    {
+      "name": "Counted sanbaiman",
+      "yaku": [23],
+      "han": 17,
+      "fu": 0,
+      "dora": 16,
+      "open": true,
+      "labels": ["Tanyao"]
+    },
+    {
+      "name": "Four kans",
+      "yaku": [6],
+      "han": -1,
+      "fu": 0,
+      "dora": 0,
+      "open": true,
+      "labels": ["Suukantsu"]
+    },
+    {
+      "name": "Four concealed triplets",
+      "yaku": [7],
+      "han": -1,
+      "fu": 0,
+      "dora": 0,
+      "open": false,
+      "labels": ["Suuankou"]
+    },
+    {
+      "name": "Four concealed triplets tanki",
+      "yaku": [45],
+      "han": -2,
+      "fu": 0,
+      "dora": 0,
+      "open": false,
+      "labels": ["Suuankou Tanki"]
+    },
+    {
+      "name": "Big three dragons all honors with pao",
+      "yaku": [19, 22],
+      "han": -2,
+      "fu": 0,
+      "dora": 0,
+      "open": true,
+      "labels": ["Daisangen", "Tsuuiisou"]
+    },
+    {
+      "name": "Little four winds",
+      "yaku": [20],
+      "han": -1,
+      "fu": 0,
+      "dora": 0,
+      "open": true,
+      "labels": ["Shousuushii"]
+    },
+    {
+      "name": "Big four winds",
+      "yaku": [21],
+      "han": -1,
+      "fu": 0,
+      "dora": 0,
+      "open": true,
+      "labels": ["Daisuushii"]
+    },
+    {
+      "name": "All terminals",
+      "yaku": [26],
+      "han": -1,
+      "fu": 0,
+      "dora": 0,
+      "open": true,
+      "labels": ["Chinroutou"]
+    },
+    {
+      "name": "Nine gates",
+      "yaku": [29],
+      "han": -1,
+      "fu": 0,
+      "dora": 0,
+      "open": false,
+      "labels": ["Chuuren poutou"]
+    },
+    {
+      "name": "Pure nine gates",
+      "yaku": [46],
+      "han": -2,
+      "fu": 0,
+      "dora": 0,
+      "open": false,
+      "labels": ["Chuuren poutou 9-side"]
+    },
+    {
+      "name": "All green",
+      "yaku": [30],
+      "han": -1,
+      "fu": 0,
+      "dora": 0,
+      "open": true,
+      "labels": ["Ryuuiisou"]
+    },
+    {
+      "name": "Thirteen orphans",
+      "yaku": [32],
+      "han": -1,
+      "fu": 0,
+      "dora": 0,
+      "open": false,
+      "labels": ["Kokushi musou"]
+    },
+    {
+      "name": "Thirteen-sided orphans",
+      "yaku": [47],
+      "han": -2,
+      "fu": 0,
+      "dora": 0,
+      "open": false,
+      "labels": ["Kokushi musou 13-side"]
+    },
+    {
+      "name": "Advance dealer to finish",
+      "yaku": [13],
+      "han": 5,
+      "fu": 0,
+      "dora": 4,
+      "open": true,
+      "labels": ["Yakuhai x1"]
+    },
+    {
+      "name": "Advance dealer to finish",
+      "yaku": [13],
+      "han": 6,
+      "fu": 0,
+      "dora": 5,
+      "open": true,
+      "labels": ["Yakuhai x1"]
+    },
+    {
+      "name": "Advance dealer to finish",
+      "yaku": [13],
+      "han": 7,
+      "fu": 0,
+      "dora": 6,
+      "open": true,
+      "labels": ["Yakuhai x1"]
+    },
+    {
+      "name": "Advance dealer to finish",
+      "yaku": [13],
+      "han": 8,
+      "fu": 0,
+      "dora": 7,
+      "open": true,
+      "labels": ["Yakuhai x1"]
+    },
+    {
+      "name": "Advance dealer to finish",
+      "yaku": [13],
+      "han": 3,
+      "fu": 50,
+      "dora": 2,
+      "open": true,
+      "labels": ["Yakuhai x1"]
+    },
+    {
+      "name": "Advance dealer to finish",
+      "yaku": [13],
+      "han": 4,
+      "fu": 60,
+      "dora": 3,
+      "open": true,
+      "labels": ["Yakuhai x1"]
+    }
+  ],
+  "local": {
+    "rounds": [
+      {
+        "outcome": "ron",
+        "winners": [1],
+        "loser": 2,
+        "scores": [30000, 31000, 29000, 30000],
+        "round": 2,
+        "honba": 0,
+        "pot": 0,
+        "payments": ["1000"]
+      },
+      {
+        "outcome": "tsumo",
+        "winners": [1],
+        "scores": [29500, 32500, 28500, 29500],
+        "round": 2,
+        "honba": 1,
+        "pot": 0,
+        "payments": ["500", "500", "500"]
+      },
+      {
+        "outcome": "draw",
+        "tenpai": [0, 1],
+        "riichi": [1],
+        "scores": [31000, 33000, 27000, 28000],
+        "round": 2,
+        "honba": 2,
+        "pot": 1,
+        "payments": ["1500", "1500"]
+      },
+      {
+        "outcome": "abort",
+        "riichi": [3],
+        "scores": [31000, 33000, 27000, 27000],
+        "round": 2,
+        "honba": 3,
+        "pot": 2,
+        "payments": []
+      },
+      {
+        "outcome": "chombo",
+        "loser": 2,
+        "scores": [31000, 33000, 27000, 27000],
+        "round": 2,
+        "honba": 3,
+        "pot": 2,
+        "payments": []
+      },
+      {
+        "outcome": "nagashi",
+        "tenpai": [1, 3],
+        "nagashi": 3,
+        "scores": [29000, 29000, 25000, 35000],
+        "round": 2,
+        "honba": 4,
+        "pot": 2,
+        "payments": ["2000", "2000", "4000"]
+      },
+      {
+        "outcome": "ron",
+        "winners": [0, 3],
+        "loser": 2,
+        "scores": [31200, 29000, 20600, 39200],
+        "round": 3,
+        "honba": 0,
+        "pot": 0,
+        "payments": ["1000 + 1200", "1000 + 1200"]
+      },
+      {
+        "outcome": "tsumo",
+        "winners": [2],
+        "payments": ["16000", "16000", "16000"],
+        "scores": [15200, 13000, 68600, 23200],
+        "round": 3,
+        "honba": 1,
+        "pot": 0,
+        "hand": 0
+      },
+      {
+        "outcome": "tsumo",
+        "winners": [3],
+        "payments": ["8000 + 100", "8000 + 100", "16000 + 100"],
+        "scores": [7100, 4900, 52500, 55500],
+        "round": 4,
+        "honba": 0,
+        "pot": 0,
+        "hand": 1
+      },
+      {
+        "outcome": "ron",
+        "winners": [0],
+        "payments": ["8000"],
+        "loser": 1,
+        "scores": [15100, -3100, 52500, 55500],
+        "round": 5,
+        "honba": 0,
+        "pot": 0,
+        "hand": 2
+      },
+      {
+        "outcome": "ron",
+        "winners": [0],
+        "payments": ["11600"],
+        "loser": 1,
+        "riichi": [0],
+        "scores": [26700, -14700, 52500, 55500],
+        "round": 5,
+        "honba": 1,
+        "pot": 0,
+        "hand": 3
+      },
+      {
+        "outcome": "tsumo",
+        "winners": [0],
+        "payments": ["2600 + 100", "2600 + 100", "2600 + 100"],
+        "scores": [34800, -17400, 49800, 52800],
+        "round": 5,
+        "honba": 2,
+        "pot": 0,
+        "hand": 4
+      },
+      {
+        "outcome": "ron",
+        "winners": [0],
+        "payments": ["12000 + 600"],
+        "loser": 1,
+        "scores": [47400, -30000, 49800, 52800],
+        "round": 5,
+        "honba": 3,
+        "pot": 0,
+        "hand": 5
+      },
+      {
+        "outcome": "ron",
+        "winners": [0],
+        "payments": ["4800 + 900"],
+        "loser": 1,
+        "scores": [53100, -35700, 49800, 52800],
+        "round": 5,
+        "honba": 4,
+        "pot": 0,
+        "hand": 6
+      },
+      {
+        "outcome": "ron",
+        "winners": [0],
+        "payments": ["11600 + 1200"],
+        "loser": 1,
+        "scores": [65900, -48500, 49800, 52800],
+        "round": 5,
+        "honba": 5,
+        "pot": 0,
+        "hand": 7
+      },
+      {
+        "outcome": "ron",
+        "winners": [0],
+        "payments": ["12000 + 1500"],
+        "loser": 1,
+        "scores": [79400, -62000, 49800, 52800],
+        "round": 5,
+        "honba": 6,
+        "pot": 0,
+        "hand": 8
+      },
+      {
+        "outcome": "ron",
+        "winners": [0],
+        "payments": ["18000 + 1800"],
+        "loser": 1,
+        "scores": [99200, -81800, 49800, 52800],
+        "round": 5,
+        "honba": 7,
+        "pot": 0,
+        "hand": 9
+      },
+      {
+        "outcome": "ron",
+        "winners": [0],
+        "payments": ["18000 + 2100"],
+        "loser": 1,
+        "scores": [119300, -101900, 49800, 52800],
+        "round": 5,
+        "honba": 8,
+        "pot": 0,
+        "hand": 10
+      },
+      {
+        "outcome": "ron",
+        "winners": [0],
+        "payments": ["6800 + 2400"],
+        "loser": 1,
+        "scores": [128500, -111100, 49800, 52800],
+        "round": 5,
+        "honba": 9,
+        "pot": 0,
+        "hand": 11
+      },
+      {
+        "outcome": "ron",
+        "winners": [0],
+        "payments": ["12000 + 2700"],
+        "loser": 1,
+        "scores": [143200, -125800, 49800, 52800],
+        "round": 5,
+        "honba": 10,
+        "pot": 0,
+        "hand": 12
+      },
+      {
+        "outcome": "ron",
+        "winners": [0],
+        "payments": ["12000 + 3000"],
+        "loser": 1,
+        "scores": [158200, -140800, 49800, 52800],
+        "round": 5,
+        "honba": 11,
+        "pot": 0,
+        "hand": 13
+      },
+      {
+        "outcome": "ron",
+        "winners": [0],
+        "payments": ["18000 + 3300"],
+        "loser": 1,
+        "scores": [179500, -162100, 49800, 52800],
+        "round": 5,
+        "honba": 12,
+        "pot": 0,
+        "hand": 14
+      },
+      {
+        "outcome": "ron",
+        "winners": [0],
+        "payments": ["24000 + 3600"],
+        "loser": 1,
+        "scores": [207100, -189700, 49800, 52800],
+        "round": 5,
+        "honba": 13,
+        "pot": 0,
+        "hand": 15
+      },
+      {
+        "outcome": "ron",
+        "winners": [0],
+        "payments": ["4800 + 3900"],
+        "loser": 1,
+        "scores": [215800, -198400, 49800, 52800],
+        "round": 5,
+        "honba": 14,
+        "pot": 0,
+        "hand": 16
+      },
+      {
+        "outcome": "ron",
+        "winners": [0],
+        "payments": ["12000 + 4200"],
+        "loser": 1,
+        "riichi": [0],
+        "scores": [232000, -214600, 49800, 52800],
+        "round": 5,
+        "honba": 15,
+        "pot": 0,
+        "hand": 17
+      },
+      {
+        "outcome": "ron",
+        "winners": [0],
+        "payments": ["5800 + 4500"],
+        "loser": 1,
+        "riichi": [0],
+        "scores": [242300, -224900, 49800, 52800],
+        "round": 5,
+        "honba": 16,
+        "pot": 0,
+        "hand": 18
+      },
+      {
+        "outcome": "tsumo",
+        "winners": [0],
+        "payments": ["2000 + 1600", "2000 + 1600", "2000 + 1600"],
+        "scores": [253100, -228500, 46200, 49200],
+        "round": 5,
+        "honba": 17,
+        "pot": 0,
+        "hand": 19
+      },
+      {
+        "outcome": "tsumo",
+        "winners": [0],
+        "payments": ["3200 + 1700", "3200 + 1700", "3200 + 1700"],
+        "scores": [267800, -233400, 41300, 44300],
+        "round": 5,
+        "honba": 18,
+        "pot": 0,
+        "hand": 20
+      },
+      {
+        "outcome": "ron",
+        "winners": [0],
+        "payments": ["10600 + 5400"],
+        "loser": 1,
+        "scores": [283800, -249400, 41300, 44300],
+        "round": 5,
+        "honba": 19,
+        "pot": 0,
+        "hand": 21
+      },
+      {
+        "outcome": "ron",
+        "winners": [0],
+        "payments": ["36000 + 5700"],
+        "loser": 1,
+        "scores": [325500, -291100, 41300, 44300],
+        "round": 5,
+        "honba": 20,
+        "pot": 0,
+        "hand": 22
+      },
+      {
+        "outcome": "ron",
+        "winners": [0],
+        "payments": ["48000 + 6000"],
+        "loser": 1,
+        "scores": [379500, -345100, 41300, 44300],
+        "round": 5,
+        "honba": 21,
+        "pot": 0,
+        "hand": 23
+      },
+      {
+        "outcome": "tsumo",
+        "winners": [0],
+        "payments": ["16000 + 2100", "16000 + 2100", "16000 + 2100"],
+        "scores": [433800, -363200, 23200, 26200],
+        "round": 5,
+        "honba": 22,
+        "pot": 0,
+        "hand": 24
+      },
+      {
+        "outcome": "ron",
+        "winners": [0],
+        "payments": ["96000 + 6600"],
+        "loser": 1,
+        "scores": [536400, -465800, 23200, 26200],
+        "round": 5,
+        "honba": 23,
+        "pot": 0,
+        "hand": 25
+      },
+      {
+        "outcome": "ron",
+        "winners": [0],
+        "payments": ["72000 + 6900", "24000"],
+        "loser": 1,
+        "scores": [639300, -544700, -800, 26200],
+        "round": 5,
+        "honba": 24,
+        "pot": 0,
+        "hand": 26,
+        "paoPlayer": 2
+      },
+      {
+        "outcome": "ron",
+        "winners": [0],
+        "payments": ["48000 + 7200"],
+        "loser": 1,
+        "scores": [694500, -599900, -800, 26200],
+        "round": 5,
+        "honba": 25,
+        "pot": 0,
+        "hand": 27
+      },
+      {
+        "outcome": "ron",
+        "winners": [0],
+        "payments": ["48000 + 7500"],
+        "loser": 1,
+        "scores": [750000, -655400, -800, 26200],
+        "round": 5,
+        "honba": 26,
+        "pot": 0,
+        "hand": 28
+      },
+      {
+        "outcome": "ron",
+        "winners": [0],
+        "payments": ["48000 + 7800"],
+        "loser": 1,
+        "scores": [805800, -711200, -800, 26200],
+        "round": 5,
+        "honba": 27,
+        "pot": 0,
+        "hand": 29
+      },
+      {
+        "outcome": "ron",
+        "winners": [0],
+        "payments": ["48000 + 8100"],
+        "loser": 1,
+        "scores": [861900, -767300, -800, 26200],
+        "round": 5,
+        "honba": 28,
+        "pot": 0,
+        "hand": 30
+      },
+      {
+        "outcome": "ron",
+        "winners": [0],
+        "payments": ["96000 + 8400"],
+        "loser": 1,
+        "scores": [966300, -871700, -800, 26200],
+        "round": 5,
+        "honba": 29,
+        "pot": 0,
+        "hand": 31
+      },
+      {
+        "outcome": "ron",
+        "winners": [0],
+        "payments": ["48000 + 8700"],
+        "loser": 1,
+        "scores": [1023000, -928400, -800, 26200],
+        "round": 5,
+        "honba": 30,
+        "pot": 0,
+        "hand": 32
+      },
+      {
+        "outcome": "ron",
+        "winners": [0],
+        "payments": ["48000 + 9000"],
+        "loser": 1,
+        "scores": [1080000, -985400, -800, 26200],
+        "round": 5,
+        "honba": 31,
+        "pot": 0,
+        "hand": 33
+      },
+      {
+        "outcome": "ron",
+        "winners": [0],
+        "payments": ["96000 + 9300"],
+        "loser": 1,
+        "scores": [1185300, -1090700, -800, 26200],
+        "round": 5,
+        "honba": 32,
+        "pot": 0,
+        "hand": 34
+      },
+      {
+        "outcome": "ron",
+        "winners": [1],
+        "payments": ["8000 + 9600"],
+        "loser": 2,
+        "scores": [1185300, -1073100, -18400, 26200],
+        "round": 6,
+        "honba": 0,
+        "pot": 0,
+        "hand": 35
+      },
+      {
+        "outcome": "ron",
+        "winners": [2],
+        "payments": ["12000"],
+        "loser": 3,
+        "scores": [1185300, -1073100, -6400, 14200],
+        "round": 7,
+        "honba": 0,
+        "pot": 0,
+        "hand": 36
+      },
+      {
+        "outcome": "ron",
+        "winners": [3],
+        "payments": ["12000"],
+        "loser": 0,
+        "scores": [1173300, -1073100, -6400, 26200],
+        "round": 8,
+        "honba": 0,
+        "pot": 0,
+        "hand": 37
+      },
+      {
+        "outcome": "ron",
+        "winners": [0],
+        "payments": ["16000"],
+        "loser": 1,
+        "scores": [1189300, -1089100, -6400, 26200],
+        "round": 9,
+        "honba": 0,
+        "pot": 0,
+        "hand": 38
+      }
+    ],
+    "ratingChanges": [1174300, -1134100, -61400, 1200]
+  },
+  "tournament": [
+    {
+      "rounds": [
+        {
+          "outcome": "ron",
+          "winners": [1],
+          "loser": 2,
+          "scores": [30000, 31000, 29000, 30000],
+          "round": 2,
+          "honba": 0,
+          "pot": 0,
+          "payments": ["1000"]
+        },
+        {
+          "outcome": "tsumo",
+          "winners": [1],
+          "scores": [29500, 32500, 28500, 29500],
+          "round": 2,
+          "honba": 1,
+          "pot": 0,
+          "payments": ["500", "500", "500"]
+        },
+        {
+          "outcome": "draw",
+          "tenpai": [0, 1],
+          "riichi": [1],
+          "scores": [31000, 33000, 27000, 28000],
+          "round": 2,
+          "honba": 2,
+          "pot": 1,
+          "payments": ["1500", "1500"]
+        },
+        {
+          "outcome": "abort",
+          "riichi": [3],
+          "scores": [31000, 33000, 27000, 27000],
+          "round": 2,
+          "honba": 3,
+          "pot": 2,
+          "payments": []
+        },
+        {
+          "outcome": "chombo",
+          "loser": 2,
+          "scores": [31000, 33000, 27000, 27000],
+          "round": 2,
+          "honba": 3,
+          "pot": 2,
+          "payments": []
+        },
+        {
+          "outcome": "nagashi",
+          "tenpai": [1, 3],
+          "nagashi": 3,
+          "scores": [29000, 29000, 25000, 35000],
+          "round": 2,
+          "honba": 4,
+          "pot": 2,
+          "payments": ["2000", "2000", "4000"]
+        },
+        {
+          "outcome": "ron",
+          "winners": [0, 3],
+          "loser": 2,
+          "scores": [31200, 29000, 20600, 39200],
+          "round": 3,
+          "honba": 0,
+          "pot": 0,
+          "payments": ["1000 + 1200", "1000 + 1200"]
+        },
+        {
+          "outcome": "tsumo",
+          "winners": [2],
+          "payments": ["16000", "16000", "16000"],
+          "scores": [15200, 13000, 68600, 23200],
+          "round": 3,
+          "honba": 1,
+          "pot": 0,
+          "hand": 0
+        },
+        {
+          "outcome": "ron",
+          "winners": [2],
+          "payments": ["4800 + 300"],
+          "loser": 3,
+          "scores": [15200, 13000, 73700, 18100],
+          "round": 3,
+          "honba": 2,
+          "pot": 0,
+          "hand": 6
+        },
+        {
+          "outcome": "ron",
+          "winners": [2],
+          "payments": ["12000 + 600"],
+          "loser": 3,
+          "scores": [15200, 13000, 86300, 5500],
+          "round": 3,
+          "honba": 3,
+          "pot": 0,
+          "hand": 12
+        },
+        {
+          "outcome": "ron",
+          "winners": [2],
+          "payments": ["5800 + 900"],
+          "loser": 3,
+          "riichi": [2],
+          "scores": [15200, 13000, 93000, -1200],
+          "round": 3,
+          "honba": 4,
+          "pot": 0,
+          "hand": 18
+        },
+        {
+          "outcome": "tsumo",
+          "winners": [2],
+          "payments": ["16000 + 400", "16000 + 400", "16000 + 400"],
+          "scores": [-1200, -3400, 142200, -17600],
+          "round": 3,
+          "honba": 5,
+          "pot": 0,
+          "hand": 24
+        },
+        {
+          "outcome": "ron",
+          "winners": [2],
+          "payments": ["48000 + 1500"],
+          "loser": 3,
+          "scores": [-1200, -3400, 191700, -67100],
+          "round": 3,
+          "honba": 6,
+          "pot": 0,
+          "hand": 30
+        },
+        {
+          "outcome": "ron",
+          "winners": [3],
+          "payments": ["6400 + 1800"],
+          "loser": 0,
+          "scores": [-9400, -3400, 191700, -58900],
+          "round": 4,
+          "honba": 0,
+          "pot": 0,
+          "hand": 39
+        },
+        {
+          "outcome": "ron",
+          "winners": [0],
+          "payments": ["8000"],
+          "loser": 1,
+          "scores": [-1400, -11400, 191700, -58900],
+          "round": 5,
+          "honba": 0,
+          "pot": 0,
+          "hand": 40
+        },
+        {
+          "outcome": "ron",
+          "winners": [1],
+          "payments": ["8000"],
+          "loser": 2,
+          "scores": [-1400, -3400, 183700, -58900],
+          "round": 6,
+          "honba": 0,
+          "pot": 0,
+          "hand": 35
+        },
+        {
+          "outcome": "ron",
+          "winners": [2],
+          "payments": ["12000"],
+          "loser": 3,
+          "scores": [-1400, -3400, 195700, -70900],
+          "round": 7,
+          "honba": 0,
+          "pot": 0,
+          "hand": 36
+        },
+        {
+          "outcome": "ron",
+          "winners": [3],
+          "payments": ["12000"],
+          "loser": 0,
+          "scores": [-13400, -3400, 195700, -58900],
+          "round": 8,
+          "honba": 0,
+          "pot": 0,
+          "hand": 37
+        },
+        {
+          "outcome": "ron",
+          "winners": [0],
+          "payments": ["16000"],
+          "loser": 1,
+          "scores": [2600, -19400, 195700, -58900],
+          "round": 9,
+          "honba": 0,
+          "pot": 0,
+          "hand": 38
+        }
+      ],
+      "ratingChanges": [-22400, -54400, 160700, -103900]
+    },
+    {
+      "rounds": [
+        {
+          "outcome": "ron",
+          "winners": [1],
+          "loser": 2,
+          "scores": [30000, 31000, 29000, 30000],
+          "round": 2,
+          "honba": 0,
+          "pot": 0,
+          "payments": ["1000"]
+        },
+        {
+          "outcome": "tsumo",
+          "winners": [1],
+          "scores": [29500, 32500, 28500, 29500],
+          "round": 2,
+          "honba": 1,
+          "pot": 0,
+          "payments": ["500", "500", "500"]
+        },
+        {
+          "outcome": "draw",
+          "tenpai": [0, 1],
+          "riichi": [1],
+          "scores": [31000, 33000, 27000, 28000],
+          "round": 2,
+          "honba": 2,
+          "pot": 1,
+          "payments": ["1500", "1500"]
+        },
+        {
+          "outcome": "abort",
+          "riichi": [3],
+          "scores": [31000, 33000, 27000, 27000],
+          "round": 2,
+          "honba": 3,
+          "pot": 2,
+          "payments": []
+        },
+        {
+          "outcome": "chombo",
+          "loser": 2,
+          "scores": [31000, 33000, 27000, 27000],
+          "round": 2,
+          "honba": 3,
+          "pot": 2,
+          "payments": []
+        },
+        {
+          "outcome": "nagashi",
+          "tenpai": [1, 3],
+          "nagashi": 3,
+          "scores": [29000, 29000, 25000, 35000],
+          "round": 2,
+          "honba": 4,
+          "pot": 2,
+          "payments": ["2000", "2000", "4000"]
+        },
+        {
+          "outcome": "ron",
+          "winners": [0, 3],
+          "loser": 2,
+          "scores": [31200, 29000, 20600, 39200],
+          "round": 3,
+          "honba": 0,
+          "pot": 0,
+          "payments": ["1000 + 1200", "1000 + 1200"]
+        },
+        {
+          "outcome": "tsumo",
+          "winners": [3],
+          "payments": ["8000", "8000", "16000"],
+          "scores": [23200, 21000, 4600, 71200],
+          "round": 4,
+          "honba": 0,
+          "pot": 0,
+          "hand": 1
+        },
+        {
+          "outcome": "ron",
+          "winners": [3],
+          "payments": ["11600"],
+          "loser": 0,
+          "scores": [11600, 21000, 4600, 82800],
+          "round": 4,
+          "honba": 1,
+          "pot": 0,
+          "hand": 7
+        },
+        {
+          "outcome": "ron",
+          "winners": [3],
+          "payments": ["12000 + 300"],
+          "loser": 0,
+          "scores": [-700, 21000, 4600, 95100],
+          "round": 4,
+          "honba": 2,
+          "pot": 0,
+          "hand": 13
+        },
+        {
+          "outcome": "tsumo",
+          "winners": [3],
+          "payments": ["2000 + 200", "2000 + 200", "2000 + 200"],
+          "scores": [-2900, 18800, 2400, 101700],
+          "round": 4,
+          "honba": 3,
+          "pot": 0,
+          "hand": 19
+        },
+        {
+          "outcome": "ron",
+          "winners": [3],
+          "payments": ["96000 + 900"],
+          "loser": 0,
+          "scores": [-99800, 18800, 2400, 198600],
+          "round": 4,
+          "honba": 4,
+          "pot": 0,
+          "hand": 25
+        },
+        {
+          "outcome": "ron",
+          "winners": [3],
+          "payments": ["96000 + 1200"],
+          "loser": 0,
+          "scores": [-197000, 18800, 2400, 295800],
+          "round": 4,
+          "honba": 5,
+          "pot": 0,
+          "hand": 31
+        },
+        {
+          "outcome": "ron",
+          "winners": [0],
+          "payments": ["8000 + 1500"],
+          "loser": 1,
+          "scores": [-187500, 9300, 2400, 295800],
+          "round": 5,
+          "honba": 0,
+          "pot": 0,
+          "hand": 40
+        },
+        {
+          "outcome": "ron",
+          "winners": [1],
+          "payments": ["8000"],
+          "loser": 2,
+          "scores": [-187500, 17300, -5600, 295800],
+          "round": 6,
+          "honba": 0,
+          "pot": 0,
+          "hand": 35
+        },
+        {
+          "outcome": "ron",
+          "winners": [2],
+          "payments": ["12000"],
+          "loser": 3,
+          "scores": [-187500, 17300, 6400, 283800],
+          "round": 7,
+          "honba": 0,
+          "pot": 0,
+          "hand": 36
+        },
+        {
+          "outcome": "ron",
+          "winners": [3],
+          "payments": ["12000"],
+          "loser": 0,
+          "scores": [-199500, 17300, 6400, 295800],
+          "round": 8,
+          "honba": 0,
+          "pot": 0,
+          "hand": 37
+        },
+        {
+          "outcome": "ron",
+          "winners": [0],
+          "payments": ["16000"],
+          "loser": 1,
+          "scores": [-183500, 1300, 6400, 295800],
+          "round": 9,
+          "honba": 0,
+          "pot": 0,
+          "hand": 38
+        }
+      ],
+      "ratingChanges": [-228500, -33700, -38600, 280800]
+    },
+    {
+      "rounds": [
+        {
+          "outcome": "ron",
+          "winners": [1],
+          "loser": 2,
+          "scores": [30000, 31000, 29000, 30000],
+          "round": 2,
+          "honba": 0,
+          "pot": 0,
+          "payments": ["1000"]
+        },
+        {
+          "outcome": "tsumo",
+          "winners": [1],
+          "scores": [29500, 32500, 28500, 29500],
+          "round": 2,
+          "honba": 1,
+          "pot": 0,
+          "payments": ["500", "500", "500"]
+        },
+        {
+          "outcome": "draw",
+          "tenpai": [0, 1],
+          "riichi": [1],
+          "scores": [31000, 33000, 27000, 28000],
+          "round": 2,
+          "honba": 2,
+          "pot": 1,
+          "payments": ["1500", "1500"]
+        },
+        {
+          "outcome": "abort",
+          "riichi": [3],
+          "scores": [31000, 33000, 27000, 27000],
+          "round": 2,
+          "honba": 3,
+          "pot": 2,
+          "payments": []
+        },
+        {
+          "outcome": "chombo",
+          "loser": 2,
+          "scores": [31000, 33000, 27000, 27000],
+          "round": 2,
+          "honba": 3,
+          "pot": 2,
+          "payments": []
+        },
+        {
+          "outcome": "nagashi",
+          "tenpai": [1, 3],
+          "nagashi": 3,
+          "scores": [29000, 29000, 25000, 35000],
+          "round": 2,
+          "honba": 4,
+          "pot": 2,
+          "payments": ["2000", "2000", "4000"]
+        },
+        {
+          "outcome": "ron",
+          "winners": [0, 3],
+          "loser": 2,
+          "scores": [31200, 29000, 20600, 39200],
+          "round": 3,
+          "honba": 0,
+          "pot": 0,
+          "payments": ["1000 + 1200", "1000 + 1200"]
+        },
+        {
+          "outcome": "ron",
+          "winners": [3],
+          "payments": ["8000"],
+          "loser": 0,
+          "scores": [23200, 29000, 20600, 47200],
+          "round": 4,
+          "honba": 0,
+          "pot": 0,
+          "hand": 2
+        },
+        {
+          "outcome": "ron",
+          "winners": [3],
+          "payments": ["12000"],
+          "loser": 0,
+          "scores": [11200, 29000, 20600, 59200],
+          "round": 4,
+          "honba": 1,
+          "pot": 0,
+          "hand": 8
+        },
+        {
+          "outcome": "ron",
+          "winners": [3],
+          "payments": ["18000 + 300"],
+          "loser": 0,
+          "scores": [-7100, 29000, 20600, 77500],
+          "round": 4,
+          "honba": 2,
+          "pot": 0,
+          "hand": 14
+        },
+        {
+          "outcome": "tsumo",
+          "winners": [3],
+          "payments": ["3200 + 200", "3200 + 200", "3200 + 200"],
+          "scores": [-10500, 25600, 17200, 87700],
+          "round": 4,
+          "honba": 3,
+          "pot": 0,
+          "hand": 20
+        },
+        {
+          "outcome": "ron",
+          "winners": [3],
+          "payments": ["72000 + 900", "24000"],
+          "loser": 0,
+          "scores": [-83400, 1600, 17200, 184600],
+          "round": 4,
+          "honba": 4,
+          "pot": 0,
+          "hand": 26,
+          "paoPlayer": 1
+        },
+        {
+          "outcome": "ron",
+          "winners": [3],
+          "payments": ["48000 + 1200"],
+          "loser": 0,
+          "scores": [-132600, 1600, 17200, 233800],
+          "round": 4,
+          "honba": 5,
+          "pot": 0,
+          "hand": 32
+        },
+        {
+          "outcome": "ron",
+          "winners": [0],
+          "payments": ["8000 + 1500"],
+          "loser": 1,
+          "scores": [-123100, -7900, 17200, 233800],
+          "round": 5,
+          "honba": 0,
+          "pot": 0,
+          "hand": 40
+        },
+        {
+          "outcome": "ron",
+          "winners": [1],
+          "payments": ["8000"],
+          "loser": 2,
+          "scores": [-123100, 100, 9200, 233800],
+          "round": 6,
+          "honba": 0,
+          "pot": 0,
+          "hand": 35
+        },
+        {
+          "outcome": "ron",
+          "winners": [2],
+          "payments": ["12000"],
+          "loser": 3,
+          "scores": [-123100, 100, 21200, 221800],
+          "round": 7,
+          "honba": 0,
+          "pot": 0,
+          "hand": 36
+        },
+        {
+          "outcome": "ron",
+          "winners": [3],
+          "payments": ["12000"],
+          "loser": 0,
+          "scores": [-135100, 100, 21200, 233800],
+          "round": 8,
+          "honba": 0,
+          "pot": 0,
+          "hand": 37
+        },
+        {
+          "outcome": "ron",
+          "winners": [0],
+          "payments": ["16000"],
+          "loser": 1,
+          "scores": [-119100, -15900, 21200, 233800],
+          "round": 9,
+          "honba": 0,
+          "pot": 0,
+          "hand": 38
+        }
+      ],
+      "ratingChanges": [-164100, -50900, -23800, 218800]
+    },
+    {
+      "rounds": [
+        {
+          "outcome": "ron",
+          "winners": [1],
+          "loser": 2,
+          "scores": [30000, 31000, 29000, 30000],
+          "round": 2,
+          "honba": 0,
+          "pot": 0,
+          "payments": ["1000"]
+        },
+        {
+          "outcome": "tsumo",
+          "winners": [1],
+          "scores": [29500, 32500, 28500, 29500],
+          "round": 2,
+          "honba": 1,
+          "pot": 0,
+          "payments": ["500", "500", "500"]
+        },
+        {
+          "outcome": "draw",
+          "tenpai": [0, 1],
+          "riichi": [1],
+          "scores": [31000, 33000, 27000, 28000],
+          "round": 2,
+          "honba": 2,
+          "pot": 1,
+          "payments": ["1500", "1500"]
+        },
+        {
+          "outcome": "abort",
+          "riichi": [3],
+          "scores": [31000, 33000, 27000, 27000],
+          "round": 2,
+          "honba": 3,
+          "pot": 2,
+          "payments": []
+        },
+        {
+          "outcome": "chombo",
+          "loser": 2,
+          "scores": [31000, 33000, 27000, 27000],
+          "round": 2,
+          "honba": 3,
+          "pot": 2,
+          "payments": []
+        },
+        {
+          "outcome": "nagashi",
+          "tenpai": [1, 3],
+          "nagashi": 3,
+          "scores": [29000, 29000, 25000, 35000],
+          "round": 2,
+          "honba": 4,
+          "pot": 2,
+          "payments": ["2000", "2000", "4000"]
+        },
+        {
+          "outcome": "ron",
+          "winners": [0, 3],
+          "loser": 2,
+          "scores": [31200, 29000, 20600, 39200],
+          "round": 3,
+          "honba": 0,
+          "pot": 0,
+          "payments": ["1000 + 1200", "1000 + 1200"]
+        },
+        {
+          "outcome": "ron",
+          "winners": [2],
+          "payments": ["11600"],
+          "loser": 3,
+          "riichi": [2],
+          "scores": [31200, 29000, 32200, 27600],
+          "round": 3,
+          "honba": 1,
+          "pot": 0,
+          "hand": 3
+        },
+        {
+          "outcome": "ron",
+          "winners": [2],
+          "payments": ["18000 + 300"],
+          "loser": 3,
+          "scores": [31200, 29000, 50500, 9300],
+          "round": 3,
+          "honba": 2,
+          "pot": 0,
+          "hand": 9
+        },
+        {
+          "outcome": "ron",
+          "winners": [2],
+          "payments": ["24000 + 600"],
+          "loser": 3,
+          "scores": [31200, 29000, 75100, -15300],
+          "round": 3,
+          "honba": 3,
+          "pot": 0,
+          "hand": 15
+        },
+        {
+          "outcome": "ron",
+          "winners": [2],
+          "payments": ["10600 + 900"],
+          "loser": 3,
+          "scores": [31200, 29000, 86600, -26800],
+          "round": 3,
+          "honba": 4,
+          "pot": 0,
+          "hand": 21
+        },
+        {
+          "outcome": "ron",
+          "winners": [2],
+          "payments": ["48000 + 1200"],
+          "loser": 3,
+          "scores": [31200, 29000, 135800, -76000],
+          "round": 3,
+          "honba": 5,
+          "pot": 0,
+          "hand": 27
+        },
+        {
+          "outcome": "ron",
+          "winners": [2],
+          "payments": ["48000 + 1500"],
+          "loser": 3,
+          "scores": [31200, 29000, 185300, -125500],
+          "round": 3,
+          "honba": 6,
+          "pot": 0,
+          "hand": 33
+        },
+        {
+          "outcome": "ron",
+          "winners": [3],
+          "payments": ["6400 + 1800"],
+          "loser": 0,
+          "scores": [23000, 29000, 185300, -117300],
+          "round": 4,
+          "honba": 0,
+          "pot": 0,
+          "hand": 39
+        },
+        {
+          "outcome": "ron",
+          "winners": [0],
+          "payments": ["8000"],
+          "loser": 1,
+          "scores": [31000, 21000, 185300, -117300],
+          "round": 5,
+          "honba": 0,
+          "pot": 0,
+          "hand": 40
+        },
+        {
+          "outcome": "ron",
+          "winners": [1],
+          "payments": ["8000"],
+          "loser": 2,
+          "scores": [31000, 29000, 177300, -117300],
+          "round": 6,
+          "honba": 0,
+          "pot": 0,
+          "hand": 35
+        },
+        {
+          "outcome": "ron",
+          "winners": [2],
+          "payments": ["12000"],
+          "loser": 3,
+          "scores": [31000, 29000, 189300, -129300],
+          "round": 7,
+          "honba": 0,
+          "pot": 0,
+          "hand": 36
+        },
+        {
+          "outcome": "ron",
+          "winners": [3],
+          "payments": ["12000"],
+          "loser": 0,
+          "scores": [19000, 29000, 189300, -117300],
+          "round": 8,
+          "honba": 0,
+          "pot": 0,
+          "hand": 37
+        },
+        {
+          "outcome": "ron",
+          "winners": [0],
+          "payments": ["16000"],
+          "loser": 1,
+          "scores": [35000, 13000, 189300, -117300],
+          "round": 9,
+          "honba": 0,
+          "pot": 0,
+          "hand": 38
+        }
+      ],
+      "ratingChanges": [10000, -22000, 154300, -162300]
+    },
+    {
+      "rounds": [
+        {
+          "outcome": "ron",
+          "winners": [1],
+          "loser": 2,
+          "scores": [30000, 31000, 29000, 30000],
+          "round": 2,
+          "honba": 0,
+          "pot": 0,
+          "payments": ["1000"]
+        },
+        {
+          "outcome": "tsumo",
+          "winners": [1],
+          "scores": [29500, 32500, 28500, 29500],
+          "round": 2,
+          "honba": 1,
+          "pot": 0,
+          "payments": ["500", "500", "500"]
+        },
+        {
+          "outcome": "draw",
+          "tenpai": [0, 1],
+          "riichi": [1],
+          "scores": [31000, 33000, 27000, 28000],
+          "round": 2,
+          "honba": 2,
+          "pot": 1,
+          "payments": ["1500", "1500"]
+        },
+        {
+          "outcome": "abort",
+          "riichi": [3],
+          "scores": [31000, 33000, 27000, 27000],
+          "round": 2,
+          "honba": 3,
+          "pot": 2,
+          "payments": []
+        },
+        {
+          "outcome": "chombo",
+          "loser": 2,
+          "scores": [31000, 33000, 27000, 27000],
+          "round": 2,
+          "honba": 3,
+          "pot": 2,
+          "payments": []
+        },
+        {
+          "outcome": "nagashi",
+          "tenpai": [1, 3],
+          "nagashi": 3,
+          "scores": [29000, 29000, 25000, 35000],
+          "round": 2,
+          "honba": 4,
+          "pot": 2,
+          "payments": ["2000", "2000", "4000"]
+        },
+        {
+          "outcome": "ron",
+          "winners": [0, 3],
+          "loser": 2,
+          "scores": [31200, 29000, 20600, 39200],
+          "round": 3,
+          "honba": 0,
+          "pot": 0,
+          "payments": ["1000 + 1200", "1000 + 1200"]
+        },
+        {
+          "outcome": "tsumo",
+          "winners": [2],
+          "payments": ["2600", "2600", "2600"],
+          "scores": [28600, 26400, 28400, 36600],
+          "round": 3,
+          "honba": 1,
+          "pot": 0,
+          "hand": 4
+        },
+        {
+          "outcome": "ron",
+          "winners": [2],
+          "payments": ["18000 + 300"],
+          "loser": 3,
+          "scores": [28600, 26400, 46700, 18300],
+          "round": 3,
+          "honba": 2,
+          "pot": 0,
+          "hand": 10
+        },
+        {
+          "outcome": "ron",
+          "winners": [2],
+          "payments": ["4800 + 600"],
+          "loser": 3,
+          "scores": [28600, 26400, 52100, 12900],
+          "round": 3,
+          "honba": 3,
+          "pot": 0,
+          "hand": 16
+        },
+        {
+          "outcome": "ron",
+          "winners": [2],
+          "payments": ["36000 + 900"],
+          "loser": 3,
+          "scores": [28600, 26400, 89000, -24000],
+          "round": 3,
+          "honba": 4,
+          "pot": 0,
+          "hand": 22
+        },
+        {
+          "outcome": "ron",
+          "winners": [2],
+          "payments": ["48000 + 1200"],
+          "loser": 3,
+          "scores": [28600, 26400, 138200, -73200],
+          "round": 3,
+          "honba": 5,
+          "pot": 0,
+          "hand": 28
+        },
+        {
+          "outcome": "ron",
+          "winners": [2],
+          "payments": ["96000 + 1500"],
+          "loser": 3,
+          "scores": [28600, 26400, 235700, -170700],
+          "round": 3,
+          "honba": 6,
+          "pot": 0,
+          "hand": 34
+        },
+        {
+          "outcome": "ron",
+          "winners": [3],
+          "payments": ["6400 + 1800"],
+          "loser": 0,
+          "scores": [20400, 26400, 235700, -162500],
+          "round": 4,
+          "honba": 0,
+          "pot": 0,
+          "hand": 39
+        },
+        {
+          "outcome": "ron",
+          "winners": [0],
+          "payments": ["8000"],
+          "loser": 1,
+          "scores": [28400, 18400, 235700, -162500],
+          "round": 5,
+          "honba": 0,
+          "pot": 0,
+          "hand": 40
+        },
+        {
+          "outcome": "ron",
+          "winners": [1],
+          "payments": ["8000"],
+          "loser": 2,
+          "scores": [28400, 26400, 227700, -162500],
+          "round": 6,
+          "honba": 0,
+          "pot": 0,
+          "hand": 35
+        },
+        {
+          "outcome": "ron",
+          "winners": [2],
+          "payments": ["12000"],
+          "loser": 3,
+          "scores": [28400, 26400, 239700, -174500],
+          "round": 7,
+          "honba": 0,
+          "pot": 0,
+          "hand": 36
+        },
+        {
+          "outcome": "ron",
+          "winners": [3],
+          "payments": ["12000"],
+          "loser": 0,
+          "scores": [16400, 26400, 239700, -162500],
+          "round": 8,
+          "honba": 0,
+          "pot": 0,
+          "hand": 37
+        },
+        {
+          "outcome": "ron",
+          "winners": [0],
+          "payments": ["16000"],
+          "loser": 1,
+          "scores": [32400, 10400, 239700, -162500],
+          "round": 9,
+          "honba": 0,
+          "pot": 0,
+          "hand": 38
+        }
+      ],
+      "ratingChanges": [7400, -24600, 204700, -207500]
+    },
+    {
+      "rounds": [
+        {
+          "outcome": "ron",
+          "winners": [1],
+          "loser": 2,
+          "scores": [30000, 31000, 29000, 30000],
+          "round": 2,
+          "honba": 0,
+          "pot": 0,
+          "payments": ["1000"]
+        },
+        {
+          "outcome": "tsumo",
+          "winners": [1],
+          "scores": [29500, 32500, 28500, 29500],
+          "round": 2,
+          "honba": 1,
+          "pot": 0,
+          "payments": ["500", "500", "500"]
+        },
+        {
+          "outcome": "draw",
+          "tenpai": [0, 1],
+          "riichi": [1],
+          "scores": [31000, 33000, 27000, 28000],
+          "round": 2,
+          "honba": 2,
+          "pot": 1,
+          "payments": ["1500", "1500"]
+        },
+        {
+          "outcome": "abort",
+          "riichi": [3],
+          "scores": [31000, 33000, 27000, 27000],
+          "round": 2,
+          "honba": 3,
+          "pot": 2,
+          "payments": []
+        },
+        {
+          "outcome": "chombo",
+          "loser": 2,
+          "scores": [31000, 33000, 27000, 27000],
+          "round": 2,
+          "honba": 3,
+          "pot": 2,
+          "payments": []
+        },
+        {
+          "outcome": "nagashi",
+          "tenpai": [1, 3],
+          "nagashi": 3,
+          "scores": [29000, 29000, 25000, 35000],
+          "round": 2,
+          "honba": 4,
+          "pot": 2,
+          "payments": ["2000", "2000", "4000"]
+        },
+        {
+          "outcome": "ron",
+          "winners": [0, 3],
+          "loser": 2,
+          "scores": [31200, 29000, 20600, 39200],
+          "round": 3,
+          "honba": 0,
+          "pot": 0,
+          "payments": ["1000 + 1200", "1000 + 1200"]
+        },
+        {
+          "outcome": "ron",
+          "winners": [2],
+          "payments": ["12000"],
+          "loser": 3,
+          "scores": [31200, 29000, 32600, 27200],
+          "round": 3,
+          "honba": 1,
+          "pot": 0,
+          "hand": 5
+        },
+        {
+          "outcome": "ron",
+          "winners": [2],
+          "payments": ["6800 + 300"],
+          "loser": 3,
+          "scores": [31200, 29000, 39700, 20100],
+          "round": 3,
+          "honba": 2,
+          "pot": 0,
+          "hand": 11
+        },
+        {
+          "outcome": "ron",
+          "winners": [2],
+          "payments": ["12000 + 600"],
+          "loser": 3,
+          "riichi": [2],
+          "scores": [31200, 29000, 52300, 7500],
+          "round": 3,
+          "honba": 3,
+          "pot": 0,
+          "hand": 17
+        },
+        {
+          "outcome": "ron",
+          "winners": [2],
+          "payments": ["48000 + 900"],
+          "loser": 3,
+          "scores": [31200, 29000, 101200, -41400],
+          "round": 3,
+          "honba": 4,
+          "pot": 0,
+          "hand": 23
+        },
+        {
+          "outcome": "ron",
+          "winners": [2],
+          "payments": ["48000 + 1200"],
+          "loser": 3,
+          "scores": [31200, 29000, 150400, -90600],
+          "round": 3,
+          "honba": 5,
+          "pot": 0,
+          "hand": 29
+        },
+        {
+          "outcome": "ron",
+          "winners": [3],
+          "payments": ["6400 + 1500"],
+          "loser": 0,
+          "scores": [23300, 29000, 150400, -82700],
+          "round": 4,
+          "honba": 0,
+          "pot": 0,
+          "hand": 39
+        },
+        {
+          "outcome": "ron",
+          "winners": [0],
+          "payments": ["8000"],
+          "loser": 1,
+          "scores": [31300, 21000, 150400, -82700],
+          "round": 5,
+          "honba": 0,
+          "pot": 0,
+          "hand": 40
+        },
+        {
+          "outcome": "ron",
+          "winners": [1],
+          "payments": ["8000"],
+          "loser": 2,
+          "scores": [31300, 29000, 142400, -82700],
+          "round": 6,
+          "honba": 0,
+          "pot": 0,
+          "hand": 35
+        },
+        {
+          "outcome": "ron",
+          "winners": [2],
+          "payments": ["12000"],
+          "loser": 3,
+          "scores": [31300, 29000, 154400, -94700],
+          "round": 7,
+          "honba": 0,
+          "pot": 0,
+          "hand": 36
+        },
+        {
+          "outcome": "ron",
+          "winners": [3],
+          "payments": ["12000"],
+          "loser": 0,
+          "scores": [19300, 29000, 154400, -82700],
+          "round": 8,
+          "honba": 0,
+          "pot": 0,
+          "hand": 37
+        },
+        {
+          "outcome": "ron",
+          "winners": [0],
+          "payments": ["16000"],
+          "loser": 1,
+          "scores": [35300, 13000, 154400, -82700],
+          "round": 9,
+          "honba": 0,
+          "pot": 0,
+          "hand": 38
+        }
+      ],
+      "ratingChanges": [10300, -22000, 119400, -127700]
+    }
+  ]
+}

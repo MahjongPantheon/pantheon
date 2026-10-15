@@ -46,9 +46,11 @@ CI=true ./node_modules/.bin/playwright test tests/events.spec.ts --grep SMOKE-00
 
 SMOKE-005 follows the same account setup, records a complete local session in Tyr, and compares the finished results with Sigrun. Run it with `CI=true ./node_modules/.bin/playwright test tests/local-session.spec.ts --grep SMOKE-005`; see [its case description](testcases/smoke-005-local-session-round-outcomes.md) for the round sequence and score checkpoints.
 
-SMOKE-006 records six tournament games across random, Swiss, and interval seatings, including timer start, round cancellation, and administrator approval. Its per-attempt timeout is 15 minutes, with 30-second action and tournament-transition waits. Run it with `CI=true ./node_modules/.bin/playwright test tests/tournament.spec.ts --grep SMOKE-006`; see [its case description](testcases/smoke-006-basic-tournament-seatings.md).
+SMOKE-006 records six tournament games across random, Swiss, and interval seatings, including all 46 yaku, timer start, round cancellation, and administrator approval. Each game receives a randomly assigned small hand subset without replacement; the six subsets together cover all yaku. The report records the hand plan. Tyr's complete log is checked once immediately before each game's final hand, and Sigrun logs use a single collection comparison. Its per-attempt timeout is 60 minutes, with 30-second action and tournament-transition waits. Run it with `CI=true ./node_modules/.bin/playwright test tests/tournament.spec.ts --grep SMOKE-006`; see [its case description](testcases/smoke-006-basic-tournament-seatings.md).
 
 The tests use a fresh ordinary account as the event administrator. Accounts and the uniquely named TEST event are retained in the test environment. See [the case description](testcases/smoke-004-create-event-with-users.md) for assertions and coverage limits.
+
+SMOKE-005 has a 30-minute per-attempt timeout. Both scenarios use the [compatible hand catalogue](testcases/smoke-hand-catalogue.md) and explicit score fixtures, with varied fu/dora and complete yaku coverage per event. These budgets also apply in Playwright UI; individual missing controls still fail within their bounded action/assertion waits.
 
 #### Legend
 
