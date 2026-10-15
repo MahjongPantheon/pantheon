@@ -404,7 +404,7 @@ function determineStage(
       const expectedTablesCount =
         prescriptedConfig?.prescript
           ?.split('\n\n')
-          [prescriptedConfig?.nextSessionIndex - 1]?.split('\n')?.length ?? 0;
+          ?.[prescriptedConfig?.nextSessionIndex - 1]?.split('\n')?.length ?? 0;
       if (notFinishedTablesCount === expectedTablesCount) {
         return Stage.SEATING_READY;
       } else {
