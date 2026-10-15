@@ -304,9 +304,11 @@ export class EventModel extends Model {
             );
 
         const [{ people: playerItems }, regData, penalties] = await Promise.all([
-          this.repo.frey.GetPersonalInfo({
-            ids: dataItems.map((item) => item.playerId),
-          }),
+          dataItems.length
+            ? this.repo.frey.GetPersonalInfo({
+                ids: dataItems.map((item) => item.playerId),
+              })
+            : Promise.resolve({ people: [] }),
           this.repo.em.findAll(EventRegisteredPlayersEntity, {
             where: { event: mainEvent },
           }),
@@ -748,6 +750,7 @@ export class EventModel extends Model {
         event.allowManualAddReplay = eventData.allowManualAddReplay ? 1 : 0;
         event.onlinePlatform = eventData.platformId;
         event.statHost = statHost;
+        event.windShuffleMode = eventData.windShuffleMode ?? undefined;
         event.finished = 0;
 
         switch (eventData.type) {
