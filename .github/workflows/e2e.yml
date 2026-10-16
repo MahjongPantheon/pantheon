@@ -34,7 +34,12 @@ jobs:
           ENV_FILENAME: .env.e2e
 
       - name: Run all tests
-        run: make e2e
+        run: |
+          make bootstrap_admin
+          printf '%s\n' \
+            'E2E_SUPERADMIN_EMAIL=admin@localhost.localdomain' \
+            'E2E_SUPERADMIN_PASSWORD=123456' > Fenrir/.env.e2e.local
+          make e2e
         env:
           ENV_FILENAME: .env.e2e
 

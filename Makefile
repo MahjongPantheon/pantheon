@@ -656,12 +656,11 @@ e2e_ui: export ENV_FILENAME=.env.e2e
 e2e_ui:
 	cd Fenrir && ${MAKE} container_ui
 
-.PHONY: e2e_local
-e2e_dev: export ENV_FILENAME=.env.e2e
+.PHONY: e2e_dev
+e2e_dev: export ENV_FILENAME=.env.development
 e2e_dev:
 	${CONTAINER_COMMAND} pull ghcr.io/mahjongpantheon/pantheon-fenrir-${CONTAINER_ARCH}:latest
-	@${COMPOSE_COMMAND} --profile e2e up -d
-	${MAKE} e2e_compile
+	@${COMPOSE_COMMAND} --profile e2e up -d --no-deps fenrir.pantheon.internal
 	cd Fenrir && ${MAKE} container_deps && ${MAKE} container_run
 
 .PHONY: e2e_build_tyr
@@ -681,30 +680,36 @@ e2e_build_sigrun: export NODE_ENV=development
 e2e_build_sigrun: export ENV_FILENAME=.env.e2e
 e2e_build_sigrun: # this is for automated builds, don't run it manually
 	cd Sigrun && ${MAKE} container_deps && ${MAKE} container_build && ${MAKE} container_cleanup_prebuilts && ${MAKE} container_prebuild && ${MAKE} container_prod_deps
+	cp Env/.env.e2e Sigrun-dist/.env.production
 
 .PHONY: e2e_build_frey
 e2e_build_frey: export NODE_ENV=development
 e2e_build_frey: export ENV_FILENAME=.env.e2e
 e2e_build_frey: # this is for automated builds, don't run it manually
 	cd Frey && ${MAKE} container_deps && ${MAKE} container_build && ${MAKE} container_prebuild && ${MAKE} container_prod_deps
+	cp Env/.env.e2e Frey-dist/.env.production
 
 .PHONY: e2e_build_mimir
 e2e_build_mimir: export NODE_ENV=development
 e2e_build_mimir: export ENV_FILENAME=.env.e2e
 e2e_build_mimir: # this is for automated builds, don't run it manually
 	cd Mimir && ${MAKE} container_deps && ${MAKE} container_build && ${MAKE} container_prebuild && ${MAKE} container_prod_deps
+	cp Env/.env.e2e Mimir-dist/.env.production
+	cd Mimir && ${MAKE} container_reload_nginx
 
 .PHONY: e2e_build_bragi
 e2e_build_bragi: export NODE_ENV=development
 e2e_build_bragi: export ENV_FILENAME=.env.e2e
 e2e_build_bragi: # this is for automated builds, don't run it manually
 	cd Bragi && ${MAKE} container_deps && ${MAKE} container_build && ${MAKE} container_cleanup_prebuilts && ${MAKE} container_prebuild && ${MAKE} container_prod_deps
+	cp Env/.env.e2e Bragi-dist/.env.production
 
 .PHONY: e2e_build_skirnir
 e2e_build_skirnir: export NODE_ENV=development
 e2e_build_skirnir: export ENV_FILENAME=.env.e2e
 e2e_build_skirnir: # this is for automated builds, don't run it manually
 	cd Skirnir && ${MAKE} container_deps && ${MAKE} container_build && ${MAKE} container_prebuild && ${MAKE} container_prod_deps
+	cp Env/.env.e2e Skirnir-dist/.env.production
 
 .PHONY: e2e_compile
 e2e_compile: export ENV_FILENAME=.env.e2e

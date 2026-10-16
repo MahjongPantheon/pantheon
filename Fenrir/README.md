@@ -38,6 +38,8 @@ SMOKE-004, SMOKE-005, and SMOKE-006 each create nine fresh ordinary accounts thr
 
 Alternatively, provide both `E2E_SUPERADMIN_EMAIL` and `E2E_SUPERADMIN_PASSWORD` for an existing Frey superadmin through the Fenrir process environment or an ignored `Fenrir/.env.e2e.local` file. This selects the guarded `E2eCreateAccounts` RPC and requires Frey to run with `E2E_TEST_MODE=1`. Playwright reads the local file when run from the Fenrir directory, including inside the container; exported environment variables take precedence. Do not put credentials in tracked environment files. Incomplete or invalid credentials fail explicitly; setup does not bootstrap or grant superadmin rights. Without credentials, setup requires a `.pantheon.local` Frey URL and actual development confirmation codes.
 
+The CI production-build flow uses `.pantheon.internal` hosts from `Env/.env.e2e`. Its workflow bootstraps the default administrator in the fresh CI database, writes its fixture credentials to the ignored local file, and selects the guarded API path. Browser actions still use newly created ordinary accounts. Production server builds receive the e2e configuration as their runtime `.env.production` file. Development runs use `Env/.env.development` and the already-running `.pantheon.local` services instead.
+
 Follow the root README's development `make e2e_dev` flow. To run only this case inside the running Fenrir container, enter it with `make -C Fenrir shell`, then run from `/var/www/html/Fenrir`:
 
 ```sh

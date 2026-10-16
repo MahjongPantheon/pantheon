@@ -117,8 +117,9 @@ container_typecheck: get_container_id
 .PHONY: test
 test: export TEST=true
 test: export NODE_OPTIONS=--experimental-vm-modules
-test: seed_test_db
+test: seed_test_db build
 	echo "======= Mimir: test ======"
+	node src/tests/production.mjs
 	node src/tests/coverage.mjs
 	# For debugging:
 	#node --inspect=0.0.0.0:4411 node_modules/jest/bin/jest.js --runInBand -t 'Mimir Twirp API'
@@ -267,6 +268,14 @@ container_reload: get_container_id
 		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Mimir && HOME=/home/user su-exec user make reload' ; \
 	fi
 
+.PHONY: container_reload_nginx
+container_reload_nginx: get_container_id
+	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
+		echo "Mimir container is not running, cannot reload Nginx."; exit 1; \
+	else \
+		$(CONTAINER_COMMAND) exec $(RUNNING_CONTAINER_ID) sh -c 'cp /var/www/html/Mimir/mimir-container.nginx.conf /etc/nginx/http.d/mimir.conf && nginx -t && nginx -s reload'; \
+	fi
+
 .PHONY: build
 build:
 	mkdir -p dist
@@ -308,6 +317,7 @@ container_common_deps: get_container_id
 .PHONY: prebuild
 prebuild:
 	cp -f dist/server.js ../Mimir-dist/
+	cp -f dist/metadata.json ../Mimir-dist/
 	if [ -f .env.production ]; then cp -f .env.production ../Mimir-dist/ ; fi
 	cp -f package.json ../Mimir-dist/
 	cp -f pnpm-lock.yaml ../Mimir-dist/

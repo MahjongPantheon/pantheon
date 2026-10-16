@@ -10,7 +10,8 @@ Forseti event configuration and player registration, Tyr game creation and round
 
 ## Preconditions
 
-- The development stack is running; `FORSETI_URL`, `TYR_URL`, `SIGRUN_URL`, and `FREY_URL` use the configured `.pantheon.local` endpoints.
+- In production-build CI, `.pantheon.internal` services are running and the workflow supplies fixture-superadmin credentials for the guarded `E2eCreateAccounts` API. Browser actions use fresh ordinary accounts. The development alternative below uses `.pantheon.local` services.
+- For development runs, the development stack is running; `FORSETI_URL`, `TYR_URL`, `SIGRUN_URL`, and `FREY_URL` use the configured `.pantheon.local` endpoints.
 - Create nine fresh ordinary accounts through Frey before the UI flow, following [SMOKE-004](smoke-004-create-event-with-users.md): one event administrator and eight players labelled A–H. Retain their unique names, emails, passwords, and actual person IDs. These are fixtures for this case, not accounts or an event left by running SMOKE-004.
 - Use a fresh browser context for the Forseti administrator and a separate fresh context for Tyr player A. Both initially have no login state. Keep their authentication separate because the applications share cookies across the Pantheon domain. Use a third fresh, anonymous context for the public Sigrun checks.
 - No player has an ongoing session. The development databases must be consistent: newly allocated Mimir event IDs must not collide with stale Frey permission rules.

@@ -10,7 +10,8 @@ Forseti UI, Frey account setup and permissions, and Mimir event and player regis
 
 ## Preconditions
 
-- The development stack is running and `FORSETI_URL` and `SIGRUN_URL` are configured.
+- In production-build CI, `.pantheon.internal` services are running and the workflow supplies fixture-superadmin credentials for the guarded `E2eCreateAccounts` API. Browser actions use fresh ordinary accounts. The development alternative below uses `.pantheon.local` services.
+- For development runs, the development stack is running and `FORSETI_URL` and `SIGRUN_URL` are configured.
 - The browser is logged out.
 - `FREY_URL` points to Frey's `.pantheon.local` development endpoint, which returns confirmation codes for sign-up. No superadmin credentials are needed for this path.
 - Alternatively, configure both `E2E_SUPERADMIN_EMAIL` and `E2E_SUPERADMIN_PASSWORD` for an existing superadmin used only for fixture creation, and enable `E2E_TEST_MODE=1` in Frey. See [Fenrir setup](../README.md).

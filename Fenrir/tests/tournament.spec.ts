@@ -1,4 +1,10 @@
-import { test, expect as baseExpect, type Page, type BrowserContext } from '@playwright/test';
+import {
+  test,
+  expect as baseExpect,
+  type Page,
+  type BrowserContext,
+  type Response,
+} from '@playwright/test';
 import { randomUUID, randomInt } from 'node:crypto';
 import { createTestAccounts } from './utils/accounts';
 import { withScreenshotsOnTestFail } from './utils/screenshots';
@@ -221,14 +227,37 @@ test('SMOKE-006: Administrator and players can complete a two-table tournament w
     });
 
     const checkPublication = async (approvedSeatings: number) => {
-      const [gamesLoaded] = await Promise.all([
-        sigrun.waitForResponse(
-          (r) => r.url().endsWith('/common.Mimir/GetLastGames') && r.request().method() === 'POST'
-        ),
-        sigrun.goto(`${process.env.SIGRUN_URL!.replace(/\/$/, '')}/event/${eventId}/games`),
-      ]);
-      expect(gamesLoaded.ok()).toBe(true);
-      await gamesLoaded.finished();
+      let gamesLoaded: Response | undefined;
+      const captureGames = (response: Response) => {
+        if (
+          response.url().endsWith('/common.Mimir/GetLastGames') &&
+          response.request().method() === 'POST'
+        ) {
+          gamesLoaded = response;
+        }
+      };
+      sigrun.on('response', captureGames);
+      try {
+        const navigation = await sigrun.goto(
+          `${process.env.SIGRUN_URL!.replace(/\/$/, '')}/event/${eventId}/games`
+        );
+        expect(navigation?.ok()).toBe(true);
+        // SSR has already fetched this data; hydration deliberately skips the browser RPC.
+        const serverRendered = await sigrun.evaluate(
+          (key) =>
+            Boolean(
+              (window as Window & { initialData?: Record<string, unknown> }).initialData?.[key]
+            ),
+          `RecentGames_games_${eventId}_1`
+        );
+        if (!serverRendered) {
+          await expect.poll(() => gamesLoaded).toBeDefined();
+          expect(gamesLoaded!.ok()).toBe(true);
+          await gamesLoaded!.finished();
+        }
+      } finally {
+        sigrun.off('response', captureGames);
+      }
       await expect(sigrun.getByTestId('sigrun-recent-games-page')).toContainText(
         `${title} - Last games`
       );

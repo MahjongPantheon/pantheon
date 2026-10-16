@@ -46,4 +46,8 @@ app.on('error', (ctx, err) => {
 });
 
 const port = parseInt(process.env.PORT ?? '4001');
-createServer(app).listen(port, () => console.log(`Server listening on port ${port}`));
+const server = createServer(app);
+server.listen(port, () => {
+  const address = server.address();
+  console.log(`Server listening on port ${typeof address === 'object' ? address?.port : port}`);
+});

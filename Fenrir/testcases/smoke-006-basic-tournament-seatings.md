@@ -10,7 +10,9 @@ Forseti tournament settings, seating generation, timer, round cancellation, and 
 
 ## Preconditions
 
-- The development stack is running. `FORSETI_URL`, `TYR_URL`, `SIGRUN_URL`, and `FREY_URL` use the configured `.pantheon.local` endpoints. Development databases have consistent event IDs and permission rules.
+- In production-build CI, `.pantheon.internal` services are running and the workflow supplies fixture-superadmin credentials for the guarded `E2eCreateAccounts` API. Browser actions use fresh ordinary accounts. The development alternative below uses `.pantheon.local` services.
+- Publication checks accept Sigrun's server-rendered initial games data, or wait for a successful browser `GetLastGames` response in development, before asserting the visible games and ratings.
+- For development runs, the development stack is running. `FORSETI_URL`, `TYR_URL`, `SIGRUN_URL`, and `FREY_URL` use the configured `.pantheon.local` endpoints. Development databases have consistent event IDs and permission rules.
 - Create nine fresh ordinary accounts independently for every attempt and retry, following [SMOKE-004](smoke-004-create-event-with-users.md): one administrator and eight players A–H. Retain unique display names, credentials, and person IDs. No player has an ongoing session in another event.
 - Keep the Forseti administrator, each of the two Tyr table recorders, and anonymous Sigrun visitor in separate fresh browser contexts. Pantheon applications share domain cookies, so separate tabs in one context do not isolate these roles.
 - The administrator creates this event and therefore has its game-management and player-registration permissions. The Tyr recorders are ordinary registered players, not event administrators.

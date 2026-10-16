@@ -93,6 +93,7 @@ Mimir/dist/*
 Mimir/temp/*
 Mimir/coverage/*
 Mimir-dist/.env.production
+Mimir-dist/metadata.json
 Mimir-dist/node_modules/*
 
 Sigrun/dev-dist

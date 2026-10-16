@@ -191,7 +191,7 @@ Please see UPDATE.md for details.
 
 Pantheon services include e2e testing framework based on Playwright. To run it locally, make sure pantheon development
 environment is running (`make dev`) and use `make e2e_dev` command in separate terminal window. Note that it will run tests against
-development build, so no SSR is tested locally.
+development build, so no SSR is tested locally. This starts only Fenrir with the development environment; it does not rebuild or recreate the application services.
 
 If you want to test full production build locally, you may stop the development environment and use following commands:
 
@@ -200,6 +200,10 @@ make e2e_run
 make e2e_compile
 make e2e
 ```
+
+The production-build flow uses `Env/.env.e2e` and `.pantheon.internal` hosts. The `.pantheon.local` hosts proxy development servers and require `make dev`.
+For account-backed cases, configure an existing fixture superadmin in the ignored `Fenrir/.env.e2e.local` file as described in [Fenrir's README](Fenrir/README.md).
+GitHub CI bootstraps the default administrator in its fresh test database and uses it only to create ordinary fixture accounts through Frey's guarded e2e API.
 
 Remember to remove all the files created during the run before committing changes.
 

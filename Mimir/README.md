@@ -34,6 +34,12 @@ and failed tests still return a failing exit status after report generation.
 The `test_verbose` and `test_noserver` targets retain their existing debugging behavior without
 generating the combined report. The coverage target starts and stops its own test server.
 
+The normal test target also builds the production server and runs it from an isolated
+directory against the seeded test database. This checks that the deployed bundle can
+read an event without TypeScript sources. Deploy both `server.js` and `metadata.json`;
+the latter contains the ORM metadata generated from the source entities during the build.
+Register new entities in `src/mikro-orm.config.ts` so they are included in the bundle and its metadata.
+
 ### Legend
 
 **Mimir** is a figure in Norse mythology renowned for his knowledge and wisdom. See wikipedia for details :)
