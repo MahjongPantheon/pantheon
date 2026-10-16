@@ -240,7 +240,7 @@ export class EventModel extends Model {
           allowViewOtherTables: !!data.allowViewOtherTables,
           autoSeating: !!data.autoSeating,
           eventDescription: data.description,
-          eventStatHost: data.statHost,
+          eventStatHost: data.statHost.replace(ID_PLACEHOLDER, data.id.toString()),
           eventTitle: data.title,
           gameDuration: data.gameDuration ?? 0,
           gamesStatus:

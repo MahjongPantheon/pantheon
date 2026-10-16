@@ -20,7 +20,7 @@ export const LogCell = (props: LogCellProps) => {
       >
         {delta > 0 ? `+${delta}` : delta}
       </div>
-      <div className={styles.logScore}>{score + delta}</div>
+      <div className={styles.logScore}>{score}</div>
     </div>
   );
 };
