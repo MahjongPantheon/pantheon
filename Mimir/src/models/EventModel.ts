@@ -132,7 +132,7 @@ export class EventModel extends Model {
             ...(eventsGetEventsPayload.filter
               ? {
                   title: {
-                    $ilike: `%${eventsGetEventsPayload.filter}%`,
+                    $ilike: `%${decodeURIComponent(eventsGetEventsPayload.filter)}%`,
                   },
                 }
               : {}),
