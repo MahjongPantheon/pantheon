@@ -353,9 +353,7 @@ export class EventModel extends Model {
             tenhouId: item.playerTenhouId ?? '',
             rating: item.rating,
             chips: item.chips ?? 0,
-            winnerZone:
-              item.rating - (item.penaltiesAmount ?? 0) >=
-              (mainEvent.ruleset.rules.startRating ?? 0),
+            winnerZone: item.rating >= (mainEvent.ruleset.rules.startRating ?? 0),
             avgPlace: item.avgPlace ?? 0,
             avgScore: item.avgScore ?? 0,
             gamesPlayed: item.gamesPlayed ?? 0,
