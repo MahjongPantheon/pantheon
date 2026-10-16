@@ -62,6 +62,7 @@ Follow these steps:
   sure no games are played when you do an upgrade, you may look at monitoring service to verify it.
 - Checkout to recent master using `git checkout origin/master` or update the code the way you do it usually.
 - Pull new containers using `make pull`.
+- Run `make prod_stop_all` to stop containers.
 - Run `make prod_restart` to restart containers.
 - Run `cd Database && make create_mimir2_db` to create the new database for the new service.
 - Run `make prod_compile` to build all the services.

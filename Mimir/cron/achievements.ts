@@ -9,6 +9,7 @@ export async function rebuildAchievements(repo: Repository) {
       where: {
         jobName: 'achievements',
       },
+      limit: 20,
     });
 
     if (jobs.length === 0) {
