@@ -306,6 +306,9 @@ export class PlayerHistoryModel extends Model {
     );
     const penaltiesMap = penalties.reduce(
       (acc, item) => {
+        if (item.cancelled) {
+          return acc;
+        }
         if (!acc[item.playerId]) {
           acc[item.playerId] = { penaltiesCount: 0, penaltiesAmount: 0 };
         }
