@@ -6,7 +6,7 @@ import { createServer, IncomingMessage } from 'http';
 import { takeCoverage } from 'node:v8';
 import { injectRepository } from '../middleware/injectRepository.js';
 import { SkirnirServiceMock } from '../services/SkirnirMock.js';
-import { Repository } from '../services/Repository.js';
+import { createWorkerRepository } from './workerRepository.js';
 import { rebuildAchievements } from '../../cron/achievements.js';
 import { rebuildPlayerStats } from '../../cron/player_stats.js';
 
@@ -42,7 +42,7 @@ createServer(async (req, res) => {
   }
   if (req.method === 'POST' && req.url === '/__test__/cron/achievements') {
     try {
-      await rebuildAchievements(Repository.instance({}, orm));
+      await rebuildAchievements(await createWorkerRepository(orm));
       res.writeHead(204);
       res.end();
     } catch (error) {
@@ -54,7 +54,7 @@ createServer(async (req, res) => {
   }
   if (req.method === 'POST' && req.url === '/__test__/cron/player-stats') {
     try {
-      await rebuildPlayerStats(Repository.instance({}, orm));
+      await rebuildPlayerStats(await createWorkerRepository(orm));
       res.writeHead(204);
       res.end();
     } catch (error) {
