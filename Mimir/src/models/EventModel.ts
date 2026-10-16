@@ -343,12 +343,11 @@ export class EventModel extends Model {
           data.reverse();
         }
 
-        if (onlyMinGames) {
-          data.filter((r) => r.gamesPlayed >= mainEvent.minGamesCount);
-        }
-
         return {
-          list: data.map((item) => ({
+          list: (onlyMinGames
+            ? data.filter((r) => r.gamesPlayed >= mainEvent.minGamesCount)
+            : data
+          ).map((item) => ({
             id: item.playerId,
             title: item.playerTitle!,
             tenhouId: item.playerTenhouId ?? '',
