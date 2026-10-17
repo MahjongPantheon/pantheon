@@ -1205,11 +1205,12 @@ export class EventModel extends Model {
         const currentScores = sessionStates[gIndex].getScores();
         const chombo = sessionStates[gIndex].getChombo();
         const scores = [...game.players]
-          .sort((a, b) => a.order - b.order).map((p) => ({
-          playerId: p.playerId,
-          score: currentScores[p.playerId],
-          chomboCount: chombo[p.playerId],
-        }));
+          .sort((a, b) => a.order - b.order)
+          .map((p) => ({
+            playerId: p.playerId,
+            score: currentScores[p.playerId],
+            chomboCount: chombo[p.playerId],
+          }));
         return {
           status:
             game.status === SessionStatus.SESSION_STATUS_PLANNED

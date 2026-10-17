@@ -224,9 +224,7 @@ export class RulesetEntity {
           replacementPlayerOverrideUma: -15000,
           startPoints: 25000,
           startRating: 0,
-          allowedYaku: yakuListExcept([
-            Yaku.OPENRIICHI
-          ]),
+          allowedYaku: yakuListExcept([Yaku.OPENRIICHI]),
           yakuWithPao: [Yaku.DAISANGEN, Yaku.DAISUUSHII, Yaku.SUUKANTSU],
           withYakitori: false,
           yakitoriPenalty: 0,
