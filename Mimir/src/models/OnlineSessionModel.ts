@@ -180,7 +180,7 @@ export class OnlineSessionModel extends Model {
       lastResults[id].event = event;
       lastResults[id].gamesPlayed = 0;
       lastResults[id].playerId = id;
-      lastResults[id].rating = event.ruleset.rules.startRating;
+      lastResults[id].rating = event.ruleset.rules.startRating ?? 0;
       lastResults[id].sessionId = session.id;
       this.repo.em.persist(lastResults[id]);
     }

@@ -1037,7 +1037,7 @@ export class EventModel extends Model {
               previous.sessionId = session.id;
               previous.gamesPlayed = 0;
               previous.avgPlace = 0;
-              previous.rating = session.event.ruleset.rules.startRating;
+              previous.rating = session.event.ruleset.rules.startRating ?? 0;
               previous.chips = 0;
               this.repo.em.persist(previous);
             }

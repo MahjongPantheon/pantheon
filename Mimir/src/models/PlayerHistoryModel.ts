@@ -191,7 +191,7 @@ export class PlayerHistoryModel extends Model {
     sum.avgPlace =
       (source.avgPlace * source.gamesPlayed + add.avgPlace * add.gamesPlayed) /
       (source.gamesPlayed + add.gamesPlayed);
-    sum.rating = source.rating + (add.rating - ruleset.rules.startRating);
+    sum.rating = source.rating + (add.rating - (ruleset.rules.startRating ?? 0));
     sum.chips = source.chips === undefined ? undefined : source.chips + (add.chips ?? 0);
     return sum;
   }
@@ -209,7 +209,7 @@ export class PlayerHistoryModel extends Model {
     diff.avgPlace =
       Math.abs(source.avgPlace * source.gamesPlayed - sub.avgPlace * sub.gamesPlayed) /
       Math.abs(source.gamesPlayed - sub.gamesPlayed);
-    diff.rating = source.rating - (sub.rating - ruleset.rules.startRating);
+    diff.rating = source.rating - (sub.rating - (ruleset.rules.startRating ?? 0));
     diff.chips = source.chips === undefined ? undefined : source.chips - (sub.chips ?? 0);
     return diff;
   }

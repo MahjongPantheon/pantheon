@@ -378,7 +378,7 @@ export class PlayerStatsModel extends Model {
             hasAvatar: playerInfo.get(playerId)?.hasAvatar ?? false,
             lastUpdate: playerInfo.get(playerId)?.lastUpdate ?? new Date().toString(),
             playerId: playerId,
-            score: game.results.get(playerId)?.score ?? ruleset.rules.startRating,
+            score: game.results.get(playerId)?.score ?? ruleset.rules.startRating ?? 0,
             ratingDelta: game.results.get(playerId)?.ratingDelta ?? 0,
             place: game.results.get(playerId)?.place ?? 0,
             chips: 0,
@@ -402,7 +402,7 @@ export class PlayerStatsModel extends Model {
     playerId: number,
     games: Map<number, { session: SessionEntity; results: Map<number, SessionResultsEntity> }>
   ) {
-    let rating = ruleset.rules.startRating;
+    let rating = ruleset.rules.startRating ?? 0;
     const ratingHistory = Array.from(
       games.values().map((game) => {
         const result = game.results.get(playerId);
@@ -412,7 +412,7 @@ export class PlayerStatsModel extends Model {
         return rating;
       })
     );
-    ratingHistory.unshift(ruleset.rules.startRating);
+    ratingHistory.unshift(ruleset.rules.startRating ?? 0);
     return ratingHistory;
   }
 

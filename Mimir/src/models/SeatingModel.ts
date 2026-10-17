@@ -46,7 +46,7 @@ export class SeatingModel extends Model {
         if (!event) {
           throw new Error('Event not found');
         }
-        const startRating = event.ruleset?.rules.startRating;
+        const startRating = event.ruleset?.rules.startRating ?? 0;
 
         const registrations = await this.repo.em.findAll(EventRegisteredPlayersEntity, {
           where: {
