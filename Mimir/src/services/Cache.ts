@@ -23,6 +23,10 @@ export class CacheService {
     await this._connectPromise;
   }
 
+  async disconnect() {
+    return this._client.disconnect();
+  }
+
   get client(): Omit<IRedisClient, 'connect' | 'disconnect'> {
     if (!this._connectPromise) {
       throw new Error('Cache client is not connected yet');

@@ -6,21 +6,17 @@ import { sendStats } from './send_stats.js';
 import { rebuildPlayerStats } from './player_stats.js';
 import { rebuildAchievements } from './achievements.js';
 
-let _repo: Promise<Repository> | undefined;
-
 async function initRepo(): Promise<Repository> {
-  _repo ??= MikroORM.init(config()).then((orm) => {
+  return MikroORM.init(config()).then((orm) => {
     const r = Repository.instance({}, orm);
     return r.cache.connect().then(() => r);
   });
-
-  return _repo;
 }
 
 cron.schedule(
   '* * * * *',
   async () => {
-    await initRepo().then((repo) => sendStats(repo));
+    await initRepo().then((repo) => sendStats(repo).then(() => repo.destroy()));
   },
   { noOverlap: true }
 );
@@ -28,7 +24,7 @@ cron.schedule(
 cron.schedule(
   '* * * * *',
   async () => {
-    await initRepo().then((repo) => rebuildAchievements(repo));
+    await initRepo().then((repo) => rebuildAchievements(repo).then(() => repo.destroy()));
   },
   { noOverlap: true }
 );
@@ -36,7 +32,7 @@ cron.schedule(
 cron.schedule(
   '* * * * *',
   async () => {
-    await initRepo().then((repo) => rebuildPlayerStats(repo));
+    await initRepo().then((repo) => rebuildPlayerStats(repo).then(() => repo.destroy()));
   },
   { noOverlap: true }
 );
