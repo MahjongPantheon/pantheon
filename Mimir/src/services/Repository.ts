@@ -95,5 +95,6 @@ export class Repository {
   async destroy() {
     this.log.destroy();
     await this.db.close();
+    await this.cache.disconnect();
   }
 }

@@ -1,11 +1,17 @@
 import { Repository } from '../src/services/Repository.js';
-import { raw, EntityManager } from '@mikro-orm/postgresql';
+import { raw, EntityManager, MikroORM } from '@mikro-orm/postgresql';
 import { SessionEntity } from '../src/entities/Session.entity.js';
 import { SessionStatus } from 'tsclients/proto/atoms.pb.js';
 import { JobsQueueEntity } from '../src/entities/JobsQueue.entity.js';
 import { EventEntity } from '../src/entities/Event.entity.js';
+import config from '../src/mikro-orm.config.js';
 
-export async function sendStats(repo: Repository) {
+export async function sendStats() {
+  const repo = await MikroORM.init(config()).then((orm) => {
+    const r = Repository.instance({}, orm);
+    return r.cache.connect().then(() => r);
+  });
+
   const em: EntityManager = repo.db.em.fork({
     useContext: true,
   }) as EntityManager;
@@ -49,4 +55,6 @@ export async function sendStats(repo: Repository) {
       { m: 'achievement_entries', v: +achievementsCount[0].cnt, s: 'mimir' },
     ]),
   });
+
+  await repo.destroy();
 }
