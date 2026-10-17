@@ -1204,10 +1204,11 @@ export class EventModel extends Model {
       tables: lastGames.map((game, gIndex) => {
         const currentScores = sessionStates[gIndex].getScores();
         const chombo = sessionStates[gIndex].getChombo();
-        const scores = Object.keys(currentScores).map((id) => ({
-          playerId: +id,
-          score: currentScores[+id],
-          chomboCount: chombo[+id],
+        const scores = [...game.players]
+          .sort((a, b) => a.order - b.order).map((p) => ({
+          playerId: p.playerId,
+          score: currentScores[p.playerId],
+          chomboCount: chombo[p.playerId],
         }));
         return {
           status:

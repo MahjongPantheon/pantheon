@@ -200,18 +200,21 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ form, i18n }) 
       <NumberInput
         label={i18n._t('Max arbitrary penalty score')}
         defaultValue={20000}
+        max={100000}
         data-testid='forseti-event-settings-ruleset-settings-ruleset-max-penalty'
         {...form.getInputProps('ruleset.maxPenalty')}
       />
       <NumberInput
         label={i18n._t('Min arbitrary penalty score')}
         defaultValue={100}
+        max={10000}
         data-testid='forseti-event-settings-ruleset-settings-ruleset-min-penalty'
         {...form.getInputProps('ruleset.minPenalty')}
       />
       <NumberInput
         label={i18n._t('Step of arbitrary penalty scores')}
         defaultValue={100}
+        max={10000}
         data-testid='forseti-event-settings-ruleset-settings-ruleset-penalty-step'
         {...form.getInputProps('ruleset.penaltyStep')}
       />

@@ -372,7 +372,7 @@ export const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
               >
                 <Helmet>
                   <meta charSet='utf-8' />
-                  <title>Forseti: game & profile manager</title>
+                  <title>{i18n._t('Game & profile management - Forseti')}</title>
                   <base href='/' />
                   <meta
                     name='viewport'

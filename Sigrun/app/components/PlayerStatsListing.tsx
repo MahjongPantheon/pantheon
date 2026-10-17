@@ -223,7 +223,7 @@ export const PlayerStatsListing = ({
                     playerStats?.riichiSummary?.feedUnderRiichi ?? 0,
                     playerStats?.winSummary?.feed ?? 0
                   )}
-                  ) )
+                  )
                 </List.Item>
                 <List.Item>
                   {i18n._t('Without declared riichi: ')}
