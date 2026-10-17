@@ -225,10 +225,7 @@ export class RulesetEntity {
           startPoints: 25000,
           startRating: 0,
           allowedYaku: yakuListExcept([
-            Yaku.OPENRIICHI,
-            Yaku.SUUANKOUTANKI,
-            Yaku.CHUURENPOUTOPURE,
-            Yaku.KOKUSHIMUSOU13,
+            Yaku.OPENRIICHI
           ]),
           yakuWithPao: [Yaku.DAISANGEN, Yaku.DAISUUSHII, Yaku.SUUKANTSU],
           withYakitori: false,
