@@ -110,7 +110,7 @@ export class PlayerHistoryModel extends Model {
       prevItem.sessionId = sessionId;
       prevItem.gamesPlayed = 0;
       prevItem.avgPlace = 0;
-      prevItem.rating = ruleset.rules.startRating;
+      prevItem.rating = ruleset.rules.startRating ?? 0; // fallback for old events
       prevItem.chips = chips;
       this.repo.em.persist(prevItem);
     } else {
