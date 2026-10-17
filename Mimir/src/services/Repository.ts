@@ -94,7 +94,6 @@ export class Repository {
   // mainly for tests
   async destroy() {
     this.log.destroy();
-    this.cache.disconnect();
     await this.db.close();
   }
 }
