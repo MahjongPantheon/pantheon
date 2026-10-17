@@ -365,11 +365,11 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
           {achDataByKey[Achievement.YAKUMANS].length > 0 ? (
             <List>
               {achDataByKey[Achievement.YAKUMANS].map(
-                (item: { playerId: number; yakuman: number[]; kazoe: boolean }, idx: number) => (
+                (item: { playerId: number; yakuman?: number[]; kazoe?: boolean }, idx: number) => (
                   <List.Item key={`li_${idx}`}>
                     <b>{playerById[item.playerId].title}</b>,{' '}
                     {[
-                      ...item.yakuman.map((yaku) => yMap.get(yaku)),
+                      ...(item.yakuman ?? []).map((yaku) => yMap.get(yaku)),
                       item.kazoe ? i18n._t('Kazoe yakuman') : '',
                     ]
                       .filter(Boolean)
