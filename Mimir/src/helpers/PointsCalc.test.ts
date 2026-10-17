@@ -19,6 +19,20 @@ describe('PointsCalc', () => {
     expect(playerIds).toEqual([1, 2, 3, 4]);
   });
 
+  it.each([
+    { winners: [2, 99], loser: 3, seating: [1, 2, 3, 4], riichi: [] },
+    { winners: [2, 99], loser: 3, seating: [1, 2, 3, 4], riichi: [99] },
+    { winners: [2, undefined!], loser: 3, seating: [1, 2, 3, 4], riichi: [] },
+    { winners: [2, null!], loser: 3, seating: [1, 2, 3, 4], riichi: [] },
+    { winners: [2, 4], loser: 99, seating: [1, 2, 3, 4], riichi: [] },
+    { winners: [2, 4], loser: 3, seating: [], riichi: [] },
+    { winners: [], loser: 3, seating: [1, 2, 3, 4], riichi: [] },
+  ])('rejects inconsistent multiron participants: %j', ({ winners, loser, seating, riichi }) => {
+    expect(() => new PointsCalc().assignRiichiBets(winners, riichi, loser, 0, 0, seating)).toThrow(
+      'Invalid multiron participants:'
+    );
+  });
+
   it('should calculate basic ron', () => {
     const ruleset = RulesetEntity.createRuleset('ema');
     ruleset.rules.withKazoe = true;

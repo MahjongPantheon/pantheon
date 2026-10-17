@@ -543,14 +543,7 @@ export class PlayerStatsModel extends Model {
           }
           case RoundOutcome.ROUND_OUTCOME_MULTIRON: {
             const lastSessionState = round.lastSessionState;
-            const multironRiichiWinners = new PointsCalc().assignRiichiBets(
-              round.hands.map((hand) => hand.winnerId!),
-              round.riichi ?? [],
-              round.hands[0].loserId!,
-              lastSessionState?.riichiBets ?? 0,
-              lastSessionState?.honba ?? 0,
-              lastSessionState?.playerIds ?? [] // TODO: check if last state is set initially
-            );
+            const multironRiichiWinners = this._getMultironRiichiAssignments(round);
 
             round.hands.forEach((hand) => {
               const pointsDelta = this._getPointsDeltaForRound(
@@ -628,6 +621,26 @@ export class PlayerStatsModel extends Model {
         pointsLostTsumo: 0,
       }
     );
+  }
+
+  _getMultironRiichiAssignments(round: RoundEntity) {
+    const state = round.lastSessionState;
+    try {
+      return new PointsCalc().assignRiichiBets(
+        round.hands.map((hand) => hand.winnerId!),
+        round.riichi ?? [],
+        round.hands[0]?.loserId!,
+        state?.riichiBets ?? 0,
+        state?.honba ?? 0,
+        state?.playerIds ?? []
+      );
+    } catch (error) {
+      throw new Error(
+        `Cannot calculate multiron statistics for round ${round.id}, ` +
+          `session ${round.session?.id}, event ${round.event?.id}: ${String(error)}`,
+        { cause: error }
+      );
+    }
   }
 
   _getPointsDeltaForRound(
@@ -710,7 +723,7 @@ export class PlayerStatsModel extends Model {
       );
       return newScores[playerId] - scores[playerId];
     } else {
-      const isDealer = dealer === playerId;
+      const isDealer = dealer === winnerId;
       const newScores = new PointsCalc().ron(
         ruleset.rules,
         isDealer,
@@ -800,15 +813,7 @@ export class PlayerStatsModel extends Model {
             const roundWinners = round.hands.map((h) => h.winnerId!);
 
             if (roundWinners.includes(playerId) && roundRiichi?.includes(playerId)) {
-              const lastSessionState = round.lastSessionState;
-              const riichiWinners = new PointsCalc().assignRiichiBets(
-                roundWinners,
-                roundRiichi,
-                round.hands[0].loserId!,
-                lastSessionState?.riichiBets ?? 0,
-                lastSessionState?.honba ?? 0,
-                lastSessionState?.playerIds ?? [] // TODO: check if last state is set initially
-              );
+              const riichiWinners = this._getMultironRiichiAssignments(round);
               const closestWinner = riichiWinners[playerId]?.closestWinner;
               if (ruleset.rules.doubleronRiichiAtamahane && closestWinner) {
                 if (closestWinner === playerId) {

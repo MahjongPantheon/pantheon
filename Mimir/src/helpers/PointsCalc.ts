@@ -476,6 +476,17 @@ export class PointsCalc {
     honba: number,
     playerIds: number[] // ordered by e-s-w-n
   ): Record<number, RiichiBetAssignment> {
+    // Never return a partial assignment: every caller indexes it by each hand's winner.
+    // A missing winner can mean the hands and saved seating belong to different sessions.
+    const invalidWinnerIds = winnerIds.filter((id) => !playerIds.includes(id));
+    if (winnerIds.length === 0 || invalidWinnerIds.length > 0 || !playerIds.includes(loserId)) {
+      throw new Error(
+        `Invalid multiron participants: winners=${JSON.stringify(winnerIds)}, ` +
+          `loser=${loserId}, seating=${JSON.stringify(playerIds)}; ` +
+          'check hand winner_id/loser_id against round.last_session_state.player_ids'
+      );
+    }
+
     const winners: Record<number, number[]> = {};
     const remainingRiichiIds = [...riichiIds];
 

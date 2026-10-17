@@ -108,6 +108,51 @@ describe('PlayerStatsModel.getPlayerStats', () => {
   });
   afterAll(() => repo.destroy());
 
+  it('reports the affected database records when a multiron winner is absent from saved seating', async () => {
+    const round = Object.assign(new RoundEntity(), {
+      id: 700,
+      session: games.get(501)!.session,
+      event,
+      outcome: RoundOutcome.ROUND_OUTCOME_MULTIRON,
+      riichi: [],
+      lastSessionState: new SessionState(event.ruleset, playerIds).state,
+      hands: [101, 999].map((winnerId) =>
+        Object.assign(new HandEntity(), { winnerId, loserId: 202, han: 2, fu: 30 })
+      ),
+    });
+    jest.spyOn(stats, '_fetchRounds').mockResolvedValue([round]);
+
+    await expect(stats.getPlayerStats({ playerId: 101, eventIdList: [19] })).rejects.toThrow(
+      'round 700, session 501, event 19: Error: Invalid multiron participants: ' +
+        'winners=[101,999], loser=202, seating=[101,202,303,404]'
+    );
+    expect(cache).toBeNull();
+  });
+
+  it('calculates valid multiron payments for every winner and the loser', () => {
+    const round = Object.assign(new RoundEntity(), {
+      outcome: RoundOutcome.ROUND_OUTCOME_MULTIRON,
+      riichi: [101, 303],
+      lastSessionState: new SessionState(event.ruleset, playerIds).state,
+      hands: [101, 303].map((winnerId) =>
+        Object.assign(new HandEntity(), { winnerId, loserId: 202, han: 2, fu: 30 })
+      ),
+    });
+    expect(stats._getMultironRiichiAssignments(round)).toEqual({
+      101: { fromPlayers: [101], fromTable: 0, honba: 0, closestWinner: 303 },
+      303: { fromPlayers: [303], fromTable: 0, honba: 0, closestWinner: 303 },
+    });
+    expect(stats._getOutcomeSummary(event.ruleset, 101, [round])).toEqual(
+      expect.objectContaining({ ron: 1, pointsWon: 2900 })
+    );
+    expect(stats._getOutcomeSummary(event.ruleset, 303, [round])).toEqual(
+      expect.objectContaining({ ron: 1, pointsWon: 2000 })
+    );
+    expect(stats._getOutcomeSummary(event.ruleset, 202, [round])).toEqual(
+      expect.objectContaining({ feed: 2, pointsLostRon: 4900 })
+    );
+  });
+
   it('calculates participant details and summaries from played games', async () => {
     const result = await stats.getPlayerStats({ playerId: 101, eventIdList: [19] });
 

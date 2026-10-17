@@ -11,7 +11,7 @@ export async function rebuildPlayerStats(repo: Repository) {
         where: {
           jobName: 'playerStats',
         },
-        limit: 100,
+        limit: 300,
       });
 
       if (jobs.length === 0) {

@@ -10,6 +10,8 @@ import { SessionEntity } from './entities/Session.entity.js';
 import { SessionStateEntity } from './entities/SessionState.entity.js';
 import { RoundOutcome, SessionStatus, TournamentGamesStatus } from 'tsclients/proto/atoms.pb.js';
 import { camelCaseKeys } from './helpers/toCamelCase.js';
+import { groupLegacyRounds } from './helpers/groupLegacyRounds.js';
+import { getLegacyPlayerIds } from './helpers/legacySessionState.js';
 
 process.env.NODE_ENV = 'development';
 
@@ -25,6 +27,17 @@ export async function migrateFromMimir1() {
     port: repo.config.db.port,
   });
   const oldDb = await pool.connect();
+  const sourcePlayers = (
+    await oldDb.query(
+      'select session_id, player_id from session_player order by session_id, "order"'
+    )
+  ).rows;
+  const seatingBySession = new Map<number, number[]>();
+  sourcePlayers.forEach(({ session_id, player_id }) => {
+    const seating = seatingBySession.get(session_id) ?? [];
+    seating.push(player_id);
+    seatingBySession.set(session_id, seating);
+  });
 
   async function migrateTable(
     table: string,
@@ -72,7 +85,7 @@ export async function migrateFromMimir1() {
     }
   }
 
-  function rewriteIntermediateResults(results: string): string {
+  function rewriteIntermediateResults(results: string, sessionId: number): string {
     const parsed = JSON.parse(results);
 
     const newResults = {
@@ -82,7 +95,7 @@ export async function migrateFromMimir1() {
       chombo: parsed._chombo ?? {},
       scores: parsed._scores,
       yakitori: parsed._yakitori ?? {},
-      player_ids: Object.keys(parsed._scores).map(Number),
+      player_ids: getLegacyPlayerIds(parsed, seatingBySession.get(sessionId)),
       riichi_bets: parsed._riichiBets,
       last_outcome: toOutcome(parsed._lastOutcome ?? ''),
       replacements: parsed._replacements ?? {},
@@ -123,20 +136,7 @@ export async function migrateFromMimir1() {
         continue;
       }
 
-      const groupedRounds = [];
-      let lastMultiRound = [];
-
-      for (const round of rounds) {
-        if (round.multi_ron && round.multi_ron > 1) {
-          lastMultiRound.push(round);
-        } else {
-          if (lastMultiRound.length > 0) {
-            groupedRounds.push(lastMultiRound);
-            lastMultiRound = [];
-          }
-          groupedRounds.push([round]);
-        }
-      }
+      const groupedRounds = groupLegacyRounds(rounds);
 
       const emf = em.fork();
       for (const group of groupedRounds) {
@@ -166,7 +166,10 @@ export async function migrateFromMimir1() {
               )
             : {};
         r.lastSessionState.replacements = state._replacements ?? {};
-        r.lastSessionState.playerIds = state._scores ? Object.keys(state._scores).map(Number) : [];
+        r.lastSessionState.playerIds = getLegacyPlayerIds(
+          state,
+          seatingBySession.get(group[0].session_id)
+        );
         r.lastSessionState.riichiBets = state._riichiBets ?? 0;
         r.lastSessionState.scores = state._scores ?? {};
         r.honba = r.lastSessionState.honba;
@@ -206,6 +209,9 @@ export async function migrateFromMimir1() {
         flushPromises.length = 0; // clear array
       }
     }
+
+    // Complete the final (fewer than 50) batches before reading max(id) or exiting.
+    await Promise.all(flushPromises);
 
     await em.transactional(async (emt) => {
       const result = await emt
@@ -507,7 +513,10 @@ export async function migrateFromMimir1() {
                 if (!rec.intermediate_results) {
                   rec.intermediate_results = '{}';
                 } else {
-                  rec.intermediate_results = rewriteIntermediateResults(rec.intermediate_results);
+                  rec.intermediate_results = rewriteIntermediateResults(
+                    rec.intermediate_results,
+                    rec.id
+                  );
                 }
                 if (rec.id > lastId) {
                   lastId = rec.id;
