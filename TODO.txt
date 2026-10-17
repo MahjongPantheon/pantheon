@@ -1,3 +1,31 @@
+- Mimir крон течет по памяти. Надо что-то с ним сделать - перестартовать раз в час как варик.
+  - Последний фикс неудачен! Вызывает ошибки
+- Ошибки в логе крона
+    [bestDealer @ #566]: Error: TypeError: Cannot read properties of undefined (reading '1')
+    [shithander @ #566]: Error: TypeError: Cannot read properties of undefined (reading '1')
+    [braveSapper @ #566]: Error: TypeError: Cannot read properties of undefined (reading '1')
+    [dieHard @ #566]: Error: TypeError: Cannot read properties of undefined (reading '1')
+    [dovakins @ #566]: Error: TypeError: Cannot read properties of undefined (reading '1')
+    [catchEmAll @ #566]: Error: TypeError: Cannot read properties of undefined (reading '1')
+    [justAsPlanned @ #566]: Error: TypeError: Cannot read properties of undefined (reading '1')
+    [ninja @ #566]: Error: TypeError: Cannot read properties of undefined (reading '1')
+    [riichiNomi @ #566]: Error: TypeError: Cannot read properties of undefined (reading '1')
+    [bestTsumoist @ #567]: Error: TypeError: Cannot read properties of undefined (reading '1')
+    [bestDealer @ #567]: Error: TypeError: Cannot read properties of undefined (reading '1')
+    [shithander @ #567]: Error: TypeError: Cannot read properties of undefined (reading '1')
+    [braveSapper @ #567]: Error: TypeError: Cannot read properties of undefined (reading '1')
+    [dieHard @ #567]: Error: TypeError: Cannot read properties of undefined (reading '1')
+    [dovakins @ #567]: Error: TypeError: Cannot read properties of undefined (reading '1')
+    [catchEmAll @ #567]: Error: TypeError: Cannot read properties of undefined (reading '1')
+    [justAsPlanned @ #567]: Error: TypeError: Cannot read properties of undefined (reading '1')
+    [ninja @ #567]: Error: TypeError: Cannot read properties of undefined (reading '1')
+    [riichiNomi @ #567]: Error: TypeError: Cannot read properties of undefined (reading '1')
+    [bestTsumoist @ #568]: Error: TypeError: Cannot read properties of undefined (reading '1')
+    [bestDealer @ #568]: Error: TypeError: Cannot read properties of undefined (reading '1')
+    [shithander @ #568]: Error: TypeError: Cannot read properties of undefined (reading '1')
+    [braveSapper @ #568]: Error: TypeError: Cannot read properties of undefined (reading '1')
+    [dieHard @ #568]: Error: TypeError: Cannot read properties of undefined (reading '1')
+    [dovakins @ #568]: Error: TypeError: Cannot read properties of undefined (reading '1')
 - Починить логирование фронта
-- Починить интерпретацию дополнительных раундов - даже если указано 0, игра продолжается.
 - Починить отображение среднего места в рейтинговой таблице, там что-то не то сейчас.
+- Починить интерпретацию дополнительных раундов - даже если указано 0, игра продолжается.
