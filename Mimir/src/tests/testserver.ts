@@ -7,8 +7,7 @@ import { takeCoverage } from 'node:v8';
 import { injectRepository } from '../middleware/injectRepository.js';
 import { SkirnirServiceMock } from '../services/SkirnirMock.js';
 import { createWorkerRepository } from './workerRepository.js';
-import { rebuildAchievements } from '../../cron/achievements.js';
-import { rebuildPlayerStats } from '../../cron/player_stats.js';
+import { runJob } from '../../cron/runner.js';
 
 import config from '../mikro-orm.config.js';
 import { MikroORM, RequestContext } from '@mikro-orm/postgresql';
@@ -42,7 +41,7 @@ createServer(async (req, res) => {
   }
   if (req.method === 'POST' && req.url === '/__test__/cron/achievements') {
     try {
-      await rebuildAchievements(await createWorkerRepository(orm));
+      await runJob(await createWorkerRepository(orm), 'achievements');
       res.writeHead(204);
       res.end();
     } catch (error) {
@@ -54,7 +53,7 @@ createServer(async (req, res) => {
   }
   if (req.method === 'POST' && req.url === '/__test__/cron/player-stats') {
     try {
-      await rebuildPlayerStats(await createWorkerRepository(orm));
+      await runJob(await createWorkerRepository(orm), 'playerStats');
       res.writeHead(204);
       res.end();
     } catch (error) {

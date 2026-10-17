@@ -1,28 +1,30 @@
 import cron from 'node-cron';
-import { sendStats } from './send_stats.js';
-import { rebuildPlayerStats } from './player_stats.js';
-import { rebuildAchievements } from './achievements.js';
+import { jobNames } from './jobs.js';
+import { JobScheduler } from './scheduler.js';
 
-cron.schedule(
-  '* * * * *',
-  async () => {
-    await sendStats();
-  },
-  { noOverlap: true }
+const scheduler = new JobScheduler();
+const tasks = jobNames.map((name) =>
+  cron.schedule(
+    '* * * * *',
+    async () => {
+      try {
+        await scheduler.run(name);
+      } catch (error) {
+        console.error(JSON.stringify({ job: name, status: 'failed', error: String(error) }));
+      }
+    },
+    { name, noOverlap: true }
+  )
 );
 
-cron.schedule(
-  '* * * * *',
-  async () => {
-    await rebuildAchievements();
-  },
-  { noOverlap: true }
-);
+let stopping = false;
+async function shutdown() {
+  if (stopping) return;
+  stopping = true;
+  tasks.forEach((task) => task.stop());
+  await scheduler.stop();
+  process.exit(0);
+}
 
-cron.schedule(
-  '* * * * *',
-  async () => {
-    await rebuildPlayerStats();
-  },
-  { noOverlap: true }
-);
+process.on('SIGTERM', shutdown);
+process.on('SIGINT', shutdown);

@@ -2,56 +2,31 @@ import { Repository } from '../src/services/Repository.js';
 import { JobsQueueEntity } from '../src/entities/JobsQueue.entity';
 import { Model } from '../src/models/Model';
 import { PlayerStatsModel } from '../src/models/PlayerStatsModel';
-import { FlushMode } from '@mikro-orm/core';
-import { MikroORM } from '@mikro-orm/postgresql';
-import config from '../src/mikro-orm.config.js';
+import { settleJobs } from './settleJobs.js';
 
-export async function rebuildPlayerStats(repository?: Repository) {
-  if (repository) {
-    await processPlayerStats(repository);
-    return;
-  }
-
-  const orm = await MikroORM.init(config());
-  const repo = Repository.instance({}, orm);
-  try {
-    await repo.cache.connect();
-    await processPlayerStats(repo);
-  } finally {
-    await repo.destroy();
-  }
-}
-
-async function processPlayerStats(repo: Repository) {
-  await repo.em.transactional(
-    async () => {
-      const jobs = await repo.em.findAll(JobsQueueEntity, {
-        where: {
-          jobName: 'playerStats',
-        },
-        limit: 300,
-      });
-
-      if (jobs.length === 0) {
-        return;
-      }
-
-      const playerModel = Model.getModel(repo, PlayerStatsModel);
-      const promises = [];
-      for (const job of jobs) {
-        const { playerId, eventId } = JSON.parse(job.jobArguments);
-        promises.push(
-          playerModel.getPlayerStats(
-            { playerId: +playerId, eventIdList: [+eventId] },
-            { forceRebuild: true }
-          )
-        );
-      }
-      await Promise.all(promises);
-
-      repo.em.remove(jobs);
+export async function rebuildPlayerStats(repo: Repository) {
+  const jobs = await repo.em.findAll(JobsQueueEntity, {
+    where: {
+      jobName: 'playerStats',
     },
-    // Concurrent rebuilds share this unit of work; defer query-triggered flushes until all finish.
-    { flushMode: FlushMode.COMMIT }
+    limit: 300,
+  });
+
+  if (jobs.length === 0) {
+    return 0;
+  }
+
+  const playerModel = Model.getModel(repo, PlayerStatsModel);
+  await settleJobs(
+    jobs.map((job) => async () => {
+      const { playerId, eventId } = JSON.parse(job.jobArguments);
+      await playerModel.getPlayerStats(
+        { playerId: +playerId, eventIdList: [+eventId] },
+        { forceRebuild: true }
+      );
+    })
   );
+
+  repo.em.remove(jobs);
+  return jobs.length;
 }

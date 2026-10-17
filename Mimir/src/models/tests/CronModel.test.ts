@@ -10,8 +10,7 @@ import { PlayerStatsModel } from '../PlayerStatsModel.js';
 import { EventRegistrationModel } from '../EventRegistrationModel.js';
 import { EventRegisteredPlayersEntity } from '../../entities/EventRegisteredPlayers.entity.js';
 import { AchievementsModel } from '../AchievementsModel.js';
-import { rebuildAchievements } from '../../../cron/achievements.js';
-import { rebuildPlayerStats } from '../../../cron/player_stats.js';
+import { runJob } from '../../../cron/runner.js';
 
 const afterFlush = jest.fn<() => void>();
 const orm = await MikroORM.init({
@@ -38,6 +37,7 @@ describe('Explicit model transactions', () => {
     afterFlush.mockReset();
     repo.em.clear();
     await repo.em.nativeDelete(JobsQueueEntity, {});
+    jest.spyOn(repo.em, 'execute').mockResolvedValue([{ acquired: true }]);
     jest
       .spyOn(registrations, 'findByPlayerId')
       .mockResolvedValue(
@@ -95,7 +95,7 @@ describe('Explicit model transactions', () => {
       .spyOn(Model.getModel(repo, AchievementsModel), 'precalculateAchievements')
       .mockImplementation((eventId) => model.scheduleRecalcStats(eventId, [1]));
 
-    await rebuildAchievements(repo);
+    await runJob(repo, 'achievements');
 
     const jobs = await model.getPendingJobs(10);
     expect(jobs).toHaveLength(1);
@@ -140,8 +140,7 @@ describe('Explicit model transactions', () => {
         });
       }
 
-      const rebuilding =
-        jobName === 'achievements' ? rebuildAchievements(repo) : rebuildPlayerStats(repo);
+      const rebuilding = runJob(repo, jobName);
       try {
         await allStarted;
         expect(count).toBe(2);
@@ -163,7 +162,7 @@ describe('Explicit model transactions', () => {
       .mockImplementationOnce((eventId) => model.scheduleRecalcStats(eventId, [1]))
       .mockRejectedValueOnce(new Error('Cron job failed'));
 
-    await expect(rebuildAchievements(repo)).rejects.toThrow('Cron job failed');
+    await expect(runJob(repo, 'achievements')).rejects.toThrow('Cron job failed');
 
     repo.em.clear();
     const jobs = await model.getPendingJobs(10);
