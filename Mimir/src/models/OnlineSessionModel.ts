@@ -143,7 +143,7 @@ export class OnlineSessionModel extends Model {
 
     const playerIds = session.intermediateResults?.playerIds ?? [];
     session.representationalHash = sha1(playerIds.join(',') + new Date().getTime().toString());
-    session.endDate = moment.utc().format('YYYY-MM-DD HH:ii:ss');
+    session.endDate = moment.utc().format('YYYY-MM-DD HH:mm:ss');
 
     // History stores the session ID as a scalar, so reserve it before the final flush.
     if (!session.id) {
