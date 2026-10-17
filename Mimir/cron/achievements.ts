@@ -5,12 +5,23 @@ import { AchievementsModel } from '../src/models/AchievementsModel.js';
 import { MikroORM } from '@mikro-orm/postgresql';
 import config from '../src/mikro-orm.config.js';
 
-export async function rebuildAchievements() {
-  const repo = await MikroORM.init(config()).then((orm) => {
-    const r = Repository.instance({}, orm);
-    return r.cache.connect().then(() => r);
-  });
+export async function rebuildAchievements(repository?: Repository) {
+  if (repository) {
+    await processAchievements(repository);
+    return;
+  }
 
+  const orm = await MikroORM.init(config());
+  const repo = Repository.instance({}, orm);
+  try {
+    await repo.cache.connect();
+    await processAchievements(repo);
+  } finally {
+    await repo.destroy();
+  }
+}
+
+async function processAchievements(repo: Repository) {
   await repo.em.transactional(async () => {
     const jobs = await repo.em.findAll(JobsQueueEntity, {
       where: {
@@ -32,6 +43,4 @@ export async function rebuildAchievements() {
     await Promise.all(promises);
     repo.em.remove(jobs);
   });
-
-  await repo.destroy();
 }

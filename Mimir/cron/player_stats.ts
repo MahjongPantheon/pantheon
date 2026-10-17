@@ -6,12 +6,23 @@ import { FlushMode } from '@mikro-orm/core';
 import { MikroORM } from '@mikro-orm/postgresql';
 import config from '../src/mikro-orm.config.js';
 
-export async function rebuildPlayerStats() {
-  const repo = await MikroORM.init(config()).then((orm) => {
-    const r = Repository.instance({}, orm);
-    return r.cache.connect().then(() => r);
-  });
+export async function rebuildPlayerStats(repository?: Repository) {
+  if (repository) {
+    await processPlayerStats(repository);
+    return;
+  }
 
+  const orm = await MikroORM.init(config());
+  const repo = Repository.instance({}, orm);
+  try {
+    await repo.cache.connect();
+    await processPlayerStats(repo);
+  } finally {
+    await repo.destroy();
+  }
+}
+
+async function processPlayerStats(repo: Repository) {
   await repo.em.transactional(
     async () => {
       const jobs = await repo.em.findAll(JobsQueueEntity, {
@@ -43,6 +54,4 @@ export async function rebuildPlayerStats() {
     // Concurrent rebuilds share this unit of work; defer query-triggered flushes until all finish.
     { flushMode: FlushMode.COMMIT }
   );
-
-  await repo.destroy();
 }
