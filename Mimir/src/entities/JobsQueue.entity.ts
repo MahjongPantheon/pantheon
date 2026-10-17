@@ -20,4 +20,4 @@ export class JobsQueueEntity {
   createdAt!: string;
 }
 
-export type JobName = 'achievements' | 'playerStats';
+export type JobName = 'achievements' | 'playerStats' | 'scoring';

@@ -10,6 +10,10 @@ import { RulesetEntity } from '../entities/Ruleset.entity.js';
 import { ConfigService } from '../services/Config.js';
 import { Client } from 'pg';
 import { v4 } from 'uuid';
+import { MikroORM } from '@mikro-orm/postgresql';
+import ormConfig from '../mikro-orm.config.js';
+import { Repository } from '../services/Repository.js';
+import { runJob } from '../../cron/runner.js';
 
 const CLUB_RATING_EVENT_ID = 19;
 const TOURNAMENT_EVENT_ID = 889;
@@ -2678,6 +2682,15 @@ describe('Mimir Twirp API', () => {
       expect(scoringBefore.results.some((item) => item.rating_delta !== 0)).toBe(true);
       expect(scoringBefore.history).toHaveLength(12);
       expect(scoringBefore.history.filter((item) => item.games_played === 2)).toHaveLength(4);
+      const finalHistory = scoringBefore.history.filter((item) => item.games_played === 2);
+      expect(finalHistory.some((item) => !Number.isInteger(item.avg_place))).toBe(true);
+      finalHistory.forEach((item) => {
+        const places = scoringBefore.results.filter(
+          (result) => result.player_id === item.player_id
+        );
+        const expected = places.reduce((sum, result) => sum + result.place, 0) / places.length;
+        expect(item.avg_place).toBeCloseTo(expected, 5);
+      });
 
       await db.query('delete from session_results where event_id = $1', [eventId]);
       await db.query('delete from player_history where event_id = $1', [eventId]);
@@ -2688,6 +2701,29 @@ describe('Mimir Twirp API', () => {
       expect((await mimirClient.RebuildScoring(eventId)).success).toBe(true);
       expect(await getScoring()).toEqual(scoringBefore);
       expect(await getSourceData()).toEqual(sourceBefore);
+
+      // The migration's queued rebuild must repair previously rounded averages without an admin.
+      await db.query('update player_history set avg_place = round(avg_place) where event_id = $1', [
+        eventId,
+      ]);
+      await db.query(
+        "insert into jobs_queue (job_arguments, job_name, created_at) values ($1, 'scoring', now())",
+        [JSON.stringify({ eventId })]
+      );
+      const orm = await MikroORM.init(ormConfig());
+      try {
+        const repo = Repository.instance({}, orm);
+        expect(await runJob(repo, 'scoring')).toEqual({ status: 'completed', processed: 1 });
+      } finally {
+        await orm.close();
+      }
+      expect(await getScoring()).toEqual(scoringBefore);
+      expect(await getSourceData()).toEqual(sourceBefore);
+      const jobs = await db.query(
+        "select * from jobs_queue where job_name = 'scoring' and job_arguments = $1",
+        [JSON.stringify({ eventId })]
+      );
+      expect(jobs.rows).toHaveLength(0);
     } finally {
       await db.end();
     }
