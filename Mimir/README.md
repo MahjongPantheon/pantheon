@@ -40,6 +40,35 @@ read an event without TypeScript sources. Deploy both `server.js` and `metadata.
 the latter contains the ORM metadata generated from the source entities during the build.
 Register new entities in `src/mikro-orm.config.ts` so they are included in the bundle and its metadata.
 
+### Scheduled workers
+
+Supervisor runs `cron/cron.ts`, a scheduler with no database or Redis connections.
+Every minute it launches a separate Node process for each of `achievements`,
+`playerStats`, and `metrics`. Each process initializes its own services, executes
+one bounded batch, closes its services, and exits. Business handlers accept a
+repository; `cron/runner.ts` owns initialization, transactions, and cleanup.
+
+The scheduler skips a job type while its previous child is still running. A
+PostgreSQL transaction advisory lock also excludes workers of the same type
+across scheduler processes and containers. Lock identifiers in `cron/jobs.ts`
+must remain stable across deployments. Different job types can run concurrently.
+Results and completed queue entries commit together. Failed batches remain queued
+for the next tick; all started operations settle before rollback begins.
+
+Each execution has a five-minute deadline, including startup and cleanup. The
+scheduler sends SIGTERM at the deadline and SIGKILL after a five-second grace
+period, and waits for child closure before permitting another execution. Shutdown
+stops scheduling and terminates active children. PostgreSQL releases their locks
+when their transactions end or their connections close. Supervisor allows fifteen
+seconds for shutdown and terminates the process group as a fallback.
+
+Workers log JSON records with job name, status, processed count, and duration;
+the scheduler also logs child exit codes, signals, and timeouts. Missed ticks are
+skipped, not replayed; queued rebuilds remain in PostgreSQL. Metrics requests have
+a thirty-second HTTP timeout. To run one execution manually from Mimir:
+`pnpm exec tsx cron/worker.ts achievements` (use the normal environment; this
+processes queued jobs in its configured database).
+
 ### Legend
 
 **Mimir** is a figure in Norse mythology renowned for his knowledge and wisdom. See wikipedia for details :)

@@ -1,5 +1,3 @@
-- Mimir крон течет по памяти. Надо что-то с ним сделать - перестартовать раз в час как варик.
-  - Последний фикс норм, но надо сделать по-человечески.
 - Крон sendStats не срабатывает или срабатывает криво
 - Ошибки в логе крона
     [bestDealer @ #566]: Error: TypeError: Cannot read properties of undefined (reading '1')
@@ -27,7 +25,6 @@
     [braveSapper @ #568]: Error: TypeError: Cannot read properties of undefined (reading '1')
     [dieHard @ #568]: Error: TypeError: Cannot read properties of undefined (reading '1')
     [dovakins @ #568]: Error: TypeError: Cannot read properties of undefined (reading '1')
-- Починить логирование фронта
 - Починить отображение среднего места в рейтинговой таблице, там что-то не то сейчас.
 - Починить интерпретацию дополнительных раундов - даже если указано 0, игра продолжается.
 - Фичреквест: копирование турнира/ивента со всеми игроками и настройками в новый.

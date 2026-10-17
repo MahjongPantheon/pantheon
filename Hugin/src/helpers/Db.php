@@ -20,7 +20,6 @@ namespace Hugin;
 use \Idiorm\ORM;
 
 require_once __DIR__ . '/../../vendor/ctizen/idiorm/src/idiorm.php';
-require_once __DIR__ . '/../../../Common/Storage.php';
 require_once __DIR__ . '/../../src/interfaces/IDb.php';
 require_once __DIR__ . '/../../src/helpers/Config.php';
 
