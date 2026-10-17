@@ -16,7 +16,7 @@ export class PlayerHistoryEntity {
   @Property({ fieldName: 'session_id' })
   sessionId!: number;
 
-  @Property({ fieldName: 'avg_place' })
+  @Property({ fieldName: 'avg_place', type: 'float' })
   avgPlace!: number;
 
   @Property({ fieldName: 'chips', nullable: true })

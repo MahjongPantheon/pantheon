@@ -4,6 +4,7 @@ import { Repository } from '../../services/Repository.js';
 import { RulesetEntity } from '../../entities/Ruleset.entity.js';
 import { SessionState } from '../../helpers/SessionState.js';
 import { init } from '../../tests/initOrm.js';
+import { RulesetConfig } from 'tsclients/proto/atoms.pb.js';
 
 const orm = await init();
 describe('SessionResults', () => {
@@ -100,4 +101,38 @@ describe('SessionResults', () => {
       mdl.calcRatingDelta([1, 2, 3, 4], ruleset, mdl.calcPlacesMap(scores), scores, { 1: 101 })[1]
     ).toBe(0);
   });
+
+  it.each(['replacementPlayerFixedPoints', 'replacementPlayerOverrideUma'] as const)(
+    'defaults an omitted %s to zero',
+    (field) => {
+      const ruleset = RulesetEntity.createRuleset('ema');
+      delete (ruleset.rules as Partial<RulesetConfig>)[field];
+      const scores = { 1: 60000, 2: 30000, 3: 20000, 4: 10000 };
+      expect(
+        mdl.calcRatingDelta([1, 2, 3, 4], ruleset, mdl.calcPlacesMap(scores), scores, { 1: 101 })[1]
+      ).toBe(-15000);
+    }
+  );
+
+  it.each<Record<number, number>>([{}, { 1: 2, 2: -2 }])(
+    'treats missing saved chip counts as zero: %j',
+    (chips) => {
+      const ruleset = RulesetEntity.createRuleset('ema');
+      ruleset.rules.startPoints = 25000;
+      ruleset.rules.oka = 20000;
+      ruleset.rules.chipsValue = 8000;
+      const state = new SessionState(ruleset, [1, 2, 3, 4]);
+      state.state.scores = { 1: 40200, 2: 24700, 3: 22100, 4: 13000 };
+      state.state.chips = chips;
+
+      const results = mdl.calc(ruleset, state, [1, 2, 3, 4], 29, 249);
+      expect(results.map((result) => result.chips)).toEqual([chips[1] ?? 0, chips[2] ?? 0, 0, 0]);
+      expect(results.map((result) => result.ratingDelta)).toEqual([
+        45200 + (chips[1] ?? 0) * 8000,
+        -300 + (chips[2] ?? 0) * 8000,
+        -12900,
+        -32000,
+      ]);
+    }
+  );
 });

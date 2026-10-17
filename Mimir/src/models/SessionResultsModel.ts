@@ -49,7 +49,7 @@ export class SessionResultsModel extends Model {
     );
 
     return allPlayerIds.map((currentPlayerId) => {
-      const chips = ruleset.rules.chipsValue > 0 ? state.getChips()[currentPlayerId] : 0;
+      const chips = ruleset.rules.chipsValue > 0 ? (state.getChips()[currentPlayerId] ?? 0) : 0;
       const score = state.getScores()[currentPlayerId];
       const place = placesMap[currentPlayerId];
 
@@ -113,9 +113,11 @@ export class SessionResultsModel extends Model {
       .forEach(([playerId, score], idx) => {
         const pId = parseInt(playerId.toString(), 10);
         const scoreSub = replacements[pId]
-          ? ruleset.rules.replacementPlayerFixedPoints
+          ? (ruleset.rules.replacementPlayerFixedPoints ?? 0)
           : score - ruleset.rules.startPoints;
-        const uma = replacements[pId] ? ruleset.rules.replacementPlayerOverrideUma : umaList[idx];
+        const uma = replacements[pId]
+          ? (ruleset.rules.replacementPlayerOverrideUma ?? 0)
+          : umaList[idx];
         ratingDelta[pId] =
           scoreSub + (replacements[pId] ? 0 : ruleset.getOka(placesMap[pId])) + uma;
       });

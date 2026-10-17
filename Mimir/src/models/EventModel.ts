@@ -995,76 +995,109 @@ export class EventModel extends Model {
           throw new Error("You don't have the necessary permissions to update the event");
         }
 
-        const sessionModel = this.getModel(SessionModel);
-        const sessions = await sessionModel.findByEventAndStatus(
-          [eventId],
-          [SessionStatus.SESSION_STATUS_FINISHED],
-          0,
-          null,
-          'id',
-          'asc'
-        );
-        if (sessions.length === 0) {
-          return { success: true };
-        }
-        await this.repo.em.populate(sessions, ['event.ruleset']);
+        return this.rebuildEventScoring(eventId);
+      },
+      { propagation: TransactionPropagation.REQUIRED }
+    );
+  }
 
-        await this.repo.em.nativeDelete(SessionResultsEntity, { event: eventId });
-        await this.repo.em.nativeDelete(PlayerHistoryEntity, { event: eventId });
+  // Internal rebuild used by the authorized API and the scoring worker.
+  async rebuildEventScoring(eventId: number) {
+    const sessionModel = this.getModel(SessionModel);
+    const sessions = await sessionModel.findByEventAndStatus(
+      [eventId],
+      [SessionStatus.SESSION_STATUS_FINISHED],
+      0,
+      null,
+      'id',
+      'asc'
+    );
+    if (sessions.length === 0) {
+      return { success: true };
+    }
+    await this.repo.em.populate(sessions, ['event.ruleset']);
 
-        const resultsModel = this.getModel(SessionResultsModel);
-        const historyModel = this.getModel(PlayerHistoryModel);
-        const lastHistory: Record<number, PlayerHistoryEntity> = {};
-        for (const session of sessions) {
-          const playerIds = session.intermediateResults?.playerIds ?? [];
-          // Finished state already includes the final riichi payout and saved replacements.
-          const results = resultsModel.calc(
+    const resultsModel = this.getModel(SessionResultsModel);
+    // Older imported replacement sessions can lack scores for the registered player IDs.
+    // Keep their recorded results as the source for rebuilding cumulative history.
+    const legacySessionIds = sessions
+      .filter((session) =>
+        (session.intermediateResults?.playerIds ?? []).some(
+          (playerId) => !Number.isFinite(session.intermediateResults?.scores?.[playerId])
+        )
+      )
+      .map((session) => session.id);
+    const legacyResults = legacySessionIds.length
+      ? await resultsModel.findBySession(legacySessionIds)
+      : [];
+
+    await this.repo.em.nativeDelete(SessionResultsEntity, {
+      event: eventId,
+      ...(legacySessionIds.length ? { session: { $nin: legacySessionIds } } : {}),
+    });
+    await this.repo.em.nativeDelete(PlayerHistoryEntity, { event: eventId });
+
+    const historyModel = this.getModel(PlayerHistoryModel);
+    const lastHistory: Record<number, PlayerHistoryEntity> = {};
+    for (const session of sessions) {
+      const playerIds = session.intermediateResults?.playerIds ?? [];
+      // Finished state already includes the final riichi payout and saved replacements.
+      const results = legacySessionIds.includes(session.id)
+        ? legacyResults.filter((result) => result.session.id === session.id)
+        : resultsModel.calc(
             session.event.ruleset,
             new SessionState(session.event.ruleset, playerIds, session.intermediateResults),
             playerIds,
             eventId,
             session.id
           );
-          this.repo.em.persist(results);
+      if (
+        results.length !== playerIds.length ||
+        results.some(
+          (result) =>
+            !playerIds.includes(result.playerId) ||
+            !Number.isFinite(result.score) ||
+            !Number.isFinite(result.place) ||
+            !Number.isFinite(result.ratingDelta) ||
+            (result.chips != null && !Number.isFinite(result.chips))
+        )
+      ) {
+        throw new Error(`Invalid scoring data for event ${eventId}, session ${session.id}`);
+      }
+      this.repo.em.persist(results);
 
-          // Accumulate in session order without querying unflushed history rows.
-          for (const result of results) {
-            let previous = lastHistory[result.playerId];
-            if (!previous) {
-              previous = new PlayerHistoryEntity();
-              previous.playerId = result.playerId;
-              previous.event = session.event;
-              previous.sessionId = session.id;
-              previous.gamesPlayed = 0;
-              previous.avgPlace = 0;
-              previous.rating = session.event.ruleset.rules.startRating ?? 0;
-              previous.chips = 0;
-              this.repo.em.persist(previous);
-            }
-
-            const item = new PlayerHistoryEntity();
-            item.playerId = result.playerId;
-            item.event = session.event;
-            item.sessionId = session.id;
-            item.gamesPlayed = previous.gamesPlayed;
-            item.avgPlace = previous.avgPlace;
-            item.rating = previous.rating + result.ratingDelta;
-            item.chips =
-              session.event.ruleset.rules.chipsValue > 0
-                ? (previous.chips ?? 0) + (result.chips ?? 0)
-                : 0;
-            lastHistory[result.playerId] = historyModel.updateAvgPlaceAndGamesCount(
-              item,
-              result.place
-            );
-            this.repo.em.persist(lastHistory[result.playerId]);
-          }
+      // Accumulate in session order without querying unflushed history rows.
+      for (const result of results) {
+        let previous = lastHistory[result.playerId];
+        if (!previous) {
+          previous = new PlayerHistoryEntity();
+          previous.playerId = result.playerId;
+          previous.event = session.event;
+          previous.sessionId = session.id;
+          previous.gamesPlayed = 0;
+          previous.avgPlace = 0;
+          previous.rating = session.event.ruleset.rules.startRating ?? 0;
+          previous.chips = 0;
+          this.repo.em.persist(previous);
         }
 
-        return { success: true };
-      },
-      { propagation: TransactionPropagation.REQUIRED }
-    );
+        const item = new PlayerHistoryEntity();
+        item.playerId = result.playerId;
+        item.event = session.event;
+        item.sessionId = session.id;
+        item.gamesPlayed = previous.gamesPlayed;
+        item.avgPlace = previous.avgPlace;
+        item.rating = previous.rating + result.ratingDelta;
+        item.chips =
+          session.event.ruleset.rules.chipsValue > 0
+            ? (previous.chips ?? 0) + (result.chips ?? 0)
+            : 0;
+        lastHistory[result.playerId] = historyModel.updateAvgPlaceAndGamesCount(item, result.place);
+        this.repo.em.persist(lastHistory[result.playerId]);
+      }
+    }
+
+    return { success: true };
   }
 
   async getTablesState(

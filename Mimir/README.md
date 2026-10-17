@@ -44,7 +44,7 @@ Register new entities in `src/mikro-orm.config.ts` so they are included in the b
 
 Supervisor runs `cron/cron.ts`, a scheduler with no database or Redis connections.
 Every minute it launches a separate Node process for each of `achievements`,
-`playerStats`, and `metrics`. Each process initializes its own services, executes
+`playerStats`, `scoring`, and `metrics`. Each process initializes its own services, executes
 one bounded batch, closes its services, and exits. Business handlers accept a
 repository; `cron/runner.ts` owns initialization, transactions, and cleanup.
 

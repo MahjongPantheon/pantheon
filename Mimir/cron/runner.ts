@@ -4,6 +4,7 @@ import config from '../src/mikro-orm.config.js';
 import { Repository } from '../src/services/Repository.js';
 import { rebuildAchievements } from './achievements.js';
 import { rebuildPlayerStats } from './player_stats.js';
+import { rebuildScoring } from './scoring.js';
 import { sendStats } from './send_stats.js';
 import { JobName, jobLockKey, jobLockNamespace } from './jobs.js';
 
@@ -11,6 +12,7 @@ const handlers = {
   achievements: rebuildAchievements,
   playerStats: rebuildPlayerStats,
   metrics: sendStats,
+  scoring: rebuildScoring,
 };
 
 export async function withJobLock(repo: Repository, name: JobName, handler: () => Promise<number>) {

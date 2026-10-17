@@ -1,4 +1,51 @@
 import { RulesetEntity } from './Ruleset.entity.js';
+import { RulesetConfig, Uma, UmaType } from 'tsclients/proto/atoms.pb.js';
+
+describe('Legacy UMA configuration', () => {
+  it.each([
+    [
+      [36000, 29000, 28000, 27000],
+      [12000, -1000, -3000, -8000],
+    ],
+    [
+      [33000, 32000, 31000, 24000],
+      [8000, 3000, 1000, -12000],
+    ],
+    [
+      [33000, 32000, 28000, 27000],
+      [8000, 4000, -4000, -8000],
+    ],
+  ])(
+    'uses stored complex UMA when the simple table is missing for scores %j',
+    (scores, expected) => {
+      const ruleset = RulesetEntity.createRuleset('jpmlA');
+      ruleset.rules.umaType = UmaType.UMA_TYPE_UMA_SIMPLE;
+      delete (ruleset.rules as Partial<RulesetConfig>).uma;
+      expect(ruleset.getUma(scores)).toEqual(expected);
+    }
+  );
+
+  it('keeps explicit simple UMA when complex tables are also stored', () => {
+    const ruleset = RulesetEntity.createRuleset('jpmlA');
+    ruleset.rules.umaType = UmaType.UMA_TYPE_UMA_SIMPLE;
+    ruleset.rules.uma = { place1: 15000, place2: 5000, place3: -5000, place4: -15000 };
+    expect(ruleset.getUma([33000, 32000, 28000, 27000])).toEqual([15000, 5000, -5000, -15000]);
+  });
+
+  it('restores omitted zero values in a stored simple UMA table before equalizing ties', () => {
+    const ruleset = RulesetEntity.createRuleset('ema');
+    ruleset.rules.uma = { place1: 15000, place2: 5000, place4: -20000 } as Uma;
+    expect(ruleset.getUma([33000, 29000, 29000, 27000])).toEqual([15000, 2500, 2500, -20000]);
+    ruleset.rules.uma = {} as Uma;
+    expect(ruleset.getUma([33000, 32000, 28000, 27000])).toEqual([0, 0, 0, 0]);
+  });
+
+  it('restores omitted zero values in a stored complex UMA table', () => {
+    const ruleset = RulesetEntity.createRuleset('jpmlA');
+    ruleset.rules.complexUma.otherwise = { place1: 8000, place4: -8000 } as Uma;
+    expect(ruleset.getUma([33000, 32000, 28000, 27000])).toEqual([8000, 0, 0, -8000]);
+  });
+});
 
 describe('Equalize uma', () => {
   const equalizedUma = RulesetEntity.prototype.equalizedUma;

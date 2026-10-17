@@ -344,7 +344,13 @@ export class RulesetEntity {
 
   getUma(scores: number[]): number[] {
     let uma: number[];
-    if (this.rules.umaType === UmaType.UMA_TYPE_UMA_COMPLEX) {
+    // Some imported events are marked simple but only contain complex UMA tables.
+    const legacyComplexUma =
+      !this.rules.uma &&
+      this.rules.complexUma?.neg1 &&
+      this.rules.complexUma?.neg3 &&
+      this.rules.complexUma?.otherwise;
+    if (this.rules.umaType === UmaType.UMA_TYPE_UMA_COMPLEX || legacyComplexUma) {
       uma = this.complexUma(
         scores,
         {
@@ -377,6 +383,9 @@ export class RulesetEntity {
         this.rules.uma.place4,
       ];
     }
+
+    // Protobuf JSON omits zero-valued fields in stored UMA tables.
+    uma = uma.map((points) => points ?? 0);
 
     if (this.rules.equalizeUma) {
       return this.equalizedUma(scores, uma);
