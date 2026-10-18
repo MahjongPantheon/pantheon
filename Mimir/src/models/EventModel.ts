@@ -382,8 +382,15 @@ export class EventModel extends Model {
           },
           orderBy: { endDate: -1, id: -1 },
           limit: 5,
-          populate: ['event'],
-          fields: ['representationalHash', 'endDate', 'event.id', 'event.title', 'event.timezone'],
+          populate: ['event.ruleset'],
+          fields: [
+            'representationalHash',
+            'endDate',
+            'event.id',
+            'event.title',
+            'event.timezone',
+            'event.ruleset.rules',
+          ],
         });
         if (games.length === 0) {
           return { games: [] };
@@ -406,6 +413,7 @@ export class EventModel extends Model {
               sessionHash: game.representationalHash!,
               eventId: game.event.id,
               eventTitle: game.event.title,
+              startPoints: game.event.ruleset.rules.startPoints,
               date: moment.utc(game.endDate).tz(game.event.timezone).format('YYYY-MM-DD HH:mm:ss'),
               players: results
                 .filter((result) => result.session.id === game.id)

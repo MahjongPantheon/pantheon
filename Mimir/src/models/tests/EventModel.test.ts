@@ -140,6 +140,7 @@ describe('Event creation', () => {
       {
         ...eventData,
         title: 'Mahjong Soul public',
+        rulesetConfig: { ...eventData.rulesetConfig, startPoints: 25000 },
         timezone: 'Asia/Tokyo',
         type: EventType.EVENT_TYPE_ONLINE,
         platformId: PlatformType.PLATFORM_TYPE_MAHJONGSOUL,
@@ -232,6 +233,7 @@ describe('Event creation', () => {
         sessionHash: `public-${index}`,
         eventId: publicEvents[index % 2].id,
         eventTitle: index % 2 ? 'Mahjong Soul public' : 'Tenhou public',
+        startPoints: index % 2 ? 25000 : 30000,
         date: `2026-01-0${[1, 4, 3, 5, 5, 2][index]} ${index % 2 ? '21' : '12'}:00:00`,
         players: [
           {

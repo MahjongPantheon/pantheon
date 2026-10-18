@@ -80,6 +80,7 @@ export interface RecentPublicGame {
   eventTitle: string;
   date: string;
   players: RecentPublicGamePlayer[];
+  startPoints: number;
 }
 
 export interface EventsGetRecentPublicGamesResponse {
@@ -4292,6 +4293,7 @@ export const RecentPublicGame = {
       eventTitle: "",
       date: "",
       players: [],
+      startPoints: 0,
       ...msg,
     };
   },
@@ -4321,6 +4323,9 @@ export const RecentPublicGame = {
         msg.players as any,
         RecentPublicGamePlayer._writeMessage,
       );
+    }
+    if (msg.startPoints) {
+      writer.writeInt32(8, msg.startPoints);
     }
     return writer;
   },
@@ -4355,6 +4360,10 @@ export const RecentPublicGame = {
           const m = RecentPublicGamePlayer.initialize();
           reader.readMessage(m, RecentPublicGamePlayer._readMessage);
           msg.players.push(m);
+          break;
+        }
+        case 8: {
+          msg.startPoints = reader.readInt32();
           break;
         }
         default: {
@@ -10675,6 +10684,7 @@ export const RecentPublicGameJSON = {
       eventTitle: "",
       date: "",
       players: [],
+      startPoints: 0,
       ...msg,
     };
   },
@@ -10702,6 +10712,9 @@ export const RecentPublicGameJSON = {
       json["players"] = msg.players.map(
         RecentPublicGamePlayerJSON._writeMessage,
       );
+    }
+    if (msg.startPoints) {
+      json["startPoints"] = msg.startPoints;
     }
     return json;
   },
@@ -10733,6 +10746,10 @@ export const RecentPublicGameJSON = {
         RecentPublicGamePlayerJSON._readMessage(m, item);
         msg.players.push(m);
       }
+    }
+    const _startPoints_ = json["startPoints"] ?? json["start_points"];
+    if (_startPoints_) {
+      msg.startPoints = protoscript.parseNumber(_startPoints_);
     }
     return msg;
   },

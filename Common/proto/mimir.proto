@@ -153,6 +153,7 @@ message RecentPublicGame {
   string event_title = 5;
   string date = 6;
   repeated RecentPublicGamePlayer players = 7;
+  int32 start_points = 8;
 }
 
 message EventsGetRecentPublicGamesResponse {
