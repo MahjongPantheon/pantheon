@@ -109,13 +109,14 @@ export class PlayerStatsModel extends Model {
               playerId: input.playerId,
             },
           });
-          // Older rebuilds stored empty summaries even when games existed.
+          // Older rebuilds stored empty summaries or null ratings even when games existed.
           const cachedData = stats[0]?.data;
           const incompleteCache =
-            (cachedData?.totalPlayedGames ?? 0) > 0 &&
-            (!cachedData?.playersInfo?.length ||
-              !Object.keys(cachedData.scoreHistory ?? {}).length ||
-              !Object.keys(cachedData.placesSummary ?? {}).length);
+            (cachedData?.ratingHistory?.some((rating) => !Number.isFinite(rating)) ?? false) ||
+            ((cachedData?.totalPlayedGames ?? 0) > 0 &&
+              (!cachedData?.playersInfo?.length ||
+                !Object.keys(cachedData.scoreHistory ?? {}).length ||
+                !Object.keys(cachedData.placesSummary ?? {}).length));
           if (stats.length > 0 && !incompleteCache) {
             return {
               ratingHistory: stats[0].data.ratingHistory ?? [],

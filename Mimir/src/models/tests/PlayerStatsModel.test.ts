@@ -1,5 +1,6 @@
 import { jest } from '@jest/globals';
 import { RoundOutcome } from 'tsclients/proto/atoms.pb.js';
+import { PlayersGetPlayerStatsResponse } from 'tsclients/proto/mimir.pb.js';
 import { init } from '../../tests/initOrm.js';
 import { makePlayer } from '../../tests/playerFixtures.js';
 import { Repository } from '../../services/Repository.js';
@@ -266,6 +267,22 @@ describe('PlayerStatsModel.getPlayerStats', () => {
     expect(result.handsValueSummary).toHaveLength(2);
     expect(result.yakuSummary).toHaveLength(3);
     expect(stats._fetchGamesHistory).toHaveBeenCalled();
+  });
+
+  it('rebuilds cached null ratings so played games can be returned over protobuf', async () => {
+    const calculated = await stats.getPlayerStats({ playerId: 101, eventIdList: [19] });
+    cache!.data.ratingHistory = JSON.parse('[null, null, null]');
+    jest.mocked(stats._fetchGamesHistory).mockClear();
+
+    const result = await stats.getPlayerStats({ playerId: 101, eventIdList: [19] });
+
+    expect(stats._fetchGamesHistory).toHaveBeenCalled();
+    expect(result).toEqual(calculated);
+    const decoded = PlayersGetPlayerStatsResponse.decode(
+      PlayersGetPlayerStatsResponse.encode(result)
+    );
+    expect(decoded.totalPlayedGames).toBe(2);
+    expect(decoded.ratingHistory).toEqual(calculated.ratingHistory);
   });
 
   it('returns empty summaries when no games have been played', async () => {
