@@ -1,3 +1,4 @@
+import moment from 'moment-timezone';
 import { TransactionPropagation } from '@mikro-orm/core';
 import { EventEntity } from '../entities/Event.entity.js';
 import { Model } from './Model.js';
@@ -381,29 +382,40 @@ export class EventModel extends Model {
           },
           orderBy: { endDate: -1, id: -1 },
           limit: 5,
-          populate: ['players', 'event.ruleset'],
+          populate: ['event'],
+          fields: ['representationalHash', 'endDate', 'event.id', 'event.title', 'event.timezone'],
         });
         if (games.length === 0) {
           return { games: [] };
         }
 
-        const [results, rounds, players] = await Promise.all([
-          this.getModel(SessionResultsModel).findBySession(games.map((game) => game.id)),
-          this.getModel(RoundModel).findBySessionIds(games.map((game) => game.id)),
+        const [results, players] = await Promise.all([
+          this.repo.em.find(
+            SessionResultsEntity,
+            { session: { id: { $in: games.map((game) => game.id) } } },
+            { fields: ['session', 'playerId', 'score'] }
+          ),
           this.getModel(SessionModel).getPlayersOfGames(games),
         ]);
         return {
-          games: games.map((game) => ({
-            game: formatGameResult(
-              game,
-              game.event.onlinePlatform ?? PlatformType.PLATFORM_TYPE_UNSPECIFIED,
-              players.players.get(game.id) ?? [],
-              results.filter((result) => result.session.id === game.id),
-              rounds.filter((round) => round.session.id === game.id),
-              game.event
-            ),
-            event: this._formatEventList([game.event], { [game.event.id]: 1 })[0],
-          })),
+          games: games.map((game) => {
+            const names = new Map(
+              (players.players.get(game.id) ?? []).map((player) => [player.id, player.title])
+            );
+            return {
+              sessionHash: game.representationalHash!,
+              eventId: game.event.id,
+              eventTitle: game.event.title,
+              date: moment.utc(game.endDate).tz(game.event.timezone).format('YYYY-MM-DD HH:mm:ss'),
+              players: results
+                .filter((result) => result.session.id === game.id)
+                .map((result) => ({
+                  playerId: result.playerId,
+                  title: names.get(result.playerId) ?? '',
+                  score: result.score,
+                })),
+            };
+          }),
         };
       },
       { propagation: TransactionPropagation.REQUIRED }

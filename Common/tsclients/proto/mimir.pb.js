@@ -2648,6 +2648,79 @@ export const EventsGetRecentPublicGamesPayload = {
     return _msg;
   }
 };
+export const RecentPublicGamePlayer = {
+  /**
+   * Serializes RecentPublicGamePlayer to protobuf.
+   */
+  encode: function(msg) {
+    return RecentPublicGamePlayer._writeMessage(
+      msg,
+      new protoscript.BinaryWriter()
+    ).getResultBuffer();
+  },
+  /**
+   * Deserializes RecentPublicGamePlayer from protobuf.
+   */
+  decode: function(bytes) {
+    return RecentPublicGamePlayer._readMessage(
+      RecentPublicGamePlayer.initialize(),
+      new protoscript.BinaryReader(bytes)
+    );
+  },
+  /**
+   * Initializes RecentPublicGamePlayer with all fields set to their default value.
+   */
+  initialize: function(msg) {
+    return {
+      playerId: 0,
+      title: "",
+      score: 0,
+      ...msg
+    };
+  },
+  /**
+   * @private
+   */
+  _writeMessage: function(msg, writer) {
+    if (msg.playerId) {
+      writer.writeInt32(1, msg.playerId);
+    }
+    if (msg.title) {
+      writer.writeString(2, msg.title);
+    }
+    if (msg.score) {
+      writer.writeInt32(3, msg.score);
+    }
+    return writer;
+  },
+  /**
+   * @private
+   */
+  _readMessage: function(msg, reader) {
+    while (reader.nextField()) {
+      const field = reader.getFieldNumber();
+      switch (field) {
+        case 1: {
+          msg.playerId = reader.readInt32();
+          break;
+        }
+        case 2: {
+          msg.title = reader.readString();
+          break;
+        }
+        case 3: {
+          msg.score = reader.readInt32();
+          break;
+        }
+        default: {
+          reader.skipField();
+          break;
+        }
+      }
+    }
+    return msg;
+  }
+};
 export const RecentPublicGame = {
   /**
    * Serializes RecentPublicGame to protobuf.
@@ -2672,8 +2745,11 @@ export const RecentPublicGame = {
    */
   initialize: function(msg) {
     return {
-      game: protoAtoms.GameResult.initialize(),
-      event: protoAtoms.Event.initialize(),
+      sessionHash: "",
+      eventId: 0,
+      eventTitle: "",
+      date: "",
+      players: [],
       ...msg
     };
   },
@@ -2681,11 +2757,24 @@ export const RecentPublicGame = {
    * @private
    */
   _writeMessage: function(msg, writer) {
-    if (msg.game) {
-      writer.writeMessage(1, msg.game, protoAtoms.GameResult._writeMessage);
+    if (msg.sessionHash) {
+      writer.writeString(3, msg.sessionHash);
     }
-    if (msg.event) {
-      writer.writeMessage(2, msg.event, protoAtoms.Event._writeMessage);
+    if (msg.eventId) {
+      writer.writeInt32(4, msg.eventId);
+    }
+    if (msg.eventTitle) {
+      writer.writeString(5, msg.eventTitle);
+    }
+    if (msg.date) {
+      writer.writeString(6, msg.date);
+    }
+    if (msg.players?.length) {
+      writer.writeRepeatedMessage(
+        7,
+        msg.players,
+        RecentPublicGamePlayer._writeMessage
+      );
     }
     return writer;
   },
@@ -2696,12 +2785,26 @@ export const RecentPublicGame = {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
-        case 1: {
-          reader.readMessage(msg.game, protoAtoms.GameResult._readMessage);
+        case 3: {
+          msg.sessionHash = reader.readString();
           break;
         }
-        case 2: {
-          reader.readMessage(msg.event, protoAtoms.Event._readMessage);
+        case 4: {
+          msg.eventId = reader.readInt32();
+          break;
+        }
+        case 5: {
+          msg.eventTitle = reader.readString();
+          break;
+        }
+        case 6: {
+          msg.date = reader.readString();
+          break;
+        }
+        case 7: {
+          const m = RecentPublicGamePlayer.initialize();
+          reader.readMessage(m, RecentPublicGamePlayer._readMessage);
+          msg.players.push(m);
           break;
         }
         default: {
@@ -7900,6 +8003,68 @@ export const EventsGetRecentPublicGamesPayloadJSON = {
     return msg;
   }
 };
+export const RecentPublicGamePlayerJSON = {
+  /**
+   * Serializes RecentPublicGamePlayer to JSON.
+   */
+  encode: function(msg) {
+    return JSON.stringify(RecentPublicGamePlayerJSON._writeMessage(msg));
+  },
+  /**
+   * Deserializes RecentPublicGamePlayer from JSON.
+   */
+  decode: function(json) {
+    return RecentPublicGamePlayerJSON._readMessage(
+      RecentPublicGamePlayerJSON.initialize(),
+      JSON.parse(json)
+    );
+  },
+  /**
+   * Initializes RecentPublicGamePlayer with all fields set to their default value.
+   */
+  initialize: function(msg) {
+    return {
+      playerId: 0,
+      title: "",
+      score: 0,
+      ...msg
+    };
+  },
+  /**
+   * @private
+   */
+  _writeMessage: function(msg) {
+    const json = {};
+    if (msg.playerId) {
+      json["playerId"] = msg.playerId;
+    }
+    if (msg.title) {
+      json["title"] = msg.title;
+    }
+    if (msg.score) {
+      json["score"] = msg.score;
+    }
+    return json;
+  },
+  /**
+   * @private
+   */
+  _readMessage: function(msg, json) {
+    const _playerId_ = json["playerId"] ?? json["player_id"];
+    if (_playerId_) {
+      msg.playerId = protoscript.parseNumber(_playerId_);
+    }
+    const _title_ = json["title"];
+    if (_title_) {
+      msg.title = _title_;
+    }
+    const _score_ = json["score"];
+    if (_score_) {
+      msg.score = protoscript.parseNumber(_score_);
+    }
+    return msg;
+  }
+};
 export const RecentPublicGameJSON = {
   /**
    * Serializes RecentPublicGame to JSON.
@@ -7921,8 +8086,11 @@ export const RecentPublicGameJSON = {
    */
   initialize: function(msg) {
     return {
-      game: protoAtoms.GameResultJSON.initialize(),
-      event: protoAtoms.EventJSON.initialize(),
+      sessionHash: "",
+      eventId: 0,
+      eventTitle: "",
+      date: "",
+      players: [],
       ...msg
     };
   },
@@ -7931,17 +8099,22 @@ export const RecentPublicGameJSON = {
    */
   _writeMessage: function(msg) {
     const json = {};
-    if (msg.game) {
-      const _game_ = protoAtoms.GameResultJSON._writeMessage(msg.game);
-      if (Object.keys(_game_).length > 0) {
-        json["game"] = _game_;
-      }
+    if (msg.sessionHash) {
+      json["sessionHash"] = msg.sessionHash;
     }
-    if (msg.event) {
-      const _event_ = protoAtoms.EventJSON._writeMessage(msg.event);
-      if (Object.keys(_event_).length > 0) {
-        json["event"] = _event_;
-      }
+    if (msg.eventId) {
+      json["eventId"] = msg.eventId;
+    }
+    if (msg.eventTitle) {
+      json["eventTitle"] = msg.eventTitle;
+    }
+    if (msg.date) {
+      json["date"] = msg.date;
+    }
+    if (msg.players?.length) {
+      json["players"] = msg.players.map(
+        RecentPublicGamePlayerJSON._writeMessage
+      );
     }
     return json;
   },
@@ -7949,13 +8122,29 @@ export const RecentPublicGameJSON = {
    * @private
    */
   _readMessage: function(msg, json) {
-    const _game_ = json["game"];
-    if (_game_) {
-      protoAtoms.GameResultJSON._readMessage(msg.game, _game_);
+    const _sessionHash_ = json["sessionHash"] ?? json["session_hash"];
+    if (_sessionHash_) {
+      msg.sessionHash = _sessionHash_;
     }
-    const _event_ = json["event"];
-    if (_event_) {
-      protoAtoms.EventJSON._readMessage(msg.event, _event_);
+    const _eventId_ = json["eventId"] ?? json["event_id"];
+    if (_eventId_) {
+      msg.eventId = protoscript.parseNumber(_eventId_);
+    }
+    const _eventTitle_ = json["eventTitle"] ?? json["event_title"];
+    if (_eventTitle_) {
+      msg.eventTitle = _eventTitle_;
+    }
+    const _date_ = json["date"];
+    if (_date_) {
+      msg.date = _date_;
+    }
+    const _players_ = json["players"];
+    if (_players_) {
+      for (const item of _players_) {
+        const m = RecentPublicGamePlayerJSON.initialize();
+        RecentPublicGamePlayerJSON._readMessage(m, item);
+        msg.players.push(m);
+      }
     }
     return msg;
   }

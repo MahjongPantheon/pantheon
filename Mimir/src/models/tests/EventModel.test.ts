@@ -2,12 +2,14 @@ import { jest } from '@jest/globals';
 import {
   EventType,
   PlatformType,
+  PersonEx,
   SessionStatus,
   WindShuffleMode,
 } from 'tsclients/proto/atoms.pb.js';
 import { Model } from '../Model.js';
 import { EventModel } from '../EventModel.js';
 import { SessionModel } from '../SessionModel.js';
+import { RoundModel } from '../RoundModel.js';
 import { SessionEntity } from '../../entities/Session.entity.js';
 import { SessionResultsEntity } from '../../entities/SessionResults.entity.js';
 import { PlayerHistoryModel } from '../PlayerHistoryModel.js';
@@ -199,37 +201,48 @@ describe('Event creation', () => {
     await repo.em.flush();
     repo.em.clear();
     jest.spyOn(Model.getModel(repo, SessionModel), 'getPlayersOfGames').mockResolvedValue({
-      players: new Map(),
+      players: new Map(
+        sessions.map((session, index) => [
+          session.id,
+          [
+            {
+              id: index + 1,
+              title: `Player ${index + 1}`,
+              email: 'private@example.invalid',
+              tenhouId: 'unused-platform-account',
+            } as PersonEx,
+          ],
+        ])
+      ),
       replaceMap: new Map(),
     });
+    const rounds = jest.spyOn(Model.getModel(repo, RoundModel), 'findBySessionIds');
 
     const feed = await model.getRecentPublicGames();
-    expect(feed.games.map(({ game }) => game.sessionHash)).toEqual([
+    expect(feed.games.map((game) => game.sessionHash)).toEqual([
       'public-4',
       'public-3',
       'public-1',
       'public-2',
       'public-5',
     ]);
-    for (const { event, game } of feed.games) {
+    for (const game of feed.games) {
       const index = Number(game.sessionHash.split('-')[1]);
-      expect(event.id).toBe(publicEvents[index % 2].id);
-      expect(event.title).toBe(index % 2 ? 'Mahjong Soul public' : 'Tenhou public');
-      expect(game.replayLink).toBe(
-        index % 2
-          ? `https://mahjongsoul.game.yo-star.com/?paipu=replay-${index}`
-          : `http://tenhou.net/0/?log=replay-${index}`
-      );
-      expect(game.date).toContain(index % 2 ? '21:00:00' : '12:00:00');
-      expect(game.finalResults).toEqual([
-        {
-          playerId: index + 1,
-          place: 1,
-          score: 30000 + index,
-          ratingDelta: index,
-        },
-      ]);
+      expect(game).toEqual({
+        sessionHash: `public-${index}`,
+        eventId: publicEvents[index % 2].id,
+        eventTitle: index % 2 ? 'Mahjong Soul public' : 'Tenhou public',
+        date: `2026-01-0${[1, 4, 3, 5, 5, 2][index]} ${index % 2 ? '21' : '12'}:00:00`,
+        players: [
+          {
+            playerId: index + 1,
+            title: `Player ${index + 1}`,
+            score: 30000 + index,
+          },
+        ],
+      });
     }
+    expect(rounds).not.toHaveBeenCalled();
   });
 
   it('does not grant rights when saving the event fails', async () => {

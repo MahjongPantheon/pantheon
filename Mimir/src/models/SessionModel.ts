@@ -314,7 +314,7 @@ export class SessionModel extends Model {
    * @returns
    */
   async getPlayersOfGames(
-    sessions: SessionEntity[],
+    sessions: Pick<SessionEntity, 'representationalHash'>[],
     substituteReplacementPlayers = true
   ): Promise<{
     players: Map<number, PersonEx[]>; // session -> players ordered

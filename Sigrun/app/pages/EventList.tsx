@@ -82,6 +82,7 @@ export const EventList: React.FC<{ params: { page?: string; filter?: string } }>
         title={`${i18n._t('Event list')} - Sigrun`}
         description={i18n._t('List of all events registered with Mahjong Pantheon')}
       />
+      {page === '1' && filter === '' && <RecentPublicGames />}
       <h2>{i18n._t('Riichi mahjong events list')}</h2>
       <Divider size='xs' />
       <Space h='md' />
@@ -170,7 +171,6 @@ export const EventList: React.FC<{ params: { page?: string; filter?: string } }>
           total={Math.ceil((events?.total ?? 0) / PERPAGE)}
         />
       </Center>
-      {page === '1' && filter === '' && <RecentPublicGames />}
     </Container>
   );
 };

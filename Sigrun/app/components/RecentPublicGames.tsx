@@ -1,16 +1,12 @@
 import * as React from 'react';
-import { Anchor, Divider, Space, Stack } from '@mantine/core';
-import { EventType, PersonEx } from 'tsclients/proto/atoms.pb';
+import { Anchor, Divider, Group, Stack, Text } from '@mantine/core';
 import { useIsomorphicState } from '../hooks/useIsomorphicState';
 import { useApi } from '../hooks/api';
 import { useI18n } from '../hooks/i18n';
-import { useStorage } from '../hooks/storage';
-import { GameListing } from './GameListing';
 
 export const RecentPublicGames: React.FC = () => {
   const api = useApi();
   const i18n = useI18n();
-  const storage = useStorage();
   const [recent] = useIsomorphicState(
     { games: [] },
     'RecentPublicGames',
@@ -24,36 +20,50 @@ export const RecentPublicGames: React.FC = () => {
 
   return (
     <section data-testid='sigrun-public-recent-games'>
-      <Space h='xl' />
       <h2>{i18n._t('Last games')}</h2>
-      <Divider size='xs' />
-      <Stack gap='md'>
-        {recent.games.map(({ event, game }) => (
-          <div key={game.sessionHash}>
-            <Space h='md' />
-            <Anchor
-              data-testid={`sigrun-recent-game-event-${game.sessionHash}`}
-              href={`/event/${event.id}/info`}
-            >
-              {event.title}
-            </Anchor>
-            <GameListing
-              eventId={event.id.toString()}
-              isOnline={event.type === EventType.EVENT_TYPE_ONLINE}
-              isDimmed={storage.getDimmed()}
-              withYakitori={event.withYakitori}
-              game={game}
-              players={
-                Object.fromEntries(game.players.map((player) => [player.id, player])) as Record<
-                  number,
-                  PersonEx
+      <Stack gap='xs'>
+        {recent.games.map((game) => (
+          <Stack
+            key={game.sessionHash}
+            gap='xs'
+            p='sm'
+            data-testid={`sigrun-game-row-${game.sessionHash}`}
+          >
+            <Group justify='space-between' gap='xs'>
+              <Anchor
+                data-testid={`sigrun-recent-game-event-${game.sessionHash}`}
+                href={`/event/${game.eventId}/info`}
+              >
+                {game.eventTitle}
+              </Anchor>
+              <Group gap='sm'>
+                <Text size='sm' c='dimmed' data-testid='sigrun-recent-game-date'>
+                  {game.date.slice(0, -3)}
+                </Text>
+                <Anchor
+                  data-testid={`sigrun-game-details-link-${game.sessionHash}`}
+                  href={`/event/${game.eventId}/game/${game.sessionHash}`}
                 >
-              }
-              rowStyle={{ padding: '16px' }}
-              showShareLink={true}
-            />
+                  {i18n._t('View game')}
+                </Anchor>
+              </Group>
+            </Group>
+            <Group gap='lg'>
+              {game.players.map((player) => (
+                <Group
+                  key={player.playerId}
+                  gap='xs'
+                  data-testid={`sigrun-recent-game-player-${game.sessionHash}-${player.playerId}`}
+                >
+                  <Text size='sm'>{player.title}</Text>
+                  <Text size='sm' fw={600} data-testid='sigrun-recent-game-score'>
+                    {player.score}
+                  </Text>
+                </Group>
+              ))}
+            </Group>
             <Divider size='xs' />
-          </div>
+          </Stack>
         ))}
       </Stack>
     </section>

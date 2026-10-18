@@ -240,7 +240,23 @@ test('SMOKE-005: Registered player can finish a local session and view matching 
         const eventLink = feed.getByTestId(`sigrun-recent-game-event-${hash}`);
         await expect(eventLink).toHaveText(eventTitle);
         await expect(eventLink).toHaveAttribute('href', `/event/${eventId}/info`);
-        await checkGame();
+        const summary = feed.getByTestId(`sigrun-game-row-${hash}`);
+        await expect(summary.getByTestId(/^sigrun-recent-game-player-/)).toHaveCount(4);
+        for (const player of players) {
+          const row = summary.getByTestId(`sigrun-recent-game-player-${hash}-${player.id}`);
+          await expect(row).toContainText(player.title);
+          await assertNumber(
+            row.getByTestId('sigrun-recent-game-score'),
+            Number(results.get(player.id)!.score)
+          );
+        }
+        await expect(summary.getByTestId('sigrun-recent-game-date')).toHaveText(
+          /^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}$/
+        );
+        await expect(summary.locator('ul')).toHaveCount(0);
+        await expect(feed.locator('xpath=following-sibling::h2').first()).toHaveText(
+          'Riichi mahjong events list'
+        );
         await feed.getByTestId(`sigrun-game-details-link-${hash}`).click();
         await expect(sigrun).toHaveURL(new RegExp(`/event/${eventId}/game/${hash}$`));
         await expect(sigrun.getByTestId('sigrun-game-page')).toContainText(eventTitle);

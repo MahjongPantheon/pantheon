@@ -140,9 +140,19 @@ message EventsGetRatingTableResponse {
 // Fixed-size feed of the latest finished sessions with publicly listed results.
 message EventsGetRecentPublicGamesPayload {}
 
+message RecentPublicGamePlayer {
+  int32 player_id = 1;
+  string title = 2;
+  int32 score = 3;
+}
+
 message RecentPublicGame {
-  GameResult game = 1;
-  Event event = 2;
+  reserved 1, 2;
+  string session_hash = 3;
+  int32 event_id = 4;
+  string event_title = 5;
+  string date = 6;
+  repeated RecentPublicGamePlayer players = 7;
 }
 
 message EventsGetRecentPublicGamesResponse {
