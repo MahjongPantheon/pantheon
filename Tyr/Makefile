@@ -125,7 +125,8 @@ prebuild:
 
 .PHONY: dev
 dev:
-	./node_modules/.bin/vite --clearScreen=false
+	# Generated tsclients can change without a lockfile change; refresh Vite's cache.
+	./node_modules/.bin/vite --clearScreen=false --force
 
 PHONY: i18n_extract
 i18n_extract:
