@@ -48,8 +48,11 @@ import { Filler } from '../../helpers/filler';
 import { Redirect, useLocation } from 'wouter';
 import { useStorage } from '../../hooks/storage';
 import { isGoalPointsValid } from './validation';
+import { loadEventCopy } from './copy';
 
-export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params: { id } }) => {
+export const OwnedEventsEdit: React.FC<{ params: { id?: string; copyId?: string } }> = ({
+  params: { id, copyId },
+}) => {
   const { isLoggedIn, privilegesLevel, privilegesLoading } = useContext(authCtx);
   const api = useApi();
   const i18n = useI18n();
@@ -62,6 +65,7 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
   const [validationTarget, setValidationTarget] = useState<{ field: HTMLElement } | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isFinished, setIsFinished] = useState(false);
+  const [copyLoaded, setCopyLoaded] = useState(false);
   const [timezones, setTimezones] = useState<Array<{ value: string; label: string }>>([]);
   const [rules, setRules] = useState<Array<{ value: string; label: string; rules: RulesetConfig }>>(
     []
@@ -213,18 +217,36 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
   };
 
   useEffect(() => {
+    if (!isLoggedIn || !storage.getPersonId()) {
+      return;
+    }
+    let cancelled = false;
     nprogress.reset();
     nprogress.start();
     setIsLoading(true);
+    setCopyLoaded(false);
     Promise.all([
       api.getRulesets(),
       api.getTimezones(),
       id ? api.getEventForEdit(parseInt(id, 10)) : Promise.resolve(null),
+      copyId
+        ? loadEventCopy(api, storage.getPersonId()!, parseInt(copyId, 10))
+        : Promise.resolve(null),
     ])
-      .then(([rulesets, timezoneData, eventData]) => {
+      .then(([rulesets, timezoneData, eventData, eventCopy]) => {
+        if (cancelled) {
+          return;
+        }
         setTimezones(timezoneData.timezones.map((z) => ({ value: z, label: z })));
         setRules(rulesets.map((r) => ({ value: r.id, label: r.title, rules: r.rules })));
-        if (id) {
+        setIsFinished(false);
+        if (copyId) {
+          if (!eventCopy) {
+            throw new Error(i18n._t('Failed to fetch event data'));
+          }
+          setFormValues(eventCopy, eventCopy.rulesetConfig);
+          setCopyLoaded(true);
+        } else if (id) {
           if (eventData) {
             // edit mode
             setEventName(eventData.event.title);
@@ -233,6 +255,8 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
           } else {
             throw new Error(i18n._t('Failed to fetch event data'));
           }
+        } else {
+          form.reset();
         }
       })
       .catch((err: Error) => {
@@ -243,12 +267,20 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
         });
       })
       .finally(() => {
-        setIsLoading(false);
-        nprogress.complete();
+        if (!cancelled) {
+          setIsLoading(false);
+          nprogress.complete();
+        }
       });
-  }, [isLoggedIn, privilegesLevel]);
+    return () => {
+      cancelled = true;
+    };
+  }, [isLoggedIn, privilegesLevel, id, copyId]);
 
   const submitForm = (vals: FormFields) => {
+    if (isLoading || (copyId && !copyLoaded)) {
+      return;
+    }
     setIsSaving(true);
     setIsSaved(false);
     (id
@@ -285,6 +317,10 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
   // Referees can't edit events, so redirect them to games management
   if (id && !privilegesLoading && privilegesLevel < PrivilegesLevel.ADMIN) {
     return <Redirect to={`/event/${id}/games`} />;
+  }
+
+  if (copyId && !isLoading && !copyLoaded) {
+    return null;
   }
 
   return (

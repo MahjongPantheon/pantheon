@@ -17,6 +17,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: i18n-json2po\n"
 
+#: app/pages/OwnedEvents.tsx:389:24
+msgid "Copy event"
+msgstr ""
+
 #: app/components/AppHeader.tsx:111:24
 #: app/components/AppHeader.tsx:123:24
 msgid "Open menu"

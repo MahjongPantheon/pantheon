@@ -434,6 +434,10 @@ msgid ""
 msgstr ""
 "Количество сессий в одной серии. Поставьте 0, чтобы отключить игровые серии."
 
+#: app/pages/OwnedEvents.tsx:389:24
+msgid "Copy event"
+msgstr "Копировать событие"
+
 #: app/pages/ProfileManage.tsx:229:22 app/pages/ProfileManageAdmin.tsx:255:20
 msgid "Country"
 msgstr "Страна"
