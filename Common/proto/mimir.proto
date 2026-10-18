@@ -26,6 +26,7 @@ service Mimir {
   rpc GetGameConfig(GenericEventPayload) returns (GameConfig);
   rpc GetRatingTable(EventsGetRatingTablePayload) returns (EventsGetRatingTableResponse);
   rpc GetLastGames(EventsGetLastGamesPayload) returns (EventsGetLastGamesResponse);
+  rpc GetRecentPublicGames(EventsGetRecentPublicGamesPayload) returns (EventsGetRecentPublicGamesResponse);
   rpc GetGame(GenericSessionPayload) returns (EventsGetGameResponse);
   rpc GetGamesSeries(GenericEventPayload) returns (EventsGetGamesSeriesResponse);
   rpc GetCurrentSessions(PlayersGetCurrentSessionsPayload) returns (PlayersGetCurrentSessionsResponse);
@@ -134,6 +135,29 @@ message EventsGetRatingTablePayload {
 
 message EventsGetRatingTableResponse {
   repeated PlayerInRating list = 1;
+}
+
+// Fixed-size feed of the latest finished sessions with publicly listed results.
+message EventsGetRecentPublicGamesPayload {}
+
+message RecentPublicGamePlayer {
+  int32 player_id = 1;
+  string title = 2;
+  int32 score = 3;
+}
+
+message RecentPublicGame {
+  reserved 1, 2;
+  string session_hash = 3;
+  int32 event_id = 4;
+  string event_title = 5;
+  string date = 6;
+  repeated RecentPublicGamePlayer players = 7;
+  int32 start_points = 8;
+}
+
+message EventsGetRecentPublicGamesResponse {
+  repeated RecentPublicGame games = 1;
 }
 
 message EventsGetLastGamesPayload {

@@ -1,7 +1,17 @@
 import { jest } from '@jest/globals';
-import { EventType, PlatformType, WindShuffleMode } from 'tsclients/proto/atoms.pb.js';
+import {
+  EventType,
+  PlatformType,
+  PersonEx,
+  SessionStatus,
+  WindShuffleMode,
+} from 'tsclients/proto/atoms.pb.js';
 import { Model } from '../Model.js';
 import { EventModel } from '../EventModel.js';
+import { SessionModel } from '../SessionModel.js';
+import { RoundModel } from '../RoundModel.js';
+import { SessionEntity } from '../../entities/Session.entity.js';
+import { SessionResultsEntity } from '../../entities/SessionResults.entity.js';
 import { PlayerHistoryModel } from '../PlayerHistoryModel.js';
 import { EventEntity } from '../../entities/Event.entity.js';
 import { RulesetEntity } from '../../entities/Ruleset.entity.js';
@@ -110,6 +120,170 @@ describe('Event creation', () => {
       model.getRatingTable([eventId], 'rating', 'desc', false, false, null, null)
     ).resolves.toEqual({ list: [] });
     expect(personalInfo).not.toHaveBeenCalled();
+  });
+
+  it('returns an empty public feed without requesting players when no sessions are eligible', async () => {
+    const players = jest.spyOn(Model.getModel(repo, SessionModel), 'getPlayersOfGames');
+    await expect(model.getRecentPublicGames()).resolves.toEqual({ games: [] });
+    expect(players).not.toHaveBeenCalled();
+  });
+
+  it('returns only the latest game per event with stable ties and owning event metadata', async () => {
+    const eventIds = [];
+    for (const data of [
+      {
+        ...eventData,
+        title: 'Tenhou public',
+        type: EventType.EVENT_TYPE_ONLINE,
+        platformId: PlatformType.PLATFORM_TYPE_TENHOUNET,
+      },
+      {
+        ...eventData,
+        title: 'Mahjong Soul public',
+        rulesetConfig: { ...eventData.rulesetConfig, startPoints: 25000 },
+        timezone: 'Asia/Tokyo',
+        type: EventType.EVENT_TYPE_ONLINE,
+        platformId: PlatformType.PLATFORM_TYPE_MAHJONGSOUL,
+      },
+      { ...eventData, isListed: false },
+      { ...eventData, isRatingShown: false },
+    ]) {
+      eventIds.push(await model.createEvent(data));
+    }
+    const events = await model.findById(eventIds.map(({ eventId }) => eventId));
+    const byId = new Map(events.map((event) => [event.id, event]));
+    const publicEvents = eventIds.slice(0, 2).map(({ eventId }) => byId.get(eventId)!);
+    const sessions = [1, 5, 3, 5, 5, 2].map((day, index) =>
+      repo.em.create(SessionEntity, {
+        event: publicEvents[index % 2],
+        players: [],
+        status: SessionStatus.SESSION_STATUS_FINISHED,
+        representationalHash: `public-${index}`,
+        replayHash: `replay-${index}`,
+        endDate: `2026-01-0${day} 12:00:00`,
+        extraTime: 0,
+      })
+    );
+    const excluded = [
+      { event: byId.get(eventIds[2].eventId)!, status: SessionStatus.SESSION_STATUS_FINISHED },
+      { event: byId.get(eventIds[3].eventId)!, status: SessionStatus.SESSION_STATUS_FINISHED },
+      { event: publicEvents[0], status: SessionStatus.SESSION_STATUS_INPROGRESS },
+      { event: publicEvents[0], status: SessionStatus.SESSION_STATUS_PREFINISHED },
+    ].map((data, index) =>
+      repo.em.create(SessionEntity, {
+        ...data,
+        players: [],
+        representationalHash: `excluded-${index}`,
+        endDate: '2026-02-01 12:00:00',
+        extraTime: 0,
+      })
+    );
+    const undated = repo.em.create(SessionEntity, {
+      event: publicEvents[0],
+      status: SessionStatus.SESSION_STATUS_FINISHED,
+      players: [],
+      representationalHash: 'undated',
+      extraTime: 0,
+    });
+    repo.em.persist([...sessions, ...excluded, undated]);
+    await repo.em.flush();
+    repo.em.persist(
+      sessions.map((session, index) =>
+        repo.em.create(SessionResultsEntity, {
+          session,
+          event: session.event,
+          playerId: index + 1,
+          place: 1,
+          score: 30000 + index,
+          ratingDelta: index,
+        })
+      )
+    );
+    await repo.em.flush();
+    repo.em.clear();
+    jest.spyOn(Model.getModel(repo, SessionModel), 'getPlayersOfGames').mockResolvedValue({
+      players: new Map(
+        sessions.map((session, index) => [
+          session.id,
+          [
+            {
+              id: index + 1,
+              title: `Player ${index + 1}`,
+              email: 'private@example.invalid',
+              tenhouId: 'unused-platform-account',
+            } as PersonEx,
+          ],
+        ])
+      ),
+      replaceMap: new Map(),
+    });
+    const rounds = jest.spyOn(Model.getModel(repo, RoundModel), 'findBySessionIds');
+
+    const feed = await model.getRecentPublicGames();
+    expect(feed.games.map((game) => game.sessionHash)).toEqual(['public-4', 'public-3']);
+    for (const game of feed.games) {
+      const index = Number(game.sessionHash.split('-')[1]);
+      expect(game).toEqual({
+        sessionHash: `public-${index}`,
+        eventId: publicEvents[index % 2].id,
+        eventTitle: index % 2 ? 'Mahjong Soul public' : 'Tenhou public',
+        startPoints: index % 2 ? 25000 : 30000,
+        date: `2026-01-0${[1, 5, 3, 5, 5, 2][index]} ${index % 2 ? '21' : '12'}:00:00`,
+        players: [
+          {
+            playerId: index + 1,
+            title: `Player ${index + 1}`,
+            score: 30000 + index,
+          },
+        ],
+      });
+    }
+    expect(rounds).not.toHaveBeenCalled();
+  });
+
+  it('fills five distinct event slots even when one event has many newer games', async () => {
+    const events: EventEntity[] = [];
+    for (let index = 0; index < 7; index++) {
+      const { eventId } = await model.createEvent({ ...eventData, title: `Distinct ${index}` });
+      events.push((await model.findById([eventId]))[0]);
+    }
+    const sessions = events.map((event, index) =>
+      repo.em.create(SessionEntity, {
+        event,
+        players: [],
+        status: SessionStatus.SESSION_STATUS_FINISHED,
+        representationalHash: `distinct-${index}`,
+        endDate: `2026-03-0${index + 1} 12:00:00`,
+        extraTime: 0,
+      })
+    );
+    const busyEventGames = [1, 2, 3, 4, 5, 6].map((hour) =>
+      repo.em.create(SessionEntity, {
+        event: events[0],
+        players: [],
+        status: SessionStatus.SESSION_STATUS_FINISHED,
+        representationalHash: `busy-${hour}`,
+        endDate: `2026-03-08 0${hour}:00:00`,
+        extraTime: 0,
+      })
+    );
+    repo.em.persist([...sessions, ...busyEventGames]);
+    await repo.em.flush();
+    repo.em.clear();
+    jest.spyOn(Model.getModel(repo, SessionModel), 'getPlayersOfGames').mockResolvedValue({
+      players: new Map(),
+      replaceMap: new Map(),
+    });
+
+    const feed = await model.getRecentPublicGames();
+    expect(feed.games.map((game) => game.sessionHash)).toEqual([
+      'busy-6',
+      'distinct-6',
+      'distinct-5',
+      'distinct-4',
+      'distinct-3',
+    ]);
+    expect(new Set(feed.games.map((game) => game.eventId)).size).toBe(5);
   });
 
   it('does not grant rights when saving the event fails', async () => {

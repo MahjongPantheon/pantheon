@@ -26,6 +26,7 @@ import {
   GetGameConfig,
   GetGamesSeries,
   GetLastGames,
+  GetRecentPublicGames,
   GetPlayer,
   GetPlayerStats,
   GetRatingTable,
@@ -164,6 +165,10 @@ export class ApiService {
   getEventsById(ids: number[]) {
     this._analytics?.track(Analytics.LOAD_STARTED, { method: 'GetEventsById' });
     return GetEventsById({ ids }, this._clientConfMimir).then((r) => r.events);
+  }
+
+  getRecentPublicGames() {
+    return GetRecentPublicGames({}, this._clientConfMimir);
   }
 
   getRecentGames(eventId: number, limit: number, offset: number) {

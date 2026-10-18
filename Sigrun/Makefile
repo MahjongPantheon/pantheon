@@ -120,7 +120,8 @@ cleanup_prebuilts:
 	cd ../Sigrun-dist/dist/client/assets && find -name '*.js' -or -name '*.css' -or -name '*.js.gz' -or -name '*.css.gz' | tail -n +30 | xargs -I {} rm {}
 
 dev:
-	./node_modules/.bin/vite --clearScreen=false
+	# Generated tsclients can change without a lockfile change; refresh Vite's cache.
+	./node_modules/.bin/vite --clearScreen=false --force
 
 PHONY: i18n_extract
 i18n_extract:

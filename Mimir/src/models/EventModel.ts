@@ -1,3 +1,4 @@
+import moment from 'moment-timezone';
 import { TransactionPropagation } from '@mikro-orm/core';
 import { EventEntity } from '../entities/Event.entity.js';
 import { Model } from './Model.js';
@@ -12,6 +13,7 @@ import {
   EventsGetEventsResponse,
   EventsGetLastGamesPayload,
   EventsGetLastGamesResponse,
+  EventsGetRecentPublicGamesResponse,
   EventsGetPrescriptedEventConfigResponse,
   EventsGetRatingTableResponse,
   EventsGetTablesStatePayload,
@@ -363,6 +365,93 @@ export class EventModel extends Model {
             penaltiesAmount: item.penaltiesAmount ?? 0,
             penaltiesCount: item.penaltiesCount ?? 0,
           })),
+        };
+      },
+      { propagation: TransactionPropagation.REQUIRED }
+    );
+  }
+
+  async getRecentPublicGames(): Promise<EventsGetRecentPublicGamesResponse> {
+    return this.repo.em.transactional(
+      async () => {
+        const knex = this.repo.em.getKnex();
+        const rankedGames = knex
+          .from('session as s')
+          .join('event as e', 'e.id', 's.event_id')
+          .where({
+            's.status': SessionStatus.SESSION_STATUS_FINISHED,
+            'e.is_listed': 1,
+            'e.hide_results': 0,
+          })
+          .whereNotNull('s.end_date')
+          .select('s.id', 's.end_date')
+          .rowNumber('event_rank', function () {
+            this.partitionBy('s.event_id').orderBy('s.end_date', 'desc').orderBy('s.id', 'desc');
+          });
+        const latestGames: { id: number }[] = await this.repo.em.execute(
+          knex
+            .from(rankedGames.as('ranked_games'))
+            .select('id')
+            .where('event_rank', 1)
+            .orderBy('end_date', 'desc')
+            .orderBy('id', 'desc')
+            .limit(5)
+        );
+        if (latestGames.length === 0) {
+          return { games: [] };
+        }
+
+        const games = await this.repo.em.findAll(SessionEntity, {
+          where: {
+            id: { $in: latestGames.map((game) => game.id) },
+            status: SessionStatus.SESSION_STATUS_FINISHED,
+            endDate: { $ne: null },
+            event: { isListed: 1, hideResults: 0 },
+          },
+          orderBy: { endDate: -1, id: -1 },
+          limit: 5,
+          populate: ['event.ruleset'],
+          fields: [
+            'representationalHash',
+            'endDate',
+            'event.id',
+            'event.title',
+            'event.timezone',
+            'event.ruleset.rules',
+          ],
+        });
+        if (games.length === 0) {
+          return { games: [] };
+        }
+
+        const [results, players] = await Promise.all([
+          this.repo.em.find(
+            SessionResultsEntity,
+            { session: { id: { $in: games.map((game) => game.id) } } },
+            { fields: ['session', 'playerId', 'score'] }
+          ),
+          this.getModel(SessionModel).getPlayersOfGames(games),
+        ]);
+        return {
+          games: games.map((game) => {
+            const names = new Map(
+              (players.players.get(game.id) ?? []).map((player) => [player.id, player.title])
+            );
+            return {
+              sessionHash: game.representationalHash!,
+              eventId: game.event.id,
+              eventTitle: game.event.title,
+              startPoints: game.event.ruleset.rules.startPoints,
+              date: moment.utc(game.endDate).tz(game.event.timezone).format('YYYY-MM-DD HH:mm:ss'),
+              players: results
+                .filter((result) => result.session.id === game.id)
+                .map((result) => ({
+                  playerId: result.playerId,
+                  title: names.get(result.playerId) ?? '',
+                  score: result.score,
+                })),
+            };
+          }),
         };
       },
       { propagation: TransactionPropagation.REQUIRED }

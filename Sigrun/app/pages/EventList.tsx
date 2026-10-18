@@ -42,6 +42,7 @@ import { useApi } from '../hooks/api';
 import { useMediaQuery } from '@mantine/hooks';
 import { Meta } from '../components/Meta';
 import { TextFilter } from '../components/TextFilter';
+import { RecentPublicGames } from '../components/RecentPublicGames';
 
 let stripHtml: (dirtyString: string) => string;
 if (import.meta.env.SSR) {
@@ -81,6 +82,7 @@ export const EventList: React.FC<{ params: { page?: string; filter?: string } }>
         title={`${i18n._t('Event list')} - Sigrun`}
         description={i18n._t('List of all events registered with Mahjong Pantheon')}
       />
+      {page === '1' && filter === '' && <RecentPublicGames />}
       <h2>{i18n._t('Riichi mahjong events list')}</h2>
       <Divider size='xs' />
       <Space h='md' />

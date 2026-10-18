@@ -58,6 +58,14 @@ export async function GetLastGames(eventsGetLastGamesPayload, config) {
   );
   return EventsGetLastGamesResponse.decode(response);
 }
+export async function GetRecentPublicGames(eventsGetRecentPublicGamesPayload, config) {
+  const response = await PBrequest(
+    "/common.Mimir/GetRecentPublicGames",
+    EventsGetRecentPublicGamesPayload.encode(eventsGetRecentPublicGamesPayload),
+    config
+  );
+  return EventsGetRecentPublicGamesResponse.decode(response);
+}
 export async function GetGame(genericSessionPayload, config) {
   const response = await PBrequest(
     "/common.Mimir/GetGame",
@@ -615,6 +623,16 @@ export async function GetLastGamesJSON(eventsGetLastGamesPayload, config) {
     config
   );
   return EventsGetLastGamesResponseJSON.decode(response);
+}
+export async function GetRecentPublicGamesJSON(eventsGetRecentPublicGamesPayload, config) {
+  const response = await JSONrequest(
+    "/common.Mimir/GetRecentPublicGames",
+    EventsGetRecentPublicGamesPayloadJSON.encode(
+      eventsGetRecentPublicGamesPayload
+    ),
+    config
+  );
+  return EventsGetRecentPublicGamesResponseJSON.decode(response);
 }
 export async function GetGameJSON(genericSessionPayload, config) {
   const response = await JSONrequest(
@@ -1212,6 +1230,18 @@ export function createMimir(service) {
         output: {
           protobuf: EventsGetLastGamesResponse,
           json: EventsGetLastGamesResponseJSON
+        }
+      },
+      GetRecentPublicGames: {
+        name: "GetRecentPublicGames",
+        handler: service.GetRecentPublicGames,
+        input: {
+          protobuf: EventsGetRecentPublicGamesPayload,
+          json: EventsGetRecentPublicGamesPayloadJSON
+        },
+        output: {
+          protobuf: EventsGetRecentPublicGamesResponse,
+          json: EventsGetRecentPublicGamesResponseJSON
         }
       },
       GetGame: {
@@ -2573,6 +2603,279 @@ export const EventsGetRatingTableResponse = {
           const m = protoAtoms.PlayerInRating.initialize();
           reader.readMessage(m, protoAtoms.PlayerInRating._readMessage);
           msg.list.push(m);
+          break;
+        }
+        default: {
+          reader.skipField();
+          break;
+        }
+      }
+    }
+    return msg;
+  }
+};
+export const EventsGetRecentPublicGamesPayload = {
+  /**
+   * Serializes EventsGetRecentPublicGamesPayload to protobuf.
+   */
+  encode: function(_msg) {
+    return new Uint8Array();
+  },
+  /**
+   * Deserializes EventsGetRecentPublicGamesPayload from protobuf.
+   */
+  decode: function(_bytes) {
+    return {};
+  },
+  /**
+   * Initializes EventsGetRecentPublicGamesPayload with all fields set to their default value.
+   */
+  initialize: function(msg) {
+    return {
+      ...msg
+    };
+  },
+  /**
+   * @private
+   */
+  _writeMessage: function(_msg, writer) {
+    return writer;
+  },
+  /**
+   * @private
+   */
+  _readMessage: function(_msg, _reader) {
+    return _msg;
+  }
+};
+export const RecentPublicGamePlayer = {
+  /**
+   * Serializes RecentPublicGamePlayer to protobuf.
+   */
+  encode: function(msg) {
+    return RecentPublicGamePlayer._writeMessage(
+      msg,
+      new protoscript.BinaryWriter()
+    ).getResultBuffer();
+  },
+  /**
+   * Deserializes RecentPublicGamePlayer from protobuf.
+   */
+  decode: function(bytes) {
+    return RecentPublicGamePlayer._readMessage(
+      RecentPublicGamePlayer.initialize(),
+      new protoscript.BinaryReader(bytes)
+    );
+  },
+  /**
+   * Initializes RecentPublicGamePlayer with all fields set to their default value.
+   */
+  initialize: function(msg) {
+    return {
+      playerId: 0,
+      title: "",
+      score: 0,
+      ...msg
+    };
+  },
+  /**
+   * @private
+   */
+  _writeMessage: function(msg, writer) {
+    if (msg.playerId) {
+      writer.writeInt32(1, msg.playerId);
+    }
+    if (msg.title) {
+      writer.writeString(2, msg.title);
+    }
+    if (msg.score) {
+      writer.writeInt32(3, msg.score);
+    }
+    return writer;
+  },
+  /**
+   * @private
+   */
+  _readMessage: function(msg, reader) {
+    while (reader.nextField()) {
+      const field = reader.getFieldNumber();
+      switch (field) {
+        case 1: {
+          msg.playerId = reader.readInt32();
+          break;
+        }
+        case 2: {
+          msg.title = reader.readString();
+          break;
+        }
+        case 3: {
+          msg.score = reader.readInt32();
+          break;
+        }
+        default: {
+          reader.skipField();
+          break;
+        }
+      }
+    }
+    return msg;
+  }
+};
+export const RecentPublicGame = {
+  /**
+   * Serializes RecentPublicGame to protobuf.
+   */
+  encode: function(msg) {
+    return RecentPublicGame._writeMessage(
+      msg,
+      new protoscript.BinaryWriter()
+    ).getResultBuffer();
+  },
+  /**
+   * Deserializes RecentPublicGame from protobuf.
+   */
+  decode: function(bytes) {
+    return RecentPublicGame._readMessage(
+      RecentPublicGame.initialize(),
+      new protoscript.BinaryReader(bytes)
+    );
+  },
+  /**
+   * Initializes RecentPublicGame with all fields set to their default value.
+   */
+  initialize: function(msg) {
+    return {
+      sessionHash: "",
+      eventId: 0,
+      eventTitle: "",
+      date: "",
+      players: [],
+      startPoints: 0,
+      ...msg
+    };
+  },
+  /**
+   * @private
+   */
+  _writeMessage: function(msg, writer) {
+    if (msg.sessionHash) {
+      writer.writeString(3, msg.sessionHash);
+    }
+    if (msg.eventId) {
+      writer.writeInt32(4, msg.eventId);
+    }
+    if (msg.eventTitle) {
+      writer.writeString(5, msg.eventTitle);
+    }
+    if (msg.date) {
+      writer.writeString(6, msg.date);
+    }
+    if (msg.players?.length) {
+      writer.writeRepeatedMessage(
+        7,
+        msg.players,
+        RecentPublicGamePlayer._writeMessage
+      );
+    }
+    if (msg.startPoints) {
+      writer.writeInt32(8, msg.startPoints);
+    }
+    return writer;
+  },
+  /**
+   * @private
+   */
+  _readMessage: function(msg, reader) {
+    while (reader.nextField()) {
+      const field = reader.getFieldNumber();
+      switch (field) {
+        case 3: {
+          msg.sessionHash = reader.readString();
+          break;
+        }
+        case 4: {
+          msg.eventId = reader.readInt32();
+          break;
+        }
+        case 5: {
+          msg.eventTitle = reader.readString();
+          break;
+        }
+        case 6: {
+          msg.date = reader.readString();
+          break;
+        }
+        case 7: {
+          const m = RecentPublicGamePlayer.initialize();
+          reader.readMessage(m, RecentPublicGamePlayer._readMessage);
+          msg.players.push(m);
+          break;
+        }
+        case 8: {
+          msg.startPoints = reader.readInt32();
+          break;
+        }
+        default: {
+          reader.skipField();
+          break;
+        }
+      }
+    }
+    return msg;
+  }
+};
+export const EventsGetRecentPublicGamesResponse = {
+  /**
+   * Serializes EventsGetRecentPublicGamesResponse to protobuf.
+   */
+  encode: function(msg) {
+    return EventsGetRecentPublicGamesResponse._writeMessage(
+      msg,
+      new protoscript.BinaryWriter()
+    ).getResultBuffer();
+  },
+  /**
+   * Deserializes EventsGetRecentPublicGamesResponse from protobuf.
+   */
+  decode: function(bytes) {
+    return EventsGetRecentPublicGamesResponse._readMessage(
+      EventsGetRecentPublicGamesResponse.initialize(),
+      new protoscript.BinaryReader(bytes)
+    );
+  },
+  /**
+   * Initializes EventsGetRecentPublicGamesResponse with all fields set to their default value.
+   */
+  initialize: function(msg) {
+    return {
+      games: [],
+      ...msg
+    };
+  },
+  /**
+   * @private
+   */
+  _writeMessage: function(msg, writer) {
+    if (msg.games?.length) {
+      writer.writeRepeatedMessage(
+        1,
+        msg.games,
+        RecentPublicGame._writeMessage
+      );
+    }
+    return writer;
+  },
+  /**
+   * @private
+   */
+  _readMessage: function(msg, reader) {
+    while (reader.nextField()) {
+      const field = reader.getFieldNumber();
+      switch (field) {
+        case 1: {
+          const m = RecentPublicGame.initialize();
+          reader.readMessage(m, RecentPublicGame._readMessage);
+          msg.games.push(m);
           break;
         }
         default: {
@@ -7669,6 +7972,246 @@ export const EventsGetRatingTableResponseJSON = {
         const m = protoAtoms.PlayerInRatingJSON.initialize();
         protoAtoms.PlayerInRatingJSON._readMessage(m, item);
         msg.list.push(m);
+      }
+    }
+    return msg;
+  }
+};
+export const EventsGetRecentPublicGamesPayloadJSON = {
+  /**
+   * Serializes EventsGetRecentPublicGamesPayload to JSON.
+   */
+  encode: function(_msg) {
+    return "{}";
+  },
+  /**
+   * Deserializes EventsGetRecentPublicGamesPayload from JSON.
+   */
+  decode: function(_json) {
+    return {};
+  },
+  /**
+   * Initializes EventsGetRecentPublicGamesPayload with all fields set to their default value.
+   */
+  initialize: function(msg) {
+    return {
+      ...msg
+    };
+  },
+  /**
+   * @private
+   */
+  _writeMessage: function(_msg) {
+    return {};
+  },
+  /**
+   * @private
+   */
+  _readMessage: function(msg, _json) {
+    return msg;
+  }
+};
+export const RecentPublicGamePlayerJSON = {
+  /**
+   * Serializes RecentPublicGamePlayer to JSON.
+   */
+  encode: function(msg) {
+    return JSON.stringify(RecentPublicGamePlayerJSON._writeMessage(msg));
+  },
+  /**
+   * Deserializes RecentPublicGamePlayer from JSON.
+   */
+  decode: function(json) {
+    return RecentPublicGamePlayerJSON._readMessage(
+      RecentPublicGamePlayerJSON.initialize(),
+      JSON.parse(json)
+    );
+  },
+  /**
+   * Initializes RecentPublicGamePlayer with all fields set to their default value.
+   */
+  initialize: function(msg) {
+    return {
+      playerId: 0,
+      title: "",
+      score: 0,
+      ...msg
+    };
+  },
+  /**
+   * @private
+   */
+  _writeMessage: function(msg) {
+    const json = {};
+    if (msg.playerId) {
+      json["playerId"] = msg.playerId;
+    }
+    if (msg.title) {
+      json["title"] = msg.title;
+    }
+    if (msg.score) {
+      json["score"] = msg.score;
+    }
+    return json;
+  },
+  /**
+   * @private
+   */
+  _readMessage: function(msg, json) {
+    const _playerId_ = json["playerId"] ?? json["player_id"];
+    if (_playerId_) {
+      msg.playerId = protoscript.parseNumber(_playerId_);
+    }
+    const _title_ = json["title"];
+    if (_title_) {
+      msg.title = _title_;
+    }
+    const _score_ = json["score"];
+    if (_score_) {
+      msg.score = protoscript.parseNumber(_score_);
+    }
+    return msg;
+  }
+};
+export const RecentPublicGameJSON = {
+  /**
+   * Serializes RecentPublicGame to JSON.
+   */
+  encode: function(msg) {
+    return JSON.stringify(RecentPublicGameJSON._writeMessage(msg));
+  },
+  /**
+   * Deserializes RecentPublicGame from JSON.
+   */
+  decode: function(json) {
+    return RecentPublicGameJSON._readMessage(
+      RecentPublicGameJSON.initialize(),
+      JSON.parse(json)
+    );
+  },
+  /**
+   * Initializes RecentPublicGame with all fields set to their default value.
+   */
+  initialize: function(msg) {
+    return {
+      sessionHash: "",
+      eventId: 0,
+      eventTitle: "",
+      date: "",
+      players: [],
+      startPoints: 0,
+      ...msg
+    };
+  },
+  /**
+   * @private
+   */
+  _writeMessage: function(msg) {
+    const json = {};
+    if (msg.sessionHash) {
+      json["sessionHash"] = msg.sessionHash;
+    }
+    if (msg.eventId) {
+      json["eventId"] = msg.eventId;
+    }
+    if (msg.eventTitle) {
+      json["eventTitle"] = msg.eventTitle;
+    }
+    if (msg.date) {
+      json["date"] = msg.date;
+    }
+    if (msg.players?.length) {
+      json["players"] = msg.players.map(
+        RecentPublicGamePlayerJSON._writeMessage
+      );
+    }
+    if (msg.startPoints) {
+      json["startPoints"] = msg.startPoints;
+    }
+    return json;
+  },
+  /**
+   * @private
+   */
+  _readMessage: function(msg, json) {
+    const _sessionHash_ = json["sessionHash"] ?? json["session_hash"];
+    if (_sessionHash_) {
+      msg.sessionHash = _sessionHash_;
+    }
+    const _eventId_ = json["eventId"] ?? json["event_id"];
+    if (_eventId_) {
+      msg.eventId = protoscript.parseNumber(_eventId_);
+    }
+    const _eventTitle_ = json["eventTitle"] ?? json["event_title"];
+    if (_eventTitle_) {
+      msg.eventTitle = _eventTitle_;
+    }
+    const _date_ = json["date"];
+    if (_date_) {
+      msg.date = _date_;
+    }
+    const _players_ = json["players"];
+    if (_players_) {
+      for (const item of _players_) {
+        const m = RecentPublicGamePlayerJSON.initialize();
+        RecentPublicGamePlayerJSON._readMessage(m, item);
+        msg.players.push(m);
+      }
+    }
+    const _startPoints_ = json["startPoints"] ?? json["start_points"];
+    if (_startPoints_) {
+      msg.startPoints = protoscript.parseNumber(_startPoints_);
+    }
+    return msg;
+  }
+};
+export const EventsGetRecentPublicGamesResponseJSON = {
+  /**
+   * Serializes EventsGetRecentPublicGamesResponse to JSON.
+   */
+  encode: function(msg) {
+    return JSON.stringify(
+      EventsGetRecentPublicGamesResponseJSON._writeMessage(msg)
+    );
+  },
+  /**
+   * Deserializes EventsGetRecentPublicGamesResponse from JSON.
+   */
+  decode: function(json) {
+    return EventsGetRecentPublicGamesResponseJSON._readMessage(
+      EventsGetRecentPublicGamesResponseJSON.initialize(),
+      JSON.parse(json)
+    );
+  },
+  /**
+   * Initializes EventsGetRecentPublicGamesResponse with all fields set to their default value.
+   */
+  initialize: function(msg) {
+    return {
+      games: [],
+      ...msg
+    };
+  },
+  /**
+   * @private
+   */
+  _writeMessage: function(msg) {
+    const json = {};
+    if (msg.games?.length) {
+      json["games"] = msg.games.map(RecentPublicGameJSON._writeMessage);
+    }
+    return json;
+  },
+  /**
+   * @private
+   */
+  _readMessage: function(msg, json) {
+    const _games_ = json["games"];
+    if (_games_) {
+      for (const item of _games_) {
+        const m = RecentPublicGameJSON.initialize();
+        RecentPublicGameJSON._readMessage(m, item);
+        msg.games.push(m);
       }
     }
     return msg;

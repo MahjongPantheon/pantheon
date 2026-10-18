@@ -168,6 +168,9 @@ export const mimirServer: Mimir<Context> = {
       eventsGetRatingTablePayload.dateTo ?? null
     );
   },
+  GetRecentPublicGames: async function (_, context: Context) {
+    return Model.getModel(context.repository, EventModel).getRecentPublicGames();
+  },
   GetLastGames: async function (
     eventsGetLastGamesPayload: EventsGetLastGamesPayload,
     context: Context

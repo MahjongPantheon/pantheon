@@ -446,6 +446,20 @@ describe('Mimir Twirp API', () => {
     );
   });
 
+  test('GetRecentPublicGames: latest game from each distinct public event', async () => {
+    const { games } = await mimirClient.GetRecentPublicGames();
+    expect(games.length).toBeGreaterThan(0);
+    expect(games.length).toBeLessThanOrEqual(5);
+    expect(new Set(games.map((game) => game.eventId)).size).toBe(games.length);
+    for (const summary of games) {
+      const { game } = await mimirClient.GetGame(summary.sessionHash);
+      expect(game.date).toBe(summary.date);
+      expect(game.finalResults.map((result) => result.score).sort((a, b) => a - b)).toEqual(
+        summary.players.map((player) => player.score).sort((a, b) => a - b)
+      );
+    }
+  });
+
   test('GetLastGames: basic', async () => {
     const games = await mimirClient.GetLastGames([TOURNAMENT_EVENT_ID], 10, 0);
     expect(games).toBeDefined();
