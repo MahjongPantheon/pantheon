@@ -432,6 +432,10 @@ msgid ""
 "Count of session in game series. Set to 0 to disable series functionality."
 msgstr "Anzahl von Spielen in einer Serie. 0 deaktiviert Serienfunktion."
 
+#: app/pages/OwnedEvents.tsx:389:24
+msgid "Copy event"
+msgstr "Event kopieren"
+
 #: app/pages/ProfileManage.tsx:229:22 app/pages/ProfileManageAdmin.tsx:255:20
 msgid "Country"
 msgstr "Land"

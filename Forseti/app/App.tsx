@@ -59,6 +59,7 @@ export const App = () => {
       <Route path='/profile/notifications' component={ProfileNotifications} />
 
       <Route path='/ownedEvents/new' component={OwnedEventsEdit} />
+      <Route path='/ownedEvents/copy/:copyId' component={OwnedEventsEdit} />
       <Route path='/ownedEvents/edit/:id' component={OwnedEventsEdit} />
       <Route path='/ownedEvents/privileges/:id' component={PrivilegesManage} />
       <Route path='/ownedEvents/:page' component={OwnedEvents} />

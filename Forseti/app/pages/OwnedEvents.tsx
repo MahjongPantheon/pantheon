@@ -38,6 +38,7 @@ import {
 } from '@mantine/core';
 import {
   IconAlertOctagon,
+  IconCopy,
   IconExternalLink,
   IconEye,
   IconFriends,
@@ -84,7 +85,36 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
   const [resultsLoading, setResultsLoading] = useState<Record<number, boolean>>({});
   const [achievementsLoading, setAchievementsLoading] = useState<Record<number, boolean>>({});
   const [scoringLoading, setScoringLoading] = useState<Record<number, boolean>>({});
+  const [copyableEventIds, setCopyableEventIds] = useState<number[]>([]);
   usePageTitle(i18n._t('Manage my events'));
+
+  useEffect(() => {
+    let cancelled = false;
+    setCopyableEventIds([]);
+    const personId = storage.getPersonId();
+    if (isLoggedIn && personId && events.length) {
+      api
+        .getSuperadminFlag(personId)
+        .then((isSuperadmin) =>
+          Promise.all(
+            events.map(async (event) =>
+              isSuperadmin || (await api.getIsEventAdmin(personId, event.id)) ? event.id : null
+            )
+          )
+        )
+        .then((ids) => {
+          if (!cancelled) {
+            setCopyableEventIds(ids.filter((id): id is number => id !== null));
+          }
+        })
+        .catch(() => {
+          // Keep copy actions hidden if permissions cannot be verified.
+        });
+    }
+    return () => {
+      cancelled = true;
+    };
+  }, [isLoggedIn, events]);
 
   const errHandler = useCallback((err: Error) => {
     notifications.show({
@@ -346,105 +376,111 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
                     </ActionIcon>
                   </a>
                 </Group>
-                <Group position='right' spacing='xs'>
-                  {!event.finished && (
-                    <Menu shadow='md' width={200}>
-                      <Menu.Target>
-                        <Button
-                          data-testid={`forseti-owned-event-actions-${event.id}`}
-                          color='grape'
-                        >
-                          {i18n._t('Actions')}
-                        </Button>
-                      </Menu.Target>
-                      <Menu.Dropdown>
-                        <Menu.Label>{i18n._t('Event management')}</Menu.Label>
-                        {privilegesLevel >= PrivilegesLevel.ADMIN && (
-                          <MenuItemLink
-                            testId={`forseti-owned-event-menu-settings-${event.id}`}
-                            href={`/ownedEvents/edit/${event.id}`}
-                            title={i18n._t('Edit event settings')}
-                            icon={<IconTool />}
-                            text={i18n._t('Settings')}
-                          />
-                        )}
-                        {privilegesLevel >= PrivilegesLevel.ADMIN && (
-                          <MenuItemLink
-                            testId={`forseti-owned-event-menu-privileges-${event.id}`}
-                            href={`/ownedEvents/privileges/${event.id}`}
-                            title={i18n._t('Manage administrators and referees in event')}
-                            icon={<IconMilitaryRank />}
-                            text={i18n._t('Manage privileges')}
-                          />
-                        )}
-                        <MenuItemLink
-                          testId={`forseti-owned-event-menu-players-${event.id}`}
-                          href={`/event/${event.id}/players`}
-                          title={i18n._t('Manage players')}
-                          icon={<IconFriends />}
-                          text={i18n._t('Manage players')}
-                        />
-                        <MenuItemLink
-                          testId={`forseti-owned-event-menu-penalties-${event.id}`}
-                          href={`/event/${event.id}/penalties`}
-                          title={i18n._t('Manage penalties')}
-                          icon={<IconAlertOctagon />}
-                          text={i18n._t('Penalties')}
-                        />
-                        <MenuItemLink
-                          testId={`forseti-owned-event-menu-games-${event.id}`}
-                          href={`/event/${event.id}/games`}
-                          title={i18n._t('Manage current games')}
-                          icon={<IconOlympics />}
-                          text={i18n._t('Manage games')}
-                        />
-                        {event.isPrescripted && privilegesLevel >= PrivilegesLevel.ADMIN && (
-                          <MenuItemLink
-                            testId={`forseti-owned-event-menu-seating-${event.id}`}
-                            href={`/event/${event.id}/prescript`}
-                            title={i18n._t('Manage predefined seating')}
-                            icon={<IconScript />}
-                            text={i18n._t('Predefined seating')}
-                          />
-                        )}
-                        {privilegesLevel >= PrivilegesLevel.ADMIN && (
-                          <>
-                            <Menu.Divider />
-                            <Menu.Label>{i18n._t('Danger zone')}</Menu.Label>
-                            {privilegesLevel === PrivilegesLevel.SUPERADMIN && (
-                              <Menu.Item
-                                data-testid={`forseti-owned-event-menu-rebuild-scoring-${event.id}`}
-                                title={i18n._t('Rebuild scoring')}
-                                onClick={() => rebuildScoring(event.id)}
-                                icon={<IconRefreshAlert />}
-                              >
-                                {i18n._t('Rebuild scoring')}
-                              </Menu.Item>
-                            )}
-
-                            <Menu.Item
-                              data-testid={`forseti-owned-event-menu-finish-${event.id}`}
-                              title={i18n._t('Finish event')}
-                              color='red'
-                              icon={<IconHandStop />}
-                              onClick={() => {
-                                setStopEventData({ id: event.id, title: event.title });
-                                stopEventModalOpen();
-                              }}
-                            >
-                              {i18n._t('Finish event')}
-                            </Menu.Item>
-                          </>
-                        )}
-                      </Menu.Dropdown>
-                    </Menu>
-                  )}
-
+                <Group position='right' spacing='xs' ml='auto'>
                   {event.finished && (
                     <Badge color='pink' variant='outline'>
                       {i18n._t('Event finished')}
                     </Badge>
                   )}
+                  <Menu shadow='md' width={200}>
+                    <Menu.Target>
+                      <Button data-testid={`forseti-owned-event-actions-${event.id}`} color='grape'>
+                        {i18n._t('Actions')}
+                      </Button>
+                    </Menu.Target>
+                    <Menu.Dropdown>
+                      <Menu.Label>{i18n._t('Event management')}</Menu.Label>
+                      {copyableEventIds.includes(event.id) && (
+                        <MenuItemLink
+                          testId={`forseti-owned-event-copy-${event.id}`}
+                          href={`/ownedEvents/copy/${event.id}`}
+                          icon={<IconCopy />}
+                          text={i18n._t('Copy event')}
+                        />
+                      )}
+                      {!event.finished && (
+                        <>
+                          {privilegesLevel >= PrivilegesLevel.ADMIN && (
+                            <MenuItemLink
+                              testId={`forseti-owned-event-menu-settings-${event.id}`}
+                              href={`/ownedEvents/edit/${event.id}`}
+                              title={i18n._t('Edit event settings')}
+                              icon={<IconTool />}
+                              text={i18n._t('Settings')}
+                            />
+                          )}
+                          {privilegesLevel >= PrivilegesLevel.ADMIN && (
+                            <MenuItemLink
+                              testId={`forseti-owned-event-menu-privileges-${event.id}`}
+                              href={`/ownedEvents/privileges/${event.id}`}
+                              title={i18n._t('Manage administrators and referees in event')}
+                              icon={<IconMilitaryRank />}
+                              text={i18n._t('Manage privileges')}
+                            />
+                          )}
+                          <MenuItemLink
+                            testId={`forseti-owned-event-menu-players-${event.id}`}
+                            href={`/event/${event.id}/players`}
+                            title={i18n._t('Manage players')}
+                            icon={<IconFriends />}
+                            text={i18n._t('Manage players')}
+                          />
+                          <MenuItemLink
+                            testId={`forseti-owned-event-menu-penalties-${event.id}`}
+                            href={`/event/${event.id}/penalties`}
+                            title={i18n._t('Manage penalties')}
+                            icon={<IconAlertOctagon />}
+                            text={i18n._t('Penalties')}
+                          />
+                          <MenuItemLink
+                            testId={`forseti-owned-event-menu-games-${event.id}`}
+                            href={`/event/${event.id}/games`}
+                            title={i18n._t('Manage current games')}
+                            icon={<IconOlympics />}
+                            text={i18n._t('Manage games')}
+                          />
+                          {event.isPrescripted && privilegesLevel >= PrivilegesLevel.ADMIN && (
+                            <MenuItemLink
+                              testId={`forseti-owned-event-menu-seating-${event.id}`}
+                              href={`/event/${event.id}/prescript`}
+                              title={i18n._t('Manage predefined seating')}
+                              icon={<IconScript />}
+                              text={i18n._t('Predefined seating')}
+                            />
+                          )}
+                          {privilegesLevel >= PrivilegesLevel.ADMIN && (
+                            <>
+                              <Menu.Divider />
+                              <Menu.Label>{i18n._t('Danger zone')}</Menu.Label>
+                              {privilegesLevel === PrivilegesLevel.SUPERADMIN && (
+                                <Menu.Item
+                                  data-testid={`forseti-owned-event-menu-rebuild-scoring-${event.id}`}
+                                  title={i18n._t('Rebuild scoring')}
+                                  onClick={() => rebuildScoring(event.id)}
+                                  icon={<IconRefreshAlert />}
+                                >
+                                  {i18n._t('Rebuild scoring')}
+                                </Menu.Item>
+                              )}
+
+                              <Menu.Item
+                                data-testid={`forseti-owned-event-menu-finish-${event.id}`}
+                                title={i18n._t('Finish event')}
+                                color='red'
+                                icon={<IconHandStop />}
+                                onClick={() => {
+                                  setStopEventData({ id: event.id, title: event.title });
+                                  stopEventModalOpen();
+                                }}
+                              >
+                                {i18n._t('Finish event')}
+                              </Menu.Item>
+                            </>
+                          )}
+                        </>
+                      )}
+                    </Menu.Dropdown>
+                  </Menu>
 
                   <Menu shadow='md' width={200}>
                     <Menu.Target>

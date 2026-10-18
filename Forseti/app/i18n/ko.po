@@ -432,6 +432,10 @@ msgid ""
 "Count of session in game series. Set to 0 to disable series functionality."
 msgstr "시리즈에 표시되는 대국 수. 시리즈를 비활성화하려면 0으로 설정하시오"
 
+#: app/pages/OwnedEvents.tsx:389:24
+msgid "Copy event"
+msgstr "이벤트 복사"
+
 #: app/pages/ProfileManage.tsx:229:22 app/pages/ProfileManageAdmin.tsx:255:20
 msgid "Country"
 msgstr "국가"
