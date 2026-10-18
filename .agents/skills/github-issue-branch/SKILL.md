@@ -86,11 +86,22 @@ can continue. Do not infer requirements from planned knowledge-base features.
    remain blocked, but clearly report that it awaits validation. If requirements
    remain unmet or correctness defects remain, preserve the worktree and report
    partial/blocked status rather than a ready branch. Do not push or create a PR.
-6. Return the issue URL, local branch, absolute worktree path, base and implementation
-   commit IDs, behavior changed, acceptance-criteria status, actual validation results,
-   and remaining blockers. Make it clear whether the branch is ready for the user
-   to push or still requires work/validation. Preserve the worktree for user handoff;
-   do not archive/remove it. Do not claim a PR exists.
+6. Release the issue branch after the implementation is committed and reviewed,
+   including when only environment-dependent validation remains blocked, so the user
+   can check it out and test it in the primary repository. Verify that all intended
+   changes are committed on the named branch and inspect worktree status first.
+   Archive a managed worktree with the desktop worktree tool; otherwise remove the
+   clean issue worktree with `git worktree remove <path>`. Preserve needed ignored
+   artifacts before removal. Never force-remove uncommitted work or delete the branch.
+   Confirm the branch is no longer checked out in another worktree. Leave the primary
+   checkout unchanged. Preserve worktrees for partial implementations or unresolved
+   correctness defects.
+7. Return the issue URL, local branch, base and implementation commit IDs, behavior
+   changed, acceptance-criteria status, actual validation results, and remaining
+   blockers. Confirm that the worktree was released and give the command to check
+   out the branch in the primary repository. If a worktree remains, include its
+   absolute path and explain why. Make it clear whether the branch is ready for the
+   user to push or still requires work/validation. Do not claim a PR exists.
 
 Keep resume information in the parent chat and verify actual Git state on continuation.
 For a requested batch, release the current worker before starting the next issue;

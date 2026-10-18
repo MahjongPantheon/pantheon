@@ -42,6 +42,7 @@ import { useApi } from '../hooks/api';
 import { useMediaQuery } from '@mantine/hooks';
 import { Meta } from '../components/Meta';
 import { TextFilter } from '../components/TextFilter';
+import { RecentPublicGames } from '../components/RecentPublicGames';
 
 let stripHtml: (dirtyString: string) => string;
 if (import.meta.env.SSR) {
@@ -169,6 +170,7 @@ export const EventList: React.FC<{ params: { page?: string; filter?: string } }>
           total={Math.ceil((events?.total ?? 0) / PERPAGE)}
         />
       </Center>
+      {page === '1' && filter === '' && <RecentPublicGames />}
     </Container>
   );
 };

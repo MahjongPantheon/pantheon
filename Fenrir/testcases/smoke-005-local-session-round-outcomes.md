@@ -107,15 +107,19 @@ R8–R42 enter **H01–H35 in order** from the [catalogue](smoke-hand-catalogue.
 8. In an anonymous Sigrun context, open this event's Last games page. Expect exactly one game and 46 retained rounds (Ron 35 / Tsumo 7 / Draw 2 / Chombo 1 / Nagashi 1). Compare all four results with the explicit fixture and captured Tyr results. Check every persisted round's starting wind, players, yaku, han/fu, and dora, including both R7 winners and the final South 4 hand.
 9. Open the game's details via its link, retain its hash, reload, and repeat the results/history checks. Do not identify the event by a global latest-game query.
 
+10. With the event listed publicly, open the Sigrun homepage. Find this known session hash in Last games, verify its owning event title, all four results and rounds, then follow the session and event links to this event's details pages.
+
 ## Timeout and implementation requirements
 
 Use one `SMOKE-005` test, **30 minutes per attempt**, with bounded action and assertion waits and meaningful per-round steps. Use UI state/request completion waits, never fixed sleeps. API setup is limited to creating accounts. Routine game-log checks may inspect only the latest entry and total count; reload and publication checkpoints verify full history. Keep contexts for administrator, recorder, and spectator isolated.
 
 ## Cleanup and isolation
 
+Run this case without competing session-completion flows during the final homepage checks: the global feed retains only the latest five sessions. The event must have both listing and public results enabled.
+
 Retain this attempt's TEST event and accounts for inspection. Retries use new accounts and a new event. Close extra contexts; never alter unrelated sessions.
 
 ## Implementation and coverage
 
 - Status: Implemented in [local-session.spec.ts](../tests/local-session.spec.ts), with [shared UI helpers](../tests/utils/game-flow.ts) and [explicit scenario checkpoints](../tests/utils/hand-scenarios.json).
-- Covers all 46 yaku in one local event, diverse fu/dora, all six outcomes, dealer continuation, carryover, deferred chombo, persistence, natural completion, and matching Tyr/Sigrun results. Tournament synchronization is covered by SMOKE-006.
+- Covers all 46 yaku in one local event, diverse fu/dora, all six outcomes, dealer continuation, carryover, deferred chombo, persistence, natural completion, and matching Tyr/Sigrun results. Also covers the public homepage feed and links for the newly finished session. Tournament synchronization is covered by SMOKE-006.

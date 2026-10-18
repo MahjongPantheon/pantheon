@@ -63,6 +63,20 @@ export interface EventsGetRatingTableResponse {
   list: protoAtoms.PlayerInRating[];
 }
 
+/**
+ * Fixed-size feed of the latest finished sessions with publicly listed results.
+ */
+export interface EventsGetRecentPublicGamesPayload {}
+
+export interface RecentPublicGame {
+  game: protoAtoms.GameResult;
+  event: protoAtoms.Event;
+}
+
+export interface EventsGetRecentPublicGamesResponse {
+  games: RecentPublicGame[];
+}
+
 export interface EventsGetLastGamesPayload {
   eventIdList: number[];
   limit: number;
@@ -513,6 +527,18 @@ export async function GetLastGames(
     config,
   );
   return EventsGetLastGamesResponse.decode(response);
+}
+
+export async function GetRecentPublicGames(
+  eventsGetRecentPublicGamesPayload: EventsGetRecentPublicGamesPayload,
+  config?: ClientConfiguration,
+): Promise<EventsGetRecentPublicGamesResponse> {
+  const response = await PBrequest(
+    "/common.Mimir/GetRecentPublicGames",
+    EventsGetRecentPublicGamesPayload.encode(eventsGetRecentPublicGamesPayload),
+    config,
+  );
+  return EventsGetRecentPublicGamesResponse.decode(response);
 }
 
 export async function GetGame(
@@ -1349,6 +1375,20 @@ export async function GetLastGamesJSON(
   return EventsGetLastGamesResponseJSON.decode(response);
 }
 
+export async function GetRecentPublicGamesJSON(
+  eventsGetRecentPublicGamesPayload: EventsGetRecentPublicGamesPayload,
+  config?: ClientConfiguration,
+): Promise<EventsGetRecentPublicGamesResponse> {
+  const response = await JSONrequest(
+    "/common.Mimir/GetRecentPublicGames",
+    EventsGetRecentPublicGamesPayloadJSON.encode(
+      eventsGetRecentPublicGamesPayload,
+    ),
+    config,
+  );
+  return EventsGetRecentPublicGamesResponseJSON.decode(response);
+}
+
 export async function GetGameJSON(
   genericSessionPayload: protoAtoms.GenericSessionPayload,
   config?: ClientConfiguration,
@@ -2136,6 +2176,12 @@ export interface Mimir<Context = unknown> {
     eventsGetLastGamesPayload: EventsGetLastGamesPayload,
     context: Context,
   ) => Promise<EventsGetLastGamesResponse> | EventsGetLastGamesResponse;
+  GetRecentPublicGames: (
+    eventsGetRecentPublicGamesPayload: EventsGetRecentPublicGamesPayload,
+    context: Context,
+  ) =>
+    | Promise<EventsGetRecentPublicGamesResponse>
+    | EventsGetRecentPublicGamesResponse;
   GetGame: (
     genericSessionPayload: protoAtoms.GenericSessionPayload,
     context: Context,
@@ -2550,6 +2596,18 @@ export function createMimir<Context>(service: Mimir<Context>) {
         output: {
           protobuf: EventsGetLastGamesResponse,
           json: EventsGetLastGamesResponseJSON,
+        },
+      },
+      GetRecentPublicGames: {
+        name: "GetRecentPublicGames",
+        handler: service.GetRecentPublicGames,
+        input: {
+          protobuf: EventsGetRecentPublicGamesPayload,
+          json: EventsGetRecentPublicGamesPayloadJSON,
+        },
+        output: {
+          protobuf: EventsGetRecentPublicGamesResponse,
+          json: EventsGetRecentPublicGamesResponseJSON,
         },
       },
       GetGame: {
@@ -4047,6 +4105,209 @@ export const EventsGetRatingTableResponse = {
           const m = protoAtoms.PlayerInRating.initialize();
           reader.readMessage(m, protoAtoms.PlayerInRating._readMessage);
           msg.list.push(m);
+          break;
+        }
+        default: {
+          reader.skipField();
+          break;
+        }
+      }
+    }
+    return msg;
+  },
+};
+
+export const EventsGetRecentPublicGamesPayload = {
+  /**
+   * Serializes EventsGetRecentPublicGamesPayload to protobuf.
+   */
+  encode: function (
+    _msg?: PartialDeep<EventsGetRecentPublicGamesPayload>,
+  ): Uint8Array {
+    return new Uint8Array();
+  },
+
+  /**
+   * Deserializes EventsGetRecentPublicGamesPayload from protobuf.
+   */
+  decode: function (_bytes?: ByteSource): EventsGetRecentPublicGamesPayload {
+    return {};
+  },
+
+  /**
+   * Initializes EventsGetRecentPublicGamesPayload with all fields set to their default value.
+   */
+  initialize: function (
+    msg?: Partial<EventsGetRecentPublicGamesPayload>,
+  ): EventsGetRecentPublicGamesPayload {
+    return {
+      ...msg,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    _msg: PartialDeep<EventsGetRecentPublicGamesPayload>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
+    return writer;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    _msg: EventsGetRecentPublicGamesPayload,
+    _reader: protoscript.BinaryReader,
+  ): EventsGetRecentPublicGamesPayload {
+    return _msg;
+  },
+};
+
+export const RecentPublicGame = {
+  /**
+   * Serializes RecentPublicGame to protobuf.
+   */
+  encode: function (msg: PartialDeep<RecentPublicGame>): Uint8Array {
+    return RecentPublicGame._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
+  },
+
+  /**
+   * Deserializes RecentPublicGame from protobuf.
+   */
+  decode: function (bytes: ByteSource): RecentPublicGame {
+    return RecentPublicGame._readMessage(
+      RecentPublicGame.initialize(),
+      new protoscript.BinaryReader(bytes),
+    );
+  },
+
+  /**
+   * Initializes RecentPublicGame with all fields set to their default value.
+   */
+  initialize: function (msg?: Partial<RecentPublicGame>): RecentPublicGame {
+    return {
+      game: protoAtoms.GameResult.initialize(),
+      event: protoAtoms.Event.initialize(),
+      ...msg,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: PartialDeep<RecentPublicGame>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
+    if (msg.game) {
+      writer.writeMessage(1, msg.game, protoAtoms.GameResult._writeMessage);
+    }
+    if (msg.event) {
+      writer.writeMessage(2, msg.event, protoAtoms.Event._writeMessage);
+    }
+    return writer;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: RecentPublicGame,
+    reader: protoscript.BinaryReader,
+  ): RecentPublicGame {
+    while (reader.nextField()) {
+      const field = reader.getFieldNumber();
+      switch (field) {
+        case 1: {
+          reader.readMessage(msg.game, protoAtoms.GameResult._readMessage);
+          break;
+        }
+        case 2: {
+          reader.readMessage(msg.event, protoAtoms.Event._readMessage);
+          break;
+        }
+        default: {
+          reader.skipField();
+          break;
+        }
+      }
+    }
+    return msg;
+  },
+};
+
+export const EventsGetRecentPublicGamesResponse = {
+  /**
+   * Serializes EventsGetRecentPublicGamesResponse to protobuf.
+   */
+  encode: function (
+    msg: PartialDeep<EventsGetRecentPublicGamesResponse>,
+  ): Uint8Array {
+    return EventsGetRecentPublicGamesResponse._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
+  },
+
+  /**
+   * Deserializes EventsGetRecentPublicGamesResponse from protobuf.
+   */
+  decode: function (bytes: ByteSource): EventsGetRecentPublicGamesResponse {
+    return EventsGetRecentPublicGamesResponse._readMessage(
+      EventsGetRecentPublicGamesResponse.initialize(),
+      new protoscript.BinaryReader(bytes),
+    );
+  },
+
+  /**
+   * Initializes EventsGetRecentPublicGamesResponse with all fields set to their default value.
+   */
+  initialize: function (
+    msg?: Partial<EventsGetRecentPublicGamesResponse>,
+  ): EventsGetRecentPublicGamesResponse {
+    return {
+      games: [],
+      ...msg,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: PartialDeep<EventsGetRecentPublicGamesResponse>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
+    if (msg.games?.length) {
+      writer.writeRepeatedMessage(
+        1,
+        msg.games as any,
+        RecentPublicGame._writeMessage,
+      );
+    }
+    return writer;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: EventsGetRecentPublicGamesResponse,
+    reader: protoscript.BinaryReader,
+  ): EventsGetRecentPublicGamesResponse {
+    while (reader.nextField()) {
+      const field = reader.getFieldNumber();
+      switch (field) {
+        case 1: {
+          const m = RecentPublicGame.initialize();
+          reader.readMessage(m, RecentPublicGame._readMessage);
+          msg.games.push(m);
           break;
         }
         default: {
@@ -10133,6 +10394,187 @@ export const EventsGetRatingTableResponseJSON = {
         const m = protoAtoms.PlayerInRatingJSON.initialize();
         protoAtoms.PlayerInRatingJSON._readMessage(m, item);
         msg.list.push(m);
+      }
+    }
+    return msg;
+  },
+};
+
+export const EventsGetRecentPublicGamesPayloadJSON = {
+  /**
+   * Serializes EventsGetRecentPublicGamesPayload to JSON.
+   */
+  encode: function (
+    _msg?: PartialDeep<EventsGetRecentPublicGamesPayload>,
+  ): string {
+    return "{}";
+  },
+
+  /**
+   * Deserializes EventsGetRecentPublicGamesPayload from JSON.
+   */
+  decode: function (_json?: string): EventsGetRecentPublicGamesPayload {
+    return {};
+  },
+
+  /**
+   * Initializes EventsGetRecentPublicGamesPayload with all fields set to their default value.
+   */
+  initialize: function (
+    msg?: Partial<EventsGetRecentPublicGamesPayload>,
+  ): EventsGetRecentPublicGamesPayload {
+    return {
+      ...msg,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    _msg: PartialDeep<EventsGetRecentPublicGamesPayload>,
+  ): Record<string, unknown> {
+    return {};
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: EventsGetRecentPublicGamesPayload,
+    _json: any,
+  ): EventsGetRecentPublicGamesPayload {
+    return msg;
+  },
+};
+
+export const RecentPublicGameJSON = {
+  /**
+   * Serializes RecentPublicGame to JSON.
+   */
+  encode: function (msg: PartialDeep<RecentPublicGame>): string {
+    return JSON.stringify(RecentPublicGameJSON._writeMessage(msg));
+  },
+
+  /**
+   * Deserializes RecentPublicGame from JSON.
+   */
+  decode: function (json: string): RecentPublicGame {
+    return RecentPublicGameJSON._readMessage(
+      RecentPublicGameJSON.initialize(),
+      JSON.parse(json),
+    );
+  },
+
+  /**
+   * Initializes RecentPublicGame with all fields set to their default value.
+   */
+  initialize: function (msg?: Partial<RecentPublicGame>): RecentPublicGame {
+    return {
+      game: protoAtoms.GameResultJSON.initialize(),
+      event: protoAtoms.EventJSON.initialize(),
+      ...msg,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: PartialDeep<RecentPublicGame>,
+  ): Record<string, unknown> {
+    const json: Record<string, unknown> = {};
+    if (msg.game) {
+      const _game_ = protoAtoms.GameResultJSON._writeMessage(msg.game);
+      if (Object.keys(_game_).length > 0) {
+        json["game"] = _game_;
+      }
+    }
+    if (msg.event) {
+      const _event_ = protoAtoms.EventJSON._writeMessage(msg.event);
+      if (Object.keys(_event_).length > 0) {
+        json["event"] = _event_;
+      }
+    }
+    return json;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (msg: RecentPublicGame, json: any): RecentPublicGame {
+    const _game_ = json["game"];
+    if (_game_) {
+      protoAtoms.GameResultJSON._readMessage(msg.game, _game_);
+    }
+    const _event_ = json["event"];
+    if (_event_) {
+      protoAtoms.EventJSON._readMessage(msg.event, _event_);
+    }
+    return msg;
+  },
+};
+
+export const EventsGetRecentPublicGamesResponseJSON = {
+  /**
+   * Serializes EventsGetRecentPublicGamesResponse to JSON.
+   */
+  encode: function (
+    msg: PartialDeep<EventsGetRecentPublicGamesResponse>,
+  ): string {
+    return JSON.stringify(
+      EventsGetRecentPublicGamesResponseJSON._writeMessage(msg),
+    );
+  },
+
+  /**
+   * Deserializes EventsGetRecentPublicGamesResponse from JSON.
+   */
+  decode: function (json: string): EventsGetRecentPublicGamesResponse {
+    return EventsGetRecentPublicGamesResponseJSON._readMessage(
+      EventsGetRecentPublicGamesResponseJSON.initialize(),
+      JSON.parse(json),
+    );
+  },
+
+  /**
+   * Initializes EventsGetRecentPublicGamesResponse with all fields set to their default value.
+   */
+  initialize: function (
+    msg?: Partial<EventsGetRecentPublicGamesResponse>,
+  ): EventsGetRecentPublicGamesResponse {
+    return {
+      games: [],
+      ...msg,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: PartialDeep<EventsGetRecentPublicGamesResponse>,
+  ): Record<string, unknown> {
+    const json: Record<string, unknown> = {};
+    if (msg.games?.length) {
+      json["games"] = msg.games.map(RecentPublicGameJSON._writeMessage);
+    }
+    return json;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: EventsGetRecentPublicGamesResponse,
+    json: any,
+  ): EventsGetRecentPublicGamesResponse {
+    const _games_ = json["games"];
+    if (_games_) {
+      for (const item of _games_) {
+        const m = RecentPublicGameJSON.initialize();
+        RecentPublicGameJSON._readMessage(m, item);
+        msg.games.push(m);
       }
     }
     return msg;

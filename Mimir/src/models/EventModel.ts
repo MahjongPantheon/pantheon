@@ -12,6 +12,7 @@ import {
   EventsGetEventsResponse,
   EventsGetLastGamesPayload,
   EventsGetLastGamesResponse,
+  EventsGetRecentPublicGamesResponse,
   EventsGetPrescriptedEventConfigResponse,
   EventsGetRatingTableResponse,
   EventsGetTablesStatePayload,
@@ -362,6 +363,46 @@ export class EventModel extends Model {
             lastUpdate: item.playerLastUpdate ?? '',
             penaltiesAmount: item.penaltiesAmount ?? 0,
             penaltiesCount: item.penaltiesCount ?? 0,
+          })),
+        };
+      },
+      { propagation: TransactionPropagation.REQUIRED }
+    );
+  }
+
+  async getRecentPublicGames(): Promise<EventsGetRecentPublicGamesResponse> {
+    return this.repo.em.transactional(
+      async () => {
+        const games = await this.repo.em.findAll(SessionEntity, {
+          where: {
+            status: SessionStatus.SESSION_STATUS_FINISHED,
+            endDate: { $ne: null },
+            event: { isListed: 1, hideResults: 0 },
+          },
+          orderBy: { endDate: -1, id: -1 },
+          limit: 5,
+          populate: ['players', 'event.ruleset'],
+        });
+        if (games.length === 0) {
+          return { games: [] };
+        }
+
+        const [results, rounds, players] = await Promise.all([
+          this.getModel(SessionResultsModel).findBySession(games.map((game) => game.id)),
+          this.getModel(RoundModel).findBySessionIds(games.map((game) => game.id)),
+          this.getModel(SessionModel).getPlayersOfGames(games),
+        ]);
+        return {
+          games: games.map((game) => ({
+            game: formatGameResult(
+              game,
+              game.event.onlinePlatform ?? PlatformType.PLATFORM_TYPE_UNSPECIFIED,
+              players.players.get(game.id) ?? [],
+              results.filter((result) => result.session.id === game.id),
+              rounds.filter((round) => round.session.id === game.id),
+              game.event
+            ),
+            event: this._formatEventList([game.event], { [game.event.id]: 1 })[0],
           })),
         };
       },

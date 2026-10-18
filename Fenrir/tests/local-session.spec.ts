@@ -61,6 +61,7 @@ test('SMOKE-005: Registered player can finish a local session and view matching 
       await admin
         .getByTestId('forseti-event-settings-basic-settings-event-is-rating-shown')
         .check();
+      await admin.getByTestId('forseti-event-settings-basic-settings-event-is-listed').check();
       await checkRules(admin, true);
       await admin.getByTestId('forseti-event-settings-save').click();
       const rows = admin.getByTestId(/^forseti-owned-event-row-\d+$/);
@@ -232,6 +233,21 @@ test('SMOKE-005: Registered player can finish a local session and view matching 
       await sigrun.reload();
       await expect(sigrun.getByTestId('sigrun-game-page')).toBeVisible();
       await checkGame();
+      await test.step('Find the completed session on the public homepage and follow its links', async () => {
+        await sigrun.goto(process.env.SIGRUN_URL!);
+        const feed = sigrun.getByTestId('sigrun-public-recent-games');
+        await expect(feed).toBeVisible();
+        const eventLink = feed.getByTestId(`sigrun-recent-game-event-${hash}`);
+        await expect(eventLink).toHaveText(eventTitle);
+        await expect(eventLink).toHaveAttribute('href', `/event/${eventId}/info`);
+        await checkGame();
+        await feed.getByTestId(`sigrun-game-details-link-${hash}`).click();
+        await expect(sigrun).toHaveURL(new RegExp(`/event/${eventId}/game/${hash}$`));
+        await expect(sigrun.getByTestId('sigrun-game-page')).toContainText(eventTitle);
+        await sigrun.goto(process.env.SIGRUN_URL!);
+        await sigrun.getByTestId(`sigrun-recent-game-event-${hash}`).click();
+        await expect(sigrun).toHaveURL(new RegExp(`/event/${eventId}/info$`));
+      });
     });
   } catch (error) {
     await Promise.allSettled(
