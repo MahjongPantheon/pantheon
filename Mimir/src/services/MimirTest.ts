@@ -27,6 +27,7 @@ import {
   EventsGetGameResponse,
   EventsGetGamesSeriesResponse,
   EventsGetLastGamesResponse,
+  EventsGetRecentPublicGamesResponse,
   EventsGetRatingTablePayload,
   EventsGetRatingTableResponse,
   EventsGetRulesetsResponse,
@@ -59,6 +60,7 @@ import {
   GetGameConfig,
   GetGamesSeries,
   GetLastGames,
+  GetRecentPublicGames,
   GetLastResults,
   GetLastRound,
   GetLastRoundByHash,
@@ -188,6 +190,10 @@ export class MimirTest {
     offset: number
   ): Promise<EventsGetLastGamesResponse> {
     return GetLastGames({ eventIdList, limit, offset }, this._config);
+  }
+
+  async GetRecentPublicGames(): Promise<EventsGetRecentPublicGamesResponse> {
+    return GetRecentPublicGames({}, this._config);
   }
 
   async GetGame(sessionHash: string): Promise<EventsGetGameResponse> {

@@ -128,7 +128,7 @@ describe('Event creation', () => {
     expect(players).not.toHaveBeenCalled();
   });
 
-  it('limits the public feed by completion time with stable ties and uses each owning event', async () => {
+  it('returns only the latest game per event with stable ties and owning event metadata', async () => {
     const eventIds = [];
     for (const data of [
       {
@@ -153,7 +153,7 @@ describe('Event creation', () => {
     const events = await model.findById(eventIds.map(({ eventId }) => eventId));
     const byId = new Map(events.map((event) => [event.id, event]));
     const publicEvents = eventIds.slice(0, 2).map(({ eventId }) => byId.get(eventId)!);
-    const sessions = [1, 4, 3, 5, 5, 2].map((day, index) =>
+    const sessions = [1, 5, 3, 5, 5, 2].map((day, index) =>
       repo.em.create(SessionEntity, {
         event: publicEvents[index % 2],
         players: [],
@@ -220,13 +220,7 @@ describe('Event creation', () => {
     const rounds = jest.spyOn(Model.getModel(repo, RoundModel), 'findBySessionIds');
 
     const feed = await model.getRecentPublicGames();
-    expect(feed.games.map((game) => game.sessionHash)).toEqual([
-      'public-4',
-      'public-3',
-      'public-1',
-      'public-2',
-      'public-5',
-    ]);
+    expect(feed.games.map((game) => game.sessionHash)).toEqual(['public-4', 'public-3']);
     for (const game of feed.games) {
       const index = Number(game.sessionHash.split('-')[1]);
       expect(game).toEqual({
@@ -234,7 +228,7 @@ describe('Event creation', () => {
         eventId: publicEvents[index % 2].id,
         eventTitle: index % 2 ? 'Mahjong Soul public' : 'Tenhou public',
         startPoints: index % 2 ? 25000 : 30000,
-        date: `2026-01-0${[1, 4, 3, 5, 5, 2][index]} ${index % 2 ? '21' : '12'}:00:00`,
+        date: `2026-01-0${[1, 5, 3, 5, 5, 2][index]} ${index % 2 ? '21' : '12'}:00:00`,
         players: [
           {
             playerId: index + 1,
@@ -245,6 +239,51 @@ describe('Event creation', () => {
       });
     }
     expect(rounds).not.toHaveBeenCalled();
+  });
+
+  it('fills five distinct event slots even when one event has many newer games', async () => {
+    const events: EventEntity[] = [];
+    for (let index = 0; index < 7; index++) {
+      const { eventId } = await model.createEvent({ ...eventData, title: `Distinct ${index}` });
+      events.push((await model.findById([eventId]))[0]);
+    }
+    const sessions = events.map((event, index) =>
+      repo.em.create(SessionEntity, {
+        event,
+        players: [],
+        status: SessionStatus.SESSION_STATUS_FINISHED,
+        representationalHash: `distinct-${index}`,
+        endDate: `2026-03-0${index + 1} 12:00:00`,
+        extraTime: 0,
+      })
+    );
+    const busyEventGames = [1, 2, 3, 4, 5, 6].map((hour) =>
+      repo.em.create(SessionEntity, {
+        event: events[0],
+        players: [],
+        status: SessionStatus.SESSION_STATUS_FINISHED,
+        representationalHash: `busy-${hour}`,
+        endDate: `2026-03-08 0${hour}:00:00`,
+        extraTime: 0,
+      })
+    );
+    repo.em.persist([...sessions, ...busyEventGames]);
+    await repo.em.flush();
+    repo.em.clear();
+    jest.spyOn(Model.getModel(repo, SessionModel), 'getPlayersOfGames').mockResolvedValue({
+      players: new Map(),
+      replaceMap: new Map(),
+    });
+
+    const feed = await model.getRecentPublicGames();
+    expect(feed.games.map((game) => game.sessionHash)).toEqual([
+      'busy-6',
+      'distinct-6',
+      'distinct-5',
+      'distinct-4',
+      'distinct-3',
+    ]);
+    expect(new Set(feed.games.map((game) => game.eventId)).size).toBe(5);
   });
 
   it('does not grant rights when saving the event fails', async () => {

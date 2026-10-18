@@ -374,8 +374,36 @@ export class EventModel extends Model {
   async getRecentPublicGames(): Promise<EventsGetRecentPublicGamesResponse> {
     return this.repo.em.transactional(
       async () => {
+        const knex = this.repo.em.getKnex();
+        const rankedGames = knex
+          .from('session as s')
+          .join('event as e', 'e.id', 's.event_id')
+          .where({
+            's.status': SessionStatus.SESSION_STATUS_FINISHED,
+            'e.is_listed': 1,
+            'e.hide_results': 0,
+          })
+          .whereNotNull('s.end_date')
+          .select('s.id', 's.end_date')
+          .rowNumber('event_rank', function () {
+            this.partitionBy('s.event_id').orderBy('s.end_date', 'desc').orderBy('s.id', 'desc');
+          });
+        const latestGames: { id: number }[] = await this.repo.em.execute(
+          knex
+            .from(rankedGames.as('ranked_games'))
+            .select('id')
+            .where('event_rank', 1)
+            .orderBy('end_date', 'desc')
+            .orderBy('id', 'desc')
+            .limit(5)
+        );
+        if (latestGames.length === 0) {
+          return { games: [] };
+        }
+
         const games = await this.repo.em.findAll(SessionEntity, {
           where: {
+            id: { $in: latestGames.map((game) => game.id) },
             status: SessionStatus.SESSION_STATUS_FINISHED,
             endDate: { $ne: null },
             event: { isListed: 1, hideResults: 0 },

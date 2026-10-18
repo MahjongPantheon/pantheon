@@ -115,7 +115,7 @@ Use one `SMOKE-005` test, **30 minutes per attempt**, with bounded action and as
 
 ## Cleanup and isolation
 
-Run this case without competing session-completion flows during the final homepage checks: the global feed retains only the latest five sessions. The event must have both listing and public results enabled.
+Run this case without competing session-completion flows during the final homepage checks: the global feed retains the latest session from each of the five most recently active events. The event must have both listing and public results enabled.
 
 Retain this attempt's TEST event and accounts for inspection. Retries use new accounts and a new event. Close extra contexts; never alter unrelated sessions.
 
