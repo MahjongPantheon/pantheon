@@ -47,6 +47,7 @@ import { nprogress } from '@mantine/nprogress';
 import { Filler } from '../../helpers/filler';
 import { Redirect, useLocation } from 'wouter';
 import { useStorage } from '../../hooks/storage';
+import { isGoalPointsValid } from './validation';
 
 export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params: { id } }) => {
   const { isLoggedIn, privilegesLevel, privilegesLoading } = useContext(authCtx);
@@ -148,6 +149,12 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
       event: {
         title: (value) => (value.length > 4 ? null : 'Please use title more than 4 symbols long'),
         timezone: (value) => (value ? null : 'Timezone must be selected'),
+      },
+      ruleset: {
+        goalPoints: (value, values) =>
+          isGoalPointsValid(value, values.ruleset)
+            ? null
+            : i18n._t('Goal score must be at least the initial points'),
       },
     },
   });

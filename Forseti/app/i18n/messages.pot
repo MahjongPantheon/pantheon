@@ -1267,6 +1267,10 @@ msgstr ""
 msgid "Goal score"
 msgstr ""
 
+#: app/pages/OwnedEventsEdit/index.tsx:157:15
+msgid "Goal score must be at least the initial points"
+msgstr ""
+
 #: app/pages/OwnedEventsEdit/RulesetSettings.tsx:97:24
 msgid "Amount of score player should get to end the game."
 msgstr ""

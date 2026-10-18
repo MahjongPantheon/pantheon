@@ -103,7 +103,7 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ form, i18n }) 
           label={i18n._t('Goal score')}
           description={i18n._t('Amount of score player should get to end the game.')}
           defaultValue={30000}
-          min={0}
+          min={form.values.ruleset.startPoints}
           data-testid='forseti-event-settings-ruleset-settings-ruleset-goal-points'
           {...form.getInputProps('ruleset.goalPoints')}
         />

@@ -861,6 +861,10 @@ msgstr "Zur Anmeldeseite gehen"
 msgid "Goal score"
 msgstr "Zielpunkte"
 
+#: app/pages/OwnedEventsEdit/index.tsx:157:15
+msgid "Goal score must be at least the initial points"
+msgstr ""
+
 #: app/helpers/yaku.ts:177:34
 msgid "Haitei"
 msgstr ""
