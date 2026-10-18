@@ -848,6 +848,10 @@ msgstr "회원가입으로 이동"
 msgid "Goal score"
 msgstr "목표 점수"
 
+#: app/pages/OwnedEventsEdit/index.tsx:157:15
+msgid "Goal score must be at least the initial points"
+msgstr ""
+
 #: app/helpers/yaku.ts:177:34
 msgid "Haitei"
 msgstr "해저로월"
