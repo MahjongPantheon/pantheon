@@ -16,6 +16,7 @@ import { getBestTsumoistInSingleSession } from './bestTsumoist.js';
 import { calcRiichiStat } from './helpers/getRiichiStat.js';
 import { getMaxStolenRiichiBetsCount } from './maxStolenRiichiBetsCount.js';
 import { getMinLostRiichiBetsCount } from './minLostRiichiBetsCount.js';
+import { getHonoredDonor } from './honoredDonor.js';
 import { init } from '../../tests/initOrm.js';
 import { makePlayer } from '../../tests/playerFixtures.js';
 import { RoundOutcome } from 'tsclients/proto/atoms.pb.js';
@@ -136,6 +137,34 @@ describe('Achievement calculations', () => {
     ]);
     await expect(calcRiichiStat(repo, event)).resolves.toBe(stats);
   });
+
+  it.each([false, true])(
+    'excludes registrations without completed sessions from riichi achievements (has sessions: %s)',
+    async (hasSessions) => {
+      const { event, session } = fixture();
+      jest.spyOn(playerModel, 'findPlayersForEvents').mockResolvedValue({
+        players: [5, 6, 7, 8, 9, 10, 1, 2, 3, 4].map(makePlayer),
+        replaceMap: new Map(),
+      });
+      jest
+        .spyOn(sessionModel, 'findByEventAndStatus')
+        .mockResolvedValue(hasSessions ? [session] : []);
+      jest
+        .spyOn(roundModel, 'findBySessionIds')
+        .mockResolvedValue(
+          hasSessions ? [round(session, RoundOutcome.ROUND_OUTCOME_DRAW, [])] : []
+        );
+      jest.spyOn(resultsModel, 'findBySession').mockResolvedValue([]);
+      event.ruleset.rules.riichiGoesToWinner = false;
+
+      const expected = hasSessions ? [1, 2, 3, 4].map((playerId) => ({ playerId, count: 0 })) : [];
+      const stats = await calcRiichiStat(repo, event);
+      expect([...stats.data.keys()]).toEqual(hasSessions ? [1, 2, 3, 4] : []);
+      await expect(getMinLostRiichiBetsCount(event, repo)).resolves.toEqual(expected);
+      await expect(getHonoredDonor(event, repo)).resolves.toEqual(expected);
+      await expect(getMaxStolenRiichiBetsCount(event, repo)).resolves.toEqual([]);
+    }
+  );
 
   it('refreshes cached statistics after two minutes', async () => {
     jest.useFakeTimers();

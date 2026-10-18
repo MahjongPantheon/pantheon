@@ -46,6 +46,10 @@ export async function calcRiichiStat(repo: Repository, event: EventEntity): Prom
 
   const playerModel = Model.getModel(repo, PlayerModel);
   const players = await playerModel.findPlayersForEvents([event.id]);
+  const sessions = await getGamesOfEvent(event.id, repo);
+  const playedPlayerIds = new Set(
+    sessions.flatMap((session) => [...session.players].map((player) => player.playerId))
+  );
 
   const stat: RiichiStat = {
     lastCalc: new Date(),
@@ -53,6 +57,9 @@ export async function calcRiichiStat(repo: Repository, event: EventEntity): Prom
   };
 
   for (const p of players.players) {
+    if (!playedPlayerIds.has(p.id)) {
+      continue;
+    }
     stat.data.set(p.id, {
       playerId: p.id,
       won: 0,
@@ -60,8 +67,6 @@ export async function calcRiichiStat(repo: Repository, event: EventEntity): Prom
       stole: 0,
     });
   }
-
-  const sessions = await getGamesOfEvent(event.id, repo);
 
   const sessionResultsModel = Model.getModel(repo, SessionResultsModel);
   const sessionResults = (
