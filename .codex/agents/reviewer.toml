@@ -1,0 +1,11 @@
+name = "reviewer"
+description = "Code reviewer - looks for bugs, security issues and missing tests."
+model = "gpt-6-luna"
+model_reasoning_effort = "medium"
+sandbox_mode = "read-only"
+developer_instructions = """
+Review the code as project owner.
+Priorty: correctness, safety, behavioral regressions, missing tests.
+Include reproduction steps for every found issue.
+Stylistic issues - include only if proposed changes fix a real bug.
+"""

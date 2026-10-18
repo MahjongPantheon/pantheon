@@ -2,10 +2,6 @@
 
 This file applies to the whole repository. Use the nearest service README and Makefile for details; the root README describes the development environment and `docs/technical/terminology.md` defines domain terms.
 
-## Project map
-
-Pantheon is a set of services, not one application. `Mimir` owns game, event, tournament, rating, and statistics data; `Frey` owns authentication, personal data, and access rules. Both expose Twirp APIs defined in `Common/proto`. The user interfaces are `Tyr` (mobile game recording), `Forseti` (administration and profiles), `Sigrun` (ratings and game views), and `Bragi` (landing pages). `Skirnir` sends real-time bot notifications. `Hugin` collects monitoring data and frontend errors, `Gullveig` stores uploaded files, and `Meili` provides geographic data. `Hermod` is the mail service; `Database` and `Redis` provide storage and caching; `Fenrir` holds Playwright end-to-end tests.
-
 ## General rules
 
 - Follow `.editorconfig`: UTF-8, LF, final newline, two-space indentation except four spaces for PHP. For PHP, follow the service's configured PSR-2 PHP_CodeSniffer standard.
@@ -16,42 +12,9 @@ Pantheon is a set of services, not one application. `Mimir` owns game, event, to
 - Preserve existing translations. Text shown to users belongs in the service's `app/i18n` flow; use `make i18n_extract` and `make i18n_compile` at the root when changing translatable messages in Tyr, Forseti, Sigrun, or Bragi. Review generated translation changes before committing.
 - Add or update a focused test for behavior changes where the owning service has a test suite. Use the domain terms in `docs/technical/terminology.md` consistently, especially event, session, round, registration, and sign-up.
 
-## Service-specific directions
-
-| Path | Where to change code and what to preserve |
-| --- | --- |
-| `Mimir/` | TypeScript Twirp game backend. API handlers are in `src/mimir.ts`; business logic lives in `src/models`, `src/services`, `src/helpers`, and MikroORM `src/entities`. Put schema changes in `src/migrations`, not in database initialization SQL for an existing installation. Keep scoring, ruleset, seating, and replay behavior covered by the nearby Jest tests. |
-| `Frey/` | TypeScript Twirp identity backend. `app/frey.ts` binds API methods to `app/models`; authentication, rights, cache, and mail helpers are in `app/helpers`. Put schema changes in `app/database/migrations` and cover authorization and personal-data changes with its Jest tests. |
-| `Tyr/` | React/Vite mobile game assistant. UI is in `app/components`, state in `app/store`, external effects in `app/services`, and shared calculations in `app/helpers`. Keep scoring and game-state behavior aligned with Mimir; run its Vitest tests for such changes. |
-| `Forseti/` | React/Vite administration and profile SPA. Place screens in `app/pages`, reusable UI in `app/components`, and backend calls in `app/services`. Preserve permission checks when changing event, player, or admin workflows. |
-| `Sigrun/` | React/Vite server-rendered public ratings and statistics site. Work in `app/pages`, `app/components`, and `app/services`; check both browser and server rendering when changing code used by `app/server.tsx`. |
-| `Bragi/` | React/Vite server-rendered landing site. Page copy is mostly in `app/pages/*.mdx`; shared UI is in `app/components`. Check both browser and server rendering for shared components. |
-| `Skirnir/` | TypeScript Telegram notification service. Its entry point is `app/server.ts`; preserve the notification API and queue/rate-limit behavior when editing delivery logic. |
-| `Hugin/` | PHP monitoring and error collection. Code is under `src`, HTTP entry points under `www`, and schema changes under `data/migrations`. Preserve the privacy boundary described in its README: analytics must remain depersonalized. |
-| `Gullveig/` | PHP file and avatar storage. Controllers are in `src/controllers` and public entry points in `www`; check upload and file-serving behavior when changing storage paths or validation. |
-| `Meili/` | PHP GeoIP provider. Its API code is in `src/controllers`; geographic data and lookup tools are under `bin`. Keep IP-derived defaults and API response shapes compatible with callers. |
-| `Fenrir/` | Playwright end-to-end tests in `tests/*.spec.ts`; shared helpers are in `tests/utils`. Follow `playwright.config.ts` and use the root `make e2e_dev` flow against a running development stack. |
-| `Hermod/` | Mail container configuration and scripts. Treat `opendkim_keys` as private material; test changes through mail flows in Frey and the development `make dump_last_mail` command. |
-| `Database/` | PostgreSQL initialization, backup, and migration support. Existing schemas evolve through the owning service's migrations (Frey, Mimir, Hugin); use initialization SQL for fresh database setup. Treat import, restore, and cleanup commands as data-changing operations. |
-| `Redis/` | Redis image and entrypoint configuration. Check effects on Frey/Mimir caches when changing it. |
-| `Common/` | Shared protobuf contracts, generated clients, storage helpers, common images, and reverse-proxy configuration. Run `make -C Common lint` for `.proto` edits and check all affected services after shared changes. |
-
-### Mimir
-
-- Do not use `await` inside loops. Collect promises and await them with `Promise.all` instead.
-- Only model methods called directly from `Mimir/src/mimir.ts` should be wrapped in `this.repo.em.transactional`. Keep other model methods unwrapped to prevent nested transactions.
-
-### Fenrir test cases
-
-- Describe new or changed end-to-end scenarios in `Fenrir/testcases/` using `template.md`. Use one file per case, a stable ID, and a title describing the actor, outcome, and relevant condition. See that folder's README and examples.
-- Specify purpose, service scope, preconditions (including permissions), test data, an action/expected-result table, and cleanup or isolation. Use observable, specific results and Pantheon domain terminology. Distinguish current automated coverage from proposed additional assertions.
-- Implement each case as an independent `test()` in `Fenrir/tests/*.spec.ts`. Include the case ID in the test title and link the description to the implementing file and test title. Keep descriptions and implementations synchronized. Before creating a test for a supplied case, search the existing specs and case index for its ID and equivalent behavior. Update the matching test instead of duplicating it; preserve established IDs and assign an unused ID only to a new case.
-- Translate each expected result into an assertion. Use `test.step()` for meaningful stages of longer journeys, roles/labels or stable test IDs for locators, and awaited Playwright assertions. Wait for UI conditions or browser events rather than fixed sleeps; register new-tab listeners before triggering navigation.
-- Exercise the real Pantheon services involved in the described integration and assert the final user-visible outcome. Keep smoke checks separate from cases proving persisted data, permissions, scoring, or cross-service behavior.
-- Create or seed required data independently of other tests. Give each attempt unique mutable data, including retries, and document cleanup or retention. Browser isolation does not isolate shared databases or mailboxes. Match email to the case's recipient; while using the current unfiltered `getLastMail()` helper, prevent competing email-producing tests from running concurrently.
-- Preserve the failure-screenshot helper and configured reporting. Validate implementation changes through root `make fenrir_oxlint fenrir_oxfmt fenrir_typecheck`, inspect `tmp/fenrir_*.log`, and run affected flows with `make e2e_dev` against the development stack. This development flow does not validate SSR; use the root README's production-build e2e flow when SSR is part of the case.
-
 ## Validation and workflow
+
+- Prefix every commit created by Codex with `[codex]` (for example, `[codex] Fix event registration validation`).
 
 - Run lint, format, and type checks through the **root Makefile** against the development containers: `make <service>_oxlint <service>_oxfmt <service>_typecheck` from the repository root, using lowercase service names (for example, `make forseti_oxlint forseti_oxfmt forseti_typecheck`). For broad changes, run `make lint`. The root recipes redirect output to `tmp/<service>_*.log`; inspect those logs and do not rely on the terminal exit status alone, because a missing container can be reported without failing its wrapper target. Do not substitute `make -C <Service> ...` host checks for these container checks.
 - For PHP services, use the root targets `make hugin_lint hugin_analyze`, `make gullveig_lint gullveig_analyze`, or `make meili_lint meili_analyze`; these run PHP_CodeSniffer and PHPStan in the owning container. Check PHP behavior with the service's available tests or an affected integration flow.

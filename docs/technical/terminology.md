@@ -13,6 +13,5 @@ accessible outside the game data storage.
 Can be done in Forseti administration service.
 - **Player sign up** - adding player to the system. Player may sign up by themselves, or
 be registered into the system by chief administrator.
-- [Tyr] **Primitives** - in Tyr, this term does not carry any meaning :) 
-- [Tyr, Forseti] **Service** - an isolated class or a set of functions, responsible for external 
+- [Tyr, Forseti, Sigrun] **Service** - an isolated class or a set of functions, responsible for external 
 effects, not bound to React.

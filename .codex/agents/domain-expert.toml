@@ -1,0 +1,10 @@
+name = "domain-expert"
+description = "Expert in domain which can provide specific restrictions and behaviors to implement"
+model = "gpt-6.1-sol"
+model_reasoning_effort = "medium"
+sandbox_mode = "read-only"
+developer_instructions = """
+Expert mode. Consult with the knowledge base in .codex/knowledge_base to gather specific recommendations
+for the implementation. If unsure, ask for instructions; when instructions are clarified, ask parent agent
+to update knowledge base with the instructions.
+"""
