@@ -16,7 +16,7 @@
  */
 
 import * as React from 'react';
-import { createRef, useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { authCtx, PrivilegesLevel } from '../../hooks/auth';
 import { useApi } from '../../hooks/api';
 import { Container, LoadingOverlay, Stack, Tabs } from '@mantine/core';
@@ -56,7 +56,10 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
   api.setEventId(0);
   const storage = useStorage();
   const [, navigate] = useLocation();
-  const formRef: React.RefObject<HTMLFormElement> = createRef();
+  const formRef = useRef<HTMLFormElement>(null);
+  const [activeTab, setActiveTab] = useState<string | null>('basic');
+  const [validationAttempt, setValidationAttempt] = useState(0);
+  const [validationTarget, setValidationTarget] = useState<{ field: HTMLElement } | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isFinished, setIsFinished] = useState(false);
   const [timezones, setTimezones] = useState<Array<{ value: string; label: string }>>([]);
@@ -158,6 +161,25 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
       },
     },
   });
+
+  useEffect(() => {
+    if (!validationAttempt) {
+      return;
+    }
+    const field = formRef.current?.querySelector<HTMLElement>('[aria-invalid="true"]');
+    const tab = field?.closest<HTMLElement>('[data-settings-tab]')?.dataset.settingsTab;
+    if (field && tab) {
+      setActiveTab(tab);
+      setValidationTarget({ field });
+    }
+  }, [validationAttempt]);
+
+  useEffect(() => {
+    if (validationTarget) {
+      validationTarget.field.focus({ preventScroll: true });
+      validationTarget.field.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }, [validationTarget]);
 
   const setFormValues = (eventData: EventCustom, currentRuleset: RulesetConfig) => {
     setConsistentWindShuffleMode(eventData);
@@ -269,12 +291,15 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
     <>
       <Container data-testid='forseti-event-settings-page' pos='relative'>
         <LoadingOverlay visible={isLoading} overlayOpacity={1} />
-        <form ref={formRef} onSubmit={form.onSubmit(submitForm)}>
-          <Tabs keepMounted={false} defaultValue='basic'>
+        <form
+          ref={formRef}
+          onSubmit={form.onSubmit(submitForm, () => setValidationAttempt((attempt) => attempt + 1))}
+        >
+          <Tabs keepMounted value={activeTab} onTabChange={setActiveTab}>
             <Tabs.List position='left'>
               <TabsList i18n={i18n} form={form} />
             </Tabs.List>
-            <Tabs.Panel value='basic' pt='xs'>
+            <Tabs.Panel value='basic' data-settings-tab='basic' pt='xs'>
               <BasicSettings
                 newEvent={!id}
                 rulesets={rules}
@@ -286,6 +311,9 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
             </Tabs.Panel>
             <Tabs.Panel
               value={form.getTransformedValues().event.type ?? EventType.EVENT_TYPE_LOCAL}
+              data-settings-tab={
+                form.getTransformedValues().event.type ?? EventType.EVENT_TYPE_LOCAL
+              }
               pt='xs'
             >
               <Stack>
@@ -300,10 +328,10 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
                 )}
               </Stack>
             </Tabs.Panel>
-            <Tabs.Panel value='ruleset_tuning' pt='xs'>
+            <Tabs.Panel value='ruleset_tuning' data-settings-tab='ruleset_tuning' pt='xs'>
               <RulesetSettings form={form} i18n={i18n} />
             </Tabs.Panel>
-            <Tabs.Panel value='yaku_tuning' pt='xs'>
+            <Tabs.Panel value='yaku_tuning' data-settings-tab='yaku_tuning' pt='xs'>
               <YakuSettings form={form} i18n={i18n} />
             </Tabs.Panel>
           </Tabs>
