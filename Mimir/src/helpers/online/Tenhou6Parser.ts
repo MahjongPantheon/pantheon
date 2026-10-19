@@ -134,6 +134,9 @@ export class Tenhou6OnlineParser {
         session,
         round
       );
+      // Tokens are collected before state progression, so assign counters during replay.
+      savedRound.round = sessionState.getRound();
+      savedRound.honba = sessionState.getHonba();
       rounds.push(savedRound);
       sessionState.update(savedRound);
       scores.push(sessionState.getScores());

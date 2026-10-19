@@ -60,6 +60,9 @@ export class OnlineParser {
         this._session,
         round
       );
+      // Tokens are collected before state progression, so assign counters during replay.
+      savedRound.round = this._sessionState.getRound();
+      savedRound.honba = this._sessionState.getHonba();
       rounds.push(savedRound);
       this._sessionState.update(savedRound);
       scores.push(this._sessionState.getScores());

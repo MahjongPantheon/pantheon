@@ -1,5 +1,6 @@
 import { readFileSync } from 'fs';
 import { join } from 'path';
+import { RoundEntity } from '../../entities/Round.entity.js';
 import { EventEntity } from '../../entities/Event.entity.js';
 import { EventRegisteredPlayersEntity } from '../../entities/EventRegisteredPlayers.entity.js';
 import { RulesetEntity } from '../../entities/Ruleset.entity.js';
@@ -9,6 +10,14 @@ import { Repository } from '../../services/Repository.js';
 import { Tenhou6OnlineParser } from './Tenhou6Parser.js';
 import { FreyServiceMock } from '../../services/FreyMock.js';
 import { EntityManager } from '@mikro-orm/core';
+
+function expectReplayRounds(content: string, rounds: RoundEntity[]) {
+  const expectedRounds = JSON.parse(content).log.map((round: number[][]) => [
+    round[0][0] + 1,
+    round[0][1],
+  ]);
+  expect(rounds.map((round) => [round.round, round.honba])).toEqual(expectedRounds);
+}
 
 const makeEvent = (em: EntityManager) => {
   const event = new EventEntity();
@@ -86,6 +95,7 @@ describe('Tenhou6ParserTest', () => {
       content
     );
 
+    expectReplayRounds(content, rounds);
     expect(sessionEntity).toBeTruthy();
     expect(sessionEntity.intermediateResults?.scores).toEqual(results);
 
@@ -167,12 +177,13 @@ describe('Tenhou6ParserTest', () => {
       join(import.meta.dirname, 'testdata/format6/doubleron_and_honba.json'),
       'utf-8'
     );
-    const [sessionEntity, results] = await new Tenhou6OnlineParser(repo).parseToSession(
+    const [sessionEntity, results, rounds] = await new Tenhou6OnlineParser(repo).parseToSession(
       event,
       '2018020420gm-0001-14423-3290b527',
       content
     );
 
+    expectReplayRounds(content, rounds);
     expect(sessionEntity).toBeTruthy();
     expect(results).toEqual(sessionEntity.intermediateResults?.scores);
     await repo.destroy();
@@ -201,12 +212,13 @@ describe('Tenhou6ParserTest', () => {
       join(import.meta.dirname, 'testdata/format6/nagashi_usual.json'),
       'utf-8'
     );
-    const [sessionEntity, results] = await new Tenhou6OnlineParser(repo).parseToSession(
+    const [sessionEntity, results, rounds] = await new Tenhou6OnlineParser(repo).parseToSession(
       event,
       '2019020814gm-0061-0000-c1b0958b',
       content
     );
 
+    expectReplayRounds(content, rounds);
     expect(sessionEntity).toBeTruthy();
     expect(results).toEqual(sessionEntity.intermediateResults?.scores);
     await repo.destroy();
@@ -232,12 +244,13 @@ describe('Tenhou6ParserTest', () => {
   test('parseHanchanWithWestRound', async () => {
     const [repo, event] = await prepareTestEntities();
     const content = readFileSync(join(import.meta.dirname, 'testdata/format6/west.json'), 'utf-8');
-    const [sessionEntity, results] = await new Tenhou6OnlineParser(repo).parseToSession(
+    const [sessionEntity, results, rounds] = await new Tenhou6OnlineParser(repo).parseToSession(
       event,
       '2017030413gm-0009-3821-485c5dae',
       content
     );
 
+    expectReplayRounds(content, rounds);
     expect(sessionEntity).toBeTruthy();
     expect(results).toEqual(sessionEntity.intermediateResults?.scores);
     await repo.destroy();
@@ -410,6 +423,7 @@ describe('Tenhou6ParserTest', () => {
       content
     );
 
+    expectReplayRounds(content, rounds);
     expect(sessionEntity).toBeTruthy();
     expect(results).toEqual(sessionEntity.intermediateResults?.scores);
     expect(rounds.length).toBe(12);
@@ -429,6 +443,7 @@ describe('Tenhou6ParserTest', () => {
       content
     );
 
+    expectReplayRounds(content, rounds);
     expect(sessionEntity).toBeTruthy();
     expect(results).toEqual(sessionEntity.intermediateResults?.scores);
     expect(rounds.length).toBe(12);
