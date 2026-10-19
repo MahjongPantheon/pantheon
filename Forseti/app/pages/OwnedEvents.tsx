@@ -85,36 +85,7 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
   const [resultsLoading, setResultsLoading] = useState<Record<number, boolean>>({});
   const [achievementsLoading, setAchievementsLoading] = useState<Record<number, boolean>>({});
   const [scoringLoading, setScoringLoading] = useState<Record<number, boolean>>({});
-  const [copyableEventIds, setCopyableEventIds] = useState<number[]>([]);
   usePageTitle(i18n._t('Manage my events'));
-
-  useEffect(() => {
-    let cancelled = false;
-    setCopyableEventIds([]);
-    const personId = storage.getPersonId();
-    if (isLoggedIn && personId && events.length) {
-      api
-        .getSuperadminFlag(personId)
-        .then((isSuperadmin) =>
-          Promise.all(
-            events.map(async (event) =>
-              isSuperadmin || (await api.getIsEventAdmin(personId, event.id)) ? event.id : null
-            )
-          )
-        )
-        .then((ids) => {
-          if (!cancelled) {
-            setCopyableEventIds(ids.filter((id): id is number => id !== null));
-          }
-        })
-        .catch(() => {
-          // Keep copy actions hidden if permissions cannot be verified.
-        });
-    }
-    return () => {
-      cancelled = true;
-    };
-  }, [isLoggedIn, events]);
 
   const errHandler = useCallback((err: Error) => {
     notifications.show({
@@ -390,14 +361,12 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
                     </Menu.Target>
                     <Menu.Dropdown>
                       <Menu.Label>{i18n._t('Event management')}</Menu.Label>
-                      {copyableEventIds.includes(event.id) && (
-                        <MenuItemLink
-                          testId={`forseti-owned-event-copy-${event.id}`}
-                          href={`/ownedEvents/copy/${event.id}`}
-                          icon={<IconCopy />}
-                          text={i18n._t('Copy event')}
-                        />
-                      )}
+                      <MenuItemLink
+                        testId={`forseti-owned-event-copy-${event.id}`}
+                        href={`/ownedEvents/copy/${event.id}`}
+                        icon={<IconCopy />}
+                        text={i18n._t('Copy event')}
+                      />
                       {!event.finished && (
                         <>
                           {privilegesLevel >= PrivilegesLevel.ADMIN && (

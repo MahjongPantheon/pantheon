@@ -154,7 +154,7 @@ test('Copy event requires review, preserves settings and excludes games and part
     await refereePage.getByTestId('forseti-login-submit').click();
     await expect(refereePage.getByTestId(`forseti-owned-event-row-${eventId}`)).toBeVisible();
     await refereePage.getByTestId(`forseti-owned-event-actions-${eventId}`).click();
-    await expect(refereePage.getByTestId(`forseti-owned-event-copy-${eventId}`)).toHaveCount(0);
+    await expect(refereePage.getByTestId(`forseti-owned-event-copy-${eventId}`)).toBeVisible();
     await refereePage.goto(`${process.env.FORSETI_URL}/ownedEvents/copy/${eventId}`);
     await expect(
       refereePage.getByText('Failed to fetch event data', { exact: true })
