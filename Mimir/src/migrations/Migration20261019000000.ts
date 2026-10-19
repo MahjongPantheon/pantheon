@@ -4,7 +4,7 @@ export class Migration20261019000000 extends Migration {
   override async up(): Promise<void> {
     this.addSql(`drop index "session_replay_hash_index";`);
     this.addSql(
-      `alter table "session" add constraint "session_replay_hash_index" unique ("replay_hash");`
+      `alter table "session" add constraint "session_replay_hash_index" unique ("event_id", "replay_hash");`
     );
   }
 

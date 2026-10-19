@@ -999,8 +999,8 @@
         },
         {
           "keyName": "session_replay_hash_index",
-          "columnNames": ["replay_hash"],
-          "composite": false,
+          "columnNames": ["event_id", "replay_hash"],
+          "composite": true,
           "constraint": true,
           "primary": false,
           "unique": true

@@ -15,7 +15,7 @@ import { SessionStateEntity } from './SessionState.entity.js';
 @Entity({ tableName: 'session' })
 @Index({ properties: ['event'] })
 @Index({ properties: ['endDate'] })
-@Unique({ name: 'session_replay_hash_index', properties: ['replayHash'] })
+@Unique({ name: 'session_replay_hash_index', properties: ['event', 'replayHash'] })
 @Index({ properties: ['representationalHash'] })
 @Index({ properties: ['status'] })
 @Index({ properties: ['tableIndex'] })
