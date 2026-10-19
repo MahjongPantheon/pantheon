@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-06 20:39Z\n"
+"POT-Creation-Date: 2026-10-19 21:07Z\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,75 +17,75 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: i18n-json2po\n"
 
-#: app/components/App.tsx:189:35
+#: app/components/App.tsx:194:35
 #: app/components/pages/Login/LoginError.tsx:44:12
 msgid "OK"
 msgstr ""
 
-#: app/components/App.tsx:191:16
+#: app/components/App.tsx:196:16
 msgid "Please return back and press riichi button for the winner"
 msgstr ""
 
-#: app/components/App.tsx:213:35
+#: app/components/App.tsx:219:35
 msgid "Retry"
 msgstr ""
 
-#: app/components/App.tsx:214:37
+#: app/components/App.tsx:220:37
 msgid "Reset & logout"
 msgstr ""
 
-#: app/components/App.tsx:216:16
+#: app/components/App.tsx:222:16
 msgid "It looks like there are issues with your network connection. Would you like to retry starting the application or clear the credentials and try logging in again?"
 msgstr ""
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:89:19
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:90:19
 msgid "Pao"
 msgstr ""
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:92:30
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:97:30
 msgid "Nobody selected"
 msgstr ""
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:104:28
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:115:28
 msgid "%1 fu"
 msgstr ""
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:123:22
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:140:22
 msgid "Dora %1"
 msgstr ""
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:133:20
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:134:17
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:150:20
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:151:17
 msgid "Yakuman"
 msgstr ""
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:136:17
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:153:17
 #: app/store/selectors/round.ts:39:12
 msgid "%1 han %2 fu"
 msgstr ""
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:137:17
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:154:17
 #: app/store/selectors/round.ts:36:15
 msgid "%1 han"
 msgstr ""
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:143:18
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:161:18
 msgid "No pao"
 msgstr ""
 
 #: app/components/base/Player/Player.tsx:59:58
-#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:97:22
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:113:22
 #: app/store/selectors/round.ts:191:14
 #: app/store/selectors/table.ts:136:25
 #: app/store/selectors/table.ts:416:14
 msgid "Chombo"
 msgstr ""
 
-#: app/components/base/TableStatus/TableStatus.tsx:47:45
+#: app/components/base/TableStatus/TableStatus.tsx:48:45
 msgid "Table #%1"
 msgstr ""
 
-#: app/components/base/TableStatus/TableStatus.tsx:96:16
+#: app/components/base/TableStatus/TableStatus.tsx:106:16
 msgid "%1 deal left"
 msgid_plural "%1 deals left"
 msgstr[0] ""
@@ -95,60 +95,60 @@ msgstr[1] ""
 msgid "Theme"
 msgstr ""
 
-#: app/components/pages/EventSelect/EventSelect.tsx:42:55
+#: app/components/pages/EventSelect/EventSelect.tsx:49:55
 msgid "Select event"
 msgstr ""
 
-#: app/components/pages/EventSelect/EventSelect.tsx:56:14
+#: app/components/pages/EventSelect/EventSelect.tsx:64:14
 msgid "There are no events you participate in right now"
 msgstr ""
 
-#: app/components/pages/GameResult/GameResult.tsx:61:44
+#: app/components/pages/GameResult/GameResult.tsx:84:14
 msgid "No games found"
 msgstr ""
 
-#: app/components/pages/Home/Home.tsx:73:14
+#: app/components/pages/Home/Home.tsx:108:14
 msgid "New game"
 msgstr ""
 
-#: app/components/pages/Home/Home.tsx:78:14
+#: app/components/pages/Home/Home.tsx:118:14
 msgid "Current game"
 msgstr ""
 
-#: app/components/pages/Home/Home.tsx:83:14
+#: app/components/pages/Home/Home.tsx:128:14
 msgid "Previous game"
 msgstr ""
 
-#: app/components/pages/Home/Home.tsx:88:14
+#: app/components/pages/Home/Home.tsx:138:14
 msgid "Other playing tables"
 msgstr ""
 
-#: app/components/pages/Home/Home.tsx:98:14
+#: app/components/pages/Home/Home.tsx:149:14
 msgid "Statistics"
 msgstr ""
 
-#: app/components/pages/Login/Login.tsx:33:24
+#: app/components/pages/Login/Login.tsx:35:24
 msgid "Email"
 msgstr ""
 
-#: app/components/pages/Login/Login.tsx:40:24
+#: app/components/pages/Login/Login.tsx:43:24
 msgid "Password"
 msgstr ""
 
-#: app/components/pages/Login/Login.tsx:48:12
+#: app/components/pages/Login/Login.tsx:51:12
 msgid "Log in"
 msgstr ""
 
-#: app/components/pages/Login/Login.tsx:53:12
+#: app/components/pages/Login/Login.tsx:56:12
 msgid "Sign up"
 msgstr ""
 
-#: app/components/pages/Login/Login.tsx:56:12
+#: app/components/pages/Login/Login.tsx:59:12
 #: app/components/pages/Login/LoginError.tsx:33:16
 msgid "Forgot password?"
 msgstr ""
 
-#: app/components/pages/Login/LoginError.tsx:14:83
+#: app/components/pages/Login/LoginError.tsx:14:120
 msgctxt "Name of registration link"
 msgid "register"
 msgstr ""
@@ -177,102 +177,102 @@ msgstr ""
 msgid "If in doubt, contact the tournament administrator for further instructions."
 msgstr ""
 
-#: app/components/pages/LogView/LogView.tsx:37:62
+#: app/components/pages/LogView/LogView.tsx:39:12
 msgid "No results found"
 msgstr ""
 
-#: app/components/pages/LogView/LogView.tsx:81:46
+#: app/components/pages/LogView/LogView.tsx:91:46
 msgid "Game log"
 msgstr ""
 
-#: app/components/pages/NewGame/NewGame.tsx:46:26
-#: app/components/pages/NewGame/NewGame.tsx:52:26
-#: app/components/pages/NewGame/NewGame.tsx:58:26
-#: app/components/pages/NewGame/NewGame.tsx:64:26
+#: app/components/pages/NewGame/NewGame.tsx:53:26
+#: app/components/pages/NewGame/NewGame.tsx:60:26
+#: app/components/pages/NewGame/NewGame.tsx:67:26
+#: app/components/pages/NewGame/NewGame.tsx:74:26
 msgid "select player"
 msgstr ""
 
-#: app/components/pages/NewGame/NewGame.tsx:72:14
+#: app/components/pages/NewGame/NewGame.tsx:88:14
 msgid "Clear players"
 msgstr ""
 
-#: app/components/pages/NewGame/NewGame.tsx:81:14
+#: app/components/pages/NewGame/NewGame.tsx:98:14
 msgid "Shuffle players"
 msgstr ""
 
-#: app/components/pages/NewGame/NewGame.tsx:91:14
+#: app/components/pages/NewGame/NewGame.tsx:109:14
 msgid "Start game"
 msgstr ""
 
-#: app/components/pages/OtherTablesList/OtherTablesList.tsx:42:42
+#: app/components/pages/OtherTablesList/OtherTablesList.tsx:49:14
 msgid "No tables are playing right now"
 msgstr ""
 
-#: app/components/pages/Penalties/Penalties.tsx:37:12
+#: app/components/pages/Penalties/Penalties.tsx:43:12
 msgid "Failed to load penalties. Connection issues?"
 msgstr ""
 
-#: app/components/pages/Penalties/Penalties.tsx:46:40
+#: app/components/pages/Penalties/Penalties.tsx:58:40
 msgid "Your penalties in current event"
 msgstr ""
 
-#: app/components/pages/Penalties/Penalties.tsx:55:51
+#: app/components/pages/Penalties/Penalties.tsx:68:51
 msgid "Notice"
 msgstr ""
 
-#: app/components/pages/Penalties/Penalties.tsx:61:14
+#: app/components/pages/Penalties/Penalties.tsx:78:14
 msgid "You don't have any penalties in this event 🎉"
 msgstr ""
 
-#: app/components/pages/PlayersSearch/PlayersSearch.tsx:45:24
+#: app/components/pages/PlayersSearch/PlayersSearch.tsx:52:24
 msgid "find player..."
 msgstr ""
 
-#: app/components/pages/Settings/Settings.tsx:104:10
+#: app/components/pages/Settings/Settings.tsx:117:10
 msgid "Go to personal area"
 msgstr ""
 
-#: app/components/pages/Settings/Settings.tsx:107:10
+#: app/components/pages/Settings/Settings.tsx:125:10
 msgid "Select another event"
 msgstr ""
 
-#: app/components/pages/Settings/Settings.tsx:110:45
+#: app/components/pages/Settings/Settings.tsx:128:45
 msgid "Language"
 msgstr ""
 
-#: app/components/pages/Settings/Settings.tsx:128:16
+#: app/components/pages/Settings/Settings.tsx:147:16
 msgid "Single device mode"
 msgstr ""
 
-#: app/components/pages/Settings/Settings.tsx:129:22
+#: app/components/pages/Settings/Settings.tsx:148:22
 msgid "Turn on if you use a single device for all players"
 msgstr ""
 
-#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:83:79
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:91:22
 #: app/store/selectors/table.ts:145:25
 #: app/store/selectors/table.ts:408:14
 msgid "Ron"
 msgstr ""
 
-#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:84:81
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:96:22
 #: app/store/selectors/table.ts:142:25
 #: app/store/selectors/table.ts:410:14
 msgid "Tsumo"
 msgstr ""
 
-#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:87:22
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:101:22
 #: app/store/selectors/round.ts:166:14
 #: app/store/selectors/table.ts:139:25
 msgid "Exhaustive draw"
 msgstr ""
 
-#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:92:24
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:107:24
 #: app/store/selectors/round.ts:178:14
 #: app/store/selectors/table.ts:133:25
 msgid "Abortive draw"
 msgstr ""
 
-#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:102:24
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:119:24
 #: app/store/selectors/round.ts:204:14
 #: app/store/selectors/table.ts:148:25
 msgid "Nagashi mangan"

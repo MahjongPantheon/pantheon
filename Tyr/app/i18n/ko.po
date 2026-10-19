@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-07 21:43Z\n"
+"POT-Creation-Date: 2026-10-19 21:07Z\n"
 "PO-Revision-Date: 2024-05-09 22:02+0300\n"
 "Last-Translator: Geunmo Kim <kimgeunmo@gmail.com>\n"
 "Language-Team: \n"
@@ -20,21 +20,21 @@ msgstr ""
 "Generated-By: i18n-json2po\n"
 "X-Generator: Poedit 3.4.2\n"
 
-#: app/components/base/TableStatus/TableStatus.tsx:96:16
+#: app/components/base/TableStatus/TableStatus.tsx:106:16
 msgid "%1 deal left"
 msgid_plural "%1 deals left"
 msgstr[0] "%1 국 남음"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:104:28
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:115:28
 msgid "%1 fu"
 msgstr "%1 부"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:137:17
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:154:17
 #: app/store/selectors/round.ts:36:15
 msgid "%1 han"
 msgstr "%1 판"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:136:17
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:153:17
 #: app/store/selectors/round.ts:39:12
 msgid "%1 han %2 fu"
 msgstr "%1 판 %2 부"
@@ -47,7 +47,7 @@ msgstr "%1 ← %2"
 msgid "Abort"
 msgstr "도중유국"
 
-#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:92:24
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:107:24
 #: app/store/selectors/round.ts:178:14 app/store/selectors/table.ts:133:25
 msgid "Abortive draw"
 msgstr "도중유국"
@@ -89,7 +89,7 @@ msgid "Chinroutou"
 msgstr "청노두"
 
 #: app/components/base/Player/Player.tsx:59:58
-#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:97:22
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:113:22
 #: app/store/selectors/round.ts:191:14 app/store/selectors/table.ts:136:25
 #: app/store/selectors/table.ts:416:14
 msgid "Chombo"
@@ -100,15 +100,14 @@ msgid "Chuuren poutou"
 msgstr "구련보등"
 
 #: app/helpers/yaku.ts:306:34 app/helpers/yaku.ts:307:39
-#, fuzzy
 msgid "Chuuren poutou 9-side"
 msgstr "구련보등"
 
-#: app/components/pages/NewGame/NewGame.tsx:72:14
+#: app/components/pages/NewGame/NewGame.tsx:88:14
 msgid "Clear players"
 msgstr "작사 초기화"
 
-#: app/components/pages/Home/Home.tsx:78:14
+#: app/components/pages/Home/Home.tsx:118:14
 msgid "Current game"
 msgstr "현재 대국"
 
@@ -128,7 +127,7 @@ msgstr "대삼원"
 msgid "Daisuushii"
 msgstr "대사희"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:123:22
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:140:22
 msgid "Dora %1"
 msgstr "도라 %1"
 
@@ -140,7 +139,7 @@ msgstr "유국"
 msgid "E-mail is not registered in Pantheon database (%1)"
 msgstr "다음 사용자가 존재하지 않습니다 (%1)"
 
-#: app/components/pages/Login/Login.tsx:33:24
+#: app/components/pages/Login/Login.tsx:35:24
 msgid "Email"
 msgstr "이메일"
 
@@ -148,29 +147,29 @@ msgstr "이메일"
 msgid "Event title"
 msgstr "이벤트"
 
-#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:87:22
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:101:22
 #: app/store/selectors/round.ts:166:14 app/store/selectors/table.ts:139:25
 msgid "Exhaustive draw"
 msgstr "유국"
 
-#: app/components/pages/Penalties/Penalties.tsx:37:12
+#: app/components/pages/Penalties/Penalties.tsx:43:12
 msgid "Failed to load penalties. Connection issues?"
-msgstr ""
+msgstr "벌부를 불러오지 못했습니다. 연결 상태를 확인해 주세요."
 
-#: app/components/pages/Login/Login.tsx:56:12
+#: app/components/pages/Login/Login.tsx:59:12
 #: app/components/pages/Login/LoginError.tsx:33:16
 msgid "Forgot password?"
 msgstr "비밀번호 찾기"
 
 #: app/components/screens/OtherTableView/OtherTableView.tsx:68:49
 msgid "Game has finished"
-msgstr ""
+msgstr "대국이 종료되었습니다"
 
-#: app/components/pages/LogView/LogView.tsx:81:46
+#: app/components/pages/LogView/LogView.tsx:91:46
 msgid "Game log"
 msgstr "대국 로그"
 
-#: app/components/pages/Settings/Settings.tsx:104:10
+#: app/components/pages/Settings/Settings.tsx:117:10
 msgid "Go to personal area"
 msgstr "계정 설정"
 
@@ -211,12 +210,12 @@ msgstr "이페코"
 msgid "Ippatsu"
 msgstr "일발"
 
-#: app/components/App.tsx:216:16
+#: app/components/App.tsx:222:16
 msgid ""
 "It looks like there are issues with your network connection. Would you like "
 "to retry starting the application or clear the credentials and try logging "
 "in again?"
-msgstr ""
+msgstr "네트워크 연결에 문제가 있는 것 같습니다. 앱 시작을 다시 시도하거나 로그인 정보를 삭제하고 다시 로그인하시겠습니까?"
 
 #: app/helpers/yaku.ts:204:34 app/helpers/yaku.ts:205:39
 msgid "Ittsu"
@@ -231,15 +230,14 @@ msgid "Kokushi musou"
 msgstr "국사무쌍"
 
 #: app/helpers/yaku.ts:330:34 app/helpers/yaku.ts:331:39
-#, fuzzy
 msgid "Kokushi musou 13-side"
 msgstr "국사무쌍"
 
-#: app/components/pages/Settings/Settings.tsx:110:45
+#: app/components/pages/Settings/Settings.tsx:128:45
 msgid "Language"
 msgstr "언어"
 
-#: app/components/pages/Login/Login.tsx:48:12
+#: app/components/pages/Login/Login.tsx:51:12
 msgid "Log in"
 msgstr "로그인"
 
@@ -259,40 +257,40 @@ msgstr "%1 방총, 다가화"
 msgid "Nagashi"
 msgstr "유국만관"
 
-#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:102:24
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:119:24
 #: app/store/selectors/round.ts:204:14 app/store/selectors/table.ts:148:25
 msgid "Nagashi mangan"
 msgstr "유국만관"
 
-#: app/components/pages/Home/Home.tsx:73:14
+#: app/components/pages/Home/Home.tsx:108:14
 msgid "New game"
 msgstr "신규 대국"
 
-#: app/components/pages/GameResult/GameResult.tsx:61:44
+#: app/components/pages/GameResult/GameResult.tsx:84:14
 msgid "No games found"
 msgstr "대국을 찾을 수 없습니다"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:143:18
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:161:18
 msgid "No pao"
 msgstr "파오 없음"
 
-#: app/components/pages/LogView/LogView.tsx:37:62
+#: app/components/pages/LogView/LogView.tsx:39:12
 msgid "No results found"
 msgstr "결과를 찾을 수 없습니다"
 
-#: app/components/pages/OtherTablesList/OtherTablesList.tsx:42:42
+#: app/components/pages/OtherTablesList/OtherTablesList.tsx:49:14
 msgid "No tables are playing right now"
 msgstr "진행 중인 대국이 없습니다"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:92:30
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:97:30
 msgid "Nobody selected"
 msgstr "아무도 선택되지 않았습니다"
 
-#: app/components/pages/Penalties/Penalties.tsx:55:51
+#: app/components/pages/Penalties/Penalties.tsx:68:51
 msgid "Notice"
-msgstr ""
+msgstr "주의"
 
-#: app/components/App.tsx:189:35
+#: app/components/App.tsx:194:35
 #: app/components/pages/Login/LoginError.tsx:44:12
 msgid "OK"
 msgstr "확인"
@@ -305,7 +303,7 @@ msgstr "오픈 리치"
 msgid "Opened hand"
 msgstr "비멘젠"
 
-#: app/components/pages/Home/Home.tsx:88:14
+#: app/components/pages/Home/Home.tsx:138:14
 msgid "Other playing tables"
 msgstr "대국 관전"
 
@@ -313,7 +311,7 @@ msgstr "대국 관전"
 msgid "Pantheon"
 msgstr "Pantheon"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:89:19
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:90:19
 msgid "Pao"
 msgstr "파오"
 
@@ -321,7 +319,7 @@ msgstr "파오"
 msgid "Pao from: %1"
 msgstr "책임지불 (파오): %1"
 
-#: app/components/pages/Login/Login.tsx:40:24
+#: app/components/pages/Login/Login.tsx:43:24
 msgid "Password"
 msgstr "비밀번호"
 
@@ -337,11 +335,11 @@ msgstr "핑후"
 msgid "Player name"
 msgstr "작사 명"
 
-#: app/components/App.tsx:191:16
+#: app/components/App.tsx:196:16
 msgid "Please return back and press riichi button for the winner"
 msgstr "역: 리치를 선택/해제시 돌아가서 승자의 리치 버튼을 눌러주세요"
 
-#: app/components/pages/Home/Home.tsx:83:14
+#: app/components/pages/Home/Home.tsx:128:14
 msgid "Previous game"
 msgstr "이전 대국"
 
@@ -353,13 +351,13 @@ msgstr "심판이 호출되었습니다!"
 msgid "Renhou"
 msgstr "인화"
 
-#: app/components/App.tsx:214:37
+#: app/components/App.tsx:220:37
 msgid "Reset & logout"
-msgstr ""
+msgstr "초기화 및 로그아웃"
 
-#: app/components/App.tsx:213:35
+#: app/components/App.tsx:219:35
 msgid "Retry"
-msgstr ""
+msgstr "다시 시도"
 
 #: app/helpers/yaku.ts:336:34 app/helpers/yaku.ts:337:39
 msgid "Riichi"
@@ -377,7 +375,7 @@ msgstr "영상"
 msgid "Rinshan kaihou"
 msgstr "영상개화"
 
-#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:83:79
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:91:22
 #: app/store/selectors/table.ts:145:25 app/store/selectors/table.ts:408:14
 msgid "Ron"
 msgstr "론"
@@ -410,11 +408,11 @@ msgstr "삼색동순"
 msgid "Sanshoku doukou"
 msgstr "삼색동각"
 
-#: app/components/pages/Settings/Settings.tsx:107:10
+#: app/components/pages/Settings/Settings.tsx:125:10
 msgid "Select another event"
 msgstr "다른 이벤트 선택"
 
-#: app/components/pages/EventSelect/EventSelect.tsx:42:55
+#: app/components/pages/EventSelect/EventSelect.tsx:49:55
 msgid "Select event"
 msgstr "이벤트 선택"
 
@@ -430,23 +428,23 @@ msgstr "소삼원"
 msgid "Shousuushii"
 msgstr "소사희"
 
-#: app/components/pages/NewGame/NewGame.tsx:81:14
+#: app/components/pages/NewGame/NewGame.tsx:98:14
 msgid "Shuffle players"
 msgstr "작사 셔플"
 
-#: app/components/pages/Login/Login.tsx:53:12
+#: app/components/pages/Login/Login.tsx:56:12
 msgid "Sign up"
 msgstr "회원가입"
 
-#: app/components/pages/Settings/Settings.tsx:128:16
+#: app/components/pages/Settings/Settings.tsx:147:16
 msgid "Single device mode"
 msgstr "단일 기기 모드"
 
-#: app/components/pages/NewGame/NewGame.tsx:91:14
+#: app/components/pages/NewGame/NewGame.tsx:109:14
 msgid "Start game"
 msgstr "대국 시작"
 
-#: app/components/pages/Home/Home.tsx:98:14
+#: app/components/pages/Home/Home.tsx:149:14
 msgid "Statistics"
 msgstr "통계"
 
@@ -455,7 +453,6 @@ msgid "Suuankou"
 msgstr "스안커"
 
 #: app/helpers/yaku.ts:168:34 app/helpers/yaku.ts:169:39
-#, fuzzy
 msgid "Suuankou Tanki"
 msgstr "스안커단기"
 
@@ -463,7 +460,7 @@ msgstr "스안커단기"
 msgid "Suukantsu"
 msgstr "스깡쯔"
 
-#: app/components/base/TableStatus/TableStatus.tsx:47:45
+#: app/components/base/TableStatus/TableStatus.tsx:48:45
 msgid "Table #%1"
 msgstr "제 #%1 탁"
 
@@ -483,7 +480,7 @@ msgstr "천화"
 msgid "Theme"
 msgstr "테마"
 
-#: app/components/pages/EventSelect/EventSelect.tsx:56:14
+#: app/components/pages/EventSelect/EventSelect.tsx:64:14
 msgid "There are no events you participate in right now"
 msgstr "현재 참가중인 이벤트가 없습니다"
 
@@ -491,7 +488,7 @@ msgstr "현재 참가중인 이벤트가 없습니다"
 msgid "Toitoi"
 msgstr "또이또이"
 
-#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:84:81
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:96:22
 #: app/store/selectors/table.ts:142:25 app/store/selectors/table.ts:410:14
 msgid "Tsumo"
 msgstr "쯔모"
@@ -504,7 +501,7 @@ msgstr "쯔모, %1"
 msgid "Tsuuiisou"
 msgstr "자일색"
 
-#: app/components/pages/Settings/Settings.tsx:129:22
+#: app/components/pages/Settings/Settings.tsx:148:22
 msgid "Turn on if you use a single device for all players"
 msgstr "모든 작사가 이 기기만 사용할 경우 활성화하십시오"
 
@@ -532,24 +529,24 @@ msgstr "역패 x3"
 msgid "Yakuhai x4"
 msgstr "역패 x4"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:133:20
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:134:17
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:150:20
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:151:17
 msgid "Yakuman"
 msgstr "역만"
 
-#: app/components/pages/Penalties/Penalties.tsx:61:14
+#: app/components/pages/Penalties/Penalties.tsx:78:14
 msgid "You don't have any penalties in this event 🎉"
-msgstr ""
+msgstr "이 이벤트에서 받은 벌부가 없습니다 🎉"
 
-#: app/components/pages/Penalties/Penalties.tsx:46:40
+#: app/components/pages/Penalties/Penalties.tsx:58:40
 msgid "Your penalties in current event"
-msgstr ""
+msgstr "현재 이벤트에서 받은 벌부"
 
 #: app/store/selectors/round.ts:71:19
 msgid "dora %1"
 msgstr "도라 %1"
 
-#: app/components/pages/PlayersSearch/PlayersSearch.tsx:45:24
+#: app/components/pages/PlayersSearch/PlayersSearch.tsx:52:24
 msgid "find player..."
 msgstr "선수를 찾는 중..."
 
@@ -557,15 +554,15 @@ msgstr "선수를 찾는 중..."
 msgid "name"
 msgstr "이름"
 
-#: app/components/pages/Login/LoginError.tsx:14:83
+#: app/components/pages/Login/LoginError.tsx:14:120
 msgctxt "Name of registration link"
 msgid "register"
 msgstr "회원가입"
 
-#: app/components/pages/NewGame/NewGame.tsx:46:26
-#: app/components/pages/NewGame/NewGame.tsx:52:26
-#: app/components/pages/NewGame/NewGame.tsx:58:26
-#: app/components/pages/NewGame/NewGame.tsx:64:26
+#: app/components/pages/NewGame/NewGame.tsx:53:26
+#: app/components/pages/NewGame/NewGame.tsx:60:26
+#: app/components/pages/NewGame/NewGame.tsx:67:26
+#: app/components/pages/NewGame/NewGame.tsx:74:26
 msgid "select player"
 msgstr "작사 선택"
 

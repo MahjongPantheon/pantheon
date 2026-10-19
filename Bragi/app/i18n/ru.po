@@ -29,7 +29,6 @@ msgstr ""
 "с ассистированиев вводы, панелью администратора и сервисов статистики"
 
 #: app/components/Layout.tsx:114:24
-#, fuzzy
 msgid "Pantheon: riichi mahjong ratings and statistics"
 msgstr "Pantheon: рейтинги и статистика в риичи-маджонге"
 

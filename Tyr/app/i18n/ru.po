@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-07 21:43Z\n"
+"POT-Creation-Date: 2026-10-19 21:07Z\n"
 "PO-Revision-Date: 2025-08-08 00:45+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -20,23 +20,23 @@ msgstr ""
 "Generated-By: i18n-json2po\n"
 "X-Generator: Poedit 3.6\n"
 
-#: app/components/base/TableStatus/TableStatus.tsx:96:16
+#: app/components/base/TableStatus/TableStatus.tsx:106:16
 msgid "%1 deal left"
 msgid_plural "%1 deals left"
 msgstr[0] "Осталась %1 раздача"
 msgstr[1] "Осталось %1 раздачи"
 msgstr[2] "Осталось %1 раздач"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:104:28
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:115:28
 msgid "%1 fu"
 msgstr "%1 фу"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:137:17
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:154:17
 #: app/store/selectors/round.ts:36:15
 msgid "%1 han"
 msgstr "%1 хан"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:136:17
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:153:17
 #: app/store/selectors/round.ts:39:12
 msgid "%1 han %2 fu"
 msgstr "%1 хан, %2 фу"
@@ -49,7 +49,7 @@ msgstr "%1 ← %2"
 msgid "Abort"
 msgstr "Абортивная ничья"
 
-#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:92:24
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:107:24
 #: app/store/selectors/round.ts:178:14 app/store/selectors/table.ts:133:25
 msgid "Abortive draw"
 msgstr "Абортивная ничья"
@@ -91,7 +91,7 @@ msgid "Chinroutou"
 msgstr "Чинрото"
 
 #: app/components/base/Player/Player.tsx:59:58
-#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:97:22
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:113:22
 #: app/store/selectors/round.ts:191:14 app/store/selectors/table.ts:136:25
 #: app/store/selectors/table.ts:416:14
 msgid "Chombo"
@@ -105,11 +105,11 @@ msgstr "Чууренпото"
 msgid "Chuuren poutou 9-side"
 msgstr "Чууренпото 9-ти сторонний"
 
-#: app/components/pages/NewGame/NewGame.tsx:72:14
+#: app/components/pages/NewGame/NewGame.tsx:88:14
 msgid "Clear players"
 msgstr "Очистить"
 
-#: app/components/pages/Home/Home.tsx:78:14
+#: app/components/pages/Home/Home.tsx:118:14
 msgid "Current game"
 msgstr "Текущая игра"
 
@@ -129,7 +129,7 @@ msgstr "Дайсанген"
 msgid "Daisuushii"
 msgstr "Дайсуши"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:123:22
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:140:22
 msgid "Dora %1"
 msgstr "Дора %1"
 
@@ -141,7 +141,7 @@ msgstr "Ничья"
 msgid "E-mail is not registered in Pantheon database (%1)"
 msgstr "E-mail не зарегистрирован в базе данных Pantheon (%1)"
 
-#: app/components/pages/Login/Login.tsx:33:24
+#: app/components/pages/Login/Login.tsx:35:24
 msgid "Email"
 msgstr "Email"
 
@@ -149,16 +149,16 @@ msgstr "Email"
 msgid "Event title"
 msgstr "Название события"
 
-#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:87:22
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:101:22
 #: app/store/selectors/round.ts:166:14 app/store/selectors/table.ts:139:25
 msgid "Exhaustive draw"
 msgstr "Ничья"
 
-#: app/components/pages/Penalties/Penalties.tsx:37:12
+#: app/components/pages/Penalties/Penalties.tsx:43:12
 msgid "Failed to load penalties. Connection issues?"
 msgstr "Не удалось загрузить штрафы. Проблемы с сетью?"
 
-#: app/components/pages/Login/Login.tsx:56:12
+#: app/components/pages/Login/Login.tsx:59:12
 #: app/components/pages/Login/LoginError.tsx:33:16
 msgid "Forgot password?"
 msgstr "Забыли пароль?"
@@ -167,11 +167,11 @@ msgstr "Забыли пароль?"
 msgid "Game has finished"
 msgstr "Игра закончена"
 
-#: app/components/pages/LogView/LogView.tsx:81:46
+#: app/components/pages/LogView/LogView.tsx:91:46
 msgid "Game log"
 msgstr "Лог игры"
 
-#: app/components/pages/Settings/Settings.tsx:104:10
+#: app/components/pages/Settings/Settings.tsx:117:10
 msgid "Go to personal area"
 msgstr "В личный кабинет"
 
@@ -212,7 +212,7 @@ msgstr "Иипейко"
 msgid "Ippatsu"
 msgstr "Иппацу"
 
-#: app/components/App.tsx:216:16
+#: app/components/App.tsx:222:16
 msgid ""
 "It looks like there are issues with your network connection. Would you like "
 "to retry starting the application or clear the credentials and try logging "
@@ -237,11 +237,11 @@ msgstr "Кокушимусо"
 msgid "Kokushi musou 13-side"
 msgstr "Кокушимусо 13-ти сторонний"
 
-#: app/components/pages/Settings/Settings.tsx:110:45
+#: app/components/pages/Settings/Settings.tsx:128:45
 msgid "Language"
 msgstr "Язык"
 
-#: app/components/pages/Login/Login.tsx:48:12
+#: app/components/pages/Login/Login.tsx:51:12
 msgid "Log in"
 msgstr "Вход"
 
@@ -261,40 +261,40 @@ msgstr "Мультирон с %1"
 msgid "Nagashi"
 msgstr "Нагаши манган"
 
-#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:102:24
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:119:24
 #: app/store/selectors/round.ts:204:14 app/store/selectors/table.ts:148:25
 msgid "Nagashi mangan"
 msgstr "Нагаши манган"
 
-#: app/components/pages/Home/Home.tsx:73:14
+#: app/components/pages/Home/Home.tsx:108:14
 msgid "New game"
 msgstr "Новая игра"
 
-#: app/components/pages/GameResult/GameResult.tsx:61:44
+#: app/components/pages/GameResult/GameResult.tsx:84:14
 msgid "No games found"
 msgstr "Игры не найдены"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:143:18
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:161:18
 msgid "No pao"
 msgstr "Нет пао"
 
-#: app/components/pages/LogView/LogView.tsx:37:62
+#: app/components/pages/LogView/LogView.tsx:39:12
 msgid "No results found"
 msgstr "Результаты отсутствуют"
 
-#: app/components/pages/OtherTablesList/OtherTablesList.tsx:42:42
+#: app/components/pages/OtherTablesList/OtherTablesList.tsx:49:14
 msgid "No tables are playing right now"
 msgstr "На данный момент ни один стол не играет"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:92:30
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:97:30
 msgid "Nobody selected"
 msgstr "Никто не выбран"
 
-#: app/components/pages/Penalties/Penalties.tsx:55:51
+#: app/components/pages/Penalties/Penalties.tsx:68:51
 msgid "Notice"
 msgstr "Предупреждение"
 
-#: app/components/App.tsx:189:35
+#: app/components/App.tsx:194:35
 #: app/components/pages/Login/LoginError.tsx:44:12
 msgid "OK"
 msgstr "ОК"
@@ -307,7 +307,7 @@ msgstr "Опен риичи"
 msgid "Opened hand"
 msgstr "Открытая рука"
 
-#: app/components/pages/Home/Home.tsx:88:14
+#: app/components/pages/Home/Home.tsx:138:14
 msgid "Other playing tables"
 msgstr "Другие столы"
 
@@ -315,7 +315,7 @@ msgstr "Другие столы"
 msgid "Pantheon"
 msgstr "Pantheon"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:89:19
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:90:19
 msgid "Pao"
 msgstr "Пао"
 
@@ -323,7 +323,7 @@ msgstr "Пао"
 msgid "Pao from: %1"
 msgstr "Пао с: %1"
 
-#: app/components/pages/Login/Login.tsx:40:24
+#: app/components/pages/Login/Login.tsx:43:24
 msgid "Password"
 msgstr "Пароль"
 
@@ -339,11 +339,11 @@ msgstr "Пин-фу"
 msgid "Player name"
 msgstr "Имя игрока"
 
-#: app/components/App.tsx:191:16
+#: app/components/App.tsx:196:16
 msgid "Please return back and press riichi button for the winner"
 msgstr "Пожалуйста, вернитесь назад и нажмите кнопку риичи для выигравшего"
 
-#: app/components/pages/Home/Home.tsx:83:14
+#: app/components/pages/Home/Home.tsx:128:14
 msgid "Previous game"
 msgstr "Предыдущая игра"
 
@@ -355,11 +355,11 @@ msgstr "Судья был вызван за ваш стол!"
 msgid "Renhou"
 msgstr "Ренхо"
 
-#: app/components/App.tsx:214:37
+#: app/components/App.tsx:220:37
 msgid "Reset & logout"
 msgstr "Сброс и выход"
 
-#: app/components/App.tsx:213:35
+#: app/components/App.tsx:219:35
 msgid "Retry"
 msgstr "Повторить"
 
@@ -379,7 +379,7 @@ msgstr "Риншан"
 msgid "Rinshan kaihou"
 msgstr "Риншан кайхо"
 
-#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:83:79
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:91:22
 #: app/store/selectors/table.ts:145:25 app/store/selectors/table.ts:408:14
 msgid "Ron"
 msgstr "Рон"
@@ -412,11 +412,11 @@ msgstr "Саншоку"
 msgid "Sanshoku doukou"
 msgstr "Саншоку доко"
 
-#: app/components/pages/Settings/Settings.tsx:107:10
+#: app/components/pages/Settings/Settings.tsx:125:10
 msgid "Select another event"
 msgstr "Выбрать другое событие"
 
-#: app/components/pages/EventSelect/EventSelect.tsx:42:55
+#: app/components/pages/EventSelect/EventSelect.tsx:49:55
 msgid "Select event"
 msgstr "Выбрать событие"
 
@@ -432,23 +432,23 @@ msgstr "Шосанген"
 msgid "Shousuushii"
 msgstr "Шосуши"
 
-#: app/components/pages/NewGame/NewGame.tsx:81:14
+#: app/components/pages/NewGame/NewGame.tsx:98:14
 msgid "Shuffle players"
 msgstr "Перемешать"
 
-#: app/components/pages/Login/Login.tsx:53:12
+#: app/components/pages/Login/Login.tsx:56:12
 msgid "Sign up"
 msgstr "Регистрация"
 
-#: app/components/pages/Settings/Settings.tsx:128:16
+#: app/components/pages/Settings/Settings.tsx:147:16
 msgid "Single device mode"
 msgstr "Режим одного устройства"
 
-#: app/components/pages/NewGame/NewGame.tsx:91:14
+#: app/components/pages/NewGame/NewGame.tsx:109:14
 msgid "Start game"
 msgstr "Начать игру"
 
-#: app/components/pages/Home/Home.tsx:98:14
+#: app/components/pages/Home/Home.tsx:149:14
 msgid "Statistics"
 msgstr "Статистика"
 
@@ -464,7 +464,7 @@ msgstr "Сууанко Танки"
 msgid "Suukantsu"
 msgstr "Сууканцу"
 
-#: app/components/base/TableStatus/TableStatus.tsx:47:45
+#: app/components/base/TableStatus/TableStatus.tsx:48:45
 msgid "Table #%1"
 msgstr "Стол №%1"
 
@@ -484,7 +484,7 @@ msgstr "Тенхо"
 msgid "Theme"
 msgstr "Оформление"
 
-#: app/components/pages/EventSelect/EventSelect.tsx:56:14
+#: app/components/pages/EventSelect/EventSelect.tsx:64:14
 msgid "There are no events you participate in right now"
 msgstr "На данный момент нет активных событий, в которых вы участвуете"
 
@@ -492,7 +492,7 @@ msgstr "На данный момент нет активных событий, �
 msgid "Toitoi"
 msgstr "Тойтой"
 
-#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:84:81
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:96:22
 #: app/store/selectors/table.ts:142:25 app/store/selectors/table.ts:410:14
 msgid "Tsumo"
 msgstr "Цумо"
@@ -505,7 +505,7 @@ msgstr "Цумо, %1"
 msgid "Tsuuiisou"
 msgstr "Цуисо"
 
-#: app/components/pages/Settings/Settings.tsx:129:22
+#: app/components/pages/Settings/Settings.tsx:148:22
 msgid "Turn on if you use a single device for all players"
 msgstr "Включите, если вы используете одно устройство для всех игроков"
 
@@ -533,16 +533,16 @@ msgstr "Якухай 3"
 msgid "Yakuhai x4"
 msgstr "Якухай 4"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:133:20
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:134:17
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:150:20
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:151:17
 msgid "Yakuman"
 msgstr "Якуман"
 
-#: app/components/pages/Penalties/Penalties.tsx:61:14
+#: app/components/pages/Penalties/Penalties.tsx:78:14
 msgid "You don't have any penalties in this event 🎉"
 msgstr "У вас нет ни одного штрафа 🎉"
 
-#: app/components/pages/Penalties/Penalties.tsx:46:40
+#: app/components/pages/Penalties/Penalties.tsx:58:40
 msgid "Your penalties in current event"
 msgstr "Ваши штрафы в текущем событии"
 
@@ -550,7 +550,7 @@ msgstr "Ваши штрафы в текущем событии"
 msgid "dora %1"
 msgstr "дора %1"
 
-#: app/components/pages/PlayersSearch/PlayersSearch.tsx:45:24
+#: app/components/pages/PlayersSearch/PlayersSearch.tsx:52:24
 msgid "find player..."
 msgstr "найти игрока..."
 
@@ -558,15 +558,15 @@ msgstr "найти игрока..."
 msgid "name"
 msgstr "имя"
 
-#: app/components/pages/Login/LoginError.tsx:14:83
+#: app/components/pages/Login/LoginError.tsx:14:120
 msgctxt "Name of registration link"
 msgid "register"
 msgstr "регистрация"
 
-#: app/components/pages/NewGame/NewGame.tsx:46:26
-#: app/components/pages/NewGame/NewGame.tsx:52:26
-#: app/components/pages/NewGame/NewGame.tsx:58:26
-#: app/components/pages/NewGame/NewGame.tsx:64:26
+#: app/components/pages/NewGame/NewGame.tsx:53:26
+#: app/components/pages/NewGame/NewGame.tsx:60:26
+#: app/components/pages/NewGame/NewGame.tsx:67:26
+#: app/components/pages/NewGame/NewGame.tsx:74:26
 msgid "select player"
 msgstr "выбрать игрока"
 
