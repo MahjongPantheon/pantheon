@@ -1,5 +1,6 @@
 import { readFileSync } from 'fs';
 import { join } from 'path';
+import { RoundEntity } from '../../entities/Round.entity.js';
 import { EventEntity } from '../../entities/Event.entity.js';
 import { EventRegisteredPlayersEntity } from '../../entities/EventRegisteredPlayers.entity.js';
 import { RulesetEntity } from '../../entities/Ruleset.entity.js';
@@ -8,6 +9,14 @@ import { RoundOutcome } from 'tsclients/proto/atoms.pb.js';
 import { OnlineParser } from './Parser.js';
 import { Repository } from '../../services/Repository.js';
 import { EntityManager } from '@mikro-orm/core';
+
+function expectReplayRounds(content: string, rounds: RoundEntity[]) {
+  const expectedRounds = [...content.matchAll(/<INIT[^>]* seed="([^"]+)"/g)].map(([, seed]) => {
+    const [round, honba] = seed.split(',').map(Number);
+    return [round + 1, honba];
+  });
+  expect(rounds.map((round) => [round.round, round.honba])).toEqual(expectedRounds);
+}
 
 const makeEvent = (em: EntityManager) => {
   const event = new EventEntity();
@@ -80,6 +89,7 @@ describe('OnlinelogParserTest', () => {
       content
     );
 
+    expectReplayRounds(content, rounds);
     expect(sessionEntity).toBeTruthy();
     expect(sessionEntity.intermediateResults?.scores).toEqual(results);
 
@@ -136,8 +146,12 @@ describe('OnlinelogParserTest', () => {
       join(import.meta.dirname, 'testdata/doubleron_and_honba.xml'),
       'utf-8'
     );
-    const [sessionEntity, results] = await new OnlineParser(repo).parseToSession(event, content);
+    const [sessionEntity, results, rounds] = await new OnlineParser(repo).parseToSession(
+      event,
+      content
+    );
 
+    expectReplayRounds(content, rounds);
     expect(sessionEntity).toBeTruthy();
     expect(results).toEqual(sessionEntity.intermediateResults?.scores);
     await repo.destroy();
@@ -146,8 +160,12 @@ describe('OnlinelogParserTest', () => {
   test('parseNagashiMangan', async () => {
     const [repo, event] = await prepareTestEntities();
     const content = readFileSync(join(import.meta.dirname, 'testdata/nagashi.xml'), 'utf-8');
-    const [sessionEntity, results] = await new OnlineParser(repo).parseToSession(event, content);
+    const [sessionEntity, results, rounds] = await new OnlineParser(repo).parseToSession(
+      event,
+      content
+    );
 
+    expectReplayRounds(content, rounds);
     expect(sessionEntity).toBeTruthy();
     expect(results).toEqual(sessionEntity.intermediateResults?.scores);
     await repo.destroy();
@@ -156,8 +174,12 @@ describe('OnlinelogParserTest', () => {
   test('hanchanWithWestRound', async () => {
     const [repo, event] = await prepareTestEntities();
     const content = readFileSync(join(import.meta.dirname, 'testdata/west.xml'), 'utf-8');
-    const [sessionEntity, results] = await new OnlineParser(repo).parseToSession(event, content);
+    const [sessionEntity, results, rounds] = await new OnlineParser(repo).parseToSession(
+      event,
+      content
+    );
 
+    expectReplayRounds(content, rounds);
     expect(sessionEntity).toBeTruthy();
     expect(results).toEqual(sessionEntity.intermediateResults?.scores);
     await repo.destroy();
@@ -348,6 +370,7 @@ describe('OnlinelogParserTest', () => {
       content
     );
 
+    expectReplayRounds(content, rounds);
     expect(sessionEntity).toBeTruthy();
     expect(results).toEqual(sessionEntity.intermediateResults?.scores);
     expect(rounds.length).toBe(12);
@@ -363,6 +386,7 @@ describe('OnlinelogParserTest', () => {
       content
     );
 
+    expectReplayRounds(content, rounds);
     expect(sessionEntity).toBeTruthy();
     expect(results).toEqual(sessionEntity.intermediateResults?.scores);
     expect(rounds.length).toBe(12);
