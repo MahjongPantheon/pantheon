@@ -2292,3 +2292,11 @@ msgstr ""
 #: app/pages/SystemStats.tsx:227:18
 msgid "Subsystem"
 msgstr ""
+
+#: app/pages/OwnedEvents.tsx:277:14
+msgid "All my events"
+msgstr ""
+
+#: app/pages/OwnedEvents.tsx:291:14
+msgid "Only ongoing events"
+msgstr ""

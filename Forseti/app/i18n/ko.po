@@ -2540,3 +2540,11 @@ msgstr "표시 / 숨김"
 #~ msgstr ""
 #~ "천봉 사용자 명 대신 로그인 문자열을 제공하셨습니다. 절대로 다른 사람에게 "
 #~ "로그인 문자열을 알려주면 안 됩니다!"
+
+#: app/pages/OwnedEvents.tsx:277:14
+msgid "All my events"
+msgstr "내 모든 이벤트"
+
+#: app/pages/OwnedEvents.tsx:291:14
+msgid "Only ongoing events"
+msgstr "진행 중인 이벤트만"

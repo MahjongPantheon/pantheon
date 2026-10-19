@@ -2571,3 +2571,11 @@ msgstr "anzeigen /ausblenden"
 #~ msgstr ""
 #~ "Tenhou login string statt Benutzername eingegeben. Bitte niemals den "
 #~ "login string weitergeben!"
+
+#: app/pages/OwnedEvents.tsx:277:14
+msgid "All my events"
+msgstr "Alle meine Veranstaltungen"
+
+#: app/pages/OwnedEvents.tsx:291:14
+msgid "Only ongoing events"
+msgstr "Nur laufende Veranstaltungen"

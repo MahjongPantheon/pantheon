@@ -26,6 +26,14 @@ export async function GetEventsById(eventsGetEventsByIdPayload, config) {
   );
   return EventsGetEventsByIdResponse.decode(response);
 }
+export async function GetEventStates(eventsGetEventStatesPayload, config) {
+  const response = await PBrequest(
+    "/common.Mimir/GetEventStates",
+    EventsGetEventStatesPayload.encode(eventsGetEventStatesPayload),
+    config
+  );
+  return EventsGetEventStatesResponse.decode(response);
+}
 export async function GetMyEvents(playersGetMyEventsPayload, config) {
   const response = await PBrequest(
     "/common.Mimir/GetMyEvents",
@@ -591,6 +599,14 @@ export async function GetEventsByIdJSON(eventsGetEventsByIdPayload, config) {
     config
   );
   return EventsGetEventsByIdResponseJSON.decode(response);
+}
+export async function GetEventStatesJSON(eventsGetEventStatesPayload, config) {
+  const response = await JSONrequest(
+    "/common.Mimir/GetEventStates",
+    EventsGetEventStatesPayloadJSON.encode(eventsGetEventStatesPayload),
+    config
+  );
+  return EventsGetEventStatesResponseJSON.decode(response);
 }
 export async function GetMyEventsJSON(playersGetMyEventsPayload, config) {
   const response = await JSONrequest(
@@ -1182,6 +1198,18 @@ export function createMimir(service) {
         output: {
           protobuf: EventsGetEventsByIdResponse,
           json: EventsGetEventsByIdResponseJSON
+        }
+      },
+      GetEventStates: {
+        name: "GetEventStates",
+        handler: service.GetEventStates,
+        input: {
+          protobuf: EventsGetEventStatesPayload,
+          json: EventsGetEventStatesPayloadJSON
+        },
+        output: {
+          protobuf: EventsGetEventStatesResponse,
+          json: EventsGetEventStatesResponseJSON
         }
       },
       GetMyEvents: {
@@ -2105,6 +2133,7 @@ export const EventsGetEventsPayload = {
       offset: 0,
       filterUnlisted: false,
       filter: "",
+      onlyOngoing: void 0,
       ...msg
     };
   },
@@ -2123,6 +2152,9 @@ export const EventsGetEventsPayload = {
     }
     if (msg.filter) {
       writer.writeString(4, msg.filter);
+    }
+    if (msg.onlyOngoing != void 0) {
+      writer.writeBool(5, msg.onlyOngoing);
     }
     return writer;
   },
@@ -2147,6 +2179,10 @@ export const EventsGetEventsPayload = {
         }
         case 4: {
           msg.filter = reader.readString();
+          break;
+        }
+        case 5: {
+          msg.onlyOngoing = reader.readBool();
           break;
         }
         default: {
@@ -2341,6 +2377,195 @@ export const EventsGetEventsByIdResponse = {
         case 1: {
           const m = protoAtoms.Event.initialize();
           reader.readMessage(m, protoAtoms.Event._readMessage);
+          msg.events.push(m);
+          break;
+        }
+        default: {
+          reader.skipField();
+          break;
+        }
+      }
+    }
+    return msg;
+  }
+};
+export const EventsGetEventStatesPayload = {
+  /**
+   * Serializes EventsGetEventStatesPayload to protobuf.
+   */
+  encode: function(msg) {
+    return EventsGetEventStatesPayload._writeMessage(
+      msg,
+      new protoscript.BinaryWriter()
+    ).getResultBuffer();
+  },
+  /**
+   * Deserializes EventsGetEventStatesPayload from protobuf.
+   */
+  decode: function(bytes) {
+    return EventsGetEventStatesPayload._readMessage(
+      EventsGetEventStatesPayload.initialize(),
+      new protoscript.BinaryReader(bytes)
+    );
+  },
+  /**
+   * Initializes EventsGetEventStatesPayload with all fields set to their default value.
+   */
+  initialize: function(msg) {
+    return {
+      ids: [],
+      ...msg
+    };
+  },
+  /**
+   * @private
+   */
+  _writeMessage: function(msg, writer) {
+    if (msg.ids?.length) {
+      writer.writePackedInt32(1, msg.ids);
+    }
+    return writer;
+  },
+  /**
+   * @private
+   */
+  _readMessage: function(msg, reader) {
+    while (reader.nextField()) {
+      const field = reader.getFieldNumber();
+      switch (field) {
+        case 1: {
+          if (reader.isDelimited()) {
+            msg.ids.push(...reader.readPackedInt32());
+          } else {
+            msg.ids.push(reader.readInt32());
+          }
+          break;
+        }
+        default: {
+          reader.skipField();
+          break;
+        }
+      }
+    }
+    return msg;
+  }
+};
+export const EventState = {
+  /**
+   * Serializes EventState to protobuf.
+   */
+  encode: function(msg) {
+    return EventState._writeMessage(
+      msg,
+      new protoscript.BinaryWriter()
+    ).getResultBuffer();
+  },
+  /**
+   * Deserializes EventState from protobuf.
+   */
+  decode: function(bytes) {
+    return EventState._readMessage(
+      EventState.initialize(),
+      new protoscript.BinaryReader(bytes)
+    );
+  },
+  /**
+   * Initializes EventState with all fields set to their default value.
+   */
+  initialize: function(msg) {
+    return {
+      id: 0,
+      finished: false,
+      ...msg
+    };
+  },
+  /**
+   * @private
+   */
+  _writeMessage: function(msg, writer) {
+    if (msg.id) {
+      writer.writeInt32(1, msg.id);
+    }
+    if (msg.finished) {
+      writer.writeBool(2, msg.finished);
+    }
+    return writer;
+  },
+  /**
+   * @private
+   */
+  _readMessage: function(msg, reader) {
+    while (reader.nextField()) {
+      const field = reader.getFieldNumber();
+      switch (field) {
+        case 1: {
+          msg.id = reader.readInt32();
+          break;
+        }
+        case 2: {
+          msg.finished = reader.readBool();
+          break;
+        }
+        default: {
+          reader.skipField();
+          break;
+        }
+      }
+    }
+    return msg;
+  }
+};
+export const EventsGetEventStatesResponse = {
+  /**
+   * Serializes EventsGetEventStatesResponse to protobuf.
+   */
+  encode: function(msg) {
+    return EventsGetEventStatesResponse._writeMessage(
+      msg,
+      new protoscript.BinaryWriter()
+    ).getResultBuffer();
+  },
+  /**
+   * Deserializes EventsGetEventStatesResponse from protobuf.
+   */
+  decode: function(bytes) {
+    return EventsGetEventStatesResponse._readMessage(
+      EventsGetEventStatesResponse.initialize(),
+      new protoscript.BinaryReader(bytes)
+    );
+  },
+  /**
+   * Initializes EventsGetEventStatesResponse with all fields set to their default value.
+   */
+  initialize: function(msg) {
+    return {
+      events: [],
+      ...msg
+    };
+  },
+  /**
+   * @private
+   */
+  _writeMessage: function(msg, writer) {
+    if (msg.events?.length) {
+      writer.writeRepeatedMessage(
+        1,
+        msg.events,
+        EventState._writeMessage
+      );
+    }
+    return writer;
+  },
+  /**
+   * @private
+   */
+  _readMessage: function(msg, reader) {
+    while (reader.nextField()) {
+      const field = reader.getFieldNumber();
+      switch (field) {
+        case 1: {
+          const m = EventState.initialize();
+          reader.readMessage(m, EventState._readMessage);
           msg.events.push(m);
           break;
         }
@@ -7558,6 +7783,7 @@ export const EventsGetEventsPayloadJSON = {
       offset: 0,
       filterUnlisted: false,
       filter: "",
+      onlyOngoing: void 0,
       ...msg
     };
   },
@@ -7577,6 +7803,9 @@ export const EventsGetEventsPayloadJSON = {
     }
     if (msg.filter) {
       json["filter"] = msg.filter;
+    }
+    if (msg.onlyOngoing != void 0) {
+      json["onlyOngoing"] = msg.onlyOngoing;
     }
     return json;
   },
@@ -7599,6 +7828,10 @@ export const EventsGetEventsPayloadJSON = {
     const _filter_ = json["filter"];
     if (_filter_) {
       msg.filter = _filter_;
+    }
+    const _onlyOngoing_ = json["onlyOngoing"] ?? json["only_ongoing"];
+    if (_onlyOngoing_) {
+      msg.onlyOngoing = _onlyOngoing_;
     }
     return msg;
   }
@@ -7751,6 +7984,156 @@ export const EventsGetEventsByIdResponseJSON = {
       for (const item of _events_) {
         const m = protoAtoms.EventJSON.initialize();
         protoAtoms.EventJSON._readMessage(m, item);
+        msg.events.push(m);
+      }
+    }
+    return msg;
+  }
+};
+export const EventsGetEventStatesPayloadJSON = {
+  /**
+   * Serializes EventsGetEventStatesPayload to JSON.
+   */
+  encode: function(msg) {
+    return JSON.stringify(EventsGetEventStatesPayloadJSON._writeMessage(msg));
+  },
+  /**
+   * Deserializes EventsGetEventStatesPayload from JSON.
+   */
+  decode: function(json) {
+    return EventsGetEventStatesPayloadJSON._readMessage(
+      EventsGetEventStatesPayloadJSON.initialize(),
+      JSON.parse(json)
+    );
+  },
+  /**
+   * Initializes EventsGetEventStatesPayload with all fields set to their default value.
+   */
+  initialize: function(msg) {
+    return {
+      ids: [],
+      ...msg
+    };
+  },
+  /**
+   * @private
+   */
+  _writeMessage: function(msg) {
+    const json = {};
+    if (msg.ids?.length) {
+      json["ids"] = msg.ids;
+    }
+    return json;
+  },
+  /**
+   * @private
+   */
+  _readMessage: function(msg, json) {
+    const _ids_ = json["ids"];
+    if (_ids_) {
+      msg.ids = _ids_.map(protoscript.parseNumber);
+    }
+    return msg;
+  }
+};
+export const EventStateJSON = {
+  /**
+   * Serializes EventState to JSON.
+   */
+  encode: function(msg) {
+    return JSON.stringify(EventStateJSON._writeMessage(msg));
+  },
+  /**
+   * Deserializes EventState from JSON.
+   */
+  decode: function(json) {
+    return EventStateJSON._readMessage(
+      EventStateJSON.initialize(),
+      JSON.parse(json)
+    );
+  },
+  /**
+   * Initializes EventState with all fields set to their default value.
+   */
+  initialize: function(msg) {
+    return {
+      id: 0,
+      finished: false,
+      ...msg
+    };
+  },
+  /**
+   * @private
+   */
+  _writeMessage: function(msg) {
+    const json = {};
+    if (msg.id) {
+      json["id"] = msg.id;
+    }
+    if (msg.finished) {
+      json["finished"] = msg.finished;
+    }
+    return json;
+  },
+  /**
+   * @private
+   */
+  _readMessage: function(msg, json) {
+    const _id_ = json["id"];
+    if (_id_) {
+      msg.id = protoscript.parseNumber(_id_);
+    }
+    const _finished_ = json["finished"];
+    if (_finished_) {
+      msg.finished = _finished_;
+    }
+    return msg;
+  }
+};
+export const EventsGetEventStatesResponseJSON = {
+  /**
+   * Serializes EventsGetEventStatesResponse to JSON.
+   */
+  encode: function(msg) {
+    return JSON.stringify(EventsGetEventStatesResponseJSON._writeMessage(msg));
+  },
+  /**
+   * Deserializes EventsGetEventStatesResponse from JSON.
+   */
+  decode: function(json) {
+    return EventsGetEventStatesResponseJSON._readMessage(
+      EventsGetEventStatesResponseJSON.initialize(),
+      JSON.parse(json)
+    );
+  },
+  /**
+   * Initializes EventsGetEventStatesResponse with all fields set to their default value.
+   */
+  initialize: function(msg) {
+    return {
+      events: [],
+      ...msg
+    };
+  },
+  /**
+   * @private
+   */
+  _writeMessage: function(msg) {
+    const json = {};
+    if (msg.events?.length) {
+      json["events"] = msg.events.map(EventStateJSON._writeMessage);
+    }
+    return json;
+  },
+  /**
+   * @private
+   */
+  _readMessage: function(msg, json) {
+    const _events_ = json["events"];
+    if (_events_) {
+      for (const item of _events_) {
+        const m = EventStateJSON.initialize();
+        EventStateJSON._readMessage(m, item);
         msg.events.push(m);
       }
     }

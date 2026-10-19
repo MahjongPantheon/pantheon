@@ -20,6 +20,8 @@ import {
   EventsGetEventForEditResponse,
   EventsGetEventsByIdPayload,
   EventsGetEventsByIdResponse,
+  EventsGetEventStatesPayload,
+  EventsGetEventStatesResponse,
   EventsGetEventsPayload,
   EventsGetEventsResponse,
   EventsGetGameResponse,
@@ -127,6 +129,14 @@ export const mimirServer: Mimir<Context> = {
   ): Promise<EventsGetEventsByIdResponse> {
     const model = Model.getModel(context.repository, EventModel);
     return model.getEventsById(eventsGetEventsByIdPayload);
+  },
+
+  GetEventStates: async function (
+    payload: EventsGetEventStatesPayload,
+    context: Context
+  ): Promise<EventsGetEventStatesResponse> {
+    const model = Model.getModel(context.repository, EventModel);
+    return model.getEventStates(payload);
   },
 
   GetMyEvents: async function (

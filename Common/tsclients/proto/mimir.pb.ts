@@ -29,6 +29,7 @@ export interface EventsGetEventsPayload {
   offset: number;
   filterUnlisted: boolean;
   filter: string;
+  onlyOngoing?: boolean | null | undefined;
 }
 
 export interface EventsGetEventsResponse {
@@ -42,6 +43,19 @@ export interface EventsGetEventsByIdPayload {
 
 export interface EventsGetEventsByIdResponse {
   events: protoAtoms.Event[];
+}
+
+export interface EventsGetEventStatesPayload {
+  ids: number[];
+}
+
+export interface EventState {
+  id: number;
+  finished: boolean;
+}
+
+export interface EventsGetEventStatesResponse {
+  events: EventState[];
 }
 
 export interface PlayersGetMyEventsPayload {}
@@ -489,6 +503,18 @@ export async function GetEventsById(
     config,
   );
   return EventsGetEventsByIdResponse.decode(response);
+}
+
+export async function GetEventStates(
+  eventsGetEventStatesPayload: EventsGetEventStatesPayload,
+  config?: ClientConfiguration,
+): Promise<EventsGetEventStatesResponse> {
+  const response = await PBrequest(
+    "/common.Mimir/GetEventStates",
+    EventsGetEventStatesPayload.encode(eventsGetEventStatesPayload),
+    config,
+  );
+  return EventsGetEventStatesResponse.decode(response);
 }
 
 export async function GetMyEvents(
@@ -1337,6 +1363,18 @@ export async function GetEventsByIdJSON(
   return EventsGetEventsByIdResponseJSON.decode(response);
 }
 
+export async function GetEventStatesJSON(
+  eventsGetEventStatesPayload: EventsGetEventStatesPayload,
+  config?: ClientConfiguration,
+): Promise<EventsGetEventStatesResponse> {
+  const response = await JSONrequest(
+    "/common.Mimir/GetEventStates",
+    EventsGetEventStatesPayloadJSON.encode(eventsGetEventStatesPayload),
+    config,
+  );
+  return EventsGetEventStatesResponseJSON.decode(response);
+}
+
 export async function GetMyEventsJSON(
   playersGetMyEventsPayload: PlayersGetMyEventsPayload,
   config?: ClientConfiguration,
@@ -2170,6 +2208,10 @@ export interface Mimir<Context = unknown> {
     eventsGetEventsByIdPayload: EventsGetEventsByIdPayload,
     context: Context,
   ) => Promise<EventsGetEventsByIdResponse> | EventsGetEventsByIdResponse;
+  GetEventStates: (
+    eventsGetEventStatesPayload: EventsGetEventStatesPayload,
+    context: Context,
+  ) => Promise<EventsGetEventStatesResponse> | EventsGetEventStatesResponse;
   GetMyEvents: (
     playersGetMyEventsPayload: PlayersGetMyEventsPayload,
     context: Context,
@@ -2558,6 +2600,18 @@ export function createMimir<Context>(service: Mimir<Context>) {
         output: {
           protobuf: EventsGetEventsByIdResponse,
           json: EventsGetEventsByIdResponseJSON,
+        },
+      },
+      GetEventStates: {
+        name: "GetEventStates",
+        handler: service.GetEventStates,
+        input: {
+          protobuf: EventsGetEventStatesPayload,
+          json: EventsGetEventStatesPayloadJSON,
+        },
+        output: {
+          protobuf: EventsGetEventStatesResponse,
+          json: EventsGetEventStatesResponseJSON,
         },
       },
       GetMyEvents: {
@@ -3516,6 +3570,7 @@ export const EventsGetEventsPayload = {
       offset: 0,
       filterUnlisted: false,
       filter: "",
+      onlyOngoing: undefined,
       ...msg,
     };
   },
@@ -3538,6 +3593,9 @@ export const EventsGetEventsPayload = {
     }
     if (msg.filter) {
       writer.writeString(4, msg.filter);
+    }
+    if (msg.onlyOngoing != undefined) {
+      writer.writeBool(5, msg.onlyOngoing);
     }
     return writer;
   },
@@ -3566,6 +3624,10 @@ export const EventsGetEventsPayload = {
         }
         case 4: {
           msg.filter = reader.readString();
+          break;
+        }
+        case 5: {
+          msg.onlyOngoing = reader.readBool();
           break;
         }
         default: {
@@ -3799,6 +3861,234 @@ export const EventsGetEventsByIdResponse = {
         case 1: {
           const m = protoAtoms.Event.initialize();
           reader.readMessage(m, protoAtoms.Event._readMessage);
+          msg.events.push(m);
+          break;
+        }
+        default: {
+          reader.skipField();
+          break;
+        }
+      }
+    }
+    return msg;
+  },
+};
+
+export const EventsGetEventStatesPayload = {
+  /**
+   * Serializes EventsGetEventStatesPayload to protobuf.
+   */
+  encode: function (msg: PartialDeep<EventsGetEventStatesPayload>): Uint8Array {
+    return EventsGetEventStatesPayload._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
+  },
+
+  /**
+   * Deserializes EventsGetEventStatesPayload from protobuf.
+   */
+  decode: function (bytes: ByteSource): EventsGetEventStatesPayload {
+    return EventsGetEventStatesPayload._readMessage(
+      EventsGetEventStatesPayload.initialize(),
+      new protoscript.BinaryReader(bytes),
+    );
+  },
+
+  /**
+   * Initializes EventsGetEventStatesPayload with all fields set to their default value.
+   */
+  initialize: function (
+    msg?: Partial<EventsGetEventStatesPayload>,
+  ): EventsGetEventStatesPayload {
+    return {
+      ids: [],
+      ...msg,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: PartialDeep<EventsGetEventStatesPayload>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
+    if (msg.ids?.length) {
+      writer.writePackedInt32(1, msg.ids);
+    }
+    return writer;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: EventsGetEventStatesPayload,
+    reader: protoscript.BinaryReader,
+  ): EventsGetEventStatesPayload {
+    while (reader.nextField()) {
+      const field = reader.getFieldNumber();
+      switch (field) {
+        case 1: {
+          if (reader.isDelimited()) {
+            msg.ids.push(...reader.readPackedInt32());
+          } else {
+            msg.ids.push(reader.readInt32());
+          }
+          break;
+        }
+        default: {
+          reader.skipField();
+          break;
+        }
+      }
+    }
+    return msg;
+  },
+};
+
+export const EventState = {
+  /**
+   * Serializes EventState to protobuf.
+   */
+  encode: function (msg: PartialDeep<EventState>): Uint8Array {
+    return EventState._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
+  },
+
+  /**
+   * Deserializes EventState from protobuf.
+   */
+  decode: function (bytes: ByteSource): EventState {
+    return EventState._readMessage(
+      EventState.initialize(),
+      new protoscript.BinaryReader(bytes),
+    );
+  },
+
+  /**
+   * Initializes EventState with all fields set to their default value.
+   */
+  initialize: function (msg?: Partial<EventState>): EventState {
+    return {
+      id: 0,
+      finished: false,
+      ...msg,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: PartialDeep<EventState>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
+    if (msg.id) {
+      writer.writeInt32(1, msg.id);
+    }
+    if (msg.finished) {
+      writer.writeBool(2, msg.finished);
+    }
+    return writer;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: EventState,
+    reader: protoscript.BinaryReader,
+  ): EventState {
+    while (reader.nextField()) {
+      const field = reader.getFieldNumber();
+      switch (field) {
+        case 1: {
+          msg.id = reader.readInt32();
+          break;
+        }
+        case 2: {
+          msg.finished = reader.readBool();
+          break;
+        }
+        default: {
+          reader.skipField();
+          break;
+        }
+      }
+    }
+    return msg;
+  },
+};
+
+export const EventsGetEventStatesResponse = {
+  /**
+   * Serializes EventsGetEventStatesResponse to protobuf.
+   */
+  encode: function (
+    msg: PartialDeep<EventsGetEventStatesResponse>,
+  ): Uint8Array {
+    return EventsGetEventStatesResponse._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
+  },
+
+  /**
+   * Deserializes EventsGetEventStatesResponse from protobuf.
+   */
+  decode: function (bytes: ByteSource): EventsGetEventStatesResponse {
+    return EventsGetEventStatesResponse._readMessage(
+      EventsGetEventStatesResponse.initialize(),
+      new protoscript.BinaryReader(bytes),
+    );
+  },
+
+  /**
+   * Initializes EventsGetEventStatesResponse with all fields set to their default value.
+   */
+  initialize: function (
+    msg?: Partial<EventsGetEventStatesResponse>,
+  ): EventsGetEventStatesResponse {
+    return {
+      events: [],
+      ...msg,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: PartialDeep<EventsGetEventStatesResponse>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
+    if (msg.events?.length) {
+      writer.writeRepeatedMessage(
+        1,
+        msg.events as any,
+        EventState._writeMessage,
+      );
+    }
+    return writer;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: EventsGetEventStatesResponse,
+    reader: protoscript.BinaryReader,
+  ): EventsGetEventStatesResponse {
+    while (reader.nextField()) {
+      const field = reader.getFieldNumber();
+      switch (field) {
+        case 1: {
+          const m = EventState.initialize();
+          reader.readMessage(m, EventState._readMessage);
           msg.events.push(m);
           break;
         }
@@ -10023,6 +10313,7 @@ export const EventsGetEventsPayloadJSON = {
       offset: 0,
       filterUnlisted: false,
       filter: "",
+      onlyOngoing: undefined,
       ...msg,
     };
   },
@@ -10045,6 +10336,9 @@ export const EventsGetEventsPayloadJSON = {
     }
     if (msg.filter) {
       json["filter"] = msg.filter;
+    }
+    if (msg.onlyOngoing != undefined) {
+      json["onlyOngoing"] = msg.onlyOngoing;
     }
     return json;
   },
@@ -10071,6 +10365,10 @@ export const EventsGetEventsPayloadJSON = {
     const _filter_ = json["filter"];
     if (_filter_) {
       msg.filter = _filter_;
+    }
+    const _onlyOngoing_ = json["onlyOngoing"] ?? json["only_ongoing"];
+    if (_onlyOngoing_) {
+      msg.onlyOngoing = _onlyOngoing_;
     }
     return msg;
   },
@@ -10259,6 +10557,187 @@ export const EventsGetEventsByIdResponseJSON = {
       for (const item of _events_) {
         const m = protoAtoms.EventJSON.initialize();
         protoAtoms.EventJSON._readMessage(m, item);
+        msg.events.push(m);
+      }
+    }
+    return msg;
+  },
+};
+
+export const EventsGetEventStatesPayloadJSON = {
+  /**
+   * Serializes EventsGetEventStatesPayload to JSON.
+   */
+  encode: function (msg: PartialDeep<EventsGetEventStatesPayload>): string {
+    return JSON.stringify(EventsGetEventStatesPayloadJSON._writeMessage(msg));
+  },
+
+  /**
+   * Deserializes EventsGetEventStatesPayload from JSON.
+   */
+  decode: function (json: string): EventsGetEventStatesPayload {
+    return EventsGetEventStatesPayloadJSON._readMessage(
+      EventsGetEventStatesPayloadJSON.initialize(),
+      JSON.parse(json),
+    );
+  },
+
+  /**
+   * Initializes EventsGetEventStatesPayload with all fields set to their default value.
+   */
+  initialize: function (
+    msg?: Partial<EventsGetEventStatesPayload>,
+  ): EventsGetEventStatesPayload {
+    return {
+      ids: [],
+      ...msg,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: PartialDeep<EventsGetEventStatesPayload>,
+  ): Record<string, unknown> {
+    const json: Record<string, unknown> = {};
+    if (msg.ids?.length) {
+      json["ids"] = msg.ids;
+    }
+    return json;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: EventsGetEventStatesPayload,
+    json: any,
+  ): EventsGetEventStatesPayload {
+    const _ids_ = json["ids"];
+    if (_ids_) {
+      msg.ids = _ids_.map(protoscript.parseNumber);
+    }
+    return msg;
+  },
+};
+
+export const EventStateJSON = {
+  /**
+   * Serializes EventState to JSON.
+   */
+  encode: function (msg: PartialDeep<EventState>): string {
+    return JSON.stringify(EventStateJSON._writeMessage(msg));
+  },
+
+  /**
+   * Deserializes EventState from JSON.
+   */
+  decode: function (json: string): EventState {
+    return EventStateJSON._readMessage(
+      EventStateJSON.initialize(),
+      JSON.parse(json),
+    );
+  },
+
+  /**
+   * Initializes EventState with all fields set to their default value.
+   */
+  initialize: function (msg?: Partial<EventState>): EventState {
+    return {
+      id: 0,
+      finished: false,
+      ...msg,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: PartialDeep<EventState>,
+  ): Record<string, unknown> {
+    const json: Record<string, unknown> = {};
+    if (msg.id) {
+      json["id"] = msg.id;
+    }
+    if (msg.finished) {
+      json["finished"] = msg.finished;
+    }
+    return json;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (msg: EventState, json: any): EventState {
+    const _id_ = json["id"];
+    if (_id_) {
+      msg.id = protoscript.parseNumber(_id_);
+    }
+    const _finished_ = json["finished"];
+    if (_finished_) {
+      msg.finished = _finished_;
+    }
+    return msg;
+  },
+};
+
+export const EventsGetEventStatesResponseJSON = {
+  /**
+   * Serializes EventsGetEventStatesResponse to JSON.
+   */
+  encode: function (msg: PartialDeep<EventsGetEventStatesResponse>): string {
+    return JSON.stringify(EventsGetEventStatesResponseJSON._writeMessage(msg));
+  },
+
+  /**
+   * Deserializes EventsGetEventStatesResponse from JSON.
+   */
+  decode: function (json: string): EventsGetEventStatesResponse {
+    return EventsGetEventStatesResponseJSON._readMessage(
+      EventsGetEventStatesResponseJSON.initialize(),
+      JSON.parse(json),
+    );
+  },
+
+  /**
+   * Initializes EventsGetEventStatesResponse with all fields set to their default value.
+   */
+  initialize: function (
+    msg?: Partial<EventsGetEventStatesResponse>,
+  ): EventsGetEventStatesResponse {
+    return {
+      events: [],
+      ...msg,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: PartialDeep<EventsGetEventStatesResponse>,
+  ): Record<string, unknown> {
+    const json: Record<string, unknown> = {};
+    if (msg.events?.length) {
+      json["events"] = msg.events.map(EventStateJSON._writeMessage);
+    }
+    return json;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: EventsGetEventStatesResponse,
+    json: any,
+  ): EventsGetEventStatesResponse {
+    const _events_ = json["events"];
+    if (_events_) {
+      for (const item of _events_) {
+        const m = EventStateJSON.initialize();
+        EventStateJSON._readMessage(m, item);
         msg.events.push(m);
       }
     }

@@ -9,6 +9,8 @@ import {
   EventsGetEventForEditResponse,
   EventsGetEventsByIdPayload,
   EventsGetEventsByIdResponse,
+  EventsGetEventStatesPayload,
+  EventsGetEventStatesResponse,
   EventsGetEventsPayload,
   EventsGetEventsResponse,
   EventsGetLastGamesPayload,
@@ -138,6 +140,7 @@ export class EventModel extends Model {
                   },
                 }
               : {}),
+            ...(eventsGetEventsPayload.onlyOngoing ? { finished: 0 } : {}),
             ...(eventsGetEventsPayload.filterUnlisted
               ? {
                   isListed: 1,
@@ -185,6 +188,17 @@ export class EventModel extends Model {
     );
   }
 
+  async getEventStates(
+    payload: EventsGetEventStatesPayload
+  ): Promise<EventsGetEventStatesResponse> {
+    const events = await this.repo.em.findAll(EventEntity, {
+      where: { id: payload.ids },
+      fields: ['id', 'finished'],
+      orderBy: { id: -1 },
+    });
+    return { events: events.map((event) => ({ id: event.id, finished: !!event.finished })) };
+  }
+
   async getMyEvents(personId: number): Promise<PlayersGetMyEventsResponse> {
     return this.repo.em.transactional(
       async () => {
@@ -205,8 +219,8 @@ export class EventModel extends Model {
                 },
                 fields: ['id', 'title', 'isOnline', 'description'],
                 orderBy: {
-                  id: -1
-                }
+                  id: -1,
+                },
               });
         return {
           events: events.map((e) => ({

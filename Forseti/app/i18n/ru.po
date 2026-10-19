@@ -2607,3 +2607,11 @@ msgstr "показать / скрыть"
 #~ msgstr ""
 #~ "Вы ввели ваш логин для Tenhou.net вместо имени пользователя. Вам не "
 #~ "следует НИКОГДА и никому передавать ваш логин!"
+
+#: app/pages/OwnedEvents.tsx:277:14
+msgid "All my events"
+msgstr "Все мои события"
+
+#: app/pages/OwnedEvents.tsx:291:14
+msgid "Only ongoing events"
+msgstr "Только текущие события"

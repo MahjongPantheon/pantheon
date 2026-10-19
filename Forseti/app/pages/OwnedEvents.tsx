@@ -16,7 +16,7 @@
  */
 
 import * as React from 'react';
-import { useCallback, useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { usePageTitle } from '../hooks/pageTitle';
 import {
   ActionIcon,
@@ -64,6 +64,7 @@ import { nprogress } from '@mantine/nprogress';
 import { MenuItemLink } from '../components/MenuItemLink';
 import { env } from '../env';
 import { notifications } from '@mantine/notifications';
+import { loadOwnedEvents } from '../helpers/ownedEventsData';
 
 export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: { page } }) => {
   const EVENTS_PERPAGE = 30;
@@ -78,6 +79,8 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
     useDisclosure(false);
   const [stopEventData, setStopEventData] = useState({ id: 0, title: '' });
   const [currentPage, setCurrentPage] = useState(parseInt(page ?? '1', 10));
+  const [onlyOngoing, setOnlyOngoing] = useState(true);
+  const loadRequest = useRef(0);
   const [isLoading, setIsLoading] = useState(true);
   const [totalPages, setTotalPages] = useState(0);
   const [events, setEvents] = useState<Event[]>([]);
@@ -96,7 +99,8 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
   }, []);
 
   const loadPageData = useCallback(
-    (pageToLoad: number) => {
+    async (pageToLoad: number) => {
+      const request = ++loadRequest.current;
       if (!isLoggedIn || !storage.getPersonId()) {
         setIsLoading(false);
         return;
@@ -104,44 +108,38 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
       nprogress.reset();
       nprogress.start();
       setIsLoading(true);
-      Promise.all([api.getManagedEventIds(storage.getPersonId()!)])
-        .then(([eventsList]) => {
-          eventsList = eventsList.sort((a, b) => b - a)
-          const pageOffset = (pageToLoad - 1) * EVENTS_PERPAGE;
-          if (eventsList.includes(-1)) {
-            // -1 === global privileges
-            api.getEvents(EVENTS_PERPAGE, pageOffset, false).then((resp) => {
-              setEvents(resp.events);
-              setTotalPages(Math.ceil(resp.total / EVENTS_PERPAGE));
-              setIsLoading(false);
-              nprogress.complete();
-            });
-          } else {
-            const eventIds = eventsList.slice(pageOffset, pageOffset + EVENTS_PERPAGE);
-            api.getEventsById(eventIds).then((resp) => {
-              setEvents(resp);
-              setTotalPages(Math.ceil(eventsList.length / EVENTS_PERPAGE));
-              setIsLoading(false);
-              nprogress.complete();
-            });
-          }
-        })
-        .catch((e) => {
-          errHandler(e);
+      try {
+        const result = await loadOwnedEvents(
+          api,
+          storage.getPersonId()!,
+          pageToLoad,
+          onlyOngoing,
+          EVENTS_PERPAGE
+        );
+        if (request !== loadRequest.current) return;
+        setEvents(result.events);
+        setCurrentPage(result.page);
+        setTotalPages(result.totalPages);
+      } catch (e) {
+        if (request === loadRequest.current) errHandler(e as Error);
+      } finally {
+        if (request === loadRequest.current) {
           setIsLoading(false);
           nprogress.complete();
-        });
+        }
+      }
     },
-    [isLoggedIn]
+    [isLoggedIn, onlyOngoing]
   );
 
-  const setPage = useCallback(
-    (newpage: number) => {
-      setCurrentPage(newpage);
-      loadPageData(newpage);
-    },
-    [isLoggedIn]
-  );
+  const setPage = (newPage: number) => {
+    setCurrentPage(newPage);
+  };
+
+  const setFilter = (ongoing: boolean) => {
+    setCurrentPage(1);
+    setOnlyOngoing(ongoing);
+  };
 
   const toggleVisibility = (id: number) => {
     setVisibilityLoading({ ...scoringLoading, [id]: true });
@@ -173,12 +171,7 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
       .finishEvent(id)
       .then((resp) => {
         if (resp) {
-          const idx = events.findIndex((ev) => ev.id === id);
-          setEvents([
-            ...events.slice(0, idx),
-            { ...events[idx], finished: true },
-            ...events.slice(idx + 1),
-          ]);
+          void loadPageData(currentPage);
         }
       })
       .catch(errHandler);
@@ -226,14 +219,18 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
       .catch(errHandler);
   };
 
-  // Initial load
-  useEffect(() => loadPageData(1), [isLoggedIn]);
+  useEffect(() => {
+    void loadPageData(currentPage);
+    return () => {
+      loadRequest.current++;
+    };
+  }, [loadPageData, currentPage]);
 
   if (!storage.getPersonId()) {
     return <Redirect to='/profile/login' />;
   }
 
-  return isLoading ? null : (
+  return (
     <>
       <Modal
         data-testid='forseti-owned-events-stop-modal'
@@ -269,7 +266,42 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
           </Button>
         </Group>
       </Modal>
-      <Container data-testid='forseti-owned-events-page' pos='relative' sx={{ minHeight: '400px' }}>
+      <Container
+        data-testid='forseti-owned-events-page'
+        aria-busy={isLoading}
+        pos='relative'
+        sx={{ minHeight: '400px' }}
+      >
+        <Group spacing='xs' mb='md'>
+          <Badge
+            data-testid='forseti-owned-events-filter-ongoing'
+            component='button'
+            type='button'
+            size='lg'
+            color='orange'
+            radius='sm'
+            variant={onlyOngoing ? 'filled' : 'light'}
+            aria-pressed={onlyOngoing}
+            onClick={() => setFilter(true)}
+            style={{ cursor: 'pointer' }}
+          >
+            {i18n._t('Only ongoing events')}
+          </Badge>
+          <Badge
+            data-testid='forseti-owned-events-filter-all'
+            component='button'
+            type='button'
+            size='lg'
+            color='lime'
+            radius='sm'
+            variant={onlyOngoing ? 'light' : 'filled'}
+            aria-pressed={!onlyOngoing}
+            onClick={() => setFilter(false)}
+            style={{ cursor: 'pointer' }}
+          >
+            {i18n._t('All my events')}
+          </Badge>
+        </Group>
         <Stack justify='flex-start' spacing='0'>
           {events.map((event, idx) => {
             return (

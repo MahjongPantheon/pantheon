@@ -22,6 +22,8 @@ service Mimir {
   rpc GetRulesets(EventsGetRulesetsPayload) returns (EventsGetRulesetsResponse);
   rpc GetEvents(EventsGetEventsPayload) returns (EventsGetEventsResponse);
   rpc GetEventsById(EventsGetEventsByIdPayload) returns (EventsGetEventsByIdResponse);
+  rpc GetEventStates(EventsGetEventStatesPayload)
+      returns (EventsGetEventStatesResponse);
   rpc GetMyEvents(PlayersGetMyEventsPayload) returns (PlayersGetMyEventsResponse);
   rpc GetGameConfig(GenericEventPayload) returns (GameConfig);
   rpc GetRatingTable(EventsGetRatingTablePayload) returns (EventsGetRatingTableResponse);
@@ -103,6 +105,7 @@ message EventsGetEventsPayload {
   int32 offset = 2;
   bool filter_unlisted = 3;
   string filter = 4;
+  optional bool only_ongoing = 5;
 }
 
 message EventsGetEventsResponse {
@@ -116,6 +119,19 @@ message EventsGetEventsByIdPayload {
 
 message EventsGetEventsByIdResponse {
   repeated Event events = 1;
+}
+
+message EventsGetEventStatesPayload {
+  repeated int32 ids = 1;
+}
+
+message EventState {
+  int32 id = 1;
+  bool finished = 2;
+}
+
+message EventsGetEventStatesResponse {
+  repeated EventState events = 1;
 }
 
 message PlayersGetMyEventsPayload {}

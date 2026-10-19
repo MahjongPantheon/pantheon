@@ -30,6 +30,7 @@ import {
   GetEventForEdit,
   GetEvents,
   GetEventsById,
+  GetEventStates,
   GetGameConfig,
   GetPrescriptedEventConfig,
   GetRulesets,
@@ -292,9 +293,17 @@ export class ApiService {
     return GetSuperadminFlag({ personId }, this._clientConfFrey).then((r) => r.isAdmin);
   }
 
-  getEvents(limit: number, offset: number, filterUnlisted: boolean) {
+  getEvents(limit: number, offset: number, filterUnlisted: boolean, onlyOngoing = false) {
     this._analytics?.track(Analytics.LOAD_STARTED, { method: 'GetEvents' });
-    return GetEvents({ limit, offset, filter: '', filterUnlisted }, this._clientConfMimir);
+    return GetEvents(
+      { limit, offset, filter: '', filterUnlisted, onlyOngoing },
+      this._clientConfMimir
+    );
+  }
+
+  getEventStates(ids: number[]) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'GetEventStates' });
+    return GetEventStates({ ids }, this._clientConfMimir).then((r) => r.events);
   }
 
   getEventsById(ids: number[]) {

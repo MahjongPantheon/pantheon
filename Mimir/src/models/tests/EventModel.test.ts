@@ -51,6 +51,51 @@ describe('Event creation', () => {
     repo.em.clear();
   });
 
+  it('returns only requested event states, including finished and unlisted events', async () => {
+    const first = await model.createEvent({ ...eventData, isListed: false });
+    const second = await model.createEvent(eventData);
+    await repo.em.nativeUpdate(EventEntity, { id: second.eventId }, { finished: 1 });
+    repo.em.clear();
+    expect(await model.getEventStates({ ids: [first.eventId, second.eventId, 999999] })).toEqual({
+      events: [
+        { id: second.eventId, finished: true },
+        { id: first.eventId, finished: false },
+      ],
+    });
+    expect(await model.getEventStates({ ids: [] })).toEqual({ events: [] });
+  });
+
+  it('filters ongoing events before pagination and counts only matching events', async () => {
+    const payload = { filter: '', filterUnlisted: false, limit: 1, offset: 1 };
+    const before = await model.getEvents({ ...payload, onlyOngoing: true });
+    const listedBefore = await model.getEvents({
+      ...payload,
+      onlyOngoing: true,
+      filterUnlisted: true,
+    });
+    const allBefore = await model.getEvents(payload);
+    const title = 'Ongoing filter regression';
+    const first = await model.createEvent({ ...eventData, title, isListed: false });
+    const second = await model.createEvent({ ...eventData, title });
+    const third = await model.createEvent({ ...eventData, title });
+    await repo.em.nativeUpdate(EventEntity, { id: second.eventId }, { finished: 1 });
+    repo.em.clear();
+    const ongoing = await model.getEvents({ ...payload, onlyOngoing: true });
+    expect(ongoing.total).toBe(before.total + 2);
+    expect(ongoing.events.map((event) => event.id)).toEqual([first.eventId]);
+    const all = await model.getEvents(payload);
+    expect(all.total).toBe(allBefore.total + 3);
+    expect(all.events.map((event) => event.id)).toEqual([second.eventId]);
+    const listed = await model.getEvents({
+      ...payload,
+      offset: 0,
+      filterUnlisted: true,
+      onlyOngoing: true,
+    });
+    expect(listed.total).toBe(listedBefore.total + 1);
+    expect(listed.events.map((event) => event.id)).toEqual([third.eventId]);
+  });
+
   it('grants the creator admin rights only after the event has been saved and refreshed', async () => {
     let savedEvent: EventEntity | undefined;
     let committed = false;

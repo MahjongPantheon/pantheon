@@ -110,4 +110,50 @@ test('SMOKE-004: Create a local event and add players there', async ({
       );
     }
   });
+
+  await test.step('Filter finished events from the owned events page', async () => {
+    await page.goto(`${process.env.FORSETI_URL}/ownedEvents`);
+    const ongoing = page.getByTestId('forseti-owned-events-filter-ongoing');
+    const all = page.getByTestId('forseti-owned-events-filter-all');
+    await expect(ongoing).toHaveAttribute('aria-pressed', 'true');
+    const row = page.getByTestId(/^forseti-owned-event-row-\d+$/).filter({ hasText: eventTitle });
+    await expect(row).toBeVisible();
+    const rowId = (await row.getAttribute('data-testid'))!.split('-').pop();
+    await page.goto(`${process.env.FORSETI_URL}/ownedEvents/edit/${rowId}`);
+    await expect(page.getByTestId('forseti-event-settings-page')).toBeVisible();
+    await page.getByTestId('forseti-menu-sidebar-finish-event').click();
+    await page.getByTestId('forseti-stop-event-confirm').click();
+    await expect(page.getByTestId('forseti-owned-events-page')).toBeVisible();
+    await expect(row).toHaveCount(0);
+    await all.click();
+    await expect(all).toHaveAttribute('aria-pressed', 'true');
+    await expect(row).toBeVisible();
+    let resumeRequest!: () => void;
+    const pendingRequest = new Promise<void>((resolve) => {
+      resumeRequest = resolve;
+    });
+    await page.route(
+      '**/common.Mimir/GetEventStates',
+      async (route) => {
+        await pendingRequest;
+        await route.continue();
+      },
+      { times: 1 }
+    );
+    try {
+      await ongoing.click();
+      await expect(ongoing).toHaveAttribute('aria-pressed', 'true');
+      await expect(page.getByTestId('forseti-owned-events-page')).toHaveAttribute(
+        'aria-busy',
+        'true'
+      );
+      await expect(row).toBeVisible();
+    } finally {
+      resumeRequest();
+    }
+    await expect(row).toHaveCount(0);
+    await page.reload();
+    await expect(ongoing).toHaveAttribute('aria-pressed', 'true');
+    await expect(row).toHaveCount(0);
+  });
 });
