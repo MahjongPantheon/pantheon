@@ -56,6 +56,7 @@ import { Confirmation } from './Confirmation';
 import { PlayerAvatar } from '../../components/PlayerAvatar';
 import { useState } from 'react';
 import { EventsGetTimerStateResponse } from 'tsclients/proto/mimir.pb';
+import { orderTables } from '../../helpers/orderTables';
 
 type GamesListProps = {
   tablesState: TableState[];
@@ -86,7 +87,7 @@ export function GamesList({
   const matches = useMediaQuery('(max-width: 568px)');
   return (
     <Stack>
-      {tablesState.map((t, idx) => {
+      {orderTables(tablesState, eventConfig).map((t, idx) => {
         const players = t.players.reduce(
           (acc, p) => {
             acc[p.id] = p;
