@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-19 21:07Z\n"
+"POT-Creation-Date: 2026-10-19 22:18Z\n"
 "PO-Revision-Date: 2024-02-10 23:22+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -15,6 +15,7 @@ msgstr ""
 "X-Generator: Poedit 3.0.1\n"
 
 #: app/components/base/TableStatus/TableStatus.tsx:106:16
+#: app/services/i18n.be.test.ts:51:12
 msgid "%1 deal left"
 msgid_plural "%1 deals left"
 msgstr[0] "%1 deal left"
@@ -164,7 +165,7 @@ msgstr "Game has finished"
 msgid "Game log"
 msgstr "Game log"
 
-#: app/components/pages/Settings/Settings.tsx:117:10
+#: app/components/pages/Settings/Settings.tsx:122:10
 msgid "Go to personal area"
 msgstr "Go to personal area"
 
@@ -228,7 +229,8 @@ msgstr "Thirteen Orphans"
 msgid "Kokushi musou 13-side"
 msgstr "Thirteen Orphans (thirteen-sided wait)"
 
-#: app/components/pages/Settings/Settings.tsx:128:45
+#: app/components/pages/Settings/Settings.tsx:133:45
+#: app/services/i18n.be.test.ts:34:12
 msgid "Language"
 msgstr "Language"
 
@@ -403,7 +405,7 @@ msgstr "Mixed Triple Chow"
 msgid "Sanshoku doukou"
 msgstr "Triple Pung"
 
-#: app/components/pages/Settings/Settings.tsx:125:10
+#: app/components/pages/Settings/Settings.tsx:130:10
 msgid "Select another event"
 msgstr "Select another event"
 
@@ -431,7 +433,7 @@ msgstr "Shuffle players"
 msgid "Sign up"
 msgstr "Sign up"
 
-#: app/components/pages/Settings/Settings.tsx:147:16
+#: app/components/pages/Settings/Settings.tsx:152:16
 msgid "Single device mode"
 msgstr "Single device mode"
 
@@ -496,7 +498,7 @@ msgstr "Tsumo, %1"
 msgid "Tsuuiisou"
 msgstr "All Honours"
 
-#: app/components/pages/Settings/Settings.tsx:148:22
+#: app/components/pages/Settings/Settings.tsx:153:22
 msgid "Turn on if you use a single device for all players"
 msgstr "Turn on if you use a single device for all players"
 

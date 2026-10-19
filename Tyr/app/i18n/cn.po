@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-19 21:07Z\n"
+"POT-Creation-Date: 2026-10-19 22:18Z\n"
 "PO-Revision-Date: 2024-05-09 22:09+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -15,6 +15,7 @@ msgstr ""
 "X-Generator: Poedit 3.4.2\n"
 
 #: app/components/base/TableStatus/TableStatus.tsx:106:16
+#: app/services/i18n.be.test.ts:51:12
 msgid "%1 deal left"
 msgid_plural "%1 deals left"
 msgstr[0] "剩余 %1 局 "
@@ -163,7 +164,7 @@ msgstr "对局已结束"
 msgid "Game log"
 msgstr "对局记录"
 
-#: app/components/pages/Settings/Settings.tsx:117:10
+#: app/components/pages/Settings/Settings.tsx:122:10
 msgid "Go to personal area"
 msgstr "前往个人区域"
 
@@ -227,7 +228,8 @@ msgstr "国士无双"
 msgid "Kokushi musou 13-side"
 msgstr "国士无双十三面听"
 
-#: app/components/pages/Settings/Settings.tsx:128:45
+#: app/components/pages/Settings/Settings.tsx:133:45
+#: app/services/i18n.be.test.ts:34:12
 msgid "Language"
 msgstr "语言"
 
@@ -402,7 +404,7 @@ msgstr "三色同顺"
 msgid "Sanshoku doukou"
 msgstr "三色同刻"
 
-#: app/components/pages/Settings/Settings.tsx:125:10
+#: app/components/pages/Settings/Settings.tsx:130:10
 msgid "Select another event"
 msgstr "选择其他活动或比赛"
 
@@ -430,7 +432,7 @@ msgstr "洗牌玩家"
 msgid "Sign up"
 msgstr "注册"
 
-#: app/components/pages/Settings/Settings.tsx:147:16
+#: app/components/pages/Settings/Settings.tsx:152:16
 msgid "Single device mode"
 msgstr "单设备模式"
 
@@ -495,7 +497,7 @@ msgstr "自摸, %1"
 msgid "Tsuuiisou"
 msgstr "字一色"
 
-#: app/components/pages/Settings/Settings.tsx:148:22
+#: app/components/pages/Settings/Settings.tsx:153:22
 msgid "Turn on if you use a single device for all players"
 msgstr "如果您为所有玩家使用单一设备，请开启此功能"
 

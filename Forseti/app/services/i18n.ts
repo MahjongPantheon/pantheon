@@ -19,14 +19,16 @@ import { TranslationProvider, TranslationController } from 'i18n-dialect';
 import { TranslationJson } from 'i18n-proto';
 
 import langRu from '../i18n/ru.json';
+import langBe from '../i18n/be.json';
 import langKo from '../i18n/ko.json';
 import langDe from '../i18n/de.json';
 import langJp from '../i18n/jp.json';
 import langCn from '../i18n/cn.json';
 import { IStorage } from '../../../Common/storage';
-export const supportedLanguages = ['en', 'ru', 'de', 'ko', 'jp', 'cn'];
+export const supportedLanguages = ['en', 'ru', 'de', 'ko', 'jp', 'cn', 'be'];
 const langs = {
   ru: langRu,
+  be: langBe,
   ko: langKo,
   de: langDe,
   jp: langJp,
@@ -45,6 +47,7 @@ export class I18nService {
       ) => {
         switch (name) {
           case 'ru':
+          case 'be':
           case 'ko':
           case 'jp':
           case 'cn':

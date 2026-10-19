@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-19 21:37Z\n"
+"POT-Creation-Date: 2026-10-19 22:18Z\n"
 "PO-Revision-Date: 2026-10-20 00:34+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -789,7 +789,8 @@ msgstr "强制结束对局"
 msgid "Forgot your password?"
 msgstr "忘记密码了吗？"
 
-#: app/pages/EventPrescript.tsx:182:15 app/services/i18n.test.ts:37:14
+#: app/pages/EventPrescript.tsx:182:15 app/services/i18n.be.test.ts:52:12
+#: app/services/i18n.test.ts:37:14
 msgid "Found %1 error"
 msgid_plural "Found %1 errors"
 msgstr[0] "发现 %1 个错误"
@@ -1043,7 +1044,7 @@ msgstr "国士无双十三面听"
 msgid "Kuitan"
 msgstr "食断"
 
-#: app/components/MainMenu.tsx:332:18
+#: app/components/MainMenu.tsx:332:18 app/services/i18n.be.test.ts:35:12
 msgid "Language"
 msgstr "语言"
 
@@ -2162,11 +2163,11 @@ msgid ""
 "(see below)."
 msgstr "计时器初始值。时间到后，将应用下方的对局结束规则。"
 
-#: app/components/MainMenu.tsx:407:18
+#: app/components/MainMenu.tsx:416:18
 msgid "Toggle color scheme"
 msgstr "切换配色方案"
 
-#: app/components/MainMenu.tsx:397:18
+#: app/components/MainMenu.tsx:406:18
 msgid "Toggle dimmed colors"
 msgstr "切换柔和配色"
 

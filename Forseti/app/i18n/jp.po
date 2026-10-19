@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-19 21:37Z\n"
+"POT-Creation-Date: 2026-10-19 22:18Z\n"
 "PO-Revision-Date: 2026-10-20 00:34+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -808,7 +808,8 @@ msgstr "対局を強制終了する"
 msgid "Forgot your password?"
 msgstr "パスワードを忘れましたか？"
 
-#: app/pages/EventPrescript.tsx:182:15 app/services/i18n.test.ts:37:14
+#: app/pages/EventPrescript.tsx:182:15 app/services/i18n.be.test.ts:52:12
+#: app/services/i18n.test.ts:37:14
 msgid "Found %1 error"
 msgid_plural "Found %1 errors"
 msgstr[0] "%1 件のエラーが見つかりました"
@@ -1078,7 +1079,7 @@ msgstr "国士無双十三面待ち"
 msgid "Kuitan"
 msgstr "喰いタン"
 
-#: app/components/MainMenu.tsx:332:18
+#: app/components/MainMenu.tsx:332:18 app/services/i18n.be.test.ts:35:12
 msgid "Language"
 msgstr "言語"
 
@@ -2217,11 +2218,11 @@ msgid ""
 msgstr ""
 "タイマーの初期値。時間が経過すると、下記の対局の終了ルールを適用します。"
 
-#: app/components/MainMenu.tsx:407:18
+#: app/components/MainMenu.tsx:416:18
 msgid "Toggle color scheme"
 msgstr "配色を切り替える"
 
-#: app/components/MainMenu.tsx:397:18
+#: app/components/MainMenu.tsx:406:18
 msgid "Toggle dimmed colors"
 msgstr "落ち着いた配色に切り替える"
 

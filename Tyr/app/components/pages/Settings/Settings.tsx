@@ -11,7 +11,7 @@ import { ThemeSelector } from '../../base/ThemeSelector/ThemeSelector';
 import { Switch } from '../../base/Switch/Switch';
 import { Player } from '../../base/Player/Player';
 import styles from './Settings.module.css';
-import { FlagCn, FlagDe, FlagEn, FlagJa, FlagKo, FlagRu } from '../../base/Flags';
+import { FlagBe, FlagCn, FlagDe, FlagEn, FlagJa, FlagKo, FlagRu } from '../../base/Flags';
 import { supportedLanguages as langs } from '../../../services/i18n';
 import { PlayerDescriptor } from '../../../helpers/interfaces';
 
@@ -60,6 +60,11 @@ const flags: Record<(typeof langs)[number], ReactElement> = {
   cn: (
     <div className={styles.flagWithLabel}>
       <FlagCn width={32} />
+    </div>
+  ),
+  be: (
+    <div className={styles.flagWithLabel}>
+      <FlagBe width={32} />
     </div>
   ),
   ema: (

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-19 21:37Z\n"
+"POT-Creation-Date: 2026-10-19 22:18Z\n"
 "PO-Revision-Date: 2024-04-12 22:47+0300\n"
 "Last-Translator: Jesterboxboy <github@jesterbox.org>\n"
 "Language-Team: \n"
@@ -816,7 +816,8 @@ msgstr "Spielende erzwingen"
 msgid "Forgot your password?"
 msgstr "Passwort vergessen?"
 
-#: app/pages/EventPrescript.tsx:182:15 app/services/i18n.test.ts:37:14
+#: app/pages/EventPrescript.tsx:182:15 app/services/i18n.be.test.ts:52:12
+#: app/services/i18n.test.ts:37:14
 msgid "Found %1 error"
 msgid_plural "Found %1 errors"
 msgstr[0] "Ein %1 Fehler wurde gefunden"
@@ -1083,7 +1084,7 @@ msgstr "Kokushi musou mit 13-seitigem Warten"
 msgid "Kuitan"
 msgstr "Kuitan"
 
-#: app/components/MainMenu.tsx:332:18
+#: app/components/MainMenu.tsx:332:18 app/services/i18n.be.test.ts:35:12
 msgid "Language"
 msgstr "Sprache"
 
@@ -2225,11 +2226,11 @@ msgstr ""
 "Startwert des Timers. Nach Ablauf der Zeit, werden die Einstellungen für "
 "Matchende angewendet(siehe unten)."
 
-#: app/components/MainMenu.tsx:407:18
+#: app/components/MainMenu.tsx:416:18
 msgid "Toggle color scheme"
 msgstr "Farbschema"
 
-#: app/components/MainMenu.tsx:397:18
+#: app/components/MainMenu.tsx:406:18
 msgid "Toggle dimmed colors"
 msgstr "Helligkeit"
 

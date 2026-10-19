@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-19 21:07Z\n"
+"POT-Creation-Date: 2026-10-19 22:18Z\n"
 "PO-Revision-Date: 2024-03-22 12:07+0100\n"
 "Last-Translator: Jesterboxboy <github@jesterbox.org>\n"
 "Language-Team: \n"
@@ -20,6 +20,7 @@ msgstr ""
 "X-Generator: Poedit 3.0.1\n"
 
 #: app/components/base/TableStatus/TableStatus.tsx:106:16
+#: app/services/i18n.be.test.ts:51:12
 msgid "%1 deal left"
 msgid_plural "%1 deals left"
 msgstr[0] "Noch %1 Hand "
@@ -169,7 +170,7 @@ msgstr "Das Spiel ist beendet"
 msgid "Game log"
 msgstr "Spielaufzeichung"
 
-#: app/components/pages/Settings/Settings.tsx:117:10
+#: app/components/pages/Settings/Settings.tsx:122:10
 msgid "Go to personal area"
 msgstr "Zum persönlichen Bereich gehen"
 
@@ -233,7 +234,8 @@ msgstr "Kokushi musou"
 msgid "Kokushi musou 13-side"
 msgstr "Kokushi musou mit 13-seitigem Warten"
 
-#: app/components/pages/Settings/Settings.tsx:128:45
+#: app/components/pages/Settings/Settings.tsx:133:45
+#: app/services/i18n.be.test.ts:34:12
 msgid "Language"
 msgstr "Sprache"
 
@@ -408,7 +410,7 @@ msgstr "Sanshoku"
 msgid "Sanshoku doukou"
 msgstr "Sanshoku doukou"
 
-#: app/components/pages/Settings/Settings.tsx:125:10
+#: app/components/pages/Settings/Settings.tsx:130:10
 msgid "Select another event"
 msgstr "Event auswählen"
 
@@ -436,7 +438,7 @@ msgstr "Spieler mischen"
 msgid "Sign up"
 msgstr "Registrieren"
 
-#: app/components/pages/Settings/Settings.tsx:147:16
+#: app/components/pages/Settings/Settings.tsx:152:16
 msgid "Single device mode"
 msgstr "Einzelgerätemodus"
 
@@ -501,7 +503,7 @@ msgstr "Tsumo, %1"
 msgid "Tsuuiisou"
 msgstr "Tsuuiisou"
 
-#: app/components/pages/Settings/Settings.tsx:148:22
+#: app/components/pages/Settings/Settings.tsx:153:22
 msgid "Turn on if you use a single device for all players"
 msgstr "Einschalten, wenn Sie ein einzelnes Gerät für alle Spieler verwenden"
 

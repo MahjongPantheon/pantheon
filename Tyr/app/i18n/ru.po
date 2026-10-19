@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-19 21:07Z\n"
+"POT-Creation-Date: 2026-10-19 22:18Z\n"
 "PO-Revision-Date: 2025-08-08 00:45+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -21,6 +21,7 @@ msgstr ""
 "X-Generator: Poedit 3.6\n"
 
 #: app/components/base/TableStatus/TableStatus.tsx:106:16
+#: app/services/i18n.be.test.ts:51:12
 msgid "%1 deal left"
 msgid_plural "%1 deals left"
 msgstr[0] "Осталась %1 раздача"
@@ -171,7 +172,7 @@ msgstr "Игра закончена"
 msgid "Game log"
 msgstr "Лог игры"
 
-#: app/components/pages/Settings/Settings.tsx:117:10
+#: app/components/pages/Settings/Settings.tsx:122:10
 msgid "Go to personal area"
 msgstr "В личный кабинет"
 
@@ -237,7 +238,8 @@ msgstr "Кокушимусо"
 msgid "Kokushi musou 13-side"
 msgstr "Кокушимусо 13-ти сторонний"
 
-#: app/components/pages/Settings/Settings.tsx:128:45
+#: app/components/pages/Settings/Settings.tsx:133:45
+#: app/services/i18n.be.test.ts:34:12
 msgid "Language"
 msgstr "Язык"
 
@@ -412,7 +414,7 @@ msgstr "Саншоку"
 msgid "Sanshoku doukou"
 msgstr "Саншоку доко"
 
-#: app/components/pages/Settings/Settings.tsx:125:10
+#: app/components/pages/Settings/Settings.tsx:130:10
 msgid "Select another event"
 msgstr "Выбрать другое событие"
 
@@ -440,7 +442,7 @@ msgstr "Перемешать"
 msgid "Sign up"
 msgstr "Регистрация"
 
-#: app/components/pages/Settings/Settings.tsx:147:16
+#: app/components/pages/Settings/Settings.tsx:152:16
 msgid "Single device mode"
 msgstr "Режим одного устройства"
 
@@ -505,7 +507,7 @@ msgstr "Цумо, %1"
 msgid "Tsuuiisou"
 msgstr "Цуисо"
 
-#: app/components/pages/Settings/Settings.tsx:148:22
+#: app/components/pages/Settings/Settings.tsx:153:22
 msgid "Turn on if you use a single device for all players"
 msgstr "Включите, если вы используете одно устройство для всех игроков"
 

@@ -122,10 +122,12 @@ i18n_extract:
 	msgmerge -s -U ./app/i18n/ko.po ./app/i18n/messages.pot --backup=none
 	msgmerge -s -U ./app/i18n/jp.po ./app/i18n/messages.pot --backup=none
 	msgmerge -s -U ./app/i18n/cn.po ./app/i18n/messages.pot --backup=none
+	msgmerge -s -U ./app/i18n/be.po ./app/i18n/messages.pot --backup=none
 
 PHONY: i18n_update
 i18n_update:
 	./node_modules/.bin/pojson -s app/i18n/ru.po -o app/i18n/ru.json --withMeta
+	./node_modules/.bin/pojson -s app/i18n/be.po -o app/i18n/be.json --withMeta
 	./node_modules/.bin/pojson -s app/i18n/ko.po -o app/i18n/ko.json --withMeta
 	./node_modules/.bin/pojson -s app/i18n/de.po -o app/i18n/de.json --withMeta
 	./node_modules/.bin/pojson -s app/i18n/cn.po -o app/i18n/cn.json --withMeta

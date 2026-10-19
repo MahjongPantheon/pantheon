@@ -1,3 +1,5 @@
+import flagBe from '../../img/flags/by.svg';
+
 export const FlagRu = ({ width }: { width: number }) => (
   <svg
     // @ts-expect-error
@@ -119,5 +121,13 @@ export const FlagCn = ({ width }: { width: number }) => (
       fill='#F7DE28'
       points='137.1,125.7 147.5,130.4 155.3,122.1 153.9,133.4 164.2,138.3 153,140.5 151.6,151.8 146.1,141.8 134.9,144 142.6,135.6  '
     />
+  </svg>
+);
+
+// Public SVG: flag-icons (MIT); attribution is included in the asset.
+// Match the 512-square canvas and 298.7-high visible area of the other flags.
+export const FlagBe = ({ width }: { width: number }) => (
+  <svg style={{ width: `${width}px` }} viewBox='0 0 512 512'>
+    <image href={flagBe} x='0' y='106.7' width='512' height='298.7' preserveAspectRatio='none' />
   </svg>
 );

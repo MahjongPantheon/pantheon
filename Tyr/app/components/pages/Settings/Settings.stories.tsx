@@ -24,7 +24,7 @@ export const Default = {
       hasAvatar: false,
       lastUpdate: new Date().toString(),
     },
-    supportedLanguages: ['en', 'ru', 'de', 'ko', 'cn', 'jp', 'ema'],
+    supportedLanguages: ['en', 'ru', 'de', 'ko', 'cn', 'jp', 'ema', 'be'],
     currentLanguage: 'ema',
     supportedThemes: themes,
     currentTheme: 'day',

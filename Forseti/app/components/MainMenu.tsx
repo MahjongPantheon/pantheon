@@ -25,7 +25,7 @@ import {
   IconUserCircle,
   IconUserPlus,
 } from '@tabler/icons-react';
-import { FlagDe, FlagEn, FlagKo, FlagRu, FlagJa, FlagCn } from '../helpers/flags';
+import { FlagDe, FlagEn, FlagKo, FlagRu, FlagJa, FlagCn, FlagBe } from '../helpers/flags';
 import * as React from 'react';
 import { useContext } from 'react';
 import { useI18n } from '../hooks/i18n';
@@ -384,6 +384,15 @@ export const MainMenu = ({
             }}
             icon={<FlagCn width={24} />}
             label='cn'
+          />
+          <NavLink
+            data-testid={`forseti-menu-${testIdScope}-language-be`}
+            onClick={() => {
+              saveLang('be');
+              closeMenu?.();
+            }}
+            icon={<FlagBe width={24} />}
+            label='be'
           />
         </NavLink>
         <NavLink
