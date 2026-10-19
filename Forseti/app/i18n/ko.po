@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-19 21:07Z\n"
+"POT-Creation-Date: 2026-10-19 21:37Z\n"
 "PO-Revision-Date: 2025-03-23 23:41+0300\n"
 "Last-Translator: Geunmo Kim <kimgeunmo@gmail.com>\n"
 "Language-Team: \n"
@@ -805,7 +805,7 @@ msgstr "대국 강제 종료하기"
 msgid "Forgot your password?"
 msgstr "비밀번호 찾기"
 
-#: app/pages/EventPrescript.tsx:182:15
+#: app/pages/EventPrescript.tsx:182:15 app/services/i18n.test.ts:37:14
 msgid "Found %1 error"
 msgid_plural "Found %1 errors"
 msgstr[0] "%1 개의 오류를 발견했습니다"
@@ -840,6 +840,7 @@ msgid "Go to Signup page"
 msgstr "회원가입으로 이동"
 
 #: app/pages/OwnedEventsEdit/RulesetSettings.tsx:103:18
+#: app/services/i18n.test.ts:35:12
 msgid "Goal score"
 msgstr "목표 점수"
 
@@ -2194,11 +2195,11 @@ msgid ""
 "(see below)."
 msgstr "타이머의 시작 값. 타이머가 종료될 경우 하기의 대국 종료 규칙이 적용됨"
 
-#: app/components/MainMenu.tsx:389:18
+#: app/components/MainMenu.tsx:407:18
 msgid "Toggle color scheme"
 msgstr "다크모드 전환"
 
-#: app/components/MainMenu.tsx:379:18
+#: app/components/MainMenu.tsx:397:18
 msgid "Toggle dimmed colors"
 msgstr "저채도모드 전환"
 

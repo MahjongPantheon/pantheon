@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-19 21:07Z\n"
+"POT-Creation-Date: 2026-10-19 21:37Z\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -158,11 +158,11 @@ msgstr ""
 msgid "Language"
 msgstr ""
 
-#: app/components/MainMenu.tsx:379:18
+#: app/components/MainMenu.tsx:397:18
 msgid "Toggle dimmed colors"
 msgstr ""
 
-#: app/components/MainMenu.tsx:389:18
+#: app/components/MainMenu.tsx:407:18
 msgid "Toggle color scheme"
 msgstr ""
 
@@ -478,6 +478,7 @@ msgid "Instructions"
 msgstr ""
 
 #: app/pages/EventPrescript.tsx:182:15
+#: app/services/i18n.test.ts:37:14
 msgid "Found %1 error"
 msgid_plural "Found %1 errors"
 msgstr[0] ""
@@ -1253,6 +1254,7 @@ msgid "If nobody reaches the goal score at the last hand, the game continues to 
 msgstr ""
 
 #: app/pages/OwnedEventsEdit/RulesetSettings.tsx:103:18
+#: app/services/i18n.test.ts:35:12
 msgid "Goal score"
 msgstr ""
 

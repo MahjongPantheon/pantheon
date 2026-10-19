@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-19 21:07Z\n"
+"POT-Creation-Date: 2026-10-19 21:37Z\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -224,13 +224,13 @@ msgstr ""
 msgid "Language"
 msgstr ""
 
-#: app/components/MainMenu.tsx:289:33
-#: app/components/MainMenu.tsx:290:20
+#: app/components/MainMenu.tsx:307:33
+#: app/components/MainMenu.tsx:308:20
 msgid "Toggle dimmed colors"
 msgstr ""
 
-#: app/components/MainMenu.tsx:300:33
-#: app/components/MainMenu.tsx:301:20
+#: app/components/MainMenu.tsx:318:33
+#: app/components/MainMenu.tsx:319:20
 msgid "Toggle color scheme"
 msgstr ""
 
@@ -843,6 +843,7 @@ msgstr ""
 
 #: app/pages/Achievements.tsx:321:14
 #: app/pages/Achievements.tsx:665:14
+#: app/services/i18n.test.ts:37:14
 msgctxt "Achievements badge"
 msgid "%1 win"
 msgid_plural "%1 wins"
@@ -1091,6 +1092,7 @@ msgid "Event referees: "
 msgstr ""
 
 #: app/pages/EventList.tsx:82:19
+#: app/services/i18n.test.ts:35:12
 msgid "Event list"
 msgstr ""
 

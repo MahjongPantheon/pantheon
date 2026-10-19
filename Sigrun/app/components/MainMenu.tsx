@@ -23,7 +23,7 @@ import {
   IconUsers,
 } from '@tabler/icons-react';
 import { EventType, PlatformType } from 'tsclients/proto/atoms.pb';
-import { FlagEn, FlagKo, FlagRu, FlagDe } from '../helpers/flags';
+import { FlagEn, FlagKo, FlagRu, FlagDe, FlagJa, FlagCn } from '../helpers/flags';
 import { useI18n } from '../hooks/i18n';
 import { useContext } from 'react';
 import { AddOnlineReplayLink } from './AddOnlineReplayLink';
@@ -276,6 +276,24 @@ export const MainMenu = ({
               }}
               leftSection={<FlagKo width={24} />}
               label={showLabels ? 'ko' : ''}
+            />
+            <NavLink
+              data-testid={`sigrun-menu-${testIdScope}-language-jp`}
+              onClick={() => {
+                saveLang('jp');
+                closeMenu?.();
+              }}
+              leftSection={<FlagJa width={24} />}
+              label={showLabels ? 'jp' : ''}
+            />
+            <NavLink
+              data-testid={`sigrun-menu-${testIdScope}-language-cn`}
+              onClick={() => {
+                saveLang('cn');
+                closeMenu?.();
+              }}
+              leftSection={<FlagCn width={24} />}
+              label={showLabels ? 'cn' : ''}
             />
           </NavLink>
           <NavLink

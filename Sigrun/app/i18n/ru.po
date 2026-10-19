@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-19 21:07Z\n"
+"POT-Creation-Date: 2026-10-19 21:37Z\n"
 "PO-Revision-Date: 2026-10-06 23:41+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -121,6 +121,7 @@ msgid "%1 tsumo"
 msgstr "%1 цумо"
 
 #: app/pages/Achievements.tsx:321:14 app/pages/Achievements.tsx:665:14
+#: app/services/i18n.test.ts:37:14
 msgctxt "Achievements badge"
 msgid "%1 win"
 msgid_plural "%1 wins"
@@ -624,7 +625,7 @@ msgstr "Админка события"
 msgid "Event administrators: "
 msgstr "Администраторы события: "
 
-#: app/pages/EventList.tsx:82:19
+#: app/pages/EventList.tsx:82:19 app/services/i18n.test.ts:35:12
 msgid "Event list"
 msgstr "Список событий"
 
@@ -1564,11 +1565,11 @@ msgstr "В руки с риичи: "
 msgid "To open hands: "
 msgstr "В открытые руки: "
 
-#: app/components/MainMenu.tsx:300:33 app/components/MainMenu.tsx:301:20
+#: app/components/MainMenu.tsx:318:33 app/components/MainMenu.tsx:319:20
 msgid "Toggle color scheme"
 msgstr "Переключить цветовую схему"
 
-#: app/components/MainMenu.tsx:289:33 app/components/MainMenu.tsx:290:20
+#: app/components/MainMenu.tsx:307:33 app/components/MainMenu.tsx:308:20
 msgid "Toggle dimmed colors"
 msgstr "Переключить приглушенную цветовую схему"
 

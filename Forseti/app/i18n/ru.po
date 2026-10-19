@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-19 21:07Z\n"
+"POT-Creation-Date: 2026-10-19 21:37Z\n"
 "PO-Revision-Date: 2025-10-19 23:15+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -821,7 +821,7 @@ msgstr "Досрочно завершить игру"
 msgid "Forgot your password?"
 msgstr "Забыли пароль?"
 
-#: app/pages/EventPrescript.tsx:182:15
+#: app/pages/EventPrescript.tsx:182:15 app/services/i18n.test.ts:37:14
 msgid "Found %1 error"
 msgid_plural "Found %1 errors"
 msgstr[0] "Найдена %1 ошибка"
@@ -858,6 +858,7 @@ msgid "Go to Signup page"
 msgstr "К странице регистрации"
 
 #: app/pages/OwnedEventsEdit/RulesetSettings.tsx:103:18
+#: app/services/i18n.test.ts:35:12
 msgid "Goal score"
 msgstr "Целевое количество очков"
 
@@ -2281,11 +2282,11 @@ msgstr ""
 "Стартовое значение таймера. После истечения таймера, применяется политика "
 "окончания игры (см. ниже)"
 
-#: app/components/MainMenu.tsx:389:18
+#: app/components/MainMenu.tsx:407:18
 msgid "Toggle color scheme"
 msgstr "Переключить цветовую схему"
 
-#: app/components/MainMenu.tsx:379:18
+#: app/components/MainMenu.tsx:397:18
 msgid "Toggle dimmed colors"
 msgstr "Переключить приглушенную цветовую схему"
 

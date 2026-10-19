@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-19 21:07Z\n"
+"POT-Creation-Date: 2026-10-19 21:37Z\n"
 "PO-Revision-Date: 2026-10-06 23:43+0300\n"
 "Last-Translator: Geunmo Kim <kimgeunmo@gmail.com>\n"
 "Language-Team: \n"
@@ -107,6 +107,7 @@ msgid "%1 tsumo"
 msgstr "쯔모 %1 회"
 
 #: app/pages/Achievements.tsx:321:14 app/pages/Achievements.tsx:665:14
+#: app/services/i18n.test.ts:37:14
 msgctxt "Achievements badge"
 msgid "%1 win"
 msgid_plural "%1 wins"
@@ -595,7 +596,7 @@ msgstr "관리자 패널에서 이벤트 편집"
 msgid "Event administrators: "
 msgstr "관리자: "
 
-#: app/pages/EventList.tsx:82:19
+#: app/pages/EventList.tsx:82:19 app/services/i18n.test.ts:35:12
 msgid "Event list"
 msgstr "이벤트 목록"
 
@@ -1503,11 +1504,11 @@ msgstr "리치 상대: "
 msgid "To open hands: "
 msgstr "비멘젠 상대: "
 
-#: app/components/MainMenu.tsx:300:33 app/components/MainMenu.tsx:301:20
+#: app/components/MainMenu.tsx:318:33 app/components/MainMenu.tsx:319:20
 msgid "Toggle color scheme"
 msgstr "다크모드 전환"
 
-#: app/components/MainMenu.tsx:289:33 app/components/MainMenu.tsx:290:20
+#: app/components/MainMenu.tsx:307:33 app/components/MainMenu.tsx:308:20
 msgid "Toggle dimmed colors"
 msgstr "저채도모드 전환"
 
