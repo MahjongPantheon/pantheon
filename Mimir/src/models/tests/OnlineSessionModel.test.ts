@@ -1,4 +1,5 @@
 import { jest } from '@jest/globals';
+import { UniqueConstraintViolationException } from '@mikro-orm/core';
 import { Model } from '../Model.js';
 import { OnlineSessionModel } from '../OnlineSessionModel.js';
 import { PlayerHistoryModel } from '../PlayerHistoryModel.js';
@@ -208,9 +209,56 @@ describe('Online replay import', () => {
 
   it('rejects an already imported replay hash', async () => {
     jest.spyOn(repo.em, 'findOne').mockResolvedValue(new SessionEntity());
-    await expect(model._checkReplayHash(19, 'duplicate')).rejects.toThrow('already added');
+    await expect(model._checkReplayHash('duplicate')).rejects.toThrow('already added');
+    expect(repo.em.findOne).toHaveBeenCalledWith(SessionEntity, { replayHash: 'duplicate' });
     jest.mocked(repo.em.findOne).mockResolvedValue(null);
-    await expect(model._checkReplayHash(19, 'new')).resolves.toBeUndefined();
+    await expect(model._checkReplayHash('new')).resolves.toBeUndefined();
+  });
+
+  describe.each(['link', 'typed'] as const)('%s replay errors', (source) => {
+    const importReplay = () =>
+      source === 'link'
+        ? model.addGame({ eventId: 19, link })
+        : model.addTypedGame({
+            eventId: 19,
+            replayHash: 'hash',
+            content: '{}',
+            contentType: 2,
+            platformId: PlatformType.PLATFORM_TYPE_TENHOUNET,
+            logTimestamp: 0,
+          });
+
+    it('reports a duplicate detected when the transaction flushes', async () => {
+      const error = new UniqueConstraintViolationException(
+        Object.assign(new Error('duplicate key'), { constraint: 'session_replay_hash_index' })
+      );
+      jest.spyOn(repo.em, 'transactional').mockRejectedValue(error);
+      await expect(importReplay()).rejects.toThrow('This game is already added to the system');
+    });
+
+    it.each([
+      new Error('storage unavailable'),
+      new UniqueConstraintViolationException(
+        Object.assign(new Error('another duplicate'), { constraint: 'session_pkey' })
+      ),
+    ])('preserves unrelated storage errors: %s', async (error) => {
+      jest.spyOn(repo.em, 'transactional').mockRejectedValue(error);
+      await expect(importReplay()).rejects.toBe(error);
+    });
+
+    it('awaits the duplicate check before importing content', async () => {
+      const { event } = fixture();
+      event.isOnline = source === 'link' ? 1 : 0;
+      jest.spyOn(repo.em, 'findOne').mockResolvedValue(event);
+      jest
+        .spyOn(model, '_checkReplayHash')
+        .mockRejectedValue(new Error('This game is already added to the system'));
+      const download = jest.spyOn(Downloader.prototype, 'getReplay');
+      const importer = jest.spyOn(model, 'addGameContent');
+      await expect(importReplay()).rejects.toThrow('already added');
+      expect(download).not.toHaveBeenCalled();
+      expect(importer).not.toHaveBeenCalled();
+    });
   });
 
   it('checks expiration only when the rules require it', () => {

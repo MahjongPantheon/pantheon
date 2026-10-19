@@ -1,4 +1,4 @@
-import { TransactionPropagation } from '@mikro-orm/core';
+import { TransactionPropagation, UniqueConstraintViolationException } from '@mikro-orm/core';
 import {
   GamesAddOnlineReplayPayload,
   GamesAddOnlineReplayResponse,
@@ -30,66 +30,70 @@ enum ContentType {
 
 export class OnlineSessionModel extends Model {
   async addGame(data: GamesAddOnlineReplayPayload): Promise<GamesAddOnlineReplayResponse> {
-    return this.repo.em.transactional(
-      async () => {
-        if (!data.link) {
-          throw new Error(`Link to replay is required`);
-        }
-        const event = await this.repo.em.findOne(EventEntity, { id: data.eventId });
-        if (!event) {
-          throw new Error(`Event ${data.eventId} not found`);
-        }
-        if (!event.isOnline) {
-          throw new Error(`Event ${data.eventId} is not online`);
-        }
-        if (event.finished) {
-          throw new Error(`Event ${data.eventId} is already finished`);
-        }
+    return this.repo.em
+      .transactional(
+        async () => {
+          if (!data.link) {
+            throw new Error(`Link to replay is required`);
+          }
+          const event = await this.repo.em.findOne(EventEntity, { id: data.eventId });
+          if (!event) {
+            throw new Error(`Event ${data.eventId} not found`);
+          }
+          if (!event.isOnline) {
+            throw new Error(`Event ${data.eventId} is not online`);
+          }
+          if (event.finished) {
+            throw new Error(`Event ${data.eventId} is already finished`);
+          }
 
-        const downloader = new Downloader();
-        downloader.validateUrl(data.link);
-        const replayHash = downloader.getReplayHash(data.link);
+          const downloader = new Downloader();
+          downloader.validateUrl(data.link);
+          const replayHash = downloader.getReplayHash(data.link);
 
-        this._checkGameExpired(replayHash, event.ruleset.rules);
-        this._checkReplayHash(event.id, replayHash);
+          this._checkGameExpired(replayHash, event.ruleset.rules);
+          await this._checkReplayHash(replayHash);
 
-        const replay = await downloader.getReplay(data.link);
-        return this.addGameContent(event, replayHash, replay.content, data.link);
-      },
-      { propagation: TransactionPropagation.REQUIRED }
-    );
+          const replay = await downloader.getReplay(data.link);
+          return this.addGameContent(event, replayHash, replay.content, data.link);
+        },
+        { propagation: TransactionPropagation.REQUIRED }
+      )
+      .catch(this._handleReplayImportError);
   }
 
   async addTypedGame(
     data: TypedGamesAddOnlineReplayPayload
   ): Promise<GamesAddOnlineReplayResponse> {
-    return this.repo.em.transactional(
-      async () => {
-        const event = await this.repo.em.findOne(EventEntity, { id: data.eventId });
-        if (!event) {
-          throw new Error(`Event ${data.eventId} not found`);
-        }
-        if (event.isOnline) {
-          throw new Error(`Event ${data.eventId} is not online`);
-        }
-        if (event.finished) {
-          throw new Error(`Event ${data.eventId} is already finished`);
-        }
+    return this.repo.em
+      .transactional(
+        async () => {
+          const event = await this.repo.em.findOne(EventEntity, { id: data.eventId });
+          if (!event) {
+            throw new Error(`Event ${data.eventId} not found`);
+          }
+          if (event.isOnline) {
+            throw new Error(`Event ${data.eventId} is not online`);
+          }
+          if (event.finished) {
+            throw new Error(`Event ${data.eventId} is already finished`);
+          }
 
-        this._checkGameTimestampExpired(data.logTimestamp, event.ruleset.rules);
-        this._checkReplayHash(event.id, data.replayHash);
+          this._checkGameTimestampExpired(data.logTimestamp, event.ruleset.rules);
+          await this._checkReplayHash(data.replayHash);
 
-        return this.addGameContent(
-          event,
-          data.replayHash,
-          data.content,
-          '',
-          data.contentType,
-          data.platformId
-        );
-      },
-      { propagation: TransactionPropagation.REQUIRED }
-    );
+          return this.addGameContent(
+            event,
+            data.replayHash,
+            data.content,
+            '',
+            data.contentType,
+            data.platformId
+          );
+        },
+        { propagation: TransactionPropagation.REQUIRED }
+      )
+      .catch(this._handleReplayImportError);
   }
 
   async addGameContent(
@@ -252,9 +256,19 @@ export class OnlineSessionModel extends Model {
     };
   }
 
-  async _checkReplayHash(eventId: number, replayHash: string) {
+  private _handleReplayImportError(error: unknown): never {
+    if (
+      error instanceof UniqueConstraintViolationException &&
+      'constraint' in error &&
+      error.constraint === 'session_replay_hash_index'
+    ) {
+      throw new Error(`This game is already added to the system`);
+    }
+    throw error;
+  }
+
+  async _checkReplayHash(replayHash: string) {
     const session = await this.repo.em.findOne(SessionEntity, {
-      event: this.repo.em.getReference(EventEntity, eventId),
       replayHash,
     });
     if (session) {

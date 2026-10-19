@@ -6,6 +6,7 @@ import {
   OneToMany,
   PrimaryKey,
   Property,
+  Unique,
 } from '@mikro-orm/postgresql';
 import { EventEntity } from './Event.entity.js';
 import { SessionPlayerEntity } from './SessionPlayer.entity.js';
@@ -14,7 +15,7 @@ import { SessionStateEntity } from './SessionState.entity.js';
 @Entity({ tableName: 'session' })
 @Index({ properties: ['event'] })
 @Index({ properties: ['endDate'] })
-@Index({ properties: ['replayHash'] })
+@Unique({ name: 'session_replay_hash_index', properties: ['replayHash'] })
 @Index({ properties: ['representationalHash'] })
 @Index({ properties: ['status'] })
 @Index({ properties: ['tableIndex'] })
