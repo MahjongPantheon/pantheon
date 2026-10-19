@@ -52,7 +52,7 @@ export class OnlineSessionModel extends Model {
           const replayHash = downloader.getReplayHash(data.link);
 
           this._checkGameExpired(replayHash, event.ruleset.rules);
-          await this._checkReplayHash(replayHash);
+          await this._checkReplayHash(event.id, replayHash);
 
           const replay = await downloader.getReplay(data.link);
           return this.addGameContent(event, replayHash, replay.content, data.link);
@@ -80,7 +80,7 @@ export class OnlineSessionModel extends Model {
           }
 
           this._checkGameTimestampExpired(data.logTimestamp, event.ruleset.rules);
-          await this._checkReplayHash(data.replayHash);
+          await this._checkReplayHash(event.id, data.replayHash);
 
           return this.addGameContent(
             event,
@@ -267,8 +267,9 @@ export class OnlineSessionModel extends Model {
     throw error;
   }
 
-  async _checkReplayHash(replayHash: string) {
+  async _checkReplayHash(eventId: number, replayHash: string) {
     const session = await this.repo.em.findOne(SessionEntity, {
+      event: this.repo.em.getReference(EventEntity, eventId),
       replayHash,
     });
     if (session) {

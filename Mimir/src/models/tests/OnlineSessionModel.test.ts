@@ -142,6 +142,10 @@ describe('Online replay import', () => {
       players: [],
     });
     await model.addGame({ eventId: event.id, link });
+    expect(model._checkReplayHash).toHaveBeenCalledWith(
+      event.id,
+      '2026010100gm-0001-0000-12345678'
+    );
     expect(importer).toHaveBeenCalledWith(
       event,
       '2026010100gm-0001-0000-12345678',
@@ -166,6 +170,7 @@ describe('Online replay import', () => {
       platformId: PlatformType.PLATFORM_TYPE_MAHJONGSOUL,
       logTimestamp: Math.floor(Date.now() / 1000),
     });
+    expect(model._checkReplayHash).toHaveBeenCalledWith(event.id, 'hash');
     expect(importer).toHaveBeenCalledWith(
       event,
       'hash',
@@ -207,12 +212,19 @@ describe('Online replay import', () => {
     ).rejects.toThrow(error);
   });
 
-  it('rejects an already imported replay hash', async () => {
+  it('rejects a replay hash in the same event but allows it in another event', async () => {
     jest.spyOn(repo.em, 'findOne').mockResolvedValue(new SessionEntity());
-    await expect(model._checkReplayHash('duplicate')).rejects.toThrow('already added');
-    expect(repo.em.findOne).toHaveBeenCalledWith(SessionEntity, { replayHash: 'duplicate' });
+    await expect(model._checkReplayHash(19, 'duplicate')).rejects.toThrow('already added');
+    expect(repo.em.findOne).toHaveBeenLastCalledWith(SessionEntity, {
+      event: repo.em.getReference(EventEntity, 19),
+      replayHash: 'duplicate',
+    });
     jest.mocked(repo.em.findOne).mockResolvedValue(null);
-    await expect(model._checkReplayHash('new')).resolves.toBeUndefined();
+    await expect(model._checkReplayHash(20, 'duplicate')).resolves.toBeUndefined();
+    expect(repo.em.findOne).toHaveBeenLastCalledWith(SessionEntity, {
+      event: repo.em.getReference(EventEntity, 20),
+      replayHash: 'duplicate',
+    });
   });
 
   describe.each(['link', 'typed'] as const)('%s replay errors', (source) => {
