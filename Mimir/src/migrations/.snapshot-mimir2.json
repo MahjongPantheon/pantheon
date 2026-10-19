@@ -1001,9 +1001,9 @@
           "keyName": "session_replay_hash_index",
           "columnNames": ["replay_hash"],
           "composite": false,
-          "constraint": false,
+          "constraint": true,
           "primary": false,
-          "unique": false
+          "unique": true
         },
         {
           "keyName": "session_end_date_index",
