@@ -106,6 +106,7 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
       setIsLoading(true);
       Promise.all([api.getManagedEventIds(storage.getPersonId()!)])
         .then(([eventsList]) => {
+          eventsList = eventsList.sort((a, b) => b - a)
           const pageOffset = (pageToLoad - 1) * EVENTS_PERPAGE;
           if (eventsList.includes(-1)) {
             // -1 === global privileges
