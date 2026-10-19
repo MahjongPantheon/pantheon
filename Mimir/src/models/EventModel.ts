@@ -204,6 +204,9 @@ export class EventModel extends Model {
                   finished: 0,
                 },
                 fields: ['id', 'title', 'isOnline', 'description'],
+                orderBy: {
+                  id: -1
+                }
               });
         return {
           events: events.map((e) => ({
