@@ -1,4 +1,7 @@
-import { TransactionPropagation } from '@mikro-orm/core';
+import { LockMode, TransactionPropagation } from '@mikro-orm/core';
+import { randomUUID } from 'node:crypto';
+import { TwirpError } from 'twirpscript';
+import { IdempotencyModel } from './IdempotencyModel.js';
 import {
   EndingPolicy,
   EventAdmin,
@@ -63,12 +66,17 @@ export class SessionModel extends Model {
 
   async findByRepresentationalHash(
     hashList: string[],
-    populate?: Populate<SessionEntity, 'event' | 'event.ruleset' | 'event.ruleset.rules'>
+    populate?: Populate<SessionEntity, 'event' | 'event.ruleset' | 'event.ruleset.rules'>,
+    forUpdate = false
   ) {
-    return this.repo.em.findAll(SessionEntity, {
+    const sessions = await this.repo.em.findAll(SessionEntity, {
       where: { representationalHash: { $in: hashList } },
-      populate,
+      // Lock the session only; joined population would also lock the event/ruleset.
+      populate: forUpdate ? undefined : populate,
+      ...(forUpdate ? { lockMode: LockMode.PESSIMISTIC_WRITE, refresh: true } : {}),
     });
+    if (forUpdate && populate) await this.repo.em.populate(sessions, populate);
+    return sessions;
   }
 
   async findByEventAndStatus(
@@ -386,6 +394,7 @@ export class SessionModel extends Model {
 
         return {
           id: session[0].id,
+          nextRoundToken: session[0].nextRoundToken,
           eventId: session[0].event.id,
           tableIndex: session[0].tableIndex,
           players: players.map((player) => ({
@@ -431,12 +440,36 @@ export class SessionModel extends Model {
     );
   }
 
-  async addRound(gameHash: string, roundData: Round): Promise<GamesAddRoundResponse> {
+  async addRound(
+    gameHash: string,
+    roundData: Round,
+    roundToken?: string | null
+  ): Promise<GamesAddRoundResponse> {
+    return this.getModel(IdempotencyModel).execute(
+      `session:${gameHash}`,
+      'AddRound',
+      roundToken,
+      roundData,
+      () => this.recordRound(gameHash, roundData, roundToken!)
+    );
+  }
+
+  private async recordRound(
+    gameHash: string,
+    roundData: Round,
+    roundToken: string
+  ): Promise<GamesAddRoundResponse> {
     return this.repo.em.transactional(
       async () => {
-        const session = await this.findByRepresentationalHash([gameHash], ['event']);
+        const session = await this.findByRepresentationalHash([gameHash], ['event'], true);
         if (session.length === 0 || session[0].status !== SessionStatus.SESSION_STATUS_INPROGRESS) {
           throw new Error('Session not found');
+        }
+        if (session[0].nextRoundToken !== roundToken) {
+          throw new TwirpError({
+            code: 'failed_precondition',
+            msg: 'Round token is stale; refresh the session overview',
+          });
         }
         const event = session[0].event;
         if (event.gamesStatus === TournamentGamesStatus.TOURNAMENT_GAMES_STATUS_SEATING_READY) {
@@ -481,6 +514,7 @@ export class SessionModel extends Model {
           session[0].intermediateResults ? session[0].intermediateResults.clone() : undefined
         );
         this.repo.em.persist(roundEntity);
+        session[0].nextRoundToken = randomUUID();
         const lastScores = { ...sessionState.getScores() };
         await this.updateSessionState(event, session[0], sessionState, roundEntity);
         this.repo.em.persist(session[0]);
@@ -517,6 +551,7 @@ export class SessionModel extends Model {
 
         const chomboCounts = sessionState.getChombo();
         return {
+          nextRoundToken: session[0].nextRoundToken,
           scores: Object.entries(sessionState.getScores()).map(([playerId, score]) => ({
             playerId: +playerId,
             score,
@@ -808,7 +843,11 @@ export class SessionModel extends Model {
   async cancelGame(payload: GenericSessionPayload) {
     return this.repo.em.transactional(
       async () => {
-        const session = await this.findByRepresentationalHash([payload.sessionHash]);
+        const session = await this.findByRepresentationalHash(
+          [payload.sessionHash],
+          undefined,
+          true
+        );
         if (session.length === 0) {
           throw new Error('Session not found');
         }
@@ -828,6 +867,7 @@ export class SessionModel extends Model {
           throw new Error('Session is not in progress');
         }
         session[0].status = SessionStatus.SESSION_STATUS_CANCELLED;
+        session[0].nextRoundToken = randomUUID();
         this.repo.em.persist(session[0]);
 
         return { success: true };
@@ -1093,7 +1133,7 @@ export class SessionModel extends Model {
           {
             representationalHash: addExtraTimePayload.sessionHashList,
           },
-          { populate: ['event'] }
+          { lockMode: LockMode.PESSIMISTIC_WRITE, refresh: true, orderBy: { id: 'asc' } }
         );
 
         if (!sessions.every((s) => s.event.id === sessions[0].event.id)) {
@@ -1114,6 +1154,7 @@ export class SessionModel extends Model {
 
         for (const session of sessions) {
           session.extraTime += addExtraTimePayload.extraTime;
+          session.nextRoundToken = randomUUID();
           this.repo.em.persist(session);
         }
 
@@ -1126,7 +1167,11 @@ export class SessionModel extends Model {
   async dropLastRound(payload: GamesDropLastRoundPayload) {
     return this.repo.em.transactional(
       async () => {
-        const sessions = await this.findByRepresentationalHash([payload.sessionHash], ['event']);
+        const sessions = await this.findByRepresentationalHash(
+          [payload.sessionHash],
+          ['event'],
+          true
+        );
         if (sessions.length === 0) {
           throw new Error('Session not found');
         }
@@ -1171,6 +1216,7 @@ export class SessionModel extends Model {
         sessions[0].status = SessionStatus.SESSION_STATUS_INPROGRESS;
         this.repo.em.remove(lastRound.hands);
         this.repo.em.remove(lastRound);
+        sessions[0].nextRoundToken = randomUUID();
         this.repo.em.persist(sessions[0]);
 
         return { success: true };
@@ -1182,7 +1228,7 @@ export class SessionModel extends Model {
   async definalizeGame(hash: string) {
     return this.repo.em.transactional(
       async () => {
-        const session = await this.findByRepresentationalHash([hash], ['event']);
+        const session = await this.findByRepresentationalHash([hash], ['event'], true);
         if (session.length === 0) {
           throw new Error('Session not found');
         }
@@ -1212,6 +1258,7 @@ export class SessionModel extends Model {
         this.repo.em.remove(sessionResults);
 
         session[0].status = SessionStatus.SESSION_STATUS_INPROGRESS;
+        session[0].nextRoundToken = randomUUID();
         this.repo.em.persist(session[0]);
 
         const playerStatsModel = this.getModel(PlayerStatsModel);
@@ -1226,7 +1273,7 @@ export class SessionModel extends Model {
   async forceFinishGame(hash: string) {
     return this.repo.em.transactional(
       async () => {
-        const session = await this.findByRepresentationalHash([hash], ['event']);
+        const session = await this.findByRepresentationalHash([hash], ['event'], true);
         if (session.length === 0) {
           throw new Error('Session not found');
         }
@@ -1250,6 +1297,7 @@ export class SessionModel extends Model {
         );
         await this.finish(session[0].event, session[0], sessionState);
         sessionState.forceFinish();
+        session[0].nextRoundToken = randomUUID();
         this.repo.em.persist(session[0]);
 
         const achievementsModel = this.getModel(AchievementsModel);

@@ -84,6 +84,7 @@ import { RulesetEntity } from './entities/Ruleset.entity.js';
 import { Context } from './context.js';
 import { EventModel } from './models/EventModel.js';
 import { Model } from './models/Model.js';
+import { IdempotencyModel } from './models/IdempotencyModel.js';
 import { SessionModel } from './models/SessionModel.js';
 import { PlayerModel } from './models/PlayerModel.js';
 import { EventGameSeriesModel } from './models/EventGameSeriesModel.js';
@@ -239,12 +240,17 @@ export const mimirServer: Mimir<Context> = {
     const statsModel = Model.getModel(context.repository, PlayerStatsModel);
     return statsModel.getPlayerStats(playersGetPlayerStatsPayload);
   },
-  AddRound: function (
+  AddRound: async function (
     gamesAddRoundPayload: GamesAddRoundPayload,
     context: Context
   ): Promise<GamesAddRoundResponse> {
+    await Model.getModel(context.repository, IdempotencyModel).authenticate();
     const sessionModel = Model.getModel(context.repository, SessionModel);
-    return sessionModel.addRound(gamesAddRoundPayload.sessionHash, gamesAddRoundPayload.roundData);
+    return sessionModel.addRound(
+      gamesAddRoundPayload.sessionHash,
+      gamesAddRoundPayload.roundData,
+      gamesAddRoundPayload.roundToken
+    );
   },
   PreviewRound: function (
     gamesPreviewRoundPayload: GamesPreviewRoundPayload,
@@ -284,7 +290,13 @@ export const mimirServer: Mimir<Context> = {
     const eventModel = Model.getModel(context.repository, EventModel);
     return eventModel.getEventForEdit(eventsGetEventForEditPayload);
   },
-  CreateEvent: function (eventData: EventData, context: Context): Promise<GenericEventPayload> {
+  CreateEvent: async function (
+    eventData: EventData,
+    context: Context
+  ): Promise<GenericEventPayload> {
+    const operations = Model.getModel(context.repository, IdempotencyModel);
+    await operations.authenticate();
+    if (!eventData.requestId) throw new Error('An idempotency key is required');
     const eventModel = Model.getModel(context.repository, EventModel);
     return eventModel.createEvent(eventData);
   },
@@ -420,12 +432,21 @@ export const mimirServer: Mimir<Context> = {
     const eventRegModel = Model.getModel(context.repository, EventRegistrationModel);
     return eventRegModel.updatePlayersTeams(eventsUpdatePlayersTeamsPayload);
   },
-  StartGame: function (
+  StartGame: async function (
     gamesStartGamePayload: GamesStartGamePayload,
     context: Context
   ): Promise<GenericSessionPayload> {
     const sessionModel = Model.getModel(context.repository, SessionModel);
-    return sessionModel.startGame(gamesStartGamePayload, context);
+    const operations = Model.getModel(context.repository, IdempotencyModel);
+    await operations.authenticate();
+    const { requestId, ...request } = gamesStartGamePayload;
+    return operations.execute(
+      `person:${context.repository.meta.personId}`,
+      'StartGame',
+      requestId,
+      request,
+      () => sessionModel.startGame(gamesStartGamePayload, context)
+    );
   },
   CancelGame: function (
     genericSessionPayload: GenericSessionPayload,

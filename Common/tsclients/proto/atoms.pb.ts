@@ -465,6 +465,7 @@ export interface EventData {
   platformId: PlatformType;
   allowManualAddReplay: boolean;
   windShuffleMode?: WindShuffleMode | null | undefined;
+  requestId?: string | null | undefined;
 }
 
 export interface TableState {
@@ -5731,6 +5732,7 @@ export const EventData = {
       platformId: PlatformType._fromInt(0),
       allowManualAddReplay: false,
       windShuffleMode: undefined,
+      requestId: undefined,
       ...msg,
     };
   },
@@ -5795,6 +5797,9 @@ export const EventData = {
     }
     if (msg.windShuffleMode != undefined) {
       writer.writeEnum(21, WindShuffleMode._toInt(msg.windShuffleMode));
+    }
+    if (msg.requestId != undefined) {
+      writer.writeString(22, msg.requestId);
     }
     return writer;
   },
@@ -5879,6 +5884,10 @@ export const EventData = {
         }
         case 21: {
           msg.windShuffleMode = WindShuffleMode._fromInt(reader.readEnum());
+          break;
+        }
+        case 22: {
+          msg.requestId = reader.readString();
           break;
         }
         default: {
@@ -12250,6 +12259,7 @@ export const EventDataJSON = {
       platformId: PlatformType._fromInt(0),
       allowManualAddReplay: false,
       windShuffleMode: undefined,
+      requestId: undefined,
       ...msg,
     };
   },
@@ -12319,6 +12329,9 @@ export const EventDataJSON = {
     }
     if (msg.windShuffleMode != undefined) {
       json["windShuffleMode"] = msg.windShuffleMode;
+    }
+    if (msg.requestId != undefined) {
+      json["requestId"] = msg.requestId;
     }
     return json;
   },
@@ -12402,6 +12415,10 @@ export const EventDataJSON = {
       json["windShuffleMode"] ?? json["wind_shuffle_mode"];
     if (_windShuffleMode_) {
       msg.windShuffleMode = WindShuffleMode._fromInt(_windShuffleMode_);
+    }
+    const _requestId_ = json["requestId"] ?? json["request_id"];
+    if (_requestId_) {
+      msg.requestId = _requestId_;
     }
     return msg;
   },

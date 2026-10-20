@@ -2,6 +2,7 @@ import moment from 'moment-timezone';
 import { TransactionPropagation } from '@mikro-orm/core';
 import { EventEntity } from '../entities/Event.entity.js';
 import { Model } from './Model.js';
+import { IdempotencyModel } from './IdempotencyModel.js';
 import {
   EventsGetAllRegisteredPlayersPayload,
   EventsGetAllRegisteredPlayersResponse,
@@ -826,91 +827,131 @@ export class EventModel extends Model {
   }
 
   async createEvent(eventData: EventData): Promise<GenericEventPayload> {
-    const createdEvent = await this.repo.em.transactional(
-      async () => {
-        if (!eventData.rulesetConfig) {
-          throw new Error('Ruleset configuration is required');
+    const create = async () => {
+      const createdEvent = await this.repo.em.transactional(
+        async () => {
+          if (!eventData.rulesetConfig) {
+            throw new Error('Ruleset configuration is required');
+          }
+
+          // Check if we have rights to create new event
+          if (!this.repo.meta.personId) {
+            throw new Error("You don't have the necessary permissions to create a new event");
+          }
+
+          const statHost = this.repo.config.sigrunUrl + '/event/' + ID_PLACEHOLDER + '/info';
+          const event = new EventEntity();
+          event.title = eventData.title;
+          event.description = eventData.description;
+          event.gameDuration = eventData.duration;
+          event.timezone = eventData.timezone;
+          event.isListed = eventData.isListed ? 1 : 0;
+          event.hideResults = eventData.isRatingShown ? 0 : 1;
+          event.hideAchievements = eventData.achievementsShown ? 0 : 1;
+          event.seriesLength = eventData.seriesLength;
+          event.minGamesCount = eventData.minGames;
+          event.ruleset = new RulesetEntity('custom', 'custom', eventData.rulesetConfig);
+          event.allowViewOtherTables = eventData.allowViewOtherTables ? 1 : 0;
+          event.allowManualAddReplay = eventData.allowManualAddReplay ? 1 : 0;
+          event.onlinePlatform = eventData.platformId;
+          event.statHost = statHost;
+          event.windShuffleMode = eventData.windShuffleMode ?? undefined;
+          event.finished = 0;
+
+          switch (eventData.type) {
+            case EventType.EVENT_TYPE_TOURNAMENT:
+              event.allowPlayerAppend = 0;
+              event.autoSeating = eventData.isPrescripted ? 0 : 1;
+              event.syncStart = 1;
+              event.syncEnd = 1;
+              event.isOnline = 0;
+              event.useTimer = 1;
+              event.usePenalty = 1;
+              event.isTeam = eventData.isTeam ? 1 : 0;
+              event.isPrescripted = eventData.isPrescripted ? 1 : 0;
+              break;
+            case EventType.EVENT_TYPE_ONLINE:
+              event.allowPlayerAppend = 0;
+              event.autoSeating = 0;
+              event.syncStart = 0;
+              event.syncEnd = 0;
+              event.isOnline = 1;
+              event.useTimer = 0;
+              event.usePenalty = 1;
+              event.isTeam = eventData.isTeam ? 1 : 0;
+              event.lobbyId = eventData.lobbyId;
+              event.isPrescripted = 0;
+              break;
+            case EventType.EVENT_TYPE_LOCAL:
+              event.allowPlayerAppend = 1;
+              event.autoSeating = 0;
+              event.syncStart = 0;
+              event.syncEnd = 0;
+              event.isOnline = 0;
+              event.useTimer = 0;
+              event.usePenalty = 1;
+              event.isTeam = 0;
+              event.isPrescripted = 0;
+              break;
+            case EventType.EVENT_TYPE_UNSPECIFIED:
+            case null:
+            case undefined:
+            default:
+              throw new Error('Invalid event type');
+          }
+
+          this.repo.em.persist(event);
+          return event;
+        },
+        { propagation: TransactionPropagation.REQUIRED }
+      );
+      if (eventData.requestId) await this.repo.em.flush();
+      await this.repo.em.refresh(createdEvent);
+      return { eventId: createdEvent.id };
+    };
+    const { requestId, ...request } = eventData;
+    const result = requestId
+      ? await this.getModel(IdempotencyModel).execute(
+          `person:${this.repo.meta.personId}`,
+          'CreateEvent',
+          requestId,
+          request,
+          create
+        )
+      : await create(); // Internal model callers do not cross a retrying RPC boundary.
+    const grant = () =>
+      this.repo.frey.AddRuleForPerson({
+        eventId: result.eventId,
+        personId: this.repo.meta.personId!,
+        ruleName: 'ADMIN_EVENT',
+        ruleValue: 1,
+      });
+    if (!requestId) {
+      await grant();
+    } else {
+      await this.getModel(IdempotencyModel).execute(
+        `person:${this.repo.meta.personId}`,
+        'CreateEventGrant',
+        requestId,
+        result,
+        async () => {
+          const hasGrant = async () =>
+            (await this.repo.frey.GetEventAdmins({ eventId: result.eventId })).admins.some(
+              (admin) => admin.personId === this.repo.meta.personId
+            );
+          if (!(await hasGrant())) {
+            try {
+              await grant();
+            } catch (error) {
+              // Frey's successful response may have been lost. Reconcile before retrying.
+              if (!(await hasGrant())) throw error;
+            }
+          }
+          return result;
         }
-
-        // Check if we have rights to create new event
-        if (!this.repo.meta.personId) {
-          throw new Error("You don't have the necessary permissions to create a new event");
-        }
-
-        const statHost = this.repo.config.sigrunUrl + '/event/' + ID_PLACEHOLDER + '/info';
-        const event = new EventEntity();
-        event.title = eventData.title;
-        event.description = eventData.description;
-        event.gameDuration = eventData.duration;
-        event.timezone = eventData.timezone;
-        event.isListed = eventData.isListed ? 1 : 0;
-        event.hideResults = eventData.isRatingShown ? 0 : 1;
-        event.hideAchievements = eventData.achievementsShown ? 0 : 1;
-        event.seriesLength = eventData.seriesLength;
-        event.minGamesCount = eventData.minGames;
-        event.ruleset = new RulesetEntity('custom', 'custom', eventData.rulesetConfig);
-        event.allowViewOtherTables = eventData.allowViewOtherTables ? 1 : 0;
-        event.allowManualAddReplay = eventData.allowManualAddReplay ? 1 : 0;
-        event.onlinePlatform = eventData.platformId;
-        event.statHost = statHost;
-        event.windShuffleMode = eventData.windShuffleMode ?? undefined;
-        event.finished = 0;
-
-        switch (eventData.type) {
-          case EventType.EVENT_TYPE_TOURNAMENT:
-            event.allowPlayerAppend = 0;
-            event.autoSeating = eventData.isPrescripted ? 0 : 1;
-            event.syncStart = 1;
-            event.syncEnd = 1;
-            event.isOnline = 0;
-            event.useTimer = 1;
-            event.usePenalty = 1;
-            event.isTeam = eventData.isTeam ? 1 : 0;
-            event.isPrescripted = eventData.isPrescripted ? 1 : 0;
-            break;
-          case EventType.EVENT_TYPE_ONLINE:
-            event.allowPlayerAppend = 0;
-            event.autoSeating = 0;
-            event.syncStart = 0;
-            event.syncEnd = 0;
-            event.isOnline = 1;
-            event.useTimer = 0;
-            event.usePenalty = 1;
-            event.isTeam = eventData.isTeam ? 1 : 0;
-            event.lobbyId = eventData.lobbyId;
-            event.isPrescripted = 0;
-            break;
-          case EventType.EVENT_TYPE_LOCAL:
-            event.allowPlayerAppend = 1;
-            event.autoSeating = 0;
-            event.syncStart = 0;
-            event.syncEnd = 0;
-            event.isOnline = 0;
-            event.useTimer = 0;
-            event.usePenalty = 1;
-            event.isTeam = 0;
-            event.isPrescripted = 0;
-            break;
-          case EventType.EVENT_TYPE_UNSPECIFIED:
-          case null:
-          case undefined:
-          default:
-            throw new Error('Invalid event type');
-        }
-
-        this.repo.em.persist(event);
-        return event;
-      },
-      { propagation: TransactionPropagation.REQUIRED }
-    );
-    await this.repo.em.refresh(createdEvent);
-    await this.repo.frey.AddRuleForPerson({
-      eventId: createdEvent.id,
-      personId: this.repo.meta.personId!,
-      ruleName: 'ADMIN_EVENT',
-      ruleValue: 1,
-    });
-    return { eventId: createdEvent.id };
+      );
+    }
+    return result;
   }
 
   async updateEvent(eventData: EventsUpdateEventPayload): Promise<GenericSuccessResponse> {

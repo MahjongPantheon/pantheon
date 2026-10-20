@@ -237,6 +237,7 @@ message GamesGetSessionOverviewResponse {
   repeated PlayerInSession players = 4;
   SessionState state = 5;
   EventsGetTimerStateResponse timer_state = 6;
+  optional string next_round_token = 7;
 }
 
 message PlayersGetPlayerStatsPayload {
@@ -264,6 +265,7 @@ message PlayersGetPlayerStatsResponse {
 message GamesAddRoundPayload {
   string session_hash = 1;
   Round round_data = 2;
+  optional string round_token = 3;
 }
 
 message GamesAddRoundResponse {
@@ -286,6 +288,7 @@ message GamesAddRoundResponse {
   // certain rules should be applied in current case, e.g., agariyame
   // should not be applied on chombo or abortive draw.
   optional RoundOutcome last_outcome = 10;
+  optional string next_round_token = 11;
 }
 
 message GamesPreviewRoundPayload {
@@ -403,6 +406,7 @@ message EventsUpdatePlayersTeamsPayload {
 message GamesStartGamePayload {
   int32 event_id = 1;
   repeated int32 players = 2; // ids list, e-s-w-n
+  optional string request_id = 3;
 }
 
 message GamesDropLastRoundPayload {

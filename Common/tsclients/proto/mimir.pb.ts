@@ -162,6 +162,7 @@ export interface GamesGetSessionOverviewResponse {
   players: protoAtoms.PlayerInSession[];
   state: protoAtoms.SessionState;
   timerState: EventsGetTimerStateResponse;
+  nextRoundToken?: string | null | undefined;
 }
 
 export interface PlayersGetPlayerStatsPayload {
@@ -189,6 +190,7 @@ export interface PlayersGetPlayerStatsResponse {
 export interface GamesAddRoundPayload {
   sessionHash: string;
   roundData: protoAtoms.Round;
+  roundToken?: string | null | undefined;
 }
 
 export interface GamesAddRoundResponse {
@@ -223,6 +225,7 @@ export interface GamesAddRoundResponse {
    * should not be applied on chombo or abortive draw.
    */
   lastOutcome?: protoAtoms.RoundOutcome | null | undefined;
+  nextRoundToken?: string | null | undefined;
 }
 
 export interface GamesPreviewRoundPayload {
@@ -340,6 +343,7 @@ export interface EventsUpdatePlayersTeamsPayload {
 export interface GamesStartGamePayload {
   eventId: number;
   players: number[];
+  requestId?: string | null | undefined;
 }
 
 export interface GamesDropLastRoundPayload {
@@ -5645,6 +5649,7 @@ export const GamesGetSessionOverviewResponse = {
       players: [],
       state: protoAtoms.SessionState.initialize(),
       timerState: EventsGetTimerStateResponse.initialize(),
+      nextRoundToken: undefined,
       ...msg,
     };
   },
@@ -5681,6 +5686,9 @@ export const GamesGetSessionOverviewResponse = {
         msg.timerState,
         EventsGetTimerStateResponse._writeMessage,
       );
+    }
+    if (msg.nextRoundToken != undefined) {
+      writer.writeString(7, msg.nextRoundToken);
     }
     return writer;
   },
@@ -5722,6 +5730,10 @@ export const GamesGetSessionOverviewResponse = {
             msg.timerState,
             EventsGetTimerStateResponse._readMessage,
           );
+          break;
+        }
+        case 7: {
+          msg.nextRoundToken = reader.readString();
           break;
         }
         default: {
@@ -6079,6 +6091,7 @@ export const GamesAddRoundPayload = {
     return {
       sessionHash: "",
       roundData: protoAtoms.Round.initialize(),
+      roundToken: undefined,
       ...msg,
     };
   },
@@ -6095,6 +6108,9 @@ export const GamesAddRoundPayload = {
     }
     if (msg.roundData) {
       writer.writeMessage(2, msg.roundData, protoAtoms.Round._writeMessage);
+    }
+    if (msg.roundToken != undefined) {
+      writer.writeString(3, msg.roundToken);
     }
     return writer;
   },
@@ -6115,6 +6131,10 @@ export const GamesAddRoundPayload = {
         }
         case 2: {
           reader.readMessage(msg.roundData, protoAtoms.Round._readMessage);
+          break;
+        }
+        case 3: {
+          msg.roundToken = reader.readString();
           break;
         }
         default: {
@@ -6164,6 +6184,7 @@ export const GamesAddRoundResponse = {
       isFinished: false,
       lastHandStarted: false,
       lastOutcome: undefined,
+      nextRoundToken: undefined,
       ...msg,
     };
   },
@@ -6205,6 +6226,9 @@ export const GamesAddRoundResponse = {
     }
     if (msg.lastOutcome != undefined) {
       writer.writeEnum(10, protoAtoms.RoundOutcome._toInt(msg.lastOutcome));
+    }
+    if (msg.nextRoundToken != undefined) {
+      writer.writeString(11, msg.nextRoundToken);
     }
     return writer;
   },
@@ -6258,6 +6282,10 @@ export const GamesAddRoundResponse = {
         }
         case 10: {
           msg.lastOutcome = protoAtoms.RoundOutcome._fromInt(reader.readEnum());
+          break;
+        }
+        case 11: {
+          msg.nextRoundToken = reader.readString();
           break;
         }
         default: {
@@ -8146,6 +8174,7 @@ export const GamesStartGamePayload = {
     return {
       eventId: 0,
       players: [],
+      requestId: undefined,
       ...msg,
     };
   },
@@ -8162,6 +8191,9 @@ export const GamesStartGamePayload = {
     }
     if (msg.players?.length) {
       writer.writePackedInt32(2, msg.players);
+    }
+    if (msg.requestId != undefined) {
+      writer.writeString(3, msg.requestId);
     }
     return writer;
   },
@@ -8186,6 +8218,10 @@ export const GamesStartGamePayload = {
           } else {
             msg.players.push(reader.readInt32());
           }
+          break;
+        }
+        case 3: {
+          msg.requestId = reader.readString();
           break;
         }
         default: {
@@ -12075,6 +12111,7 @@ export const GamesGetSessionOverviewResponseJSON = {
       players: [],
       state: protoAtoms.SessionStateJSON.initialize(),
       timerState: EventsGetTimerStateResponseJSON.initialize(),
+      nextRoundToken: undefined,
       ...msg,
     };
   },
@@ -12113,6 +12150,9 @@ export const GamesGetSessionOverviewResponseJSON = {
       if (Object.keys(_timerState_).length > 0) {
         json["timerState"] = _timerState_;
       }
+    }
+    if (msg.nextRoundToken != undefined) {
+      json["nextRoundToken"] = msg.nextRoundToken;
     }
     return json;
   },
@@ -12154,6 +12194,10 @@ export const GamesGetSessionOverviewResponseJSON = {
         msg.timerState,
         _timerState_,
       );
+    }
+    const _nextRoundToken_ = json["nextRoundToken"] ?? json["next_round_token"];
+    if (_nextRoundToken_) {
+      msg.nextRoundToken = _nextRoundToken_;
     }
     return msg;
   },
@@ -12466,6 +12510,7 @@ export const GamesAddRoundPayloadJSON = {
     return {
       sessionHash: "",
       roundData: protoAtoms.RoundJSON.initialize(),
+      roundToken: undefined,
       ...msg,
     };
   },
@@ -12486,6 +12531,9 @@ export const GamesAddRoundPayloadJSON = {
         json["roundData"] = _roundData_;
       }
     }
+    if (msg.roundToken != undefined) {
+      json["roundToken"] = msg.roundToken;
+    }
     return json;
   },
 
@@ -12503,6 +12551,10 @@ export const GamesAddRoundPayloadJSON = {
     const _roundData_ = json["roundData"] ?? json["round_data"];
     if (_roundData_) {
       protoAtoms.RoundJSON._readMessage(msg.roundData, _roundData_);
+    }
+    const _roundToken_ = json["roundToken"] ?? json["round_token"];
+    if (_roundToken_) {
+      msg.roundToken = _roundToken_;
     }
     return msg;
   },
@@ -12542,6 +12594,7 @@ export const GamesAddRoundResponseJSON = {
       isFinished: false,
       lastHandStarted: false,
       lastOutcome: undefined,
+      nextRoundToken: undefined,
       ...msg,
     };
   },
@@ -12581,6 +12634,9 @@ export const GamesAddRoundResponseJSON = {
     }
     if (msg.lastOutcome != undefined) {
       json["lastOutcome"] = msg.lastOutcome;
+    }
+    if (msg.nextRoundToken != undefined) {
+      json["nextRoundToken"] = msg.nextRoundToken;
     }
     return json;
   },
@@ -12634,6 +12690,10 @@ export const GamesAddRoundResponseJSON = {
     const _lastOutcome_ = json["lastOutcome"] ?? json["last_outcome"];
     if (_lastOutcome_) {
       msg.lastOutcome = protoAtoms.RoundOutcome._fromInt(_lastOutcome_);
+    }
+    const _nextRoundToken_ = json["nextRoundToken"] ?? json["next_round_token"];
+    if (_nextRoundToken_) {
+      msg.nextRoundToken = _nextRoundToken_;
     }
     return msg;
   },
@@ -14241,6 +14301,7 @@ export const GamesStartGamePayloadJSON = {
     return {
       eventId: 0,
       players: [],
+      requestId: undefined,
       ...msg,
     };
   },
@@ -14257,6 +14318,9 @@ export const GamesStartGamePayloadJSON = {
     }
     if (msg.players?.length) {
       json["players"] = msg.players;
+    }
+    if (msg.requestId != undefined) {
+      json["requestId"] = msg.requestId;
     }
     return json;
   },
@@ -14275,6 +14339,10 @@ export const GamesStartGamePayloadJSON = {
     const _players_ = json["players"];
     if (_players_) {
       msg.players = _players_.map(protoscript.parseNumber);
+    }
+    const _requestId_ = json["requestId"] ?? json["request_id"];
+    if (_requestId_) {
+      msg.requestId = _requestId_;
     }
     return msg;
   },

@@ -78,6 +78,7 @@ export interface IAppState {
   analyticsSession?: string;
   currentScreen: AppScreen;
   currentSessionHash?: string;
+  nextRoundToken?: string;
   currentOutcome?: AppOutcome;
   currentPlayerDisplayName?: string;
   currentPlayerHasAvatar?: boolean;
