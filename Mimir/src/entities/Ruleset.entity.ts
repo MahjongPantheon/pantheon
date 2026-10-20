@@ -5,7 +5,7 @@ import { ComplexUma, EndingPolicy, RulesetConfig, Uma, UmaType } from 'tsclients
 @Embeddable()
 export class RulesetEntity {
   @Property()
-  baseRuleset!: 'ema' | 'wrc' | 'jpmlA' | 'tenhounet' | 'rrc' | 'custom';
+  baseRuleset!: 'ema' | 'wrc' | 'jpmlA' | 'tenhounet' | 'rrc' | 'sanma' | 'custom';
 
   @Property()
   title!: string;
@@ -14,7 +14,7 @@ export class RulesetEntity {
   rules!: RulesetConfig;
 
   constructor(
-    baseRuleset: 'ema' | 'wrc' | 'jpmlA' | 'tenhounet' | 'rrc' | 'custom',
+    baseRuleset: 'ema' | 'wrc' | 'jpmlA' | 'tenhounet' | 'rrc' | 'sanma' | 'custom',
     title: string,
     rules: RulesetConfig
   ) {
@@ -72,6 +72,10 @@ export class RulesetEntity {
           chomboEndsGame: false,
           honbaValue: 300,
           doubleYakuman: [],
+          withSanma: false,
+          sanmaNoTsumoLoss: false,
+          sanmaDrawPayments: 0,
+          sanmaChomboPayments: 0,
         });
       case 'jpmlA':
         return new RulesetEntity(baseRuleset, 'Japanese Professional Mahjong League A rules', {
@@ -140,6 +144,10 @@ export class RulesetEntity {
           chomboEndsGame: false,
           honbaValue: 300,
           doubleYakuman: [],
+          withSanma: false,
+          sanmaNoTsumoLoss: false,
+          sanmaDrawPayments: 0,
+          sanmaChomboPayments: 0,
         });
       case 'wrc':
         return new RulesetEntity(baseRuleset, 'World Riichi Championship rules', {
@@ -188,6 +196,10 @@ export class RulesetEntity {
           chomboEndsGame: false,
           honbaValue: 300,
           doubleYakuman: [],
+          withSanma: false,
+          sanmaNoTsumoLoss: false,
+          sanmaDrawPayments: 0,
+          sanmaChomboPayments: 0,
         });
       case 'tenhounet':
         return new RulesetEntity(baseRuleset, 'Tenhou.net compatible rules', {
@@ -231,6 +243,10 @@ export class RulesetEntity {
           chomboEndsGame: false,
           honbaValue: 300,
           doubleYakuman: [],
+          withSanma: false,
+          sanmaNoTsumoLoss: false,
+          sanmaDrawPayments: 0,
+          sanmaChomboPayments: 0,
         });
       case 'rrc':
         return new RulesetEntity(baseRuleset, 'Russian Riichi Community rules', {
@@ -279,14 +295,49 @@ export class RulesetEntity {
           chomboEndsGame: true,
           honbaValue: 300,
           doubleYakuman: [],
+          withSanma: false,
+          sanmaNoTsumoLoss: false,
+          sanmaDrawPayments: 0,
+          sanmaChomboPayments: 0,
         });
+      case 'sanma': {
+        const rules = RulesetEntity.createRuleset('ema').rules;
+        return new RulesetEntity(baseRuleset, 'Three-player riichi (sanma) rules', {
+          ...rules,
+          withSanma: true,
+          sanmaNoTsumoLoss: false,
+          sanmaDrawPayments: 3000,
+          sanmaChomboPayments: 6000,
+          startPoints: 35000,
+          goalPoints: 40000,
+          uma: { place1: 15000, place2: 0, place3: -15000, place4: 0 },
+        });
+      }
       case 'custom':
         throw new Error('Custom ruleset creation not supported');
     }
   }
 
+  get playerCount(): 3 | 4 {
+    return this.rules.withSanma ? 3 : 4;
+  }
+
   equalizedUma(scores: number[], uma: number[]): number[] {
     const sortedScores = [...scores].sort((a, b) => b - a);
+
+    if (sortedScores.length === 3) {
+      if (sortedScores.every((score) => score === sortedScores[0])) return [0, 0, 0];
+      const result = [...uma];
+      if (sortedScores[0] === sortedScores[1]) {
+        result[0] = (uma[0] + uma[1]) / 2;
+        result[1] = result[0];
+      }
+      if (sortedScores[1] === sortedScores[2]) {
+        result[1] = (uma[1] + uma[2]) / 2;
+        result[2] = result[1];
+      }
+      return result;
+    }
 
     if (sortedScores.every((val) => val === sortedScores[0])) {
       return [0, 0, 0, 0];
@@ -385,7 +436,7 @@ export class RulesetEntity {
     }
 
     // Protobuf JSON omits zero-valued fields in stored UMA tables.
-    uma = uma.map((points) => points ?? 0);
+    uma = uma.slice(0, this.playerCount).map((points) => points ?? 0);
 
     if (this.rules.equalizeUma) {
       return this.equalizedUma(scores, uma);
@@ -396,9 +447,9 @@ export class RulesetEntity {
 
   getOka(place: number) {
     if (place === 1) {
-      return (this.rules.oka ?? 0) * 0.75;
+      return ((this.rules.oka ?? 0) * (this.playerCount - 1)) / this.playerCount;
     } else {
-      return -(this.rules.oka ?? 0) / 4;
+      return -(this.rules.oka ?? 0) / this.playerCount;
     }
   }
 }

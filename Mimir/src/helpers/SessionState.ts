@@ -1,3 +1,4 @@
+import { GHOST_PLAYER_ID } from '../../../Common/constants.js';
 import { RoundOutcome } from 'tsclients/proto/atoms.pb.js';
 import { PaymentsInfo, PointsCalc } from './PointsCalc.js';
 import { RoundEntity } from '../entities/Round.entity.js';
@@ -9,6 +10,10 @@ export class SessionState {
   protected _state: SessionStateEntity;
 
   constructor(ruleset: RulesetEntity, playersIds: number[], state?: SessionStateEntity) {
+    playersIds = playersIds.filter((id) => id !== GHOST_PLAYER_ID);
+    if (playersIds.length > 0 && playersIds.length !== ruleset.playerCount) {
+      throw new Error(`Players count is not ${ruleset.playerCount}: ${JSON.stringify(playersIds)}`);
+    }
     this._ruleset = ruleset;
     this._state = state?.clone() ?? new SessionStateEntity();
 
@@ -20,6 +25,9 @@ export class SessionState {
       this._state.honba = 0;
       this._state.riichiBets = 0;
       this._state.chombo = {};
+      this._state.chips = {};
+      this._state.replacements = {};
+      this._state.yakitori = {};
       playersIds.forEach((playerId) => {
         this._state.scores[playerId] = startPoints;
       });
@@ -33,8 +41,11 @@ export class SessionState {
 
   // Mostly for online events, as session state is created before players are known there
   setPlayers(playersIds: number[]) {
-    if (playersIds.length !== 4) {
-      throw new Error(`Players count is not 4: ${JSON.stringify(playersIds)}`);
+    playersIds = playersIds.filter((id) => id !== GHOST_PLAYER_ID);
+    if (playersIds.length !== this._ruleset.playerCount) {
+      throw new Error(
+        `Players count is not ${this._ruleset.playerCount}: ${JSON.stringify(playersIds)}`
+      );
     }
     playersIds.forEach((playerId) => {
       this._state.scores[playerId] = this._ruleset.rules.startPoints;
@@ -56,7 +67,7 @@ export class SessionState {
       return false; // should play last round at least once!
     }
 
-    const maxRound = this._ruleset.rules.tonpuusen ? 4 : 8;
+    const maxRound = this._ruleset.playerCount * (this._ruleset.rules.tonpuusen ? 1 : 2);
     if (this.getRound() !== maxRound) {
       return false; // not oorasu
     }
@@ -68,7 +79,7 @@ export class SessionState {
   }
 
   protected _lastPossibleRoundWasPlayed(): boolean {
-    const roundsCount = this._ruleset.rules.tonpuusen ? 4 : 8;
+    const roundsCount = this._ruleset.playerCount * (this._ruleset.rules.tonpuusen ? 1 : 2);
 
     if (this.getRound() <= roundsCount) {
       return false;
@@ -78,7 +89,9 @@ export class SessionState {
       return false; // chombo should not finish game
     }
 
-    const additionalRounds = this._ruleset.rules.playAdditionalRounds ? 4 : 0;
+    const additionalRounds = this._ruleset.rules.playAdditionalRounds
+      ? this._ruleset.playerCount
+      : 0;
     const maxPossibleRound = roundsCount + additionalRounds;
     if (this.getRound() > maxPossibleRound) {
       return true;
@@ -186,13 +199,26 @@ export class SessionState {
    * Return id of current dealer
    */
   public getCurrentDealer(): number {
-    return this._state.playerIds[(this._state.round - 1) % 4];
+    return this._state.playerIds[(this._state.round - 1) % this._ruleset.playerCount];
   }
 
   /**
    * Register new round in current session
    */
   public update(round: RoundEntity): PaymentsInfo {
+    const participants = [
+      ...(round.riichi ?? []),
+      ...round.hands.flatMap((hand) => [
+        hand.winnerId,
+        hand.loserId,
+        hand.paoPlayerId,
+        ...(hand.tempai ?? []),
+        ...(hand.nagashi ?? []),
+      ]),
+    ].filter((id): id is number => id !== undefined && id !== null && id !== 0);
+    if (participants.some((id) => !this._state.playerIds.includes(id))) {
+      throw new Error('Round participants must be real players in this session');
+    }
     const lastRoundIndex = this.getRound();
     let payments: PaymentsInfo;
 
@@ -392,7 +418,12 @@ export class SessionState {
   protected _updateAfterDraw(round: RoundEntity): PaymentsInfo {
     const tempaiIds = round.hands[0].tempai ?? [];
     const calc = new PointsCalc();
-    this._state.scores = calc.draw(this.getScores(), tempaiIds, round.riichi ?? []);
+    this._state.scores = calc.draw(
+      this.getScores(),
+      tempaiIds,
+      round.riichi ?? [],
+      this._ruleset.rules
+    );
 
     this._addHonba()._addRiichiBets((round.riichi ?? []).length);
 

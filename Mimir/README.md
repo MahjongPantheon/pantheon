@@ -133,3 +133,23 @@ The corresponding `container_seed`, `container_seed_tournament`, and
 that `make bootstrap_admin` has already been run from the root. These commands
 are for disposable development databases only. A failed run can leave partial
 sample data in Frey; rerun the command to reset Mimir and create fresh samples.
+
+### Three-player events
+
+The `sanma` ruleset uses three real players and a local North ghost seat (`-1`)
+in stored seating and player overviews. The ghost has no Frey account, never
+participates in rounds, and receives no scores, placements, ratings, or statistics.
+StartGame accepts three distinct real player IDs and appends the ghost internally.
+Session state rotates East/South/West and ends after East 3 for tonpuusen or
+South 3 for hanchan, with three hands in an optional additional wind.
+
+Tsumo loss is supported; no-tsumo-loss settings are rejected. Draw payments and
+extra chombo payments are configurable. Shuffled, interval, Swiss, and prescripted tournament
+seating use the Rust engine's `tableSize: 3` option. Interval seating retains its
+rating/step grouping and fallback for remaining tables; Swiss seating retains its
+rating priorities and repeated-opponent limits, with three seats per table.
+
+Seating requires `mahjong-seatings-rs-node` 4.0.0 or later; version 3.0.0 ignores
+`tableSize`. The sanma tests cover scoring, dealer rotation, ghost exclusion,
+results, a complete session through the Twirp API, and generated seating modes.
+The engine and wrapper repositories also contain three-player seating tests.

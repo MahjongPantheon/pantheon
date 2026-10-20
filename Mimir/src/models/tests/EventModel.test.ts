@@ -44,6 +44,31 @@ const eventData = {
 };
 
 describe('Event creation', () => {
+  it('creates a sanma event with three-player rules', async () => {
+    const { eventId } = await model.createEvent({
+      ...eventData,
+      rulesetConfig: RulesetEntity.createRuleset('sanma').rules,
+    });
+    const [event] = await model.findById([eventId]);
+    expect(event.ruleset.playerCount).toBe(3);
+    expect(event.ruleset.rules.startPoints).toBe(35000);
+  });
+
+  it.each([
+    { sanmaNoTsumoLoss: true },
+    { sanmaDrawPayments: -200 },
+    { sanmaDrawPayments: 3100 },
+    { sanmaChomboPayments: -100 },
+    { sanmaChomboPayments: 6050 },
+  ])('rejects unsupported sanma settings %j', async (overrides) => {
+    await expect(
+      model.createEvent({
+        ...eventData,
+        rulesetConfig: { ...RulesetEntity.createRuleset('sanma').rules, ...overrides },
+      })
+    ).rejects.toThrow('Sanma');
+  });
+
   beforeAll(() => orm.schema.createSchema());
   afterAll(() => repo.destroy());
   afterEach(() => {
