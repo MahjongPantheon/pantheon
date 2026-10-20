@@ -42,6 +42,8 @@ import { Penalty, SessionStatus } from 'tsclients/proto/atoms.pb';
 
 import { handleReleaseTag } from './releaseTags';
 import { env } from '../helpers/env';
+import { v4 } from 'uuid';
+import { pendingRpc } from '../../../Common/pendingRpc';
 
 export class RiichiApiTwirpService implements IRiichiApi {
   private _authToken: string | null = null;
@@ -103,12 +105,9 @@ export class RiichiApiTwirpService implements IRiichiApi {
 
   // returns game hashcode
   startGame(eventId: number, playerIds: number[]) {
-    return StartGame(
-      {
-        eventId,
-        players: playerIds,
-      },
-      this._clientConfMimir
+    const request = { eventId, players: playerIds };
+    return pendingRpc(`StartGame:${this._personId}`, request, v4, (requestId) =>
+      StartGame({ ...request, requestId }, this._clientConfMimir)
     ).then((val) => val.sessionHash);
   }
 
@@ -190,7 +189,16 @@ export class RiichiApiTwirpService implements IRiichiApi {
     if (!sessionHash || !roundData) {
       return Promise.reject();
     }
-    return AddRound({ sessionHash, roundData }, this._clientConfMimir);
+    const request = { sessionHash, roundData };
+    return pendingRpc(
+      `AddRound:${this._personId}:${sessionHash}`,
+      request,
+      () => {
+        if (!state.nextRoundToken) throw new Error('Session overview must be refreshed');
+        return state.nextRoundToken;
+      },
+      (roundToken) => AddRound({ ...request, roundToken }, this._clientConfMimir)
+    );
   }
 
   getTablesState(eventId: number) {

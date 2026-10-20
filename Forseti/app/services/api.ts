@@ -15,6 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import { pendingRpc } from '../../../Common/pendingRpc';
+import { v4 } from 'uuid';
 import {
   AddExtraTime,
   AddPenalty,
@@ -363,7 +365,9 @@ export class ApiService {
 
   createEvent(event: EventData) {
     this._analytics?.track(Analytics.LOAD_STARTED, { method: 'CreateEvent' });
-    return CreateEvent(event, this._clientConfMimir).then((r) => r.eventId);
+    return pendingRpc(`CreateEvent:${this._personId}`, event, v4, (requestId) =>
+      CreateEvent({ ...event, requestId }, this._clientConfMimir)
+    ).then((r) => r.eventId);
   }
 
   getRulesets() {

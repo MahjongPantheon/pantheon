@@ -4671,6 +4671,7 @@ export const EventData = {
       platformId: PlatformType._fromInt(0),
       allowManualAddReplay: false,
       windShuffleMode: void 0,
+      requestId: void 0,
       ...msg
     };
   },
@@ -4731,6 +4732,9 @@ export const EventData = {
     }
     if (msg.windShuffleMode != void 0) {
       writer.writeEnum(21, WindShuffleMode._toInt(msg.windShuffleMode));
+    }
+    if (msg.requestId != void 0) {
+      writer.writeString(22, msg.requestId);
     }
     return writer;
   },
@@ -4811,6 +4815,10 @@ export const EventData = {
         }
         case 21: {
           msg.windShuffleMode = WindShuffleMode._fromInt(reader.readEnum());
+          break;
+        }
+        case 22: {
+          msg.requestId = reader.readString();
           break;
         }
         default: {
@@ -10651,6 +10659,7 @@ export const EventDataJSON = {
       platformId: PlatformType._fromInt(0),
       allowManualAddReplay: false,
       windShuffleMode: void 0,
+      requestId: void 0,
       ...msg
     };
   },
@@ -10717,6 +10726,9 @@ export const EventDataJSON = {
     }
     if (msg.windShuffleMode != void 0) {
       json["windShuffleMode"] = msg.windShuffleMode;
+    }
+    if (msg.requestId != void 0) {
+      json["requestId"] = msg.requestId;
     }
     return json;
   },
@@ -10795,6 +10807,10 @@ export const EventDataJSON = {
     const _windShuffleMode_ = json["windShuffleMode"] ?? json["wind_shuffle_mode"];
     if (_windShuffleMode_) {
       msg.windShuffleMode = WindShuffleMode._fromInt(_windShuffleMode_);
+    }
+    const _requestId_ = json["requestId"] ?? json["request_id"];
+    if (_requestId_) {
+      msg.requestId = _requestId_;
     }
     return msg;
   }

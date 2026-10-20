@@ -28,6 +28,7 @@ test('Copy event requires review, preserves settings and excludes games and part
   const created = await request.post(`${mimir}/CreateEvent`, {
     headers,
     data: {
+      requestId: randomUUID(),
       type: 'EVENT_TYPE_LOCAL',
       title,
       description: 'Copied **description**',
@@ -54,7 +55,11 @@ test('Copy event requires review, preserves settings and excludes games and part
   }
   const started = await request.post(`${mimir}/StartGame`, {
     headers,
-    data: { eventId, players: [referee, ...players].map((player) => player.id) },
+    data: {
+      eventId,
+      players: [referee, ...players].map((player) => player.id),
+      requestId: randomUUID(),
+    },
   });
   await expect(started).toBeOK();
   const { sessionHash } = await started.json();
@@ -85,6 +90,7 @@ test('Copy event requires review, preserves settings and excludes games and part
   page.on('request', (req) => {
     if (/\/(CreateEvent|UpdateEvent)$/.test(req.url())) writes.push(req.url());
   });
+  await page.getByTestId('forseti-owned-events-filter-all').click();
   await page.getByTestId(`forseti-owned-event-actions-${eventId}`).click();
   await page.getByTestId(`forseti-owned-event-copy-${eventId}`).click();
   await expect(page.getByTestId('forseti-event-settings-basic-settings-event-title')).toHaveValue(
@@ -152,6 +158,7 @@ test('Copy event requires review, preserves settings and excludes games and part
     await refereePage.getByTestId('forseti-login-email').fill(referee.email);
     await refereePage.getByTestId('forseti-login-password').fill(referee.password);
     await refereePage.getByTestId('forseti-login-submit').click();
+    await refereePage.getByTestId('forseti-owned-events-filter-all').click();
     await expect(refereePage.getByTestId(`forseti-owned-event-row-${eventId}`)).toBeVisible();
     await refereePage.getByTestId(`forseti-owned-event-actions-${eventId}`).click();
     await expect(refereePage.getByTestId(`forseti-owned-event-copy-${eventId}`)).toBeVisible();

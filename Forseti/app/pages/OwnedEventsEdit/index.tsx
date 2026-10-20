@@ -278,7 +278,7 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string; copyId?: string 
   }, [isLoggedIn, privilegesLevel, id, copyId]);
 
   const submitForm = (vals: FormFields) => {
-    if (isLoading || (copyId && !copyLoaded)) {
+    if (isLoading || isSaving || (copyId && !copyLoaded)) {
       return;
     }
     setIsSaving(true);

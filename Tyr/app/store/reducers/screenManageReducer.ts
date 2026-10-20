@@ -58,6 +58,7 @@ export function screenManageReducer(state: IAppState, action: AppActionTypes): I
         players: undefined,
         mapIdToPlayer: {},
         currentSessionHash: '',
+        nextRoundToken: undefined,
         gameOverviewReady: true,
       };
     case START_NEW_GAME:

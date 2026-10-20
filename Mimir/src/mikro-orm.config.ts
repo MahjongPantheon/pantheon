@@ -15,6 +15,7 @@ import { PenaltyEntity } from './entities/Penalty.entity.js';
 import { PlayerHistoryEntity } from './entities/PlayerHistory.entity.js';
 import { PlayerStatsEntity } from './entities/PlayerStats.entity.js';
 import { RoundEntity } from './entities/Round.entity.js';
+import { RpcOperationEntity } from './entities/RpcOperation.entity.js';
 import { RulesetEntity } from './entities/Ruleset.entity.js';
 import { SessionEntity } from './entities/Session.entity.js';
 import { SessionPlayerEntity } from './entities/SessionPlayer.entity.js';
@@ -44,6 +45,7 @@ export const createConfig = (useGeneratedCache: boolean) =>
       PlayerHistoryEntity,
       PlayerStatsEntity,
       RoundEntity,
+      RpcOperationEntity,
       RulesetEntity,
       SessionEntity,
       SessionPlayerEntity,

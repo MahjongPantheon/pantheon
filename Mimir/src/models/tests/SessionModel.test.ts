@@ -2,6 +2,7 @@ import { jest } from '@jest/globals';
 import { setImmediate } from 'node:timers/promises';
 import { EndingPolicy, SessionStatus } from 'tsclients/proto/atoms.pb.js';
 import { Model } from '../Model.js';
+import { IdempotencyModel } from '../IdempotencyModel.js';
 import { SessionModel } from '../SessionModel.js';
 import { CronModel } from '../CronModel.js';
 import { EventRegistrationModel } from '../EventRegistrationModel.js';
@@ -185,9 +186,12 @@ describe('Session previews and finalization', () => {
       await expect(model.previewRound(session.representationalHash, invalidRound)).rejects.toThrow(
         "Can't record hand without yaku"
       );
-      await expect(model.addRound(session.representationalHash, invalidRound)).rejects.toThrow(
-        "Can't record hand without yaku"
-      );
+      jest
+        .spyOn(Model.getModel(repo, IdempotencyModel), 'execute')
+        .mockImplementation(async (_scope, _method, _key, _request, action) => action());
+      await expect(
+        model.addRound(session.representationalHash, invalidRound, session.nextRoundToken)
+      ).rejects.toThrow("Can't record hand without yaku");
       expect(session.intermediateResults).toBe(saved);
       expect(saved).toEqual(snapshot);
       expect(persist).not.toHaveBeenCalled();

@@ -40,6 +40,32 @@ read an event without TypeScript sources. Deploy both `server.js` and `metadata.
 the latter contains the ORM metadata generated from the source entities during the build.
 Register new entities in `src/mikro-orm.config.ts` so they are included in the bundle and its metadata.
 
+### Retry-safe mutations
+
+`CreateEvent` and `StartGame` require a client-generated `request_id`. Generate it once
+per logical submission and reuse it on retries. Keys are scoped to the authenticated
+caller and RPC method. A reused key with different parameters is rejected.
+
+`GetSessionOverview` returns the persisted `next_round_token`. Send it as `round_token`
+to `AddRound`; every accepted round, including chombo, rotates it. Repeated overview
+reads do not rotate the token. Undo, extra-time changes, cancellation, definalization,
+and forced completion invalidate outstanding tokens. Clients refresh the overview after successful round
+submission or a stale-token conflict. A delayed retry returns its original response,
+which may describe an older session state.
+
+PostgreSQL transaction advisory locks serialize requests sharing a key. Operation
+receipts in `rpc_operation` commit with business writes and survive undo; they have
+no automatic expiration. Deleting receipts removes replay protection for old requests.
+The frontend keeps pending keys in session storage across ambiguous failures and
+reloads, and clears them after success or a definitive token conflict. Authentication
+failures retain the pending key so reauthentication cannot cause duplicate creation.
+
+Apply `Migration20261021000000` before deploying the updated server and clients. It
+backfills existing sessions with distinct tokens. Updated clients are required for
+these three write RPCs. Event-creation retries resume the initial Frey permission
+grant using the saved event ID. Other external notifications retain their existing
+failure semantics; database idempotency does not make remote calls transactional.
+
 ### Scheduled workers
 
 Supervisor runs `cron/cron.ts`, a scheduler with no database or Redis connections.

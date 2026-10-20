@@ -413,7 +413,12 @@ function addRound(
         dispatchToStore({ type: GET_GAME_OVERVIEW_INIT, payload: state.currentSessionHash });
       }
     })
-    .catch((e) => dispatch({ type: ADD_ROUND_FAIL, payload: e }));
+    .catch((e) => {
+      dispatch({ type: ADD_ROUND_FAIL, payload: e });
+      if (['failed_precondition', 'already_exists'].includes(e?.code) && state.currentSessionHash) {
+        dispatchToStore({ type: GET_GAME_OVERVIEW_INIT, payload: state.currentSessionHash });
+      }
+    });
 }
 
 function getLastResults(

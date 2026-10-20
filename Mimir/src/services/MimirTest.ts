@@ -1,3 +1,4 @@
+import { randomUUID } from 'node:crypto';
 import {
   EventData,
   GameConfig,
@@ -115,7 +116,7 @@ export class MimirTest {
 
   protected _eventId = 1;
   protected _personId = 1;
-  protected _authToken = '';
+  protected _authToken = 'test-token';
 
   setEventId(eventId: number) {
     this._eventId = eventId;
@@ -226,15 +227,21 @@ export class MimirTest {
   }
 
   async AddRound(payload: GamesAddRoundPayload): Promise<GamesAddRoundResponse> {
-    return AddRound(payload, this._config);
+    const roundToken =
+      payload.roundToken ?? (await this.GetSessionOverview(payload.sessionHash)).nextRoundToken;
+    return AddRound({ ...payload, roundToken }, this._config);
   }
 
   async PreviewRound(payload: GamesPreviewRoundPayload): Promise<GamesPreviewRoundResponse> {
     return PreviewRound(payload, this._config);
   }
 
-  async StartGame(eventId: number, players: number[]): Promise<GenericSessionPayload> {
-    return StartGame({ eventId, players }, this._config);
+  async StartGame(
+    eventId: number,
+    players: number[],
+    requestId: string = randomUUID()
+  ): Promise<GenericSessionPayload> {
+    return StartGame({ eventId, players, requestId }, this._config);
   }
 
   async CancelGame(sessionHash: string): Promise<GenericSuccessResponse> {
@@ -269,7 +276,10 @@ export class MimirTest {
   }
 
   async CreateEvent(eventData: EventData): Promise<GenericEventPayload> {
-    return CreateEvent(eventData, this._config);
+    return CreateEvent(
+      { ...eventData, requestId: eventData.requestId ?? randomUUID() },
+      this._config
+    );
   }
 
   async GetEventForEdit(eventId: number): Promise<EventsGetEventForEditResponse> {

@@ -192,6 +192,7 @@ export function mimirReducer(state: IAppState, action: AppActionTypes): IAppStat
         ...state,
         gameConfig: action.payload.gameConfig,
         currentSessionHash: action.payload.games[0] && action.payload.games[0].sessionHash,
+        nextRoundToken: undefined,
         players,
         mapIdToPlayer,
         yakuList: makeYakuGraph(action.payload.gameConfig.rulesetConfig.withMultiYakumans),
@@ -475,6 +476,7 @@ export function mimirReducer(state: IAppState, action: AppActionTypes): IAppStat
         tableIndex: action.payload.tableIndex,
         players: action.payload.players,
         sessionState: action.payload.state,
+        nextRoundToken: action.payload.nextRoundToken ?? undefined,
       };
     case GET_GAME_OVERVIEW_FAIL:
       return {
@@ -593,6 +595,7 @@ export function mimirReducer(state: IAppState, action: AppActionTypes): IAppStat
           addRound: false,
         },
         currentOutcome: undefined,
+        nextRoundToken: undefined,
         currentScreen: 'currentGame',
       };
     case ADD_ROUND_FAIL:

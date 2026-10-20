@@ -468,6 +468,7 @@ message EventData {
   PlatformType platform_id = 19;
   bool allow_manual_add_replay = 20;
   optional WindShuffleMode wind_shuffle_mode = 21;
+  optional string request_id = 22; // required by CreateEvent; reuse across retries
 }
 
 message TableState {

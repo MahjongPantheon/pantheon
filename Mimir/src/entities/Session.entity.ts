@@ -4,6 +4,7 @@ import {
   Index,
   ManyToOne,
   OneToMany,
+  OptionalProps,
   PrimaryKey,
   Property,
   Unique,
@@ -11,6 +12,7 @@ import {
 import { EventEntity } from './Event.entity.js';
 import { SessionPlayerEntity } from './SessionPlayer.entity.js';
 import { SessionStateEntity } from './SessionState.entity.js';
+import { randomUUID } from 'node:crypto';
 
 @Entity({ tableName: 'session' })
 @Index({ properties: ['event'] })
@@ -20,8 +22,13 @@ import { SessionStateEntity } from './SessionState.entity.js';
 @Index({ properties: ['status'] })
 @Index({ properties: ['tableIndex'] })
 export class SessionEntity {
+  [OptionalProps]?: 'nextRoundToken';
+
   @PrimaryKey()
   id!: number;
+
+  @Property({ type: 'string' })
+  nextRoundToken: string = randomUUID();
 
   @ManyToOne({ fieldName: 'event_id' })
   event!: EventEntity;
