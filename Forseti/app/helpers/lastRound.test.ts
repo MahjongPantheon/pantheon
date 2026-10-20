@@ -308,3 +308,12 @@ describe('last round player emphasis', () => {
     ).toEqual(['Draw, tempai: all tenpai, riichi: --']);
   });
 });
+
+it('formats sanma winds after three hands and preserves four-player defaults', () => {
+  expect(formatRoundIndex(3, 3)).toBe('東3');
+  expect(formatRoundIndex(4, 3)).toBe('南1');
+  expect(formatRoundIndex(6, 3)).toBe('南3');
+  expect(formatRoundIndex(7, 3)).toBe('西1');
+  expect(formatRoundIndex(13, 3)).toBe('?');
+  expect(formatRoundIndex(4)).toBe('東4');
+});

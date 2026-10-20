@@ -5860,6 +5860,10 @@ export const RulesetConfig = {
       honbaValue: 0,
       doubleYakuman: [],
       useAggregatedYakuhai: false,
+      withSanma: false,
+      sanmaNoTsumoLoss: false,
+      sanmaDrawPayments: 0,
+      sanmaChomboPayments: 0,
       ...msg
     };
   },
@@ -5989,6 +5993,18 @@ export const RulesetConfig = {
     }
     if (msg.useAggregatedYakuhai) {
       writer.writeBool(41, msg.useAggregatedYakuhai);
+    }
+    if (msg.withSanma) {
+      writer.writeBool(42, msg.withSanma);
+    }
+    if (msg.sanmaNoTsumoLoss) {
+      writer.writeBool(45, msg.sanmaNoTsumoLoss);
+    }
+    if (msg.sanmaDrawPayments) {
+      writer.writeInt32(43, msg.sanmaDrawPayments);
+    }
+    if (msg.sanmaChomboPayments) {
+      writer.writeInt32(44, msg.sanmaChomboPayments);
     }
     return writer;
   },
@@ -6173,6 +6189,22 @@ export const RulesetConfig = {
         }
         case 41: {
           msg.useAggregatedYakuhai = reader.readBool();
+          break;
+        }
+        case 42: {
+          msg.withSanma = reader.readBool();
+          break;
+        }
+        case 45: {
+          msg.sanmaNoTsumoLoss = reader.readBool();
+          break;
+        }
+        case 43: {
+          msg.sanmaDrawPayments = reader.readInt32();
+          break;
+        }
+        case 44: {
+          msg.sanmaChomboPayments = reader.readInt32();
           break;
         }
         default: {
@@ -11718,6 +11750,10 @@ export const RulesetConfigJSON = {
       honbaValue: 0,
       doubleYakuman: [],
       useAggregatedYakuhai: false,
+      withSanma: false,
+      sanmaNoTsumoLoss: false,
+      sanmaDrawPayments: 0,
+      sanmaChomboPayments: 0,
       ...msg
     };
   },
@@ -11854,6 +11890,18 @@ export const RulesetConfigJSON = {
     }
     if (msg.useAggregatedYakuhai) {
       json["useAggregatedYakuhai"] = msg.useAggregatedYakuhai;
+    }
+    if (msg.withSanma) {
+      json["withSanma"] = msg.withSanma;
+    }
+    if (msg.sanmaNoTsumoLoss) {
+      json["sanmaNoTsumoLoss"] = msg.sanmaNoTsumoLoss;
+    }
+    if (msg.sanmaDrawPayments) {
+      json["sanmaDrawPayments"] = msg.sanmaDrawPayments;
+    }
+    if (msg.sanmaChomboPayments) {
+      json["sanmaChomboPayments"] = msg.sanmaChomboPayments;
     }
     return json;
   },
@@ -12028,6 +12076,22 @@ export const RulesetConfigJSON = {
     const _useAggregatedYakuhai_ = json["useAggregatedYakuhai"] ?? json["use_aggregated_yakuhai"];
     if (_useAggregatedYakuhai_) {
       msg.useAggregatedYakuhai = _useAggregatedYakuhai_;
+    }
+    const _withSanma_ = json["withSanma"] ?? json["with_sanma"];
+    if (_withSanma_) {
+      msg.withSanma = _withSanma_;
+    }
+    const _sanmaNoTsumoLoss_ = json["sanmaNoTsumoLoss"] ?? json["sanma_no_tsumo_loss"];
+    if (_sanmaNoTsumoLoss_) {
+      msg.sanmaNoTsumoLoss = _sanmaNoTsumoLoss_;
+    }
+    const _sanmaDrawPayments_ = json["sanmaDrawPayments"] ?? json["sanma_draw_payments"];
+    if (_sanmaDrawPayments_) {
+      msg.sanmaDrawPayments = protoscript.parseNumber(_sanmaDrawPayments_);
+    }
+    const _sanmaChomboPayments_ = json["sanmaChomboPayments"] ?? json["sanma_chombo_payments"];
+    if (_sanmaChomboPayments_) {
+      msg.sanmaChomboPayments = protoscript.parseNumber(_sanmaChomboPayments_);
     }
     return msg;
   }

@@ -206,7 +206,12 @@ export class RoundModel extends Model {
         return calc.lastPaymentsInfo();
       }
       case RoundOutcome.ROUND_OUTCOME_DRAW: {
-        calc.draw(sessionState.getScores(), round.hands[0].tempai ?? [], round.riichi ?? []);
+        calc.draw(
+          sessionState.getScores(),
+          round.hands[0].tempai ?? [],
+          round.riichi ?? [],
+          event.ruleset.rules
+        );
         return calc.lastPaymentsInfo();
       }
       case RoundOutcome.ROUND_OUTCOME_ABORT: {

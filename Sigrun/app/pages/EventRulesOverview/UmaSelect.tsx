@@ -26,6 +26,7 @@ type UmaSelectProps = {
 };
 
 export const UmaSelect: React.FC<UmaSelectProps> = ({ config, i18n }) => {
+  const isSanma = !!config.rulesetConfig.withSanma;
   return (
     <>
       <Radio.Group
@@ -47,7 +48,7 @@ export const UmaSelect: React.FC<UmaSelectProps> = ({ config, i18n }) => {
         </Group>
       </Radio.Group>
       {config.rulesetConfig.umaType === UmaType.UMA_TYPE_UMA_SIMPLE && (
-        <SimpleGrid cols={2}>
+        <SimpleGrid cols={isSanma ? 3 : 2}>
           <NumberInput
             readOnly
             hideControls
@@ -66,12 +67,14 @@ export const UmaSelect: React.FC<UmaSelectProps> = ({ config, i18n }) => {
             label={i18n._t('Uma penalty for 3rd place')}
             value={config.rulesetConfig.uma.place3}
           />
-          <NumberInput
-            readOnly
-            hideControls
-            label={i18n._t('Uma penalty for 4th place')}
-            value={config.rulesetConfig.uma.place4}
-          />
+          {!isSanma && (
+            <NumberInput
+              readOnly
+              hideControls
+              label={i18n._t('Uma penalty for 4th place')}
+              value={config.rulesetConfig.uma.place4}
+            />
+          )}
         </SimpleGrid>
       )}
       {config.rulesetConfig.umaType === UmaType.UMA_TYPE_UMA_COMPLEX && (
@@ -87,9 +90,11 @@ export const UmaSelect: React.FC<UmaSelectProps> = ({ config, i18n }) => {
             <Text h='34px' ta='right'>
               {i18n._t('3rd')}
             </Text>
-            <Text h='34px' ta='right'>
-              {i18n._t('4th')}
-            </Text>
+            {!isSanma && (
+              <Text h='34px' ta='right'>
+                {i18n._t('4th')}
+              </Text>
+            )}
           </Stack>
           <Stack w='21%'>
             <Center>
@@ -110,11 +115,13 @@ export const UmaSelect: React.FC<UmaSelectProps> = ({ config, i18n }) => {
               hideControls
               value={config.rulesetConfig.complexUma.neg3.place3}
             />
-            <NumberInput
-              readOnly
-              hideControls
-              value={config.rulesetConfig.complexUma.neg3.place4}
-            />
+            {!isSanma && (
+              <NumberInput
+                readOnly
+                hideControls
+                value={config.rulesetConfig.complexUma.neg3.place4}
+              />
+            )}
           </Stack>
           <Stack w='21%'>
             <Center>
@@ -135,11 +142,13 @@ export const UmaSelect: React.FC<UmaSelectProps> = ({ config, i18n }) => {
               hideControls
               value={config.rulesetConfig.complexUma.neg1.place3}
             />
-            <NumberInput
-              readOnly
-              hideControls
-              value={config.rulesetConfig.complexUma.neg1.place4}
-            />
+            {!isSanma && (
+              <NumberInput
+                readOnly
+                hideControls
+                value={config.rulesetConfig.complexUma.neg1.place4}
+              />
+            )}
           </Stack>
           <Stack w='21%'>
             <Text>{i18n._t('Otherwise')}</Text>
@@ -158,11 +167,13 @@ export const UmaSelect: React.FC<UmaSelectProps> = ({ config, i18n }) => {
               hideControls
               value={config.rulesetConfig.complexUma.otherwise.place3}
             />
-            <NumberInput
-              readOnly
-              hideControls
-              value={config.rulesetConfig.complexUma.otherwise.place4}
-            />
+            {!isSanma && (
+              <NumberInput
+                readOnly
+                hideControls
+                value={config.rulesetConfig.complexUma.otherwise.place4}
+              />
+            )}
           </Stack>
         </Group>
       )}

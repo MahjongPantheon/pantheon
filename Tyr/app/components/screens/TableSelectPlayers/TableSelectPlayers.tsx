@@ -28,10 +28,13 @@ import { mayGoNextFromPlayersSelect } from '../../../store/selectors/navbar';
 export const TableSelectPlayers = ({ state, dispatch }: IComponentProps) => {
   const loc = useContext(i18n);
 
+  const expectedPlayersCount = state.gameConfig?.rulesetConfig.withSanma ? 3 : 4;
   const isLoading =
     state.loading.events ||
     (state.currentScreen === 'overview' &&
-      (!state.gameOverviewReady || !state.players || state.players.length !== 4)) ||
+      (!state.gameOverviewReady ||
+        !state.players ||
+        state.players.length !== expectedPlayersCount)) ||
     state.loading.addRound ||
     state.loading.overview;
 

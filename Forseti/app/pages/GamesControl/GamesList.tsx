@@ -1,3 +1,4 @@
+import { GHOST_PLAYER_ID } from '../../../../Common/constants';
 /*  Forseti: personal area & event control panel
  *  Copyright (C) 2023  o.klimenko aka ctizen
  *
@@ -135,52 +136,57 @@ export function GamesList({
                       size='lg'
                       title={i18n._t('Current round')}
                     >
-                      {formatRoundIndex(t.currentRoundIndex)}
+                      {formatRoundIndex(
+                        t.currentRoundIndex,
+                        eventConfig?.rulesetConfig.withSanma ? 3 : 4
+                      )}
                     </ActionIcon>
                   )}
                 </Stack>
                 <Stack gap='0'>
-                  {t.players.map((p) => {
-                    const score = t.scores.find((s) => s.playerId === p.id)?.score ?? 0;
-                    return (
-                      <Group key={`pl_${p.id}`}>
-                        <Badge
-                          style={{ minWidth: '64px' }}
-                          variant='outline'
-                          color={
-                            score === eventConfig?.rulesetConfig.startPoints
-                              ? 'blue'
-                              : score > (eventConfig?.rulesetConfig.startPoints ?? 0)
-                                ? 'green'
-                                : 'red'
-                          }
-                        >
-                          {score}
-                        </Badge>
-                        <PlayerAvatar p={p} size='sm' />
-                        <Text
-                          fw='bold'
-                          style={
-                            matches
-                              ? {
-                                  textOverflow: 'ellipsis',
-                                  overflow: 'hidden',
-                                  maxWidth: '160px',
-                                }
-                              : {
-                                  textOverflow: 'ellipsis',
-                                  overflow: 'hidden',
-                                  maxWidth: '320px',
-                                }
-                          }
-                        >
-                          {p.title}
-                          {eventConfig?.isPrescripted ? ` id #${p.localId ?? '??'}` : null}
-                          {eventConfig?.isOnline ? ` (${p.tenhouId})` : null}
-                        </Text>
-                      </Group>
-                    );
-                  })}
+                  {t.players
+                    .filter((p) => p.id !== GHOST_PLAYER_ID)
+                    .map((p) => {
+                      const score = t.scores.find((s) => s.playerId === p.id)?.score ?? 0;
+                      return (
+                        <Group key={`pl_${p.id}`}>
+                          <Badge
+                            style={{ minWidth: '64px' }}
+                            variant='outline'
+                            color={
+                              score === eventConfig?.rulesetConfig.startPoints
+                                ? 'blue'
+                                : score > (eventConfig?.rulesetConfig.startPoints ?? 0)
+                                  ? 'green'
+                                  : 'red'
+                            }
+                          >
+                            {score}
+                          </Badge>
+                          <PlayerAvatar p={p} size='sm' />
+                          <Text
+                            fw='bold'
+                            style={
+                              matches
+                                ? {
+                                    textOverflow: 'ellipsis',
+                                    overflow: 'hidden',
+                                    maxWidth: '160px',
+                                  }
+                                : {
+                                    textOverflow: 'ellipsis',
+                                    overflow: 'hidden',
+                                    maxWidth: '320px',
+                                  }
+                            }
+                          >
+                            {p.title}
+                            {eventConfig?.isPrescripted ? ` id #${p.localId ?? '??'}` : null}
+                            {eventConfig?.isOnline ? ` (${p.tenhouId})` : null}
+                          </Text>
+                        </Group>
+                      );
+                    })}
                 </Stack>
                 <Box style={{ flex: 1 }}>
                   {!!t.extraTime && (

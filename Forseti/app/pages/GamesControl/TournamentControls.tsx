@@ -86,6 +86,7 @@ export function TournamentControls({
   const i18n = useI18n();
   const [interval, setInterval] = useState<string | null>('1');
   const [extraTime, setExtraTime] = useState<string | null>('60');
+  const isSanma = !!eventConfig?.rulesetConfig.withSanma;
   const currentStage = determineStage(
     tablesState,
     players,
@@ -114,7 +115,11 @@ export function TournamentControls({
         />
         {currentStage === Stage.NOT_READY && (
           <Box>
-            {i18n._t("Can't generate seating: count of registered players is not divisible by 4")}
+            {isSanma
+              ? i18n._t("Can't generate seating: count of registered players is not divisible by 3")
+              : i18n._t(
+                  "Can't generate seating: count of registered players is not divisible by 4"
+                )}
           </Box>
         )}
         {currentStage === Stage.READY_BUT_NOT_STARTED && !eventConfig?.isPrescripted && (
@@ -166,7 +171,10 @@ export function TournamentControls({
                       { value: '4', label: '1-5-9-13' },
                       { value: '5', label: '1-6-11-16' },
                       { value: '6', label: '1-7-13-19' },
-                    ]}
+                    ].map((option) => ({
+                      ...option,
+                      label: isSanma ? option.label.split('-').slice(0, 3).join('-') : option.label,
+                    }))}
                   />
                   <Space h='md' />
                   <Text>{i18n._t('Use interval seating for next session?')}</Text>
@@ -390,8 +398,9 @@ function determineStage(
   );
 
   const playersFiltered = players.filter((p) => !p.ignoreSeating);
+  const seatsCount = eventConfig?.rulesetConfig.withSanma ? 3 : 4;
 
-  if (playersFiltered.length % 4 !== 0 && !eventConfig?.isPrescripted) {
+  if (playersFiltered.length % seatsCount !== 0 && !eventConfig?.isPrescripted) {
     return Stage.NOT_READY;
   }
 
@@ -405,7 +414,7 @@ function determineStage(
 
   if (eventConfig?.gamesStatus === TournamentGamesStatus.TOURNAMENT_GAMES_STATUS_SEATING_READY) {
     if (!eventConfig?.isPrescripted) {
-      if (notFinishedTablesCount === Math.round(playersFiltered.length / 4)) {
+      if (notFinishedTablesCount === Math.round(playersFiltered.length / seatsCount)) {
         return Stage.SEATING_READY;
       } else {
         return Stage.SEATING_INPROGRESS;

@@ -1,3 +1,4 @@
+import { GHOST_PLAYER_ID } from '../../../Common/constants.js';
 import { HandEntity } from '../entities/Hand.entity.js';
 import { RoundEntity } from '../entities/Round.entity.js';
 import { RulesetEntity } from '../entities/Ruleset.entity.js';
@@ -37,6 +38,7 @@ export function checkRound(
   ruleset: RulesetEntity,
   roundData: Round
 ): void {
+  players = players.filter((id) => id !== GHOST_PLAYER_ID);
   _checkPlayers(players, allRegisteredPlayersIds);
   const yakuList = ruleset.rules.allowedYaku;
   if (roundData.ron) {

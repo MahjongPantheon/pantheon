@@ -1,3 +1,4 @@
+import { GHOST_PLAYER_ID } from '../../../Common/constants';
 /*  Sigrun: rating tables and statistics frontend
  *  Copyright (C) 2023  o.klimenko aka ctizen
  *
@@ -307,79 +308,85 @@ function SelectedGamePreview({
       <Divider size='xs' />
       <Space h='md' />
       <Stack gap={0}>
-        {selectedGame.tables.map((seat, idx) => (
-          <Group grow key={seat.playerId}>
-            <DataCmp
-              gap='xs'
-              style={{
-                padding: '10px',
-                backgroundColor:
-                  idx % 2 ? (isDark ? theme.colors.dark[7] : theme.colors.gray[1]) : 'transparent',
-              }}
-            >
-              <Group style={{ flex: 1 }}>
-                <Badge
-                  w={50}
-                  size='xl'
-                  color={calcDimmedBackground(isDimmed, isDark, '#e7f5ff')}
-                  c={calcDimmedText(isDimmed, isDark)}
-                  radius='sm'
-                  style={{ padding: 0, fontSize: '22px' }}
-                >
-                  {winds[idx]}
-                </Badge>
-                <PlayerAvatar
-                  p={{
-                    title: seat.title,
-                    id: seat.playerId,
-                    hasAvatar: seat.hasAvatar,
-                    lastUpdate: seat.lastUpdate,
-                  }}
-                />
-                {seat.playerId === playerId ? (
-                  <Text fw={700}>{seat.title}</Text>
-                ) : (
-                  <Anchor
-                    data-testid={`sigrun-player-stats-preview-player-link-${seat.playerId}`}
-                    href={getPlayerUrl(seat.playerId)}
-                    onClick={(e) => {
-                      navigate(getPlayerUrl(seat.playerId));
-                      e.preventDefault();
-                    }}
+        {selectedGame.tables
+          .filter((seat) => seat.playerId !== GHOST_PLAYER_ID)
+          .map((seat, idx) => (
+            <Group grow key={seat.playerId}>
+              <DataCmp
+                gap='xs'
+                style={{
+                  padding: '10px',
+                  backgroundColor:
+                    idx % 2
+                      ? isDark
+                        ? theme.colors.dark[7]
+                        : theme.colors.gray[1]
+                      : 'transparent',
+                }}
+              >
+                <Group style={{ flex: 1 }}>
+                  <Badge
+                    w={50}
+                    size='xl'
+                    color={calcDimmedBackground(isDimmed, isDark, '#e7f5ff')}
+                    c={calcDimmedText(isDimmed, isDark)}
+                    radius='sm'
+                    style={{ padding: 0, fontSize: '22px' }}
                   >
-                    {seat.title}
-                  </Anchor>
-                )}
-              </Group>
-              <Group gap={2} grow={!largeScreen}>
-                <Badge
-                  w={65}
-                  miw='max-content'
-                  maw='none'
-                  size='lg'
-                  color={calcDimmedBackground(isDimmed, isDark)}
-                  c={calcDimmedText(isDimmed, isDark)}
-                  radius='sm'
-                  style={{ padding: 0 }}
-                >
-                  {seat.score}
-                </Badge>
-                <Badge
-                  w={75}
-                  miw='max-content'
-                  maw='none'
-                  size='lg'
-                  variant='filled'
-                  color={seat.ratingDelta > 0 ? 'lime' : 'red'}
-                  radius='sm'
-                  style={{ padding: 0 }}
-                >
-                  {seat.ratingDelta}
-                </Badge>
-              </Group>
-            </DataCmp>
-          </Group>
-        ))}
+                    {winds[idx]}
+                  </Badge>
+                  <PlayerAvatar
+                    p={{
+                      title: seat.title,
+                      id: seat.playerId,
+                      hasAvatar: seat.hasAvatar,
+                      lastUpdate: seat.lastUpdate,
+                    }}
+                  />
+                  {seat.playerId === playerId ? (
+                    <Text fw={700}>{seat.title}</Text>
+                  ) : (
+                    <Anchor
+                      data-testid={`sigrun-player-stats-preview-player-link-${seat.playerId}`}
+                      href={getPlayerUrl(seat.playerId)}
+                      onClick={(e) => {
+                        navigate(getPlayerUrl(seat.playerId));
+                        e.preventDefault();
+                      }}
+                    >
+                      {seat.title}
+                    </Anchor>
+                  )}
+                </Group>
+                <Group gap={2} grow={!largeScreen}>
+                  <Badge
+                    w={65}
+                    miw='max-content'
+                    maw='none'
+                    size='lg'
+                    color={calcDimmedBackground(isDimmed, isDark)}
+                    c={calcDimmedText(isDimmed, isDark)}
+                    radius='sm'
+                    style={{ padding: 0 }}
+                  >
+                    {seat.score}
+                  </Badge>
+                  <Badge
+                    w={75}
+                    miw='max-content'
+                    maw='none'
+                    size='lg'
+                    variant='filled'
+                    color={seat.ratingDelta > 0 ? 'lime' : 'red'}
+                    radius='sm'
+                    style={{ padding: 0 }}
+                  >
+                    {seat.ratingDelta}
+                  </Badge>
+                </Group>
+              </DataCmp>
+            </Group>
+          ))}
       </Stack>
       <Space h='md' />
       <Divider size='xs' />

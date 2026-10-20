@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-26 20:19+0100\n"
+"POT-Creation-Date: 2026-10-30 00:28+0100\n"
 "PO-Revision-Date: 2025-03-23 23:41+0300\n"
 "Last-Translator: Geunmo Kim <kimgeunmo@gmail.com>\n"
 "Language-Team: \n"
@@ -20,69 +20,80 @@ msgstr ""
 "X-Generator: Poedit 3.5\n"
 "X-Poedit-Bookmarks: -1,290,-1,-1,-1,-1,-1,-1,-1,-1\n"
 
-#: app/helpers/lastRound.ts:58:13
+#: app/helpers/lastRound.ts:78:13
 msgid "%1 han"
 msgstr "%1 판"
 
-#: app/helpers/lastRound.ts:59:13
+#: app/helpers/lastRound.ts:79:13
 msgid "%1 han, %2 fu"
 msgstr "%1 판 %2 부"
 
-#: app/pages/GamesControl/GamesList.tsx:215:53
-#: app/pages/GamesControl/TournamentControls.tsx:306:45
+#: app/services/i18n.selection.test.ts:39:10
+msgid "%1 item"
+msgid_plural "%1 items"
+msgstr[0] ""
+
+#: app/services/i18n.selection.test.ts:40:10
+msgctxt "context"
+msgid "%1 item"
+msgid_plural "%1 items"
+msgstr[0] ""
+
+#: app/pages/GamesControl/GamesList.tsx:217:53
+#: app/pages/GamesControl/TournamentControls.tsx:314:45
 msgid "1 minute"
 msgstr "1분"
 
-#: app/pages/OwnedEventsEdit/UmaSelect.tsx:130:22
+#: app/pages/OwnedEventsEdit/UmaSelect.tsx:138:22
 msgid "1 player with score less than starting"
 msgstr "1명의 작사가 시작 점수보다 낮은 점수를 기록함"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:162:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:225:22
 msgid "13+ han hands are considered yakuman, not sanbaiman."
 msgstr "13판 이상의 화료는 삼배만이 아닌 역만으로 취급됨"
 
-#: app/pages/OwnedEventsEdit/UmaSelect.tsx:87:16
+#: app/pages/OwnedEventsEdit/UmaSelect.tsx:93:16
 msgid "1st"
 msgstr "1위"
 
-#: app/pages/GamesControl/GamesList.tsx:216:54
-#: app/pages/GamesControl/TournamentControls.tsx:307:46
+#: app/pages/GamesControl/GamesList.tsx:218:54
+#: app/pages/GamesControl/TournamentControls.tsx:315:46
 msgid "2 minutes"
 msgstr "2분"
 
-#: app/pages/OwnedEventsEdit/UmaSelect.tsx:90:16
+#: app/pages/OwnedEventsEdit/UmaSelect.tsx:96:16
 msgid "2nd"
 msgstr "2위"
 
-#: app/pages/GamesControl/GamesList.tsx:217:54
-#: app/pages/GamesControl/TournamentControls.tsx:308:46
+#: app/pages/GamesControl/GamesList.tsx:219:54
+#: app/pages/GamesControl/TournamentControls.tsx:316:46
 msgid "3 minutes"
 msgstr "3분"
 
-#: app/pages/OwnedEventsEdit/UmaSelect.tsx:101:22
+#: app/pages/OwnedEventsEdit/UmaSelect.tsx:107:22
 msgid "3 players with score less than starting"
 msgstr "3명의 작사가 시작 점수보다 낮은 점수를 기록함"
 
-#: app/pages/OwnedEventsEdit/UmaSelect.tsx:93:16
+#: app/pages/OwnedEventsEdit/UmaSelect.tsx:99:16
 msgid "3rd"
 msgstr "3위"
 
-#: app/pages/GamesControl/GamesList.tsx:218:54
-#: app/pages/GamesControl/TournamentControls.tsx:309:46
+#: app/pages/GamesControl/GamesList.tsx:220:54
+#: app/pages/GamesControl/TournamentControls.tsx:317:46
 msgid "4 minutes"
 msgstr "4분"
 
-#: app/pages/OwnedEventsEdit/UmaSelect.tsx:96:16
+#: app/pages/OwnedEventsEdit/UmaSelect.tsx:102:16
 msgid "4th"
 msgstr "4위"
 
-#: app/pages/GamesControl/GamesList.tsx:219:54
-#: app/pages/GamesControl/TournamentControls.tsx:310:46
+#: app/pages/GamesControl/GamesList.tsx:221:54
+#: app/pages/GamesControl/TournamentControls.tsx:318:46
 msgid "5 minutes"
 msgstr "5분"
 
-#: app/pages/GamesControl/GamesList.tsx:220:54
-#: app/pages/GamesControl/TournamentControls.tsx:311:46
+#: app/pages/GamesControl/GamesList.tsx:222:54
+#: app/pages/GamesControl/TournamentControls.tsx:319:46
 msgid "7 minutes"
 msgstr "7분"
 
@@ -94,15 +105,15 @@ msgstr ""
 "비밀번호 복구를 위한 확인 링크가 이메일로 전송되었습니다. 메일함을 확인하시"
 "고 메일 상의 링크로 이동해주세요."
 
-#: app/pages/Penalties/PenaltyForm.tsx:67:38
+#: app/pages/Penalties/PenaltyForm.tsx:69:38
 msgid "A reason for penalty is mandatory"
 msgstr "벌부 사유는 필수 입력 사항입니다"
 
-#: app/helpers/lastRound.ts:124:9
+#: app/helpers/lastRound.ts:129:13
 msgid "Abortive draw, riichi: %1"
 msgstr "도중유국, 리치: %1"
 
-#: app/pages/OwnedEvents.tsx:530:26
+#: app/pages/OwnedEvents.tsx:540:26
 msgid "Achievements visible"
 msgstr "업적 표시"
 
@@ -110,29 +121,29 @@ msgstr "업적 표시"
 msgid "Action required"
 msgstr "조치 필요"
 
-#: app/pages/OwnedEvents.tsx:392:26
+#: app/pages/OwnedEvents.tsx:397:26
 msgid "Actions"
 msgstr "동작"
 
-#: app/pages/Penalties/PenaltyForm.tsx:108:45
+#: app/pages/Penalties/PenaltyForm.tsx:110:45
 msgid "Add a penalty"
 msgstr "벌부 추가"
 
-#: app/pages/GamesControl/GamesList.tsx:206:29
-#: app/pages/GamesControl/TournamentControls.tsx:296:22
-#: app/pages/GamesControl/TournamentControls.tsx:297:21
+#: app/pages/GamesControl/GamesList.tsx:208:29
+#: app/pages/GamesControl/TournamentControls.tsx:304:22
+#: app/pages/GamesControl/TournamentControls.tsx:305:21
 msgid "Add extra time"
 msgstr "추가 시간 부여"
 
-#: app/pages/GamesControl/GamesList.tsx:205:30
+#: app/pages/GamesControl/GamesList.tsx:207:30
 msgid "Add extra time for this table"
 msgstr "이 테이블에 추가 시간 부여"
 
-#: app/pages/GamesControl/TournamentControls.tsx:315:26
+#: app/pages/GamesControl/TournamentControls.tsx:323:26
 msgid "Add selected amount of extra time for all tables?"
 msgstr "모든 테이블에 선택한 만큼 추가 시간을 부여하시겠습니까?"
 
-#: app/pages/GamesControl/GamesList.tsx:225:30
+#: app/pages/GamesControl/GamesList.tsx:227:30
 msgid "Add selected amount of extra time for this table?"
 msgstr "이 테이블에 선택한 만큼 추가 시간을 부여하시겠습니까?"
 
@@ -140,7 +151,7 @@ msgstr "이 테이블에 선택한 만큼 추가 시간을 부여하시겠습니
 msgid "Administrator privileges include everything a referee can do plus:"
 msgstr "관리자는 심판의 모든 권한과 다음 권한을 가집니다:"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:69:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:122:16
 msgid "Agariyame"
 msgstr "아가리야메"
 
@@ -153,7 +164,7 @@ msgstr "모든 날짜 및 시간은 선택한 시간대에 맞춰 표시됨"
 msgid "All events"
 msgstr "모든 이벤트"
 
-#: app/pages/OwnedEvents.tsx:302:14
+#: app/pages/OwnedEvents.tsx:307:14
 msgid "All my events"
 msgstr "내 모든 이벤트"
 
@@ -161,7 +172,7 @@ msgstr "내 모든 이벤트"
 msgid "All player stats and achievements"
 msgstr "작사 통계 및 업적"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:153:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:215:22
 msgid ""
 "All riichi bets on the table will be given to the first winner. If not "
 "checked, winning riichi bets will always be given back, lost bets would be "
@@ -180,23 +191,23 @@ msgstr "이메일 주소, 천봉 ID, 이름 및 성을 포함한 모든 개인 �
 msgid "All your played games and events"
 msgstr "진행한 모든 대국 및 이벤트"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:121:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:179:16
 msgid "Allow abortive draws"
 msgstr "도중유국 허용"
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:85:16
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:89:16
 msgid "Allow adding of replays manually"
 msgstr "수동 패보 추가 허용"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:87:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:142:16
 msgid "Allow bankruptcy"
 msgstr "들통 허용"
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:49:22
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:51:22
 msgid "Allow combination of yakumans, e.g. tsuuisou + daisangen"
 msgstr "역만 중첩을 허용, 예시: 자일색 + 대삼원"
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:164:18
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:170:18
 msgid "Allow viewing of other tables during ongoing game"
 msgstr "대국 중 다른 테이블 관전 허용"
 
@@ -204,19 +215,19 @@ msgstr "대국 중 다른 테이블 관전 허용"
 msgid "Already registered?"
 msgstr "기존 계정 로그인"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:241:18
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:308:18
 msgid "Amount of chombo penalty"
 msgstr "촌보 벌부값"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:242:24
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:309:24
 msgid "Amount of penalty applied in the end of the session after uma bonus."
 msgstr "대국 종료 및 우마 적용 후에 적용될 촌보 벌부값"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:261:24
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:329:24
 msgid "Amount of penalty applied to those who didn't win once in game."
 msgstr "한번도 화료하지 못한 작사에게 적용될 야키토리 벌부값"
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:108:22
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:114:22
 msgid ""
 "Amount of points given for each chip. Chips should be set up in tournament "
 "settings in Tenhou.net. Set to 0 to disable chips."
@@ -224,16 +235,22 @@ msgstr ""
 "칩 당 주어지는 점수 설정. 칩은 천봉의 대회 설정에서 설정해야 함. 칩을 비활성"
 "화하려면 0으로 설정하시오"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:55:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:62:22
 msgid ""
 "Amount of points given to every player in the beginning of every session"
 msgstr "대국 시작 시 주어지는 시작 점수"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:175:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:240:22
 msgid "Amount of points given to player at 1st place"
 msgstr "대국 1위 작사에게 주어지는 오카 점수"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:104:24
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:89:26
+msgid ""
+"Amount of points paid by the offending player to each of the other players "
+"on a chombo"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:161:24
 msgid "Amount of score player should get to end the game."
 msgstr "대국 종료를 위해 도달해야 하는 점수"
 
@@ -245,20 +262,20 @@ msgstr "주의를 받은 후 재차 규칙 위반"
 msgid "Applied chombo penalties"
 msgstr "적용된 촌보 벌부"
 
-#: app/pages/Penalties/PenaltyForm.tsx:158:58
-#: app/pages/Penalties/PenaltyForm.tsx:162:52
+#: app/pages/Penalties/PenaltyForm.tsx:160:58
+#: app/pages/Penalties/PenaltyForm.tsx:164:52
 msgid "Apply penalty"
 msgstr "벌부 적용"
 
-#: app/pages/GamesControl/TournamentControls.tsx:232:28
+#: app/pages/GamesControl/TournamentControls.tsx:240:28
 msgid "Apply seating for next session?"
 msgstr "다음 대국에 해당 좌석을 적용하시겠습니까?"
 
-#: app/pages/GamesControl/TournamentControls.tsx:339:22
+#: app/pages/GamesControl/TournamentControls.tsx:347:22
 msgid "Approve session results and go on to next session"
 msgstr "대국 결과를 승인하고 다음 대국으로 이동"
 
-#: app/pages/GamesControl/TournamentControls.tsx:340:21
+#: app/pages/GamesControl/TournamentControls.tsx:348:21
 msgid "Approve sessions"
 msgstr "대국 승인"
 
@@ -270,11 +287,11 @@ msgstr "심판과 언쟁"
 msgid "Assigned by:"
 msgstr "부과자:"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:113:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:170:16
 msgid "Atamahane"
 msgstr "선오름(아타마하네)"
 
-#: app/pages/ProfileManage.tsx:293:20 app/pages/ProfileManageAdmin.tsx:319:18
+#: app/pages/ProfileManage.tsx:293:20 app/pages/ProfileManageAdmin.tsx:315:18
 msgid ""
 "Avatar should be an image file. It's recommended to upload a square-sized "
 "image, otherwise it will be cropped to center square. File size should not "
@@ -283,15 +300,15 @@ msgstr ""
 "아바타는 이미지 파일이여야합니다. 정사각형 이미지의 사용을 권장하며 아닐 경"
 "우 이미지 가운데를 기준으로 크롭됩니다. 파일 크기는 256 KB 이하여야 합니다."
 
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:112:22
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:120:22
 msgid "Balanced wind shuffle"
 msgstr "균등한 바람 배정"
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:98:20
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:97:20
 msgid "Basic ruleset"
 msgstr "기본 규칙 템플릿"
 
-#: app/pages/OwnedEventsEdit/TabsList.tsx:45:10
+#: app/pages/OwnedEventsEdit/TabsList.tsx:46:10
 msgid "Basic settings"
 msgstr "기본 설정"
 
@@ -299,22 +316,27 @@ msgstr "기본 설정"
 msgid "Being late for a session"
 msgstr "대국 지각"
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:133:18
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:135:18
 msgid "Brief description"
 msgstr "이벤트 설명"
 
-#: app/pages/GamesControl/TournamentControls.tsx:117:14
+#: app/pages/GamesControl/TournamentControls.tsx:119:17
+msgid ""
+"Can't generate seating: count of registered players is not divisible by 3"
+msgstr ""
+
+#: app/pages/GamesControl/TournamentControls.tsx:120:17
 msgid ""
 "Can't generate seating: count of registered players is not divisible by 4"
 msgstr "좌석 생성 불가: 등록 작사 수를 4로 나눌 수 없습니다"
 
 #: app/components/RecalcAchievementsModal.tsx:54:12
 #: app/components/RecalcPlayerStatsModal.tsx:54:12
-#: app/components/StopEventModal.tsx:41:12 app/pages/OwnedEvents.tsx:254:14
+#: app/components/StopEventModal.tsx:41:12 app/pages/OwnedEvents.tsx:259:14
 msgid "Cancel"
 msgstr "취소"
 
-#: app/pages/GamesControl/GamesList.tsx:245:30
+#: app/pages/GamesControl/GamesList.tsx:247:30
 msgid "Cancel last played round"
 msgstr "이전 국 취소"
 
@@ -322,11 +344,11 @@ msgstr "이전 국 취소"
 msgid "Cancel penalty"
 msgstr "벌부 취소"
 
-#: app/pages/GamesControl/GamesList.tsx:296:29
+#: app/pages/GamesControl/GamesList.tsx:298:29
 msgid "Cancel results"
 msgstr "결과 취소"
 
-#: app/pages/GamesControl/GamesList.tsx:246:29
+#: app/pages/GamesControl/GamesList.tsx:248:29
 msgid "Cancel round"
 msgstr "국 취소"
 
@@ -334,10 +356,10 @@ msgstr "국 취소"
 msgid "Cancelled: "
 msgstr "취소됨: "
 
-#: app/pages/OwnedEventsEdit/index.tsx:378:32
-#: app/pages/PlayersManage/LocalIdsTab.tsx:113:28
-#: app/pages/PlayersManage/TeamNamesTab.tsx:114:28
-#: app/pages/ProfileManage.tsx:311:32 app/pages/ProfileManageAdmin.tsx:330:21
+#: app/pages/OwnedEventsEdit/index.tsx:383:32
+#: app/pages/PlayersManage/LocalIdsTab.tsx:115:28
+#: app/pages/PlayersManage/TeamNamesTab.tsx:116:28
+#: app/pages/ProfileManage.tsx:311:32 app/pages/ProfileManageAdmin.tsx:326:21
 msgid "Changes saved!"
 msgstr "저장되었습니다!"
 
@@ -365,13 +387,17 @@ msgstr "청일색"
 msgid "Chinroutou"
 msgstr "청노두"
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:107:16
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:113:16
 msgid "Chips value"
 msgstr "칩 가치"
 
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:74:16
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:78:16
 msgid "Chombo in last round ends game"
 msgstr "마지막 국의 촌보로 대국 종료"
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:88:20
+msgid "Chombo payments (sanma)"
+msgstr ""
 
 #: app/pages/Penalties/PenaltiesList.tsx:159:10
 msgid ""
@@ -381,7 +407,7 @@ msgstr ""
 "아직 대국이 종료되지 않았다면 대국 관리 페이지에서 해당 국을 취소하여 촌보 벌"
 "부를 취소할 수 있습니다."
 
-#: app/helpers/lastRound.ts:107:43
+#: app/helpers/lastRound.ts:118:13
 msgid "Chombo, %1"
 msgstr "촌보: %1"
 
@@ -397,7 +423,7 @@ msgstr "구련보등"
 msgid "City"
 msgstr "도시"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:152:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:214:16
 msgid "Collect riichi bets by atamahane"
 msgstr "선오름에 따른 리치봉 지급"
 
@@ -405,15 +431,15 @@ msgstr "선오름에 따른 리치봉 지급"
 msgid "Common actions"
 msgstr "일반 동작"
 
-#: app/pages/Penalties/PenaltyForm.tsx:146:18
+#: app/pages/Penalties/PenaltyForm.tsx:148:18
 msgid "Common reasons for penalties"
 msgstr "일반적인 벌부 사유"
 
-#: app/pages/Penalties/CommonReasons.tsx:63:14
+#: app/pages/Penalties/CommonReasons.tsx:69:28
 msgid "Common reasons for the penalty"
 msgstr "일반적인 벌부 사유"
 
-#: app/pages/OwnedEventsEdit/UmaSelect.tsx:46:20
+#: app/pages/OwnedEventsEdit/UmaSelect.tsx:50:20
 msgid "Complex position-based"
 msgstr "복잡한 위치 기반"
 
@@ -430,17 +456,17 @@ msgstr "취소 확인"
 msgid "Confirm your email"
 msgstr "이메일을 인증해주세요"
 
-#: app/pages/OwnedEvents.tsx:401:31
+#: app/pages/OwnedEvents.tsx:406:31
 msgid "Copy event"
 msgstr "이벤트 복사"
 
-#: app/pages/OwnedEventsEdit/LocalSettings.tsx:37:22
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:120:22
+#: app/pages/OwnedEventsEdit/LocalSettings.tsx:39:22
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:126:22
 msgid ""
 "Count of session in game series. Set to 0 to disable series functionality."
 msgstr "시리즈에 표시되는 대국 수. 시리즈를 비활성화하려면 0으로 설정하시오"
 
-#: app/pages/ProfileManage.tsx:232:22 app/pages/ProfileManageAdmin.tsx:258:20
+#: app/pages/ProfileManage.tsx:232:22 app/pages/ProfileManageAdmin.tsx:254:20
 msgid "Country"
 msgstr "국가"
 
@@ -452,11 +478,11 @@ msgstr "신규 이벤트 생성"
 msgid "Current penalties"
 msgstr "현재 벌부"
 
-#: app/pages/GamesControl/GamesList.tsx:135:30
+#: app/pages/GamesControl/GamesList.tsx:137:30
 msgid "Current round"
 msgstr "현재 국"
 
-#: app/pages/GamesControl/TournamentControls.tsx:99:28
+#: app/pages/GamesControl/TournamentControls.tsx:100:24
 msgid "Current status"
 msgstr "현재 상태"
 
@@ -473,28 +499,32 @@ msgstr "대삼원"
 msgid "Daisuushii"
 msgstr "대사희"
 
-#: app/components/MainMenu.tsx:156:24 app/pages/OwnedEvents.tsx:456:44
+#: app/components/MainMenu.tsx:156:24 app/pages/OwnedEvents.tsx:461:44
 #: app/pages/ProfileManage.tsx:300:29
 msgid "Danger zone"
 msgstr "위험 지역"
 
-#: app/pages/SystemStats.tsx:228:18
+#: app/pages/SystemStats.tsx:175:18
 msgid "Data slice"
 msgstr "데이터 슬라이스"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:77:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:131:16
 msgid "Disable renchans"
 msgstr "연장 비활성화"
 
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:56:20
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:60:20
 msgid "Do not interrupt session until it ends"
 msgstr "오라스에 인한 대국 종료시 종료"
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:131:25
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:98:25
 msgid "Double yakuman:"
 msgstr "더블 역만:"
 
-#: app/helpers/lastRound.ts:113:9
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:80:20
+msgid "Draw payments (sanma)"
+msgstr ""
+
+#: app/helpers/lastRound.ts:122:7
 msgid "Draw, tempai: %1, riichi: %2"
 msgstr "유국, 텐파이: %1, 리치: %2"
 
@@ -510,11 +540,11 @@ msgstr "자풍: 동"
 msgid "East wind"
 msgstr "동풍"
 
-#: app/pages/OwnedEventsEdit/index.tsx:78:18
+#: app/pages/OwnedEventsEdit/index.tsx:77:21
 msgid "Edit event :: %1"
 msgstr "이벤트 수정 :: %1"
 
-#: app/pages/OwnedEvents.tsx:409:38
+#: app/pages/OwnedEvents.tsx:414:38
 msgid "Edit event settings"
 msgstr "이벤트 설정 수정"
 
@@ -534,11 +564,11 @@ msgstr "이메일 인증 성공"
 msgid "Email has been sent"
 msgstr "이메일이 전송되었습니다"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:130:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:189:22
 msgid "Enable \"Nagashi\" outcome to record this special draw"
 msgstr "특별 유국인 \"유국만관\" 결과가 활성화됨"
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:54:16
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:57:16
 msgid "Enable aggregated yakuhai"
 msgstr "집계된 역패 사용"
 
@@ -546,7 +576,7 @@ msgstr "집계된 역패 사용"
 msgid "Enter a reason for cancellation and confirm it."
 msgstr "취소 사유를 입력하고 확인해 주세요."
 
-#: app/pages/ProfileManageAdmin.tsx:268:26
+#: app/pages/ProfileManageAdmin.tsx:264:26
 msgid "Enter city of the player"
 msgstr "도시명을 입력해 주십시오"
 
@@ -554,15 +584,15 @@ msgstr "도시명을 입력해 주십시오"
 msgid "Enter new strong password"
 msgstr "강력한 비밀번호를 입력해주세요"
 
-#: app/pages/ProfileManageAdmin.tsx:229:26
+#: app/pages/ProfileManageAdmin.tsx:225:26
 msgid "Enter player's e-mail address"
 msgstr "이메일 주소 입력"
 
-#: app/pages/ProfileManageAdmin.tsx:275:26
+#: app/pages/ProfileManageAdmin.tsx:271:26
 msgid "Enter player's phone"
 msgstr "전화번호를 입력해 주십시오"
 
-#: app/pages/ProfileManageAdmin.tsx:248:30 app/pages/ProfileSignup.tsx:141:26
+#: app/pages/ProfileManageAdmin.tsx:244:30 app/pages/ProfileSignup.tsx:141:26
 msgid "Enter strong password"
 msgstr "강력한 암호를 입력해 주십시오"
 
@@ -570,25 +600,26 @@ msgstr "강력한 암호를 입력해 주십시오"
 msgid "Enter your e-mail address"
 msgstr "이메일 주소를 입력해주세요"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:192:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:257:16
 msgid "Equalize uma"
 msgstr "동점 동일 우마"
 
-#: app/pages/EventPrescript.tsx:76:18 app/pages/EventPrescript.tsx:111:18
-#: app/pages/GamesControl/index.tsx:89:18
-#: app/pages/GamesControl/index.tsx:102:14 app/pages/OwnedEvents.tsx:95:14
-#: app/pages/OwnedEventsEdit/index.tsx:265:18
-#: app/pages/OwnedEventsEdit/index.tsx:304:18 app/pages/Penalties.tsx:102:18
-#: app/pages/Penalties/PenaltyForm.tsx:91:18
-#: app/pages/PlayersManage/index.tsx:86:18
-#: app/pages/PlayersManage/LocalIdsTab.tsx:72:18
+#: app/pages/EventPrescript.tsx:84:18 app/pages/EventPrescript.tsx:124:18
+#: app/pages/GamesControl/index.tsx:96:18
+#: app/pages/GamesControl/index.tsx:116:16 app/pages/OwnedEvents.tsx:96:16
+#: app/pages/OwnedEventsEdit/index.tsx:270:18
+#: app/pages/OwnedEventsEdit/index.tsx:309:18 app/pages/Penalties.tsx:102:18
+#: app/pages/Penalties/PenaltyForm.tsx:93:18
+#: app/pages/PlayersManage/index.tsx:89:18
+#: app/pages/PlayersManage/LocalIdsTab.tsx:74:18
 #: app/pages/PlayersManage/ManagementTab.tsx:85:18
-#: app/pages/PlayersManage/TeamNamesTab.tsx:72:18
+#: app/pages/PlayersManage/TeamNamesTab.tsx:74:18
 #: app/pages/PrivilegesManage/index.tsx:60:18
 #: app/pages/PrivilegesManage/ManagementTab.tsx:65:18
 #: app/pages/PrivilegesManage/ManagementTab.tsx:82:18
 #: app/pages/PrivilegesManage/ManagementTab.tsx:120:28
 #: app/pages/PrivilegesManage/ManagementTab.tsx:196:28
+#: app/pages/SystemStats.tsx:128:18
 msgid "Error has occurred"
 msgstr "오류가 발생했습니다"
 
@@ -596,15 +627,15 @@ msgstr "오류가 발생했습니다"
 msgid "Event administrators list"
 msgstr "이벤트 관리자 목록"
 
-#: app/pages/OwnedEvents.tsx:386:24
+#: app/pages/OwnedEvents.tsx:391:24
 msgid "Event finished"
 msgstr "이벤트 종료됨"
 
-#: app/pages/OwnedEvents.tsx:396:36
+#: app/pages/OwnedEvents.tsx:401:36
 msgid "Event management"
 msgstr "이벤트 관리"
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:52:18
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:53:18
 msgid "Event platform"
 msgstr "이벤트 플랫폼"
 
@@ -612,19 +643,19 @@ msgstr "이벤트 플랫폼"
 msgid "Event referees list"
 msgstr "이벤트 심판 목록"
 
-#: app/pages/EventPrescript.tsx:164:36
+#: app/pages/EventPrescript.tsx:181:32
 msgid "Event script"
 msgstr "이벤트 스크립트"
 
-#: app/pages/EventPrescript.tsx:132:37
+#: app/pages/EventPrescript.tsx:145:33
 msgid "Event script filling instruction"
 msgstr "이벤트 스크립트 작성법"
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:88:18
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:86:18
 msgid "Event title"
 msgstr "이벤트 이름"
 
-#: app/pages/OwnedEvents.tsx:513:28
+#: app/pages/OwnedEvents.tsx:519:28
 msgid "Event visible in global list"
 msgstr "전체 목록에 이벤트 표시"
 
@@ -632,24 +663,24 @@ msgstr "전체 목록에 이벤트 표시"
 msgid "Event: %1"
 msgstr "이벤트: %1"
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:53:24
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:54:24
 msgid "External gaming platform for the tournament"
 msgstr "대회에 사용할 외부 게임 플랫폼"
 
-#: app/pages/GamesControl/GamesList.tsx:187:24
+#: app/pages/GamesControl/GamesList.tsx:189:24
 msgid "Extra minutes: %1"
 msgstr "추가 시간: %1분"
 
-#: app/pages/GamesControl/index.tsx:189:29
-#: app/pages/GamesControl/index.tsx:203:27
+#: app/pages/GamesControl/index.tsx:220:29
+#: app/pages/GamesControl/index.tsx:235:29
 msgid "Failed to add extra time"
 msgstr "추가 시간 부여 실패"
 
-#: app/pages/Penalties/PenaltyForm.tsx:86:27
+#: app/pages/Penalties/PenaltyForm.tsx:88:27
 msgid "Failed to apply penalty: server error or network unreachable"
 msgstr "벌부 적용 실패: 서버 오류 또는 네트워크에 연결할 수 없음"
 
-#: app/pages/GamesControl/index.tsx:238:27
+#: app/pages/GamesControl/index.tsx:272:27
 msgid "Failed to approve session results"
 msgstr "대국 결과 승인 실패"
 
@@ -657,11 +688,11 @@ msgstr "대국 결과 승인 실패"
 msgid "Failed to authorize. Please check your email and password."
 msgstr "인증 실패. 이메일과 비밀번호를 확인하십시오."
 
-#: app/pages/GamesControl/index.tsx:162:33
+#: app/pages/GamesControl/index.tsx:191:35
 msgid "Failed to cancel game"
 msgstr "대국 취소 실패"
 
-#: app/pages/GamesControl/index.tsx:138:35
+#: app/pages/GamesControl/index.tsx:163:35
 msgid "Failed to cancel round"
 msgstr "국 취소 실패"
 
@@ -677,36 +708,36 @@ msgstr ""
 "이메일 인증 실패. 사용한 링크가 만료되었거나 이미 사용되었을 수 있습니다. 다"
 "시 등록 시도해 주시기 바랍니다."
 
-#: app/pages/GamesControl/index.tsx:151:33
+#: app/pages/GamesControl/index.tsx:177:35
 msgid "Failed to definalize game"
 msgstr "대국 종료 취소 실패"
 
-#: app/pages/OwnedEventsEdit/index.tsx:246:29
-#: app/pages/OwnedEventsEdit/index.tsx:257:29
+#: app/pages/OwnedEventsEdit/index.tsx:251:29
+#: app/pages/OwnedEventsEdit/index.tsx:262:29
 msgid "Failed to fetch event data"
 msgstr "이벤트 데이터 불러오기 실패"
 
-#: app/pages/GamesControl/index.tsx:329:27
+#: app/pages/GamesControl/index.tsx:373:29
 msgid "Failed to finish the game"
 msgstr "대국 종료 실패"
 
-#: app/pages/GamesControl/index.tsx:252:29
+#: app/pages/GamesControl/index.tsx:286:29
 msgid "Failed to generate interval seating"
 msgstr "간격 좌석 생성 실패"
 
-#: app/pages/GamesControl/index.tsx:302:27
+#: app/pages/GamesControl/index.tsx:343:29
 msgid "Failed to generate prescripted seating"
 msgstr "사전 정의된 좌석 생성 실패"
 
-#: app/pages/GamesControl/index.tsx:270:27
+#: app/pages/GamesControl/index.tsx:305:29
 msgid "Failed to generate random seating"
 msgstr "임의 좌석 생성 실패"
 
-#: app/pages/GamesControl/index.tsx:286:27
+#: app/pages/GamesControl/index.tsx:324:29
 msgid "Failed to generate swiss seating"
 msgstr "스위스 좌석 생성 실패"
 
-#: app/pages/GamesControl/index.tsx:215:27
+#: app/pages/GamesControl/index.tsx:249:27
 msgid "Failed to notify players"
 msgstr "알림 실패"
 
@@ -718,7 +749,7 @@ msgstr ""
 "비밀번호 복구 실패. 사용한 링크가 만료되었거나 이미 사용되었을 수 있습니다. "
 "다시 시도해 주세요."
 
-#: app/pages/ProfileManageAdmin.tsx:134:15
+#: app/pages/ProfileManageAdmin.tsx:130:15
 msgid "Failed to register player. Is your connection stable?"
 msgstr "회원가입 실패. 연결이 안정적인가요?"
 
@@ -730,15 +761,15 @@ msgstr "비밀번호 재설정 요청 실패. 이메일을 확인해주세요."
 msgid "Failed to request registration. Is your connection stable?"
 msgstr "회원가입 요청 실패. 연결이 안정적인가요?"
 
-#: app/pages/GamesControl/index.tsx:317:27
+#: app/pages/GamesControl/index.tsx:360:27
 msgid "Failed to reset seating"
 msgstr "좌석 초기화 실패"
 
-#: app/pages/EventPrescript.tsx:105:13
+#: app/pages/EventPrescript.tsx:118:13
 msgid "Failed to save event script: server error or network unreachable"
 msgstr "이벤트 스크립트 저장 실패: 서버 오류 또는 네트워크에 연결할 수 없음"
 
-#: app/pages/OwnedEventsEdit/index.tsx:299:27
+#: app/pages/OwnedEventsEdit/index.tsx:304:27
 msgid "Failed to save event: server error or network unreachable"
 msgstr "이벤트 저장 실패: 서버 오류 또는 네트워크에 연결할 수 없음"
 
@@ -746,19 +777,19 @@ msgstr "이벤트 저장 실패: 서버 오류 또는 네트워크에 연결할 
 msgid "Failed to set notifications settings."
 msgstr "알림 설정 실패"
 
-#: app/pages/GamesControl/index.tsx:173:27
+#: app/pages/GamesControl/index.tsx:204:27
 msgid "Failed to start timer"
 msgstr "타이머 시작 실패"
 
-#: app/pages/OwnedEvents.tsx:207:27
+#: app/pages/OwnedEvents.tsx:213:27
 msgid "Failed to toggle achievements visibility"
 msgstr "업적 표시 여부 전환 실패"
 
-#: app/pages/GamesControl/index.tsx:226:27 app/pages/OwnedEvents.tsx:186:27
+#: app/pages/GamesControl/index.tsx:260:27 app/pages/OwnedEvents.tsx:193:27
 msgid "Failed to toggle results visibility"
 msgstr "결과 표시 여부 전환 실패"
 
-#: app/pages/ProfileManageAdmin.tsx:173:15
+#: app/pages/ProfileManageAdmin.tsx:169:15
 msgid "Failed to update player details. Is your connection stable?"
 msgstr "정보 업데이트 실패. 연결이 안정적인가요?"
 
@@ -786,8 +817,8 @@ msgstr "이름으로 심판을 검색하여 추가..."
 msgid "Find replacement player by name..."
 msgstr "교체 작사 검색"
 
-#: app/components/MainMenu.tsx:207:24 app/pages/OwnedEvents.tsx:470:40
-#: app/pages/OwnedEvents.tsx:478:34
+#: app/components/MainMenu.tsx:207:24 app/pages/OwnedEvents.tsx:476:40
+#: app/pages/OwnedEvents.tsx:484:34
 msgid "Finish event"
 msgstr "이벤트 종료"
 
@@ -795,35 +826,35 @@ msgstr "이벤트 종료"
 msgid "Finish event."
 msgstr "이벤트 종료."
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:155:22
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:142:22
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:161:22
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:151:22
 msgid ""
 "Fixed amount of rank penalty applied for each replacement player regardless "
 "of session results."
 msgstr "대국 결과에 관계없이 교체 작사에게 적용되는 고정 우마값"
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:144:22
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:131:22
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:150:22
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:140:22
 msgid ""
 "Fixed amount of result score applied for each replacement player regardless "
 "of session results."
 msgstr "대국 결과에 관계없이 교체 작사에게 적용되는 고정 결과 점수"
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:143:16
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:130:16
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:149:16
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:139:16
 msgid "Fixed score applied to replacement player"
 msgstr "교체 작사에게 고정 점수 적용"
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:154:16
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:141:16
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:160:16
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:150:16
 msgid "Fixed uma for replacement player"
 msgstr "교체 작사에게 고정 우마 적용"
 
-#: app/pages/GamesControl/GamesList.tsx:280:29
+#: app/pages/GamesControl/GamesList.tsx:282:29
 msgid "Force finish game"
 msgstr "대국 강제 종료"
 
-#: app/pages/GamesControl/GamesList.tsx:279:30
+#: app/pages/GamesControl/GamesList.tsx:281:30
 msgid "Forcefully finish the game"
 msgstr "대국 강제 종료하기"
 
@@ -831,29 +862,29 @@ msgstr "대국 강제 종료하기"
 msgid "Forgot your password?"
 msgstr "비밀번호 찾기"
 
-#: app/pages/EventPrescript.tsx:182:15 app/services/i18n.be.test.ts:52:12
+#: app/pages/EventPrescript.tsx:199:15 app/services/i18n.be.test.ts:52:12
 #: app/services/i18n.test.ts:37:14
 msgid "Found %1 error"
 msgid_plural "Found %1 errors"
 msgstr[0] "%1 개의 오류를 발견했습니다"
 
-#: app/Layout.tsx:375:27
+#: app/Layout.tsx:380:25
 msgid "Game & profile management - Forseti"
 msgstr "대국 및 프로필 관리 - Forseti"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:61:25
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:113:25
 msgid "Game duration"
 msgstr "대국 시간"
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:96:16
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:102:16
 msgid "Game expiration time (in hours)"
 msgstr "대국 만료 기간 (시간)"
 
-#: app/pages/GamesControl/index.tsx:64:16
+#: app/pages/GamesControl/index.tsx:66:16
 msgid "Games management"
 msgstr "대국 관리"
 
-#: app/pages/GamesControl/TournamentControls.tsx:228:24
+#: app/pages/GamesControl/TournamentControls.tsx:236:24
 msgid "Generate seating for next session"
 msgstr "다음 대국을 위한 좌석을 생성"
 
@@ -866,12 +897,12 @@ msgstr "로그인으로 이동"
 msgid "Go to Signup page"
 msgstr "회원가입으로 이동"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:103:18
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:160:18
 #: app/services/i18n.test.ts:35:12
 msgid "Goal score"
 msgstr "목표 점수"
 
-#: app/pages/OwnedEventsEdit/index.tsx:165:15
+#: app/pages/OwnedEventsEdit/index.tsx:168:15
 msgid "Goal score must be at least the initial points"
 msgstr "목표 점수는 대국 시작 점수 이상이어야 합니다"
 
@@ -883,25 +914,34 @@ msgstr "발"
 msgid "Haitei"
 msgstr "해저로월"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:168:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:232:22
 msgid "Hands valued as 4/30 and 3/60 are rounded to mangan."
 msgstr "4판30부와 3부60부는 만관으로 취급됨"
 
-#: app/pages/GamesControl/TournamentControls.tsx:214:19
-#: app/pages/GamesControl/TournamentControls.tsx:329:19
-#: app/pages/GamesControl/TournamentControls.tsx:355:19
+#: app/services/i18n.selection.test.ts:37:10
+msgid "Hello %1"
+msgstr ""
+
+#: app/services/i18n.selection.test.ts:38:10
+msgctxt "context"
+msgid "Hello %1"
+msgstr ""
+
+#: app/pages/GamesControl/TournamentControls.tsx:222:19
+#: app/pages/GamesControl/TournamentControls.tsx:337:19
+#: app/pages/GamesControl/TournamentControls.tsx:363:19
 msgid "Hide results table"
 msgstr "결과표를 숨김"
 
-#: app/pages/GamesControl/TournamentControls.tsx:129:19
+#: app/pages/GamesControl/TournamentControls.tsx:134:19
 msgid "Hide results table and achievements"
 msgstr "결과표와 업적을 숨김"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:183:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:248:16
 msgid "Honba Value"
 msgstr "판수"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:145:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:206:22
 msgid ""
 "Honba payments will be given only to the first winner. If not checked, "
 "payment will be given to all winners."
@@ -921,11 +961,11 @@ msgstr "혼노두"
 msgid "Houtei raoyui"
 msgstr "하저로어"
 
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:47:22
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:50:22
 msgid "How game sessions should end during the tournament"
 msgstr "대회 중 대국이 종료되는 방법"
 
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:97:24
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:104:24
 msgid "How players on the same table are shuffled"
 msgstr "같은 테이블의 작사에게 바람을 배정하는 방법"
 
@@ -933,13 +973,13 @@ msgstr "같은 테이블의 작사에게 바람을 배정하는 방법"
 msgid "I've read the privacy policy listed below and accept its terms"
 msgstr "아래 나열된 개인정보 보호정책을 읽었으며 약관에 동의합니다"
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:157:24
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:162:24
 msgid ""
 "If checked, achievements will be shown for everyone, otherwise only for "
 "event administrators"
 msgstr "활성화 시 업적이 전체 공개되며 비활성 시 관리자에게만 표시됨"
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:86:22
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:90:22
 msgid ""
 "If checked, any player participating in event will be able to add new "
 "replays through user interface. Disable this if you have any external tool "
@@ -948,7 +988,7 @@ msgstr ""
 "활성화 시 이벤트 참가 작사 누구나 사용자 화면에서 새 패보를 추가할 수 있음. "
 "외부 도구로 패보를 자동 추가하는 경우에는 비활성화하시오"
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:165:24
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:171:24
 msgid ""
 "If checked, players will be able to see other tables state even if they are "
 "currently in game. It is strongly recommended to keep this checkbox disabled "
@@ -957,7 +997,7 @@ msgstr ""
 "활성화 시 본인이 대국 중이라도 다른 테이블 관전 가능함. 대회 이벤트의 경우 "
 "이 기능의 비활성화를 강력히 권고함"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:193:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:258:22
 msgid ""
 "If checked, players with equivalent score receive equivalent uma bonus. "
 "Otherwise, uma is assigned according to move order."
@@ -965,7 +1005,7 @@ msgstr ""
 "활성시 동점이 발생하면 해당 작사들에게 우마를 동일하게 적용함. 비활성 시 우마"
 "는 좌석 순서에 따라 결정됨"
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:141:24
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:144:24
 msgid ""
 "If checked, the event will be publicly visible on main page of ratings "
 "subsystem. If unchecked, event will not be visible in the list, but still "
@@ -974,13 +1014,13 @@ msgstr ""
 "활성화 시 이벤트 전체 목록에 표시됨. 비활성 시 이벤트 전체 목록에는 표시되지 "
 "않지만 링크를 통해 이벤트 페이지 접근 가능"
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:149:24
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:153:24
 msgid ""
 "If checked, the rating table will be shown for everyone, otherwise only for "
 "event administrators"
 msgstr "활성화 시 순위표가 전체 공개되며 비활성 시 관리자에게만 표시됨"
 
-#: app/pages/ProfileManage.tsx:264:28 app/pages/ProfileManageAdmin.tsx:290:26
+#: app/pages/ProfileManage.tsx:264:28 app/pages/ProfileManageAdmin.tsx:286:26
 msgid ""
 "If checked, uploaded avatar will be shown instead of default circle with "
 "initials. If no avatar is uploaded, the default circle will be shown."
@@ -988,7 +1028,7 @@ msgstr ""
 "활성화시 이니셜이 표시된 기본 동그라미 아이콘 대신 업로드한 아바타가 표시됩니"
 "다. 아바타가 업로드 되지 않은 경우 기본 동그라미 아이콘이 표시됩니다."
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:94:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:150:22
 msgid ""
 "If nobody reaches the goal score at the last hand, the game continues to "
 "west rounds (in hanchan) or to south rounds (in tonpuusen), until someone "
@@ -997,7 +1037,7 @@ msgstr ""
 "오라스 종료 후 1등의 점수가 목표 점수 미만일 경우 동풍전이면 남입, 반장전이"
 "면 서입을 진행함"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:70:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:123:22
 msgid ""
 "If the dealer holds the 1st place after last hand in session, the game ends "
 "regardless of his winning hand or tempai."
@@ -1012,7 +1052,7 @@ msgstr ""
 "같은 사람이 심판과 관리자 목록 모두에 추가되면 더 넓은 권한인 관리자 권한이 "
 "적용됩니다."
 
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:75:22
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:79:22
 msgid ""
 "If this is set, chombo will not allow players to play one more hand if time "
 "is out and it is final hand of the game"
@@ -1024,7 +1064,14 @@ msgstr ""
 msgid "Iipeikou"
 msgstr "이페코"
 
-#: app/pages/EventPrescript.tsx:143:10
+#: app/pages/EventPrescript.tsx:157:13
+msgid ""
+"In this example, two tables play two games with 3 players each (1-2-3). "
+"Numbers in seating are called \"Local IDs\". They persist between games and "
+"are defined at Manage players page of the event."
+msgstr ""
+
+#: app/pages/EventPrescript.tsx:160:13
 msgid ""
 "In this example, two tables play two games. Numbers in seating are called "
 "\"Local IDs\". They persist between games and are defined at Manage players "
@@ -1034,19 +1081,19 @@ msgstr ""
 "\"로컬 ID\"라고 합니다. 이 번호는 대국 간에 유지되며 이벤트의 작사 관리 페이"
 "지에서 정의됩니다."
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:54:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:61:16
 msgid "Initial points"
 msgstr "대국 시작 점수"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:45:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:52:16
 msgid "Initial rating"
 msgstr "이벤트 시작 점수"
 
-#: app/pages/EventPrescript.tsx:170:18
+#: app/pages/EventPrescript.tsx:187:18
 msgid "Instructions"
 msgstr "사용법"
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:97:22
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:103:22
 msgid ""
 "Interval of time when played online game is still considered valid and can "
 "be added to the rating. Set to 0 to disable expiration."
@@ -1054,20 +1101,20 @@ msgstr ""
 "온라인 대국이 유효하며 레이팅에 추가될 수 있는 기간. 만료 기간을 부여하지 않"
 "으려면 0으로 설정하시오"
 
-#: app/pages/GamesControl/TournamentControls.tsx:154:21
+#: app/pages/GamesControl/TournamentControls.tsx:159:21
 msgid "Interval seating"
 msgstr "간격 좌석"
 
-#: app/pages/GamesControl/TournamentControls.tsx:151:21
+#: app/pages/GamesControl/TournamentControls.tsx:156:21
 msgid "Interval seating can't be used for first session in tournament"
 msgstr "대회 첫 대국에 간격 좌석를 사용할 수 없습니다"
 
-#: app/pages/ProfileLogin.tsx:46:63 app/pages/ProfileManageAdmin.tsx:88:63
+#: app/pages/ProfileLogin.tsx:46:63 app/pages/ProfileManageAdmin.tsx:84:63
 #: app/pages/ProfileResetPassword.tsx:42:63 app/pages/ProfileSignup.tsx:58:63
 msgid "Invalid email"
 msgstr "유효하지 않은 이메일"
 
-#: app/pages/ProfileManage.tsx:91:70 app/pages/ProfileManageAdmin.tsx:89:70
+#: app/pages/ProfileManage.tsx:91:70 app/pages/ProfileManageAdmin.tsx:85:70
 #: app/pages/ProfileSignup.tsx:59:70
 msgid "Invalid title"
 msgstr "유효하지 않은 호칭"
@@ -1084,11 +1131,11 @@ msgstr "일기통관"
 msgid "Junchan"
 msgstr "준찬타"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:161:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:224:16
 msgid "Kazoe yakuman"
 msgstr "헤아림 역만"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:167:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:231:16
 msgid "Kiriage mangan"
 msgstr "절상 만관"
 
@@ -1100,44 +1147,45 @@ msgstr "국사무쌍"
 msgid "Kokushi musou 13-side"
 msgstr "국사무쌍"
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:40:16
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:41:16
 msgid "Kuitan"
 msgstr "쿠이탕"
 
 #: app/components/MainMenu.tsx:332:18 app/services/i18n.be.test.ts:35:12
+#: app/services/i18n.selection.test.ts:23:10
 msgid "Language"
 msgstr "언어"
 
-#: app/pages/SystemStats.tsx:222:16
+#: app/pages/SystemStats.tsx:169:16
 msgid "Last 12mon"
 msgstr "최근 12개월"
 
-#: app/pages/SystemStats.tsx:212:16
+#: app/pages/SystemStats.tsx:159:16
 msgid "Last 24h"
 msgstr "최근 24시간"
 
-#: app/pages/SystemStats.tsx:217:16
+#: app/pages/SystemStats.tsx:164:16
 msgid "Last 30d"
 msgstr "최근 30일"
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:75:16
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:77:16
 msgid "Lobby ID"
 msgstr "로비 ID"
 
-#: app/pages/PlayersManage/LocalIdsTab.tsx:100:24
+#: app/pages/PlayersManage/LocalIdsTab.tsx:102:24
 msgid "Local ID"
 msgstr "로컬 ID"
 
-#: app/pages/PlayersManage/index.tsx:132:14
+#: app/pages/PlayersManage/index.tsx:139:14
 msgid "Local IDs"
 msgstr "로컬 ID"
 
-#: app/pages/OwnedEventsEdit/TabsList.tsx:53:12
+#: app/pages/OwnedEventsEdit/TabsList.tsx:54:12
 msgid "Local event settings"
 msgstr "로컬 이벤트 설정"
 
-#: app/pages/OwnedEvents.tsx:328:30
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:44:35
+#: app/pages/OwnedEvents.tsx:333:30
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:45:35
 msgid "Local rating"
 msgstr "로컬 이벤트"
 
@@ -1149,7 +1197,7 @@ msgstr "로그인"
 msgid "Logout"
 msgstr "로그아웃"
 
-#: app/pages/OwnedEvents.tsx:418:38
+#: app/pages/OwnedEvents.tsx:423:38
 msgid "Manage administrators and referees in event"
 msgstr "이벤트 관리자 및 심판 관리"
 
@@ -1162,7 +1210,7 @@ msgstr ""
 "개별 벌부를 추가하거나 취소합니다. 심판은 모바일 도우미의 심판 호출 버튼을 통"
 "한 모든 알림도 받습니다."
 
-#: app/pages/OwnedEvents.tsx:440:36
+#: app/pages/OwnedEvents.tsx:445:36
 msgid "Manage current games"
 msgstr "현재 대국 관리"
 
@@ -1170,7 +1218,7 @@ msgstr "현재 대국 관리"
 msgid "Manage event settings: rename event, change yaku settings, etc."
 msgstr "이벤트 이름 및 역 설정 변경 등 이벤트 설정을 관리합니다."
 
-#: app/components/MainMenu.tsx:135:29 app/pages/OwnedEvents.tsx:442:35
+#: app/components/MainMenu.tsx:135:29 app/pages/OwnedEvents.tsx:447:35
 msgid "Manage games"
 msgstr "대국 관리"
 
@@ -1184,16 +1232,16 @@ msgstr "대회 타이머 시작 및 초기화, 국과 대국 취소, 좌석 배�
 msgid "Manage my events"
 msgstr "내 이벤트 관리"
 
-#: app/pages/OwnedEvents.tsx:433:36 app/pages/Penalties.tsx:47:16
+#: app/pages/OwnedEvents.tsx:438:36 app/pages/Penalties.tsx:47:16
 msgid "Manage penalties"
 msgstr "벌부 관리"
 
-#: app/components/MainMenu.tsx:118:27 app/pages/OwnedEvents.tsx:426:36
-#: app/pages/OwnedEvents.tsx:428:35
+#: app/components/MainMenu.tsx:118:27 app/pages/OwnedEvents.tsx:431:36
+#: app/pages/OwnedEvents.tsx:433:35
 msgid "Manage players"
 msgstr "작사 관리"
 
-#: app/pages/PlayersManage/index.tsx:60:16
+#: app/pages/PlayersManage/index.tsx:59:16
 msgid "Manage players in event"
 msgstr "이벤트 등록 작사 관리"
 
@@ -1201,11 +1249,11 @@ msgstr "이벤트 등록 작사 관리"
 msgid "Manage players in event: add, remove and exclude for seating."
 msgstr "이벤트 작사를 추가하거나 삭제하고 좌석 배정에서 제외합니다."
 
-#: app/pages/OwnedEvents.tsx:448:38
+#: app/pages/OwnedEvents.tsx:453:38
 msgid "Manage predefined seating"
 msgstr "사전 정의된 좌석 관리"
 
-#: app/components/MainMenu.tsx:109:27 app/pages/OwnedEvents.tsx:420:37
+#: app/components/MainMenu.tsx:109:27 app/pages/OwnedEvents.tsx:425:37
 msgid "Manage privileges"
 msgstr "권한 관리"
 
@@ -1221,11 +1269,11 @@ msgstr "심판과 다른 관리자를 지정하여 권한을 관리합니다."
 msgid "Manage your account"
 msgstr "계정 관리"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:201:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:267:16
 msgid "Max arbitrary penalty score"
 msgstr "최대 임의 벌부 점수"
 
-#: app/components/AppHeader.tsx:123:18
+#: app/components/AppHeader.tsx:96:18
 msgid "Menu"
 msgstr "메뉴"
 
@@ -1233,26 +1281,26 @@ msgstr "메뉴"
 msgid "Menzentsumo"
 msgstr "멘젠쯔모"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:208:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:274:16
 msgid "Min arbitrary penalty score"
 msgstr "최소 임의 벌부 점수"
 
-#: app/pages/OwnedEventsEdit/LocalSettings.tsx:49:22
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:132:22
+#: app/pages/OwnedEventsEdit/LocalSettings.tsx:51:22
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:138:22
 msgid ""
 "Minimal count of games the player should play to get into the rating table."
 msgstr "순위표에 입성하기 위해 치뤄야 하는 최소 대국 수"
 
-#: app/pages/OwnedEventsEdit/LocalSettings.tsx:48:16
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:131:16
+#: app/pages/OwnedEventsEdit/LocalSettings.tsx:50:16
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:137:16
 msgid "Minimal games count"
 msgstr "최소 대국 수"
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:134:24
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:136:24
 msgid "Multiline. Markdown syntax supported."
 msgstr "여러 줄 입력 가능. 마크다운 문법 지원됨"
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:48:16
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:50:16
 msgid "Multiple yakumans"
 msgstr "역만 중첩"
 
@@ -1260,23 +1308,23 @@ msgstr "역만 중첩"
 msgid "My events"
 msgstr "내 이벤트"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:129:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:188:16
 msgid "Nagashi mangan"
 msgstr "유국만관"
 
-#: app/helpers/lastRound.ts:132:9
+#: app/helpers/lastRound.ts:133:7
 msgid "Nagashi mangan, nagashi: %1, tempai: %2, riichi: %3"
 msgstr "유국만관: %1, 텐파이: %2, 리치: %3"
 
-#: app/pages/OwnedEventsEdit/index.tsx:80:18
+#: app/pages/OwnedEventsEdit/index.tsx:77:64
 msgid "New event"
 msgstr "신규 이벤트"
 
-#: app/pages/GamesControl/TournamentControls.tsx:229:23
+#: app/pages/GamesControl/TournamentControls.tsx:237:23
 msgid "Next seating"
 msgstr "다음 좌석"
 
-#: app/pages/EventPrescript.tsx:150:16
+#: app/pages/EventPrescript.tsx:167:16
 msgid "Next session index"
 msgstr "다음 대국 인덱스"
 
@@ -1284,17 +1332,21 @@ msgstr "다음 대국 인덱스"
 msgid "No chombo penalties assigned yet"
 msgstr "아직 부과된 촌보 벌부가 없습니다"
 
-#: app/pages/EventPrescript.tsx:183:37
+#: app/pages/EventPrescript.tsx:200:37
 msgid "No errors found"
 msgstr "오류가 발견되지 않았습니다"
 
-#: app/pages/GamesControl/TournamentControls.tsx:222:18
+#: app/pages/GamesControl/TournamentControls.tsx:230:18
 msgid "No more prescripted sessions available"
 msgstr "더 이상 예정된 세션이 없습니다"
 
 #: app/pages/Penalties/PenaltiesList.tsx:82:45
 msgid "No penalties assigned yet"
 msgstr "아직 부과된 벌부가 없습니다"
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:108:54
+msgid "No tsumo loss (coming soon)"
+msgstr ""
 
 #: app/helpers/yaku.ts:297:34
 msgid "North round wind"
@@ -1308,15 +1360,15 @@ msgstr "자풍: 북"
 msgid "North wind"
 msgstr "북풍"
 
-#: app/pages/GamesControl/TournamentControls.tsx:107:22
+#: app/pages/GamesControl/TournamentControls.tsx:108:22
 msgid "Not ready"
 msgstr "준비되지 않음"
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:57:22
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:58:22
 msgid "Not selected"
 msgstr "선택되지 않음"
 
-#: app/pages/GamesControl/TournamentControls.tsx:108:22
+#: app/pages/GamesControl/TournamentControls.tsx:109:22
 msgid "Not started"
 msgstr "시작되지 않음"
 
@@ -1324,8 +1376,8 @@ msgstr "시작되지 않음"
 msgid "Notes on privileges"
 msgstr "권한 관련 안내"
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:126:25
-#: app/pages/ProfileManage.tsx:234:29 app/pages/ProfileManageAdmin.tsx:260:27
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:126:32
+#: app/pages/ProfileManage.tsx:234:36 app/pages/ProfileManageAdmin.tsx:256:34
 msgid "Nothing found"
 msgstr "검색 결과 없음"
 
@@ -1357,7 +1409,7 @@ msgstr ""
 msgid "Notifications settings"
 msgstr "알림 설정"
 
-#: app/pages/GamesControl/TournamentControls.tsx:269:26
+#: app/pages/GamesControl/TournamentControls.tsx:277:26
 msgid ""
 "Notify all subscribed players to come to their tables? This will send a "
 "message through notification service."
@@ -1365,11 +1417,11 @@ msgstr ""
 "알림을 활성화한 모든 작사들에게 작탁으로 이동 알림을 보내시겠습니까? 이는 알"
 "림 기능을 통해 메시지를 보냅니다."
 
-#: app/pages/GamesControl/TournamentControls.tsx:268:23
+#: app/pages/GamesControl/TournamentControls.tsx:276:23
 msgid "Notify players"
 msgstr "작사 알림"
 
-#: app/pages/GamesControl/TournamentControls.tsx:267:24
+#: app/pages/GamesControl/TournamentControls.tsx:275:24
 msgid "Notify players to come to their tables"
 msgstr "작사들에게 작탁으로 이동하도록 알림"
 
@@ -1407,20 +1459,20 @@ msgstr "심판 호출을 받을 시 알림"
 msgid "Numerical identifier of your user profile."
 msgstr "작사 프로필의 고유 숫자 식별자입니다."
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:174:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:239:16
 msgid "Oka bonus"
 msgstr "오카 보너스"
 
-#: app/pages/OwnedEvents.tsx:354:30
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:45:36
+#: app/pages/OwnedEvents.tsx:359:30
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:46:36
 msgid "Online event"
 msgstr "온라인 이벤트"
 
-#: app/pages/OwnedEventsEdit/TabsList.tsx:71:12
+#: app/pages/OwnedEventsEdit/TabsList.tsx:72:12
 msgid "Online event settings"
 msgstr "온라인 이벤트 설정"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:114:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:171:22
 msgid ""
 "Only first player by the order of the move from the loser would be "
 "considered a winner. If not checked, all players declaring Ron are "
@@ -1429,11 +1481,11 @@ msgstr ""
 "다가화 상황 발생 시 좌석 순서에 따라 첫번째 작사만 론 화료가 가능함. 비활성 "
 "시 론을 선언한 모든 작사가 화료하게 됨"
 
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:120:30
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:128:30
 msgid "Only for prescripted events, just follow the script"
 msgstr "사전 정의된 이벤트 전용으로, 이벤트 스크립트를 따름"
 
-#: app/pages/OwnedEvents.tsx:288:14
+#: app/pages/OwnedEvents.tsx:293:14
 msgid "Only ongoing events"
 msgstr "진행 중인 이벤트만"
 
@@ -1449,11 +1501,11 @@ msgstr "Pantheon으로 이동"
 msgid "Open event page"
 msgstr "이벤트 페이지 열기"
 
-#: app/pages/OwnedEvents.tsx:373:30
+#: app/pages/OwnedEvents.tsx:378:30
 msgid "Open event page in new tab"
 msgstr "신규 탭에서 이벤트 페이지 열기"
 
-#: app/components/AppHeader.tsx:115:24 app/components/AppHeader.tsx:128:24
+#: app/components/AppHeader.tsx:88:24 app/components/AppHeader.tsx:101:24
 msgid "Open menu"
 msgstr "메뉴 열기"
 
@@ -1461,11 +1513,11 @@ msgstr "메뉴 열기"
 msgid "Open riichi"
 msgstr "오픈 리치"
 
-#: app/pages/OwnedEventsEdit/UmaSelect.tsx:158:20
+#: app/pages/OwnedEventsEdit/UmaSelect.tsx:168:20
 msgid "Otherwise"
 msgstr "기타"
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:113:25
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:87:25
 msgid "Pao rule enabled for:"
 msgstr "책임지불(파오) 해당 역:"
 
@@ -1477,11 +1529,11 @@ msgstr "비밀번호 복구 실패"
 msgid "Password successfully updated"
 msgstr "비밀번호 업데이트 성공"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:222:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:288:16
 msgid "Pay chombo as reverse mangan"
 msgstr "촌보 시 역 만관으로 지급"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:223:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:289:22
 msgid ""
 "Pay chombo right on occasion. If not checked, chombo is subtracted from "
 "player score after uma is applied."
@@ -1489,20 +1541,20 @@ msgstr ""
 "촌보를 즉시 지급함. 비활성 시 대국 종료 및 우마 적용 이후에 촌보 벌부값을 제"
 "함"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:144:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:205:16
 msgid "Pay for honba by atamahane"
 msgstr "선오름에 따른 본장 지급"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:159:25
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:222:25
 msgid "Payments and scores"
 msgstr "점수와 보너스"
 
-#: app/components/MainMenu.tsx:128:29 app/pages/OwnedEvents.tsx:435:35
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:199:25
+#: app/components/MainMenu.tsx:128:29 app/pages/OwnedEvents.tsx:440:35
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:265:25
 msgid "Penalties"
 msgstr "벌부"
 
-#: app/pages/Penalties/PenaltyForm.tsx:124:16
+#: app/pages/Penalties/PenaltyForm.tsx:126:16
 msgid "Penalty amount"
 msgstr "벌부 점수"
 
@@ -1510,8 +1562,8 @@ msgstr "벌부 점수"
 msgid "Penalty applied by mistake"
 msgstr "벌부가 잘못 부과됨"
 
-#: app/pages/Penalties/PenaltyForm.tsx:158:28
-#: app/pages/Penalties/PenaltyForm.tsx:162:22
+#: app/pages/Penalties/PenaltyForm.tsx:160:28
+#: app/pages/Penalties/PenaltyForm.tsx:164:22
 msgid "Penalty applied!"
 msgstr "벌부가 적용되었습니다!"
 
@@ -1519,7 +1571,7 @@ msgstr "벌부가 적용되었습니다!"
 msgid "Penalty not approved by lead referee"
 msgstr "주심이 승인하지 않은 벌부"
 
-#: app/pages/Penalties/PenaltyForm.tsx:140:18
+#: app/pages/Penalties/PenaltyForm.tsx:142:18
 msgid "Penalty reason"
 msgstr "벌부 사유"
 
@@ -1531,23 +1583,29 @@ msgstr "전화번호"
 msgid "Pinfu"
 msgstr "핑후"
 
-#: app/pages/OwnedEventsEdit/UmaSelect.tsx:85:22
+#: app/pages/OwnedEventsEdit/UmaSelect.tsx:91:22
 msgid "Place / Session result"
 msgstr "대국 결과"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:93:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:149:16
 msgid "Play additional rounds"
 msgstr "남입 / 서입"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:64:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:116:22
 msgid "Play only east rounds"
 msgstr "동장전만 진행함"
 
-#: app/helpers/lastRound.ts:35:56
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:70:22
+msgid ""
+"Play with 3 players instead of 4. The North seat is removed; uma and seating "
+"are adjusted accordingly."
+msgstr ""
+
+#: app/helpers/lastRound.ts:32:37
 msgid "Player #%1"
 msgstr "작사 #%1"
 
-#: app/pages/ProfileManageAdmin.tsx:159:26
+#: app/pages/ProfileManageAdmin.tsx:155:26
 msgid "Player details were successfully saved"
 msgstr "정보가 성공적으로 저장되었습니다"
 
@@ -1563,11 +1621,11 @@ msgstr "작사가 다음 좌석에 추가되었습니다. 제외하려면 클릭
 msgid "Player title"
 msgstr "작사 호칭"
 
-#: app/pages/ProfileManageAdmin.tsx:122:26
+#: app/pages/ProfileManageAdmin.tsx:118:26
 msgid "Player was successfully registered"
 msgstr "성공적으로 회원가입되었습니다"
 
-#: app/pages/PlayersManage/index.tsx:116:14
+#: app/pages/PlayersManage/index.tsx:123:14
 msgid "Players"
 msgstr "작사"
 
@@ -1579,7 +1637,7 @@ msgstr "메일함에서 인증 메일을 확인해주세요."
 msgid "Please confirm account removal"
 msgstr "계정 삭제를 확인해 주세요"
 
-#: app/pages/EventPrescript.tsx:161:24
+#: app/pages/EventPrescript.tsx:178:24
 msgid "Please enter event script here"
 msgstr "이벤트 스크립트를 입력하세요"
 
@@ -1591,7 +1649,7 @@ msgstr "암호를 입력해 주십시오"
 msgid "Please enter you telegram ID"
 msgstr "텔레그램 ID를 입력해 주십시오"
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:89:24
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:87:24
 msgid ""
 "Please include a \"TEST\" word if you make a test tournament. Events that "
 "have \"TEST\" in title do not send any notifications to players."
@@ -1603,7 +1661,7 @@ msgstr ""
 msgid "Please note"
 msgstr "참고"
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:45:10
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:46:10
 msgid ""
 "Please note: you should set up the rating accordingly to tournament settings "
 "in game platform, otherwise expect errors on replay submit!"
@@ -1615,7 +1673,7 @@ msgstr ""
 msgid "Please press the button below to proceed with password recovery"
 msgstr "비밀번호 복구를 진행하시려면 아래 버튼을 눌러주세요"
 
-#: app/pages/Penalties/PenaltyForm.tsx:65:54
+#: app/pages/Penalties/PenaltyForm.tsx:67:36
 msgid "Please select player"
 msgstr "작사를 선택하시오"
 
@@ -1623,19 +1681,19 @@ msgstr "작사를 선택하시오"
 msgid "Please type in your title to proceed with removal"
 msgstr "계정 삭제를 진행하시려면 작사 호칭을 입력해주십시오"
 
-#: app/pages/GamesControl/TournamentControls.tsx:247:17
+#: app/pages/GamesControl/TournamentControls.tsx:255:17
 msgid "Please wait unit seating is ready"
 msgstr "좌석이 준비되는 동안 대기하여 주십시오"
 
-#: app/components/MainMenu.tsx:145:27 app/pages/OwnedEvents.tsx:450:37
+#: app/components/MainMenu.tsx:145:27 app/pages/OwnedEvents.tsx:455:37
 msgid "Predefined seating"
 msgstr "사전 정의 좌석"
 
-#: app/pages/EventPrescript.tsx:64:16
+#: app/pages/EventPrescript.tsx:72:16
 msgid "Predefined seating configuration"
 msgstr "사전 정의 좌석 설정"
 
-#: app/pages/EventPrescript.tsx:135:10
+#: app/pages/EventPrescript.tsx:148:10
 msgid ""
 "Predefined seating is entered as list of tables, one table per row. New game "
 "session should be indicated as an empty line. Example:"
@@ -1643,7 +1701,7 @@ msgstr ""
 "사전 정의된 좌석은 행당 한 테이블씩 테이블 목록으로 입력됩니다. 신규 대국은 "
 "빈 줄로 표시해야 합니다. 예시:"
 
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:119:24
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:127:24
 msgid "Prescripted wind shuffle"
 msgstr "사전 정의된 바람 배정"
 
@@ -1663,24 +1721,24 @@ msgstr ""
 msgid "Proceed with sign in"
 msgstr "로그인"
 
-#: app/pages/GamesControl/TournamentControls.tsx:135:21
+#: app/pages/GamesControl/TournamentControls.tsx:140:21
 msgid "Random seating"
 msgstr "임의 좌석"
 
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:106:22
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:114:22
 msgid "Random wind shuffle"
 msgstr "무작위 바람 배정"
 
-#: app/pages/OwnedEvents.tsx:522:26
+#: app/pages/OwnedEvents.tsx:530:26
 msgid "Rating table visible"
 msgstr "순위표 표시"
 
-#: app/pages/GamesControl/TournamentControls.tsx:112:22
+#: app/pages/GamesControl/TournamentControls.tsx:113:22
 msgid "Ready to approve"
 msgstr "승인 준비됨"
 
-#: app/components/MainMenu.tsx:163:24 app/pages/OwnedEvents.tsx:460:42
-#: app/pages/OwnedEvents.tsx:464:36
+#: app/components/MainMenu.tsx:163:24 app/pages/OwnedEvents.tsx:465:42
+#: app/pages/OwnedEvents.tsx:470:36
 msgid "Rebuild scoring"
 msgstr "점수 재설정"
 
@@ -1748,20 +1806,20 @@ msgstr "중"
 msgid "Referee privileges include:"
 msgstr "심판 권한은 다음과 같습니다:"
 
-#: app/pages/GamesControl/index.tsx:399:16
+#: app/pages/GamesControl/index.tsx:444:16
 msgid "Refresh data [%1]"
 msgstr "데이터 새로고침 [%1]"
 
-#: app/pages/ProfileManageAdmin.tsx:60:18 app/pages/ProfileSignup.tsx:43:16
+#: app/pages/ProfileManageAdmin.tsx:57:56 app/pages/ProfileSignup.tsx:43:16
 #: app/pages/ProfileSignup.tsx:159:16
 msgid "Register new account"
 msgstr "신규 회원가입"
 
-#: app/components/MainMenu.tsx:278:19 app/pages/ProfileManageAdmin.tsx:334:21
+#: app/components/MainMenu.tsx:278:19 app/pages/ProfileManageAdmin.tsx:330:21
 msgid "Register player"
 msgstr "작사 등록"
 
-#: app/pages/ProfileManageAdmin.tsx:331:21
+#: app/pages/ProfileManageAdmin.tsx:327:21
 msgid "Registration done!"
 msgstr "회원가입되었습니다!"
 
@@ -1769,11 +1827,11 @@ msgstr "회원가입되었습니다!"
 msgid "Remove administrator from event"
 msgstr "이벤트에서 관리자 삭제"
 
-#: app/pages/GamesControl/GamesList.tsx:262:29
+#: app/pages/GamesControl/GamesList.tsx:264:29
 msgid "Remove game"
 msgstr "대국 삭제"
 
-#: app/pages/GamesControl/GamesList.tsx:295:30
+#: app/pages/GamesControl/GamesList.tsx:297:30
 msgid "Remove game results"
 msgstr "대국 결과 삭제"
 
@@ -1794,7 +1852,7 @@ msgstr "이벤트에서 심판 삭제"
 msgid "Remove replacement"
 msgstr "교체 작사 삭제"
 
-#: app/pages/GamesControl/GamesList.tsx:261:30
+#: app/pages/GamesControl/GamesList.tsx:263:30
 msgid "Remove the game as it never existed"
 msgstr "대국 기록을 완전히 삭제합니다"
 
@@ -1814,7 +1872,7 @@ msgstr "%1 로 교체됨"
 msgid "Request password reset"
 msgstr "비밀번호 재설정 요청"
 
-#: app/pages/GamesControl/TournamentControls.tsx:255:22
+#: app/pages/GamesControl/TournamentControls.tsx:263:22
 msgid "Reset generated seating"
 msgstr "생성된 좌석 초기화"
 
@@ -1822,7 +1880,7 @@ msgstr "생성된 좌석 초기화"
 msgid "Reset my password"
 msgstr "비밀번호 재설정"
 
-#: app/pages/GamesControl/TournamentControls.tsx:256:21
+#: app/pages/GamesControl/TournamentControls.tsx:264:21
 msgid "Reset seating"
 msgstr "좌석 초기화"
 
@@ -1834,15 +1892,15 @@ msgstr "비밀번호 재설정"
 msgid "Riichi"
 msgstr "리치"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:134:25
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:194:25
 msgid "Riichi and honba"
 msgstr "리치와 본장"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:136:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:196:16
 msgid "Riichi goes to winner"
 msgstr "톱의 리치봉 습득"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:137:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:197:22
 msgid ""
 "Riichi left on table in case of draw in the end of the session will be given "
 "to session winner"
@@ -1854,15 +1912,15 @@ msgstr ""
 msgid "Rinshan kaihou"
 msgstr "영상개화"
 
-#: app/helpers/lastRound.ts:70:9 app/helpers/lastRound.ts:84:9
+#: app/helpers/lastRound.ts:88:7 app/helpers/lastRound.ts:99:7
 msgid "Ron, %1 from %2 (%3), riichi: %4"
 msgstr "론: %1 방총: %2 (%3), 리치: %4"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:111:25
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:168:25
 msgid "Round outcomes"
 msgstr "국 결과"
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:99:26
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:98:26
 msgid ""
 "Ruleset to be used as a template for the event. Fine tuning is available in "
 "adjacent tabs. Please note that all ruleset settings will be reset when you "
@@ -1871,7 +1929,7 @@ msgstr ""
 "이벤트 규칙의 템플릿으로 사용될 규칙 선택. 세부 규칙은 이후 탭에서 조정 가능"
 "함. 다른 템플릿 선택 시 기존 설정 초기화됨"
 
-#: app/pages/OwnedEventsEdit/TabsList.tsx:79:10
+#: app/pages/OwnedEventsEdit/TabsList.tsx:80:10
 msgid "Ruleset tuning"
 msgstr "상세 규칙 설정"
 
@@ -1899,30 +1957,30 @@ msgstr "삼색동순"
 msgid "Sanshoku doukou"
 msgstr "삼색동각"
 
-#: app/pages/OwnedEventsEdit/index.tsx:378:60
-#: app/pages/PlayersManage/LocalIdsTab.tsx:113:56
-#: app/pages/PlayersManage/TeamNamesTab.tsx:114:56
+#: app/pages/OwnedEventsEdit/index.tsx:383:60
+#: app/pages/PlayersManage/LocalIdsTab.tsx:115:56
+#: app/pages/PlayersManage/TeamNamesTab.tsx:116:56
 #: app/pages/ProfileManage.tsx:311:60
 msgid "Save changes"
 msgstr "변경사항 저장"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:46:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:53:22
 msgid "Score given to all players in the beginning of the rating"
 msgstr "이벤트 참가 시 주어지는 시작 점수"
 
-#: app/pages/EventPrescript.tsx:196:26
+#: app/pages/EventPrescript.tsx:213:26
 msgid "Script updated!"
 msgstr "스크립트가 업데이트 되었습니다!"
 
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:87:16
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:93:16
 msgid "Seating is defined in advance"
 msgstr "사전 설정 좌석"
 
-#: app/pages/GamesControl/TournamentControls.tsx:110:22
+#: app/pages/GamesControl/TournamentControls.tsx:111:22
 msgid "Seating ready"
 msgstr "좌석 준비됨"
 
-#: app/pages/GamesControl/TournamentControls.tsx:109:22
+#: app/pages/GamesControl/TournamentControls.tsx:110:22
 msgid "Seating..."
 msgstr "좌석 준비중..."
 
@@ -1930,20 +1988,20 @@ msgstr "좌석 준비중..."
 msgid "Select an avatar"
 msgstr "아바타 선택"
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:60:22
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:57:22
 msgid "Select event type"
 msgstr "이벤트 종류 선택"
 
-#: app/pages/GamesControl/GamesList.tsx:211:36
-#: app/pages/GamesControl/TournamentControls.tsx:302:28
+#: app/pages/GamesControl/GamesList.tsx:213:36
+#: app/pages/GamesControl/TournamentControls.tsx:310:28
 msgid "Select extra time"
 msgstr "추가 시간 선택"
 
-#: app/pages/GamesControl/TournamentControls.tsx:159:28
+#: app/pages/GamesControl/TournamentControls.tsx:164:28
 msgid "Select interval"
 msgstr "간격 선택"
 
-#: app/pages/Penalties/PenaltyForm.tsx:113:16
+#: app/pages/Penalties/PenaltyForm.tsx:115:16
 msgid "Select player"
 msgstr "작사 선택"
 
@@ -1951,7 +2009,7 @@ msgstr "작사 선택"
 msgid "Select replacement player for %1"
 msgstr "%1 의 교체 작사를 고르시오"
 
-#: app/pages/OwnedEventsEdit/UmaSelect.tsx:33:16
+#: app/pages/OwnedEventsEdit/UmaSelect.tsx:36:16
 msgid "Select uma bonus type"
 msgstr "우마 보너스 종류 선택"
 
@@ -1959,8 +2017,8 @@ msgstr "우마 보너스 종류 선택"
 msgid "Selected file is too big. Please select a file not bigger than 256KB"
 msgstr "파일 크기가 너무 큽니다. 256KB 이하의 파일을 선택해 주십시오"
 
-#: app/pages/OwnedEventsEdit/LocalSettings.tsx:36:16
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:119:16
+#: app/pages/OwnedEventsEdit/LocalSettings.tsx:38:16
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:125:16
 msgid "Series length"
 msgstr "시리즈 길이"
 
@@ -1970,43 +2028,43 @@ msgid ""
 "removed account."
 msgstr "서버 관리자도 삭제된 계정을 되돌릴 수는 없습니다."
 
-#: app/pages/GamesControl/GamesList.tsx:379:18
+#: app/pages/GamesControl/GamesList.tsx:381:18
 msgid "Session cancelled"
 msgstr "대국 취소됨"
 
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:37:16
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:41:16
 msgid "Session duration in minutes"
 msgstr "대국 시간 (분)"
 
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:46:16
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:49:16
 msgid "Session ending policy"
 msgstr "대국 종료 규칙"
 
-#: app/pages/GamesControl/GamesList.tsx:367:18
+#: app/pages/GamesControl/GamesList.tsx:369:18
 msgid "Session finished"
 msgstr "대국 종료됨"
 
-#: app/pages/GamesControl/GamesList.tsx:355:18
+#: app/pages/GamesControl/GamesList.tsx:357:18
 msgid "Session finished, but not confirmed"
 msgstr "대국이 종료되었지만 확인되기 전임"
 
-#: app/pages/GamesControl/GamesList.tsx:342:20
+#: app/pages/GamesControl/GamesList.tsx:344:20
 msgid "Session in progress"
 msgstr "대국 진행 중"
 
-#: app/pages/GamesControl/GamesList.tsx:330:20
+#: app/pages/GamesControl/GamesList.tsx:332:20
 msgid "Session is ready to start"
 msgstr "대국 시작 준비됨"
 
-#: app/pages/GamesControl/GamesList.tsx:391:18
+#: app/pages/GamesControl/GamesList.tsx:393:18
 msgid "Session is scheduled"
 msgstr "대국 예약됨"
 
-#: app/pages/GamesControl/TournamentControls.tsx:111:22
+#: app/pages/GamesControl/TournamentControls.tsx:112:22
 msgid "Session started"
 msgstr "대국 시작됨"
 
-#: app/components/MainMenu.tsx:98:23 app/pages/OwnedEvents.tsx:411:37
+#: app/components/MainMenu.tsx:98:23 app/pages/OwnedEvents.tsx:416:37
 msgid "Settings"
 msgstr "설정"
 
@@ -2014,12 +2072,12 @@ msgstr "설정"
 msgid "Settings saved!"
 msgstr "설정이 저장되었습니다!"
 
-#: app/pages/PlayersManage/index.tsx:122:20
+#: app/pages/PlayersManage/index.tsx:129:20
 msgid ""
 "Setup local identifiers of players to be used in predefined event script"
 msgstr "사전 정의된 이벤트 스크립트에서 사용할 작사의 로컬 ID 설정"
 
-#: app/pages/PlayersManage/index.tsx:137:20
+#: app/pages/PlayersManage/index.tsx:144:20
 msgid "Setup team name for each player (for team events)"
 msgstr "각 작사의 팀명 설정 (팀 이벤트의 경우)"
 
@@ -2031,33 +2089,33 @@ msgstr "소삼원"
 msgid "Shousuushii"
 msgstr "소사희"
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:156:18
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:161:18
 msgid "Show achievements for everyone"
 msgstr "업적 전체 공개"
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:140:18
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:143:18
 msgid "Show in ratings global list"
 msgstr "공개 이벤트"
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:148:18
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:152:18
 msgid "Show rating table for everyone"
 msgstr "순위표 전체 공개"
 
-#: app/pages/GamesControl/TournamentControls.tsx:213:19
-#: app/pages/GamesControl/TournamentControls.tsx:328:19
-#: app/pages/GamesControl/TournamentControls.tsx:354:19
+#: app/pages/GamesControl/TournamentControls.tsx:221:19
+#: app/pages/GamesControl/TournamentControls.tsx:336:19
+#: app/pages/GamesControl/TournamentControls.tsx:362:19
 msgid "Show results table"
 msgstr "결과표를 표시"
 
-#: app/pages/GamesControl/TournamentControls.tsx:128:19
+#: app/pages/GamesControl/TournamentControls.tsx:133:19
 msgid "Show results table and achievements"
 msgstr "결과표와 업적을 표시"
 
-#: app/pages/ProfileManage.tsx:263:22 app/pages/ProfileManageAdmin.tsx:289:20
+#: app/pages/ProfileManage.tsx:263:22 app/pages/ProfileManageAdmin.tsx:285:20
 msgid "Show user avatar"
 msgstr "사용자 아바타 표시"
 
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:107:28
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:115:28
 msgid "Shuffle players on the same table randomly"
 msgstr "같은 테이블의 작사에게 바람을 무작위로 배정"
 
@@ -2073,7 +2131,7 @@ msgstr "로그아웃"
 msgid "Sign up"
 msgstr "회원가입"
 
-#: app/pages/OwnedEventsEdit/UmaSelect.tsx:41:20
+#: app/pages/OwnedEventsEdit/UmaSelect.tsx:45:20
 msgid "Simple rank-based"
 msgstr "단순 순위 기반"
 
@@ -2094,39 +2152,43 @@ msgstr "자풍: 남"
 msgid "South wind"
 msgstr "남풍"
 
-#: app/pages/GamesControl/TournamentControls.tsx:282:21
+#: app/pages/GamesControl/TournamentControls.tsx:290:21
 msgid "Start timer"
 msgstr "타이머 시작"
 
-#: app/pages/GamesControl/TournamentControls.tsx:283:24
+#: app/pages/GamesControl/TournamentControls.tsx:291:24
 msgid "Start timer and game sessions?"
 msgstr "타이머 및 대국을 시작하시겠습니까?"
 
-#: app/pages/GamesControl/TournamentControls.tsx:281:22
+#: app/pages/GamesControl/TournamentControls.tsx:289:22
 msgid "Start timer and sessions"
 msgstr "타이머 시작과 대국"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:215:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:281:16
 msgid "Step of arbitrary penalty scores"
 msgstr "임의 벌부 점수 단계"
 
-#: app/components/StopEventModal.tsx:52:12 app/pages/OwnedEvents.tsx:265:14
+#: app/components/StopEventModal.tsx:52:12 app/pages/OwnedEvents.tsx:270:14
 msgid "Stop event"
 msgstr "이벤트 종료"
 
-#: app/components/StopEventModal.tsx:30:10 app/pages/OwnedEvents.tsx:243:12
+#: app/components/StopEventModal.tsx:30:10 app/pages/OwnedEvents.tsx:248:12
 msgid "Stop event \"%1\" (id #%2)? This action can't be undone!"
 msgstr ""
 "이벤트 \"%1\" (id #%2)를 종료하시겠습니까? 이 행동은 돌이킬 수 없습니다!"
 
-#: app/pages/SystemStats.tsx:235:18
+#: app/pages/SystemStats.tsx:182:18
 msgid "Subsystem"
 msgstr "하위 시스템"
 
-#: app/pages/ProfileManageAdmin.tsx:121:24
-#: app/pages/ProfileManageAdmin.tsx:158:24 app/pages/ProfileSignup.tsx:109:20
+#: app/pages/ProfileManageAdmin.tsx:117:24
+#: app/pages/ProfileManageAdmin.tsx:154:24 app/pages/ProfileSignup.tsx:109:20
 msgid "Success"
 msgstr "성공"
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:81:26
+msgid "Sum of points paid by players in noten to players in tenpai"
+msgstr ""
 
 #: app/helpers/yaku.ts:209:34
 msgid "Suuankou"
@@ -2140,11 +2202,11 @@ msgstr "스안커단기"
 msgid "Suukantsu"
 msgstr "스깡쯔"
 
-#: app/pages/GamesControl/TournamentControls.tsx:193:21
+#: app/pages/GamesControl/TournamentControls.tsx:201:21
 msgid "Swiss seating"
 msgstr "스위스 좌석"
 
-#: app/pages/GamesControl/TournamentControls.tsx:190:21
+#: app/pages/GamesControl/TournamentControls.tsx:198:21
 msgid "Swiss seating can't be used for first session in tournament"
 msgstr "대회 첫 대국에 스위스 좌석를 사용할 수 없습니다"
 
@@ -2152,11 +2214,11 @@ msgstr "대회 첫 대국에 스위스 좌석를 사용할 수 없습니다"
 msgid "System ID"
 msgstr "시스템 ID"
 
-#: app/components/MainMenu.tsx:287:19 app/pages/SystemStats.tsx:165:16
+#: app/components/MainMenu.tsx:287:19 app/pages/SystemStats.tsx:104:16
 msgid "System stats"
 msgstr "시스템 통계"
 
-#: app/pages/GamesControl/GamesList.tsx:119:30
+#: app/pages/GamesControl/GamesList.tsx:121:30
 msgid "Table # %1"
 msgstr "제 #%1 탁"
 
@@ -2164,7 +2226,7 @@ msgstr "제 #%1 탁"
 msgid "Tanyao"
 msgstr "탕야오"
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:41:22
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:42:22
 msgid ""
 "Tanyao costs 1 han on open hand. If not checked, tanyao does not work on "
 "open hand."
@@ -2172,16 +2234,16 @@ msgstr ""
 "비멘젠 상태로 탕야오 화료 시 1판 인정. 비활성 시 비멘젠 탕야오를 인정하지 않"
 "음"
 
-#: app/pages/PlayersManage/index.tsx:141:14
+#: app/pages/PlayersManage/index.tsx:148:14
 msgid "Team names"
 msgstr "팀명"
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:80:16
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:82:16
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:83:16
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:87:16
 msgid "Team tournament"
 msgstr "팀 대회"
 
-#: app/pages/PlayersManage/TeamNamesTab.tsx:100:24
+#: app/pages/PlayersManage/TeamNamesTab.tsx:102:24
 msgid "Team:"
 msgstr "팀:"
 
@@ -2189,7 +2251,7 @@ msgstr "팀:"
 msgid "Tenhou"
 msgstr "천화"
 
-#: app/pages/ProfileManage.tsx:257:22 app/pages/ProfileManageAdmin.tsx:283:26
+#: app/pages/ProfileManage.tsx:257:22 app/pages/ProfileManageAdmin.tsx:279:26
 msgid "Tenhou nickname"
 msgstr "천봉 nickname"
 
@@ -2206,7 +2268,7 @@ msgstr ""
 msgid "Texting or speaking by phone during the game"
 msgstr "대국 중 문자 또는 전화 사용"
 
-#: app/pages/Penalties/PenaltyForm.tsx:125:22
+#: app/pages/Penalties/PenaltyForm.tsx:127:22
 msgid ""
 "The penalty applies to the rating table in this event by subtracting the "
 "suggested amount of points from player rating. If the amount is zero, the "
@@ -2220,7 +2282,7 @@ msgid ""
 "The player name will be replaced with [Deleted account ####] everywhere."
 msgstr "위 모든 페이지에서 작사 호칭은 [Deleted account ####] 으로 대체됩니다."
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:122:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:180:22
 msgid ""
 "There will be a separate \"Abortive draw\" outcome to record draws due to "
 "four riichi, four kans, suufon renda, kyuushu kyuuhai, etc."
@@ -2228,12 +2290,12 @@ msgstr ""
 "사가리치, 사개깡, 사풍연타, 구종구패 등으로 인한 유국을 기록하는 별도의 \"도"
 "중유국\" 결과가 활성화됨"
 
-#: app/pages/GamesControl/GamesList.tsx:247:32
-#: app/pages/GamesControl/GamesList.tsx:263:32
+#: app/pages/GamesControl/GamesList.tsx:249:32
+#: app/pages/GamesControl/GamesList.tsx:265:32
 msgid "This action can't be undone. Continue?"
 msgstr "이 행동은 돌이킬 수 없습니다. 계속하시겠습니까?"
 
-#: app/pages/Penalties/PenaltyForm.tsx:115:22
+#: app/pages/Penalties/PenaltyForm.tsx:117:22
 msgid "This is a player to be penalized"
 msgstr "해당 작사에게 벌부가 적용됨"
 
@@ -2248,7 +2310,7 @@ msgstr ""
 "들을 검색하여 이벤트에 추가하게 됩니다. 단순 호칭은 중복 가능성이 있습니다. "
 "성을 포함한 이름은 괜찮습니다."
 
-#: app/pages/ProfileManageAdmin.tsx:237:26
+#: app/pages/ProfileManageAdmin.tsx:233:26
 msgid ""
 "This is a title that will be shown in rating table and in mobile assistant. "
 "Please select some unique title, like nickname or name+surname."
@@ -2256,7 +2318,7 @@ msgstr ""
 "이는 순위표와 Pantheon에 표시되는 호칭입니다. 되도록 고유한 호칭을 선택해 주"
 "십시오."
 
-#: app/pages/EventPrescript.tsx:151:22
+#: app/pages/EventPrescript.tsx:168:22
 msgid ""
 "This is the index of next session script (starting from 1). Each time new "
 "session starts, this value is increased automatically."
@@ -2264,18 +2326,23 @@ msgstr ""
 "다음 대국 스크립트의 인덱스( 1부터 시작함). 대국이 시작될 때마다 인덱스는 자"
 "동으로 증가함"
 
-#: app/pages/GamesControl/GamesList.tsx:297:32
+#: app/pages/GamesControl/GamesList.tsx:299:32
 msgid ""
 "This will only remove the game results, but you will need to cancel last "
 "round separately. Continue?"
 msgstr ""
 "대국 결과만 삭제되며 마지막 국은 별도로 취소해야 합니다. 계속하시겠습니까?"
 
-#: app/pages/GamesControl/TournamentControls.tsx:257:24
+#: app/pages/GamesControl/TournamentControls.tsx:265:24
 msgid "This will remove generated seating. Continue?"
 msgstr "생성된 좌석을 삭제하게됩니다. 계속하시겠습니까?"
 
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:38:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:67:25
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:69:16
+msgid "Three-player game (sanma)"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:42:22
 msgid ""
 "Timer starting value. After time runs out, session ending policy is applied "
 "(see below)."
@@ -2289,15 +2356,15 @@ msgstr "다크모드 전환"
 msgid "Toggle dimmed colors"
 msgstr "저채도모드 전환"
 
-#: app/pages/OwnedEvents.tsx:509:34
+#: app/pages/OwnedEvents.tsx:515:34
 msgid "Toggle visibility in ratings global list"
 msgstr "전체 이벤트 목록에서 표시 여부 전환"
 
-#: app/pages/OwnedEvents.tsx:526:32
+#: app/pages/OwnedEvents.tsx:534:32
 msgid "Toggle visibility of achievements"
 msgstr "업적 공개 여부 전환"
 
-#: app/pages/OwnedEvents.tsx:518:32
+#: app/pages/OwnedEvents.tsx:524:32
 msgid "Toggle visibility of rating table"
 msgstr "순위표 표시 여부 전환"
 
@@ -2305,7 +2372,7 @@ msgstr "순위표 표시 여부 전환"
 msgid "Toitoi"
 msgstr "또이또이"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:63:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:115:16
 msgid "Tonpuusen"
 msgstr "동풍전"
 
@@ -2313,20 +2380,28 @@ msgstr "동풍전"
 msgid "Too much noise during the game"
 msgstr "대국 중 과도한 소음"
 
-#: app/pages/OwnedEvents.tsx:341:30
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:46:40
+#: app/pages/OwnedEvents.tsx:346:30
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:47:40
 msgid "Tournament"
 msgstr "대회"
 
-#: app/pages/OwnedEventsEdit/TabsList.tsx:62:12
+#: app/pages/OwnedEventsEdit/TabsList.tsx:63:12
 msgid "Tournament settings"
 msgstr "대회 설정"
 
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:113:28
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:121:28
 msgid "Try to place players on winds they previously played less"
 msgstr "이전에 적게 배정받은 바람을 우선 배정"
 
-#: app/helpers/lastRound.ts:98:9
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:97:20
+msgid "Tsumo loss"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:107:42
+msgid "Tsumo loss (default)"
+msgstr ""
+
+#: app/helpers/lastRound.ts:110:7
 msgid "Tsumo, %1 (%2), riichi: %3"
 msgstr "쯔모: %1 (%2), 리치: %3"
 
@@ -2334,19 +2409,19 @@ msgstr "쯔모: %1 (%2), 리치: %3"
 msgid "Tsuuiisou"
 msgstr "자일색"
 
-#: app/pages/OwnedEventsEdit/UmaSelect.tsx:54:20
+#: app/pages/OwnedEventsEdit/UmaSelect.tsx:58:20
 msgid "Uma bonus for 1st place"
 msgstr "1위 우마 보너스"
 
-#: app/pages/OwnedEventsEdit/UmaSelect.tsx:61:20
+#: app/pages/OwnedEventsEdit/UmaSelect.tsx:65:20
 msgid "Uma bonus for 2nd place"
 msgstr "2위 우마 보너스"
 
-#: app/pages/OwnedEventsEdit/UmaSelect.tsx:68:20
+#: app/pages/OwnedEventsEdit/UmaSelect.tsx:72:20
 msgid "Uma penalty for 3rd place"
 msgstr "3위 우마 벌부"
 
-#: app/pages/OwnedEventsEdit/UmaSelect.tsx:75:20
+#: app/pages/OwnedEventsEdit/UmaSelect.tsx:80:20
 msgid "Uma penalty for 4th place"
 msgstr "4위 우마 벌부"
 
@@ -2354,15 +2429,15 @@ msgstr "4위 우마 벌부"
 msgid "Update password"
 msgstr "비밀번호 업데이트"
 
-#: app/pages/ProfileManageAdmin.tsx:333:21
+#: app/pages/ProfileManageAdmin.tsx:329:21
 msgid "Update player"
 msgstr "정보 업데이트"
 
-#: app/pages/ProfileManageAdmin.tsx:58:18
+#: app/pages/ProfileManageAdmin.tsx:57:21
 msgid "Update player account"
 msgstr "계정 업데이트"
 
-#: app/pages/EventPrescript.tsx:196:55
+#: app/pages/EventPrescript.tsx:213:55
 msgid "Update script"
 msgstr "스크립트 업데이트"
 
@@ -2370,43 +2445,43 @@ msgstr "스크립트 업데이트"
 msgid "Update settings"
 msgstr "설정 업데이트"
 
-#: app/pages/GamesControl/TournamentControls.tsx:152:21
+#: app/pages/GamesControl/TournamentControls.tsx:157:21
 msgid "Use interval seating for next session"
 msgstr "다음 대국에 간격 좌석를 사용"
 
-#: app/pages/GamesControl/TournamentControls.tsx:172:26
+#: app/pages/GamesControl/TournamentControls.tsx:180:26
 msgid "Use interval seating for next session?"
 msgstr "다음 대국에 간격 좌석를 사용하시겠습니까?"
 
-#: app/pages/GamesControl/TournamentControls.tsx:134:22
+#: app/pages/GamesControl/TournamentControls.tsx:139:22
 msgid "Use random seating for next session"
 msgstr "다음 대국에 임의 좌석를 사용"
 
-#: app/pages/GamesControl/TournamentControls.tsx:136:24
+#: app/pages/GamesControl/TournamentControls.tsx:141:24
 msgid "Use random seating for next session?"
 msgstr "다음 대국에 임의 좌석를 사용하시겠습니까?"
 
-#: app/pages/GamesControl/TournamentControls.tsx:191:21
+#: app/pages/GamesControl/TournamentControls.tsx:199:21
 msgid "Use swiss seating for next session"
 msgstr "다음 대국에 스위스 좌석를 사용"
 
-#: app/pages/GamesControl/TournamentControls.tsx:194:24
+#: app/pages/GamesControl/TournamentControls.tsx:202:24
 msgid "Use swiss seating for next session?"
 msgstr "다음 대국에 스위스 자리를 사용하시겠습니까?"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:253:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:320:22
 msgid "Use yakitori rule"
 msgstr "야키토리 규칙 사용"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:184:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:249:22
 msgid "Value of one honba stick"
 msgstr "본장당 점수"
 
-#: app/pages/OwnedEvents.tsx:491:32
+#: app/pages/OwnedEvents.tsx:497:32
 msgid "Visibility"
 msgstr "표시 여부"
 
-#: app/pages/OwnedEvents.tsx:505:36
+#: app/pages/OwnedEvents.tsx:511:36
 msgid "Visibility management"
 msgstr "표시 여부 관리"
 
@@ -2430,11 +2505,11 @@ msgstr "다음 항목들은 삭제되지 않습니다:"
 msgid "What will be deleted:"
 msgstr "다음 항목들이 삭제됩니다:"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:88:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:143:22
 msgid "When a player runs out of score points, the game immediately ends"
 msgstr "작사 중 하나의 점수가 0점 미만이 될 경우 대국이 종료됨"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:78:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:132:22
 msgid ""
 "When dealer wins, or stays tempai after draw, seat winds will be changed. "
 "Honba is added only after draw."
@@ -2442,7 +2517,7 @@ msgstr ""
 "친의 화료 또는 유국 시 텐파이에도 국이 연장되지 않음. 본장은 유국 시에만 추가"
 "됨"
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:55:22
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:58:22
 msgid ""
 "When disabled, use separate yakuhai names like \"East\" and \"White dragon\" "
 "instead of aggregated names like \"Yakuhai x3\"."
@@ -2450,37 +2525,41 @@ msgstr ""
 "사용하지 않으면 \"역패 x3\"처럼 집계된 이름 대신 \"동\"과 \"백\" 같은 개별 역"
 "패 이름을 사용합니다."
 
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:61:20
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:65:20
 msgid "When time is out, finish current hand and interrupt the session"
 msgstr "타이머 종료 시점에서 진행중인 국까지 진행하고 대국 종료"
 
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:66:20
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:70:20
 msgid ""
 "When time is out, finish current hand, play one more, and then interrup the "
 "session"
 msgstr "타이머 종료 시점에서 진행중인 국 및 그 다음 국까지 진행하고 대국 종료"
 
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:98:26
+msgid "Whether tsumo payments are scored the same as in four-player games"
+msgstr ""
+
 #: app/helpers/yaku.ts:309:34
 msgid "White dragon"
 msgstr "백"
 
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:96:18
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:103:18
 msgid "Wind shuffle mode"
 msgstr "바람 배정 방식"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:252:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:319:16
 msgid "Yakitori"
 msgstr "야키토리"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:260:18
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:328:18
 msgid "Yakitori penalty"
 msgstr "야키토리 벌부"
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:61:25
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:65:25
 msgid "Yaku allowed"
 msgstr "허용 역"
 
-#: app/pages/OwnedEventsEdit/TabsList.tsx:87:10
+#: app/pages/OwnedEventsEdit/TabsList.tsx:88:10
 msgid "Yaku settings"
 msgstr "역 설정"
 
@@ -2508,11 +2587,11 @@ msgstr ""
 "시스템에서 계정 데이터를 삭제하려고 합니다. 확인바랍니다. 창을 닫으시면 취소"
 "됩니다."
 
-#: app/pages/GamesControl/GamesList.tsx:281:32
+#: app/pages/GamesControl/GamesList.tsx:283:32
 msgid "You are going to forcefully finish this game. Continue?"
 msgstr "이 대국을 강제로 종료하려고 합니다. 계속하시겠습니까?"
 
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:88:22
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:94:22
 msgid ""
 "You should prepare the tournament script yourself. No automated seating "
 "functionality is available when this flag is set."
@@ -2524,7 +2603,7 @@ msgstr ""
 msgid "You should read and accept the Privacy Policy"
 msgstr "개인 정보 보호 정책을 읽고 동의해야 합니다"
 
-#: app/pages/GamesControl/TournamentControls.tsx:341:24
+#: app/pages/GamesControl/TournamentControls.tsx:349:24
 msgid ""
 "You won't be able to cancel last round after the results are approved. "
 "Approve session results?"
@@ -2582,19 +2661,19 @@ msgstr "비밀번호가 취약합니다. 더 강력한 비밀번호를 입력해
 msgid "Your telegram ID"
 msgstr "텔레그램 ID"
 
-#: app/helpers/lastRound.ts:38:67
+#: app/helpers/lastRound.ts:59:67
 msgid "all noten"
 msgstr "전원 노텐"
 
-#: app/helpers/lastRound.ts:38:24
+#: app/helpers/lastRound.ts:59:24
 msgid "all tenpai"
 msgstr "전원 텐파이"
 
-#: app/helpers/lastRound.ts:53:32
+#: app/helpers/lastRound.ts:73:32
 msgid "dora %1"
 msgstr "도라 %1"
 
-#: app/helpers/lastRound.ts:61:39
+#: app/helpers/lastRound.ts:81:39
 msgid "pao: %1"
 msgstr ""
 
@@ -2602,7 +2681,7 @@ msgstr ""
 msgid "show / hide"
 msgstr "표시 / 숨김"
 
-#: app/helpers/lastRound.ts:56:11
+#: app/helpers/lastRound.ts:76:11
 msgid "yakuman!"
 msgstr "역만!"
 

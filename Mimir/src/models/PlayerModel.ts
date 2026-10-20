@@ -1,4 +1,5 @@
 import { authenticateCaller } from '../helpers/authentication.js';
+import { GHOST_PLAYER_ID } from '../../../Common/constants.js';
 import { TransactionPropagation } from '@mikro-orm/core';
 import { PersonEx, Player } from 'tsclients/proto/atoms.pb.js';
 import { Model } from './Model.js';
@@ -11,6 +12,8 @@ import { filterPersonalData, filterPersonalDataSingle } from '../helpers/filterP
 
 export class PlayerModel extends Model {
   async findById(ids: number[], skipCache = false, filterPD = true): Promise<PersonEx[]> {
+    const requestedIds = ids;
+    ids = ids.filter((id) => id !== GHOST_PLAYER_ID);
     let missingIds: number[] = [];
     const fetchedData = new Map<number, PersonEx>();
     const fetchedRemote = new Map<number, PersonEx>();
@@ -45,7 +48,11 @@ export class PlayerModel extends Model {
     }
 
     const allData: PersonEx[] = [];
-    for (const id of ids) {
+    for (const id of requestedIds) {
+      if (id === GHOST_PLAYER_ID) {
+        allData.push({ ...filterPersonalDataSingle(), id, title: '', lastUpdate: '' });
+        continue;
+      }
       if (fetchedData.has(id)) {
         allData.push(fetchedData.get(id)!);
       }
