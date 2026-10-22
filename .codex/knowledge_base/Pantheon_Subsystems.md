@@ -20,9 +20,9 @@ Pantheon is a set of services, not one application. `Mimir` owns game, event, to
 | `Meili/` | TypeScript GeoIP provider. HTTP handling is in `src/app.ts`, database lookup in `src/geoip.ts`, and compatible country/timezone lists in `src/data`. Each of four production workers reads `bin/GeoLite2-City.mmdb` once; Nginx balances requests between them. Keep IP-derived defaults and API response shapes compatible with callers. |
 | `Fenrir/` | Playwright end-to-end tests in `tests/*.spec.ts`; shared helpers are in `tests/utils`. Follow `playwright.config.ts` and use the root `make e2e_dev` flow against a running development stack. |
 | `Hermod/` | TypeScript mail HTTP service (`src/app.ts`), local Postfix submission and MIME dumps (`src/mail.ts`), plus Postfix/OpenDKIM container configuration and scripts. Treat `opendkim_keys` as private material; test changes through mail flows in Frey and the development `make dump_last_mail` command. |
-| `Database/` | PostgreSQL initialization, backup, and migration support. Existing schemas evolve through the owning service's migrations (Frey, Mimir, Hugin); use initialization SQL for fresh database setup. Treat import, restore, and cleanup commands as data-changing operations. |
-| `Redis/` | Redis image and entrypoint configuration. Check effects on Frey/Mimir caches when changing it. |
-| `Common/` | Shared protobuf contracts, generated clients, storage helpers, common images, and reverse-proxy configuration. Run `make -C Common lint` for `.proto` edits and check all affected services after shared changes. |
+| `Database/` | Standalone Alpine/PostgreSQL image, initialization, Bash backup notifications, and migration support. Existing schemas evolve through the owning service's migrations (Frey, Mimir, Hugin); use initialization SQL for fresh database setup. Treat import, restore, and cleanup commands as data-changing operations. |
+| `Redis/` | Standalone Alpine/Redis image and entrypoint configuration. Check effects on Frey/Mimir caches when changing it. |
+| `Common/` | Shared protobuf contracts, generated clients, storage helpers, the shared Node image in `Common/ContainerBase` (`pantheon-container-base-v4`), and reverse-proxy configuration. Run `make -C Common lint` for `.proto` edits and check all affected services after shared changes. |
 
 ### Mimir specifics
 

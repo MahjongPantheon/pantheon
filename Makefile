@@ -90,12 +90,14 @@ build_reverse_proxy: export DOCKER_BUILDKIT=1
 build_reverse_proxy:
 	cd Common/ReverseProxy && ${CONTAINER_COMMAND} buildx build -t pantheon-reverse-proxy .
 
+.PHONY: container_base
+container_base:
+	cd Common/ContainerBase && ${CONTAINER_COMMAND} buildx build --load -t ghcr.io/mahjongpantheon/pantheon-container-base-v4-${CONTAINER_ARCH}:latest .
+
 .PHONY: container
 container: export COMPOSE_DOCKER_CLI_BUILD=1
 container: export DOCKER_BUILDKIT=1
-container:
-	cd Common/Backend && ${CONTAINER_COMMAND} buildx build -t ghcr.io/mahjongpantheon/pantheon-backend-common-v3:latest .
-	cd Common/Frontend && ${CONTAINER_COMMAND} buildx build -t ghcr.io/mahjongpantheon/pantheon-frontend-common-v3:latest .
+container: container_base
 	${COMPOSE_COMMAND} down
 	${COMPOSE_COMMAND} up --build -d
 

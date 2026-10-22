@@ -22,7 +22,7 @@ The nginx request limit is 1 MB to accommodate base64 encoding.
 
 ### Development and deployment
 
-Use the same `pantheon-frontend-common-v3` container as the other Node services.
+Use the same `pantheon-container-base-v4` container as the other Node services.
 After updating an existing installation, rebuild/recreate the Gullveig container
 with the appropriate Compose file before installing dependencies.
 

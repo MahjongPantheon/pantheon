@@ -4,7 +4,13 @@ on:
   workflow_dispatch:
   push:
     paths:
+      - 'Common/ContainerBase/**'
+      - 'Database/**'
+      - 'Redis/**'
       - 'Hermod/**'
+      - 'Hugin/config/**'
+      - '**/cron/tabs/**'
+      - '.github/workflows/build.yml'
       - '**/Dockerfile'
       - '**/Makefile'
       - '**/supervisord.conf'
@@ -36,25 +42,15 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and push [Backend common]
+      - name: Build and push [Container base]
         uses: docker/build-push-action@v6
         with:
-          context: ./Common/Backend
+          context: ./Common/ContainerBase
           platforms: linux/amd64
           push: ${{ github.event_name != 'pull_request' }}
           tags: |
-            ghcr.io/mahjongpantheon/pantheon-backend-common-v3-amd64:latest
-            ghcr.io/mahjongpantheon/pantheon-backend-common-v3-amd64:${{ github.sha }}
-
-      - name: Build and push [Frontend common]
-        uses: docker/build-push-action@v6
-        with:
-          context: ./Common/Frontend
-          platforms: linux/amd64
-          push: ${{ github.event_name != 'pull_request' }}
-          tags: |
-            ghcr.io/mahjongpantheon/pantheon-frontend-common-v3-amd64:latest
-            ghcr.io/mahjongpantheon/pantheon-frontend-common-v3-amd64:${{ github.sha }}
+            ghcr.io/mahjongpantheon/pantheon-container-base-v4-amd64:latest
+            ghcr.io/mahjongpantheon/pantheon-container-base-v4-amd64:${{ github.sha }}
 
       - name: Build and push [Database]
         uses: docker/build-push-action@v6

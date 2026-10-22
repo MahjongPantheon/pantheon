@@ -1,13 +1,18 @@
-ARG CONTAINER_ARCH=amd64
-FROM ghcr.io/mahjongpantheon/pantheon-backend-common-v3-${CONTAINER_ARCH}:latest
+FROM alpine:3.22.0
+
+# PostgreSQL runtime plus initialization, compression and remote-backup tools.
+RUN apk add --no-cache bash ca-certificates curl git make openssh postgresql16 su-exec tzdata zstd
+ENV TIMEZONE=Europe/Berlin
+ENV LANG=en_US.utf8
+RUN cp /usr/share/zoneinfo/${TIMEZONE} /etc/localtime && \
+    echo "${TIMEZONE}" > /etc/timezone
+RUN mkdir -p /home/user /etc/profile.d
 
 ENV PGDATA=/var/lib/postgresql/data
 ENV POSTGRES_PASSWORD=pgpass
 
 # copy entry point
-COPY entrypoint.sh /entrypoint.sh
-RUN dos2unix /entrypoint.sh
-RUN chmod 755 /entrypoint.sh
+COPY --chmod=755 entrypoint.sh /entrypoint.sh
 
 # copy db init scripts
 RUN mkdir -p /container-entrypoint-initdb.d

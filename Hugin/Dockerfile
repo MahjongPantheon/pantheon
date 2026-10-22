@@ -1,5 +1,5 @@
 ARG CONTAINER_ARCH=amd64
-FROM ghcr.io/mahjongpantheon/pantheon-frontend-common-v3-${CONTAINER_ARCH}:latest
+FROM ghcr.io/mahjongpantheon/pantheon-container-base-v4-${CONTAINER_ARCH}:latest
 
 # these should match auth data in dbinit_hugin.sql
 ENV PHINX_DB_HUGIN_NAME=hugin
@@ -10,9 +10,7 @@ ENV TZ=UTC
 RUN apk add --no-cache rsyslog
 
 # copy entry point
-COPY entrypoint.sh /entrypoint.sh
-RUN dos2unix /entrypoint.sh
-RUN chmod 755 /entrypoint.sh
+COPY --chmod=755 entrypoint.sh /entrypoint.sh
 
 # copy supervisor config
 COPY supervisord.conf /etc/supervisord.conf
@@ -28,10 +26,4 @@ COPY config/prometheus_partial_config.conf /prometheus_partial_config.conf
 RUN bash /install_prometheus.sh
 
 # Folders init
-RUN mkdir -p /run/nginx
 RUN mkdir -p /var/www/html/Hugin /var/www/html/Hugin-dist
-RUN mkdir -p /var/www/html/Common
-
-# Entry point
-CMD ["/entrypoint.sh"]
-

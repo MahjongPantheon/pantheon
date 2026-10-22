@@ -29,7 +29,7 @@ preferences and logs the database error at startup.
 
 ### Development and deployment
 
-The container uses `pantheon-frontend-common-v3`, matching Mimir and Gullveig.
+The container uses `pantheon-container-base-v4`, matching Mimir and Gullveig.
 Rebuild/recreate the Meili container when migrating from the PHP implementation.
 
 From the repository root:

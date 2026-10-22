@@ -1,10 +1,8 @@
 ARG CONTAINER_ARCH=amd64
-FROM ghcr.io/mahjongpantheon/pantheon-frontend-common-v3-${CONTAINER_ARCH}:latest
+FROM ghcr.io/mahjongpantheon/pantheon-container-base-v4-${CONTAINER_ARCH}:latest
 
 # copy entry point
-COPY entrypoint.sh /entrypoint.sh
-RUN dos2unix /entrypoint.sh
-RUN chmod 755 /entrypoint.sh
+COPY --chmod=755 entrypoint.sh /entrypoint.sh
 
 # copy supervisor config
 COPY supervisord.conf /etc/supervisord.conf
@@ -13,11 +11,5 @@ COPY supervisord.conf /etc/supervisord.conf
 COPY sigrun-container.nginx.conf /etc/nginx/http.d/sigrun.conf
 
 # Folders init
-RUN mkdir -p /run/nginx
 RUN mkdir -p /var/www/html/Sigrun
 RUN mkdir -p /var/www/html/Sigrun-dist
-RUN mkdir -p /var/www/html/Common
-
-# Entry point
-CMD ["/entrypoint.sh"]
-

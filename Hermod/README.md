@@ -34,7 +34,7 @@ compiled Node CLI. This cache records queue acceptance, not final delivery.
 
 ### Development and deployment
 
-Hermod uses `pantheon-frontend-common-v3` with the Postfix/OpenDKIM packages added
+Hermod uses `pantheon-container-base-v4` with the Postfix/OpenDKIM packages added
 in its Dockerfile. Rebuild/recreate the Hermod container when migrating from PHP.
 Its source mount now includes the whole `Hermod` directory; private keys remain
 on their existing dedicated mount.

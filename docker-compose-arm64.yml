@@ -79,8 +79,6 @@ services:
   db.pantheon.internal:
     build:
       context: ./Database
-      args:
-        CONTAINER_ARCH: arm64
     cgroup: host
     cap_add:
       - ALL

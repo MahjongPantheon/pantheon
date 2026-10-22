@@ -136,8 +136,18 @@ is displayed, try adding `sudo` before `make`._
    - As an option, you can run `make container_dev` to build containers from scratch on you local machine. This may take a long time.
 2. Run `make dev` to start all containers, install dependencies for all projects, run database migrations and start development servers.
 3. After everything is build, you can use `make logs` and `make php_logs` in each subsystem folder to view logs in real-time. Also you may use `make shell` to get
-   to container shell, if you want to. Notice that killing php-fpm, postgres or nginx will ruin the container entirely.
+   to container shell, if you want to. Notice that killing postgres or nginx will ruin the container entirely.
 4. You can use `make pantheon_stop` to stop all containers (without deleting the data) and `make kill` to stop the container AND clean images (e.g. this will remove all db data).
+
+The shared Node service image is built from `Common/ContainerBase` and published as
+`ghcr.io/mahjongpantheon/pantheon-container-base-v4-{amd64,arm64}:latest`.
+`make container_base` builds and loads the tag for the current architecture;
+`make container` builds it before rebuilding services. The base owns shared Node
+and build tools, the local `user`, nginx runtime directories/logging, and the
+default `/entrypoint.sh` command. Service Dockerfiles provide executable entrypoints,
+service configuration, folders and additional packages. Database and Redis use
+standalone Alpine images; Fenrir retains Ubuntu for Playwright. After changing
+the base image, rebuild dependent service images and recreate their containers.
 
 Development dependency installation (`make dev_deps` from the root or inside a service) reuses existing `node_modules` and the shared pnpm store. Local `file:` packages such as `Common/tsclients` are refreshed on each run, including added and removed files. The install uses `--no-frozen-lockfile` so local package manifest changes are also resolved, even when `CI` is set. To reinstall a service from scratch, remove its `node_modules` and run `make dev_deps` again. Production builds and CI prepare source-project dependencies with `make deps` and `--frozen-lockfile`, which fails if manifests and lockfiles differ. Existing `prod_deps` targets continue to prepare runtime dependencies in the built output folders.
 
