@@ -127,7 +127,7 @@ test: seed_test_db build
 .PHONY: container_test
 container_test: get_container_id
 	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
-		echo "${RED}Mimir container is not running.${NC}"; \
+		echo "${RED}Mimir container is not running.${NC}"; exit 1; \
 	else \
 		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Mimir && HOME=/home/user su-exec user make test' ; \
 	fi
@@ -143,7 +143,7 @@ test_verbose: seed_test_db
 .PHONY: container_test_verbose
 container_test_verbose: get_container_id
 	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
-		echo "${RED}Mimir container is not running.${NC}"; \
+		echo "${RED}Mimir container is not running.${NC}"; exit 1; \
 	else \
 		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Mimir && HOME=/home/user su-exec user make test_verbose' ; \
 	fi

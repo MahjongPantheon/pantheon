@@ -34,11 +34,13 @@ jobs:
           ENV_FILENAME: .env.development
 
       - name: Install project deps
+        id: deps
         run: make deps
         env:
           ENV_FILENAME: .env.development
 
       - name: Apply db migrations
+        id: migrate
         run: make migrate
         env:
           ENV_FILENAME: .env.development
@@ -48,7 +50,9 @@ jobs:
         env:
           ENV_FILENAME: .env.development
 
-      - name: Run all unit tests
+      - name: Run all service test suites
+        # A lint failure must not hide test failures in other services.
+        if: ${{ !cancelled() && steps.deps.outcome == 'success' && steps.migrate.outcome == 'success' }}
         run: make test
         env:
           ENV_FILENAME: .env.development

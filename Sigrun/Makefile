@@ -80,7 +80,7 @@ test:
 PHONY: container_test
 container_test: get_container_id
 	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
-		echo "${RED}Sigrun container is not running.${NC}"; \
+		echo "${RED}Sigrun container is not running.${NC}"; exit 1; \
 	else \
 		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Sigrun && HOME=/home/user su-exec user make test' ; \
 	fi

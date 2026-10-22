@@ -515,43 +515,44 @@ lint:
 			exit $$LINT_RESULT ;\
 		}
 
-.PHONY: gullveig_test
-gullveig_test:
-	cd Gullveig && ${MAKE} container_test
+SERVICE_TEST_TARGETS := tyr_test frey_test mimir_test gullveig_test meili_test hermod_test hugin_test forseti_test sigrun_test
 
-.PHONY: hugin_test
-hugin_test:
-	cd Hugin && ${MAKE} container_test
+.PHONY: $(SERVICE_TEST_TARGETS) $(addsuffix _verbose,$(SERVICE_TEST_TARGETS))
+tyr_test tyr_test_verbose:
+	cd Tyr && ${MAKE} $(if $(filter %_verbose,$@),container_test_verbose,container_test)
 
-.PHONY: hermod_test
-hermod_test:
-	cd Hermod && ${MAKE} container_test
+frey_test frey_test_verbose:
+	cd Frey && ${MAKE} $(if $(filter %_verbose,$@),container_test_verbose,container_test)
 
-.PHONY: meili_test
-meili_test:
-	cd Meili && ${MAKE} container_test
+mimir_test mimir_test_verbose:
+	cd Mimir && ${MAKE} $(if $(filter %_verbose,$@),container_test_verbose,container_test)
+
+gullveig_test gullveig_test_verbose:
+	cd Gullveig && ${MAKE} $(if $(filter %_verbose,$@),container_test_verbose,container_test)
+
+meili_test meili_test_verbose:
+	cd Meili && ${MAKE} $(if $(filter %_verbose,$@),container_test_verbose,container_test)
+
+hermod_test hermod_test_verbose:
+	cd Hermod && ${MAKE} $(if $(filter %_verbose,$@),container_test_verbose,container_test)
+
+hugin_test hugin_test_verbose:
+	cd Hugin && ${MAKE} $(if $(filter %_verbose,$@),container_test_verbose,container_test)
+
+forseti_test forseti_test_verbose:
+	cd Forseti && ${MAKE} container_test
+
+sigrun_test sigrun_test_verbose:
+	cd Sigrun && ${MAKE} container_test
 
 .PHONY: test
 test:
-	@echo "Running tests for all subsystems"
-	@echo "For more information, you might also want to run 'make test_verbose'"
-	cd Tyr && ${MAKE} container_test
-	cd Frey && ${MAKE} container_test
-	cd Mimir && ${MAKE} container_test
-	cd Gullveig && ${MAKE} container_test
-	cd Meili && ${MAKE} container_test
-	cd Hermod && ${MAKE} container_test
-	cd Hugin && ${MAKE} container_test
+	@echo "Running every service test suite, including after an earlier suite fails"
+	${MAKE} -k $(SERVICE_TEST_TARGETS)
 
 .PHONY: test_verbose
 test_verbose:
-	cd Tyr && ${MAKE} container_test_verbose
-	cd Frey && ${MAKE} container_test_verbose
-	cd Mimir && ${MAKE} container_test_verbose
-	cd Gullveig && ${MAKE} container_test_verbose
-	cd Meili && ${MAKE} container_test_verbose
-	cd Hermod && ${MAKE} container_test_verbose
-	cd Hugin && ${MAKE} container_test_verbose
+	${MAKE} -k $(addsuffix _verbose,$(SERVICE_TEST_TARGETS))
 
 .PHONY: autofix
 autofix:
