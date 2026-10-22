@@ -2,7 +2,7 @@ import { describe, expect, it } from '@jest/globals';
 import { BatchWriter, Busy } from './batch.js';
 import { analyticsRow } from './ingest.js';
 import { previousPeriod, mergeHistograms } from './aggregation.js';
-import { parseMetrics, renderMetrics } from './metrics.js';
+import { parseMetrics, renderMetrics, redisOptions } from './metrics.js';
 import { moment } from './time.js';
 
 const payload = {
@@ -153,5 +153,31 @@ describe('shared Prometheus gauge encoding', () => {
     ].map((input) => ({ input }))
   )('rejects invalid gauge input %#', ({ input }) => {
     expect(() => parseMetrics(input)).toThrow('Invalid metrics payload');
+  });
+});
+
+describe('shared Redis connection', () => {
+  it('uses the neighbouring authenticated Redis container by default', () => {
+    expect(redisOptions({})).toEqual({
+      socket: { host: 'redis.pantheon.internal', port: 6379 },
+      username: 'redis',
+      password: 'redispass',
+    });
+  });
+  it('supports Hugin overrides and the existing host fallback', () => {
+    expect(redisOptions({ REDIS_HOST: 'shared-redis' }).socket.host).toBe('shared-redis');
+    expect(
+      redisOptions({
+        HUGIN_REDIS_HOST: 'custom-redis',
+        REDIS_HOST: 'fallback',
+        HUGIN_REDIS_PORT: '6380',
+        HUGIN_REDIS_USER: 'hugin',
+        HUGIN_REDIS_PASSWORD: 'test-password',
+      })
+    ).toEqual({
+      socket: { host: 'custom-redis', port: 6380 },
+      username: 'hugin',
+      password: 'test-password',
+    });
   });
 });

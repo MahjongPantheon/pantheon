@@ -26,7 +26,7 @@ Existing interfaces remain available:
   the Frey/Mimir backend callers.
 - POST `/addMetric` accepts `[{ "m": "metric_name", "v": 1, "s": "service" }]`.
 - GET `/metrics` exposes `pantheon_*` gauges with the `service` label. Values
-  live in the shared local Redis registry, so every worker sees the same data.
+  live in the shared Redis registry in `redis.pantheon.internal`, so every worker sees the same data.
 - `/v2/common.Hugin/GetLastDay`, `GetLastMonth` and `GetLastYear` retain the
   existing protobuf and Twirp JSON contract. No protocol regeneration is needed.
 
@@ -36,7 +36,9 @@ PostgreSQL commits. Pending queues are bounded; overload returns HTTP 503 and
 write failures return HTTP 500. Shutdown drains queued writes. Each worker uses
 at most four PostgreSQL connections by default (`HUGIN_DB_POOL_SIZE` overrides
 this). The shared Redis registry uses `HUGIN_REDIS_HOST`/`HUGIN_REDIS_PORT`,
-defaulting to the local Redis process; `REDIS_HOST` remains a host fallback.
+defaulting to `redis.pantheon.internal:6379`; `REDIS_HOST` remains a host fallback.
+`HUGIN_REDIS_USER`/`HUGIN_REDIS_PASSWORD` configure authentication, using the same
+defaults as Frey/Mimir. Hugin does not run its own Redis server.
 Gauges are refreshed by their existing publishers after deployment.
 
 ### Database migration and scheduled work
@@ -77,7 +79,7 @@ Run `make hugin_oxlint hugin_oxfmt hugin_typecheck` and `make hugin_test` from t
 root. Hugin is also included in `make test` and `make test_verbose`. Its tests
 use `PHINX_DB_HUGIN_NAME_UNIT` (default `hugin_unit`), which must be a separate
 `_unit` or `_test` database; they never reset the configured application database.
-Tests need PostgreSQL and Hugin's Redis process. They cover real persistence,
+Tests need PostgreSQL and the shared Redis container. They cover real persistence,
 Phinx schema adoption, protobuf/JSON APIs, shared metrics, aggregation/retention,
 batched write failures, and daylight-saving boundaries.
 

@@ -13,7 +13,7 @@ import { migrate } from './migrations.js';
 import { up } from './migrations/20261022_node_baseline.js';
 import { createApp } from './app.js';
 import { Ingest, analyticsRow } from './ingest.js';
-import { createMetrics, METRICS_KEY } from './metrics.js';
+import { createMetrics, METRICS_KEY, redisOptions } from './metrics.js';
 import { aggregateDaily, aggregateMonthly, cleanupErrors } from './aggregation.js';
 import { collectEvents } from './reports.js';
 import { DIMENSIONS } from './schema.js';
@@ -178,7 +178,7 @@ describe('Hugin persistence and legacy contracts', () => {
     expect(await (await fetch(url + '/metrics')).text()).toContain(
       `pantheon_${name}{service="unit"} 7`
     );
-    const client = createClient({ socket: { host: process.env.HUGIN_REDIS_HOST ?? '127.0.0.1' } });
+    const client = createClient(redisOptions());
     await client.connect();
     await client.hDel(METRICS_KEY, JSON.stringify([name, 'unit']));
     await client.quit();

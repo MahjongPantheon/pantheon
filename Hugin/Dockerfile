@@ -7,7 +7,7 @@ ENV PHINX_DB_HUGIN_NAME_UNIT=hugin_unit
 ENV PHINX_DB_HUGIN_USER=hugin
 ENV PHINX_DB_HUGIN_PASS=pgpass
 ENV TZ=UTC
-RUN apk add --no-cache redis rsyslog
+RUN apk add --no-cache rsyslog
 
 # copy entry point
 COPY entrypoint.sh /entrypoint.sh

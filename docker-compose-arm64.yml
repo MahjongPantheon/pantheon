@@ -386,6 +386,7 @@ services:
       - "127.0.0.1:4008:80"
       - "127.0.0.1:4208:4208"
     depends_on:
+      - redis.pantheon.internal
       - db.pantheon.internal
       - hermod.pantheon.internal
       - tyr.pantheon.internal

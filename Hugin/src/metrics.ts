@@ -43,13 +43,18 @@ export function renderMetrics(values: Record<string, string>): string {
     })
     .join('');
 }
-export async function createMetrics() {
-  const client = createClient({
+export function redisOptions(env: NodeJS.ProcessEnv = process.env) {
+  return {
     socket: {
-      host: process.env.HUGIN_REDIS_HOST ?? process.env.REDIS_HOST ?? '127.0.0.1',
-      port: Number(process.env.HUGIN_REDIS_PORT ?? '6379'),
+      host: env.HUGIN_REDIS_HOST ?? env.REDIS_HOST ?? 'redis.pantheon.internal',
+      port: Number(env.HUGIN_REDIS_PORT ?? '6379'),
     },
-  });
+    username: env.HUGIN_REDIS_USER ?? 'redis',
+    password: env.HUGIN_REDIS_PASSWORD ?? 'redispass',
+  };
+}
+export async function createMetrics() {
+  const client = createClient(redisOptions());
   client.on('error', () => console.error('Hugin metrics Redis connection error'));
   await client.connect();
   return {
