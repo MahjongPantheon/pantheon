@@ -124,21 +124,25 @@ Gullveig/dist/
 Gullveig/coverage/
 Gullveig-dist/*
 !Gullveig-dist/.keep
+!Gullveig-dist/server.js
 
 Meili/node_modules/
 Meili/dist/
 Meili/coverage/
 Meili-dist/*
 !Meili-dist/.keep
+!Meili-dist/server.js
 
 Hermod/node_modules/
 Hermod/dist/
 Hermod/coverage/
 Hermod-dist/*
 !Hermod-dist/.keep
+!Hermod-dist/server.js
 
 Hugin/node_modules/
 Hugin/dist/
 Hugin/coverage/
 Hugin-dist/*
 !Hugin-dist/.keep
+!Hugin-dist/server.js
