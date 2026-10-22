@@ -1,4 +1,5 @@
 import dotenv from 'dotenv';
+import { getGullveigUrl } from './avatars';
 
 type EnvVars = {
   INTERNAL_QUERY_SECRET: string;
@@ -9,6 +10,7 @@ type EnvVars = {
   FORSETI_URL: string;
   COOKIE_DOMAIN: string;
   GULLVEIG_URL_INTERNAL: string;
+  GULLVEIG_URL: string;
   MIMIR_URL_INTERNAL: string;
   HUGIN_URL_INTERNAL: string;
   USERINFO_HOOK: string;
@@ -58,7 +60,7 @@ export const env = {
     guiUrl: data.FORSETI_URL,
   },
   cookieDomain: data.COOKIE_DOMAIN,
-  gullveigUrl: data.GULLVEIG_URL_INTERNAL,
+  gullveigUrl: getGullveigUrl(data),
   mimirUrl: process.env.MIMIR_URL_INTERNAL ?? data.MIMIR_URL_INTERNAL,
   huginUrl: process.env.HUGIN_URL_INTERNAL ?? data.HUGIN_URL_INTERNAL,
   forsetiUrl: process.env.FORSETI_URL ?? data.FORSETI_URL,

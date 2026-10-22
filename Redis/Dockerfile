@@ -1,10 +1,13 @@
-ARG CONTAINER_ARCH=amd64
-FROM ghcr.io/mahjongpantheon/pantheon-backend-common-v3-${CONTAINER_ARCH}:latest
+FROM alpine:3.22.0
+
+RUN apk add --no-cache redis su-exec tzdata
+ENV TIMEZONE=Europe/Berlin
+RUN cp /usr/share/zoneinfo/${TIMEZONE} /etc/localtime && \
+    echo "${TIMEZONE}" > /etc/timezone && \
+    mkdir -p /home/user /etc/profile.d
 
 # copy entry point
-COPY entrypoint.sh /entrypoint.sh
-RUN dos2unix /entrypoint.sh
-RUN chmod 755 /entrypoint.sh
+COPY --chmod=755 entrypoint.sh /entrypoint.sh
 
 RUN mkdir -p /var/lib/redis && chown redis /var/lib/redis
 

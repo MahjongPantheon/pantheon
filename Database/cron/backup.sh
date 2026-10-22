@@ -26,5 +26,5 @@ if [ $? -eq 0 ]; then
   echo "Success"
 else
   echo "Backup failed!"
-  php /var/lib/postgresql/ErrMailer.php
+  bash /var/lib/postgresql/err_mailer.sh
 fi

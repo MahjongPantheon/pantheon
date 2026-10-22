@@ -34,11 +34,17 @@ services:
       - ./Env/${ENV_FILENAME:-.env.production}
     ports:
       - "127.0.0.1:4007:80"
+      - "127.0.0.1:4207:4207"
     volumes:
-      - ./Hermod/www:/var/www/html/Hermod
+      - ./Hermod:/var/www/html/Hermod
+      - ./Hermod-dist:/var/www/html/Hermod-dist
+      - pnpmstore01:/.pnpm
       - ./Hermod/opendkim_keys:/etc/opendkim/keys
       - pfspool01:/var/spool/postfix
       - pfetc01:/etc/postfix
+    environment:
+      PNPM_HOME: /.pnpm
+      npm_config_store_dir: /.pnpm
     networks:
       internal_net:
         aliases:
@@ -73,8 +79,6 @@ services:
   db.pantheon.internal:
     build:
       context: ./Database
-      args:
-        CONTAINER_ARCH: amd64
     cgroup: host
     cap_add:
       - ALL
@@ -300,10 +304,16 @@ services:
       - ./Env/${ENV_FILENAME:-.env.production}
     ports:
       - "127.0.0.1:4009:80"
+      - "127.0.0.1:4209:4209"
     volumes:
       - ./Gullveig:/var/www/html/Gullveig
+      - ./Gullveig-dist:/var/www/html/Gullveig-dist
       - ./Common:/var/www/html/Common
       - gullveigstorage01:/var/storage
+      - pnpmstore01:/.pnpm
+    environment:
+      PNPM_HOME: /.pnpm
+      npm_config_store_dir: /.pnpm
     networks:
       internal_net:
         aliases:
@@ -322,10 +332,15 @@ services:
       - ./Env/${ENV_FILENAME:-.env.production}
     ports:
       - "127.0.0.1:4012:80"
+      - "127.0.0.1:4212:4212"
     volumes:
       - ./Meili:/var/www/html/Meili
+      - ./Meili-dist:/var/www/html/Meili-dist
       - ./Common:/var/www/html/Common
       - pnpmstore01:/.pnpm
+    environment:
+      PNPM_HOME: /.pnpm
+      npm_config_store_dir: /.pnpm
     networks:
       internal_net:
         aliases:
@@ -370,7 +385,9 @@ services:
       - ./Env/${ENV_FILENAME:-.env.production}
     ports:
       - "127.0.0.1:4008:80"
+      - "127.0.0.1:4208:4208"
     depends_on:
+      - redis.pantheon.internal
       - db.pantheon.internal
       - hermod.pantheon.internal
       - tyr.pantheon.internal
@@ -383,9 +400,13 @@ services:
       - skirnir.pantheon.internal
     volumes:
       - ./Hugin:/var/www/html/Hugin
+      - ./Hugin-dist:/var/www/html/Hugin-dist
+      - pnpmstore01:/.pnpm
       - ./Common:/var/www/html/Common
       - prometheusdata:/var/lib/prometheus
     environment:
+      PNPM_HOME: /.pnpm
+      npm_config_store_dir: /.pnpm
       PHINX_DB_HUGIN_PORT: 5432
       PHINX_DB_HUGIN_HOST: db.pantheon.internal
     networks:

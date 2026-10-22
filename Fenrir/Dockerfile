@@ -2,7 +2,6 @@ ARG CONTAINER_ARCH=amd64
 FROM ubuntu:22.04
 
 ENV TIMEZONE=Europe/Berlin
-ENV PHP_MEMORY_LIMIT=512M
 ENV LANG=en_US.utf8
 ENV RUN_IN_DOCKER=true
 
@@ -43,9 +42,7 @@ RUN cd /root/dummy && \
     pnpm exec playwright install --with-deps
 
 # copy entry point
-COPY entrypoint.sh /entrypoint.sh
-RUN dos2unix /entrypoint.sh
-RUN chmod 755 /entrypoint.sh
+COPY --chmod=755 entrypoint.sh /entrypoint.sh
 
 # copy nginx configs
 COPY fenrir-container.nginx.conf /etc/nginx/conf.d/fenrir.conf

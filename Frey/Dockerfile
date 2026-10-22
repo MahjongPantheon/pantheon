@@ -1,10 +1,8 @@
 ARG CONTAINER_ARCH=amd64
-FROM ghcr.io/mahjongpantheon/pantheon-frontend-common-v3-${CONTAINER_ARCH}:latest
+FROM ghcr.io/mahjongpantheon/pantheon-container-base-v4-${CONTAINER_ARCH}:latest
 
 # copy entry point
-COPY entrypoint.sh /entrypoint.sh
-RUN dos2unix /entrypoint.sh
-RUN chmod 755 /entrypoint.sh
+COPY --chmod=755 entrypoint.sh /entrypoint.sh
 
 # copy nginx configs
 COPY frey-container.nginx.conf /etc/nginx/http.d/frey.conf
@@ -16,10 +14,4 @@ COPY supervisord.conf /etc/supervisord.conf
 COPY cron/tabs/nobody /var/spool/cron/crontabs/nobody
 
 # Folders init
-RUN mkdir -p /run/nginx
 RUN mkdir -p /var/www/html/Frey
-RUN mkdir -p /var/www/html/Common
-
-# Entry point
-CMD ["/entrypoint.sh"]
-

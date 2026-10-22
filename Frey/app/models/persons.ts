@@ -36,6 +36,7 @@ import {
   NotFoundError,
 } from '../helpers/errors';
 import { clearStatCache } from '../helpers/mimir';
+import { uploadAvatar } from '../helpers/avatars';
 
 export async function createAccount(
   db: Database,
@@ -512,6 +513,12 @@ export async function updatePersonalInfo(
     throw new ActionNotAllowedError('This action is not allowed');
   }
 
+  if (isSuperadmin && payload.email.length === 0) {
+    throw new DataMalformedError('Some of required field are empty');
+  }
+  // Do not persist a successful profile update until storage has accepted the image.
+  await uploadAvatar(env.gullveigUrl, payload.id, payload.avatarData);
+
   const promises = [];
   if (env.userinfoHook) {
     promises.push(
@@ -533,36 +540,19 @@ export async function updatePersonalInfo(
     );
   }
 
-  if (env.gullveigUrl) {
-    promises.push(
-      fetch(env.gullveigUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          userId: context.personId,
-          avatar: payload.avatarData,
-        }),
-      })
-    );
-  }
-
-  if (context.personId) {
-    promises.push(clearStatCache(context.personId));
-  }
+  promises.push(clearStatCache(payload.id));
 
   const value: Partial<RowPerson> = {
     city: payload.city,
     country: payload.country,
     has_avatar: payload.hasAvatar ? 1 : 0,
+    last_update: new Date().toISOString(),
     phone: payload.phone,
     tenhou_id: payload.tenhouId,
     title: payload.title,
   };
 
   if (isSuperadmin) {
-    if (payload.email.length === 0) {
-      throw new DataMalformedError('Some of required field are empty');
-    }
     // allow superadmin to change emails of users
     value.email = payload.email;
   }
