@@ -10,10 +10,16 @@ module.exports = async ({ github, context, core, reportPath = '.ci-results/repor
         owner, repo, commit_sha: context.sha, per_page: 100,
       });
   const body = fs.readFileSync(reportPath, 'utf8');
+  const checkedHead = context.payload.pull_request?.head.sha || context.sha;
   for (const pr of pullRequests) {
     if (pr.state !== 'open' || pr.head.repo?.full_name !== `${owner}/${repo}`) continue;
-    // An older push must not overwrite the latest branch's results.
-    if (!context.payload.pull_request && pr.head.sha !== context.sha) continue;
+    // Event payloads retain the old head after another push. Read the current PR
+    // before publishing so stale PR runs cannot replace results for a newer head.
+    const { data: current } = await github.rest.pulls.get({ owner, repo, pull_number: pr.number });
+    if (current.state !== 'open' || current.head.repo?.full_name !== `${owner}/${repo}` || current.head.sha !== checkedHead) {
+      core.info(`Skipping stale or closed PR #${pr.number}`);
+      continue;
+    }
     const comments = await github.paginate(github.rest.issues.listComments, {
       owner, repo, issue_number: pr.number, per_page: 100,
     });
