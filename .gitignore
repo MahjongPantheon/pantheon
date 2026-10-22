@@ -124,3 +124,9 @@ Gullveig/dist/
 Gullveig/coverage/
 Gullveig-dist/*
 !Gullveig-dist/.keep
+
+Meili/node_modules/
+Meili/dist/
+Meili/coverage/
+Meili-dist/*
+!Meili-dist/.keep

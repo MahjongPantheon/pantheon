@@ -42,7 +42,12 @@ make dev_gullveig &
 GULLVEIG_PID=$!
 echo $GULLVEIG_PID
 
-trap "TRAPPED_SIGNAL=true; make frey_stop; make mimir_stop; make tyr_stop; make forseti_stop; make sigrun_stop; make bragi_stop; make skirnir_stop; make gullveig_stop;" SIGTERM  SIGINT
+echo 'Starting Meili dev';
+make dev_meili &
+MEILI_PID=$!
+echo $MEILI_PID
+
+trap "TRAPPED_SIGNAL=true; make frey_stop; make mimir_stop; make tyr_stop; make forseti_stop; make sigrun_stop; make bragi_stop; make skirnir_stop; make gullveig_stop; make meili_stop;" SIGTERM  SIGINT
 
 while :
 do
@@ -70,8 +75,11 @@ do
     kill -0 $GULLVEIG_PID 2> /dev/null
     GULLVEIG_STATUS=$?
 
+    kill -0 $MEILI_PID 2> /dev/null
+    MEILI_STATUS=$?
+
     if [ "$TRAPPED_SIGNAL" = "false" ]; then
-        if [ $TYR_STATUS -ne 0 ] || [ $FREY_STATUS -ne 0 ] || [ $MIMIR_STATUS -ne 0 ] || [ $FORSETI_STATUS -ne 0 ] || [ $SIGRUN_STATUS -ne 0 ] || [ $BRAGI_STATUS -ne 0 ] || [ $SKIRNIR_STATUS -ne 0 ] || [ $GULLVEIG_STATUS -ne 0 ]; then
+        if [ $TYR_STATUS -ne 0 ] || [ $FREY_STATUS -ne 0 ] || [ $MIMIR_STATUS -ne 0 ] || [ $FORSETI_STATUS -ne 0 ] || [ $SIGRUN_STATUS -ne 0 ] || [ $BRAGI_STATUS -ne 0 ] || [ $SKIRNIR_STATUS -ne 0 ] || [ $GULLVEIG_STATUS -ne 0 ] || [ $MEILI_STATUS -ne 0 ]; then
             if [ $FORSETI_STATUS -eq 0 ]; then
                 kill -15 $FORSETI_PID;
                 wait $FORSETI_PID;
@@ -104,10 +112,14 @@ do
                 kill -15 $GULLVEIG_PID;
                 wait $GULLVEIG_PID;
             fi
+            if [ $MEILI_STATUS -eq 0 ]; then
+                kill -15 $MEILI_PID;
+                wait $MEILI_PID;
+            fi
             exit 1;
         fi
     else
-       if [ $TYR_STATUS -ne 0 ] && [ $FORSETI_STATUS -ne 0 ] && [ $FREY_STATUS -ne 0 ] && [ $MIMIR_STATUS -ne 0 ] && [ $SIGRUN_STATUS -ne 0 ] && [ $BRAGI_STATUS -ne 0 ] && [ $SKIRNIR_STATUS -ne 0 ] && [ $GULLVEIG_STATUS -ne 0 ]; then
+       if [ $TYR_STATUS -ne 0 ] && [ $FORSETI_STATUS -ne 0 ] && [ $FREY_STATUS -ne 0 ] && [ $MIMIR_STATUS -ne 0 ] && [ $SIGRUN_STATUS -ne 0 ] && [ $BRAGI_STATUS -ne 0 ] && [ $SKIRNIR_STATUS -ne 0 ] && [ $GULLVEIG_STATUS -ne 0 ] && [ $MEILI_STATUS -ne 0 ]; then
             exit 0;
        fi
     fi

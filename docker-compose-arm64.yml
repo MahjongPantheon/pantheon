@@ -325,9 +325,15 @@ services:
       - ./Env/${ENV_FILENAME:-.env.production}
     ports:
       - "127.0.0.1:4012:80"
+      - "127.0.0.1:4212:4212"
     volumes:
       - ./Meili:/var/www/html/Meili
+      - ./Meili-dist:/var/www/html/Meili-dist
       - ./Common:/var/www/html/Common
+      - pnpmstore01:/.pnpm
+    environment:
+      PNPM_HOME: /.pnpm
+      npm_config_store_dir: /.pnpm
     networks:
       internal_net:
         aliases:
