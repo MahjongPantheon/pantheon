@@ -310,7 +310,7 @@ server {
     location / {
           gzip on;
           gzip_proxied any;
-          proxy_pass http://127.0.0.1:4007/;
+          proxy_pass http://127.0.0.1:4005/;
           proxy_set_header Host forseti.pantheon.internal;
           proxy_set_header X-Real-IP $remote_addr;
           proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -330,7 +330,7 @@ server {
     location / {
           gzip on;
           gzip_proxied any;
-          proxy_pass http://127.0.0.1:4010/;
+          proxy_pass http://127.0.0.1:4008/;
           proxy_set_header Host hugin.pantheon.internal;
           proxy_set_header X-Real-IP $remote_addr;
           proxy_set_header REMOTE_ADDR $remote_addr;
@@ -378,7 +378,7 @@ server {
     location / {
           gzip on;
           gzip_proxied any;
-          proxy_pass http://127.0.0.1:4012/;
+          proxy_pass http://127.0.0.1:4009/;
           proxy_set_header Host gullveig.pantheon.internal;
           proxy_set_header X-Real-IP $remote_addr;
           proxy_set_header REMOTE_ADDR $remote_addr;
@@ -418,7 +418,7 @@ server {
     server_name pantheon.org;
 
     location / {
-          proxy_pass http://127.0.0.1:4008/;
+          proxy_pass http://127.0.0.1:4006/;
           gzip on;
           gzip_proxied any;
           proxy_set_header Host bragi.pantheon.internal;

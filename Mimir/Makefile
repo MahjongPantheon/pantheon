@@ -122,7 +122,7 @@ test: seed_test_db build
 	node src/tests/production.mjs
 	node src/tests/coverage.mjs
 	# For debugging:
-	#node --inspect=0.0.0.0:4411 node_modules/jest/bin/jest.js --runInBand -t 'Mimir Twirp API'
+	#node --inspect=0.0.0.0:4501 node_modules/jest/bin/jest.js --runInBand -t 'Mimir Twirp API'
 
 .PHONY: container_test
 container_test: get_container_id
