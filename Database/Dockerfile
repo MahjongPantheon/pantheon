@@ -34,7 +34,7 @@ RUN echo "" > /var/lib/postgresql/.gitconfig
 RUN echo "[user]" >> /var/lib/postgresql/.gitconfig
 RUN echo "    email = pantheon_backup@pantheon.local" >> /var/lib/postgresql/.gitconfig
 RUN echo "    name = Pantheon Backup" >> /var/lib/postgresql/.gitconfig
-COPY ErrMailer.php /var/lib/postgresql/ErrMailer.php
+COPY err_mailer.sh /var/lib/postgresql/err_mailer.sh
 
 # Entry point
 CMD ["/entrypoint.sh"]
