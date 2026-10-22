@@ -57,5 +57,6 @@ const reportStatus = run('pnpm', [
   '--reporter=html',
   '--reporter=lcov',
   '--reporter=json',
+  '--reporter=json-summary',
 ]);
 process.exit(testStatus !== 0 ? testStatus : reportStatus);

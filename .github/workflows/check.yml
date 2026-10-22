@@ -3,8 +3,6 @@ name: Unit tests, static analysis, code style
 on:
   workflow_dispatch:
   push:
-  pull_request:
-    types: [opened, reopened]
 
 permissions:
   contents: read
@@ -12,7 +10,7 @@ permissions:
   pull-requests: write
 
 concurrency:
-  group: service-checks-${{ github.event.pull_request.head.repo.full_name || github.repository }}-${{ github.head_ref || github.ref_name }}
+  group: service-checks-${{ github.repository }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -20,6 +18,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+
+      - name: Clear previous PR report
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await require('./.github/scripts/comment-checks.cjs')({
+              github, context, core,
+              marker: '<!-- pantheon-service-checks -->',
+              clearPrevious: true,
+            });
 
       - uses: NathanFirmo/wait-for-other-action@v1.0.4
         if: |
