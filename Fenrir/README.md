@@ -16,11 +16,11 @@ With the development stack and Fenrir container running, execute from the reposi
 make e2e_ui
 ```
 
-Open [http://localhost:4017](http://localhost:4017) in your host browser and keep the command running. Use the localhost URL so browser features such as service workers have a secure context. No custom hostname, hosts-file entry, HTTPS setup, or external reverse proxy is needed.
+Open [http://localhost:4011](http://localhost:4011) in your host browser and keep the command running. Use the localhost URL so browser features such as service workers have a secure context. No custom hostname, hosts-file entry, HTTPS setup, or external reverse proxy is needed.
 
 Select a test (for example, filter by `SMOKE-004`), press its run button, and inspect the action timeline, DOM snapshots, source, network requests, and errors. Enable the eye icon to rerun tests when their source changes. Tests and their browsers execute inside Fenrir, so the host browser does not need to resolve the service domains. UI runs use one worker and no retries. They create test data just like normal E2E runs.
 
-Press Ctrl+C in the terminal to stop the UI server. You can also use `make -C Fenrir container_ui` from the host, or `make ui` from `/var/www/html/Fenrir` inside the container. The UI uses port 4017 inside Fenrir and the Nginx/WebSocket proxy to container port 80, published at host `127.0.0.1:4017`. The target copies the mounted proxy configuration into Ubuntu Nginx's `conf.d` directory, validates it, and reloads Nginx before starting Playwright. This also fixes existing containers whose image copied the configuration into the unused `http.d` directory. No additional port mapping or container recreation is needed. Run only one UI server at a time; no desktop display or X server is required.
+Press Ctrl+C in the terminal to stop the UI server. You can also use `make -C Fenrir container_ui` from the host, or `make ui` from `/var/www/html/Fenrir` inside the container. The UI uses port 4017 inside Fenrir and the Nginx/WebSocket proxy to container port 80, published at host `127.0.0.1:4011`. The target copies the mounted proxy configuration into Ubuntu Nginx's `conf.d` directory, validates it, and reloads Nginx before starting Playwright. This also fixes existing containers whose image copied the configuration into the unused `http.d` directory. The Compose mapping publishes container port 80 at host port 4011; recreate an existing Fenrir container if it still publishes the previous host port. Run only one UI server at a time; no desktop display or X server is required.
 
 If Fenrir is not running, start only its container against the already-running development stack:
 

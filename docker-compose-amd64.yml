@@ -33,7 +33,7 @@ services:
     env_file:
       - ./Env/${ENV_FILENAME:-.env.production}
     ports:
-      - "127.0.0.1:4009:80"
+      - "127.0.0.1:4007:80"
     volumes:
       - ./Hermod/www:/var/www/html/Hermod
       - ./Hermod/opendkim_keys:/etc/opendkim/keys
@@ -59,7 +59,7 @@ services:
       PNPM_HOME: /.pnpm
       npm_config_store_dir: /.pnpm
     ports:
-      - "127.0.0.1:4015:80"
+      - "127.0.0.1:4010:80"
     volumes:
       - ./Skirnir:/var/www/html/Skirnir
       - ./Skirnir-dist:/var/www/html/Skirnir-dist
@@ -121,8 +121,8 @@ services:
       - "4204:4204/udp"
       - "4404:4404"
       - "4404:4404/udp"
-      - "4414:4414"
-      - "4414:4414/udp"
+      - "4504:4504"
+      - "4504:4504/udp"
     depends_on:
       - db.pantheon.internal
       - hermod.pantheon.internal
@@ -160,8 +160,8 @@ services:
       - "4301:4301/udp"
       - "4401:4401"
       - "4401:4401/udp"
-      - "4411:4411"
-      - "4411:4411/udp"
+      - "4501:4501"
+      - "4501:4501/udp"
     depends_on:
       - frey.pantheon.internal
       - db.pantheon.internal
@@ -244,7 +244,7 @@ services:
       PNPM_HOME: /.pnpm
       npm_config_store_dir: /.pnpm
     ports:
-      - "127.0.0.1:4007:80"
+      - "127.0.0.1:4005:80"
     depends_on:
       - frey.pantheon.internal
       - mimir.pantheon.internal
@@ -299,7 +299,7 @@ services:
     env_file:
       - ./Env/${ENV_FILENAME:-.env.production}
     ports:
-      - "127.0.0.1:4012:80"
+      - "127.0.0.1:4009:80"
     volumes:
       - ./Gullveig:/var/www/html/Gullveig
       - ./Common:/var/www/html/Common
@@ -321,7 +321,7 @@ services:
     env_file:
       - ./Env/${ENV_FILENAME:-.env.production}
     ports:
-      - "127.0.0.1:4018:80"
+      - "127.0.0.1:4012:80"
     volumes:
       - ./Meili:/var/www/html/Meili
       - ./Common:/var/www/html/Common
@@ -346,7 +346,7 @@ services:
       PNPM_HOME: /.pnpm
       npm_config_store_dir: /.pnpm
     ports:
-      - "127.0.0.1:4008:80"
+      - "127.0.0.1:4006:80"
     volumes:
       - ./Bragi:/var/www/html/Bragi
       - ./Bragi-dist:/var/www/html/Bragi-dist
@@ -369,7 +369,7 @@ services:
     env_file:
       - ./Env/${ENV_FILENAME:-.env.production}
     ports:
-      - "127.0.0.1:4010:80"
+      - "127.0.0.1:4008:80"
     depends_on:
       - db.pantheon.internal
       - hermod.pantheon.internal
@@ -412,7 +412,7 @@ services:
       PNPM_HOME: /.pnpm
       npm_config_store_dir: /.pnpm
     ports:
-      - "127.0.0.1:4017:80"
+      - "127.0.0.1:4011:80"
     depends_on:
       - db.pantheon.internal
       - hermod.pantheon.internal

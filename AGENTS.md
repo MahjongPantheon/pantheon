@@ -2,6 +2,8 @@
 
 This file applies to the whole repository. Use the nearest service README and Makefile for details; the root README describes the development environment and `docs/technical/terminology.md` defines domain terms.
 
+Before applying changes, consult the relevant documents in `.codex/knowledge_base`, including [the service port reference](.codex/knowledge_base/Pantheon_Service_Ports.md). For networking, service URLs, proxies, containers, development servers, tests, or debugging changes, check that reference against the affected configuration and update it when port assignments change. Treat `docker-compose-amd64.yml` as the source of truth for Compose port mappings and keep ARM64 mappings aligned.
+
 ## General rules
 
 - Follow `.editorconfig`: UTF-8, LF, final newline, two-space indentation except four spaces for PHP. For PHP, follow the service's configured PSR-2 PHP_CodeSniffer standard.
