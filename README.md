@@ -216,6 +216,9 @@ Fenrir code-check, and Playwright results; logs are in `e2e-check-results` and
 `playwright-report`. Both workflows run on pushes and manual dispatches; opening
 or reopening a PR does not start another run. Comments are posted when an open
 PR exists at reporting time; otherwise results remain in the Actions summary.
+Each workflow removes its previous bot report at startup, then publishes fresh
+results once its checks finish. Runs for an outdated PR head cannot change the
+comments.
 
 #### End-to-end tests
 

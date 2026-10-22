@@ -19,6 +19,16 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Clear previous PR report
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await require('./.github/scripts/comment-checks.cjs')({
+              github, context, core,
+              marker: '<!-- pantheon-e2e-checks -->',
+              clearPrevious: true,
+            });
+
       - uses: NathanFirmo/wait-for-other-action@v1.0.4
         if: |
           github.ref == 'refs/heads/master' &&
