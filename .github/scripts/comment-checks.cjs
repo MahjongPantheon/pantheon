@@ -1,5 +1,5 @@
-// Called by actions/github-script. Push runs update existing PRs; opening a PR
-// also triggers a run so its initial comment does not depend on another push.
+// Called by actions/github-script. Push and manual runs update associated open
+// PRs if one exists when the report is ready; otherwise only the summary is kept.
 module.exports = async ({ github, context, core, reportPath = '.ci-results/report.md', marker = '<!-- pantheon-service-checks -->' }) => {
   const fs = require('node:fs');
   if (!fs.existsSync(reportPath)) return;

@@ -213,7 +213,9 @@ type checks, and tests in the Actions summary and an updated PR comment. The
 the summary and artifact; their read-only token cannot post the comment. The e2e
 workflow publishes its own summary and separate updated PR comment with setup,
 Fenrir code-check, and Playwright results; logs are in `e2e-check-results` and
-`playwright-report`.
+`playwright-report`. Both workflows run on pushes and manual dispatches; opening
+or reopening a PR does not start another run. Comments are posted when an open
+PR exists at reporting time; otherwise results remain in the Actions summary.
 
 #### End-to-end tests
 
