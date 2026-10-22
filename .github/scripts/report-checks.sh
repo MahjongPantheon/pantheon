@@ -5,7 +5,7 @@ set -uo pipefail
 report_dir=${CI_REPORT_DIR:-.ci-results}
 root_log_dir=${ROOT_LOG_DIR:-tmp}
 make_command=${MAKE_COMMAND:-make}
-services=(Bragi Fenrir Forseti Frey Gullveig Hermod Hugin Meili Mimir Sigrun Skirnir Tyr)
+services=(Bragi Forseti Frey Gullveig Hermod Hugin Meili Mimir Sigrun Skirnir Tyr)
 test_services=(Tyr Frey Mimir Gullveig Meili Hermod Hugin Forseti Sigrun)
 mkdir -p "$report_dir"
 failed=0
@@ -52,9 +52,7 @@ for service in "${test_services[@]}"; do run_check "$service" test; done
   for service in "${services[@]}"; do
     printf '| %s ' "$service"
     for check in oxlint oxfmt typecheck test; do
-      if [[ $check == test && $service == Fenrir ]]; then
-        printf '| Separate e2e workflow '
-      elif [[ $check == test && ( $service == Bragi || $service == Skirnir ) ]]; then
+      if [[ $check == test && ( $service == Bragi || $service == Skirnir ) ]]; then
         printf '| No test suite '
       else
         printf '| %s ' "$(cat "$report_dir/${service,,}_$check.status")"
@@ -62,6 +60,8 @@ for service in "${test_services[@]}"; do run_check "$service" test; done
     done
     echo '|'
   done
+  echo
+  echo 'Fenrir lint, formatting, type checks, and Playwright tests run in the separate e2e workflow.'
   echo
   echo 'All checks share one container environment. Detailed logs are available in the workflow and its service-check-results artifact.'
 } > "$report_dir/report.md"

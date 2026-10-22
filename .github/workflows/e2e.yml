@@ -3,6 +3,17 @@ name: e2e tests
 on:
   workflow_dispatch:
   push:
+  pull_request:
+    types: [opened, reopened]
+
+permissions:
+  contents: read
+  actions: read
+  pull-requests: write
+
+concurrency:
+  group: e2e-checks-${{ github.event.pull_request.head.repo.full_name || github.repository }}-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
 
 jobs:
   checkPr:
@@ -29,11 +40,24 @@ jobs:
           ENV_FILENAME: .env.e2e
 
       - name: Add deps, migrate and build all systems
+        id: setup
         run: make e2e_compile
         env:
           ENV_FILENAME: .env.e2e
 
+      - name: Check Fenrir code
+        id: code_checks
+        run: |
+          make -k fenrir_oxlint fenrir_oxfmt fenrir_typecheck || {
+            cat tmp/fenrir_*.log
+            exit 1
+          }
+        env:
+          ENV_FILENAME: .env.e2e
+
       - name: Run all tests
+        id: tests
+        if: ${{ !cancelled() && steps.setup.outcome == 'success' }}
         run: |
           make bootstrap_admin
           printf '%s\n' \
@@ -43,12 +67,42 @@ jobs:
         env:
           ENV_FILENAME: .env.e2e
 
+      - name: Prepare e2e results table
+        if: ${{ !cancelled() }}
+        run: bash .github/scripts/report-e2e.sh
+        env:
+          CHECK_RESULT: ${{ job.status }}
+          SETUP_RESULT: ${{ steps.setup.outcome }}
+          CODE_CHECK_RESULT: ${{ steps.code_checks.outcome }}
+          E2E_RESULT: ${{ steps.tests.outcome }}
+
+      - name: Update PR e2e results table
+        if: ${{ !cancelled() && hashFiles('.ci-e2e-results/report.md') != '' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) }}
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await require('./.github/scripts/comment-checks.cjs')({
+              github, context, core,
+              reportPath: '.ci-e2e-results/report.md',
+              marker: '<!-- pantheon-e2e-checks -->',
+            });
+
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: playwright-report
           path: Fenrir/playwright-report/
           retention-days: 30
+
+      - name: Upload e2e check results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: e2e-check-results
+          include-hidden-files: true
+          path: |
+            .ci-e2e-results/
+            tmp/fenrir_*.log
 
       - name: Stop containers
         if: always()

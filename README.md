@@ -205,12 +205,15 @@ attempts all suites even after a failure and returns a failing exit status if
 any suite fails or its container is missing. `make test_verbose` covers the same
 services. Bragi and Skirnir currently have no test files. GitHub Actions runs
 these suites independently of lint results after dependency and migration setup;
-Fenrir's Playwright tests run in the separate e2e workflow. CI prepares one shared
-container environment (including Fenrir via `COMPOSE_PROFILES=e2e`) and reports
-each service's lint, formatting, type checks,
-and tests in the Actions summary and an updated PR comment. The
+Fenrir's lint, formatting, type checks, and Playwright tests run in the separate
+e2e workflow. The service-check workflow prepares one shared container
+environment for the application services and reports their lint, formatting,
+type checks, and tests in the Actions summary and an updated PR comment. The
 `service-check-results` artifact contains individual check logs. Fork PRs receive
-the summary and artifact; their read-only token cannot post the comment.
+the summary and artifact; their read-only token cannot post the comment. The e2e
+workflow publishes its own summary and separate updated PR comment with setup,
+Fenrir code-check, and Playwright results; logs are in `e2e-check-results` and
+`playwright-report`.
 
 #### End-to-end tests
 

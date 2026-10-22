@@ -1,8 +1,7 @@
 // Called by actions/github-script. Push runs update existing PRs; opening a PR
 // also triggers a run so its initial comment does not depend on another push.
-module.exports = async ({ github, context, core }) => {
+module.exports = async ({ github, context, core, reportPath = '.ci-results/report.md', marker = '<!-- pantheon-service-checks -->' }) => {
   const fs = require('node:fs');
-  const reportPath = '.ci-results/report.md';
   if (!fs.existsSync(reportPath)) return;
   const { owner, repo } = context.repo;
   const pullRequests = context.payload.pull_request
@@ -20,7 +19,7 @@ module.exports = async ({ github, context, core }) => {
     });
     const existing = comments.find(comment =>
       comment.user?.login === 'github-actions[bot]' &&
-      comment.body?.includes('<!-- pantheon-service-checks -->'));
+      comment.body?.includes(marker));
     if (existing) {
       await github.rest.issues.updateComment({ owner, repo, comment_id: existing.id, body });
     } else {

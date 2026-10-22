@@ -149,3 +149,4 @@ Hugin-dist/*
 
 # Per-service GitHub Actions reports and logs
 /.ci-results/
+/.ci-e2e-results/
