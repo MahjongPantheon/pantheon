@@ -35,7 +35,7 @@ The [development reverse proxy](../../Common/ReverseProxy/nginx.conf) forwards o
 
 ## Processes inside service containers
 
-These ports are not separately host-published by Compose unless listed in the next section. Nginx connects to the local workers. Production worker ranges are inclusive. Mimir, Frey, Sigrun and Bragi use eight workers each; Meili uses four; Gullveig, Skirnir and Hermod each run one production worker.
+These ports are not separately host-published by Compose unless listed in the next section. Nginx connects to the local workers. Production worker ranges are inclusive. Mimir, Frey, Sigrun, Bragi and Hugin use eight workers each; Meili uses four; Gullveig, Skirnir and Hermod each run one production worker.
 
 | Service | Development process port | Production process port(s) | Configuration sources |
 | --- | --- | --- | --- |
@@ -50,7 +50,7 @@ These ports are not separately host-published by Compose unless listed in the ne
 | Gullveig | 4009 | 41091 | [Nginx](../../Gullveig/gullveig-container.nginx.conf), [Supervisor](../../Gullveig/supervisord.conf), [server](../../Gullveig/src/server.ts) |
 | Meili | 4012 | 41121–41124 | [Nginx](../../Meili/meili-container.nginx.conf), [Supervisor](../../Meili/supervisord.conf), [server](../../Meili/src/server.ts) |
 | Hermod | 4007 | 41071 | [Nginx](../../Hermod/hermod-container.nginx.conf), [Supervisor](../../Hermod/configs/supervisord.conf), [server](../../Hermod/src/server.ts) |
-| Hugin | 9000 (PHP-FPM/FastCGI) | 9000 (PHP-FPM/FastCGI) | Owning service `*-container.nginx.conf`; [shared PHP image](../../Common/Backend/Dockerfile) |
+| Hugin | 4008 | 41081–41088 | [Nginx](../../Hugin/hugin-container.nginx.conf), [Supervisor](../../Hugin/supervisord.conf), [server](../../Hugin/src/server.ts) |
 | Hugin Prometheus | 9090 | 9090 | [Supervisor](../../Hugin/supervisord.conf), [Munin Nginx virtual host](../../Hugin/hugin-container.nginx.conf) |
 | Hugin node exporter | 9100 | 9100 | [Supervisor](../../Hugin/supervisord.conf), [scrape targets](../../Hugin/config/prometheus_partial_config.conf) |
 | Hermod SMTP | 25; 587 submission declared by image | Same; submission depends on mail setup | [Dockerfile](../../Hermod/Dockerfile), [mail setup](../../Hermod/scripts/common-run.sh); neither port is host-published by Compose |
@@ -81,7 +81,7 @@ Standalone SSR launchers default to Sigrun 4102 and Bragi 4108 when `PORT` is ab
 | Meili | 30017 | Supervisor HTTP control bound to container localhost; no host publication | [Supervisor](../../Meili/supervisord.conf) |
 | Hermod | 4207 | Development Node inspector; host-published on `127.0.0.1` at the same port | [Makefile](../../Hermod/Makefile), Compose |
 | Hermod | 30018 | Supervisor HTTP control bound to container localhost; no host publication | [Supervisor](../../Hermod/configs/supervisord.conf) |
-| Hugin | 9001 | Xdebug client destination at `172.17.0.1`, enabled by debug setup; not a listener in the PHP container | Respective service Makefile `enable_debug` target |
+| Hugin | 4208 | Development Node inspector; host-published on `127.0.0.1` at the same port | [Makefile](../../Hugin/Makefile), Compose |
 
 Compose publishes Mimir 4201/4301/4401/4501 and Frey 4204/4404/4504 on all host interfaces for both TCP and UDP. The actual HTTP/Node inspector listeners use TCP; a published UDP mapping does not imply a UDP listener.
 

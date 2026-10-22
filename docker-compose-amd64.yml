@@ -387,6 +387,7 @@ services:
       - ./Env/${ENV_FILENAME:-.env.production}
     ports:
       - "127.0.0.1:4008:80"
+      - "127.0.0.1:4208:4208"
     depends_on:
       - db.pantheon.internal
       - hermod.pantheon.internal
@@ -400,9 +401,13 @@ services:
       - skirnir.pantheon.internal
     volumes:
       - ./Hugin:/var/www/html/Hugin
+      - ./Hugin-dist:/var/www/html/Hugin-dist
+      - pnpmstore01:/.pnpm
       - ./Common:/var/www/html/Common
       - prometheusdata:/var/lib/prometheus
     environment:
+      PNPM_HOME: /.pnpm
+      npm_config_store_dir: /.pnpm
       PHINX_DB_HUGIN_PORT: 5432
       PHINX_DB_HUGIN_HOST: db.pantheon.internal
     networks:

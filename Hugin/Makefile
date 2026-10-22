@@ -21,55 +21,6 @@ shell: get_container_id
 		$(CONTAINER_COMMAND) exec -it $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Hugin && /bin/sh -l' ; \
 	fi
 
-.PHONY: kill
-kill:
-	$(CONTAINER_COMMAND) rmi `$(CONTAINER_COMMAND) images | grep 'pantheon' | grep 'hugin' | awk '{print $$3}'` || exit 0
-
-.PHONY: enable_debug
-enable_debug:
-	@echo -ne "zend_extension=xdebug.so\n \
-		xdebug.mode=debug\n \
-		xdebug.client_host=172.17.0.1\n \
-		xdebug.client_port=9001\n" > /etc/php83/conf.d/50_xdebug.ini
-	$(shell kill -SIGUSR2 `ps ax| grep php-fpm | grep master | awk '{print $$1}'`)
-
-.PHONY: disable_debug
-disable_debug:
-	@echo "" > /etc/php83/conf.d/50_xdebug.ini
-	$(shell kill -SIGUSR2 `ps ax | grep php-fpm | grep master | awk '{print $$1}'`)
-
-.PHONY: container_disable_debug
-container_disable_debug: get_container_id
-	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
-		echo "${RED}Hugin container is not running, can't disable debug.${NC}"; \
-	else \
-		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Hugin && make disable_debug'; \
-	fi
-
-.PHONY: container_enable_debug
-container_enable_debug: get_container_id
-	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
-		echo "${RED}Hugin container is not running, can't enable debug.${NC}"; \
-	else \
-		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Hugin && make enable_debug'; \
-	fi
-
-.PHONY: container_seed
-container_seed: get_container_id container_migrate
-	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
-		echo "${RED}Hugin container is not running, can't run seeding.${NC}"; \
-	else \
-		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Hugin && HOME=/home/user su-exec user bin/phinx seed:run -e docker -s TestEventsSeeder --verbose'; \
-	fi
-
-.PHONY: container_migrate
-container_migrate: get_container_id
-	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
-		echo "${RED}Hugin container is not running, can't run migrations.${NC}"; \
-	else \
-		$(CONTAINER_COMMAND) exec $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Hugin && HOME=/home/user su-exec user bin/phinx migrate -e docker'; \
-	fi
-
 .PHONY: logs
 logs: get_container_id
 	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
@@ -78,97 +29,198 @@ logs: get_container_id
 		$(CONTAINER_COMMAND) logs -f $(RUNNING_CONTAINER_ID); \
 	fi
 
-.PHONY: php_logs
-php_logs: get_container_id
+.PHONY: deps
+deps:
+	pnpm install --frozen-lockfile
+
+.PHONY: dev_deps
+dev_deps:
+	pnpm install --no-frozen-lockfile
+
+.PHONY: container_deps
+container_deps: get_container_id
 	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
-		echo "${RED}Hugin container is not running, can't view logs.${NC}"; \
+		echo "${RED}Hugin container is not running.${NC}"; exit 1; \
 	else \
-		$(CONTAINER_COMMAND) exec -it $(RUNNING_CONTAINER_ID) sh -c 'tail -f /var/log/php-errors.log | grep -v xdebug' ; \
+		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Hugin && HOME=/home/user su-exec user make deps' ; \
 	fi
 
-.PHONY: hooks
-hooks:
-	if [ -d .git ]; then \
-		cp -prf bin/hooks/* .git/hooks; \
-		chmod a+x .git/hooks/*; \
+.PHONY: container_dev_deps
+container_dev_deps: get_container_id
+	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
+		echo "${RED}Hugin container is not running.${NC}"; exit 1; \
+	else \
+		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Hugin && HOME=/home/user su-exec user make dev_deps' ; \
 	fi
 
-.PHONY: hooks
-deps: hooks
-	php bin/composer.phar install
+.PHONY: oxlint
+oxlint:
+	echo "======= Hugin: oxlint ======"
+	pnpm exec oxlint .
 
-.PHONY: lint
-lint:
-	echo "======= Hugin: lint (php codestyle) ======"
-	php vendor/bin/phpcs --config-set default_standard PSR2 > /dev/null
-	php vendor/bin/phpcs --config-set show_warnings 0 > /dev/null
-	php vendor/bin/phpcs --ignore=*/generated/*,src/TwirpServer.php src www
-
-.PHONY: container_lint
-container_lint: get_container_id
+.PHONY: container_oxlint
+container_oxlint: get_container_id
 	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
-		echo "${RED}Hugin container is not running.${NC}"; \
+		echo "${RED}Hugin container is not running.${NC}"; exit 1; \
 	else \
-		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Hugin && HOME=/home/user su-exec user make lint' ; \
+		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Hugin && HOME=/home/user su-exec user make oxlint' ; \
 	fi
 
-.PHONY: analyze
-analyze:
-	echo "======= Hugin: lint (php static analyzer) ======"
-	php vendor/bin/phpstan clear-result-cache && php vendor/bin/phpstan analyse -c phpstan.neon
+.PHONY: oxfmt
+oxfmt:
+	echo "======= Hugin: oxfmt ======"
+	pnpm exec oxfmt --check
 
-.PHONY: container_analyze
-container_analyze: get_container_id
+.PHONY: container_oxfmt
+container_oxfmt: get_container_id
 	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
-		echo "${RED}Hugin container is not running.${NC}"; \
+		echo "${RED}Hugin container is not running.${NC}"; exit 1; \
 	else \
-		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Hugin && HOME=/home/user su-exec user make analyze' ; \
+		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Hugin && HOME=/home/user su-exec user make oxfmt' ; \
+	fi
+
+.PHONY: typecheck
+typecheck:
+	echo "======= Hugin: typecheck ======"
+	pnpm exec tsc --project tsconfig.json --noEmit
+
+.PHONY: container_typecheck
+container_typecheck: get_container_id
+	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
+		echo "${RED}Hugin container is not running.${NC}"; exit 1; \
+	else \
+		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Hugin && HOME=/home/user su-exec user make typecheck' ; \
 	fi
 
 .PHONY: autofix
 autofix:
-	php vendor/bin/phpcbf --config-set default_standard PSR2 > /dev/null
-	php vendor/bin/phpcbf --config-set show_warnings 0 > /dev/null
-	php vendor/bin/phpcbf src www
-
-.PHONY: init_test_db
-init_test_db:
-	@bin/phinx migrate -e testing
-
-.PHONY: clean_test_db
-clean_test_db:
-	while read p; do \
-		PGPASSWORD=pgpass psql -hdb.pantheon.internal -U hugin hugin_unit -c "DROP TABLE \"$$p\""; \
-	done < ./data/tablelist.txt || true
-
-.PHONY: container_deps
-container_deps: get_container_id
-		@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
-  		echo "${RED}Hugin container is not running.${NC}"; \
-  	else \
-  		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Hugin && HOME=/home/user su-exec user make deps' ; \
-  	fi
+	pnpm exec oxlint . --fix
+	pnpm exec oxfmt
 
 .PHONY: container_autofix
 container_autofix: get_container_id
 	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
-		echo "${RED}Hugin container is not running.${NC}"; \
+		echo "${RED}Hugin container is not running.${NC}"; exit 1; \
 	else \
 		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Hugin && HOME=/home/user su-exec user make autofix' ; \
 	fi
 
-.PHONY: container_init_test_db
-container_init_test_db: get_container_id
+.PHONY: dev
+dev:
+	pnpm exec tsx watch --inspect=0.0.0.0:4208/debug src/server.ts
+
+.PHONY: container_dev
+container_dev: get_container_id
 	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
-		echo "${RED}Hugin container is not running.${NC}"; \
+		echo "${RED}Hugin container is not running.${NC}"; exit 1; \
 	else \
-		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Hugin && HOME=/home/user su-exec user make init_test_db' ; \
+		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Hugin && HOME=/home/user su-exec user make dev' ; \
 	fi
 
-.PHONY: container_clean_test_db
-container_clean_test_db: get_container_id
+.PHONY: reload
+reload:
+	supervisorctl restart hugin:
+
+.PHONY: container_reload
+container_reload: get_container_id
 	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
-		echo "${RED}Hugin container is not running.${NC}"; \
+		echo "${RED}Hugin container is not running.${NC}"; exit 1; \
 	else \
-		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Hugin && HOME=/home/user su-exec user make clean_test_db' ; \
+		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Hugin && HOME=/home/user su-exec user make reload' ; \
 	fi
+
+.PHONY: container_reload_nginx
+container_reload_nginx: get_container_id
+	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
+		echo "Hugin container is not running, cannot reload Nginx."; exit 1; \
+	else \
+		$(CONTAINER_COMMAND) exec $(RUNNING_CONTAINER_ID) sh -c 'cp /var/www/html/Hugin/hugin-container.nginx.conf /etc/nginx/http.d/hugin.conf && nginx -t && nginx -s reload'; \
+	fi
+
+.PHONY: build
+build:
+	mkdir -p dist
+	pnpm exec tsx build.ts
+
+.PHONY: container_build
+container_build: get_container_id
+	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
+		echo "${RED}Hugin container is not running.${NC}"; exit 1; \
+	else \
+		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Hugin && HOME=/home/user su-exec user make build' ; \
+	fi
+
+.PHONY: prod_deps
+prod_deps:
+	cd ../Hugin-dist && rm -rf node_modules && NODE_ENV=production pnpm install --prod --frozen-lockfile
+
+.PHONY: container_prod_deps
+container_prod_deps: get_container_id
+	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
+		echo "${RED}Hugin container is not running.${NC}"; exit 1; \
+	else \
+		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Hugin && HOME=/home/user su-exec user make prod_deps' ; \
+	fi
+
+.PHONY: prebuild
+prebuild:
+	mkdir -p ../Hugin-dist
+	cp -f dist/server.js dist/jobs.js dist/migrate.js ../Hugin-dist/
+	mkdir -p ../Hugin-dist/bin
+	cp -f bin/GeoLite2-*.mmdb ../Hugin-dist/bin/
+	cp -f package.json ../Hugin-dist/
+	cp -f pnpm-lock.yaml ../Hugin-dist/
+
+.PHONY: container_prebuild
+container_prebuild: get_container_id
+	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
+		echo "${RED}Hugin container is not running.${NC}"; exit 1; \
+	else \
+		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Hugin && HOME=/home/user su-exec user make prebuild' ; \
+	fi
+
+.PHONY: kill
+kill:
+	$(CONTAINER_COMMAND) rmi `$(CONTAINER_COMMAND) images | grep 'pantheon' | grep 'hugin' | awk '{print $$3}'` || exit 0
+
+.PHONY: container_stop
+container_stop: get_container_id
+	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
+		echo "${RED}Hugin container is not running.${NC}"; exit 1; \
+	else \
+		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'killall node' ; \
+	fi
+
+.PHONY: test test_verbose container_test container_test_verbose
+test:
+	pnpm test --runInBand
+
+test_verbose:
+	pnpm test --runInBand --verbose
+
+container_test container_test_verbose: get_container_id
+	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
+		echo "Hugin container is not running."; exit 1; \
+	else \
+		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Hugin && HOME=/home/user su-exec user make $(patsubst container_%,%,$@)'; \
+	fi
+
+.PHONY: migrate container_migrate seed container_seed common_deps container_common_deps
+migrate:
+	pnpm exec tsx src/migrate.ts
+
+seed:
+	pnpm exec tsx src/seed.ts
+
+container_migrate container_seed: get_container_id
+	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
+		echo "Hugin container is not running."; exit 1; \
+	else \
+		$(CONTAINER_COMMAND) exec $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Hugin && HOME=/home/user su-exec user make $(patsubst container_%,%,$@)'; \
+	fi
+
+common_deps:
+	cd ../Common/tsclients && pnpm install --frozen-lockfile
+
+container_common_deps: get_container_id
+	$(CONTAINER_COMMAND) exec $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Hugin && HOME=/home/user su-exec user make common_deps'

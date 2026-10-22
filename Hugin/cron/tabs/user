@@ -1,0 +1,4 @@
+15 3 * * * cd /var/www/html/Hugin-dist && node jobs.js aggregate_daily
+15 4 5 * * cd /var/www/html/Hugin-dist && node jobs.js aggregate_monthly
+38 2 3 * * cd /var/www/html/Hugin-dist && node jobs.js cleanup_errors
+* * * * * cd /var/www/html/Hugin-dist && node jobs.js send_stats

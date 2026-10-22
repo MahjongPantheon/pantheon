@@ -136,3 +136,9 @@ Hermod/dist/
 Hermod/coverage/
 Hermod-dist/*
 !Hermod-dist/.keep
+
+Hugin/node_modules/
+Hugin/dist/
+Hugin/coverage/
+Hugin-dist/*
+!Hugin-dist/.keep

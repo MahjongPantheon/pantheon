@@ -47,7 +47,7 @@ dev_deps:
 	cd Forseti && ${MAKE} container_dev_deps
 	cd Bragi && ${MAKE} container_dev_deps
 	cd Sigrun && ${MAKE} container_dev_deps
-	cd Hugin && ${MAKE} container_deps
+	cd Hugin && ${MAKE} container_dev_deps
 	cd Gullveig && ${MAKE} container_dev_deps
 	cd Meili && ${MAKE} container_dev_deps
 	cd Skirnir && ${MAKE} container_dev_deps
@@ -153,18 +153,6 @@ pantheon_stop:
 	cd Database && make stop 2>/dev/null || true # gracefully stop the db
 	${COMPOSE_COMMAND} down
 
-# only for php services
-.PHONY: enable_debug
-enable_debug: export ENV_FILENAME=.env.development
-enable_debug:
-	@cd Hugin && ${MAKE} container_enable_debug
-
-# only for php services
-.PHONY: disable_debug
-disable_debug: export ENV_FILENAME=.env.development
-disable_debug:
-	@cd Hugin && ${MAKE} container_disable_debug
-
 .PHONY: dev_tyr
 dev_tyr:
 	cd Tyr && ${MAKE} container_dev
@@ -188,6 +176,10 @@ dev_frey:
 .PHONY: dev_gullveig
 dev_gullveig:
 	cd Gullveig && ${MAKE} container_dev
+
+.PHONY: dev_hugin
+dev_hugin:
+	cd Hugin && ${MAKE} container_dev
 
 .PHONY: dev_hermod
 dev_hermod:
@@ -232,6 +224,10 @@ frey_stop:
 .PHONY: gullveig_stop
 gullveig_stop:
 	cd Gullveig && ${MAKE} container_stop
+
+.PHONY: hugin_stop
+hugin_stop:
+	cd Hugin && ${MAKE} container_stop
 
 .PHONY: hermod_stop
 hermod_stop:
@@ -426,13 +422,17 @@ meili_oxfmt:
 meili_typecheck:
 	cd Meili && ${MAKE} container_typecheck > ../tmp/meili_typecheck.log 2>&1
 
-.PHONY: hugin_lint
-hugin_lint:
-	cd Hugin && ${MAKE} container_lint > ../tmp/hugin_lint.log 2>&1
+.PHONY: hugin_oxlint
+hugin_oxlint:
+	cd Hugin && ${MAKE} container_oxlint > ../tmp/hugin_oxlint.log 2>&1
 
-.PHONY: hugin_analyze
-hugin_analyze:
-	cd Hugin && ${MAKE} container_analyze > ../tmp/hugin_analyze.log 2>&1
+.PHONY: hugin_oxfmt
+hugin_oxfmt:
+	cd Hugin && ${MAKE} container_oxfmt > ../tmp/hugin_oxfmt.log 2>&1
+
+.PHONY: hugin_typecheck
+hugin_typecheck:
+	cd Hugin && ${MAKE} container_typecheck > ../tmp/hugin_typecheck.log 2>&1
 
 .PHONY: mimir_oxlint
 mimir_oxlint:
@@ -502,7 +502,7 @@ lint:
 		gullveig_oxlint gullveig_oxfmt gullveig_typecheck \
 		hermod_oxlint hermod_oxfmt hermod_typecheck \
 		meili_oxlint meili_oxfmt meili_typecheck \
-		hugin_lint hugin_analyze \
+		hugin_oxlint hugin_oxfmt hugin_typecheck \
 		mimir_oxlint mimir_oxfmt mimir_typecheck \
 		skirnir_oxlint skirnir_oxfmt skirnir_typecheck \
 		sigrun_oxlint sigrun_oxfmt sigrun_typecheck \
@@ -516,6 +516,10 @@ lint:
 .PHONY: gullveig_test
 gullveig_test:
 	cd Gullveig && ${MAKE} container_test
+
+.PHONY: hugin_test
+hugin_test:
+	cd Hugin && ${MAKE} container_test
 
 .PHONY: hermod_test
 hermod_test:
@@ -535,6 +539,7 @@ test:
 	cd Gullveig && ${MAKE} container_test
 	cd Meili && ${MAKE} container_test
 	cd Hermod && ${MAKE} container_test
+	cd Hugin && ${MAKE} container_test
 
 .PHONY: test_verbose
 test_verbose:
@@ -544,6 +549,7 @@ test_verbose:
 	cd Gullveig && ${MAKE} container_test_verbose
 	cd Meili && ${MAKE} container_test_verbose
 	cd Hermod && ${MAKE} container_test_verbose
+	cd Hugin && ${MAKE} container_test_verbose
 
 .PHONY: autofix
 autofix:
@@ -616,6 +622,11 @@ prod_build_gullveig: export NODE_ENV=production
 prod_build_gullveig: # this is for automated builds, don't run it manually
 	cd Gullveig && ${MAKE} container_deps && ${MAKE} container_build && ${MAKE} container_prebuild && ${MAKE} container_prod_deps
 
+.PHONY: prod_build_hugin
+prod_build_hugin: export NODE_ENV=production
+prod_build_hugin: # this is for automated builds, don't run it manually
+	cd Hugin && ${MAKE} container_deps && ${MAKE} container_common_deps && ${MAKE} container_build && ${MAKE} container_prebuild && ${MAKE} container_prod_deps
+
 .PHONY: prod_build_hermod
 prod_build_hermod: export NODE_ENV=production
 prod_build_hermod: # this is for automated builds, don't run it manually
@@ -662,6 +673,7 @@ prod_compile:
 	${MAKE} prod_build_bragi && cd Bragi && ${MAKE} container_reload
 	cd Bragi && ${MAKE} container_warmup
 	${MAKE} prod_build_gullveig && cd Gullveig && ${MAKE} container_reload
+	${MAKE} prod_build_hugin && cd Hugin && ${MAKE} container_reload
 	${MAKE} prod_build_hermod && cd Hermod && ${MAKE} container_reload
 	${MAKE} prod_build_meili && cd Meili && ${MAKE} container_reload
 	${MAKE} prod_build_skirnir && cd Skirnir && ${MAKE} container_reload
@@ -775,6 +787,11 @@ e2e_build_gullveig: export NODE_ENV=development
 e2e_build_gullveig: # this is for automated builds, don't run it manually
 	cd Gullveig && ${MAKE} container_deps && ${MAKE} container_build && ${MAKE} container_prebuild && ${MAKE} container_prod_deps
 
+.PHONY: e2e_build_hugin
+e2e_build_hugin: export NODE_ENV=development
+e2e_build_hugin: # this is for automated builds, don't run it manually
+	cd Hugin && ${MAKE} container_deps && ${MAKE} container_common_deps && ${MAKE} container_build && ${MAKE} container_prebuild && ${MAKE} container_prod_deps
+
 .PHONY: e2e_build_hermod
 e2e_build_hermod: export NODE_ENV=development
 e2e_build_hermod: # this is for automated builds, don't run it manually
@@ -826,6 +843,7 @@ e2e_compile:
 	${MAKE} e2e_build_bragi && cd Bragi && ${MAKE} container_reload
 	${MAKE} e2e_build_mimir && cd Mimir && ${MAKE} container_reload
 	${MAKE} e2e_build_gullveig && cd Gullveig && ${MAKE} container_reload
+	${MAKE} e2e_build_hugin && cd Hugin && ${MAKE} container_reload
 	${MAKE} e2e_build_hermod && cd Hermod && ${MAKE} container_reload
 	${MAKE} e2e_build_meili && cd Meili && ${MAKE} container_reload
 	${MAKE} e2e_build_skirnir && cd Skirnir && ${MAKE} container_reload

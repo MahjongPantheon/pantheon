@@ -8,12 +8,12 @@ cd /opt/prometheus
 
 if [ "$ARCH" == "x86_64" ]; then
   echo "Installing for x86_64";
-  curl https://github.com/prometheus/prometheus/releases/download/v2.55.1/prometheus-2.55.1.linux-amd64.tar.gz -L -o prometheus.tar.gz
-  curl https://github.com/prometheus/node_exporter/releases/download/v1.8.2/node_exporter-1.8.2.linux-amd64.tar.gz -L -o node_exporter.tar.gz
+  curl --fail https://github.com/prometheus/prometheus/releases/download/v2.55.1/prometheus-2.55.1.linux-amd64.tar.gz -L -o prometheus.tar.gz
+  curl --fail https://github.com/prometheus/node_exporter/releases/download/v1.8.2/node_exporter-1.8.2.linux-amd64.tar.gz -L -o node_exporter.tar.gz
 else
   echo "Installing for arm64";
-  curl https://github.com/prometheus/prometheus/releases/download/v2.55.1/prometheus-2.55.1.linux-amd64.tar.gz -L -o prometheus.tar.gz
-  curl https://github.com/prometheus/node_exporter/releases/download/v1.8.2/node_exporter-1.8.2.linux-arm64.tar.gz -L -o node_exporter.tar.gz
+  curl --fail https://github.com/prometheus/prometheus/releases/download/v2.55.1/prometheus-2.55.1.linux-arm64.tar.gz -L -o prometheus.tar.gz
+  curl --fail https://github.com/prometheus/node_exporter/releases/download/v1.8.2/node_exporter-1.8.2.linux-arm64.tar.gz -L -o node_exporter.tar.gz
 fi
 
 tar -xvzf prometheus.tar.gz

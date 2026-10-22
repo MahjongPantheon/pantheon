@@ -15,7 +15,7 @@ Pantheon is a set of services, not one application. `Mimir` owns game, event, to
 | `Sigrun/` | React/Vite server-rendered public ratings and statistics site. Work in `app/pages`, `app/components`, and `app/services`; check both browser and server rendering when changing code used by `app/server.tsx`. |
 | `Bragi/` | React/Vite server-rendered landing site. Page copy is mostly in `app/pages/*.mdx`; shared UI is in `app/components`. Check both browser and server rendering for shared components. |
 | `Skirnir/` | TypeScript Telegram notification service. Its entry point is `app/server.ts`; preserve the notification API and queue/rate-limit behavior when editing delivery logic. |
-| `Hugin/` | PHP monitoring and error collection. Code is under `src`, HTTP entry points under `www`, and schema changes under `data/migrations`. Preserve the privacy boundary described in its README: analytics must remain depersonalized. |
+| `Hugin/` | TypeScript monitoring and error collection with Kysely/PostgreSQL, shared Redis metrics and eight nginx-balanced workers. HTTP/Twirp routes are in `src/app.ts`, ingestion in `src/ingest.ts`, reporting/rollups in `src/reports.ts` and `src/aggregation.ts`, and schema migrations in `src/migrations`. Preserve the privacy boundary described in its README: analytics must remain depersonalized. |
 | `Gullveig/` | TypeScript file and avatar storage. The upload server is in `src/server.ts`, HTTP handling in `src/app.ts`, and image processing in `src/avatars.ts`; Nginx serves stored avatars and `www/static` fonts. Check upload and file-serving behavior when changing storage paths or validation. |
 | `Meili/` | TypeScript GeoIP provider. HTTP handling is in `src/app.ts`, database lookup in `src/geoip.ts`, and compatible country/timezone lists in `src/data`. Each of four production workers reads `bin/GeoLite2-City.mmdb` once; Nginx balances requests between them. Keep IP-derived defaults and API response shapes compatible with callers. |
 | `Fenrir/` | Playwright end-to-end tests in `tests/*.spec.ts`; shared helpers are in `tests/utils`. Follow `playwright.config.ts` and use the root `make e2e_dev` flow against a running development stack. |
@@ -62,7 +62,7 @@ Pantheon is a set of services, not one application. `Mimir` owns game, event, to
 
 ### Shared contracts and validation
 
-- `Common/proto/*.proto` is the API source of truth. `make proto_gen` at the root regenerates TypeScript clients and refreshes development dependencies; it does not generate Hugin's PHP classes. Use the PHP generation command in [AGENTS.md](../../AGENTS.md) for Hugin contract changes.
+- `Common/proto/*.proto` is the API source of truth. `make proto_gen` at the root regenerates TypeScript clients and refreshes development dependencies, including Hugin's generated Twirp server contract.
 - Use root container check targets and inspect `tmp/<service>_*.log`, since the wrappers can report a missing container without a failing status. `make -C Common lint` is the protobuf-specific check.
 - Root `make test` covers Tyr (Vitest), Frey (Jest), and Mimir (Jest plus its test server/build check). Forseti, Sigrun, and Bragi have separate Vitest targets; first check whether relevant test files exist. Fenrir provides Playwright integration tests.
 
