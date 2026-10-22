@@ -7,13 +7,13 @@ Databases are expected to be clean before import. You may use `make pgadmin_star
 
 Export:
 
-$ PGPASSWORD=pgpass pg_dump -U frey -h 127.0.0.1 -p 5532 frey > frey2.sql
-$ PGPASSWORD=pgpass pg_dump -U mimir -h 127.0.0.1 -p 5532 mimir > mimir2.sql
+$ PGPASSWORD=pgpass pg_dump -U frey2 -h 127.0.0.1 -p 5532 frey2 > frey2.sql
+$ PGPASSWORD=pgpass pg_dump -U mimir2 -h 127.0.0.1 -p 5532 mimir2 > mimir2.sql
 
-Import: 
+Import:
 
-$ PGPASSWORD=pgpass psql -U frey -h 127.0.0.1 -p 5532 frey < frey2.sql
-$ PGPASSWORD=pgpass psql -U mimir -h 127.0.0.1 -p 5532 mimir < mimir2.sql
+$ PGPASSWORD=pgpass psql -U frey2 -h 127.0.0.1 -p 5532 frey2 < frey2.sql
+$ PGPASSWORD=pgpass psql -U mimir2 -h 127.0.0.1 -p 5532 mimir2 < mimir2.sql
 
 SQL statements to depersonalize dump:
 
@@ -21,4 +21,3 @@ UPDATE person SET email = concat(round(10000000 / random()), '@test.com')
 UPDATE person SET auth_hash = '', auth_salt = '', auth_reset_token = '', tenhou_id = '', phone = '', city= ''
 UPDATE person SET title = concat('Player', round(10000000 / random()))
 DELETE from registrant
-
