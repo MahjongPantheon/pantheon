@@ -300,10 +300,16 @@ services:
       - ./Env/${ENV_FILENAME:-.env.production}
     ports:
       - "127.0.0.1:4009:80"
+      - "127.0.0.1:4209:4209"
     volumes:
       - ./Gullveig:/var/www/html/Gullveig
+      - ./Gullveig-dist:/var/www/html/Gullveig-dist
       - ./Common:/var/www/html/Common
       - gullveigstorage01:/var/storage
+      - pnpmstore01:/.pnpm
+    environment:
+      PNPM_HOME: /.pnpm
+      npm_config_store_dir: /.pnpm
     networks:
       internal_net:
         aliases:

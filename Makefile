@@ -47,7 +47,7 @@ dev_deps:
 	cd Bragi && ${MAKE} container_dev_deps
 	cd Sigrun && ${MAKE} container_dev_deps
 	cd Hugin && ${MAKE} container_deps
-	cd Gullveig && ${MAKE} container_deps
+	cd Gullveig && ${MAKE} container_dev_deps
 	cd Meili && ${MAKE} container_deps
 	cd Skirnir && ${MAKE} container_dev_deps
 	cd Fenrir && ${MAKE} container_dev_deps
@@ -156,7 +156,6 @@ pantheon_stop:
 enable_debug: export ENV_FILENAME=.env.development
 enable_debug:
 	@cd Hugin && ${MAKE} container_enable_debug
-	@cd Gullveig && ${MAKE} container_enable_debug
 	@cd Meili && ${MAKE} container_enable_debug
 
 # only for php services
@@ -164,7 +163,6 @@ enable_debug:
 disable_debug: export ENV_FILENAME=.env.development
 disable_debug:
 	@cd Hugin && ${MAKE} container_disable_debug
-	@cd Gullveig && ${MAKE} container_disable_debug
 	@cd Meili && ${MAKE} container_disable_debug
 
 .PHONY: dev_tyr
@@ -186,6 +184,10 @@ dev_bragi:
 .PHONY: dev_frey
 dev_frey:
 	cd Frey && ${MAKE} container_dev
+
+.PHONY: dev_gullveig
+dev_gullveig:
+	cd Gullveig && ${MAKE} container_dev
 
 .PHONY: dev_mimir
 dev_mimir:
@@ -218,6 +220,10 @@ skirnir_stop:
 .PHONY: frey_stop
 frey_stop:
 	cd Frey && ${MAKE} container_stop
+
+.PHONY: gullveig_stop
+gullveig_stop:
+	cd Gullveig && ${MAKE} container_stop
 
 .PHONY: mimir_stop
 mimir_stop:
@@ -368,13 +374,17 @@ frey_oxfmt:
 frey_typecheck:
 	cd Frey && ${MAKE} container_typecheck > ../tmp/frey_typecheck.log 2>&1
 
-.PHONY: gullveig_lint
-gullveig_lint:
-	cd Gullveig && ${MAKE} container_lint > ../tmp/gullveig_lint.log 2>&1
+.PHONY: gullveig_oxlint
+gullveig_oxlint:
+	cd Gullveig && ${MAKE} container_oxlint > ../tmp/gullveig_oxlint.log 2>&1
 
-.PHONY: gullveig_analyze
-gullveig_analyze:
-	cd Gullveig && ${MAKE} container_analyze > ../tmp/gullveig_analyze.log 2>&1
+.PHONY: gullveig_oxfmt
+gullveig_oxfmt:
+	cd Gullveig && ${MAKE} container_oxfmt > ../tmp/gullveig_oxfmt.log 2>&1
+
+.PHONY: gullveig_typecheck
+gullveig_typecheck:
+	cd Gullveig && ${MAKE} container_typecheck > ../tmp/gullveig_typecheck.log 2>&1
 
 .PHONY: meili_lint
 meili_lint:
@@ -457,7 +467,7 @@ lint:
 	${MAKE} -j16 bragi_oxlint bragi_oxfmt bragi_typecheck \
 	forseti_oxlint forseti_oxfmt forseti_typecheck \
 	frey_oxlint frey_oxfmt frey_typecheck \
-		gullveig_lint gullveig_analyze \
+		gullveig_oxlint gullveig_oxfmt gullveig_typecheck \
 		meili_lint meili_analyze \
 		hugin_lint hugin_analyze \
 		mimir_oxlint mimir_oxfmt mimir_typecheck \
@@ -470,6 +480,10 @@ lint:
 			exit $$LINT_RESULT ;\
 		}
 
+.PHONY: gullveig_test
+gullveig_test:
+	cd Gullveig && ${MAKE} container_test
+
 .PHONY: test
 test:
 	@echo "Running tests for all subsystems"
@@ -477,12 +491,14 @@ test:
 	cd Tyr && ${MAKE} container_test
 	cd Frey && ${MAKE} container_test
 	cd Mimir && ${MAKE} container_test
+	cd Gullveig && ${MAKE} container_test
 
 .PHONY: test_verbose
 test_verbose:
 	cd Tyr && ${MAKE} container_test_verbose
 	cd Frey && ${MAKE} container_test_verbose
 	cd Mimir && ${MAKE} container_test_verbose
+	cd Gullveig && ${MAKE} container_test_verbose
 
 .PHONY: autofix
 autofix:
@@ -548,6 +564,11 @@ prod_build_frey: export NODE_ENV=production
 prod_build_frey: # this is for automated builds, don't run it manually
 	cd Frey && ${MAKE} container_deps && ${MAKE} container_build && ${MAKE} container_prebuild && ${MAKE} container_prod_deps
 
+.PHONY: prod_build_gullveig
+prod_build_gullveig: export NODE_ENV=production
+prod_build_gullveig: # this is for automated builds, don't run it manually
+	cd Gullveig && ${MAKE} container_deps && ${MAKE} container_build && ${MAKE} container_prebuild && ${MAKE} container_prod_deps
+
 .PHONY: prod_build_mimir
 prod_build_mimir: export NODE_ENV=production
 prod_build_mimir: # this is for automated builds, don't run it manually
@@ -583,6 +604,7 @@ prod_compile:
 	cd Sigrun && ${MAKE} container_warmup
 	${MAKE} prod_build_bragi && cd Bragi && ${MAKE} container_reload
 	cd Bragi && ${MAKE} container_warmup
+	${MAKE} prod_build_gullveig && cd Gullveig && ${MAKE} container_reload
 	${MAKE} prod_build_skirnir && cd Skirnir && ${MAKE} container_reload
 
 .PHONY: prod_start
@@ -689,6 +711,11 @@ e2e_build_frey: # this is for automated builds, don't run it manually
 	cd Frey && ${MAKE} container_deps && ${MAKE} container_build && ${MAKE} container_prebuild && ${MAKE} container_prod_deps
 	cp Env/.env.e2e Frey-dist/.env.production
 
+.PHONY: e2e_build_gullveig
+e2e_build_gullveig: export NODE_ENV=development
+e2e_build_gullveig: # this is for automated builds, don't run it manually
+	cd Gullveig && ${MAKE} container_deps && ${MAKE} container_build && ${MAKE} container_prebuild && ${MAKE} container_prod_deps
+
 .PHONY: e2e_build_mimir
 e2e_build_mimir: export NODE_ENV=development
 e2e_build_mimir: export ENV_FILENAME=.env.e2e
@@ -729,6 +756,7 @@ e2e_compile:
 	${MAKE} e2e_build_frey && cd Frey && ${MAKE} container_reload
 	${MAKE} e2e_build_bragi && cd Bragi && ${MAKE} container_reload
 	${MAKE} e2e_build_mimir && cd Mimir && ${MAKE} container_reload
+	${MAKE} e2e_build_gullveig && cd Gullveig && ${MAKE} container_reload
 	${MAKE} e2e_build_skirnir && cd Skirnir && ${MAKE} container_reload
 
 .PHONY: e2e_run

@@ -118,3 +118,9 @@ Skirnir-dist/dist/
 Skirnir-dist/node_modules/
 Skirnir-dist/package.json
 Skirnir-dist/pnpm-lock.yaml
+
+Gullveig/node_modules/
+Gullveig/dist/
+Gullveig/coverage/
+Gullveig-dist/*
+!Gullveig-dist/.keep
