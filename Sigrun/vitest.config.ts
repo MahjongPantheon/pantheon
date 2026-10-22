@@ -24,7 +24,9 @@ export default mergeConfig(
   defineConfig({
     test: {
       coverage: {
+        enabled: true,
         provider: 'istanbul',
+        reporter: ['text', 'html', 'clover', 'json', 'json-summary'],
       },
       globals: true,
       environment: 'jsdom',

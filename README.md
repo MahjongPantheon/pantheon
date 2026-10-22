@@ -208,7 +208,9 @@ these suites independently of lint results after dependency and migration setup;
 Fenrir's lint, formatting, type checks, and Playwright tests run in the separate
 e2e workflow. The service-check workflow prepares one shared container
 environment for the application services and reports their lint, formatting,
-type checks, and tests in the Actions summary and an updated PR comment. The
+type checks, tests, and overall line coverage per service in the Actions summary
+and an updated PR comment. Coverage is collected during the same test run;
+missing reports are shown as unavailable. The
 `service-check-results` artifact contains individual check logs. Fork PRs receive
 the summary and artifact; their read-only token cannot post the comment. The e2e
 workflow publishes its own summary and separate updated PR comment with setup,

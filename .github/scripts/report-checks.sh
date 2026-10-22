@@ -5,19 +5,25 @@ set -uo pipefail
 report_dir=${CI_REPORT_DIR:-.ci-results}
 root_log_dir=${ROOT_LOG_DIR:-tmp}
 make_command=${MAKE_COMMAND:-make}
+coverage_root=${COVERAGE_ROOT_DIR:-.}
 services=(Bragi Forseti Frey Gullveig Hermod Hugin Meili Mimir Sigrun Skirnir Tyr)
 test_services=(Tyr Frey Mimir Gullveig Meili Hermod Hugin Forseti Sigrun)
 mkdir -p "$report_dir"
 failed=0
 
 run_check() {
-  local service=$1 check=$2 target log root_log result
+  local service=$1 check=$2 target log root_log result coverage_summary
   target="${service,,}_$check"
   log="$report_dir/$target.log"
   root_log="$root_log_dir/$target.log"
   # Frey's root lint target uses this older log name.
   if [[ $target == frey_oxlint ]]; then root_log="$root_log_dir/frey_lint.log"; fi
   if [[ $check != test ]]; then rm -f "$root_log"; fi
+  coverage_summary="$coverage_root/$service/coverage/coverage-summary.json"
+  # Never reuse coverage from an earlier run if this suite fails to start.
+  if [[ $check == test ]]; then
+    rm -f "$coverage_summary" "$report_dir/${service,,}_coverage.json"
+  fi
   echo "Running $target"
   result='✅ Passed'
   if ! "$make_command" "$target" > "$log" 2>&1; then result='❌ Failed'; fi
@@ -25,6 +31,17 @@ run_check() {
   # Some root wrappers return success when their container is absent.
   if grep -Eiq 'container.*(not running|is missing|not found)|no such container' "$log"; then
     result='❌ Failed'
+  fi
+  if [[ $check == test ]]; then
+    if [[ -f $coverage_summary ]]; then
+      cp "$coverage_summary" "$report_dir/${service,,}_coverage.json"
+    fi
+    node -e '
+      try {
+        const pct = JSON.parse(require("node:fs").readFileSync(process.argv[1], "utf8")).total.lines.pct;
+        console.log(typeof pct === "number" && Number.isFinite(pct) ? `${pct.toFixed(1)}%` : "Unavailable");
+      } catch { console.log("Unavailable"); }
+    ' "$coverage_summary" > "$report_dir/${service,,}_coverage.status"
   fi
   printf '%s\n' "$result" > "$report_dir/$target.status"
   echo "::group::$target: $result"
@@ -47,8 +64,8 @@ for service in "${test_services[@]}"; do run_check "$service" test; done
     printf '[Workflow run](%s/%s/actions/runs/%s) · commit `%s`\n\n' \
       "${GITHUB_SERVER_URL:-https://github.com}" "$GITHUB_REPOSITORY" "$GITHUB_RUN_ID" "$GITHUB_SHA"
   fi
-  echo '| Service | Lint | Format | Types | Tests |'
-  echo '| --- | --- | --- | --- | --- |'
+  echo '| Service | Lint | Format | Types | Tests | Line coverage |'
+  echo '| --- | --- | --- | --- | --- | --- |'
   for service in "${services[@]}"; do
     printf '| %s ' "$service"
     for check in oxlint oxfmt typecheck test; do
@@ -58,6 +75,11 @@ for service in "${test_services[@]}"; do run_check "$service" test; done
         printf '| %s ' "$(cat "$report_dir/${service,,}_$check.status")"
       fi
     done
+    if [[ $service == Bragi || $service == Skirnir ]]; then
+      printf '| — '
+    else
+      printf '| %s ' "$(cat "$report_dir/${service,,}_coverage.status")"
+    fi
     echo '|'
   done
   echo
