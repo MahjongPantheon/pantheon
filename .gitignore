@@ -130,3 +130,9 @@ Meili/dist/
 Meili/coverage/
 Meili-dist/*
 !Meili-dist/.keep
+
+Hermod/node_modules/
+Hermod/dist/
+Hermod/coverage/
+Hermod-dist/*
+!Hermod-dist/.keep

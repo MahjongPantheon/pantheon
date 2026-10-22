@@ -34,11 +34,17 @@ services:
       - ./Env/${ENV_FILENAME:-.env.production}
     ports:
       - "127.0.0.1:4007:80"
+      - "127.0.0.1:4207:4207"
     volumes:
-      - ./Hermod/www:/var/www/html/Hermod
+      - ./Hermod:/var/www/html/Hermod
+      - ./Hermod-dist:/var/www/html/Hermod-dist
+      - pnpmstore01:/.pnpm
       - ./Hermod/opendkim_keys:/etc/opendkim/keys
       - pfspool01:/var/spool/postfix
       - pfetc01:/etc/postfix
+    environment:
+      PNPM_HOME: /.pnpm
+      npm_config_store_dir: /.pnpm
     networks:
       internal_net:
         aliases:
