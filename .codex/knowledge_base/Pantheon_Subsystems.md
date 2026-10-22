@@ -64,7 +64,7 @@ Pantheon is a set of services, not one application. `Mimir` owns game, event, to
 
 - `Common/proto/*.proto` is the API source of truth. `make proto_gen` at the root regenerates TypeScript clients and refreshes development dependencies, including Hugin's generated Twirp server contract.
 - Use root container check targets and inspect `tmp/<service>_*.log`, since the wrappers can report a missing container without a failing status. `make -C Common lint` is the protobuf-specific check.
-- Root `make test` and `make test_verbose` cover Tyr, Forseti, and Sigrun (Vitest), plus Frey, Mimir, Gullveig, Meili, Hermod, and Hugin (Jest). All suites run even after a failure; the aggregate still fails. Bragi and Skirnir currently have no test files. Fenrir provides Playwright integration tests through the separate e2e workflow. CI runs service tests after successful dependency/migration setup even when lint fails.
+- Root `make test` and `make test_verbose` cover Tyr, Forseti, and Sigrun (Vitest), plus Frey, Mimir, Gullveig, Meili, Hermod, and Hugin (Jest). All suites run even after a failure; the aggregate still fails. Bragi and Skirnir currently have no test files. Fenrir provides Playwright integration tests through the separate e2e workflow. CI runs service tests after successful dependency/migration setup even when lint fails. All checks share one container environment; `.github/scripts/report-checks.sh` records per-service lint, formatting, type, and test results in the Actions summary and a single updated PR comment. Detailed logs are uploaded as `service-check-results`; fork PRs retain the summary/artifact without a comment because their token is read-only.
 
 ### Fenrir test cases
 

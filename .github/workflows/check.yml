@@ -3,6 +3,17 @@ name: Unit tests, static analysis, code style
 on:
   workflow_dispatch:
   push:
+  pull_request:
+    types: [opened, reopened]
+
+permissions:
+  contents: read
+  actions: read
+  pull-requests: write
+
+concurrency:
+  group: service-checks-${{ github.event.pull_request.head.repo.full_name || github.repository }}-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
 
 jobs:
   checkPr:
@@ -45,17 +56,26 @@ jobs:
         env:
           ENV_FILENAME: .env.development
 
-      - name: Run all code checks
-        run: make lint
+      - name: Run and report every service check
+        if: ${{ !cancelled() && steps.deps.outcome == 'success' && steps.migrate.outcome == 'success' }}
+        run: bash .github/scripts/report-checks.sh
         env:
           ENV_FILENAME: .env.development
 
-      - name: Run all service test suites
-        # A lint failure must not hide test failures in other services.
-        if: ${{ !cancelled() && steps.deps.outcome == 'success' && steps.migrate.outcome == 'success' }}
-        run: make test
-        env:
-          ENV_FILENAME: .env.development
+      - name: Upload service check results
+        if: ${{ !cancelled() && hashFiles('.ci-results/report.md') != '' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: service-check-results
+          path: .ci-results/
+          include-hidden-files: true
+
+      - name: Update PR results table
+        if: ${{ !cancelled() && hashFiles('.ci-results/report.md') != '' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) }}
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await require('./.github/scripts/comment-checks.cjs')({ github, context, core });
 
       - name: Stop containers
         if: always()

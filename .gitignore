@@ -146,3 +146,6 @@ Hugin/coverage/
 Hugin-dist/*
 !Hugin-dist/.keep
 !Hugin-dist/server.js
+
+# Per-service GitHub Actions reports and logs
+/.ci-results/
