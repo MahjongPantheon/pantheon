@@ -189,7 +189,7 @@ StartGame accepts three distinct real player IDs and appends the ghost internall
 Session state rotates East/South/West and ends after East 3 for tonpuusen or
 South 3 for hanchan, with three hands in an optional additional wind.
 
-Tsumo loss is supported; no-tsumo-loss settings are rejected. Draw payments and
+Sanma uses tsumo loss scoring. Draw payments and
 extra chombo payments are configurable. Shuffled, interval, Swiss, and prescripted tournament
 seating use the Rust engine's `tableSize: 3` option. Interval seating retains its
 rating/step grouping and fallback for remaining tables; Swiss seating retains its

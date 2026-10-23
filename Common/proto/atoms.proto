@@ -617,8 +617,6 @@ message RulesetConfig {
   // Sanma (3-player) settings. When with_sanma is false the rest are ignored.
   // 3-player mode for this event
   bool with_sanma = 42;
-  // Use the no-tsumo-loss scoring table (deferred). Default false: tsumo loss.
-  bool sanma_no_tsumo_loss = 45;
   // Total points exchanged on exhaustive draw; 0/unset means 3000.
   int32 sanma_draw_payments = 43;
   // Points paid to EACH other player on chombo; 0/unset means 6000.

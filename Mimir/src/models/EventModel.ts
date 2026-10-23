@@ -68,7 +68,6 @@ const ID_PLACEHOLDER = '##ID##';
 export class EventModel extends Model {
   private validateSanmaSettings(rules: RulesetEntity['rules']): void {
     if (!rules.withSanma) return;
-    if (rules.sanmaNoTsumoLoss) throw new Error('Sanma without tsumo loss is not supported yet');
     if ((rules.sanmaDrawPayments ?? 0) < 0 || (rules.sanmaDrawPayments ?? 0) % 200 !== 0) {
       throw new Error('Sanma draw payments must be a nonnegative multiple of 200');
     }

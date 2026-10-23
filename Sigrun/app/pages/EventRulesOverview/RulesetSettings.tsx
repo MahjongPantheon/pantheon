@@ -16,7 +16,7 @@
  */
 
 import * as React from 'react';
-import { Checkbox, Group, NumberInput, Radio, Stack, Title } from '@mantine/core';
+import { Checkbox, NumberInput, Stack, Title } from '@mantine/core';
 import {
   IconBrandStackoverflow,
   IconArrowBadgeDownFilled,
@@ -84,19 +84,6 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ config, i18n }
             value={config.rulesetConfig.sanmaChomboPayments}
             readOnly
           />
-          <Radio.Group
-            label={i18n._t('Tsumo loss')}
-            description={i18n._t(
-              'Whether tsumo payments are scored the same as in four-player games'
-            )}
-            value={config.rulesetConfig.sanmaNoTsumoLoss ? 'no_loss' : 'loss'}
-            onChange={() => {}}
-          >
-            <Group mt='xs'>
-              <Radio value='loss' label={i18n._t('Tsumo loss')} />
-              <Radio value='no_loss' label={i18n._t('No tsumo loss')} />
-            </Group>
-          </Radio.Group>
         </>
       )}
       <Title order={4}>{i18n._t('Game duration')}</Title>

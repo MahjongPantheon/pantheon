@@ -150,7 +150,6 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string; copyId?: string 
         chomboEndsGame: false,
         doubleYakuman: {},
         withSanma: false,
-        sanmaNoTsumoLoss: false,
         sanmaDrawPayments: 3000,
         sanmaChomboPayments: 6000,
       },
