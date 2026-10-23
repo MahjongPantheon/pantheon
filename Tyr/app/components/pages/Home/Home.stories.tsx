@@ -18,7 +18,7 @@ export default {
 export const Default = {
   args: {
     eventName: 'My Test Event',
-    canAccessAdminPanel: true,
+    canAccessAdminPanel: false,
     onAdminPanelClick: () => {},
     canStartGame: true,
     hasStartedGame: false,
@@ -32,7 +32,7 @@ export const Default = {
 export const InGame = {
   args: {
     eventName: 'My Test Event',
-    canAccessAdminPanel: true,
+    canAccessAdminPanel: false,
     onAdminPanelClick: () => {},
     canStartGame: false,
     hasStartedGame: true,

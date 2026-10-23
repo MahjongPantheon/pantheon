@@ -12,7 +12,7 @@ import styles from './Home.module.css';
 import clsx from 'classnames';
 
 type IProps = {
-  canAccessAdminPanel: boolean;
+  canAccessAdminPanel?: boolean;
   onAdminPanelClick: () => void;
   eventName: string;
   canStartGame: boolean;
@@ -37,6 +37,7 @@ type IProps = {
 export const Home = (props: IProps) => {
   const loc = useContext(i18n);
   const {
+    canAccessAdminPanel = false,
     eventName,
     canStartGame,
     hasStartedGame,
@@ -140,7 +141,7 @@ export const Home = (props: IProps) => {
             {loc._t('Other playing tables')}
           </Button>
         )}
-        {props.canAccessAdminPanel && (
+        {canAccessAdminPanel && (
           <Button
             variant='contained'
             size='fullwidth'
