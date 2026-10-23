@@ -15,16 +15,28 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { defineConfig } from 'vite';
+import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react-swc';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import { VitePWA } from 'vite-plugin-pwa';
+import { createGameApi } from './app/services/gameApi';
 
 export default defineConfig({
   ssr: {
     noExternal: ['tsclients'],
   },
   plugins: [
+    {
+      name: 'public-game-api',
+      configureServer(server) {
+        server.middlewares.use(
+          createGameApi({
+            ...process.env,
+            ...loadEnv(server.config.mode, server.config.envDir, ''),
+          })
+        );
+      },
+    },
     react(),
     tsconfigPaths(),
     VitePWA({

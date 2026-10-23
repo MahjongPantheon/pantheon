@@ -45,6 +45,7 @@ import { SessionStateEntity } from '../entities/SessionState.entity.js';
 import { Context } from '../context.js';
 import { PlayerStatsModel } from './PlayerStatsModel.js';
 import { AchievementsModel } from './AchievementsModel.js';
+import { NotFoundError } from '../helpers/errors.js';
 
 export class SessionModel extends Model {
   async findById(id: number) {
@@ -372,7 +373,7 @@ export class SessionModel extends Model {
       async () => {
         const session = await this.findByRepresentationalHash([sessionHash]);
         if (session.length === 0) {
-          throw new Error('Session not found');
+          throw new NotFoundError('Session not found');
         }
 
         const eventModel = this.getModel(EventModel);

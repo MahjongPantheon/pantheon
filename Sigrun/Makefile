@@ -96,6 +96,7 @@ build:
 	rm -rf ./node_modules/.vite
 	./node_modules/.bin/vite build --outDir dist/client
 	./node_modules/.bin/vite build --ssr app/server.tsx --outDir dist/server
+	./node_modules/.bin/vite build --ssr app/services/gameApi.ts --outDir dist/server --emptyOutDir false
 
 .PHONY: prod_deps
 prod_deps:

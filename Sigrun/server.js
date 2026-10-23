@@ -51,6 +51,23 @@ if (fs.existsSync('./node_modules')) {
 export async function createServer(app, env) {
   const resolve = (p) => path.resolve(__dirname, p);
 
+  let gameApi;
+  app.use(async (req, res, next) => {
+    const pathname = (req.url ?? '').split('?')[0];
+    if (pathname !== '/api/game' && !pathname.startsWith('/api/game/')) {
+      return next();
+    }
+    try {
+      gameApi ??= import('./dist/server/gameApi.js').then(({ createGameApi }) =>
+        createGameApi({ ...process.env, ...env })
+      );
+      const handler = await gameApi;
+      await handler(req, res, next);
+    } catch (error) {
+      gameApi = undefined;
+      next(error);
+    }
+  });
   app.use((await import('compression')).default());
   app.use((await import('cookie-parser')).default());
   app.use(
