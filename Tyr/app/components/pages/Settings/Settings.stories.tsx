@@ -29,8 +29,6 @@ export const Default = {
     supportedThemes: themes,
     currentTheme: 'day',
     singleDeviceMode: false,
-    canAccessAdminPanel: true,
-    onClickGotoAdminPanel: () => {},
     onLogout: () => {},
     onBackClick: () => {},
     onSingleDeviceModeChange: () => {},

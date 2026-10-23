@@ -16,8 +16,6 @@ import { supportedLanguages as langs } from '../../../services/i18n';
 import { PlayerDescriptor } from '../../../helpers/interfaces';
 
 interface IProps {
-  canAccessAdminPanel: boolean;
-  onClickGotoAdminPanel: () => void;
   player: PlayerDescriptor;
   supportedLanguages: typeof langs;
   currentLanguage: string;
@@ -123,17 +121,6 @@ export const Settings = (props: IProps) => {
       >
         {loc._t('Go to personal area')}
       </Button>
-      {props.canAccessAdminPanel && (
-        <Button
-          variant='contained'
-          size='fullwidth'
-          rightIcon={<LinkIcon />}
-          onClick={props.onClickGotoAdminPanel}
-          testId='tyr-settings-admin-panel'
-        >
-          {loc._t('Go to admin panel')}
-        </Button>
-      )}
       <Button
         variant='contained'
         size='fullwidth'

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-24 00:37+0200\n"
+"POT-Creation-Date: 2026-10-24 00:43+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -108,23 +108,27 @@ msgstr ""
 msgid "No games found"
 msgstr ""
 
-#: app/components/pages/Home/Home.tsx:108:14
+#: app/components/pages/Home/Home.tsx:110:14
 msgid "New game"
 msgstr ""
 
-#: app/components/pages/Home/Home.tsx:118:14
+#: app/components/pages/Home/Home.tsx:120:14
 msgid "Current game"
 msgstr ""
 
-#: app/components/pages/Home/Home.tsx:128:14
+#: app/components/pages/Home/Home.tsx:130:14
 msgid "Previous game"
 msgstr ""
 
-#: app/components/pages/Home/Home.tsx:138:14
+#: app/components/pages/Home/Home.tsx:140:14
 msgid "Other playing tables"
 msgstr ""
 
-#: app/components/pages/Home/Home.tsx:149:14
+#: app/components/pages/Home/Home.tsx:151:14
+msgid "Go to admin panel"
+msgstr ""
+
+#: app/components/pages/Home/Home.tsx:162:14
 msgid "Statistics"
 msgstr ""
 
@@ -229,28 +233,24 @@ msgstr ""
 msgid "find player..."
 msgstr ""
 
-#: app/components/pages/Settings/Settings.tsx:124:10
+#: app/components/pages/Settings/Settings.tsx:122:10
 msgid "Go to personal area"
 msgstr ""
 
-#: app/components/pages/Settings/Settings.tsx:134:12
-msgid "Go to admin panel"
-msgstr ""
-
-#: app/components/pages/Settings/Settings.tsx:143:10
+#: app/components/pages/Settings/Settings.tsx:130:10
 msgid "Select another event"
 msgstr ""
 
-#: app/components/pages/Settings/Settings.tsx:146:45
+#: app/components/pages/Settings/Settings.tsx:133:45
 #: app/services/i18n.be.test.ts:34:12
 msgid "Language"
 msgstr ""
 
-#: app/components/pages/Settings/Settings.tsx:165:16
+#: app/components/pages/Settings/Settings.tsx:152:16
 msgid "Single device mode"
 msgstr ""
 
-#: app/components/pages/Settings/Settings.tsx:166:22
+#: app/components/pages/Settings/Settings.tsx:153:22
 msgid "Turn on if you use a single device for all players"
 msgstr ""
 
@@ -288,7 +288,7 @@ msgstr ""
 msgid "name"
 msgstr ""
 
-#: app/components/screens/Home/Home.tsx:103:60
+#: app/components/screens/Home/Home.tsx:111:60
 msgid "Event title"
 msgstr ""
 

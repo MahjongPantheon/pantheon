@@ -36,7 +36,7 @@ import { AuthAuthorizeResponse } from 'tsclients/proto/frey.pb';
 export interface IRiichiApi {
   setCredentials(personId: number, token: string): void;
   startGame(eventId: number, playerIds: number[]): Promise<string>;
-  canAccessAdminPanel(personId: number): Promise<boolean>;
+  canAccessAdminPanel(personId: number, eventId: number): Promise<boolean>;
   getMyEvents(): Promise<MyEvent[]>;
   getGameConfig(eventId: number): Promise<GameConfig>;
   getLastResults(playerId: number, eventId: number): Promise<SessionHistoryResult[]>;

@@ -13,14 +13,15 @@ describe('admin panel eligibility', () => {
 
   it.each([
     [true, [], true, 'superadmin without events'],
-    [false, [17], true, 'event administrator or referee'],
+    [false, [17], true, 'selected event administrator or referee'],
+    [false, [18], false, 'administrator of another event'],
     [false, [], false, 'ordinary player'],
   ])(
     'checks Frey permissions for a %s / %j account (%s, %s)',
     async (isAdmin: boolean, eventIds: number[], expected: boolean) => {
       vi.mocked(GetSuperadminFlag).mockResolvedValue({ isAdmin });
       vi.mocked(GetOwnedEventIds).mockResolvedValue({ eventIds });
-      expect(await new RiichiApiTwirpService().canAccessAdminPanel(42)).toBe(expected);
+      expect(await new RiichiApiTwirpService().canAccessAdminPanel(42, 17)).toBe(expected);
       expect(GetSuperadminFlag).toHaveBeenCalledWith({ personId: 42 }, expect.any(Object));
       expect(GetOwnedEventIds).toHaveBeenCalledWith({ personId: 42 }, expect.any(Object));
     }
@@ -35,6 +36,6 @@ describe('admin panel eligibility', () => {
     } else {
       vi.mocked(GetOwnedEventIds).mockRejectedValue(failure);
     }
-    await expect(new RiichiApiTwirpService().canAccessAdminPanel(42)).rejects.toBe(failure);
+    await expect(new RiichiApiTwirpService().canAccessAdminPanel(42, 17)).rejects.toBe(failure);
   });
 });

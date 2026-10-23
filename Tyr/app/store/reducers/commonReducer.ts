@@ -29,6 +29,7 @@ import {
   STARTUP_WITH_AUTH,
   INIT_STATE,
   SET_CREDENTIALS,
+  SELECT_EVENT,
   SET_STATE_SETTINGS,
   SETTINGS_SAVE_LANG,
   SETTINGS_SAVE_SINGLE_DEVICE_MODE,
@@ -53,6 +54,7 @@ export function commonReducer(state: IAppState, action: AppActionTypes): IAppSta
     case LOGIN_SUCCESS:
     case LOGIN_FAIL:
     case STARTUP_WITH_AUTH:
+    case SELECT_EVENT:
       return { ...state, canAccessAdminPanel: false };
     case SET_CREDENTIALS:
       return {

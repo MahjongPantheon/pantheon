@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-24 00:37+0200\n"
+"POT-Creation-Date: 2026-10-24 00:43+0200\n"
 "PO-Revision-Date: 2024-05-09 22:02+0300\n"
 "Last-Translator: Geunmo Kim <kimgeunmo@gmail.com>\n"
 "Language-Team: \n"
@@ -108,7 +108,7 @@ msgstr "구련보등"
 msgid "Clear players"
 msgstr "작사 초기화"
 
-#: app/components/pages/Home/Home.tsx:118:14
+#: app/components/pages/Home/Home.tsx:120:14
 msgid "Current game"
 msgstr "현재 대국"
 
@@ -144,7 +144,7 @@ msgstr "다음 사용자가 존재하지 않습니다 (%1)"
 msgid "Email"
 msgstr "이메일"
 
-#: app/components/screens/Home/Home.tsx:103:60
+#: app/components/screens/Home/Home.tsx:111:60
 msgid "Event title"
 msgstr "이벤트"
 
@@ -170,11 +170,11 @@ msgstr "대국이 종료되었습니다"
 msgid "Game log"
 msgstr "대국 로그"
 
-#: app/components/pages/Settings/Settings.tsx:134:12
+#: app/components/pages/Home/Home.tsx:151:14
 msgid "Go to admin panel"
 msgstr "관리자 패널로 이동"
 
-#: app/components/pages/Settings/Settings.tsx:124:10
+#: app/components/pages/Settings/Settings.tsx:122:10
 msgid "Go to personal area"
 msgstr "계정 설정"
 
@@ -240,7 +240,7 @@ msgstr "국사무쌍"
 msgid "Kokushi musou 13-side"
 msgstr "국사무쌍"
 
-#: app/components/pages/Settings/Settings.tsx:146:45
+#: app/components/pages/Settings/Settings.tsx:133:45
 #: app/services/i18n.be.test.ts:34:12
 msgid "Language"
 msgstr "언어"
@@ -270,7 +270,7 @@ msgstr "유국만관"
 msgid "Nagashi mangan"
 msgstr "유국만관"
 
-#: app/components/pages/Home/Home.tsx:108:14
+#: app/components/pages/Home/Home.tsx:110:14
 msgid "New game"
 msgstr "신규 대국"
 
@@ -311,7 +311,7 @@ msgstr "오픈 리치"
 msgid "Opened hand"
 msgstr "비멘젠"
 
-#: app/components/pages/Home/Home.tsx:138:14
+#: app/components/pages/Home/Home.tsx:140:14
 msgid "Other playing tables"
 msgstr "대국 관전"
 
@@ -347,7 +347,7 @@ msgstr "작사 명"
 msgid "Please return back and press riichi button for the winner"
 msgstr "역: 리치를 선택/해제시 돌아가서 승자의 리치 버튼을 눌러주세요"
 
-#: app/components/pages/Home/Home.tsx:128:14
+#: app/components/pages/Home/Home.tsx:130:14
 msgid "Previous game"
 msgstr "이전 대국"
 
@@ -416,7 +416,7 @@ msgstr "삼색동순"
 msgid "Sanshoku doukou"
 msgstr "삼색동각"
 
-#: app/components/pages/Settings/Settings.tsx:143:10
+#: app/components/pages/Settings/Settings.tsx:130:10
 msgid "Select another event"
 msgstr "다른 이벤트 선택"
 
@@ -444,7 +444,7 @@ msgstr "작사 셔플"
 msgid "Sign up"
 msgstr "회원가입"
 
-#: app/components/pages/Settings/Settings.tsx:165:16
+#: app/components/pages/Settings/Settings.tsx:152:16
 msgid "Single device mode"
 msgstr "단일 기기 모드"
 
@@ -452,7 +452,7 @@ msgstr "단일 기기 모드"
 msgid "Start game"
 msgstr "대국 시작"
 
-#: app/components/pages/Home/Home.tsx:149:14
+#: app/components/pages/Home/Home.tsx:162:14
 msgid "Statistics"
 msgstr "통계"
 
@@ -509,7 +509,7 @@ msgstr "쯔모, %1"
 msgid "Tsuuiisou"
 msgstr "자일색"
 
-#: app/components/pages/Settings/Settings.tsx:166:22
+#: app/components/pages/Settings/Settings.tsx:153:22
 msgid "Turn on if you use a single device for all players"
 msgstr "모든 작사가 이 기기만 사용할 경우 활성화하십시오"
 

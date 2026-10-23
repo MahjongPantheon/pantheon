@@ -97,8 +97,6 @@ export const Settings = (props: IComponentProps) => {
       onThemeSelect={onThemeSelect}
       onEventSelect={onEventSelect}
       onClickGotoPersonalArea={onGotoPersonalArea}
-      canAccessAdminPanel={state.canAccessAdminPanel}
-      onClickGotoAdminPanel={() => window.open(`${env.urls.forseti}/ownedEvents`)}
     />
   );
 };

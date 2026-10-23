@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-24 00:37+0200\n"
+"POT-Creation-Date: 2026-10-24 00:43+0200\n"
 "PO-Revision-Date: 2024-03-22 12:07+0100\n"
 "Last-Translator: Jesterboxboy <github@jesterbox.org>\n"
 "Language-Team: \n"
@@ -108,7 +108,7 @@ msgstr "Chuuren poutou mit 9-seitigem Warten"
 msgid "Clear players"
 msgstr "Spieler löschen"
 
-#: app/components/pages/Home/Home.tsx:118:14
+#: app/components/pages/Home/Home.tsx:120:14
 msgid "Current game"
 msgstr "Laufendes Spiel"
 
@@ -144,7 +144,7 @@ msgstr "E-mail ist nicht registriert (%1)"
 msgid "Email"
 msgstr "E-Mail"
 
-#: app/components/screens/Home/Home.tsx:103:60
+#: app/components/screens/Home/Home.tsx:111:60
 msgid "Event title"
 msgstr "Eventname"
 
@@ -170,11 +170,11 @@ msgstr "Das Spiel ist beendet"
 msgid "Game log"
 msgstr "Spielaufzeichung"
 
-#: app/components/pages/Settings/Settings.tsx:134:12
+#: app/components/pages/Home/Home.tsx:151:14
 msgid "Go to admin panel"
 msgstr "Zur Verwaltung"
 
-#: app/components/pages/Settings/Settings.tsx:124:10
+#: app/components/pages/Settings/Settings.tsx:122:10
 msgid "Go to personal area"
 msgstr "Zum persönlichen Bereich gehen"
 
@@ -241,7 +241,7 @@ msgstr "Kokushi musou"
 msgid "Kokushi musou 13-side"
 msgstr "Kokushi musou mit 13-seitigem Warten"
 
-#: app/components/pages/Settings/Settings.tsx:146:45
+#: app/components/pages/Settings/Settings.tsx:133:45
 #: app/services/i18n.be.test.ts:34:12
 msgid "Language"
 msgstr "Sprache"
@@ -271,7 +271,7 @@ msgstr "Nagashi"
 msgid "Nagashi mangan"
 msgstr "Nagashi mangan"
 
-#: app/components/pages/Home/Home.tsx:108:14
+#: app/components/pages/Home/Home.tsx:110:14
 msgid "New game"
 msgstr "Neues Spiel"
 
@@ -312,7 +312,7 @@ msgstr "Offenes Riichi"
 msgid "Opened hand"
 msgstr "Offene Hand"
 
-#: app/components/pages/Home/Home.tsx:138:14
+#: app/components/pages/Home/Home.tsx:140:14
 msgid "Other playing tables"
 msgstr "Laufende Spiele"
 
@@ -348,7 +348,7 @@ msgstr "Spielername"
 msgid "Please return back and press riichi button for the winner"
 msgstr "Bitte gehe zurück und drücke die Riichi-Taste für den Gewinner"
 
-#: app/components/pages/Home/Home.tsx:128:14
+#: app/components/pages/Home/Home.tsx:130:14
 msgid "Previous game"
 msgstr "Letztes Spiel"
 
@@ -417,7 +417,7 @@ msgstr "Sanshoku"
 msgid "Sanshoku doukou"
 msgstr "Sanshoku doukou"
 
-#: app/components/pages/Settings/Settings.tsx:143:10
+#: app/components/pages/Settings/Settings.tsx:130:10
 msgid "Select another event"
 msgstr "Event auswählen"
 
@@ -445,7 +445,7 @@ msgstr "Spieler mischen"
 msgid "Sign up"
 msgstr "Registrieren"
 
-#: app/components/pages/Settings/Settings.tsx:165:16
+#: app/components/pages/Settings/Settings.tsx:152:16
 msgid "Single device mode"
 msgstr "Einzelgerätemodus"
 
@@ -453,7 +453,7 @@ msgstr "Einzelgerätemodus"
 msgid "Start game"
 msgstr "Spiel starten"
 
-#: app/components/pages/Home/Home.tsx:149:14
+#: app/components/pages/Home/Home.tsx:162:14
 msgid "Statistics"
 msgstr "Statistiken"
 
@@ -510,7 +510,7 @@ msgstr "Tsumo, %1"
 msgid "Tsuuiisou"
 msgstr "Tsuuiisou"
 
-#: app/components/pages/Settings/Settings.tsx:166:22
+#: app/components/pages/Settings/Settings.tsx:153:22
 msgid "Turn on if you use a single device for all players"
 msgstr "Einschalten, wenn Sie ein einzelnes Gerät für alle Spieler verwenden"
 

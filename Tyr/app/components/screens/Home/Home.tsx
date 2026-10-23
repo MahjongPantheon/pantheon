@@ -17,6 +17,7 @@
 
 import { IComponentProps } from '../../IComponentProps';
 import {
+  ADMIN_ACCESS_INIT,
   GET_OTHER_TABLES_LIST_INIT,
   GO_TO_CURRENT_GAME,
   GO_TO_DONATE,
@@ -30,6 +31,7 @@ import { Home as HomePage } from '../../pages/Home/Home';
 import { useContext, useEffect, useState } from 'react';
 import { i18n } from '../../i18n';
 import { Loader } from '../../base/Loader/Loader';
+import { env } from '../../../helpers/env';
 
 export const Home = (props: IComponentProps) => {
   const loc = useContext(i18n);
@@ -39,6 +41,12 @@ export const Home = (props: IComponentProps) => {
       props.dispatch({ type: UPDATE_CURRENT_GAMES_INIT });
     }
   }, [props.state.currentEventId]);
+
+  useEffect(() => {
+    if (props.state.currentPlayerId && props.state.currentEventId) {
+      props.dispatch({ type: ADMIN_ACCESS_INIT });
+    }
+  }, [props.state.currentPlayerId, props.state.analyticsSession, props.state.currentEventId]);
 
   useEffect(() => {
     setComponentReady(true);
@@ -112,6 +120,10 @@ export const Home = (props: IComponentProps) => {
   return (
     <HomePage
       eventName={playerName}
+      canAccessAdminPanel={props.state.canAccessAdminPanel && !!props.state.currentEventId}
+      onAdminPanelClick={() =>
+        window.open(`${env.urls.forseti}/event/${props.state.currentEventId}/games`)
+      }
       canStartGame={
         !props.state.gameConfig?.autoSeating &&
         !props.state.currentSessionHash &&

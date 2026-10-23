@@ -117,12 +117,12 @@ export class RiichiApiTwirpService implements IRiichiApi {
     ).then((val) => val.sessionHash);
   }
 
-  async canAccessAdminPanel(personId: number) {
+  async canAccessAdminPanel(personId: number, eventId: number) {
     const [superadmin, ownedEvents] = await Promise.all([
       GetSuperadminFlag({ personId }, this._clientConfFrey),
       GetOwnedEventIds({ personId }, this._clientConfFrey),
     ]);
-    return superadmin.isAdmin || ownedEvents.eventIds.length > 0;
+    return superadmin.isAdmin || ownedEvents.eventIds.includes(eventId);
   }
 
   getMyEvents() {

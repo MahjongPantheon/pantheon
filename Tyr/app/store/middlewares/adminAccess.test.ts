@@ -6,8 +6,9 @@ import {
   FORCE_LOGOUT,
   INIT_STATE,
   LOGIN_INIT,
-  OPEN_SETTINGS,
+  ADMIN_ACCESS_INIT,
   SET_CREDENTIALS,
+  SELECT_EVENT,
   STARTUP_WITH_AUTH,
 } from '../actions/interfaces';
 
@@ -22,7 +23,7 @@ function deferred() {
 }
 
 function setup(personId = 42) {
-  let state = { ...initialState, currentPlayerId: personId };
+  let state = { ...initialState, currentPlayerId: personId, currentEventId: 17 };
   const requests: ReturnType<typeof deferred>[] = [];
   const api = {
     canAccessAdminPanel: vi.fn(() => {
@@ -36,6 +37,7 @@ function setup(personId = 42) {
   handler = adminAccess(api)({ getState: () => state, dispatch })(
     <T extends AppActionTypes>(action: T): T => {
       state = commonReducer(state, action) as typeof state;
+      if (action.type === SELECT_EVENT) state = { ...state, currentEventId: action.payload };
       return action;
     }
   );
@@ -49,8 +51,8 @@ describe('admin panel permission state', () => {
     'shows the button only after an eligible result (%s)',
     async (allowed: boolean) => {
       const store = setup();
-      store.dispatch({ type: OPEN_SETTINGS });
-      expect(store.api.canAccessAdminPanel).toHaveBeenCalledWith(42);
+      store.dispatch({ type: ADMIN_ACCESS_INIT });
+      expect(store.api.canAccessAdminPanel).toHaveBeenCalledWith(42, 17);
       expect(store.getState().canAccessAdminPanel).toBe(false);
       store.requests[0].resolve(allowed);
       await flush();
@@ -60,10 +62,10 @@ describe('admin panel permission state', () => {
 
   it('hides previously granted access while rechecking and after errors', async () => {
     const store = setup();
-    store.dispatch({ type: OPEN_SETTINGS });
+    store.dispatch({ type: ADMIN_ACCESS_INIT });
     store.requests[0].resolve(true);
     await flush();
-    store.dispatch({ type: OPEN_SETTINGS });
+    store.dispatch({ type: ADMIN_ACCESS_INIT });
     expect(store.getState().canAccessAdminPanel).toBe(false);
     store.requests[1].reject(new Error('Network failure'));
     await flush();
@@ -72,7 +74,7 @@ describe('admin panel permission state', () => {
 
   it('does not load permissions without a current account', () => {
     const store = setup(0);
-    store.dispatch({ type: OPEN_SETTINGS });
+    store.dispatch({ type: ADMIN_ACCESS_INIT });
     expect(store.api.canAccessAdminPanel).not.toHaveBeenCalled();
     expect(store.getState().canAccessAdminPanel).toBe(false);
   });
@@ -80,17 +82,18 @@ describe('admin panel permission state', () => {
   it.each<AppActionTypes>([
     { type: FORCE_LOGOUT, payload: undefined },
     { type: INIT_STATE },
+    { type: SELECT_EVENT, payload: 18 },
     { type: LOGIN_INIT, payload: { email: '', password: '', sessionId: '' } },
     { type: SET_CREDENTIALS, payload: { personId: 7, authToken: 'new', sessionId: '' } },
     { type: SET_CREDENTIALS, payload: { personId: 42, authToken: 'renewed', sessionId: '' } },
     { type: STARTUP_WITH_AUTH, payload: { personId: 7, token: 'new', sessionId: '' } },
   ])('invalidates access and pending results on $type', async (action: AppActionTypes) => {
     const store = setup();
-    store.dispatch({ type: OPEN_SETTINGS });
+    store.dispatch({ type: ADMIN_ACCESS_INIT });
     store.requests[0].resolve(true);
     await flush();
     expect(store.getState().canAccessAdminPanel).toBe(true);
-    store.dispatch({ type: OPEN_SETTINGS });
+    store.dispatch({ type: ADMIN_ACCESS_INIT });
     store.dispatch(action);
     store.requests[1].resolve(true);
     await flush();
@@ -99,8 +102,21 @@ describe('admin panel permission state', () => {
 
   it('ignores older successful requests after the latest request denies access', async () => {
     const store = setup();
-    store.dispatch({ type: OPEN_SETTINGS });
-    store.dispatch({ type: OPEN_SETTINGS });
+    store.dispatch({ type: ADMIN_ACCESS_INIT });
+    store.dispatch({ type: ADMIN_ACCESS_INIT });
+    store.requests[1].resolve(false);
+    await flush();
+    store.requests[0].resolve(true);
+    await flush();
+    expect(store.getState().canAccessAdminPanel).toBe(false);
+  });
+
+  it('ignores pending access for the previous event after selecting another event', async () => {
+    const store = setup();
+    store.dispatch({ type: ADMIN_ACCESS_INIT });
+    store.dispatch({ type: SELECT_EVENT, payload: 18 });
+    store.dispatch({ type: ADMIN_ACCESS_INIT });
+    expect(store.api.canAccessAdminPanel).toHaveBeenLastCalledWith(42, 18);
     store.requests[1].resolve(false);
     await flush();
     store.requests[0].resolve(true);
@@ -110,8 +126,8 @@ describe('admin panel permission state', () => {
 
   it('ignores older failed requests after the latest request grants access', async () => {
     const store = setup();
-    store.dispatch({ type: OPEN_SETTINGS });
-    store.dispatch({ type: OPEN_SETTINGS });
+    store.dispatch({ type: ADMIN_ACCESS_INIT });
+    store.dispatch({ type: ADMIN_ACCESS_INIT });
     store.requests[1].resolve(true);
     await flush();
     store.requests[0].reject(new Error('Old request failed'));

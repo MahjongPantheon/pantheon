@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-24 00:37+0200\n"
+"POT-Creation-Date: 2026-10-24 00:43+0200\n"
 "PO-Revision-Date: 2024-05-09 22:07+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -102,7 +102,7 @@ msgstr "純正九蓮宝燈"
 msgid "Clear players"
 msgstr "プレイヤーをクリア"
 
-#: app/components/pages/Home/Home.tsx:118:14
+#: app/components/pages/Home/Home.tsx:120:14
 msgid "Current game"
 msgstr "今の対局"
 
@@ -138,7 +138,7 @@ msgstr "このユーザーは存在しません (%1)"
 msgid "Email"
 msgstr "メール"
 
-#: app/components/screens/Home/Home.tsx:103:60
+#: app/components/screens/Home/Home.tsx:111:60
 msgid "Event title"
 msgstr "イベント"
 
@@ -164,11 +164,11 @@ msgstr "対局が終了しました"
 msgid "Game log"
 msgstr "対局ログ"
 
-#: app/components/pages/Settings/Settings.tsx:134:12
+#: app/components/pages/Home/Home.tsx:151:14
 msgid "Go to admin panel"
 msgstr "管理画面へ"
 
-#: app/components/pages/Settings/Settings.tsx:124:10
+#: app/components/pages/Settings/Settings.tsx:122:10
 msgid "Go to personal area"
 msgstr "個人アカウントに"
 
@@ -234,7 +234,7 @@ msgstr "国士無双"
 msgid "Kokushi musou 13-side"
 msgstr "国士無双十三面待ち"
 
-#: app/components/pages/Settings/Settings.tsx:146:45
+#: app/components/pages/Settings/Settings.tsx:133:45
 #: app/services/i18n.be.test.ts:34:12
 msgid "Language"
 msgstr "言語"
@@ -264,7 +264,7 @@ msgstr "流し"
 msgid "Nagashi mangan"
 msgstr "流し満貫"
 
-#: app/components/pages/Home/Home.tsx:108:14
+#: app/components/pages/Home/Home.tsx:110:14
 msgid "New game"
 msgstr "対局開始"
 
@@ -305,7 +305,7 @@ msgstr "オープン立直"
 msgid "Opened hand"
 msgstr "<副露ある>"
 
-#: app/components/pages/Home/Home.tsx:138:14
+#: app/components/pages/Home/Home.tsx:140:14
 msgid "Other playing tables"
 msgstr "他のプレイヤーの対局"
 
@@ -341,7 +341,7 @@ msgstr "玩家名"
 msgid "Please return back and press riichi button for the winner"
 msgstr "役：立直 を選択/解除する場合は、立直プレーヤーの確認に戻ってください"
 
-#: app/components/pages/Home/Home.tsx:128:14
+#: app/components/pages/Home/Home.tsx:130:14
 msgid "Previous game"
 msgstr "前の対局"
 
@@ -410,7 +410,7 @@ msgstr "三色同顺"
 msgid "Sanshoku doukou"
 msgstr "三色同刻"
 
-#: app/components/pages/Settings/Settings.tsx:143:10
+#: app/components/pages/Settings/Settings.tsx:130:10
 msgid "Select another event"
 msgstr "別のイベントを選択…"
 
@@ -438,7 +438,7 @@ msgstr "プレイヤーをシャッフル"
 msgid "Sign up"
 msgstr "登録"
 
-#: app/components/pages/Settings/Settings.tsx:165:16
+#: app/components/pages/Settings/Settings.tsx:152:16
 msgid "Single device mode"
 msgstr "シングルデバイスモード"
 
@@ -446,7 +446,7 @@ msgstr "シングルデバイスモード"
 msgid "Start game"
 msgstr "ゲーム開始"
 
-#: app/components/pages/Home/Home.tsx:149:14
+#: app/components/pages/Home/Home.tsx:162:14
 msgid "Statistics"
 msgstr "統計"
 
@@ -503,7 +503,7 @@ msgstr "ツモ, %1"
 msgid "Tsuuiisou"
 msgstr "字一色"
 
-#: app/components/pages/Settings/Settings.tsx:166:22
+#: app/components/pages/Settings/Settings.tsx:153:22
 msgid "Turn on if you use a single device for all players"
 msgstr "全てのプレイヤーで一つのデバイスを使用する場合は有効にしてください"
 

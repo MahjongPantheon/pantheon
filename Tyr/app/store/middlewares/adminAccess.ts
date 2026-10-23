@@ -11,8 +11,8 @@ import {
   LOGIN_FAIL,
   LOGIN_INIT,
   LOGIN_SUCCESS,
-  OPEN_SETTINGS,
   SET_CREDENTIALS,
+  SELECT_EVENT,
   STARTUP_WITH_AUTH,
 } from '../actions/interfaces';
 
@@ -29,28 +29,37 @@ export const adminAccess =
         case LOGIN_FAIL:
         case STARTUP_WITH_AUTH:
         case SET_CREDENTIALS:
+        case SELECT_EVENT:
           // Invalidate requests even when the same account logs in again.
           generation++;
           break;
       }
       const result = next(action);
-      if (action.type !== OPEN_SETTINGS) {
+      if (action.type !== ADMIN_ACCESS_INIT) {
         return result;
       }
       const requestGeneration = ++generation;
-      mw.dispatch({ type: ADMIN_ACCESS_INIT });
       const personId = mw.getState().currentPlayerId;
-      if (!personId) {
+      const eventId = mw.getState().currentEventId;
+      if (!personId || !eventId) {
         return result;
       }
-      api.canAccessAdminPanel(personId).then(
+      api.canAccessAdminPanel(personId, eventId).then(
         (allowed) => {
-          if (generation === requestGeneration) {
+          if (
+            generation === requestGeneration &&
+            mw.getState().currentPlayerId === personId &&
+            mw.getState().currentEventId === eventId
+          ) {
             mw.dispatch({ type: ADMIN_ACCESS_SUCCESS, payload: allowed });
           }
         },
         () => {
-          if (generation === requestGeneration) {
+          if (
+            generation === requestGeneration &&
+            mw.getState().currentPlayerId === personId &&
+            mw.getState().currentEventId === eventId
+          ) {
             mw.dispatch({ type: ADMIN_ACCESS_FAIL });
           }
         }

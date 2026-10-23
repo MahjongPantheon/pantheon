@@ -30,14 +30,7 @@ describe('Settings admin panel button', () => {
     vi.restoreAllMocks();
   });
 
-  it('hides the button until permission is granted', () => {
-    const dispatch = vi.fn();
-    act(() => root.render(<Settings newyear={false} state={initialState} dispatch={dispatch} />));
-    expect(container.querySelector('[data-testid="tyr-settings-admin-panel"]')).toBeNull();
-  });
-
-  it('opens the configured Forseti owned events page', () => {
-    const open = vi.spyOn(window, 'open').mockReturnValue(null);
+  it('does not show the admin panel button even for eligible users', () => {
     act(() =>
       root.render(
         <Settings
@@ -47,11 +40,7 @@ describe('Settings admin panel button', () => {
         />
       )
     );
-    const button = container.querySelector<HTMLButtonElement>(
-      '[data-testid="tyr-settings-admin-panel"]'
-    );
-    expect(button?.textContent).toBe('Go to admin panel');
-    act(() => button?.click());
-    expect(open).toHaveBeenCalledWith('https://admin.example.test/ownedEvents');
+    expect(container.textContent).not.toContain('Go to admin panel');
+    expect(container.querySelector('[data-testid="tyr-home-admin-panel"]')).toBeNull();
   });
 });
