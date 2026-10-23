@@ -46,6 +46,71 @@ describe('SessionResults', () => {
     });
   });
 
+  it.each([
+    {
+      name: 'a sole winner outside the first seat',
+      scores: [20000, 20000, 40000, 39000],
+      bets: 1,
+      expected: [20000, 20000, 41000, 39000],
+    },
+    {
+      name: 'two winners outside the first seat',
+      scores: [10000, 49000, 49000, 10000],
+      bets: 2,
+      expected: [10000, 50000, 50000, 10000],
+    },
+    {
+      name: 'three winners outside the first seat',
+      scores: [18000, 33000, 33000, 33000],
+      bets: 3,
+      expected: [18000, 34000, 34000, 34000],
+    },
+    {
+      name: 'four winners sharing a single bet',
+      scores: [29750, 29750, 29750, 29750],
+      bets: 1,
+      expected: [30000, 30000, 30000, 30000],
+    },
+    {
+      name: 'three winners sharing an indivisible pot in whole points',
+      scores: [17000, 34000, 34000, 34000],
+      bets: 1,
+      expected: [17000, 34333, 34333, 34333],
+      total: 119999,
+    },
+    {
+      name: 'no leftover bets',
+      scores: [20000, 20000, 40000, 40000],
+      bets: 0,
+      expected: [20000, 20000, 40000, 40000],
+    },
+  ])('awards leftover riichi to $name', ({ scores, bets, expected, total = 120000 }) => {
+    const playerIds = [12, 4, 9, 2];
+    const ruleset = RulesetEntity.createRuleset('ema');
+    const state = new SessionState(ruleset, playerIds);
+    state.setScores(Object.fromEntries(playerIds.map((id, index) => [id, scores[index]])));
+    state.state.riichiBets = bets;
+
+    const results = mdl.getUnfinishedSessionResults(ruleset, 19, 501, state, playerIds);
+
+    expect(results.map((result) => result.score)).toEqual(expected);
+    expect(results.reduce((sum, result) => sum + result.score, 0)).toBe(total);
+    expect(results.reduce((sum, result) => sum + result.ratingDelta, 0)).toBe(total - 120000);
+  });
+
+  it('does not award leftover riichi when the setting is disabled', () => {
+    const ruleset = RulesetEntity.createRuleset('ema');
+    ruleset.rules.riichiGoesToWinner = false;
+    const playerIds = [1, 2, 3, 4];
+    const state = new SessionState(ruleset, playerIds);
+    state.setScores({ 1: 20000, 2: 49000, 3: 49000, 4: 20000 });
+    state.state.riichiBets = 2;
+
+    const results = mdl.getUnfinishedSessionResults(ruleset, 19, 501, state, playerIds);
+
+    expect(results.map((result) => result.score)).toEqual([20000, 49000, 49000, 20000]);
+  });
+
   it('should calculate rating delta', () => {
     const ruleset = RulesetEntity.createRuleset('ema');
     const scores = {

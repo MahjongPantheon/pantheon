@@ -133,26 +133,13 @@ export class SessionResultsModel extends Model {
   ): SessionResultsEntity[] {
     const scores = sessionState.getScores();
     if (ruleset.rules.riichiGoesToWinner) {
-      const placesMap = this.calcPlacesMap(scores);
-      let firstPlacesCount = 1;
-      if (scores[playerIds[0]] === scores[playerIds[1]]) {
-        firstPlacesCount = 2;
-        if (scores[playerIds[1]] === scores[playerIds[2]]) {
-          firstPlacesCount = 3;
-          if (scores[playerIds[2]] === scores[playerIds[3]]) {
-            // oh wow lol
-            firstPlacesCount = 4;
-          }
-        }
-      }
+      const highestScore = Math.max(...playerIds.map((playerId) => scores[playerId]));
+      const winners = playerIds.filter((playerId) => scores[playerId] === highestScore);
+      // Scores are whole points; leave any indivisible remainder on the table.
+      const riichiBetAmount = Math.floor((sessionState.getRiichiBets() * 1000) / winners.length);
 
-      const riichiBetAmount =
-        100 * Math.floor((sessionState.getRiichiBets() * 10) / firstPlacesCount);
-
-      for (const playerId of playerIds) {
-        if (placesMap[playerId] <= firstPlacesCount) {
-          sessionState.giveRiichiBetsToPlayer(playerId, riichiBetAmount);
-        }
+      for (const playerId of winners) {
+        sessionState.giveRiichiBetsToPlayer(playerId, riichiBetAmount);
       }
     }
 
