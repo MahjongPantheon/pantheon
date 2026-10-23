@@ -304,7 +304,7 @@ export function getTableStatus(
 ): Omit<TableStatus, 'width' | 'height' | 'onCallRefereeClick'> {
   return {
     tableIndex: state.tableIndex ?? undefined,
-    showCallReferee: state.gameConfig?.syncStart, // only tournaments
+    showCallReferee: !!import.meta.env.VITE_BOT_NICKNAME && !!state.gameConfig?.syncStart,
     showRotateButtons: false,
 
     // from SessionState
