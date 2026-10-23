@@ -4,8 +4,8 @@ import { Repository } from '../../services/Repository';
 
 export async function getMaxFuHand(eventId: number, repo: Repository) {
   const rounds = await repo.em.findAll(RoundEntity, {
-    fields: ['hands.fu', 'hands.winnerId'],
-    populate: ['hands'],
+    fields: ['hands.fu', 'hands.winnerId', 'session.representationalHash'],
+    populate: ['hands', 'session'],
     where: {
       event: repo.em.getReference(EventEntity, eventId),
       hands: {
@@ -17,11 +17,11 @@ export async function getMaxFuHand(eventId: number, repo: Repository) {
         fu: -1,
       },
     },
-    limit: 20,
   });
 
   let maxFu = 0;
   const playerIds = new Set<number>();
+  const gamesByPlayer: Record<number, string[]> = {};
   for (const round of rounds) {
     for (const hand of round.hands) {
       if (!hand.winnerId) {
@@ -30,10 +30,16 @@ export async function getMaxFuHand(eventId: number, repo: Repository) {
       if (hand.fu && hand.fu > maxFu) {
         maxFu = hand.fu;
         playerIds.clear();
+        Object.keys(gamesByPlayer).forEach((id) => delete gamesByPlayer[+id]);
         playerIds.add(hand.winnerId);
       }
       if (hand.fu === maxFu) {
         playerIds.add(hand.winnerId);
+        const hashes = (gamesByPlayer[hand.winnerId] ??= []);
+        const hash = round.session.representationalHash;
+        if (hash && !hashes.includes(hash)) {
+          hashes.push(hash);
+        }
       }
     }
   }
@@ -41,5 +47,6 @@ export async function getMaxFuHand(eventId: number, repo: Repository) {
   return {
     playerIds: Array.from(playerIds),
     fu: maxFu,
+    gamesByPlayer,
   };
 }

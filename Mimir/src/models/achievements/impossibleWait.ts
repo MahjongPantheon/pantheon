@@ -14,6 +14,7 @@ export async function getImpossibleWait(event: EventEntity, repo: Repository) {
 
   const throwAmounts: {
     playerId: number;
+    sessionHash?: string;
     amount: number;
     hand: { han: number; fu?: number };
   }[] = [];
@@ -52,6 +53,7 @@ export async function getImpossibleWait(event: EventEntity, repo: Repository) {
         const payment = calc.lastPaymentsInfo().direct[`${hand.winnerId!}<-${hand.loserId!}`];
         throwAmounts.push({
           playerId: hand.loserId!,
+          sessionHash: session.representationalHash,
           amount: payment,
           hand: { han: hand.han!, fu: hand.fu },
         });

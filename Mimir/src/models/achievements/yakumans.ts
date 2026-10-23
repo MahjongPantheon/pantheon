@@ -12,7 +12,12 @@ export async function getYakumans(event: EventEntity, repo: Repository) {
     repo
   );
 
-  const yakumans: { playerId: number; yakuman?: number[]; kazoe?: boolean }[] = [];
+  const yakumans: {
+    playerId: number;
+    yakuman?: number[];
+    kazoe?: boolean;
+    sessionHash?: string;
+  }[] = [];
 
   for (const session of sessions) {
     for (const round of rounds[session.id]) {
@@ -28,6 +33,7 @@ export async function getYakumans(event: EventEntity, repo: Repository) {
         if ((hand.han ?? 0) < 0) {
           yakumans.push({
             playerId: hand.winnerId!,
+            sessionHash: session.representationalHash,
             yakuman: hand.yaku!.filter((y) =>
               [
                 Yaku.DAISANGEN,
@@ -52,6 +58,7 @@ export async function getYakumans(event: EventEntity, repo: Repository) {
         if ((hand.han ?? 0) >= 13 && event.ruleset.rules.withKazoe) {
           yakumans.push({
             playerId: hand.winnerId!,
+            sessionHash: session.representationalHash,
             kazoe: true,
           });
         }

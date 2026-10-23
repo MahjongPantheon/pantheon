@@ -5,8 +5,13 @@ import { SessionResultsEntity } from '../../entities/SessionResults.entity';
 export async function getNeedMoreGold(event: EventEntity, repo: Repository) {
   const results = await repo.em.findAll(SessionResultsEntity, {
     where: { event },
+    populate: ['session'],
     orderBy: { score: -1 },
     limit: 3,
   });
-  return results.map((r) => ({ playerId: r.playerId, score: r.score }));
+  return results.map((r) => ({
+    playerId: r.playerId,
+    score: r.score,
+    sessionHash: r.session.representationalHash,
+  }));
 }

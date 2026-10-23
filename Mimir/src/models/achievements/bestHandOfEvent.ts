@@ -13,6 +13,7 @@ export async function getBestHandOfEvent(event: EventEntity, repo: Repository) {
 
   let maxHan = 0;
   const ids = new Set<number>();
+  const gamesByPlayer: Record<number, string[]> = {};
   for (const session of sessions) {
     for (const round of rounds[session.id]) {
       if (
@@ -24,9 +25,14 @@ export async function getBestHandOfEvent(event: EventEntity, repo: Repository) {
           if (hand.han! > maxHan) {
             maxHan = hand.han!;
             ids.clear();
+            Object.keys(gamesByPlayer).forEach((id) => delete gamesByPlayer[+id]);
+          }
+          if (hand.han! === maxHan) {
             ids.add(hand.winnerId!);
-          } else if (hand.han! === maxHan) {
-            ids.add(hand.winnerId!);
+            const hashes = (gamesByPlayer[hand.winnerId!] ??= []);
+            if (session.representationalHash && !hashes.includes(session.representationalHash)) {
+              hashes.push(session.representationalHash);
+            }
           }
         }
       }
@@ -35,6 +41,7 @@ export async function getBestHandOfEvent(event: EventEntity, repo: Repository) {
 
   return {
     han: maxHan,
+    gamesByPlayer,
     playerIds: Array.from(ids),
   };
 }

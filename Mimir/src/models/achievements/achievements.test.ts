@@ -13,6 +13,12 @@ import { HandEntity } from '../../entities/Hand.entity.js';
 import { RulesetEntity } from '../../entities/Ruleset.entity.js';
 import { SessionState } from '../../helpers/SessionState.js';
 import { getBestTsumoistInSingleSession } from './bestTsumoist.js';
+import { getBestHandOfEvent } from './bestHandOfEvent.js';
+import { getMaxFuHand } from './maxFuHand.js';
+import { getYakumans } from './yakumans.js';
+import { getImpossibleWait } from './impossibleWait.js';
+import { getNeedMoreGold } from './needMoreGold.js';
+import { getBestDealer } from './bestDealer.js';
 import { calcRiichiStat } from './helpers/getRiichiStat.js';
 import { getMaxStolenRiichiBetsCount } from './maxStolenRiichiBetsCount.js';
 import { getMinLostRiichiBetsCount } from './minLostRiichiBetsCount.js';
@@ -37,6 +43,7 @@ function fixture() {
   const state = new SessionState(event.ruleset, [1, 2, 3, 4]).state;
   const session = Object.assign(new SessionEntity(), {
     id: ++fixtureId,
+    representationalHash: `game-${fixtureId}`,
     event,
     intermediateResults: state,
     players: [1, 2, 3, 4].map((playerId, order) => ({ playerId, order: order + 1 })),
@@ -52,6 +59,7 @@ function round(
 ) {
   return Object.assign(new RoundEntity(), {
     session,
+    round: 1,
     outcome,
     riichi,
     lastSessionState: { riichiBets: 0, honba: 0 },
@@ -68,7 +76,10 @@ describe('Achievement calculations', () => {
 
   it('selects tied maximum tsumo counts within a single session rather than event totals', async () => {
     const { event, session: first } = fixture();
-    const second = Object.assign(new SessionEntity(), { id: ++fixtureId });
+    const second = Object.assign(new SessionEntity(), {
+      id: ++fixtureId,
+      representationalHash: `game-${fixtureId}`,
+    });
     jest.spyOn(sessionModel, 'findByEventAndStatus').mockResolvedValue([first, second]);
     jest
       .spyOn(roundModel, 'findBySessionIds')
@@ -85,7 +96,92 @@ describe('Achievement calculations', () => {
     await expect(getBestTsumoistInSingleSession(event, repo)).resolves.toEqual({
       tsumo: 2,
       playerIds: [1, 2],
+      gamesByPlayer: { 1: [first.representationalHash], 2: [second.representationalHash] },
     });
+  });
+
+  it('retains all tied hand maxima and their games, excluding superseded results', async () => {
+    const { event, session: first } = fixture();
+    const { session: second } = fixture();
+    const low = round(first, RoundOutcome.ROUND_OUTCOME_RON, [3]);
+    const high = round(first, RoundOutcome.ROUND_OUTCOME_MULTIRON, [1, 2]);
+    const tied = round(second, RoundOutcome.ROUND_OUTCOME_TSUMO, [1]);
+    low.hands[0].han = 1;
+    for (const r of [high, tied]) {
+      for (const hand of r.hands) {
+        hand.han = 6;
+        hand.fu = 80;
+      }
+    }
+    jest.spyOn(sessionModel, 'findByEventAndStatus').mockResolvedValue([first, second]);
+    jest.spyOn(roundModel, 'findBySessionIds').mockResolvedValue([low, high, tied]);
+    const gamesByPlayer = {
+      1: [first.representationalHash, second.representationalHash],
+      2: [first.representationalHash],
+    };
+    await expect(getBestHandOfEvent(event, repo)).resolves.toEqual({
+      han: 6,
+      playerIds: [1, 2],
+      gamesByPlayer,
+    });
+    const query = jest.spyOn(repo.em, 'findAll').mockResolvedValue([high, tied, low]);
+    await expect(getMaxFuHand(event.id, repo)).resolves.toEqual({
+      fu: 80,
+      playerIds: [1, 2],
+      gamesByPlayer,
+    });
+    expect(query).toHaveBeenCalledWith(
+      RoundEntity,
+      expect.objectContaining({ populate: ['hands', 'session'] })
+    );
+  });
+
+  it('keeps every tied session maximum for a player', async () => {
+    const { event, session: first } = fixture();
+    const { session: second } = fixture();
+    jest.spyOn(sessionModel, 'findByEventAndStatus').mockResolvedValue([first, second]);
+    jest
+      .spyOn(roundModel, 'findBySessionIds')
+      .mockResolvedValue([
+        round(first, RoundOutcome.ROUND_OUTCOME_TSUMO, [1]),
+        round(second, RoundOutcome.ROUND_OUTCOME_TSUMO, [1]),
+      ]);
+    await expect(getBestTsumoistInSingleSession(event, repo)).resolves.toEqual({
+      tsumo: 1,
+      playerIds: [1],
+      gamesByPlayer: { 1: [first.representationalHash, second.representationalHash] },
+    });
+  });
+
+  it('attaches individual game references without linking event-wide dealer totals', async () => {
+    const { event, session } = fixture();
+    // The production player orders are one-based; dealer calculation sorts them.
+    const win = round(session, RoundOutcome.ROUND_OUTCOME_RON, [1]);
+    win.hands[0].han = 13;
+    win.hands[0].fu = 0;
+    event.ruleset.rules.withKazoe = true;
+    jest.spyOn(sessionModel, 'findByEventAndStatus').mockResolvedValue([session]);
+    jest.spyOn(roundModel, 'findBySessionIds').mockResolvedValue([win]);
+    await expect(getYakumans(event, repo)).resolves.toEqual([
+      { playerId: 1, kazoe: true, sessionHash: session.representationalHash },
+    ]);
+    const dealIns = await getImpossibleWait(event, repo);
+    expect(dealIns).toHaveLength(1);
+    expect(dealIns[0]).toEqual(
+      expect.objectContaining({ playerId: 3, sessionHash: session.representationalHash })
+    );
+    await expect(getBestDealer(event, repo)).resolves.toEqual({
+      bestWinCount: 1,
+      playerIds: [1],
+    });
+    jest
+      .spyOn(repo.em, 'findAll')
+      .mockResolvedValue([
+        Object.assign(new SessionResultsEntity(), { playerId: 1, score: 65000, session }),
+      ]);
+    await expect(getNeedMoreGold(event, repo)).resolves.toEqual([
+      { playerId: 1, score: 65000, sessionHash: session.representationalHash },
+    ]);
   });
 
   it('accounts for wins, losses, carried bets, multi-ron and leftover bets', async () => {

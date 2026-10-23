@@ -59,6 +59,7 @@ import ninja from '../../assets/img/ninja.png';
 import needMoreGold from '../../assets/img/needMoreGold.png';
 import riichiNomi from '../../assets/img/riichiNomi.png';
 import favoriteTsuchidaApprentice from '../../assets/img/favoriteTsuchidaApprentice.png';
+import { AchievementPlayer } from '../components/AchievementPlayer';
 import { Meta } from '../components/Meta';
 import { useContext } from 'react';
 import { authCtx } from '../hooks/auth';
@@ -171,7 +172,14 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
         <Group align='flex-start' justify='space-between' pl={20}>
           <List>
             {achDataByKey[Achievement.BEST_HAND].playerIds.map((playerId: number, idx: number) => (
-              <List.Item key={`li_${idx}`}>{playerById[playerId].title}</List.Item>
+              <List.Item key={`li_${idx}`}>
+                <AchievementPlayer
+                  eventId={eventId}
+                  title={playerById[playerId].title}
+                  sessionHashes={achDataByKey[Achievement.BEST_HAND].gamesByPlayer?.[playerId]}
+                  gameLabel={i18n._t('View game')}
+                />
+              </List.Item>
             ))}
           </List>
           <Badge color='teal' pl={8} leftSection={<IconAward />} variant='filled' size='xl'>
@@ -191,7 +199,14 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
         <Group align='flex-start' justify='space-between' pl={20}>
           <List>
             {achDataByKey[Achievement.BEST_FU].playerIds.map((playerId: number, idx: number) => (
-              <List.Item key={`li_${idx}`}>{playerById[playerId].title}</List.Item>
+              <List.Item key={`li_${idx}`}>
+                <AchievementPlayer
+                  eventId={eventId}
+                  title={playerById[playerId].title}
+                  sessionHashes={achDataByKey[Achievement.BEST_FU].gamesByPlayer?.[playerId]}
+                  gameLabel={i18n._t('View game')}
+                />
+              </List.Item>
             ))}
           </List>
           <Badge color='teal' pl={8} leftSection={<IconAward />} variant='filled' size='xl'>
@@ -212,7 +227,16 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
           <List>
             {achDataByKey[Achievement.BEST_TSUMOIST].playerIds.map(
               (playerId: number, idx: number) => (
-                <List.Item key={`li_${idx}`}>{playerById[playerId].title}</List.Item>
+                <List.Item key={`li_${idx}`}>
+                  <AchievementPlayer
+                    eventId={eventId}
+                    title={playerById[playerId].title}
+                    sessionHashes={
+                      achDataByKey[Achievement.BEST_TSUMOIST].gamesByPlayer?.[playerId]
+                    }
+                    gameLabel={i18n._t('View game')}
+                  />
+                </List.Item>
               )
             )}
           </List>
@@ -365,9 +389,25 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
           {achDataByKey[Achievement.YAKUMANS].length > 0 ? (
             <List>
               {achDataByKey[Achievement.YAKUMANS].map(
-                (item: { playerId: number; yakuman?: number[]; kazoe?: boolean }, idx: number) => (
+                (
+                  item: {
+                    sessionHash?: string;
+                    playerId: number;
+                    yakuman?: number[];
+                    kazoe?: boolean;
+                  },
+                  idx: number
+                ) => (
                   <List.Item key={`li_${idx}`}>
-                    <b>{playerById[item.playerId].title}</b>,{' '}
+                    <b>
+                      <AchievementPlayer
+                        eventId={eventId}
+                        title={playerById[item.playerId].title}
+                        sessionHashes={item.sessionHash ? [item.sessionHash] : undefined}
+                        gameLabel={i18n._t('View game')}
+                      />
+                    </b>
+                    ,{' '}
                     {[
                       ...(item.yakuman ?? []).map((yaku) => yMap.get(yaku)),
                       item.kazoe ? i18n._t('Kazoe yakuman') : '',
@@ -399,11 +439,24 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
           <List>
             {achDataByKey[Achievement.IMPOSSIBLE_WAIT].map(
               (
-                item: { playerId: number; hand: { han: number; fu: number }; amount: number },
+                item: {
+                  sessionHash?: string;
+                  playerId: number;
+                  hand: { han: number; fu: number };
+                  amount: number;
+                },
                 idx: number
               ) => (
                 <List.Item key={`li_${idx}`}>
-                  <b>{playerById[item.playerId].title}</b>:{' '}
+                  <b>
+                    <AchievementPlayer
+                      eventId={eventId}
+                      title={playerById[item.playerId].title}
+                      sessionHashes={item.sessionHash ? [item.sessionHash] : undefined}
+                      gameLabel={i18n._t('View game')}
+                    />
+                  </b>
+                  :{' '}
                   {item.hand.han < 0
                     ? i18n._pt('Achievements badge', 'yakuman (%1)', [item.amount || '0'])
                     : item.hand.fu
@@ -685,10 +738,17 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
         <Group align='flex-start' justify='space-between' pl={20}>
           <List>
             {achDataByKey[Achievement.NEED_MORE_GOLD].map(
-              (item: { playerId: number; score: number }, idx: number) => (
+              (item: { sessionHash?: string; playerId: number; score: number }, idx: number) => (
                 <List.Item key={`li_${idx}`}>
-                  <b>{playerById[item.playerId].title}</b>:{' '}
-                  {i18n._pt('Achievements badge', '%1 points', [item.score || '0'])}
+                  <b>
+                    <AchievementPlayer
+                      eventId={eventId}
+                      title={playerById[item.playerId].title}
+                      sessionHashes={item.sessionHash ? [item.sessionHash] : undefined}
+                      gameLabel={i18n._t('View game')}
+                    />
+                  </b>
+                  : {i18n._pt('Achievements badge', '%1 points', [item.score || '0'])}
                 </List.Item>
               )
             )}
