@@ -2549,3 +2549,7 @@ msgstr "anzeigen /ausblenden"
 #~ msgstr ""
 #~ "Tenhou login string statt Benutzername eingegeben. Bitte niemals den "
 #~ "login string weitergeben!"
+
+#: app/pages/GamesControl/TournamentControls.tsx:222:23
+msgid "No more prescripted sessions available"
+msgstr "Keine weiteren vorgegebenen Partien verfügbar"

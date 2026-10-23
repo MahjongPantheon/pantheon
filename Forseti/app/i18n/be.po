@@ -2535,3 +2535,7 @@ msgstr "Ваш Telegram ID"
 #: app/pages/ProfileSignup.tsx:174:14
 msgid "show / hide"
 msgstr "паказаць / схаваць"
+
+#: app/pages/GamesControl/TournamentControls.tsx:222:23
+msgid "No more prescripted sessions available"
+msgstr "Больш няма даступных сесій паводле сцэнарыя"
