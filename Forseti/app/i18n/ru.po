@@ -2622,3 +2622,7 @@ msgstr "показать / скрыть"
 #~ msgstr ""
 #~ "Вы ввели ваш логин для Tenhou.net вместо имени пользователя. Вам не "
 #~ "следует НИКОГДА и никому передавать ваш логин!"
+
+#: app/pages/GamesControl/TournamentControls.tsx:222:23
+msgid "No more prescripted sessions available"
+msgstr "Больше нет доступных сессий по сценарию"

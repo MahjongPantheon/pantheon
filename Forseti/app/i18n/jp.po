@@ -2497,3 +2497,7 @@ msgstr "Telegram ID"
 #: app/pages/ProfileSignup.tsx:174:14
 msgid "show / hide"
 msgstr "表示 / 非表示"
+
+#: app/pages/GamesControl/TournamentControls.tsx:222:23
+msgid "No more prescripted sessions available"
+msgstr "利用可能な事前設定セッションはもうありません"

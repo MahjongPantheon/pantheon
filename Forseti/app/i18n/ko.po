@@ -2517,3 +2517,7 @@ msgstr "표시 / 숨김"
 #~ msgstr ""
 #~ "천봉 사용자 명 대신 로그인 문자열을 제공하셨습니다. 절대로 다른 사람에게 "
 #~ "로그인 문자열을 알려주면 안 됩니다!"
+
+#: app/pages/GamesControl/TournamentControls.tsx:222:23
+msgid "No more prescripted sessions available"
+msgstr "더 이상 예정된 세션이 없습니다"

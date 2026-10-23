@@ -39,7 +39,7 @@ import {
   IconSortAscending2,
   IconSquareX,
 } from '@tabler/icons-react';
-import { EventsGetPrescriptedEventConfigResponse } from 'tsclients/proto/mimir.pb';
+import type { EventsGetPrescriptedEventConfigResponse } from 'tsclients/proto/mimir.pb';
 enum Stage {
   NOT_READY = 'not_ready',
   READY_BUT_NOT_STARTED = 'ready_not_started',
@@ -213,24 +213,34 @@ export function TournamentControls({
                 ? i18n._t('Show results table')
                 : i18n._t('Hide results table')}
             </Button>
-            <Confirmation
-              testId='forseti-tournament-next-prescripted-seating'
-              i18n={i18n}
-              title={i18n._t('Generate seating for next session')}
-              text={i18n._t('Next seating')}
-              warning={
-                <>
-                  <Text>{i18n._t('Apply seating for next session?')}</Text>
-                </>
-              }
-              icon={<IconScript />}
-              color='green'
-              onConfirm={() => {
-                makeNextPredefinedSeating(
-                  eventConfig.windShuffleMode ?? WindShuffleMode.WIND_SHUFFLE_MODE_UNSPECIFIED
-                );
-              }}
-            />
+            {prescriptedConfig &&
+            !prescriptedConfig.prescript
+              ?.replace(/\r/g, '')
+              .split('\n\n')
+              ?.[prescriptedConfig.nextSessionIndex - 1]?.trim() ? (
+              <Text data-testid='forseti-tournament-prescripted-exhausted'>
+                {i18n._t('No more prescripted sessions available')}
+              </Text>
+            ) : (
+              <Confirmation
+                testId='forseti-tournament-next-prescripted-seating'
+                i18n={i18n}
+                title={i18n._t('Generate seating for next session')}
+                text={i18n._t('Next seating')}
+                warning={
+                  <>
+                    <Text>{i18n._t('Apply seating for next session?')}</Text>
+                  </>
+                }
+                icon={<IconScript />}
+                color='green'
+                onConfirm={() => {
+                  makeNextPredefinedSeating(
+                    eventConfig.windShuffleMode ?? WindShuffleMode.WIND_SHUFFLE_MODE_UNSPECIFIED
+                  );
+                }}
+              />
+            )}
           </Stack>
         )}
         {currentStage === Stage.SEATING_INPROGRESS && (
@@ -403,8 +413,10 @@ function determineStage(
     } else {
       const expectedTablesCount =
         prescriptedConfig?.prescript
-          ?.split('\n\n')
-          ?.[prescriptedConfig?.nextSessionIndex - 1]?.split('\n')?.length ?? 0;
+          ?.replace(/\r/g, '')
+          .split('\n\n')
+          ?.[prescriptedConfig?.nextSessionIndex - 1]?.trim()
+          .split('\n').length ?? 0;
       if (notFinishedTablesCount === expectedTablesCount) {
         return Stage.SEATING_READY;
       } else {
