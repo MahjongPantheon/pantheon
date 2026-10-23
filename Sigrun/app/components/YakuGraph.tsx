@@ -20,7 +20,6 @@ import { useI18n } from '../hooks/i18n';
 import { useMantineColorScheme, useMantineTheme } from '@mantine/core';
 import { YakuId, yakuList, yakuNameMap as yakuNameMapGen } from '../helpers/yaku';
 import { YakuStat } from 'tsclients/proto/atoms.pb';
-import { useMemo } from 'react';
 
 const BarGraph = React.lazy(() => import('./BarGraph'));
 
@@ -29,7 +28,7 @@ export const YakuGraph = ({ yakuStat }: { yakuStat?: YakuStat[] }) => {
   const theme = useMantineTheme();
   const isDark = useMantineColorScheme().colorScheme === 'dark';
 
-  const yakuNameMap = useMemo(() => yakuNameMapGen(i18n), []);
+  const yakuNameMap = yakuNameMapGen(i18n);
   const yaku = Object.values(yakuList).reduce((acc, y) => {
     acc.set(y.id, 0);
     return acc;
