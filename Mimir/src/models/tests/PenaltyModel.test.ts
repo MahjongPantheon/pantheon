@@ -1,3 +1,4 @@
+import { SessionPlayerEntity } from '../../entities/SessionPlayer.entity.js';
 import { jest } from '@jest/globals';
 import { Model } from '../Model.js';
 import { PenaltyModel } from '../PenaltyModel.js';
@@ -38,48 +39,62 @@ describe('Penalty games', () => {
   });
   afterAll(() => repo.destroy());
 
-  it('assigns the fixed replacement penalty to all four players and schedules statistics', async () => {
-    const event = Object.assign(new EventEntity(), {
-      id: 19,
-      ruleset: RulesetEntity.createRuleset('ema'),
-    });
-    event.ruleset.rules.replacementPlayerFixedPoints = -30000;
-    jest.spyOn(players, 'isEventAdmin').mockResolvedValue(true);
-    jest.spyOn(players, 'findById').mockResolvedValue(playerData);
-    jest.spyOn(events, 'findById').mockResolvedValue([event]);
-    jest.spyOn(repo.em, 'execute').mockResolvedValue([{ id: 21 }]);
-    const persist = jest.spyOn(repo.em, 'persist');
-    jest.spyOn(repo.em, 'flush').mockResolvedValue();
-    const newHistory = jest.spyOn(history, 'makeNewHistoryItem').mockResolvedValue();
-    const schedule = jest.spyOn(stats, 'scheduleRebuildPlayersStats').mockResolvedValue();
-    const result = await model.addPenaltyGame({ eventId: 19, players: [1, 2, 3, 4] });
-    expect(result.sessionHash).toMatch(/^[a-f0-9]+$/);
-    const entities = persist.mock.calls.flatMap(([entity]) =>
-      Array.isArray(entity) ? entity : [entity]
-    );
-    const results = [
-      ...new Set(entities.filter((entity) => entity instanceof SessionResultsEntity)),
-    ] as SessionResultsEntity[];
-    expect(
-      results.map((item) => ({
-        playerId: item.playerId,
-        ratingDelta: item.ratingDelta,
-        score: item.score,
-      }))
-    ).toEqual(
-      playerData.map(({ id }) => ({
-        playerId: id,
-        ratingDelta: -30000,
-        score: event.ruleset.rules.startPoints,
-      }))
-    );
-    const session = entities.find((entity) => entity instanceof SessionEntity) as SessionEntity;
-    expect(session.status).toBe(SessionStatus.SESSION_STATUS_FINISHED);
-    expect(session.endDate).toBeDefined();
-    expect(newHistory).toHaveBeenCalledTimes(4);
-    expect(newHistory).toHaveBeenCalledWith(event.ruleset, 1, 19, 21, -30000, 1);
-    expect(schedule).toHaveBeenCalledWith(19);
-  });
+  it.each(['ema', 'sanma'] as const)(
+    'assigns the fixed replacement penalty to each real player (%s)',
+    async (preset) => {
+      const event = Object.assign(new EventEntity(), {
+        id: 19,
+        ruleset: RulesetEntity.createRuleset(preset),
+      });
+      const realPlayers = playerData.slice(0, event.ruleset.playerCount);
+      event.ruleset.rules.replacementPlayerFixedPoints = -30000;
+      jest.spyOn(players, 'isEventAdmin').mockResolvedValue(true);
+      jest.spyOn(players, 'findById').mockResolvedValue(realPlayers);
+      jest.spyOn(events, 'findById').mockResolvedValue([event]);
+      jest.spyOn(repo.em, 'execute').mockResolvedValue([{ id: 21 }]);
+      const persist = jest.spyOn(repo.em, 'persist');
+      jest.spyOn(repo.em, 'flush').mockResolvedValue();
+      const newHistory = jest.spyOn(history, 'makeNewHistoryItem').mockResolvedValue();
+      const schedule = jest.spyOn(stats, 'scheduleRebuildPlayersStats').mockResolvedValue();
+      const result = await model.addPenaltyGame({
+        eventId: 19,
+        players: realPlayers.map((p) => p.id),
+      });
+      expect(result.sessionHash).toMatch(/^[a-f0-9]+$/);
+      const entities = persist.mock.calls.flatMap(([entity]) =>
+        Array.isArray(entity) ? entity : [entity]
+      );
+      const results = [
+        ...new Set(entities.filter((entity) => entity instanceof SessionResultsEntity)),
+      ] as SessionResultsEntity[];
+      expect(
+        results.map((item) => ({
+          playerId: item.playerId,
+          ratingDelta: item.ratingDelta,
+          score: item.score,
+        }))
+      ).toEqual(
+        realPlayers.map(({ id }) => ({
+          playerId: id,
+          ratingDelta: -30000,
+          score: event.ruleset.rules.startPoints,
+        }))
+      );
+      const session = entities.find((entity) => entity instanceof SessionEntity) as SessionEntity;
+      expect(session.status).toBe(SessionStatus.SESSION_STATUS_FINISHED);
+      expect(session.endDate).toBeDefined();
+      expect(session.intermediateResults?.playerIds).toEqual(realPlayers.map((p) => p.id));
+      const seats = [
+        ...new Set(entities.filter((entity) => entity instanceof SessionPlayerEntity)),
+      ] as SessionPlayerEntity[];
+      expect(seats.map((p) => p.playerId)).toEqual(
+        preset === 'sanma' ? [1, 2, 3, -1] : [1, 2, 3, 4]
+      );
+      expect(newHistory).toHaveBeenCalledTimes(event.ruleset.playerCount);
+      expect(newHistory).toHaveBeenCalledWith(event.ruleset, 1, 19, 21, -30000, 1);
+      expect(schedule).toHaveBeenCalledWith(19);
+    }
+  );
 
   it('requires administrator rights before adding a penalty game', async () => {
     jest.spyOn(players, 'isEventAdmin').mockResolvedValue(false);
@@ -96,7 +111,9 @@ describe('Penalty games', () => {
     await expect(model.addPenaltyGame({ eventId: 19, players: [1, 2, 3, 4] })).rejects.toThrow(
       'Event not found'
     );
-    find.mockResolvedValue([new EventEntity()]);
+    find.mockResolvedValue([
+      Object.assign(new EventEntity(), { ruleset: RulesetEntity.createRuleset('ema') }),
+    ]);
     jest.spyOn(players, 'findById').mockResolvedValue(playerData.slice(0, 3));
     await expect(model.addPenaltyGame({ eventId: 19, players: [1, 2, 3, 4] })).rejects.toThrow(
       'Some players were not found'

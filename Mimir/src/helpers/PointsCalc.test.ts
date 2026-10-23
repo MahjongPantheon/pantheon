@@ -563,35 +563,50 @@ describe('PointsCalc', () => {
       4: 0,
     };
 
-    expect(new PointsCalc().draw(currentScores, [], [])).toEqual({
+    expect(
+      new PointsCalc().draw(currentScores, [], [], RulesetEntity.createRuleset('ema').rules)
+    ).toEqual({
       1: 0,
       2: 0,
       3: 0,
       4: 0,
     });
 
-    expect(new PointsCalc().draw(currentScores, [1], [])).toEqual({
+    expect(
+      new PointsCalc().draw(currentScores, [1], [], RulesetEntity.createRuleset('ema').rules)
+    ).toEqual({
       1: 3000,
       2: -1000,
       3: -1000,
       4: -1000,
     });
 
-    expect(new PointsCalc().draw(currentScores, [1, 3], [])).toEqual({
+    expect(
+      new PointsCalc().draw(currentScores, [1, 3], [], RulesetEntity.createRuleset('ema').rules)
+    ).toEqual({
       1: 1500,
       2: -1500,
       3: 1500,
       4: -1500,
     });
 
-    expect(new PointsCalc().draw(currentScores, [1, 3, 4], [])).toEqual({
+    expect(
+      new PointsCalc().draw(currentScores, [1, 3, 4], [], RulesetEntity.createRuleset('ema').rules)
+    ).toEqual({
       1: 1000,
       2: -3000,
       3: 1000,
       4: 1000,
     });
 
-    expect(new PointsCalc().draw(currentScores, [1, 2, 3, 4], [1, 2, 4])).toEqual({
+    expect(
+      new PointsCalc().draw(
+        currentScores,
+        [1, 2, 3, 4],
+        [1, 2, 4],
+        RulesetEntity.createRuleset('ema').rules
+      )
+    ).toEqual({
       1: -1000,
       2: -1000,
       3: 0,

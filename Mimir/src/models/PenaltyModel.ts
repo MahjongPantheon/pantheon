@@ -1,3 +1,4 @@
+import { GHOST_PLAYER_ID } from '../../../Common/constants.js';
 import { TransactionPropagation } from '@mikro-orm/core';
 import { PenaltyEntity } from '../entities/Penalty.entity.js';
 import { Model } from './Model.js';
@@ -124,8 +125,16 @@ export class PenaltyModel extends Model {
           throw new Error('Event not found');
         }
 
+        const count = event[0].ruleset.playerCount;
+        if (
+          payload.players.length !== count ||
+          new Set(payload.players).size !== count ||
+          payload.players.some((id) => id <= 0)
+        ) {
+          throw new Error(`Penalty games require ${count} distinct real players`);
+        }
         const players = await playerModel.findById(payload.players);
-        if (players.length !== 4) {
+        if (players.length !== count) {
           throw new Error('Some players were not found');
         }
 
@@ -179,6 +188,15 @@ export class PenaltyModel extends Model {
             )
           );
           i++;
+        }
+        if (count === 3) {
+          this.repo.em.persist(
+            this.repo.em.create(SessionPlayerEntity, {
+              session,
+              playerId: GHOST_PLAYER_ID,
+              order: 4,
+            })
+          );
         }
         await Promise.all(promises);
 

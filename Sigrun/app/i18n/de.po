@@ -340,7 +340,7 @@ msgstr "Punkte die der Gewinner zusätzlich erhält"
 msgid ""
 "Amount of points paid by the offending player to each of the other players "
 "on a chombo"
-msgstr ""
+msgstr "Anzahl der Punkte, die der fehlbare Spieler bei einem Chombo an jeden der anderen Spieler zahlt"
 
 #: app/pages/EventRulesOverview/RulesetSettings.tsx:131:24
 msgid "Amount of score player should get to end the game."
@@ -469,7 +469,7 @@ msgstr "Chombo in der letzten Hand beendet das Spiel"
 
 #: app/pages/EventRulesOverview/RulesetSettings.tsx:80:20
 msgid "Chombo payments (sanma)"
-msgstr ""
+msgstr "Chombo-Zahlungen (Sanma)"
 
 #: app/components/PlayerStatsListing.tsx:126:16
 msgid "Chombo penalties: "
@@ -1143,7 +1143,7 @@ msgstr "Nur Ostrunden"
 msgid ""
 "Play with 3 players instead of 4. The North seat is removed; uma and seating "
 "are adjusted accordingly."
-msgstr ""
+msgstr "Spiel mit 3 statt 4 Spielern. Der Nordplatz entfällt; Uma und Sitzordnung werden entsprechend angepasst."
 
 #: app/pages/RatingTable.tsx:598:7
 msgid "Player ID"
@@ -1325,7 +1325,7 @@ msgstr "Ryuuiisou"
 
 #: app/pages/EventRulesOverview/RulesetSettings.tsx:72:20
 msgid "Ryuukyoku payments (sanma)"
-msgstr ""
+msgstr "Unentschieden-Zahlungen (Sanma)"
 
 #: app/helpers/yaku.ts:161:34
 msgid "Sanankou"
@@ -1430,7 +1430,7 @@ msgstr "Spielvorschau \"%1\"  von Mahjong Pantheon zur Verfügung gestellt"
 
 #: app/pages/EventRulesOverview/RulesetSettings.tsx:73:26
 msgid "Sum of points paid by players in noten to players in tenpai"
-msgstr ""
+msgstr "Summe der Punkte, die Noten-Spieler an Tenpai-Spieler zahlen"
 
 #: app/helpers/yaku.ts:197:34
 msgid "Suuankou"
@@ -1519,7 +1519,7 @@ msgstr "Das kann nicht wahr sein"
 #: app/pages/EventRulesOverview/RulesetSettings.tsx:60:29
 #: app/pages/EventRulesOverview/RulesetSettings.tsx:62:20
 msgid "Three-player game (sanma)"
-msgstr ""
+msgstr "Drei-Spieler-Spiel (Sanma)"
 
 #: app/pages/Timer.tsx:176:19
 msgid "Timer"

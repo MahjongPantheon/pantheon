@@ -233,7 +233,7 @@ export class PointsCalc {
     currentScores: Record<number, number>,
     tempaiIds: number[],
     riichiIds: number[],
-    rules?: RulesetConfig
+    rules: RulesetConfig
   ): Record<number, number> {
     this.resetPaymentsInfo();
     const riichiIdsArray = riichiIds || [];
@@ -244,7 +244,7 @@ export class PointsCalc {
       this._lastPaymentsInfo.riichi[`<-${playerId}`] = 1000;
     }
 
-    if (rules?.withSanma) {
+    if (rules.withSanma) {
       if (tempaiIds.length > 3) throw new Error('More than 3 players tempai');
       if (tempaiIds.length === 0 || tempaiIds.length === 3) return scores;
       const total = rules.sanmaDrawPayments || 3000;

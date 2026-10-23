@@ -31,6 +31,14 @@ describe('Sanma Twirp API', () => {
     const { eventId } = await client.CreateEvent(eventData);
     for (const playerId of [1, 2, 3]) await client.RegisterPlayer(eventId, playerId);
     const { sessionHash } = await client.StartGame(eventId, [1, 2, 3]);
+    const tables = await client.GetTablesState({ eventId, omitLastRound: false });
+    expect(tables.tables).toHaveLength(1);
+    expect(tables.tables[0].players.map((p) => p.id)).toEqual([1, 2, 3]);
+    expect(tables.tables[0].scores.map((s) => [s.playerId, s.score])).toEqual([
+      [1, 35000],
+      [2, 35000],
+      [3, 35000],
+    ]);
     const overview = await client.GetSessionOverview(sessionHash);
     expect(overview.players.map((player) => player.id)).toEqual([1, 2, 3, GHOST_PLAYER_ID]);
     expect(overview.players.at(-1)?.score).toBe(0);
@@ -77,6 +85,13 @@ describe('Sanma Twirp API', () => {
     const finished = await client.GetSessionOverview(sessionHash);
     expect(finished.state?.finished).toBe(true);
     expect(finished.state?.roundIndex).toBe(7);
+    const finishedTables = await client.GetTablesState({ eventId, omitLastRound: false });
+    expect(finishedTables.tables[0].players.map((p) => p.id)).toEqual([1, 2, 3]);
+    expect(finishedTables.tables[0].scores.map((s) => [s.playerId, s.score])).toEqual([
+      [1, 34500],
+      [2, 35800],
+      [3, 34700],
+    ]);
     const { game } = await client.GetGame(sessionHash);
     expect(game.finalResults.map((result) => result.playerId).sort((a, b) => a - b)).toEqual([
       1, 2, 3,
