@@ -9,7 +9,12 @@ import {
   EventsUpdatePlayersLocalIdsPayload,
   EventsUpdatePlayersTeamsPayload,
 } from 'tsclients/proto/mimir.pb.js';
-import { LocalIdMapping, TeamMapping } from 'tsclients/proto/atoms.pb.js';
+import {
+  LocalIdMapping,
+  TeamMapping,
+  SessionStatus,
+  TournamentGamesStatus,
+} from 'tsclients/proto/atoms.pb.js';
 import { SessionEntity } from '../entities/Session.entity.js';
 import { filterPersonalData } from '../helpers/filterPersonalData.js';
 
@@ -265,6 +270,25 @@ export class EventRegistrationModel extends Model {
         const regItem = await this.findByPlayerAndEvent([playerId], eventId);
         if (regItem.length === 0) {
           throw new Error(`Player ${playerId} is not registered for event ${eventId}`);
+        }
+
+        const event = await this.repo.em.findOneOrFail(EventEntity, eventId);
+        if (event.syncStart && !event.isOnline) {
+          const activeSessions = await this.repo.em.count(SessionEntity, {
+            event: eventId,
+            status: {
+              $in: [
+                SessionStatus.SESSION_STATUS_INPROGRESS,
+                SessionStatus.SESSION_STATUS_PREFINISHED,
+              ],
+            },
+          });
+          if (
+            event.gamesStatus === TournamentGamesStatus.TOURNAMENT_GAMES_STATUS_SEATING_READY ||
+            activeSessions > 0
+          ) {
+            throw new Error('Cannot change seating flags while games are still in progress');
+          }
         }
 
         regItem[0].ignoreSeating = ignoreSeating ? 1 : 0;

@@ -19,7 +19,13 @@ import * as React from 'react';
 import { useContext, useEffect, useState } from 'react';
 import { usePageTitle } from '../../hooks/pageTitle';
 import { nprogress } from '@mantine/nprogress';
-import { GameConfig, RegisteredPlayer, Event } from 'tsclients/proto/atoms.pb';
+import {
+  GameConfig,
+  RegisteredPlayer,
+  Event,
+  TableState,
+  EventType,
+} from 'tsclients/proto/atoms.pb';
 
 import { authCtx } from '../../hooks/auth';
 import { useApi } from '../../hooks/api';
@@ -49,6 +55,7 @@ export const PlayersManage: React.FC<{ params: { id: string } }> = ({ params: { 
   const [players, setPlayers] = useState<RegisteredPlayer[]>([]); // user_id -> rule_id; zero means no access rights.
   const [config, setConfig] = useState<GameConfig>();
   const [event, setEvent] = useState<Event>();
+  const [tables, setTables] = useState<TableState[]>();
   api.setEventId(eventId);
   usePageTitle(i18n._t('Manage players in event'));
 
@@ -65,7 +72,10 @@ export const PlayersManage: React.FC<{ params: { id: string } }> = ({ params: { 
       api.getEventsById([eventId]),
       api.getAllPlayers(eventId),
     ])
-      .then(([conf, [eventData], playersList]) => {
+      .then(async ([conf, [eventData], playersList]) => {
+        if (conf.syncStart && eventData.type !== EventType.EVENT_TYPE_ONLINE) {
+          setTables(await api.getTablesState(eventId));
+        }
         setEvent(eventData);
         setConfig(conf);
         setPlayers(playersList.sort((a, b) => a.title.localeCompare(b.title)));
@@ -139,6 +149,7 @@ export const PlayersManage: React.FC<{ params: { id: string } }> = ({ params: { 
             eventId={eventId}
             config={config}
             event={event}
+            tables={tables}
           />
         </Tabs.Panel>
 

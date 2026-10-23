@@ -19,7 +19,13 @@ import * as React from 'react';
 import { useApi } from '../../hooks/api';
 import { useContext, useState } from 'react';
 import { useI18n } from '../../hooks/i18n';
-import { GameConfig, RegisteredPlayer, Event, EventType } from 'tsclients/proto/atoms.pb';
+import {
+  GameConfig,
+  RegisteredPlayer,
+  Event,
+  EventType,
+  TableState,
+} from 'tsclients/proto/atoms.pb';
 import {
   ActionIcon,
   Text,
@@ -39,6 +45,8 @@ import { useDisclosure } from '@mantine/hooks';
 import { Filler } from '../../helpers/filler';
 import { PlayerAvatar } from '../../components/PlayerAvatar';
 import { authCtx, PrivilegesLevel } from '../../hooks/auth';
+import { canChangeSeating } from '../../helpers/canChangeSeating';
+import { notifications } from '@mantine/notifications';
 
 export const ManagementTab: React.FC<{
   eventId: number;
@@ -46,7 +54,8 @@ export const ManagementTab: React.FC<{
   setPlayers: (players: RegisteredPlayer[]) => void;
   config?: GameConfig;
   event?: Event;
-}> = ({ eventId, players, setPlayers, config, event }) => {
+  tables?: TableState[];
+}> = ({ eventId, players, setPlayers, config, event, tables }) => {
   const api = useApi();
   const i18n = useI18n();
   const { privilegesLevel } = useContext(authCtx);
@@ -70,6 +79,13 @@ export const ManagementTab: React.FC<{
             ...players.slice(playerIdx + 1),
           ]);
         }
+      })
+      .catch((err: Error) => {
+        notifications.show({
+          title: i18n._t('Error has occurred'),
+          message: err.message,
+          color: 'red',
+        });
       })
       .finally(() => {
         setIncludeSeatingLoading({ ...includeSeatingLoading, [playerId]: false });
@@ -233,6 +249,7 @@ export const ManagementTab: React.FC<{
                         : i18n._t('Player is included in next seating. Click to exclude')
                     }
                     loading={includeSeatingLoading[p.id]}
+                    disabled={!canChangeSeating(config, event, tables)}
                     variant={p.ignoreSeating ? 'outline' : 'filled'}
                     size='lg'
                     color={p.ignoreSeating ? 'gray' : 'green'}
