@@ -91,6 +91,7 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ form, i18n }) 
             )}
             min={0}
             key={form.key('ruleset.sanmaChomboPayments')}
+            disabled={!extraChomboPayments}
             {...form.getInputProps('ruleset.sanmaChomboPayments')}
           />
         </>

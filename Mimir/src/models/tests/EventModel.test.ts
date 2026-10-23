@@ -57,7 +57,31 @@ describe('Event creation', () => {
     expect(event.ruleset.rules.startPoints).toBe(35000);
   });
 
+  it('rejects sanma online events before unsupported replay imports can be configured', async () => {
+    await expect(
+      model.createEvent({
+        ...eventData,
+        type: EventType.EVENT_TYPE_ONLINE,
+        rulesetConfig: RulesetEntity.createRuleset('sanma').rules,
+      })
+    ).rejects.toThrow('Sanma online');
+  });
+
+  it('rejects sanma when editing a stored online event even if the payload says local', async () => {
+    const { eventId } = await model.createEvent({
+      ...eventData,
+      type: EventType.EVENT_TYPE_ONLINE,
+    });
+    await expect(
+      model.updateEvent({
+        id: eventId,
+        event: { ...eventData, rulesetConfig: RulesetEntity.createRuleset('sanma').rules },
+      })
+    ).rejects.toThrow('Sanma online');
+  });
+
   it.each([
+    { oka: 10000 },
     { sanmaDrawPayments: -200 },
     { sanmaDrawPayments: 3100 },
     { sanmaChomboPayments: -100 },

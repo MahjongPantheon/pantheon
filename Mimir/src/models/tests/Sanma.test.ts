@@ -66,10 +66,10 @@ describe('Sanma sessions and results', () => {
   });
 
   it('looks up the ghost locally without sending its ID to Frey', async () => {
-    const fetch = jest
+    const fetch = vi
       .spyOn(repo.frey, 'GetPersonalInfo')
       .mockResolvedValue({ people: [makePlayer(1), makePlayer(2), makePlayer(3)] });
-    vi.spyOn(repo.cache.client, 'set').mockResolvedValue('OK');
+    vi.spyOn(repo.cache.client, 'set').mockResolvedValue(true);
     const result = await players.findById([1, 2, 3, GHOST_PLAYER_ID], true);
     expect(fetch).toHaveBeenCalledWith({ ids: [1, 2, 3] });
     expect(result.map((player) => player.id)).toEqual([1, 2, 3, GHOST_PLAYER_ID]);

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-30 00:31+0100\n"
+"POT-Creation-Date: 2026-10-30 00:33+0100\n"
 "PO-Revision-Date: 2026-10-20 00:34+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -33,7 +33,7 @@ msgid "%1 item"
 msgid_plural "%1 items"
 msgstr[0] ""
 
-#: app/pages/GamesControl/GamesList.tsx:222:53
+#: app/pages/GamesControl/GamesList.tsx:221:53
 #: app/pages/GamesControl/TournamentControls.tsx:314:45
 msgid "1 minute"
 msgstr "1 分钟"
@@ -42,7 +42,7 @@ msgstr "1 分钟"
 msgid "1 player with score less than starting"
 msgstr "1 名玩家低于起始点数"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:210:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:211:22
 msgid "13+ han hands are considered yakuman, not sanbaiman."
 msgstr "13 番及以上的手牌按役满计算，而非三倍满。"
 
@@ -50,7 +50,7 @@ msgstr "13 番及以上的手牌按役满计算，而非三倍满。"
 msgid "1st"
 msgstr "第 1 名"
 
-#: app/pages/GamesControl/GamesList.tsx:223:54
+#: app/pages/GamesControl/GamesList.tsx:222:54
 #: app/pages/GamesControl/TournamentControls.tsx:315:46
 msgid "2 minutes"
 msgstr "2 分钟"
@@ -59,7 +59,7 @@ msgstr "2 分钟"
 msgid "2nd"
 msgstr "第 2 名"
 
-#: app/pages/GamesControl/GamesList.tsx:224:54
+#: app/pages/GamesControl/GamesList.tsx:223:54
 #: app/pages/GamesControl/TournamentControls.tsx:316:46
 msgid "3 minutes"
 msgstr "3 分钟"
@@ -72,7 +72,7 @@ msgstr "3 名玩家低于起始点数"
 msgid "3rd"
 msgstr "第 3 名"
 
-#: app/pages/GamesControl/GamesList.tsx:225:54
+#: app/pages/GamesControl/GamesList.tsx:224:54
 #: app/pages/GamesControl/TournamentControls.tsx:317:46
 msgid "4 minutes"
 msgstr "4 分钟"
@@ -81,12 +81,12 @@ msgstr "4 分钟"
 msgid "4th"
 msgstr "第 4 名"
 
-#: app/pages/GamesControl/GamesList.tsx:226:54
+#: app/pages/GamesControl/GamesList.tsx:225:54
 #: app/pages/GamesControl/TournamentControls.tsx:318:46
 msgid "5 minutes"
 msgstr "5 分钟"
 
-#: app/pages/GamesControl/GamesList.tsx:227:54
+#: app/pages/GamesControl/GamesList.tsx:226:54
 #: app/pages/GamesControl/TournamentControls.tsx:319:46
 msgid "7 minutes"
 msgstr "7 分钟"
@@ -121,13 +121,13 @@ msgstr "操作"
 msgid "Add a penalty"
 msgstr "添加处罚"
 
-#: app/pages/GamesControl/GamesList.tsx:213:29
+#: app/pages/GamesControl/GamesList.tsx:212:29
 #: app/pages/GamesControl/TournamentControls.tsx:304:22
 #: app/pages/GamesControl/TournamentControls.tsx:305:21
 msgid "Add extra time"
 msgstr "追加时间"
 
-#: app/pages/GamesControl/GamesList.tsx:212:30
+#: app/pages/GamesControl/GamesList.tsx:211:30
 msgid "Add extra time for this table"
 msgstr "为本桌追加时间"
 
@@ -135,7 +135,7 @@ msgstr "为本桌追加时间"
 msgid "Add selected amount of extra time for all tables?"
 msgstr "为所有桌追加所选时长？"
 
-#: app/pages/GamesControl/GamesList.tsx:232:30
+#: app/pages/GamesControl/GamesList.tsx:231:30
 msgid "Add selected amount of extra time for this table?"
 msgstr "为本桌追加所选时长？"
 
@@ -143,7 +143,7 @@ msgstr "为本桌追加所选时长？"
 msgid "Administrator privileges include everything a referee can do plus:"
 msgstr "管理员拥有裁判的全部权限，以及："
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:107:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:108:16
 msgid "Agariyame"
 msgstr "和牌终局"
 
@@ -164,7 +164,7 @@ msgstr "我的所有活动"
 msgid "All player stats and achievements"
 msgstr "所有玩家统计和成就"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:200:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:201:22
 msgid ""
 "All riichi bets on the table will be given to the first winner. If not "
 "checked, winning riichi bets will always be given back, lost bets would be "
@@ -182,7 +182,7 @@ msgstr "你的所有个人信息，包括邮箱、天凤 ID、姓名"
 msgid "All your played games and events"
 msgstr "你参加过的所有对局和活动"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:164:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:165:16
 msgid "Allow abortive draws"
 msgstr "允许中途流局"
 
@@ -190,7 +190,7 @@ msgstr "允许中途流局"
 msgid "Allow adding of replays manually"
 msgstr "允许手动添加牌谱"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:127:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:128:16
 msgid "Allow bankruptcy"
 msgstr "允许击飞"
 
@@ -206,15 +206,15 @@ msgstr "允许对局中查看其他桌"
 msgid "Already registered?"
 msgstr "已有账号？"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:293:18
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:294:18
 msgid "Amount of chombo penalty"
 msgstr "犯规罚分"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:294:24
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:295:24
 msgid "Amount of penalty applied in the end of the session after uma bonus."
 msgstr "对局结束后，在顺位分结算后扣除的罚分。"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:314:24
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:315:24
 msgid "Amount of penalty applied to those who didn't win once in game."
 msgstr "对整场对局中未和牌玩家扣除的罚分。"
 
@@ -229,7 +229,7 @@ msgid ""
 "Amount of points given to every player in the beginning of every session"
 msgstr "每场对局开始时发给每位玩家的点数"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:225:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:226:22
 msgid "Amount of points given to player at 1st place"
 msgstr "第 1 名获得的额外点数"
 
@@ -239,7 +239,7 @@ msgid ""
 "on a chombo"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:146:24
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:147:24
 msgid "Amount of score player should get to end the game."
 msgstr "结束对局所需的目标点数。"
 
@@ -276,7 +276,7 @@ msgstr "与裁判争执"
 msgid "Assigned by:"
 msgstr "处罚执行人："
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:155:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:156:16
 msgid "Atamahane"
 msgstr "头跳"
 
@@ -325,7 +325,7 @@ msgstr "无法生成座位表：已注册玩家人数不是 4 的倍数"
 msgid "Cancel"
 msgstr "取消"
 
-#: app/pages/GamesControl/GamesList.tsx:252:30
+#: app/pages/GamesControl/GamesList.tsx:251:30
 msgid "Cancel last played round"
 msgstr "取消最后一局"
 
@@ -333,11 +333,11 @@ msgstr "取消最后一局"
 msgid "Cancel penalty"
 msgstr "取消处罚"
 
-#: app/pages/GamesControl/GamesList.tsx:303:29
+#: app/pages/GamesControl/GamesList.tsx:302:29
 msgid "Cancel results"
 msgstr "取消结果"
 
-#: app/pages/GamesControl/GamesList.tsx:253:29
+#: app/pages/GamesControl/GamesList.tsx:252:29
 msgid "Cancel round"
 msgstr "取消本局"
 
@@ -410,7 +410,7 @@ msgstr "纯正九莲宝灯"
 msgid "City"
 msgstr "城市"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:199:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:200:16
 msgid "Collect riichi bets by atamahane"
 msgstr "按头跳规则分配立直棒"
 
@@ -495,7 +495,7 @@ msgstr "危险操作区"
 msgid "Data slice"
 msgstr "统计范围"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:116:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:117:16
 msgid "Disable renchans"
 msgstr "禁用连庄"
 
@@ -551,7 +551,7 @@ msgstr "邮箱已验证"
 msgid "Email has been sent"
 msgstr "邮件已发送"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:174:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:175:22
 msgid "Enable \"Nagashi\" outcome to record this special draw"
 msgstr "启用“流局满贯”结果以记录这种特殊流局"
 
@@ -587,7 +587,7 @@ msgstr "输入高强度密码"
 msgid "Enter your e-mail address"
 msgstr "输入你的电子邮箱"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:242:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:243:16
 msgid "Equalize uma"
 msgstr "同分时平分顺位分"
 
@@ -654,7 +654,7 @@ msgstr "活动：%1"
 msgid "External gaming platform for the tournament"
 msgstr "赛事使用的外部游戏平台"
 
-#: app/pages/GamesControl/GamesList.tsx:194:24
+#: app/pages/GamesControl/GamesList.tsx:193:24
 msgid "Extra minutes: %1"
 msgstr "追加分钟数：%1"
 
@@ -833,11 +833,11 @@ msgstr "替补玩家的固定得分"
 msgid "Fixed uma for replacement player"
 msgstr "替补玩家的固定顺位分"
 
-#: app/pages/GamesControl/GamesList.tsx:287:29
+#: app/pages/GamesControl/GamesList.tsx:286:29
 msgid "Force finish game"
 msgstr "强制结束对局"
 
-#: app/pages/GamesControl/GamesList.tsx:286:30
+#: app/pages/GamesControl/GamesList.tsx:285:30
 msgid "Forcefully finish the game"
 msgstr "强制结束对局"
 
@@ -855,7 +855,7 @@ msgstr[0] "发现 %1 个错误"
 msgid "Game & profile management - Forseti"
 msgstr "对局与个人资料管理 - Forseti"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:98:25
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:99:25
 msgid "Game duration"
 msgstr "对局时长"
 
@@ -880,7 +880,7 @@ msgstr "前往登录页面"
 msgid "Go to Signup page"
 msgstr "前往注册页面"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:145:18
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:146:18
 #: app/services/i18n.test.ts:35:12
 msgid "Goal score"
 msgstr "目标点数"
@@ -897,7 +897,7 @@ msgstr "发财"
 msgid "Haitei"
 msgstr "海底摸月"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:217:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:218:22
 msgid "Hands valued as 4/30 and 3/60 are rounded to mangan."
 msgstr "4 番 30 符和 3 番 60 符按满贯计算。"
 
@@ -920,11 +920,11 @@ msgstr "隐藏结果表"
 msgid "Hide results table and achievements"
 msgstr "隐藏结果表和成就"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:233:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:234:16
 msgid "Honba Value"
 msgstr "本场点数"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:191:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:192:22
 msgid ""
 "Honba payments will be given only to the first winner. If not checked, "
 "payment will be given to all winners."
@@ -976,7 +976,7 @@ msgid ""
 "for all tournament events."
 msgstr "若勾选，玩家在对局中也能查看其他桌况。强烈建议所有赛事活动关闭此选项。"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:243:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:244:22
 msgid ""
 "If checked, players with equivalent score receive equivalent uma bonus. "
 "Otherwise, uma is assigned according to move order."
@@ -1005,7 +1005,7 @@ msgstr ""
 "若勾选，将显示上传的头像，代替默认的姓名首字母圆圈。未上传头像时，仍显示默认"
 "圆圈。"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:135:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:136:22
 msgid ""
 "If nobody reaches the goal score at the last hand, the game continues to "
 "west rounds (in hanchan) or to south rounds (in tonpuusen), until someone "
@@ -1014,7 +1014,7 @@ msgstr ""
 "若最后一局结束时无人达到目标点数，半庄战进入西场，东风战进入南场，直到有人达"
 "到目标点数"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:108:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:109:22
 msgid ""
 "If the dealer holds the 1st place after last hand in session, the game ends "
 "regardless of his winning hand or tempai."
@@ -1100,11 +1100,11 @@ msgstr "一气通贯"
 msgid "Junchan"
 msgstr "纯全带幺九"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:209:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:210:16
 msgid "Kazoe yakuman"
 msgstr "累计役满"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:216:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:217:16
 msgid "Kiriage mangan"
 msgstr "切上满贯"
 
@@ -1238,7 +1238,7 @@ msgstr "管理权限：指定裁判和其他管理员。"
 msgid "Manage your account"
 msgstr "管理你的账号"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:252:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:253:16
 msgid "Max arbitrary penalty score"
 msgstr "额外处罚的最高罚分"
 
@@ -1250,7 +1250,7 @@ msgstr "菜单"
 msgid "Menzentsumo"
 msgstr "门前清自摸和"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:259:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:260:16
 msgid "Min arbitrary penalty score"
 msgstr "额外处罚的最低罚分"
 
@@ -1277,7 +1277,7 @@ msgstr "多倍役满"
 msgid "My events"
 msgstr "我的活动"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:173:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:174:16
 msgid "Nagashi mangan"
 msgstr "流局满贯"
 
@@ -1420,7 +1420,7 @@ msgstr "你被呼叫担任裁判时通知"
 msgid "Numerical identifier of your user profile."
 msgstr "你的用户资料的数字标识符。"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:224:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:225:16
 msgid "Oka bonus"
 msgstr "头名奖励"
 
@@ -1433,7 +1433,7 @@ msgstr "在线活动"
 msgid "Online event settings"
 msgstr "在线活动设置"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:156:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:157:22
 msgid ""
 "Only first player by the order of the move from the loser would be "
 "considered a winner. If not checked, all players declaring Ron are "
@@ -1489,26 +1489,26 @@ msgstr "密码恢复失败"
 msgid "Password successfully updated"
 msgstr "密码已更新"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:273:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:274:16
 msgid "Pay chombo as reverse mangan"
 msgstr "犯规时按反向满贯支付"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:274:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:275:22
 msgid ""
 "Pay chombo right on occasion. If not checked, chombo is subtracted from "
 "player score after uma is applied."
 msgstr "犯规时立即支付罚分。若未勾选，则在对局结束并结算顺位分后扣除罚分。"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:190:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:191:16
 msgid "Pay for honba by atamahane"
 msgstr "按头跳规则分配本场点数"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:207:25
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:208:25
 msgid "Payments and scores"
 msgstr "支付与点数"
 
 #: app/components/MainMenu.tsx:128:29 app/pages/OwnedEvents.tsx:440:35
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:250:25
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:251:25
 msgid "Penalties"
 msgstr "处罚"
 
@@ -1545,11 +1545,11 @@ msgstr "平和"
 msgid "Place / Session result"
 msgstr "顺位 / 对局结果"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:134:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:135:16
 msgid "Play additional rounds"
 msgstr "允许延长对局"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:101:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:102:22
 msgid "Play only east rounds"
 msgstr "仅进行东风战"
 
@@ -1781,11 +1781,11 @@ msgstr "注册完成！"
 msgid "Remove administrator from event"
 msgstr "移除活动管理员"
 
-#: app/pages/GamesControl/GamesList.tsx:269:29
+#: app/pages/GamesControl/GamesList.tsx:268:29
 msgid "Remove game"
 msgstr "删除对局"
 
-#: app/pages/GamesControl/GamesList.tsx:302:30
+#: app/pages/GamesControl/GamesList.tsx:301:30
 msgid "Remove game results"
 msgstr "删除对局结果"
 
@@ -1806,7 +1806,7 @@ msgstr "移除活动裁判"
 msgid "Remove replacement"
 msgstr "取消替补"
 
-#: app/pages/GamesControl/GamesList.tsx:268:30
+#: app/pages/GamesControl/GamesList.tsx:267:30
 msgid "Remove the game as it never existed"
 msgstr "彻底删除对局记录"
 
@@ -1846,15 +1846,15 @@ msgstr "重置你的密码"
 msgid "Riichi"
 msgstr "立直"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:179:25
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:180:25
 msgid "Riichi and honba"
 msgstr "立直与本场"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:181:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:182:16
 msgid "Riichi goes to winner"
 msgstr "剩余立直棒归第一名"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:182:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:183:22
 msgid ""
 "Riichi left on table in case of draw in the end of the session will be given "
 "to session winner"
@@ -1868,7 +1868,7 @@ msgstr "岭上开花"
 msgid "Ron, %1 from %2 (%3), riichi: %4"
 msgstr "荣和：%1，放铳者：%2 (%3)，立直：%4"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:153:25
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:154:25
 msgid "Round outcomes"
 msgstr "局结果"
 
@@ -1944,7 +1944,7 @@ msgstr "选择头像"
 msgid "Select event type"
 msgstr "选择活动类型"
 
-#: app/pages/GamesControl/GamesList.tsx:218:36
+#: app/pages/GamesControl/GamesList.tsx:217:36
 #: app/pages/GamesControl/TournamentControls.tsx:310:28
 msgid "Select extra time"
 msgstr "选择追加时间"
@@ -1980,7 +1980,7 @@ msgid ""
 "removed account."
 msgstr "服务器管理员也无法恢复你对已删除账号的访问权限。"
 
-#: app/pages/GamesControl/GamesList.tsx:386:18
+#: app/pages/GamesControl/GamesList.tsx:385:18
 msgid "Session cancelled"
 msgstr "对局已取消"
 
@@ -1992,23 +1992,23 @@ msgstr "对局时长（分钟）"
 msgid "Session ending policy"
 msgstr "对局结束规则"
 
-#: app/pages/GamesControl/GamesList.tsx:374:18
+#: app/pages/GamesControl/GamesList.tsx:373:18
 msgid "Session finished"
 msgstr "对局已结束"
 
-#: app/pages/GamesControl/GamesList.tsx:362:18
+#: app/pages/GamesControl/GamesList.tsx:361:18
 msgid "Session finished, but not confirmed"
 msgstr "对局已结束，尚未确认"
 
-#: app/pages/GamesControl/GamesList.tsx:349:20
+#: app/pages/GamesControl/GamesList.tsx:348:20
 msgid "Session in progress"
 msgstr "对局进行中"
 
-#: app/pages/GamesControl/GamesList.tsx:337:20
+#: app/pages/GamesControl/GamesList.tsx:336:20
 msgid "Session is ready to start"
 msgstr "对局已准备开始"
 
-#: app/pages/GamesControl/GamesList.tsx:398:18
+#: app/pages/GamesControl/GamesList.tsx:397:18
 msgid "Session is scheduled"
 msgstr "对局已安排"
 
@@ -2116,7 +2116,7 @@ msgstr "启动计时器并开始对局？"
 msgid "Start timer and sessions"
 msgstr "启动计时器和对局"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:266:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:267:16
 msgid "Step of arbitrary penalty scores"
 msgstr "额外罚分步长"
 
@@ -2231,7 +2231,7 @@ msgid ""
 "The player name will be replaced with [Deleted account ####] everywhere."
 msgstr "所有地方的玩家名都将替换为 [Deleted account ####]。"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:165:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:166:22
 msgid ""
 "There will be a separate \"Abortive draw\" outcome to record draws due to "
 "four riichi, four kans, suufon renda, kyuushu kyuuhai, etc."
@@ -2239,8 +2239,8 @@ msgstr ""
 "启用单独的“中途流局”结果，以记录四家立直、四杠散了、四风连打、九种九牌等流"
 "局。"
 
-#: app/pages/GamesControl/GamesList.tsx:254:32
-#: app/pages/GamesControl/GamesList.tsx:270:32
+#: app/pages/GamesControl/GamesList.tsx:253:32
+#: app/pages/GamesControl/GamesList.tsx:269:32
 msgid "This action can't be undone. Continue?"
 msgstr "此操作无法撤销，是否继续？"
 
@@ -2271,7 +2271,7 @@ msgid ""
 "session starts, this value is increased automatically."
 msgstr "下一场对局脚本的编号（从 1 开始）。每开始一场新对局，此值自动递增。"
 
-#: app/pages/GamesControl/GamesList.tsx:304:32
+#: app/pages/GamesControl/GamesList.tsx:303:32
 msgid ""
 "This will only remove the game results, but you will need to cancel last "
 "round separately. Continue?"
@@ -2316,7 +2316,7 @@ msgstr "切换排名表显示状态"
 msgid "Toitoi"
 msgstr "对对和"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:100:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:101:16
 msgid "Tonpuusen"
 msgstr "东风战"
 
@@ -2405,11 +2405,11 @@ msgstr "下一场对局使用瑞士制排座"
 msgid "Use swiss seating for next session?"
 msgstr "下一场对局使用瑞士制排座？"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:305:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:306:22
 msgid "Use yakitori rule"
 msgstr "启用烧鸡规则"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:234:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:235:22
 msgid "Value of one honba stick"
 msgstr "每根本场棒的点数"
 
@@ -2441,11 +2441,11 @@ msgstr "以下内容不会被删除："
 msgid "What will be deleted:"
 msgstr "以下内容将被删除："
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:128:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:129:22
 msgid "When a player runs out of score points, the game immediately ends"
 msgstr "当玩家点数低于零时立即结束对局"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:117:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:118:22
 msgid ""
 "When dealer wins, or stays tempai after draw, seat winds will be changed. "
 "Honba is added only after draw."
@@ -2475,11 +2475,11 @@ msgstr "白板"
 msgid "Wind shuffle mode"
 msgstr "座风分配方式"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:304:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:305:16
 msgid "Yakitori"
 msgstr "烧鸡"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:313:18
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:314:18
 msgid "Yakitori penalty"
 msgstr "烧鸡罚分"
 
@@ -2513,7 +2513,7 @@ msgid ""
 "the action. You can close the window to cancel."
 msgstr "你将从系统中删除账号数据，请确认。可关闭窗口取消操作。"
 
-#: app/pages/GamesControl/GamesList.tsx:288:32
+#: app/pages/GamesControl/GamesList.tsx:287:32
 msgid "You are going to forcefully finish this game. Continue?"
 msgstr "你将强制结束此对局，是否继续？"
 

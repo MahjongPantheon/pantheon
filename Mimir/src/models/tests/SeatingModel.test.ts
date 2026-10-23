@@ -59,6 +59,7 @@ describe('seating creation', () => {
   beforeEach(() => {
     event = Object.assign(new EventEntity(), {
       id: eventId,
+      ruleset: RulesetEntity.createRuleset('ema'),
       useTimer: 1,
       gamesStatus: TournamentGamesStatus.TOURNAMENT_GAMES_STATUS_STARTED,
     });

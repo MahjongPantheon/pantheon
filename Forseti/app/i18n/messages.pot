@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-30 00:32+0100\n"
+"POT-Creation-Date: 2026-10-30 00:33+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -64,7 +64,7 @@ msgstr ""
 
 #: app/components/MainMenu.tsx:128:29
 #: app/pages/OwnedEvents.tsx:440:35
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:250:25
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:251:25
 msgid "Penalties"
 msgstr ""
 
@@ -635,125 +635,125 @@ msgstr ""
 msgid "Current round"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:194:24
+#: app/pages/GamesControl/GamesList.tsx:193:24
 msgid "Extra minutes: %1"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:212:30
+#: app/pages/GamesControl/GamesList.tsx:211:30
 msgid "Add extra time for this table"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:213:29
+#: app/pages/GamesControl/GamesList.tsx:212:29
 #: app/pages/GamesControl/TournamentControls.tsx:304:22
 #: app/pages/GamesControl/TournamentControls.tsx:305:21
 msgid "Add extra time"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:218:36
+#: app/pages/GamesControl/GamesList.tsx:217:36
 #: app/pages/GamesControl/TournamentControls.tsx:310:28
 msgid "Select extra time"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:222:53
+#: app/pages/GamesControl/GamesList.tsx:221:53
 #: app/pages/GamesControl/TournamentControls.tsx:314:45
 msgid "1 minute"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:223:54
+#: app/pages/GamesControl/GamesList.tsx:222:54
 #: app/pages/GamesControl/TournamentControls.tsx:315:46
 msgid "2 minutes"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:224:54
+#: app/pages/GamesControl/GamesList.tsx:223:54
 #: app/pages/GamesControl/TournamentControls.tsx:316:46
 msgid "3 minutes"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:225:54
+#: app/pages/GamesControl/GamesList.tsx:224:54
 #: app/pages/GamesControl/TournamentControls.tsx:317:46
 msgid "4 minutes"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:226:54
+#: app/pages/GamesControl/GamesList.tsx:225:54
 #: app/pages/GamesControl/TournamentControls.tsx:318:46
 msgid "5 minutes"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:227:54
+#: app/pages/GamesControl/GamesList.tsx:226:54
 #: app/pages/GamesControl/TournamentControls.tsx:319:46
 msgid "7 minutes"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:232:30
+#: app/pages/GamesControl/GamesList.tsx:231:30
 msgid "Add selected amount of extra time for this table?"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:252:30
+#: app/pages/GamesControl/GamesList.tsx:251:30
 msgid "Cancel last played round"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:253:29
+#: app/pages/GamesControl/GamesList.tsx:252:29
 msgid "Cancel round"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:254:32
-#: app/pages/GamesControl/GamesList.tsx:270:32
+#: app/pages/GamesControl/GamesList.tsx:253:32
+#: app/pages/GamesControl/GamesList.tsx:269:32
 msgid "This action can't be undone. Continue?"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:268:30
+#: app/pages/GamesControl/GamesList.tsx:267:30
 msgid "Remove the game as it never existed"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:269:29
+#: app/pages/GamesControl/GamesList.tsx:268:29
 msgid "Remove game"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:286:30
+#: app/pages/GamesControl/GamesList.tsx:285:30
 msgid "Forcefully finish the game"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:287:29
+#: app/pages/GamesControl/GamesList.tsx:286:29
 msgid "Force finish game"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:288:32
+#: app/pages/GamesControl/GamesList.tsx:287:32
 msgid "You are going to forcefully finish this game. Continue?"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:302:30
+#: app/pages/GamesControl/GamesList.tsx:301:30
 msgid "Remove game results"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:303:29
+#: app/pages/GamesControl/GamesList.tsx:302:29
 msgid "Cancel results"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:304:32
+#: app/pages/GamesControl/GamesList.tsx:303:32
 msgid "This will only remove the game results, but you will need to cancel last round separately. Continue?"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:337:20
+#: app/pages/GamesControl/GamesList.tsx:336:20
 msgid "Session is ready to start"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:349:20
+#: app/pages/GamesControl/GamesList.tsx:348:20
 msgid "Session in progress"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:362:18
+#: app/pages/GamesControl/GamesList.tsx:361:18
 msgid "Session finished, but not confirmed"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:374:18
+#: app/pages/GamesControl/GamesList.tsx:373:18
 msgid "Session finished"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:386:18
+#: app/pages/GamesControl/GamesList.tsx:385:18
 msgid "Session cancelled"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:398:18
+#: app/pages/GamesControl/GamesList.tsx:397:18
 msgid "Session is scheduled"
 msgstr ""
 
@@ -1343,200 +1343,200 @@ msgstr ""
 msgid "Amount of points paid by the offending player to each of the other players on a chombo"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:98:25
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:99:25
 msgid "Game duration"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:100:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:101:16
 msgid "Tonpuusen"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:101:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:102:22
 msgid "Play only east rounds"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:107:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:108:16
 msgid "Agariyame"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:108:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:109:22
 msgid "If the dealer holds the 1st place after last hand in session, the game ends regardless of his winning hand or tempai."
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:116:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:117:16
 msgid "Disable renchans"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:117:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:118:22
 msgid "When dealer wins, or stays tempai after draw, seat winds will be changed. Honba is added only after draw."
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:127:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:128:16
 msgid "Allow bankruptcy"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:128:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:129:22
 msgid "When a player runs out of score points, the game immediately ends"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:134:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:135:16
 msgid "Play additional rounds"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:135:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:136:22
 msgid "If nobody reaches the goal score at the last hand, the game continues to west rounds (in hanchan) or to south rounds (in tonpuusen), until someone reaches the goal"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:145:18
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:146:18
 #: app/services/i18n.test.ts:35:12
 msgid "Goal score"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:146:24
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:147:24
 msgid "Amount of score player should get to end the game."
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:153:25
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:154:25
 msgid "Round outcomes"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:155:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:156:16
 msgid "Atamahane"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:156:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:157:22
 msgid "Only first player by the order of the move from the loser would be considered a winner. If not checked, all players declaring Ron are considered winners."
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:164:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:165:16
 msgid "Allow abortive draws"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:165:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:166:22
 msgid "There will be a separate \"Abortive draw\" outcome to record draws due to four riichi, four kans, suufon renda, kyuushu kyuuhai, etc."
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:173:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:174:16
 msgid "Nagashi mangan"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:174:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:175:22
 msgid "Enable \"Nagashi\" outcome to record this special draw"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:179:25
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:180:25
 msgid "Riichi and honba"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:181:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:182:16
 msgid "Riichi goes to winner"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:182:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:183:22
 msgid "Riichi left on table in case of draw in the end of the session will be given to session winner"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:190:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:191:16
 msgid "Pay for honba by atamahane"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:191:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:192:22
 msgid "Honba payments will be given only to the first winner. If not checked, payment will be given to all winners."
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:199:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:200:16
 msgid "Collect riichi bets by atamahane"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:200:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:201:22
 msgid "All riichi bets on the table will be given to the first winner. If not checked, winning riichi bets will always be given back, lost bets would be given to the first winner."
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:207:25
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:208:25
 msgid "Payments and scores"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:209:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:210:16
 msgid "Kazoe yakuman"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:210:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:211:22
 msgid "13+ han hands are considered yakuman, not sanbaiman."
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:216:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:217:16
 msgid "Kiriage mangan"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:217:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:218:22
 msgid "Hands valued as 4/30 and 3/60 are rounded to mangan."
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:224:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:225:16
 msgid "Oka bonus"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:225:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:226:22
 msgid "Amount of points given to player at 1st place"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:233:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:234:16
 msgid "Honba Value"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:234:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:235:22
 msgid "Value of one honba stick"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:242:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:243:16
 msgid "Equalize uma"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:243:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:244:22
 msgid "If checked, players with equivalent score receive equivalent uma bonus. Otherwise, uma is assigned according to move order."
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:252:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:253:16
 msgid "Max arbitrary penalty score"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:259:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:260:16
 msgid "Min arbitrary penalty score"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:266:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:267:16
 msgid "Step of arbitrary penalty scores"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:273:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:274:16
 msgid "Pay chombo as reverse mangan"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:274:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:275:22
 msgid "Pay chombo right on occasion. If not checked, chombo is subtracted from player score after uma is applied."
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:293:18
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:294:18
 msgid "Amount of chombo penalty"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:294:24
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:295:24
 msgid "Amount of penalty applied in the end of the session after uma bonus."
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:304:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:305:16
 msgid "Yakitori"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:305:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:306:22
 msgid "Use yakitori rule"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:313:18
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:314:18
 msgid "Yakitori penalty"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:314:24
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:315:24
 msgid "Amount of penalty applied to those who didn't win once in game."
 msgstr ""
 
