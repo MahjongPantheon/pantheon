@@ -59,11 +59,12 @@ import { Meta } from '../components/Meta';
 import { authCtx } from '../hooks/auth';
 import { useStorage } from '../hooks/storage';
 import { calcDimmedBackground, calcDimmedText } from '../helpers/theme';
+import { getRatingPlaces, RatingOrderBy } from '../helpers/ratingPlaces';
 
 export const RatingTable: React.FC<{
   params: {
     eventId: string;
-    orderBy?: 'name' | 'rating' | 'games_and_rating' | 'avg_place' | 'avg_score' | 'team' | 'chips';
+    orderBy?: RatingOrderBy;
     minGamesSelector?: 'all' | 'min';
     dateFrom?: string | undefined;
     dateTo?: string | undefined;
@@ -146,10 +147,7 @@ export const RatingTable: React.FC<{
     );
   }
 
-  function getUrl(
-    _orderBy: 'name' | 'rating' | 'games_and_rating' | 'avg_place' | 'avg_score' | 'team' | 'chips',
-    _minGamesSelector: 'all' | 'min'
-  ): string {
+  function getUrl(_orderBy: RatingOrderBy, _minGamesSelector: 'all' | 'min'): string {
     let href = `/event/${eventId}/order/${_orderBy}`;
     if (_minGamesSelector === 'min') {
       href += '/filter/min';
@@ -173,6 +171,8 @@ export const RatingTable: React.FC<{
     }
     return href;
   }
+
+  const places = getRatingPlaces(players, orderBy);
 
   return (
     events && (
@@ -207,7 +207,8 @@ export const RatingTable: React.FC<{
                     events?.[0]?.isTeam,
                     events?.[0]?.withChips,
                     players,
-                    `Rating_${events?.[0]?.id}.csv`
+                    `Rating_${events?.[0]?.id}.csv`,
+                    orderBy
                   );
                 }}
               >
@@ -454,6 +455,7 @@ export const RatingTable: React.FC<{
                   >
                     <Group style={{ flex: 1 }}>
                       <Badge
+                        data-testid={`sigrun-rating-player-place-${player.id}`}
                         w={50}
                         size='xl'
                         color={calcDimmedBackground(isDimmed, isDark, '#e7f5ff')}
@@ -461,7 +463,7 @@ export const RatingTable: React.FC<{
                         radius='sm'
                         style={{ padding: 0 }}
                       >
-                        {idx + 1}
+                        {places[idx]}
                       </Badge>
                       <PlayerAvatar p={player} />
                       <Stack gap={2}>
@@ -583,6 +585,7 @@ function downloadCsv(
   withChips: boolean,
   content: PlayerInRating[],
   fileName: string,
+  orderBy: RatingOrderBy,
   mimeType?: string
 ) {
   const quoteValue = (val: any) => {
@@ -608,10 +611,11 @@ function downloadCsv(
       .join(','),
   ];
 
+  const places = getRatingPlaces(content, orderBy);
   for (let i = 0; i < content.length; i++) {
     finalVal.push(
       [
-        i + 1,
+        places[i],
         content[i].id,
         content[i].title,
         ...(isTeam ? [content[i].teamName] : []),
