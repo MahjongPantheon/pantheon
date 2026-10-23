@@ -60,6 +60,12 @@ if `VITE_*` variables have been changed, you should also run `make prod_compile`
 
 Please note that db and pgadmin containers are not restarted during `make prod_restart`. To stop these containers as well, use `make prod_stop_all`. This is rarely needed, though.
 
+#### Updating container Node.js
+
+The application containers inherit Node.js from `Common/ContainerBase`. Its version and official SHA-256 checksums are pinned together in `Common/ContainerBase/node-release.env`; update that file when applying a Node.js security release. The Alpine base downloads the official musl binary for AMD64 and compiles the official source archive against musl for ARM64 in a separate build stage. npm comes with Node.js and pnpm 10 is installed through npm, so the shared base does not depend on Alpine's Node.js packages. Fenrir has a separate image and runtime.
+
+Run `make container_base` to rebuild the shared base (the first ARM64 source build takes time; parallelism defaults to two jobs). Rebuild and recreate the application containers to apply it. The AMD64 and ARM64 registry workflows rebuild the shared base and application images when the shared release configuration changes. Existing running containers retain their previous runtime until recreated.
+
 #### Email agent
 
 Pantheon provides container with pre-installed email agent (Hermod). If you want to send emails signed with DKIM, you will need to place your private keys
