@@ -133,3 +133,40 @@ The corresponding `container_seed`, `container_seed_tournament`, and
 that `make bootstrap_admin` has already been run from the root. These commands
 are for disposable development databases only. A failed run can leave partial
 sample data in Frey; rerun the command to reset Mimir and create fresh samples.
+
+### Repair final riichi scores
+
+`src/scripts/fixRiichiScores.ts` repairs only `session.intermediate_results.scores`
+for **finished** sessions whose event currently enables `riichiGoesToWinner` and
+whose final snapshot has leftover riichi bets. It reconstructs scores from the
+last recorded round's starting snapshot and outcome, then awards the pot to the
+highest-scoring players using equal whole-point shares. This replaces any old
+payout instead of adding another one, so rerunning the script is safe. All other
+snapshot fields, including the recorded riichi pot, are preserved.
+
+From the Mimir directory inside the configured application container, preview:
+
+```sh
+pnpm exec tsx src/scripts/fixRiichiScores.ts
+pnpm exec tsx src/scripts/fixRiichiScores.ts --event 19
+```
+
+Each proposed change prints the session ID, event ID, and before/after scores.
+Add `--apply` to commit the repair in one transaction:
+
+```sh
+pnpm exec tsx src/scripts/fixRiichiScores.ts --event 19 --apply
+```
+
+The usual `.env.development` / `.env.production` selection applies; set
+`NODE_ENV=production` when targeting the production configuration. Run against
+an idle database: the script locks candidate sessions until it finishes. It
+skips sessions without a usable final-round snapshot or with inconsistent pots,
+reports the reason, and exits with status 2 if any were skipped. Unexpected errors
+roll back all updates and exit with status 1. Dry runs perform no updates.
+
+The repair uses the event's current rules, so review events whose scoring rules
+have changed since the games were recorded. Imported games without round-start
+snapshots cannot be repaired this way. Active, prefinished, and cancelled games
+are excluded. This script does not rewrite `session_results`, player history,
+ratings, or statistics; it repairs the stored intermediate scores only.
