@@ -19,8 +19,17 @@ import deepclone from '../../helpers/deepClone';
 import { initialState } from '../state';
 import {
   AppActionTypes,
+  ADMIN_ACCESS_INIT,
+  ADMIN_ACCESS_SUCCESS,
+  ADMIN_ACCESS_FAIL,
+  FORCE_LOGOUT,
+  LOGIN_INIT,
+  LOGIN_SUCCESS,
+  LOGIN_FAIL,
+  STARTUP_WITH_AUTH,
   INIT_STATE,
   SET_CREDENTIALS,
+  SELECT_EVENT,
   SET_STATE_SETTINGS,
   SETTINGS_SAVE_LANG,
   SETTINGS_SAVE_SINGLE_DEVICE_MODE,
@@ -36,9 +45,21 @@ export function commonReducer(state: IAppState, action: AppActionTypes): IAppSta
   switch (action.type) {
     case INIT_STATE:
       return deepclone(initialState);
+    case ADMIN_ACCESS_SUCCESS:
+      return { ...state, canAccessAdminPanel: action.payload };
+    case ADMIN_ACCESS_INIT:
+    case ADMIN_ACCESS_FAIL:
+    case FORCE_LOGOUT:
+    case LOGIN_INIT:
+    case LOGIN_SUCCESS:
+    case LOGIN_FAIL:
+    case STARTUP_WITH_AUTH:
+    case SELECT_EVENT:
+      return { ...state, canAccessAdminPanel: false };
     case SET_CREDENTIALS:
       return {
         ...state,
+        canAccessAdminPanel: false,
         currentPlayerId: action.payload.personId,
         analyticsSession: action.payload.sessionId,
       };

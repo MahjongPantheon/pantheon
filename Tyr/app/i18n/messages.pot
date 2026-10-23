@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-19 22:18Z\n"
+"POT-Creation-Date: 2026-10-24 00:43+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -108,23 +108,27 @@ msgstr ""
 msgid "No games found"
 msgstr ""
 
-#: app/components/pages/Home/Home.tsx:108:14
+#: app/components/pages/Home/Home.tsx:110:14
 msgid "New game"
 msgstr ""
 
-#: app/components/pages/Home/Home.tsx:118:14
+#: app/components/pages/Home/Home.tsx:120:14
 msgid "Current game"
 msgstr ""
 
-#: app/components/pages/Home/Home.tsx:128:14
+#: app/components/pages/Home/Home.tsx:130:14
 msgid "Previous game"
 msgstr ""
 
-#: app/components/pages/Home/Home.tsx:138:14
+#: app/components/pages/Home/Home.tsx:140:14
 msgid "Other playing tables"
 msgstr ""
 
-#: app/components/pages/Home/Home.tsx:149:14
+#: app/components/pages/Home/Home.tsx:151:14
+msgid "Go to admin panel"
+msgstr ""
+
+#: app/components/pages/Home/Home.tsx:162:14
 msgid "Statistics"
 msgstr ""
 
@@ -284,7 +288,7 @@ msgstr ""
 msgid "name"
 msgstr ""
 
-#: app/components/screens/Home/Home.tsx:103:60
+#: app/components/screens/Home/Home.tsx:111:60
 msgid "Event title"
 msgstr ""
 

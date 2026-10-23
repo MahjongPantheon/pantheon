@@ -75,6 +75,7 @@ export type ErrorState = {
 };
 
 export interface IAppState {
+  canAccessAdminPanel: boolean;
   analyticsSession?: string;
   currentScreen: AppScreen;
   currentSessionHash?: string;

@@ -12,6 +12,8 @@ import styles from './Home.module.css';
 import clsx from 'classnames';
 
 type IProps = {
+  canAccessAdminPanel?: boolean;
+  onAdminPanelClick: () => void;
   eventName: string;
   canStartGame: boolean;
   hasStartedGame: boolean;
@@ -35,6 +37,7 @@ type IProps = {
 export const Home = (props: IProps) => {
   const loc = useContext(i18n);
   const {
+    canAccessAdminPanel = false,
     eventName,
     canStartGame,
     hasStartedGame,
@@ -136,6 +139,17 @@ export const Home = (props: IProps) => {
             testId='tyr-home-other-tables'
           >
             {loc._t('Other playing tables')}
+          </Button>
+        )}
+        {canAccessAdminPanel && (
+          <Button
+            variant='contained'
+            size='fullwidth'
+            rightIcon={<LinkIcon />}
+            onClick={props.onAdminPanelClick}
+            testId='tyr-home-admin-panel'
+          >
+            {loc._t('Go to admin panel')}
           </Button>
         )}
         {hasStat && (

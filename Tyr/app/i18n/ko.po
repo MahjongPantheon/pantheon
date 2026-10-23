@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-19 22:18Z\n"
+"POT-Creation-Date: 2026-10-24 00:43+0200\n"
 "PO-Revision-Date: 2024-05-09 22:02+0300\n"
 "Last-Translator: Geunmo Kim <kimgeunmo@gmail.com>\n"
 "Language-Team: \n"
@@ -108,7 +108,7 @@ msgstr "구련보등"
 msgid "Clear players"
 msgstr "작사 초기화"
 
-#: app/components/pages/Home/Home.tsx:118:14
+#: app/components/pages/Home/Home.tsx:120:14
 msgid "Current game"
 msgstr "현재 대국"
 
@@ -144,7 +144,7 @@ msgstr "다음 사용자가 존재하지 않습니다 (%1)"
 msgid "Email"
 msgstr "이메일"
 
-#: app/components/screens/Home/Home.tsx:103:60
+#: app/components/screens/Home/Home.tsx:111:60
 msgid "Event title"
 msgstr "이벤트"
 
@@ -169,6 +169,10 @@ msgstr "대국이 종료되었습니다"
 #: app/components/pages/LogView/LogView.tsx:91:46
 msgid "Game log"
 msgstr "대국 로그"
+
+#: app/components/pages/Home/Home.tsx:151:14
+msgid "Go to admin panel"
+msgstr "관리자 패널로 이동"
 
 #: app/components/pages/Settings/Settings.tsx:122:10
 msgid "Go to personal area"
@@ -216,7 +220,9 @@ msgid ""
 "It looks like there are issues with your network connection. Would you like "
 "to retry starting the application or clear the credentials and try logging "
 "in again?"
-msgstr "네트워크 연결에 문제가 있는 것 같습니다. 앱 시작을 다시 시도하거나 로그인 정보를 삭제하고 다시 로그인하시겠습니까?"
+msgstr ""
+"네트워크 연결에 문제가 있는 것 같습니다. 앱 시작을 다시 시도하거나 로그인 정"
+"보를 삭제하고 다시 로그인하시겠습니까?"
 
 #: app/helpers/yaku.ts:204:34 app/helpers/yaku.ts:205:39
 msgid "Ittsu"
@@ -264,7 +270,7 @@ msgstr "유국만관"
 msgid "Nagashi mangan"
 msgstr "유국만관"
 
-#: app/components/pages/Home/Home.tsx:108:14
+#: app/components/pages/Home/Home.tsx:110:14
 msgid "New game"
 msgstr "신규 대국"
 
@@ -305,7 +311,7 @@ msgstr "오픈 리치"
 msgid "Opened hand"
 msgstr "비멘젠"
 
-#: app/components/pages/Home/Home.tsx:138:14
+#: app/components/pages/Home/Home.tsx:140:14
 msgid "Other playing tables"
 msgstr "대국 관전"
 
@@ -341,7 +347,7 @@ msgstr "작사 명"
 msgid "Please return back and press riichi button for the winner"
 msgstr "역: 리치를 선택/해제시 돌아가서 승자의 리치 버튼을 눌러주세요"
 
-#: app/components/pages/Home/Home.tsx:128:14
+#: app/components/pages/Home/Home.tsx:130:14
 msgid "Previous game"
 msgstr "이전 대국"
 
@@ -446,7 +452,7 @@ msgstr "단일 기기 모드"
 msgid "Start game"
 msgstr "대국 시작"
 
-#: app/components/pages/Home/Home.tsx:149:14
+#: app/components/pages/Home/Home.tsx:162:14
 msgid "Statistics"
 msgstr "통계"
 

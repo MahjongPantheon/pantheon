@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-19 22:18Z\n"
+"POT-Creation-Date: 2026-10-24 00:43+0200\n"
 "PO-Revision-Date: 2026-10-20 01:13+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -15,7 +15,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
 "Generated-By: i18n-json2po\n"
 "X-Generator: Poedit 3.6\n"
 
@@ -109,7 +110,7 @@ msgstr "Чуурэн путо з чаканнем на 9 бакоў"
 msgid "Clear players"
 msgstr "Ачысціць спіс гульцоў"
 
-#: app/components/pages/Home/Home.tsx:118:14
+#: app/components/pages/Home/Home.tsx:120:14
 msgid "Current game"
 msgstr "Бягучая гульня"
 
@@ -145,7 +146,7 @@ msgstr "Электронная пошта не зарэгістравана ў �
 msgid "Email"
 msgstr "Электронная пошта"
 
-#: app/components/screens/Home/Home.tsx:103:60
+#: app/components/screens/Home/Home.tsx:111:60
 msgid "Event title"
 msgstr "Назва падзеі"
 
@@ -170,6 +171,10 @@ msgstr "Гульня завершана"
 #: app/components/pages/LogView/LogView.tsx:91:46
 msgid "Game log"
 msgstr "Журнал гульні"
+
+#: app/components/pages/Home/Home.tsx:151:14
+msgid "Go to admin panel"
+msgstr "У панэль кіравання"
 
 #: app/components/pages/Settings/Settings.tsx:122:10
 msgid "Go to personal area"
@@ -269,7 +274,7 @@ msgstr "Нагасі"
 msgid "Nagashi mangan"
 msgstr "Нагасі манган"
 
-#: app/components/pages/Home/Home.tsx:108:14
+#: app/components/pages/Home/Home.tsx:110:14
 msgid "New game"
 msgstr "Новая гульня"
 
@@ -310,7 +315,7 @@ msgstr "Адкрытае рыічы"
 msgid "Opened hand"
 msgstr "Адкрытая рука"
 
-#: app/components/pages/Home/Home.tsx:138:14
+#: app/components/pages/Home/Home.tsx:140:14
 msgid "Other playing tables"
 msgstr "Іншыя сталы, дзе ідзе гульня"
 
@@ -346,7 +351,7 @@ msgstr "Імя гульца"
 msgid "Please return back and press riichi button for the winner"
 msgstr "Вярніцеся назад і націсніце кнопку рыічы для пераможцы"
 
-#: app/components/pages/Home/Home.tsx:128:14
+#: app/components/pages/Home/Home.tsx:130:14
 msgid "Previous game"
 msgstr "Папярэдняя гульня"
 
@@ -451,7 +456,7 @@ msgstr "Рэжым адной прылады"
 msgid "Start game"
 msgstr "Пачаць гульню"
 
-#: app/components/pages/Home/Home.tsx:149:14
+#: app/components/pages/Home/Home.tsx:162:14
 msgid "Statistics"
 msgstr "Статыстыка"
 

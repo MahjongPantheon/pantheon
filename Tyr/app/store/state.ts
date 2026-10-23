@@ -30,6 +30,7 @@ import { defaultPlayer } from './selectors/newGame';
 import { RoundOutcome } from 'tsclients/proto/atoms.pb';
 
 export const initialState: IAppState = {
+  canAccessAdminPanel: false,
   currentOtherTableIndex: 0,
   settings: { currentLang: 'en', currentTheme: 'day', singleDeviceMode: false },
   timer: undefined,

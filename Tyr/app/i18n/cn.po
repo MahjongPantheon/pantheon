@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-19 22:18Z\n"
+"POT-Creation-Date: 2026-10-24 00:43+0200\n"
 "PO-Revision-Date: 2024-05-09 22:09+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -102,7 +102,7 @@ msgstr "纯正九莲宝灯"
 msgid "Clear players"
 msgstr "清除玩家"
 
-#: app/components/pages/Home/Home.tsx:118:14
+#: app/components/pages/Home/Home.tsx:120:14
 msgid "Current game"
 msgstr "当前对局"
 
@@ -138,7 +138,7 @@ msgstr "该用户不存在 (%1)"
 msgid "Email"
 msgstr "电子邮箱"
 
-#: app/components/screens/Home/Home.tsx:103:60
+#: app/components/screens/Home/Home.tsx:111:60
 msgid "Event title"
 msgstr "活动名称"
 
@@ -163,6 +163,10 @@ msgstr "对局已结束"
 #: app/components/pages/LogView/LogView.tsx:91:46
 msgid "Game log"
 msgstr "对局记录"
+
+#: app/components/pages/Home/Home.tsx:151:14
+msgid "Go to admin panel"
+msgstr "前往管理面板"
 
 #: app/components/pages/Settings/Settings.tsx:122:10
 msgid "Go to personal area"
@@ -258,7 +262,7 @@ msgstr "流局"
 msgid "Nagashi mangan"
 msgstr "流局满贯"
 
-#: app/components/pages/Home/Home.tsx:108:14
+#: app/components/pages/Home/Home.tsx:110:14
 msgid "New game"
 msgstr "开始新对局"
 
@@ -299,7 +303,7 @@ msgstr "开立直"
 msgid "Opened hand"
 msgstr "非门前清"
 
-#: app/components/pages/Home/Home.tsx:138:14
+#: app/components/pages/Home/Home.tsx:140:14
 msgid "Other playing tables"
 msgstr "他人进行中的对局"
 
@@ -335,7 +339,7 @@ msgstr "玩家名"
 msgid "Please return back and press riichi button for the winner"
 msgstr "请返回并为和牌玩家按下立直按钮"
 
-#: app/components/pages/Home/Home.tsx:128:14
+#: app/components/pages/Home/Home.tsx:130:14
 msgid "Previous game"
 msgstr "上一场对局"
 
@@ -440,7 +444,7 @@ msgstr "单设备模式"
 msgid "Start game"
 msgstr "开始游戏"
 
-#: app/components/pages/Home/Home.tsx:149:14
+#: app/components/pages/Home/Home.tsx:162:14
 msgid "Statistics"
 msgstr "统计"
 

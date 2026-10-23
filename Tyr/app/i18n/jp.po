@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-19 22:18Z\n"
+"POT-Creation-Date: 2026-10-24 00:43+0200\n"
 "PO-Revision-Date: 2024-05-09 22:07+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -102,7 +102,7 @@ msgstr "純正九蓮宝燈"
 msgid "Clear players"
 msgstr "プレイヤーをクリア"
 
-#: app/components/pages/Home/Home.tsx:118:14
+#: app/components/pages/Home/Home.tsx:120:14
 msgid "Current game"
 msgstr "今の対局"
 
@@ -138,7 +138,7 @@ msgstr "このユーザーは存在しません (%1)"
 msgid "Email"
 msgstr "メール"
 
-#: app/components/screens/Home/Home.tsx:103:60
+#: app/components/screens/Home/Home.tsx:111:60
 msgid "Event title"
 msgstr "イベント"
 
@@ -163,6 +163,10 @@ msgstr "対局が終了しました"
 #: app/components/pages/LogView/LogView.tsx:91:46
 msgid "Game log"
 msgstr "対局ログ"
+
+#: app/components/pages/Home/Home.tsx:151:14
+msgid "Go to admin panel"
+msgstr "管理画面へ"
 
 #: app/components/pages/Settings/Settings.tsx:122:10
 msgid "Go to personal area"
@@ -210,7 +214,9 @@ msgid ""
 "It looks like there are issues with your network connection. Would you like "
 "to retry starting the application or clear the credentials and try logging "
 "in again?"
-msgstr "ネットワーク接続に問題があるようです。アプリの起動を再試行しますか？または、ログイン情報を削除して再度ログインしますか？"
+msgstr ""
+"ネットワーク接続に問題があるようです。アプリの起動を再試行しますか？または、"
+"ログイン情報を削除して再度ログインしますか？"
 
 #: app/helpers/yaku.ts:204:34 app/helpers/yaku.ts:205:39
 msgid "Ittsu"
@@ -258,7 +264,7 @@ msgstr "流し"
 msgid "Nagashi mangan"
 msgstr "流し満貫"
 
-#: app/components/pages/Home/Home.tsx:108:14
+#: app/components/pages/Home/Home.tsx:110:14
 msgid "New game"
 msgstr "対局開始"
 
@@ -299,7 +305,7 @@ msgstr "オープン立直"
 msgid "Opened hand"
 msgstr "<副露ある>"
 
-#: app/components/pages/Home/Home.tsx:138:14
+#: app/components/pages/Home/Home.tsx:140:14
 msgid "Other playing tables"
 msgstr "他のプレイヤーの対局"
 
@@ -335,7 +341,7 @@ msgstr "玩家名"
 msgid "Please return back and press riichi button for the winner"
 msgstr "役：立直 を選択/解除する場合は、立直プレーヤーの確認に戻ってください"
 
-#: app/components/pages/Home/Home.tsx:128:14
+#: app/components/pages/Home/Home.tsx:130:14
 msgid "Previous game"
 msgstr "前の対局"
 
@@ -440,7 +446,7 @@ msgstr "シングルデバイスモード"
 msgid "Start game"
 msgstr "ゲーム開始"
 
-#: app/components/pages/Home/Home.tsx:149:14
+#: app/components/pages/Home/Home.tsx:162:14
 msgid "Statistics"
 msgstr "統計"
 

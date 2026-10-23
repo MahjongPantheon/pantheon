@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-19 22:18Z\n"
+"POT-Creation-Date: 2026-10-24 00:43+0200\n"
 "PO-Revision-Date: 2024-02-10 23:22+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -103,7 +103,7 @@ msgstr "Nine Gates (nine-sided wait)"
 msgid "Clear players"
 msgstr "Clear players"
 
-#: app/components/pages/Home/Home.tsx:118:14
+#: app/components/pages/Home/Home.tsx:120:14
 msgid "Current game"
 msgstr "Current game"
 
@@ -139,7 +139,7 @@ msgstr "E-mail is not registered in Pantheon database (%1)"
 msgid "Email"
 msgstr "Email"
 
-#: app/components/screens/Home/Home.tsx:103:60
+#: app/components/screens/Home/Home.tsx:111:60
 msgid "Event title"
 msgstr "Event title"
 
@@ -164,6 +164,10 @@ msgstr "Game has finished"
 #: app/components/pages/LogView/LogView.tsx:91:46
 msgid "Game log"
 msgstr "Game log"
+
+#: app/components/pages/Home/Home.tsx:151:14
+msgid "Go to admin panel"
+msgstr "Go to admin panel"
 
 #: app/components/pages/Settings/Settings.tsx:122:10
 msgid "Go to personal area"
@@ -196,7 +200,8 @@ msgstr "Bottom of the River"
 #: app/components/pages/Login/LoginError.tsx:39:12
 msgid ""
 "If in doubt, contact the tournament administrator for further instructions."
-msgstr "If in doubt, contact the tournament administrator for further instructions."
+msgstr ""
+"If in doubt, contact the tournament administrator for further instructions."
 
 #: app/helpers/yaku.ts:180:34 app/helpers/yaku.ts:181:39
 msgid "Iipeikou"
@@ -211,7 +216,10 @@ msgid ""
 "It looks like there are issues with your network connection. Would you like "
 "to retry starting the application or clear the credentials and try logging "
 "in again?"
-msgstr "It looks like there are issues with your network connection. Would you like to retry starting the application or clear the credentials and try logging in again?"
+msgstr ""
+"It looks like there are issues with your network connection. Would you like "
+"to retry starting the application or clear the credentials and try logging "
+"in again?"
 
 #: app/helpers/yaku.ts:204:34 app/helpers/yaku.ts:205:39
 msgid "Ittsu"
@@ -259,7 +267,7 @@ msgstr "Nagashi"
 msgid "Nagashi mangan"
 msgstr "Nagashi mangan"
 
-#: app/components/pages/Home/Home.tsx:108:14
+#: app/components/pages/Home/Home.tsx:110:14
 msgid "New game"
 msgstr "New game"
 
@@ -300,7 +308,7 @@ msgstr "Open Riichi"
 msgid "Opened hand"
 msgstr "Opened hand"
 
-#: app/components/pages/Home/Home.tsx:138:14
+#: app/components/pages/Home/Home.tsx:140:14
 msgid "Other playing tables"
 msgstr "Other playing tables"
 
@@ -336,7 +344,7 @@ msgstr "Player name"
 msgid "Please return back and press riichi button for the winner"
 msgstr "Please return back and press riichi button for the winner"
 
-#: app/components/pages/Home/Home.tsx:128:14
+#: app/components/pages/Home/Home.tsx:130:14
 msgid "Previous game"
 msgstr "Previous game"
 
@@ -441,7 +449,7 @@ msgstr "Single device mode"
 msgid "Start game"
 msgstr "Start game"
 
-#: app/components/pages/Home/Home.tsx:149:14
+#: app/components/pages/Home/Home.tsx:162:14
 msgid "Statistics"
 msgstr "Statistics"
 

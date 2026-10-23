@@ -36,6 +36,10 @@ import {
   GamesGetSessionOverviewResponse,
 } from 'tsclients/proto/mimir.pb';
 
+export const ADMIN_ACCESS_INIT = 'ADMIN_ACCESS_INIT';
+export const ADMIN_ACCESS_SUCCESS = 'ADMIN_ACCESS_SUCCESS';
+export const ADMIN_ACCESS_FAIL = 'ADMIN_ACCESS_FAIL';
+
 export const INIT_STATE = 'INIT_STATE';
 export const RESET_STATE = 'RESET_STATE';
 export const STARTUP_WITH_AUTH = 'STARTUP_WITH_AUTH';
@@ -605,7 +609,13 @@ interface ShowNetworkDialog {
   payload: boolean;
 }
 
+type AdminAccessAction =
+  | { type: typeof ADMIN_ACCESS_INIT }
+  | { type: typeof ADMIN_ACCESS_SUCCESS; payload: boolean }
+  | { type: typeof ADMIN_ACCESS_FAIL };
+
 export type AppActionTypes =
+  | AdminAccessAction
   | InitStateAction
   | ResetStateAction
   | StartupWithAuthAction

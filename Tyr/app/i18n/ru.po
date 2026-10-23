@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-19 22:18Z\n"
+"POT-Creation-Date: 2026-10-24 00:43+0200\n"
 "PO-Revision-Date: 2025-08-08 00:45+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -110,7 +110,7 @@ msgstr "Чууренпото 9-ти сторонний"
 msgid "Clear players"
 msgstr "Очистить"
 
-#: app/components/pages/Home/Home.tsx:118:14
+#: app/components/pages/Home/Home.tsx:120:14
 msgid "Current game"
 msgstr "Текущая игра"
 
@@ -146,7 +146,7 @@ msgstr "E-mail не зарегистрирован в базе данных Pant
 msgid "Email"
 msgstr "Email"
 
-#: app/components/screens/Home/Home.tsx:103:60
+#: app/components/screens/Home/Home.tsx:111:60
 msgid "Event title"
 msgstr "Название события"
 
@@ -171,6 +171,10 @@ msgstr "Игра закончена"
 #: app/components/pages/LogView/LogView.tsx:91:46
 msgid "Game log"
 msgstr "Лог игры"
+
+#: app/components/pages/Home/Home.tsx:151:14
+msgid "Go to admin panel"
+msgstr "В панель управления"
 
 #: app/components/pages/Settings/Settings.tsx:122:10
 msgid "Go to personal area"
@@ -268,7 +272,7 @@ msgstr "Нагаши манган"
 msgid "Nagashi mangan"
 msgstr "Нагаши манган"
 
-#: app/components/pages/Home/Home.tsx:108:14
+#: app/components/pages/Home/Home.tsx:110:14
 msgid "New game"
 msgstr "Новая игра"
 
@@ -309,7 +313,7 @@ msgstr "Опен риичи"
 msgid "Opened hand"
 msgstr "Открытая рука"
 
-#: app/components/pages/Home/Home.tsx:138:14
+#: app/components/pages/Home/Home.tsx:140:14
 msgid "Other playing tables"
 msgstr "Другие столы"
 
@@ -345,7 +349,7 @@ msgstr "Имя игрока"
 msgid "Please return back and press riichi button for the winner"
 msgstr "Пожалуйста, вернитесь назад и нажмите кнопку риичи для выигравшего"
 
-#: app/components/pages/Home/Home.tsx:128:14
+#: app/components/pages/Home/Home.tsx:130:14
 msgid "Previous game"
 msgstr "Предыдущая игра"
 
@@ -450,7 +454,7 @@ msgstr "Режим одного устройства"
 msgid "Start game"
 msgstr "Начать игру"
 
-#: app/components/pages/Home/Home.tsx:149:14
+#: app/components/pages/Home/Home.tsx:162:14
 msgid "Statistics"
 msgstr "Статистика"
 
