@@ -357,15 +357,18 @@ export class SeatingModel extends Model {
       throw new Error('Cannot make new seating while games are still in progress');
     }
 
-    if (event.useTimer) {
-      event.gamesStatus = TournamentGamesStatus.TOURNAMENT_GAMES_STATUS_SEATING_READY;
-      this.repo.em.persist(event);
-    }
-
     const regs = await regModel.findByEventId([event.id]);
 
     const [playersMap, previousSeatings] = await this._getData(event, regs);
     const seating = seatingGetter(playersMap, seed, previousSeatings, windShuffleMode);
+    if (seating.length === 0) {
+      throw new Error('Cannot make seating without players');
+    }
+
+    if (event.useTimer) {
+      event.gamesStatus = TournamentGamesStatus.TOURNAMENT_GAMES_STATUS_SEATING_READY;
+      this.repo.em.persist(event);
+    }
 
     const chunks = [];
     for (let i = 0; i < seating.length; i += 4) {
