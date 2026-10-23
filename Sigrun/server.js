@@ -19,6 +19,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'url';
 import process from 'node:process';
+import { createGameApi } from './game-api.js';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 if (fs.existsSync('./node_modules')) {
@@ -51,6 +52,7 @@ if (fs.existsSync('./node_modules')) {
 export async function createServer(app, env) {
   const resolve = (p) => path.resolve(__dirname, p);
 
+  app.use(createGameApi({ ...process.env, ...env }));
   app.use((await import('compression')).default());
   app.use((await import('cookie-parser')).default());
   app.use(

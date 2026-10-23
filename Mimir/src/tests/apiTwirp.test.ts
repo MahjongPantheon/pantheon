@@ -589,6 +589,13 @@ describe('Mimir Twirp API', () => {
 
   test('GetSessionOverview: non-existing', async () => {
     await expect(mimirClient.GetSessionOverview('non-existing')).rejects.toThrow();
+    const response = await fetch('http://localhost:4301/v2/common.Mimir/GetSessionOverview', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ sessionHash: '0000000000000000000000000000000000000000' }),
+    });
+    expect(response.status).toBe(404);
+    expect(await response.json()).toMatchObject({ code: 'not_found' });
   });
 
   test('PreviewRound: valid ron', async () => {

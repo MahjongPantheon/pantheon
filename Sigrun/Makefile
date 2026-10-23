@@ -108,6 +108,7 @@ prebuild:
 	cd dist/client/assets && gzip -k -9 -f *.js *.css
 	cp -R dist ../Sigrun-dist/
 	cp -f server.js ../Sigrun-dist/
+	cp -f game-api.js ../Sigrun-dist/
 	if [ -f .env.production ]; then cp -f .env.production ../Sigrun-dist/ ; fi
 	if [ -f .env.development ]; then cp -f .env.development ../Sigrun-dist/ ; fi
 	cp -f package.json ../Sigrun-dist/
