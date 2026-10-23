@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-19 22:18Z\n"
+"POT-Creation-Date: 2026-10-24 00:37+0200\n"
 "PO-Revision-Date: 2024-05-09 22:02+0300\n"
 "Last-Translator: Geunmo Kim <kimgeunmo@gmail.com>\n"
 "Language-Team: \n"
@@ -170,7 +170,11 @@ msgstr "대국이 종료되었습니다"
 msgid "Game log"
 msgstr "대국 로그"
 
-#: app/components/pages/Settings/Settings.tsx:122:10
+#: app/components/pages/Settings/Settings.tsx:134:12
+msgid "Go to admin panel"
+msgstr "관리자 패널로 이동"
+
+#: app/components/pages/Settings/Settings.tsx:124:10
 msgid "Go to personal area"
 msgstr "계정 설정"
 
@@ -216,7 +220,9 @@ msgid ""
 "It looks like there are issues with your network connection. Would you like "
 "to retry starting the application or clear the credentials and try logging "
 "in again?"
-msgstr "네트워크 연결에 문제가 있는 것 같습니다. 앱 시작을 다시 시도하거나 로그인 정보를 삭제하고 다시 로그인하시겠습니까?"
+msgstr ""
+"네트워크 연결에 문제가 있는 것 같습니다. 앱 시작을 다시 시도하거나 로그인 정"
+"보를 삭제하고 다시 로그인하시겠습니까?"
 
 #: app/helpers/yaku.ts:204:34 app/helpers/yaku.ts:205:39
 msgid "Ittsu"
@@ -234,7 +240,7 @@ msgstr "국사무쌍"
 msgid "Kokushi musou 13-side"
 msgstr "국사무쌍"
 
-#: app/components/pages/Settings/Settings.tsx:133:45
+#: app/components/pages/Settings/Settings.tsx:146:45
 #: app/services/i18n.be.test.ts:34:12
 msgid "Language"
 msgstr "언어"
@@ -410,7 +416,7 @@ msgstr "삼색동순"
 msgid "Sanshoku doukou"
 msgstr "삼색동각"
 
-#: app/components/pages/Settings/Settings.tsx:130:10
+#: app/components/pages/Settings/Settings.tsx:143:10
 msgid "Select another event"
 msgstr "다른 이벤트 선택"
 
@@ -438,7 +444,7 @@ msgstr "작사 셔플"
 msgid "Sign up"
 msgstr "회원가입"
 
-#: app/components/pages/Settings/Settings.tsx:152:16
+#: app/components/pages/Settings/Settings.tsx:165:16
 msgid "Single device mode"
 msgstr "단일 기기 모드"
 
@@ -503,7 +509,7 @@ msgstr "쯔모, %1"
 msgid "Tsuuiisou"
 msgstr "자일색"
 
-#: app/components/pages/Settings/Settings.tsx:153:22
+#: app/components/pages/Settings/Settings.tsx:166:22
 msgid "Turn on if you use a single device for all players"
 msgstr "모든 작사가 이 기기만 사용할 경우 활성화하십시오"
 

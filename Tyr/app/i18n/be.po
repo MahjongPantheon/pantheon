@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-19 22:18Z\n"
+"POT-Creation-Date: 2026-10-24 00:37+0200\n"
 "PO-Revision-Date: 2026-10-20 01:13+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -15,7 +15,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
 "Generated-By: i18n-json2po\n"
 "X-Generator: Poedit 3.6\n"
 
@@ -171,7 +172,11 @@ msgstr "Гульня завершана"
 msgid "Game log"
 msgstr "Журнал гульні"
 
-#: app/components/pages/Settings/Settings.tsx:122:10
+#: app/components/pages/Settings/Settings.tsx:134:12
+msgid "Go to admin panel"
+msgstr "У панэль кіравання"
+
+#: app/components/pages/Settings/Settings.tsx:124:10
 msgid "Go to personal area"
 msgstr "Перайсці ў асабісты кабінет"
 
@@ -239,7 +244,7 @@ msgstr "Кокусі мусо"
 msgid "Kokushi musou 13-side"
 msgstr "Кокусі мусо з чаканнем на 13 бакоў"
 
-#: app/components/pages/Settings/Settings.tsx:133:45
+#: app/components/pages/Settings/Settings.tsx:146:45
 #: app/services/i18n.be.test.ts:34:12
 msgid "Language"
 msgstr "Мова"
@@ -415,7 +420,7 @@ msgstr "Сансёку"
 msgid "Sanshoku doukou"
 msgstr "Сансёку дока"
 
-#: app/components/pages/Settings/Settings.tsx:130:10
+#: app/components/pages/Settings/Settings.tsx:143:10
 msgid "Select another event"
 msgstr "Выбраць іншую падзею"
 
@@ -443,7 +448,7 @@ msgstr "Перамяшаць гульцоў"
 msgid "Sign up"
 msgstr "Зарэгістравацца"
 
-#: app/components/pages/Settings/Settings.tsx:152:16
+#: app/components/pages/Settings/Settings.tsx:165:16
 msgid "Single device mode"
 msgstr "Рэжым адной прылады"
 
@@ -508,7 +513,7 @@ msgstr "Цумо, %1"
 msgid "Tsuuiisou"
 msgstr "Цуіса"
 
-#: app/components/pages/Settings/Settings.tsx:153:22
+#: app/components/pages/Settings/Settings.tsx:166:22
 msgid "Turn on if you use a single device for all players"
 msgstr "Уключыце, калі ўсе гульцы выкарыстоўваюць адну прыладу"
 

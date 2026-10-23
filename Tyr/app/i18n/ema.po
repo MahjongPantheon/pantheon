@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-19 22:18Z\n"
+"POT-Creation-Date: 2026-10-24 00:37+0200\n"
 "PO-Revision-Date: 2024-02-10 23:22+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -165,7 +165,11 @@ msgstr "Game has finished"
 msgid "Game log"
 msgstr "Game log"
 
-#: app/components/pages/Settings/Settings.tsx:122:10
+#: app/components/pages/Settings/Settings.tsx:134:12
+msgid "Go to admin panel"
+msgstr "Go to admin panel"
+
+#: app/components/pages/Settings/Settings.tsx:124:10
 msgid "Go to personal area"
 msgstr "Go to personal area"
 
@@ -196,7 +200,8 @@ msgstr "Bottom of the River"
 #: app/components/pages/Login/LoginError.tsx:39:12
 msgid ""
 "If in doubt, contact the tournament administrator for further instructions."
-msgstr "If in doubt, contact the tournament administrator for further instructions."
+msgstr ""
+"If in doubt, contact the tournament administrator for further instructions."
 
 #: app/helpers/yaku.ts:180:34 app/helpers/yaku.ts:181:39
 msgid "Iipeikou"
@@ -211,7 +216,10 @@ msgid ""
 "It looks like there are issues with your network connection. Would you like "
 "to retry starting the application or clear the credentials and try logging "
 "in again?"
-msgstr "It looks like there are issues with your network connection. Would you like to retry starting the application or clear the credentials and try logging in again?"
+msgstr ""
+"It looks like there are issues with your network connection. Would you like "
+"to retry starting the application or clear the credentials and try logging "
+"in again?"
 
 #: app/helpers/yaku.ts:204:34 app/helpers/yaku.ts:205:39
 msgid "Ittsu"
@@ -229,7 +237,7 @@ msgstr "Thirteen Orphans"
 msgid "Kokushi musou 13-side"
 msgstr "Thirteen Orphans (thirteen-sided wait)"
 
-#: app/components/pages/Settings/Settings.tsx:133:45
+#: app/components/pages/Settings/Settings.tsx:146:45
 #: app/services/i18n.be.test.ts:34:12
 msgid "Language"
 msgstr "Language"
@@ -405,7 +413,7 @@ msgstr "Mixed Triple Chow"
 msgid "Sanshoku doukou"
 msgstr "Triple Pung"
 
-#: app/components/pages/Settings/Settings.tsx:130:10
+#: app/components/pages/Settings/Settings.tsx:143:10
 msgid "Select another event"
 msgstr "Select another event"
 
@@ -433,7 +441,7 @@ msgstr "Shuffle players"
 msgid "Sign up"
 msgstr "Sign up"
 
-#: app/components/pages/Settings/Settings.tsx:152:16
+#: app/components/pages/Settings/Settings.tsx:165:16
 msgid "Single device mode"
 msgstr "Single device mode"
 
@@ -498,7 +506,7 @@ msgstr "Tsumo, %1"
 msgid "Tsuuiisou"
 msgstr "All Honours"
 
-#: app/components/pages/Settings/Settings.tsx:153:22
+#: app/components/pages/Settings/Settings.tsx:166:22
 msgid "Turn on if you use a single device for all players"
 msgstr "Turn on if you use a single device for all players"
 

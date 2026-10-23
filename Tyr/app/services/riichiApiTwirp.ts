@@ -35,7 +35,13 @@ import {
   StartGame,
 } from 'tsclients/proto/mimir.pb';
 import { IRiichiApi } from './IRiichiApi';
-import { Authorize, GetPersonalInfo, QuickAuthorize } from 'tsclients/proto/frey.pb';
+import {
+  Authorize,
+  GetOwnedEventIds,
+  GetPersonalInfo,
+  GetSuperadminFlag,
+  QuickAuthorize,
+} from 'tsclients/proto/frey.pb';
 import { formatRoundToTwirp } from './formatters';
 import { ClientConfiguration } from 'twirpscript';
 import { Penalty, SessionStatus } from 'tsclients/proto/atoms.pb';
@@ -109,6 +115,14 @@ export class RiichiApiTwirpService implements IRiichiApi {
     return pendingRpc(`StartGame:${this._personId}`, request, v4, (requestId) =>
       StartGame({ ...request, requestId }, this._clientConfMimir)
     ).then((val) => val.sessionHash);
+  }
+
+  async canAccessAdminPanel(personId: number) {
+    const [superadmin, ownedEvents] = await Promise.all([
+      GetSuperadminFlag({ personId }, this._clientConfFrey),
+      GetOwnedEventIds({ personId }, this._clientConfFrey),
+    ]);
+    return superadmin.isAdmin || ownedEvents.eventIds.length > 0;
   }
 
   getMyEvents() {

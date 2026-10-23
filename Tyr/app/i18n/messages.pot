@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-19 22:18Z\n"
+"POT-Creation-Date: 2026-10-24 00:37+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -229,24 +229,28 @@ msgstr ""
 msgid "find player..."
 msgstr ""
 
-#: app/components/pages/Settings/Settings.tsx:122:10
+#: app/components/pages/Settings/Settings.tsx:124:10
 msgid "Go to personal area"
 msgstr ""
 
-#: app/components/pages/Settings/Settings.tsx:130:10
+#: app/components/pages/Settings/Settings.tsx:134:12
+msgid "Go to admin panel"
+msgstr ""
+
+#: app/components/pages/Settings/Settings.tsx:143:10
 msgid "Select another event"
 msgstr ""
 
-#: app/components/pages/Settings/Settings.tsx:133:45
+#: app/components/pages/Settings/Settings.tsx:146:45
 #: app/services/i18n.be.test.ts:34:12
 msgid "Language"
 msgstr ""
 
-#: app/components/pages/Settings/Settings.tsx:152:16
+#: app/components/pages/Settings/Settings.tsx:165:16
 msgid "Single device mode"
 msgstr ""
 
-#: app/components/pages/Settings/Settings.tsx:153:22
+#: app/components/pages/Settings/Settings.tsx:166:22
 msgid "Turn on if you use a single device for all players"
 msgstr ""
 

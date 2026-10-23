@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-19 22:18Z\n"
+"POT-Creation-Date: 2026-10-24 00:37+0200\n"
 "PO-Revision-Date: 2024-05-09 22:07+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -164,7 +164,11 @@ msgstr "対局が終了しました"
 msgid "Game log"
 msgstr "対局ログ"
 
-#: app/components/pages/Settings/Settings.tsx:122:10
+#: app/components/pages/Settings/Settings.tsx:134:12
+msgid "Go to admin panel"
+msgstr "管理画面へ"
+
+#: app/components/pages/Settings/Settings.tsx:124:10
 msgid "Go to personal area"
 msgstr "個人アカウントに"
 
@@ -210,7 +214,9 @@ msgid ""
 "It looks like there are issues with your network connection. Would you like "
 "to retry starting the application or clear the credentials and try logging "
 "in again?"
-msgstr "ネットワーク接続に問題があるようです。アプリの起動を再試行しますか？または、ログイン情報を削除して再度ログインしますか？"
+msgstr ""
+"ネットワーク接続に問題があるようです。アプリの起動を再試行しますか？または、"
+"ログイン情報を削除して再度ログインしますか？"
 
 #: app/helpers/yaku.ts:204:34 app/helpers/yaku.ts:205:39
 msgid "Ittsu"
@@ -228,7 +234,7 @@ msgstr "国士無双"
 msgid "Kokushi musou 13-side"
 msgstr "国士無双十三面待ち"
 
-#: app/components/pages/Settings/Settings.tsx:133:45
+#: app/components/pages/Settings/Settings.tsx:146:45
 #: app/services/i18n.be.test.ts:34:12
 msgid "Language"
 msgstr "言語"
@@ -404,7 +410,7 @@ msgstr "三色同顺"
 msgid "Sanshoku doukou"
 msgstr "三色同刻"
 
-#: app/components/pages/Settings/Settings.tsx:130:10
+#: app/components/pages/Settings/Settings.tsx:143:10
 msgid "Select another event"
 msgstr "別のイベントを選択…"
 
@@ -432,7 +438,7 @@ msgstr "プレイヤーをシャッフル"
 msgid "Sign up"
 msgstr "登録"
 
-#: app/components/pages/Settings/Settings.tsx:152:16
+#: app/components/pages/Settings/Settings.tsx:165:16
 msgid "Single device mode"
 msgstr "シングルデバイスモード"
 
@@ -497,7 +503,7 @@ msgstr "ツモ, %1"
 msgid "Tsuuiisou"
 msgstr "字一色"
 
-#: app/components/pages/Settings/Settings.tsx:153:22
+#: app/components/pages/Settings/Settings.tsx:166:22
 msgid "Turn on if you use a single device for all players"
 msgstr "全てのプレイヤーで一つのデバイスを使用する場合は有効にしてください"
 

@@ -17,6 +17,7 @@
 
 import { createStore, applyMiddleware, Store as ReduxStore, compose, Reducer } from 'redux';
 import { screenManageReducer } from './reducers/screenManageReducer';
+import { adminAccess } from './middlewares/adminAccess';
 import { apiClient } from './middlewares/apiClient';
 import { mimirReducer } from './reducers/mimirReducer';
 import { outcomeReducer } from './reducers/outcomeReducer';
@@ -62,6 +63,7 @@ export class Store {
     const middleware = applyMiddleware(
       // @ts-expect-error Legacy redux middlewares don't work well with new typescript inference
       logging(`⇨ [middlewares]`),
+      adminAccess(riichiService),
       apiClient(riichiService),
       analytics(analyticsService),
       history(),
