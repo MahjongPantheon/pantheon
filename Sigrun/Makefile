@@ -96,6 +96,7 @@ build:
 	rm -rf ./node_modules/.vite
 	./node_modules/.bin/vite build --outDir dist/client
 	./node_modules/.bin/vite build --ssr app/server.tsx --outDir dist/server
+	./node_modules/.bin/vite build --ssr app/services/gameApi.ts --outDir dist/server --emptyOutDir false
 
 .PHONY: prod_deps
 prod_deps:
@@ -108,7 +109,6 @@ prebuild:
 	cd dist/client/assets && gzip -k -9 -f *.js *.css
 	cp -R dist ../Sigrun-dist/
 	cp -f server.js ../Sigrun-dist/
-	cp -f game-api.js ../Sigrun-dist/
 	if [ -f .env.production ]; then cp -f .env.production ../Sigrun-dist/ ; fi
 	if [ -f .env.development ]; then cp -f .env.development ../Sigrun-dist/ ; fi
 	cp -f package.json ../Sigrun-dist/

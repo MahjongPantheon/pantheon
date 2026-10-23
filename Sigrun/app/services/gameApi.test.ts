@@ -1,34 +1,43 @@
 // @vitest-environment node
-import { createServer } from 'node:http';
+import { createServer, type Server } from 'node:http';
+import type { AddressInfo } from 'node:net';
 import { afterEach, describe, expect, test, vi } from 'vitest';
-import { createGameApi } from './game-api.js';
+import { createGameApi } from './gameApi';
 
 const sessionHash = '750cd6015c59aed57ebd9260d03fb80adb3b83f7';
-const servers = [];
+const servers: Server[] = [];
 
 afterEach(async () => {
   await Promise.all(
     servers.splice(0).map(
       (server) =>
-        new Promise((resolve) => {
-          server.close(resolve);
+        new Promise<void>((resolve) => {
+          server.close(() => resolve());
         })
     )
   );
 });
 
-async function request(backend, path = `/api/game/${sessionHash}`, options) {
-  const handler = createGameApi({ VITE_MIMIR_URL_SSR: 'http://mimir.test/' }, backend);
+async function request(
+  backend: typeof fetch,
+  path = `/api/game/${sessionHash}`,
+  options?: RequestInit,
+  env: Parameters<typeof createGameApi>[0] = {
+    VITE_MIMIR_URL_SSR: 'http://mimir.test/',
+    VITE_MIMIR_URL: 'http://fallback.test/',
+  }
+) {
+  const handler = createGameApi(env, backend);
   const server = createServer((req, res) => {
     void handler(req, res, () => {
       res.end('page');
     });
   });
   servers.push(server);
-  await new Promise((resolve) => {
+  await new Promise<void>((resolve) => {
     server.listen(0, '127.0.0.1', resolve);
   });
-  return fetch(`http://127.0.0.1:${server.address().port}${path}`, options);
+  return fetch(`http://127.0.0.1:${(server.address() as AddressInfo).port}${path}`, options);
 }
 
 function fixture(finished = false) {
@@ -82,10 +91,39 @@ describe('public game JSON endpoint', () => {
     });
   });
 
+  test('shares one ten-second timeout budget across both requests', async () => {
+    const timeout = vi.spyOn(AbortSignal, 'timeout');
+    try {
+      const { backend } = fixture();
+      expect((await request(backend)).status).toBe(200);
+      expect(timeout).toHaveBeenCalledWith(10000);
+      const firstSignal = backend.mock.calls[0][1].signal;
+      expect(firstSignal).toBeInstanceOf(AbortSignal);
+      expect(backend.mock.calls[1][1].signal).toBe(firstSignal);
+    } finally {
+      timeout.mockRestore();
+    }
+  });
+
+  test('falls back to the browser Mimir URL without forwarding viewer credentials', async () => {
+    const { backend } = fixture();
+    const response = await request(
+      backend,
+      undefined,
+      { headers: { Cookie: 'authToken=private', 'X-Auth-Token': 'private' } },
+      { VITE_MIMIR_URL: 'http://fallback.test/' }
+    );
+    expect(response.status).toBe(200);
+    expect(backend.mock.calls[0][0]).toBe(
+      'http://fallback.test/v2/common.Mimir/GetSessionOverview'
+    );
+    expect(backend.mock.calls[0][1].headers).toEqual({ 'Content-Type': 'application/json' });
+  });
+
   test('restores protobuf defaults omitted in JSON', async () => {
     const { overview, backend } = fixture();
-    delete overview.state.finished;
-    backend.mockReset().mockResolvedValueOnce(Response.json(overview));
+    const overviewWithoutDefaults = { ...overview, state: { scores: overview.state.scores } };
+    backend.mockReset().mockResolvedValueOnce(Response.json(overviewWithoutDefaults));
     backend.mockResolvedValueOnce(Response.json({ game: { sessionHash } }));
     const body = await (await request(backend)).json();
     expect(body.state).toMatchObject({ finished: false, honbaCount: 0, riichiCount: 0 });
@@ -134,6 +172,13 @@ describe('public game JSON endpoint', () => {
     expect(await response.json()).toEqual({
       error: { code: 'unavailable', message: 'Game data is temporarily unavailable.' },
     });
+  });
+
+  test('rejects game details belonging to another session', async () => {
+    const { overview } = fixture();
+    const backend = vi.fn().mockResolvedValueOnce(Response.json(overview));
+    backend.mockResolvedValueOnce(Response.json({ game: { sessionHash: 'another-session' } }));
+    expect((await request(backend)).status).toBe(502);
   });
 
   test('handles GetGame failure after a successful overview', async () => {

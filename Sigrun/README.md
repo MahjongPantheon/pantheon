@@ -65,6 +65,11 @@ Errors also return JSON, shaped as
 | 405         | `method_not_allowed` | Method other than GET (`Allow: GET`).                                                            |
 | 502         | `unavailable`        | Mimir failed, returned invalid JSON/data, or exceeded the 10-second request budget. Retry later. |
 
+The route is implemented in TypeScript in `app/services/gameApi.ts` and covered by
+`app/services/gameApi.test.ts`. The normal `make build` compiles it into
+`dist/server/gameApi.js`; the production server loads that middleware on the first
+API request. Vite loads the same TypeScript source during development.
+
 The route runs in both the production SSR server and the Vite development server.
 Both use `VITE_MIMIR_URL_SSR`, falling back to `VITE_MIMIR_URL`, for server-side
 requests through Mimir's existing Twirp JSON API. Deploy the Mimir `not_found`

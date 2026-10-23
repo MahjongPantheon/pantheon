@@ -1,14 +1,73 @@
-// Shared by the production Express server and the Vite development server.
-export function createGameApi(env, fetchGame = globalThis.fetch) {
+import type { IncomingMessage, ServerResponse } from 'node:http';
+import type {
+  GamesGetSessionOverviewResponse,
+  EventsGetGameResponse,
+} from 'tsclients/proto/mimir.pb';
+import type { GameResult, PersonEx, SessionState } from 'tsclients/proto/atoms.pb';
+
+// Twirp JSON can omit protobuf defaults, including defaults in nested messages.
+type ProtoJson<T> = T extends (infer Item)[]
+  ? ProtoJson<Item>[]
+  : T extends object
+    ? { [Key in keyof T]?: ProtoJson<T[Key]> }
+    : T;
+
+type PublicPlayer = Pick<PersonEx, 'id' | 'title' | 'hasAvatar' | 'lastUpdate'>;
+export interface PublicGameResponse {
+  sessionHash: string;
+  eventId: number | undefined;
+  tableIndex: number | null;
+  players: (PublicPlayer & {
+    score: number;
+    yakitori: boolean;
+    replacedBy: PublicPlayer | null;
+  })[];
+  state: Omit<SessionState, 'scores' | 'chombo'> & {
+    scores: ProtoJson<SessionState['scores']>;
+    chombo: ProtoJson<SessionState['chombo']>;
+  };
+  timerState: ProtoJson<GamesGetSessionOverviewResponse['timerState']> | null;
+  game: Omit<GameResult, 'rounds' | 'finalResults' | 'players'> & {
+    rounds: ProtoJson<GameResult['rounds']>;
+    finalResults: ProtoJson<GameResult['finalResults']>;
+    players: PublicPlayer[];
+  };
+}
+
+interface GameApiErrorResponse {
+  error: {
+    code: 'method_not_allowed' | 'invalid_argument' | 'not_found' | 'unavailable';
+    message: string;
+  };
+}
+
+interface GameApiEnvironment {
+  VITE_MIMIR_URL_SSR?: string;
+  VITE_MIMIR_URL?: string;
+}
+
+interface RpcResponses {
+  GetSessionOverview: ProtoJson<GamesGetSessionOverviewResponse>;
+  GetGame: ProtoJson<EventsGetGameResponse>;
+}
+
+class GameServiceError extends Error {
+  constructor(readonly notFound: boolean) {
+    super('Game service request failed');
+  }
+}
+
+export function createGameApi(env: GameApiEnvironment, fetchGame: typeof fetch = globalThis.fetch) {
   const baseUrl = env.VITE_MIMIR_URL_SSR ?? env.VITE_MIMIR_URL;
 
-  return async (req, res, next) => {
+  return async (req: IncomingMessage, res: ServerResponse, next: () => void) => {
     const pathname = (req.url ?? '').split('?')[0];
     if (pathname !== '/api/game' && !pathname.startsWith('/api/game/')) {
-      return next();
+      next();
+      return;
     }
 
-    const send = (status, body) => {
+    const send = (status: number, body: PublicGameResponse | GameApiErrorResponse) => {
       res.statusCode = status;
       res.setHeader('Content-Type', 'application/json; charset=utf-8');
       res.setHeader('Cache-Control', 'no-store');
@@ -31,9 +90,11 @@ export function createGameApi(env, fetchGame = globalThis.fetch) {
 
     try {
       const signal = AbortSignal.timeout(10000);
-      const rpc = async (method) => {
+      const rpc = async <Method extends keyof RpcResponses>(
+        method: Method
+      ): Promise<RpcResponses[Method]> => {
         const response = await fetchGame(
-          `${baseUrl.replace(/\/$/, '')}/v2/common.Mimir/${method}`,
+          `${(baseUrl ?? '').replace(/\/$/, '')}/v2/common.Mimir/${method}`,
           {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -41,11 +102,14 @@ export function createGameApi(env, fetchGame = globalThis.fetch) {
             signal,
           }
         );
-        const body = await response.json();
+        const body: unknown = await response.json();
         if (!response.ok) {
-          const error = new Error('Game service request failed');
-          error.notFound = body.code === 'not_found';
-          throw error;
+          throw new GameServiceError(
+            typeof body === 'object' && body !== null && 'code' in body && body.code === 'not_found'
+          );
+        }
+        if (typeof body !== 'object' || body === null) {
+          throw new Error('Invalid game service response');
         }
         return body;
       };
@@ -57,8 +121,8 @@ export function createGameApi(env, fetchGame = globalThis.fetch) {
         throw new Error('Invalid game service response');
       }
 
-      const publicPlayer = (player) => ({
-        id: player.id,
+      const publicPlayer = (player: ProtoJson<PersonEx>): PublicPlayer => ({
+        id: player.id ?? 0,
         title: player.title ?? '',
         hasAvatar: player.hasAvatar ?? false,
         lastUpdate: player.lastUpdate ?? '',
@@ -95,7 +159,7 @@ export function createGameApi(env, fetchGame = globalThis.fetch) {
         },
       });
     } catch (error) {
-      if (error?.notFound) {
+      if (error instanceof GameServiceError && error.notFound) {
         send(404, { error: { code: 'not_found', message: 'Game not found.' } });
         return;
       }
