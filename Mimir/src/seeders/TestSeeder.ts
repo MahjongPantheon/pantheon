@@ -110,7 +110,6 @@ export class TestSeeder extends Seeder {
       oka: 0,
       doubleYakuman: [],
       withSanma: false,
-      sanmaNoTsumoLoss: false,
       sanmaDrawPayments: 0,
       sanmaChomboPayments: 0,
       startRating: 0,

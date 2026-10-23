@@ -17,7 +17,7 @@
 
 import { I18nService } from '../../services/i18n';
 import * as React from 'react';
-import { Checkbox, Group, NumberInput, Radio, Stack, Title } from '@mantine/core';
+import { Checkbox, NumberInput, Stack, Title } from '@mantine/core';
 import {
   IconBrandStackoverflow,
   IconArrowBadgeDownFilled,
@@ -86,21 +86,6 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ form, i18n }) 
             min={0}
             {...form.getInputProps('ruleset.sanmaChomboPayments')}
           />
-          <Radio.Group
-            label={i18n._t('Tsumo loss')}
-            description={i18n._t(
-              'Whether tsumo payments are scored the same as in four-player games'
-            )}
-            value={form.getTransformedValues().ruleset.sanmaNoTsumoLoss ? 'no_loss' : 'loss'}
-            onChange={(value) => {
-              form.setFieldValue('ruleset.sanmaNoTsumoLoss', value === 'no_loss');
-            }}
-          >
-            <Group mt='xs'>
-              <Radio value='loss' label={i18n._t('Tsumo loss (default)')} />
-              <Radio value='no_loss' disabled label={i18n._t('No tsumo loss (coming soon)')} />
-            </Group>
-          </Radio.Group>
         </>
       )}
       <Title order={4}>{i18n._t('Game duration')}</Title>

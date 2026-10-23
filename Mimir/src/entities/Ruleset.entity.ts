@@ -73,7 +73,6 @@ export class RulesetEntity {
           honbaValue: 300,
           doubleYakuman: [],
           withSanma: false,
-          sanmaNoTsumoLoss: false,
           sanmaDrawPayments: 0,
           sanmaChomboPayments: 0,
         });
@@ -145,7 +144,6 @@ export class RulesetEntity {
           honbaValue: 300,
           doubleYakuman: [],
           withSanma: false,
-          sanmaNoTsumoLoss: false,
           sanmaDrawPayments: 0,
           sanmaChomboPayments: 0,
         });
@@ -197,7 +195,6 @@ export class RulesetEntity {
           honbaValue: 300,
           doubleYakuman: [],
           withSanma: false,
-          sanmaNoTsumoLoss: false,
           sanmaDrawPayments: 0,
           sanmaChomboPayments: 0,
         });
@@ -244,7 +241,6 @@ export class RulesetEntity {
           honbaValue: 300,
           doubleYakuman: [],
           withSanma: false,
-          sanmaNoTsumoLoss: false,
           sanmaDrawPayments: 0,
           sanmaChomboPayments: 0,
         });
@@ -296,7 +292,6 @@ export class RulesetEntity {
           honbaValue: 300,
           doubleYakuman: [],
           withSanma: false,
-          sanmaNoTsumoLoss: false,
           sanmaDrawPayments: 0,
           sanmaChomboPayments: 0,
         });
@@ -305,7 +300,6 @@ export class RulesetEntity {
         return new RulesetEntity(baseRuleset, 'Three-player riichi (sanma) rules', {
           ...rules,
           withSanma: true,
-          sanmaNoTsumoLoss: false,
           sanmaDrawPayments: 3000,
           sanmaChomboPayments: 6000,
           startPoints: 35000,

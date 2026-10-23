@@ -603,10 +603,6 @@ export interface RulesetConfig {
    */
   withSanma: boolean;
   /**
-   * Use the no-tsumo-loss scoring table (deferred). Default false: tsumo loss.
-   */
-  sanmaNoTsumoLoss: boolean;
-  /**
    * Total points exchanged on exhaustive draw; 0/unset means 3000.
    */
   sanmaDrawPayments: number;
@@ -7087,7 +7083,6 @@ export const RulesetConfig = {
       honbaValue: 0,
       doubleYakuman: [],
       withSanma: false,
-      sanmaNoTsumoLoss: false,
       sanmaDrawPayments: 0,
       sanmaChomboPayments: 0,
       ...msg,
@@ -7223,9 +7218,6 @@ export const RulesetConfig = {
     }
     if (msg.withSanma) {
       writer.writeBool(41, msg.withSanma);
-    }
-    if (msg.sanmaNoTsumoLoss) {
-      writer.writeBool(42, msg.sanmaNoTsumoLoss);
     }
     if (msg.sanmaDrawPayments) {
       writer.writeInt32(43, msg.sanmaDrawPayments);
@@ -7420,10 +7412,6 @@ export const RulesetConfig = {
         }
         case 41: {
           msg.withSanma = reader.readBool();
-          break;
-        }
-        case 42: {
-          msg.sanmaNoTsumoLoss = reader.readBool();
           break;
         }
         case 43: {
@@ -13465,7 +13453,6 @@ export const RulesetConfigJSON = {
       honbaValue: 0,
       doubleYakuman: [],
       withSanma: false,
-      sanmaNoTsumoLoss: false,
       sanmaDrawPayments: 0,
       sanmaChomboPayments: 0,
       ...msg,
@@ -13607,9 +13594,6 @@ export const RulesetConfigJSON = {
     }
     if (msg.withSanma) {
       json["withSanma"] = msg.withSanma;
-    }
-    if (msg.sanmaNoTsumoLoss) {
-      json["sanmaNoTsumoLoss"] = msg.sanmaNoTsumoLoss;
     }
     if (msg.sanmaDrawPayments) {
       json["sanmaDrawPayments"] = msg.sanmaDrawPayments;
@@ -13809,11 +13793,6 @@ export const RulesetConfigJSON = {
     const _withSanma_ = json["withSanma"] ?? json["with_sanma"];
     if (_withSanma_) {
       msg.withSanma = _withSanma_;
-    }
-    const _sanmaNoTsumoLoss_ =
-      json["sanmaNoTsumoLoss"] ?? json["sanma_no_tsumo_loss"];
-    if (_sanmaNoTsumoLoss_) {
-      msg.sanmaNoTsumoLoss = _sanmaNoTsumoLoss_;
     }
     const _sanmaDrawPayments_ =
       json["sanmaDrawPayments"] ?? json["sanma_draw_payments"];

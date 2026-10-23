@@ -55,7 +55,6 @@ describe('Event creation', () => {
   });
 
   it.each([
-    { sanmaNoTsumoLoss: true },
     { sanmaDrawPayments: -200 },
     { sanmaDrawPayments: 3100 },
     { sanmaChomboPayments: -100 },
