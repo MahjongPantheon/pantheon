@@ -51,6 +51,44 @@ describe('Event creation', () => {
     repo.em.clear();
   });
 
+  describe.each([
+    ['local', EventType.EVENT_TYPE_LOCAL],
+    ['tournament', EventType.EVENT_TYPE_TOURNAMENT],
+    ['online', EventType.EVENT_TYPE_ONLINE],
+  ] as const)('%s event penalties', (_name, type) => {
+    it('enables penalties on creation and returns them after reload', async () => {
+      const { eventId } = await model.createEvent({ ...eventData, type });
+      await repo.em.flush();
+      repo.em.clear();
+
+      const saved = await repo.em.findOneOrFail(EventEntity, { id: eventId });
+      expect(saved.usePenalty).toBe(1);
+      expect((await model.getGameConfig({ eventId })).usePenalty).toBe(true);
+    });
+
+    it.each([0, 1])(
+      'preserves persisted usePenalty=%s when editing the event',
+      async (usePenalty) => {
+        const { eventId } = await model.createEvent({ ...eventData, type });
+        await repo.em.nativeUpdate(EventEntity, { id: eventId }, { usePenalty });
+        repo.em.clear();
+        const { event } = await model.getEventForEdit({ id: eventId });
+        const title = `Edited ${type} event with usePenalty=${usePenalty}`;
+
+        await expect(
+          model.updateEvent({ id: eventId, event: { ...event, title } })
+        ).resolves.toEqual({ success: true });
+        await repo.em.flush();
+        repo.em.clear();
+
+        const saved = await repo.em.findOneOrFail(EventEntity, { id: eventId });
+        expect(saved.title).toBe(title);
+        expect(saved.usePenalty).toBe(usePenalty);
+        expect((await model.getGameConfig({ eventId })).usePenalty).toBe(Boolean(usePenalty));
+      }
+    );
+  });
+
   it('returns only requested event states, including finished and unlisted events', async () => {
     const first = await model.createEvent({ ...eventData, isListed: false });
     const second = await model.createEvent(eventData);
