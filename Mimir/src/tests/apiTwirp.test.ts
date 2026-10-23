@@ -165,11 +165,17 @@ describe('Mimir Twirp API', () => {
       expect(achievementsAfter.rows).toHaveLength(1);
       expect(achievementsAfter.rows[0].last_update).toBeDefined();
       const topResults = await db.query(
-        'select player_id, score from session_results where event_id = $1 order by score desc limit 3',
+        `select r.player_id, r.score, s.representational_hash
+         from session_results r join session s on s.id = r.session_id
+         where r.event_id = $1 order by r.score desc limit 3`,
         [CLUB_RATING_EVENT_ID]
       );
       expect(achievementsAfter.rows[0].data.needMoreGold).toEqual(
-        topResults.rows.map((result) => ({ playerId: result.player_id, score: result.score }))
+        topResults.rows.map((result) => ({
+          playerId: result.player_id,
+          score: result.score,
+          sessionHash: result.representational_hash,
+        }))
       );
 
       const response = await mimirClient.GetAchievements(CLUB_RATING_EVENT_ID, ['needMoreGold']);

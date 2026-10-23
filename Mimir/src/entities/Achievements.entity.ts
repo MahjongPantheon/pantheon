@@ -4,14 +4,21 @@ import { EventEntity } from './Event.entity.js';
 export type AchievementsData = Partial<{
   bestHand: {
     han: number;
+    gamesByPlayer?: Record<number, string[]>;
     playerIds: number[];
   };
   bestTsumoist: {
     tsumo: number;
+    gamesByPlayer?: Record<number, string[]>;
     playerIds: number[];
   };
   dovakins: { count: number; playerIds: number[] };
-  yakumans: Array<{ playerId: number; yakuman?: number[]; kazoe?: boolean }>;
+  yakumans: Array<{
+    playerId: number;
+    yakuman?: number[];
+    kazoe?: boolean;
+    sessionHash?: string;
+  }>;
   shithander: {
     handsCount: number;
     playerIds: number[];
@@ -22,11 +29,13 @@ export type AchievementsData = Partial<{
   };
   bestFu: {
     fu: number;
+    gamesByPlayer?: Record<number, string[]>;
     playerIds: number[];
   };
   impossibleWait: Array<{
     playerId: number;
     hand: { han: number; fu?: number };
+    sessionHash?: string;
     amount: number;
   }>;
   braveSapper: {
@@ -52,7 +61,7 @@ export type AchievementsData = Partial<{
     count: number;
     playerIds: number[];
   };
-  needMoreGold: Array<{ playerId: number; score: number }>;
+  needMoreGold: Array<{ playerId: number; score: number; sessionHash?: string }>;
   riichiNomi: {
     count: number;
     playerIds: number[];

@@ -12,6 +12,7 @@ export async function getBestTsumoistInSingleSession(event: EventEntity, repo: R
   );
 
   const bestTsumoCounts = new Map<number, number>();
+  const gamesByPlayer: Record<number, string[]> = {};
 
   for (const session of sessions) {
     const tsumoCount = new Map<number, number>();
@@ -30,6 +31,10 @@ export async function getBestTsumoistInSingleSession(event: EventEntity, repo: R
     for (const [playerId, count] of tsumoCount.entries()) {
       if (!bestTsumoCounts.has(playerId) || count > bestTsumoCounts.get(playerId)!) {
         bestTsumoCounts.set(playerId, count);
+        gamesByPlayer[playerId] = [];
+      }
+      if (count === bestTsumoCounts.get(playerId) && session.representationalHash) {
+        gamesByPlayer[playerId].push(session.representationalHash);
       }
     }
   }
@@ -45,5 +50,9 @@ export async function getBestTsumoistInSingleSession(event: EventEntity, repo: R
     }
   }
 
-  return { tsumo: bestTsumoCount, playerIds: Array.from(playerIds) };
+  return {
+    tsumo: bestTsumoCount,
+    playerIds: Array.from(playerIds),
+    gamesByPlayer: Object.fromEntries([...playerIds].map((id) => [id, gamesByPlayer[id]])),
+  };
 }
