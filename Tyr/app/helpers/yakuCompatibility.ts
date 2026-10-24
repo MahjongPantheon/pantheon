@@ -16,6 +16,7 @@
  */
 
 import { YakuId, YakuId as Y, yakuList } from './yaku';
+import { yakuhai } from './yakuhai';
 import { Node, Graph, EdgeType } from './graph';
 import { Yaku } from './interfaces';
 
@@ -23,6 +24,7 @@ import { Yaku } from './interfaces';
 // В константы перевести может?
 
 const yakuSuppressedByLimits = [
+  ...yakuhai,
   Y.TOITOI,
   Y.HONROTO,
   Y.SANANKOU,
@@ -564,6 +566,21 @@ export function makeYakuGraph(multiYakumans = false) {
 
   for (const comb of combinableYaku) {
     yakuGraph.addBiEdge(nodes[comb[0]], nodes[comb[1]], EdgeType.Combines);
+  }
+
+  for (const yaku of yakuhai) {
+    yakuGraph.addBiEdge(nodes[yaku], nodes[Y.SHOSANGEN], EdgeType.Combines);
+    for (const [left, right] of combinableYaku) {
+      if (left === Y.YAKUHAI1 || right === Y.YAKUHAI1) {
+        const other = left === Y.YAKUHAI1 ? right : left;
+        yakuGraph.addBiEdge(nodes[yaku], nodes[other], EdgeType.Combines);
+      }
+    }
+    for (const other of yakuhai) {
+      if (other !== yaku) {
+        yakuGraph.addBiEdge(nodes[yaku], nodes[other], EdgeType.Combines);
+      }
+    }
   }
 
   if (multiYakumans) {

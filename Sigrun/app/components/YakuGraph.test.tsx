@@ -70,6 +70,9 @@ describe('yaku graph language changes', () => {
       { yakuId: YakuId.YAKUHAI3, count: 2 },
       { yakuId: YakuId.YAKUHAI4, count: 1 },
       { yakuId: YakuId.PINFU, count: 0 },
+      { yakuId: YakuId.EAST_SEAT_WIND, count: 1 },
+      { yakuId: YakuId.EAST_ROUND_WIND, count: 1 },
+      { yakuId: YakuId.RED_DRAGON, count: 1 },
     ];
     const graph = () => (
       <MantineProvider>
@@ -90,7 +93,10 @@ describe('yaku graph language changes', () => {
       'Yakuhai x2 (3)',
       'Yakuhai x3 (2)',
       'Yakuhai x4 (1)',
-      'Yakuhai: total (20)',
+      'East seat wind (1)',
+      'East round wind (1)',
+      'Red dragon (1)',
+      'Yakuhai: total (23)',
     ];
     const labels = () => screen.getAllByRole('listitem').map((item) => item.textContent);
     const assertStatistics = () => {
@@ -100,9 +106,12 @@ describe('yaku graph language changes', () => {
         '3',
         '2',
         '1',
-        '20',
+        '1',
+        '1',
+        '1',
+        '23',
       ]);
-      expect(chart.parentElement?.style.height).toBe('184px');
+      expect(chart.parentElement?.style.height).toBe('256px');
     };
     expect(labels()).toEqual(englishLabels);
     assertStatistics();
@@ -116,7 +125,10 @@ describe('yaku graph language changes', () => {
       'Якухай 2 (3)',
       'Якухай 3 (2)',
       'Якухай 4 (1)',
-      'Якухай: всего (20)',
+      'Ветер места: Восток (1)',
+      'Ветер раунда: Восток (1)',
+      'Красный дракон (1)',
+      'Якухай: всего (23)',
     ]);
     assertStatistics();
 

@@ -248,6 +248,17 @@ export class SkirnirService implements ISkirnirService {
       45: _t('Suu ankou tanki'),
       46: _t('Chuuren poutou 9-side'),
       47: _t('Kokushi musou 13-side'),
+      48: _t('East seat wind'),
+      49: _t('East round wind'),
+      50: _t('South seat wind'),
+      51: _t('South round wind'),
+      52: _t('West seat wind'),
+      53: _t('West round wind'),
+      54: _t('North seat wind'),
+      55: _t('North round wind'),
+      56: _t('Red dragon'),
+      57: _t('Green dragon'),
+      58: _t('White dragon'),
     };
   }
 

@@ -133,3 +133,10 @@ The corresponding `container_seed`, `container_seed_tournament`, and
 that `make bootstrap_admin` has already been run from the root. These commands
 are for disposable development databases only. A failed run can leave partial
 sample data in Frey; rerun the command to reset Mimir and create fresh samples.
+
+### Individual yakuhai
+
+Apply `Migration20261024000000` before deploying individual wind and dragon yaku.
+It enables IDs 48–58 in existing events that allow legacy Yakuhai. IDs 13–16
+remain valid for historical hands. New online imports preserve each wind and
+dragon award separately; existing imported hands are unchanged.

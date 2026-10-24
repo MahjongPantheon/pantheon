@@ -1,6 +1,7 @@
 import { NumberSelect } from '../NumberSelect/NumberSelect';
 import { UIEvent, useContext, useState } from 'react';
 import { i18n } from '../../i18n';
+import { windYaku } from '../../../helpers/yakuhai';
 import { YakuId, yakuMap } from '../../../helpers/yaku';
 import styles from './HandOfPlayer.module.css';
 import { Toggle } from '../Toggle/Toggle';
@@ -64,7 +65,9 @@ export const HandOfPlayer = (props: IProps) => {
             onChange={() => props.onYakuClick(y, props.playerId)}
             testId={`tyr-hand-player-${props.playerId}-yaku-${y}`}
           >
-            {yakuMap[y].name(loc)}
+            {windYaku.some((pair) => pair.includes(y))
+              ? yakuMap[y].shortName(loc)
+              : yakuMap[y].name(loc)}
           </Toggle>
         ))}
       </div>

@@ -30,7 +30,7 @@ export async function getCatchThemAll(event: EventEntity, repo: Repository) {
         }
         const yakuList = (hand.yaku ?? []).map((y) => {
           if (y === Yaku.YAKUHAI2 || y === Yaku.YAKUHAI3 || y === Yaku.YAKUHAI4) {
-            return Yaku.YAKUHAI1; // all yakuhais are counted as single yaku
+            return Yaku.YAKUHAI1; // Legacy aggregate yakuhai share one entry; individual awards stay distinct.
           }
           return y;
         });

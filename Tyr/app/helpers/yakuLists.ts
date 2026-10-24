@@ -17,6 +17,7 @@
 
 import { yakuList, YakuId } from './yaku';
 import { Yaku } from './interfaces';
+import { yakuhai } from './yakuhai';
 
 export function filterAllowed(list: Yaku[], allowed: number[]) {
   return list.filter((y: Yaku) => y.id === YakuId.__OPENHAND || allowed.includes(y.id));
@@ -28,9 +29,7 @@ export const yakuCommon = [
     [YakuId.RIICHI, YakuId.IPPATSU, YakuId.MENZENTSUMO].includes(y.id)
   ),
   ...yakuList.filter((y: Yaku) => [YakuId.PINFU, YakuId.TANYAO].includes(y.id)),
-  ...yakuList.filter((y: Yaku) =>
-    [YakuId.YAKUHAI1, YakuId.YAKUHAI2, YakuId.YAKUHAI3].includes(y.id)
-  ),
+  ...yakuList.filter((y: Yaku) => yakuhai.includes(y.id)),
   ...yakuList.filter((y: Yaku) => [YakuId.ITTSU, YakuId.HONITSU, YakuId.CHINITSU].includes(y.id)),
   ...yakuList.filter((y: Yaku) => [YakuId.TOITOI, YakuId.CHIITOITSU].includes(y.id)),
   ...yakuList.filter((y: Yaku) => [YakuId.CHANTA, YakuId.JUNCHAN].includes(y.id)),
@@ -39,9 +38,7 @@ export const yakuCommon = [
 
 export const yakuRare = [
   ...yakuList.filter((y: Yaku) => [YakuId.DOUBLERIICHI, YakuId.OPENRIICHI].includes(y.id)),
-  ...yakuList.filter((y: Yaku) =>
-    [YakuId.HONROTO, YakuId.SHOSANGEN, YakuId.YAKUHAI4].includes(y.id)
-  ),
+  ...yakuList.filter((y: Yaku) => [YakuId.HONROTO, YakuId.SHOSANGEN].includes(y.id)),
   ...yakuList.filter((y: Yaku) =>
     [YakuId.SANANKOU, YakuId.SANSHOKUDOUKOU, YakuId.SANKANTSU].includes(y.id)
   ),

@@ -32,6 +32,7 @@ export const enum YakuId {
   RYANPEIKOU = 10,
   SANSHOKUDOUJUN = 11,
   ITTSU = 12,
+  // Deprecated aggregate IDs; retained for historical hands.
   YAKUHAI1 = 13,
   YAKUHAI2 = 14,
   YAKUHAI3 = 15,
@@ -66,6 +67,17 @@ export const enum YakuId {
   SUUANKOUTANKI = 45,
   CHUURENPOUTOPURE = 46,
   KOKUSHIMUSOU13 = 47,
+  EAST_SEAT_WIND = 48,
+  EAST_ROUND_WIND = 49,
+  SOUTH_SEAT_WIND = 50,
+  SOUTH_ROUND_WIND = 51,
+  WEST_SEAT_WIND = 52,
+  WEST_ROUND_WIND = 53,
+  NORTH_SEAT_WIND = 54,
+  NORTH_ROUND_WIND = 55,
+  RED_DRAGON = 56,
+  GREEN_DRAGON = 57,
+  WHITE_DRAGON = 58,
 }
 
 export interface YakuMap<T> {
@@ -116,6 +128,17 @@ export interface YakuMap<T> {
   [YakuId.SUUANKOUTANKI]: T;
   [YakuId.CHUURENPOUTOPURE]: T;
   [YakuId.KOKUSHIMUSOU13]: T;
+  [YakuId.EAST_SEAT_WIND]: T;
+  [YakuId.EAST_ROUND_WIND]: T;
+  [YakuId.SOUTH_SEAT_WIND]: T;
+  [YakuId.SOUTH_ROUND_WIND]: T;
+  [YakuId.WEST_SEAT_WIND]: T;
+  [YakuId.WEST_ROUND_WIND]: T;
+  [YakuId.NORTH_SEAT_WIND]: T;
+  [YakuId.NORTH_ROUND_WIND]: T;
+  [YakuId.RED_DRAGON]: T;
+  [YakuId.GREEN_DRAGON]: T;
+  [YakuId.WHITE_DRAGON]: T;
 }
 
 // Sequence of yaku here is very important for packing and unpacking, see yakuCompatibility.ts
@@ -402,6 +425,72 @@ export const yakuList: Yaku[] = [
     name: (i18n: I18nService) => i18n._t('Open riichi'),
     shortName: (i18n: I18nService) => i18n._t('Open riichi'),
   },
+  {
+    id: YakuId.EAST_SEAT_WIND,
+    yakuman: false,
+    name: (i18n: I18nService) => i18n._t('East seat wind'),
+    shortName: (i18n: I18nService) => i18n._t('East'),
+  },
+  {
+    id: YakuId.EAST_ROUND_WIND,
+    yakuman: false,
+    name: (i18n: I18nService) => i18n._t('East round wind'),
+    shortName: (i18n: I18nService) => i18n._t('East'),
+  },
+  {
+    id: YakuId.SOUTH_SEAT_WIND,
+    yakuman: false,
+    name: (i18n: I18nService) => i18n._t('South seat wind'),
+    shortName: (i18n: I18nService) => i18n._t('South'),
+  },
+  {
+    id: YakuId.SOUTH_ROUND_WIND,
+    yakuman: false,
+    name: (i18n: I18nService) => i18n._t('South round wind'),
+    shortName: (i18n: I18nService) => i18n._t('South'),
+  },
+  {
+    id: YakuId.WEST_SEAT_WIND,
+    yakuman: false,
+    name: (i18n: I18nService) => i18n._t('West seat wind'),
+    shortName: (i18n: I18nService) => i18n._t('West'),
+  },
+  {
+    id: YakuId.WEST_ROUND_WIND,
+    yakuman: false,
+    name: (i18n: I18nService) => i18n._t('West round wind'),
+    shortName: (i18n: I18nService) => i18n._t('West'),
+  },
+  {
+    id: YakuId.NORTH_SEAT_WIND,
+    yakuman: false,
+    name: (i18n: I18nService) => i18n._t('North seat wind'),
+    shortName: (i18n: I18nService) => i18n._t('North'),
+  },
+  {
+    id: YakuId.NORTH_ROUND_WIND,
+    yakuman: false,
+    name: (i18n: I18nService) => i18n._t('North round wind'),
+    shortName: (i18n: I18nService) => i18n._t('North'),
+  },
+  {
+    id: YakuId.RED_DRAGON,
+    yakuman: false,
+    name: (i18n: I18nService) => i18n._t('Red dragon'),
+    shortName: (i18n: I18nService) => i18n._t('Red dragon'),
+  },
+  {
+    id: YakuId.GREEN_DRAGON,
+    yakuman: false,
+    name: (i18n: I18nService) => i18n._t('Green dragon'),
+    shortName: (i18n: I18nService) => i18n._t('Green dragon'),
+  },
+  {
+    id: YakuId.WHITE_DRAGON,
+    yakuman: false,
+    name: (i18n: I18nService) => i18n._t('White dragon'),
+    shortName: (i18n: I18nService) => i18n._t('White dragon'),
+  },
 ];
 
 export const yakuMap: { [id: number]: Yaku } = {};
@@ -430,6 +519,17 @@ const viewPriority = [
   YakuId.YAKUHAI2,
   YakuId.YAKUHAI3,
   YakuId.YAKUHAI4,
+  YakuId.EAST_SEAT_WIND,
+  YakuId.EAST_ROUND_WIND,
+  YakuId.SOUTH_SEAT_WIND,
+  YakuId.SOUTH_ROUND_WIND,
+  YakuId.WEST_SEAT_WIND,
+  YakuId.WEST_ROUND_WIND,
+  YakuId.NORTH_SEAT_WIND,
+  YakuId.NORTH_ROUND_WIND,
+  YakuId.RED_DRAGON,
+  YakuId.GREEN_DRAGON,
+  YakuId.WHITE_DRAGON,
   YakuId.TOITOI,
   YakuId.SANKANTSU,
   YakuId.SANANKOU,

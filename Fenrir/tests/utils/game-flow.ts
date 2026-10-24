@@ -16,10 +16,36 @@ const fixtures = JSON.parse(
 function loadScenario(stored: StoredScenario): Scenario {
   return {
     ...stored,
-    rounds: stored.rounds.map(({ hand, paoPlayer, ...round }) => ({
+    rounds: stored.rounds.map(({ hand, paoPlayer, ...round }, index) => ({
       ...round,
-      ...(hand === undefined ? {} : { hands: [{ ...fixtures.hands[hand], paoPlayer }] }),
+      ...(hand === undefined
+        ? {}
+        : {
+            hands: [
+              {
+                ...resolveWindHand(
+                  fixtures.hands[hand],
+                  index === 0 ? 1 : stored.rounds[index - 1].round
+                ),
+                paoPlayer,
+              },
+            ],
+          }),
     })),
+  };
+}
+
+function resolveWindHand(hand: Hand, roundIndex: number): Hand {
+  if (!hand.yaku.includes(49)) return hand;
+  const roundWind = Math.floor((roundIndex - 1) / 4);
+  return {
+    ...hand,
+    yaku: hand.yaku.map((id) => (id === 49 ? 49 + roundWind * 2 : id)),
+    labels: hand.labels.map((label) =>
+      label === 'East round wind'
+        ? `${['East', 'South', 'West', 'North'][roundWind]} round wind`
+        : label
+    ),
   };
 }
 
@@ -73,12 +99,19 @@ export function assertYakuCoverage(games: Scenario[]) {
     ...new Set(
       games.flatMap((game) =>
         game.rounds.flatMap((round) =>
-          (round.hands ?? (round.winners ?? []).map(() => basicHand)).flatMap((hand) => hand.yaku)
+          (round.hands ?? (round.winners ?? []).map(() => basicHand)).flatMap((hand) =>
+            hand.yaku.map((id) => (id === 51 ? 49 : id))
+          )
         )
       )
     ),
   ].sort((a, b) => a - b);
-  expect(covered).toEqual(fixtures.yakuIds);
+  // The East/South catalogue exercises East seat, East/South round winds and all three dragons.
+  // Normalize the round wind because local and tournament samples reach different rounds.
+  // Every wind/seat combination is covered by Tyr's focused unit tests.
+  expect(covered).toEqual(
+    fixtures.yakuIds.filter((id) => ![13, 14, 15, 16, 50, 51, 52, 53, 54, 55].includes(id))
+  );
   for (const game of games) {
     for (const round of game.rounds)
       expect(round.scores.reduce((sum, score) => sum + score, round.pot * 1000)).toBe(120000);
@@ -240,7 +273,12 @@ export async function enterRound(page: Page, players: Account[], entry: Round) {
     const spec = entry.hands?.[(entry.winners ?? []).indexOf(index)] ?? basicHand;
     const prefix = `tyr-hand-player-${player.id}`;
     await expect(page.getByTestId(`${prefix}-yaku--1`)).toBeInViewport();
-    for (const yaku of [...(spec.open ? [-1] : []), ...spec.yaku]) {
+    // A double wind has two persisted awards and one visible button.
+    const buttonYaku = spec.yaku.filter((id) => !(id === 49 && spec.yaku.includes(48)));
+    for (const id of [13, 14, 15, 16]) {
+      await expect(page.getByTestId(`${prefix}-yaku-${id}`)).toHaveCount(0);
+    }
+    for (const yaku of [...(spec.open ? [-1] : []), ...buttonYaku]) {
       const button = page.getByTestId(`${prefix}-yaku-${yaku}`);
       if (!(await button.getAttribute('class'))?.includes('checked')) await button.click();
       await expect(button).toHaveClass(/checked/);
@@ -256,7 +294,7 @@ export async function enterRound(page: Page, players: Account[], entry: Round) {
           .sort((a, b) => a - b)
       );
     expect(selected, spec.name).toEqual(
-      [...(spec.open ? [-1] : []), ...spec.yaku].sort((a, b) => a - b)
+      [...(spec.open ? [-1] : []), ...buttonYaku].sort((a, b) => a - b)
     );
     if (spec.dora) {
       await page.getByTestId(`${prefix}-dora-select`).click();

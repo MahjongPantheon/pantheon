@@ -122,4 +122,4 @@ Retain this attempt's TEST event and accounts for inspection. Retries use new ac
 ## Implementation and coverage
 
 - Status: Implemented in [local-session.spec.ts](../tests/local-session.spec.ts), with [shared UI helpers](../tests/utils/game-flow.ts) and [explicit scenario checkpoints](../tests/utils/hand-scenarios.json).
-- Covers all 46 yaku in one local event, diverse fu/dora, all six outcomes, dealer continuation, carryover, deferred chombo, persistence, natural completion, and matching Tyr/Sigrun results. Also covers the public homepage feed and links for the newly finished session. Tournament synchronization is covered by SMOKE-006.
+- Covers the non-wind yaku catalogue, East seat wind, and prevailing round wind in one local event, diverse fu/dora, all six outcomes, dealer continuation, carryover, deferred chombo, persistence, natural completion, and matching Tyr/Sigrun results. Also covers the public homepage feed and links for the newly finished session. Tournament synchronization is covered by SMOKE-006.

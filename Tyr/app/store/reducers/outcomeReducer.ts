@@ -43,6 +43,7 @@ import {
 } from './util';
 import { AppOutcome } from '../../helpers/interfaces';
 import { getRequiredYaku } from '../selectors/yaku';
+import { getWindYaku, windYaku } from '../../helpers/yakuhai';
 import { YakuId } from '../../helpers/yaku';
 import { PlayerInSession, RoundOutcome } from 'tsclients/proto/atoms.pb';
 
@@ -102,6 +103,46 @@ function addYakuList(state: IAppState, yakuToAdd: YakuId[], targetPlayer?: numbe
 }
 
 export function outcomeReducer(state: IAppState, action: AppActionTypes): IAppState {
+  if (
+    action.type === TOGGLE_WINNER &&
+    state.currentOutcome?.selectedOutcome === RoundOutcome.ROUND_OUTCOME_TSUMO
+  ) {
+    // A different winner has a different seat; require wind selection again.
+    const winner = state.currentOutcome.winner;
+    const cleared = windYaku.flat().reduce(
+      (next, id) =>
+        reduceOutcome(next, {
+          type: REMOVE_YAKU,
+          payload: { id, winner },
+        }),
+      state
+    );
+    return reduceOutcome(cleared, action);
+  }
+  if ((action.type === ADD_YAKU || action.type === REMOVE_YAKU) && state.currentOutcome) {
+    const winner =
+      action.payload.winner ??
+      (state.currentOutcome.selectedOutcome === RoundOutcome.ROUND_OUTCOME_TSUMO
+        ? state.currentOutcome.winner
+        : undefined);
+    const yaku = getWindYaku(
+      action.payload.id,
+      state.currentOutcome.roundIndex,
+      state.players?.findIndex((p) => p.id === winner) ?? -1
+    );
+    if (yaku) {
+      return yaku
+        .filter((id) => state.gameConfig?.rulesetConfig.allowedYaku.includes(id))
+        .reduce(
+          (next, id) => reduceOutcome(next, { ...action, payload: { ...action.payload, id } }),
+          state
+        );
+    }
+  }
+  return reduceOutcome(state, action);
+}
+
+function reduceOutcome(state: IAppState, action: AppActionTypes): IAppState {
   let winProps;
   let playerId: number;
   switch (action.type) {

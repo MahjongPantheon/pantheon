@@ -21,6 +21,7 @@ import {
   unpack,
 } from '../../helpers/yakuCompatibility';
 import { IAppState } from '../interfaces';
+import { getWindYaku, windYaku } from '../../helpers/yakuhai';
 import { YakuId } from '../../helpers/yaku';
 import { WinProps, Yaku } from '../../helpers/interfaces';
 import { RoundOutcome } from 'tsclients/proto/atoms.pb';
@@ -125,10 +126,19 @@ function _excludeYaku(
     return [];
   }
 
-  return list.filter((yaku: YakuId) => {
+  return list.filter((yakuId: YakuId) => {
+    const yaku = getWindYaku(
+      yakuId,
+      outcome.roundIndex,
+      state.players?.findIndex((p) => p.id === winner) ?? -1
+    );
+    if (yaku && !yaku.includes(yakuId)) {
+      return false;
+    }
+
     if (
       // disable ippatsu if riichi or double riichi is not selected
-      yaku === YakuId.IPPATSU &&
+      yakuId === YakuId.IPPATSU &&
       (outcome?.selectedOutcome === RoundOutcome.ROUND_OUTCOME_RON ||
         outcome?.selectedOutcome === RoundOutcome.ROUND_OUTCOME_TSUMO) &&
       !rawYakuList.includes(YakuId.RIICHI) &&
@@ -138,7 +148,7 @@ function _excludeYaku(
     }
 
     if (
-      yaku === YakuId.__OPENHAND &&
+      yakuId === YakuId.__OPENHAND &&
       (outcome?.selectedOutcome === RoundOutcome.ROUND_OUTCOME_RON ||
         outcome?.selectedOutcome === RoundOutcome.ROUND_OUTCOME_TSUMO) &&
       outcome.riichiBets.includes(winner)
@@ -147,7 +157,7 @@ function _excludeYaku(
     }
 
     if (
-      yaku === YakuId.RENHOU &&
+      yakuId === YakuId.RENHOU &&
       outcome?.selectedOutcome === RoundOutcome.ROUND_OUTCOME_RON &&
       outcome.wins[winner].winnerIsDealer
     ) {
@@ -155,20 +165,20 @@ function _excludeYaku(
     }
 
     if (
-      yaku === YakuId.TENHOU &&
+      yakuId === YakuId.TENHOU &&
       (outcome?.selectedOutcome !== RoundOutcome.ROUND_OUTCOME_TSUMO || !outcome.winnerIsDealer)
     ) {
       return false; // non-dealer can't win with tenhou
     }
 
     if (
-      yaku === YakuId.CHIHOU &&
+      yakuId === YakuId.CHIHOU &&
       (outcome?.selectedOutcome !== RoundOutcome.ROUND_OUTCOME_TSUMO || outcome.winnerIsDealer)
     ) {
       return false; // dealer can't win with chihou
     }
 
-    return !toBeExcluded.includes(yaku);
+    return !toBeExcluded.includes(yakuId);
   });
 }
 
@@ -217,7 +227,22 @@ function _getYakuList(state: IAppState): { [id: number]: Yaku[] } {
     const simple = filterAllowed(yakuCommon, allowedYaku);
     const rare = filterAllowed(yakuRare, allowedYaku);
     const yakuman = filterAllowed(yakumans, allowedYaku);
-    yakuList[user.id] = simple.concat(rare).concat(yakuman);
+    yakuList[user.id] = simple
+      .concat(rare)
+      .concat(yakuman)
+      .filter((y) => {
+        const pair = windYaku.find((candidate) => candidate.includes(y.id));
+        if (!pair) {
+          return true;
+        }
+        const yaku = getWindYaku(
+          y.id,
+          state.currentOutcome?.roundIndex ?? 1,
+          state.players?.findIndex((p) => p.id === user.id) ?? -1
+        )!;
+        const representative = yaku.find((id) => allowedYaku.includes(id)) ?? pair[0];
+        return y.id === representative;
+      });
   }
 
   return yakuList;

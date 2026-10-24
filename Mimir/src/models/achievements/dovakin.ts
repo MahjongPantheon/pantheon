@@ -30,6 +30,17 @@ export async function getDovakin(event: EventEntity, repo: Repository) {
         }
         for (const yaku of hand.yaku ?? []) {
           switch (yaku) {
+            case Yaku.EAST_SEAT_WIND:
+            case Yaku.EAST_ROUND_WIND:
+            case Yaku.SOUTH_SEAT_WIND:
+            case Yaku.SOUTH_ROUND_WIND:
+            case Yaku.WEST_SEAT_WIND:
+            case Yaku.WEST_ROUND_WIND:
+            case Yaku.NORTH_SEAT_WIND:
+            case Yaku.NORTH_ROUND_WIND:
+            case Yaku.RED_DRAGON:
+            case Yaku.GREEN_DRAGON:
+            case Yaku.WHITE_DRAGON:
             case Yaku.YAKUHAI1:
               yakuhaiCounts.set(hand.winnerId!, yakuhaiCounts.get(hand.winnerId!)! + 1);
               break;
