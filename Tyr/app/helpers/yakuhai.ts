@@ -7,7 +7,17 @@ export const windYaku = [
   [Y.NORTH_SEAT_WIND, Y.NORTH_ROUND_WIND],
 ];
 
-export const yakuhai = [...windYaku.flat(), Y.RED_DRAGON, Y.GREEN_DRAGON, Y.WHITE_DRAGON];
+export const dragonYaku = [Y.RED_DRAGON, Y.GREEN_DRAGON, Y.WHITE_DRAGON];
+export const yakuhai = [...windYaku.flat(), ...dragonYaku];
+
+export function getYakuhaiToAdd(selected: Y[], added: Y[], allowed: Y[]): Y[] | undefined {
+  const combined = new Set([...selected, ...added]);
+  // Completing the dragons replaces ordinary yaku, even at the yakuhai limit.
+  if (dragonYaku.every((id) => combined.has(id))) {
+    return allowed.includes(Y.DAISANGEN) ? [Y.DAISANGEN] : undefined;
+  }
+  return [...combined].filter((id) => yakuhai.includes(id)).length <= 4 ? added : undefined;
+}
 
 // playerIndex is SessionPlayer.order - 1; roundIndex is one-based.
 export function getWindYaku(id: Y, roundIndex: number, playerIndex: number): Y[] | undefined {

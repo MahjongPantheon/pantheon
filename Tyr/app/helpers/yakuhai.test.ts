@@ -1,5 +1,5 @@
 import { YakuId as Y } from './yaku';
-import { getWindYaku, yakuhai, windYaku } from './yakuhai';
+import { getWindYaku, getYakuhaiToAdd, yakuhai, windYaku } from './yakuhai';
 import { addYakuToList, makeYakuGraph, pack, unpack } from './yakuCompatibility';
 import { getHan } from './yakuValues';
 
@@ -43,3 +43,19 @@ it('preserves positional packing for legacy hands and round trips new yaku', () 
   expect(unpack(old)).toEqual([Y.YAKUHAI2]);
   expect(unpack(pack(yakuhai))).toEqual(yakuhai);
 });
+
+it('checks the whole wind group before adding and allows exactly four yakuhai', () => {
+  const winds = [Y.EAST_SEAT_WIND, Y.EAST_ROUND_WIND];
+  expect(getYakuhaiToAdd([Y.RED_DRAGON, Y.GREEN_DRAGON], winds, yakuhai)).toEqual(winds);
+  expect(
+    getYakuhaiToAdd([Y.RED_DRAGON, Y.GREEN_DRAGON, Y.SOUTH_ROUND_WIND], winds, yakuhai)
+  ).toBeUndefined();
+});
+
+it.each([Y.RED_DRAGON, Y.GREEN_DRAGON, Y.WHITE_DRAGON])(
+  'promotes any third dragon (%s) to Daisangen',
+  (third: Y) => {
+    const selected = [Y.RED_DRAGON, Y.GREEN_DRAGON, Y.WHITE_DRAGON].filter((id) => id !== third);
+    expect(getYakuhaiToAdd(selected, [third], [...yakuhai, Y.DAISANGEN])).toEqual([Y.DAISANGEN]);
+  }
+);

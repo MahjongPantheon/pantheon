@@ -42,8 +42,8 @@ import {
   removeYakuFromProps,
 } from './util';
 import { AppOutcome } from '../../helpers/interfaces';
-import { getRequiredYaku } from '../selectors/yaku';
-import { getWindYaku, windYaku } from '../../helpers/yakuhai';
+import { getRequiredYaku, getSelectedYaku } from '../selectors/yaku';
+import { getWindYaku, getYakuhaiToAdd, yakuhai, windYaku } from '../../helpers/yakuhai';
 import { YakuId } from '../../helpers/yaku';
 import { PlayerInSession, RoundOutcome } from 'tsclients/proto/atoms.pb';
 
@@ -130,9 +130,22 @@ export function outcomeReducer(state: IAppState, action: AppActionTypes): IAppSt
       state.currentOutcome.roundIndex,
       state.players?.findIndex((p) => p.id === winner) ?? -1
     );
+    const allowed = state.gameConfig?.rulesetConfig.allowedYaku ?? [];
+    if (action.type === ADD_YAKU && yakuhai.includes(action.payload.id)) {
+      const added = (yaku ?? [action.payload.id]).filter((id) => allowed.includes(id));
+      const selected = winner ? (getSelectedYaku(state)[winner] ?? []) : [];
+      const resolved = getYakuhaiToAdd(selected, added, allowed);
+      if (!resolved) {
+        return state;
+      }
+      return resolved.reduce(
+        (next, id) => reduceOutcome(next, { ...action, payload: { ...action.payload, id } }),
+        state
+      );
+    }
     if (yaku) {
       return yaku
-        .filter((id) => state.gameConfig?.rulesetConfig.allowedYaku.includes(id))
+        .filter((id) => allowed.includes(id))
         .reduce(
           (next, id) => reduceOutcome(next, { ...action, payload: { ...action.payload, id } }),
           state

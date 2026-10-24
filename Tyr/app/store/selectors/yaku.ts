@@ -21,7 +21,7 @@ import {
   unpack,
 } from '../../helpers/yakuCompatibility';
 import { IAppState } from '../interfaces';
-import { getWindYaku, windYaku } from '../../helpers/yakuhai';
+import { getWindYaku, getYakuhaiToAdd, yakuhai, windYaku } from '../../helpers/yakuhai';
 import { YakuId } from '../../helpers/yaku';
 import { WinProps, Yaku } from '../../helpers/interfaces';
 import { RoundOutcome } from 'tsclients/proto/atoms.pb';
@@ -134,6 +134,14 @@ function _excludeYaku(
     );
     if (yaku && !yaku.includes(yakuId)) {
       return false;
+    }
+
+    if (yakuhai.includes(yakuId)) {
+      const allowed = state.gameConfig?.rulesetConfig.allowedYaku ?? [];
+      const added = (yaku ?? [yakuId]).filter((id) => allowed.includes(id));
+      if (!getYakuhaiToAdd(rawYakuList, added, allowed)) {
+        return false;
+      }
     }
 
     if (
