@@ -479,8 +479,9 @@ export class SkirnirService implements ISkirnirService {
     }>
   > {
     const playerModel = Model.getModel(this._repo, PlayerModel);
-    const players = await playerModel.findById(playerIds, true);
+    const players = await playerModel.findById(playerIds, true, false);
 
+    // Re-sort to initial order and return
     return playerIds
       .map((id) => players.find((p) => p.id === id))
       .filter((p): p is PersonEx => p !== undefined);

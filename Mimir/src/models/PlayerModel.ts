@@ -9,7 +9,7 @@ import { SessionModel } from './SessionModel.js';
 import { filterPersonalData, filterPersonalDataSingle } from '../helpers/filterPersonalData.js';
 
 export class PlayerModel extends Model {
-  async findById(ids: number[], skipCache = false): Promise<PersonEx[]> {
+  async findById(ids: number[], skipCache = false, filterPD = true): Promise<PersonEx[]> {
     let missingIds: number[] = [];
     const fetchedData = new Map<number, PersonEx>();
     const fetchedRemote = new Map<number, PersonEx>();
@@ -53,7 +53,11 @@ export class PlayerModel extends Model {
       }
     }
 
-    return filterPersonalData(allData);
+    if (filterPD) {
+      return filterPersonalData(allData);
+    } else {
+      return allData;
+    }
   }
 
   async findByTenhouId(ids: string[]): Promise<Record<string, PersonEx>> {
