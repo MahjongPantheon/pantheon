@@ -37,7 +37,7 @@ export const enum Yaku {
   CHUURENPOUTO = 29,
   SHOSANGEN = 18,
   SHOSUUSHII = 20,
-  // Deprecated aggregate IDs; retained for historical hands.
+  // Aggregated yakuhai IDs; used by aggregated mode and historical hands.
   YAKUHAI1 = 13,
   YAKUHAI2 = 14,
   YAKUHAI3 = 15,
@@ -187,7 +187,8 @@ const tenhouIdMap = new Map([
  */
 export function fromTenhou(
   yakuList: string | string[],
-  yakumanList: string | string[]
+  yakumanList: string | string[],
+  useAggregatedYakuhai = false
 ): {
   yaku: Yaku[];
   dora: number;
@@ -227,6 +228,17 @@ export function fromTenhou(
 
   if (result.yakuman > 0) {
     result.han = -result.yakuman;
+  }
+
+  if (useAggregatedYakuhai) {
+    const isIndividualYakuhai = (id: Yaku) => id >= Yaku.EAST_SEAT_WIND && id <= Yaku.WHITE_DRAGON;
+    const count = result.yaku.filter(isIndividualYakuhai).length;
+    const aggregated = [Yaku.YAKUHAI1, Yaku.YAKUHAI2, Yaku.YAKUHAI3, Yaku.YAKUHAI4];
+    if (count > 0 && count <= aggregated.length) {
+      result.yaku = result.yaku
+        .filter((id) => !isIndividualYakuhai(id))
+        .concat(aggregated[count - 1]);
+    }
   }
 
   return result;

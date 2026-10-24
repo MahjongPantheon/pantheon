@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-24 22:29+0200\n"
+"POT-Creation-Date: 2026-10-25 00:35+0200\n"
 "PO-Revision-Date: 2026-10-20 00:34+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -319,7 +319,7 @@ msgstr "局を取り消す"
 msgid "Cancelled: "
 msgstr "取消済み： "
 
-#: app/pages/OwnedEventsEdit/index.tsx:377:32
+#: app/pages/OwnedEventsEdit/index.tsx:378:32
 #: app/pages/PlayersManage/LocalIdsTab.tsx:113:28
 #: app/pages/PlayersManage/TeamNamesTab.tsx:114:28
 #: app/pages/ProfileManage.tsx:311:32 app/pages/ProfileManageAdmin.tsx:330:21
@@ -475,7 +475,7 @@ msgstr "連荘を無効にする"
 msgid "Do not interrupt session until it ends"
 msgstr "対局が終了するまで中断しない"
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:82:25
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:90:25
 msgid "Double yakuman:"
 msgstr "ダブル役満："
 
@@ -520,6 +520,10 @@ msgstr "メールを送信しました"
 msgid "Enable \"Nagashi\" outcome to record this special draw"
 msgstr "特殊な流局を記録するため「流し満貫」の結果を有効にする"
 
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:47:16
+msgid "Enable aggregated yakuhai"
+msgstr "役牌の集約を有効にする"
+
 #: app/pages/Penalties/CancelConfirmation.tsx:66:14
 msgid "Enter a reason for cancellation and confirm it."
 msgstr "取消の理由を入力し、確認してください。"
@@ -555,8 +559,8 @@ msgstr "同点時にウマを均等にする"
 #: app/pages/EventPrescript.tsx:76:18 app/pages/EventPrescript.tsx:111:18
 #: app/pages/GamesControl/index.tsx:89:18
 #: app/pages/GamesControl/index.tsx:102:14 app/pages/OwnedEvents.tsx:95:14
-#: app/pages/OwnedEventsEdit/index.tsx:264:18
-#: app/pages/OwnedEventsEdit/index.tsx:303:18 app/pages/Penalties.tsx:102:18
+#: app/pages/OwnedEventsEdit/index.tsx:265:18
+#: app/pages/OwnedEventsEdit/index.tsx:304:18 app/pages/Penalties.tsx:102:18
 #: app/pages/Penalties/PenaltyForm.tsx:91:18
 #: app/pages/PlayersManage/index.tsx:86:18
 #: app/pages/PlayersManage/LocalIdsTab.tsx:72:18
@@ -661,8 +665,8 @@ msgstr ""
 msgid "Failed to definalize game"
 msgstr "対局の終了を取り消せませんでした"
 
-#: app/pages/OwnedEventsEdit/index.tsx:245:29
-#: app/pages/OwnedEventsEdit/index.tsx:256:29
+#: app/pages/OwnedEventsEdit/index.tsx:246:29
+#: app/pages/OwnedEventsEdit/index.tsx:257:29
 msgid "Failed to fetch event data"
 msgstr "イベントデータを取得できませんでした"
 
@@ -722,7 +726,7 @@ msgstr ""
 "イベント進行表を保存できませんでした：サーバーエラー、またはネットワークに接"
 "続できません"
 
-#: app/pages/OwnedEventsEdit/index.tsx:298:27
+#: app/pages/OwnedEventsEdit/index.tsx:299:27
 msgid "Failed to save event: server error or network unreachable"
 msgstr ""
 "イベントを保存できませんでした：サーバーエラー、またはネットワークに接続でき"
@@ -858,7 +862,7 @@ msgstr "登録画面へ"
 msgid "Goal score"
 msgstr "目標点"
 
-#: app/pages/OwnedEventsEdit/index.tsx:164:15
+#: app/pages/OwnedEventsEdit/index.tsx:165:15
 msgid "Goal score must be at least the initial points"
 msgstr "目標点は開始点以上にしてください"
 
@@ -1452,7 +1456,7 @@ msgstr "オープン立直"
 msgid "Otherwise"
 msgstr "それ以外"
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:64:25
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:72:25
 msgid "Pao rule enabled for:"
 msgstr "パオを適用する役："
 
@@ -1881,7 +1885,7 @@ msgstr "三色同顺"
 msgid "Sanshoku doukou"
 msgstr "三色同刻"
 
-#: app/pages/OwnedEventsEdit/index.tsx:377:60
+#: app/pages/OwnedEventsEdit/index.tsx:378:60
 #: app/pages/PlayersManage/LocalIdsTab.tsx:113:56
 #: app/pages/PlayersManage/TeamNamesTab.tsx:114:56
 #: app/pages/ProfileManage.tsx:311:60
@@ -2418,6 +2422,10 @@ msgstr ""
 "親が和了、または流局時に聴牌していても座風を交代します。本場は流局時のみ追加"
 "します。"
 
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:48:22
+msgid "When disabled, use separate yakuhai names like \"East\" and \"White dragon\" instead of aggregated names like \"Yakuhai x3\"."
+msgstr "無効にすると、「役牌 x3」のような集約した名前の代わりに、「東」や「白」のような個別の役牌名を使用します。"
+
 #: app/pages/OwnedEventsEdit/TournamentSettings.tsx:61:20
 msgid "When time is out, finish current hand and interrupt the session"
 msgstr "時間が経過したら、現在の局を終えて対局を終了"
@@ -2444,7 +2452,7 @@ msgstr "焼き鳥"
 msgid "Yakitori penalty"
 msgstr "焼き鳥のペナルティ"
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:46:25
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:54:25
 msgid "Yaku allowed"
 msgstr "有効な役"
 
@@ -2552,3 +2560,15 @@ msgstr "Telegram ID"
 #: app/pages/ProfileSignup.tsx:174:14
 msgid "show / hide"
 msgstr "表示 / 非表示"
+
+#~ msgid "Disabled"
+#~ msgstr "無効"
+
+#~ msgid "Enabled"
+#~ msgstr "有効"
+
+#~ msgid "Use separate yakuhai names"
+#~ msgstr "役牌を個別に表示"
+
+#~ msgid "Yakuhai names"
+#~ msgstr "役牌の表示"

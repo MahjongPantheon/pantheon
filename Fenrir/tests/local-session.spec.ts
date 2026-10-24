@@ -39,6 +39,7 @@ test('SMOKE-005: Registered player can finish a local session and view matching 
   adminContext.setDefaultTimeout(15_000);
   sigrunContext.setDefaultTimeout(15_000);
   let eventId: string;
+  let eventEditUrl: string;
   try {
     await test.step('Create the local event and verify its scoring rules in Forseti', async () => {
       await admin.goto(process.env.FORSETI_URL!);
@@ -75,6 +76,7 @@ test('SMOKE-005: Registered player can finish a local session and view matching 
       admin = settings;
       await expect(admin.getByTestId('forseti-event-settings-page')).toBeVisible();
       eventId = new URL(admin.url()).pathname.match(/\/edit\/(\d+)/)![1];
+      eventEditUrl = admin.url();
       await expect(
         admin.getByTestId('forseti-event-settings-basic-settings-event-title')
       ).toHaveValue(eventTitle);
@@ -140,6 +142,57 @@ test('SMOKE-005: Registered player can finish a local session and view matching 
         { outcome: 'ron', scores: [30000, 30000, 30000, 30000], round: 1, honba: 0, pot: 0 },
         false
       );
+    });
+    await test.step('Persist each yakuhai mode in Forseti and verify its Tyr buttons without recording a hand', async () => {
+      const editUrl = eventEditUrl;
+      for (const aggregated of [true, false]) {
+        await admin.goto(editUrl);
+        await expect(admin.getByTestId('forseti-event-settings-page')).toBeVisible();
+        await admin.getByTestId('forseti-event-settings-tab-yaku').click();
+        await admin.getByTestId('forseti-event-settings-yakuhai-aggregated').setChecked(aggregated);
+        const [saved] = await Promise.all([
+          admin.waitForResponse(
+            (response) =>
+              response.url().endsWith('/common.Mimir/UpdateEvent') &&
+              response.request().method() === 'POST'
+          ),
+          admin.getByTestId('forseti-event-settings-save').click(),
+        ]);
+        expect(saved.ok()).toBe(true);
+        await admin.goto(editUrl);
+        await admin.getByTestId('forseti-event-settings-tab-yaku').click();
+        await expect(admin.getByTestId('forseti-event-settings-yakuhai-aggregated')).toBeChecked({
+          checked: aggregated,
+        });
+        await page.reload();
+        await expect(page.getByTestId('tyr-table').or(page.getByTestId('tyr-home'))).toBeVisible();
+        if (await page.getByTestId('tyr-home').isVisible())
+          await page.getByTestId('tyr-home-current-game').click();
+        const probe = aggregated
+          ? {
+              ...rounds[0],
+              hands: [
+                {
+                  name: 'Aggregate yakuhai probe',
+                  yaku: [14],
+                  han: 2,
+                  fu: 30,
+                  dora: 0,
+                  open: true,
+                  labels: ['Yakuhai x2'],
+                },
+              ],
+            }
+          : rounds[0];
+        await enterRound(page, players, probe, aggregated);
+        const prefix = `tyr-hand-player-${players[rounds[0].winners![0]].id}`;
+        await page.getByTestId('tyr-round-preview-back').click();
+        await expect(page.getByTestId(`${prefix}-yaku-14`)).toHaveCount(aggregated ? 1 : 0);
+        await expect(page.getByTestId(`${prefix}-yaku-56`)).toHaveCount(aggregated ? 0 : 1);
+        await page.getByTestId('tyr-hand-back').click();
+        await page.getByTestId('tyr-select-player-back').click();
+        await checkLog(page, players, 0);
+      }
     });
     for (const [index, entry] of rounds.entries()) {
       await test.step(`R${index + 1}: ${entry.outcome}${index === rounds.length - 1 ? ' finishes South 4' : ''}`, async () => {

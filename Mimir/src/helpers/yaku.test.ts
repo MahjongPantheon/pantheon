@@ -50,3 +50,24 @@ describe('individual imported yakuhai', () => {
     });
   });
 });
+
+describe('aggregate imported yakuhai', () => {
+  it.each([1, 2, 3, 4])('aggregates %s yakuhai without changing han or dora', (count) => {
+    const yaku = ['10,1', '14,1', '18,1', '19,1'].slice(0, count).join(',');
+    expect(fromTenhou(`1,1,${yaku},52,2`, '', true)).toEqual({
+      yaku: [Yaku.RIICHI, [Yaku.YAKUHAI1, Yaku.YAKUHAI2, Yaku.YAKUHAI3, Yaku.YAKUHAI4][count - 1]],
+      han: count + 3,
+      dora: 2,
+      yakuman: 0,
+    });
+  });
+
+  it('preserves yakuman in aggregate mode', () => {
+    expect(fromTenhou('', '39', true)).toEqual({
+      yaku: [Yaku.DAISANGEN],
+      han: -1,
+      dora: 0,
+      yakuman: 1,
+    });
+  });
+});

@@ -180,3 +180,33 @@ it('rejects an entire double-wind addition when only one yakuhai slot remains', 
     outcomeReducer(state, { type: ADD_YAKU, payload: { id: Y.EAST_SEAT_WIND, winner: 1 } })
   ).toBe(state);
 });
+
+it('restores aggregate buttons and their replacement behavior in aggregated mode', () => {
+  let state = fixture(1, 1);
+  state = {
+    ...state,
+    gameConfig: {
+      ...state.gameConfig!,
+      rulesetConfig: { ...state.gameConfig!.rulesetConfig, useAggregatedYakuhai: true },
+    },
+  };
+  const visible = getYakuList(state)[1].map((y) => y.id);
+  expect(visible).toEqual(expect.arrayContaining([Y.YAKUHAI1, Y.YAKUHAI2, Y.YAKUHAI3, Y.YAKUHAI4]));
+  expect(visible.some((id) => yakuhai.includes(id))).toBe(false);
+  for (const id of [Y.YAKUHAI1, Y.YAKUHAI4]) {
+    state = outcomeReducer(state, { type: ADD_YAKU, payload: { id, winner: 1 } });
+  }
+  expect(getSelectedYaku(state)[1]).toEqual([Y.YAKUHAI4]);
+  expect(outcomeReducer(state, { type: ADD_YAKU, payload: { id: Y.RED_DRAGON, winner: 1 } })).toBe(
+    state
+  );
+  state = outcomeReducer(state, { type: REMOVE_YAKU, payload: { id: Y.YAKUHAI4, winner: 1 } });
+  expect(getSelectedYaku(state)[1]).toEqual([]);
+});
+
+it('rejects aggregate buttons when the event uses separate names', () => {
+  const state = fixture(1, 1);
+  expect(outcomeReducer(state, { type: ADD_YAKU, payload: { id: Y.YAKUHAI1, winner: 1 } })).toBe(
+    state
+  );
+});

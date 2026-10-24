@@ -31,7 +31,7 @@ export enum YakuId {
   RYANPEIKOU = 10,
   SANSHOKUDOUJUN = 11,
   ITTSU = 12,
-  // Deprecated aggregate IDs; retained for historical hands.
+  // Aggregated yakuhai IDs; used by aggregated mode and historical hands.
   YAKUHAI1 = 13,
   YAKUHAI2 = 14,
   YAKUHAI3 = 15,
@@ -354,4 +354,24 @@ export const doubleYakuman = [
     id: YakuId.KOKUSHIMUSOU13,
     name: (i18n: I18nService) => i18n._t('Kokushi musou 13-side'),
   },
+];
+
+export const aggregatedYakuhai = [
+  YakuId.YAKUHAI1,
+  YakuId.YAKUHAI2,
+  YakuId.YAKUHAI3,
+  YakuId.YAKUHAI4,
+];
+export const separateYakuhai = [
+  YakuId.EAST_SEAT_WIND,
+  YakuId.EAST_ROUND_WIND,
+  YakuId.SOUTH_SEAT_WIND,
+  YakuId.SOUTH_ROUND_WIND,
+  YakuId.WEST_SEAT_WIND,
+  YakuId.WEST_ROUND_WIND,
+  YakuId.NORTH_SEAT_WIND,
+  YakuId.NORTH_ROUND_WIND,
+  YakuId.RED_DRAGON,
+  YakuId.GREEN_DRAGON,
+  YakuId.WHITE_DRAGON,
 ];

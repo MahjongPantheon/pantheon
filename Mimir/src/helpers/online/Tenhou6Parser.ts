@@ -111,10 +111,10 @@ export class Tenhou6OnlineParser {
       }
 
       if (roundData.type === 'AGARI') {
-        this.tokenAGARI(roundData.token, sessionState);
+        this.tokenAGARI(roundData.token, sessionState, event.ruleset.rules.useAggregatedYakuhai);
       } else if (roundData.type === 'MULTI_AGARI') {
         for (const tokenAgari of roundData.tokens) {
-          this.tokenAGARI(tokenAgari, sessionState);
+          this.tokenAGARI(tokenAgari, sessionState, event.ruleset.rules.useAggregatedYakuhai);
         }
       } else if (roundData.type === 'RYUUKYOKU') {
         this.tokenRYUUKYOKU(roundData.token, sessionState);
@@ -347,7 +347,11 @@ export class Tenhou6OnlineParser {
   /**
    * Process token AGARI
    */
-  protected tokenAGARI(tokenAgari: TokenAgari, sessionState: SessionState): void {
+  protected tokenAGARI(
+    tokenAgari: TokenAgari,
+    sessionState: SessionState,
+    useAggregatedYakuhai = false
+  ): void {
     const winner = this._players[tokenAgari.who];
     const loser = this._players[tokenAgari.fromWho];
     const paoPlayer = tokenAgari.paoWho !== -1 ? this._players[tokenAgari.paoWho] : 0;
@@ -359,7 +363,7 @@ export class Tenhou6OnlineParser {
     const yakumanList = tokenAgari.yakuman;
     const isMangan = tokenAgari.isMangan;
 
-    const yakuData = fromTenhou(yakuList, yakumanList);
+    const yakuData = fromTenhou(yakuList, yakumanList, useAggregatedYakuhai);
 
     if (!this._lastTokenIsAgari) {
       let calculatedFu = fu;

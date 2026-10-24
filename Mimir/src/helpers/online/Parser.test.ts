@@ -1,5 +1,6 @@
 import { readFileSync } from 'fs';
 import { join } from 'path';
+import { Yaku } from '../yaku.js';
 import { RoundEntity } from '../../entities/Round.entity.js';
 import { EventEntity } from '../../entities/Event.entity.js';
 import { EventRegisteredPlayersEntity } from '../../entities/EventRegisteredPlayers.entity.js';
@@ -81,6 +82,24 @@ const prepareTestEntities = async () => {
  * Replay parser integration test suite
  */
 describe('OnlinelogParserTest', () => {
+  test.each([false, true])('uses the event yakuhai mode (aggregated=%s)', async (aggregated) => {
+    const [repo, event] = await prepareTestEntities();
+    try {
+      event.ruleset.rules.useAggregatedYakuhai = aggregated;
+      const content = readFileSync(join(import.meta.dirname, 'testdata/usual.xml'), 'utf-8');
+      const [, , rounds] = await new OnlineParser(repo).parseToSession(event, content);
+      const yaku = rounds.flatMap((round) => round.hands.flatMap((hand) => hand.yaku ?? []));
+      const hasIndividual = yaku.some((id) => id >= Yaku.EAST_SEAT_WIND && id <= Yaku.WHITE_DRAGON);
+      const hasAggregate = yaku.some((id) =>
+        [Yaku.YAKUHAI1, Yaku.YAKUHAI2, Yaku.YAKUHAI3, Yaku.YAKUHAI4].includes(id)
+      );
+      expect(hasIndividual).toBe(!aggregated);
+      expect(hasAggregate).toBe(aggregated);
+    } finally {
+      await repo.destroy();
+    }
+  });
+
   test('parseUsualGame', async () => {
     const [repo, event] = await prepareTestEntities();
     const content = readFileSync(join(import.meta.dirname, 'testdata/usual.xml'), 'utf-8');

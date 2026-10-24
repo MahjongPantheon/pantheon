@@ -25,3 +25,10 @@ value unique across the frontend services.
 ### Legend
 
 **Týr** (/ˈtɪər/) is norse one-handed god, associated with law, warriors and glory. See wikipedia for details :)
+
+### Yakuhai entry mode
+
+Event admins choose separate wind/dragon names or aggregated Yakuhai ×1–×4 in
+Forseti's yaku settings. Separate names are the default for new events; the
+upgrade migration preserves aggregated yakuhai for existing events. The mode
+also controls new online imports and does not rewrite recorded hands.

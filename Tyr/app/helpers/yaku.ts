@@ -32,7 +32,7 @@ export const enum YakuId {
   RYANPEIKOU = 10,
   SANSHOKUDOUJUN = 11,
   ITTSU = 12,
-  // Deprecated aggregate IDs; retained for historical hands.
+  // Aggregated yakuhai IDs; used by aggregated mode and historical hands.
   YAKUHAI1 = 13,
   YAKUHAI2 = 14,
   YAKUHAI3 = 15,

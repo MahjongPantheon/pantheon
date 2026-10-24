@@ -123,3 +123,13 @@ Retain this attempt's TEST event and accounts for inspection. Retries use new ac
 
 - Status: Implemented in [local-session.spec.ts](../tests/local-session.spec.ts), with [shared UI helpers](../tests/utils/game-flow.ts) and [explicit scenario checkpoints](../tests/utils/hand-scenarios.json).
 - Covers the non-wind yaku catalogue, East seat wind, and prevailing round wind in one local event, diverse fu/dora, all six outcomes, dealer continuation, carryover, deferred chombo, persistence, natural completion, and matching Tyr/Sigrun results. Also covers the public homepage feed and links for the newly finished session. Tournament synchronization is covered by SMOKE-006.
+
+### Yakuhai mode persistence
+
+Before recording R1, check **Enable aggregated yakuhai** for the isolated event, save,
+reopen its settings, and reload Tyr. Preview an open Yakuhai ×2 hand without
+submitting it; aggregate buttons must be present and individual dragon buttons
+absent. Cancel the preview and verify that the session log remains empty. Switch
+back by unchecking **Enable aggregated yakuhai**, save/reopen/reload, and preview the original
+R1 hand. Individual dragon buttons must be present and aggregate buttons absent.
+Cancel again, verify the empty log, and proceed with the unchanged score fixtures.

@@ -724,7 +724,7 @@ msgstr "За найбольшую колькасць перамог цумо з�
 
 #: app/pages/Achievements.tsx:309:20
 msgid "Given for collecting the most of yakuhais during the tournament."
-msgstr "За найбольшую колькасць якухай падчас турніру."
+msgstr "За найбольшую колькасць якухаяў падчас турніру."
 
 #: app/pages/Achievements.tsx:434:20
 msgid ""

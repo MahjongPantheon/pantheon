@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-24 22:29+0200\n"
+"POT-Creation-Date: 2026-10-25 00:35+0200\n"
 "PO-Revision-Date: 2025-03-23 23:41+0300\n"
 "Last-Translator: Geunmo Kim <kimgeunmo@gmail.com>\n"
 "Language-Team: \n"
@@ -327,7 +327,7 @@ msgstr "국 취소"
 msgid "Cancelled: "
 msgstr "취소됨: "
 
-#: app/pages/OwnedEventsEdit/index.tsx:377:32
+#: app/pages/OwnedEventsEdit/index.tsx:378:32
 #: app/pages/PlayersManage/LocalIdsTab.tsx:113:28
 #: app/pages/PlayersManage/TeamNamesTab.tsx:114:28
 #: app/pages/ProfileManage.tsx:311:32 app/pages/ProfileManageAdmin.tsx:330:21
@@ -483,7 +483,7 @@ msgstr "연장 비활성화"
 msgid "Do not interrupt session until it ends"
 msgstr "오라스에 인한 대국 종료시 종료"
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:82:25
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:90:25
 msgid "Double yakuman:"
 msgstr "더블 역만:"
 
@@ -528,6 +528,10 @@ msgstr "이메일이 전송되었습니다"
 msgid "Enable \"Nagashi\" outcome to record this special draw"
 msgstr "특별 유국인 \"유국만관\" 결과가 활성화됨"
 
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:47:16
+msgid "Enable aggregated yakuhai"
+msgstr "집계된 역패 사용"
+
 #: app/pages/Penalties/CancelConfirmation.tsx:66:14
 msgid "Enter a reason for cancellation and confirm it."
 msgstr "취소 사유를 입력하고 확인해 주세요."
@@ -563,8 +567,8 @@ msgstr "동점 동일 우마"
 #: app/pages/EventPrescript.tsx:76:18 app/pages/EventPrescript.tsx:111:18
 #: app/pages/GamesControl/index.tsx:89:18
 #: app/pages/GamesControl/index.tsx:102:14 app/pages/OwnedEvents.tsx:95:14
-#: app/pages/OwnedEventsEdit/index.tsx:264:18
-#: app/pages/OwnedEventsEdit/index.tsx:303:18 app/pages/Penalties.tsx:102:18
+#: app/pages/OwnedEventsEdit/index.tsx:265:18
+#: app/pages/OwnedEventsEdit/index.tsx:304:18 app/pages/Penalties.tsx:102:18
 #: app/pages/Penalties/PenaltyForm.tsx:91:18
 #: app/pages/PlayersManage/index.tsx:86:18
 #: app/pages/PlayersManage/LocalIdsTab.tsx:72:18
@@ -667,8 +671,8 @@ msgstr ""
 msgid "Failed to definalize game"
 msgstr "대국 종료 취소 실패"
 
-#: app/pages/OwnedEventsEdit/index.tsx:245:29
-#: app/pages/OwnedEventsEdit/index.tsx:256:29
+#: app/pages/OwnedEventsEdit/index.tsx:246:29
+#: app/pages/OwnedEventsEdit/index.tsx:257:29
 msgid "Failed to fetch event data"
 msgstr "이벤트 데이터 불러오기 실패"
 
@@ -724,7 +728,7 @@ msgstr "좌석 초기화 실패"
 msgid "Failed to save event script: server error or network unreachable"
 msgstr "이벤트 스크립트 저장 실패: 서버 오류 또는 네트워크에 연결할 수 없음"
 
-#: app/pages/OwnedEventsEdit/index.tsx:298:27
+#: app/pages/OwnedEventsEdit/index.tsx:299:27
 msgid "Failed to save event: server error or network unreachable"
 msgstr "이벤트 저장 실패: 서버 오류 또는 네트워크에 연결할 수 없음"
 
@@ -857,7 +861,7 @@ msgstr "회원가입으로 이동"
 msgid "Goal score"
 msgstr "목표 점수"
 
-#: app/pages/OwnedEventsEdit/index.tsx:164:15
+#: app/pages/OwnedEventsEdit/index.tsx:165:15
 msgid "Goal score must be at least the initial points"
 msgstr "목표 점수는 대국 시작 점수 이상이어야 합니다"
 
@@ -1449,7 +1453,7 @@ msgstr "오픈 리치"
 msgid "Otherwise"
 msgstr "기타"
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:64:25
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:72:25
 msgid "Pao rule enabled for:"
 msgstr "책임지불(파오) 해당 역:"
 
@@ -1880,7 +1884,7 @@ msgstr "삼색동순"
 msgid "Sanshoku doukou"
 msgstr "삼색동각"
 
-#: app/pages/OwnedEventsEdit/index.tsx:377:60
+#: app/pages/OwnedEventsEdit/index.tsx:378:60
 #: app/pages/PlayersManage/LocalIdsTab.tsx:113:56
 #: app/pages/PlayersManage/TeamNamesTab.tsx:114:56
 #: app/pages/ProfileManage.tsx:311:60
@@ -2416,6 +2420,10 @@ msgstr ""
 "친의 화료 또는 유국 시 텐파이에도 국이 연장되지 않음. 본장은 유국 시에만 추가"
 "됨"
 
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:48:22
+msgid "When disabled, use separate yakuhai names like \"East\" and \"White dragon\" instead of aggregated names like \"Yakuhai x3\"."
+msgstr "사용하지 않으면 \"역패 x3\"처럼 집계된 이름 대신 \"동\"과 \"백\" 같은 개별 역패 이름을 사용합니다."
+
 #: app/pages/OwnedEventsEdit/TournamentSettings.tsx:61:20
 msgid "When time is out, finish current hand and interrupt the session"
 msgstr "타이머 종료 시점에서 진행중인 국까지 진행하고 대국 종료"
@@ -2442,7 +2450,7 @@ msgstr "야키토리"
 msgid "Yakitori penalty"
 msgstr "야키토리 벌부"
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:46:25
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:54:25
 msgid "Yaku allowed"
 msgstr "허용 역"
 
@@ -2552,6 +2560,12 @@ msgstr "텔레그램 ID"
 msgid "show / hide"
 msgstr "표시 / 숨김"
 
+#~ msgid "Disabled"
+#~ msgstr "사용 안 함"
+
+#~ msgid "Enabled"
+#~ msgstr "사용"
+
 #~ msgid "Player is a regular user. Click to promote to event admin."
 #~ msgstr "해당 작사는 일반 유저입니다. 관리자로 승격하려면 클릭하세요."
 
@@ -2585,6 +2599,12 @@ msgstr "표시 / 숨김"
 #~ "여기 입력한 점수는 대국 종료 시 우마가 적용된 점수에서 차감됨. 벌부는 대"
 #~ "국 중에만 적용될 수 있으며 이미 대국이 종료된 경우 다음 대국에서 벌부를 적"
 #~ "용함"
+
+#~ msgid "Use separate yakuhai names"
+#~ msgstr "역패 이름 개별 표시"
+
+#~ msgid "Yakuhai names"
+#~ msgstr "역패 이름"
 
 #~ msgid ""
 #~ "You have provided your tenhou login string instead of your username. You "

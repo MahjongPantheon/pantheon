@@ -138,5 +138,9 @@ sample data in Frey; rerun the command to reset Mimir and create fresh samples.
 
 Apply `Migration20261024000000` before deploying individual wind and dragon yaku.
 It enables IDs 48–58 in existing events that allow legacy Yakuhai. IDs 13–16
-remain valid for historical hands. New online imports preserve each wind and
-dragon award separately; existing imported hands are unchanged.
+remain valid for historical hands. The event ruleset selects separate wind/dragon
+names or aggregated Yakuhai ×1–×4 for Tyr entry and new online imports. Existing imported hands are unchanged.
+
+Apply `Migration20261025000000` to keep all existing events in aggregated mode.
+New events default to separate names (`useAggregatedYakuhai = false`). Admins can
+switch the mode in Forseti’s yaku settings. No historical hands are rewritten.

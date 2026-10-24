@@ -7,6 +7,8 @@ export const windYaku = [
   [Y.NORTH_SEAT_WIND, Y.NORTH_ROUND_WIND],
 ];
 
+export const aggregatedYakuhai = [Y.YAKUHAI1, Y.YAKUHAI2, Y.YAKUHAI3, Y.YAKUHAI4];
+
 export const dragonYaku = [Y.RED_DRAGON, Y.GREEN_DRAGON, Y.WHITE_DRAGON];
 export const yakuhai = [...windYaku.flat(), ...dragonYaku];
 

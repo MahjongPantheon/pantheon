@@ -43,7 +43,13 @@ import {
 } from './util';
 import { AppOutcome } from '../../helpers/interfaces';
 import { getRequiredYaku, getSelectedYaku } from '../selectors/yaku';
-import { getWindYaku, getYakuhaiToAdd, yakuhai, windYaku } from '../../helpers/yakuhai';
+import {
+  aggregatedYakuhai,
+  getWindYaku,
+  getYakuhaiToAdd,
+  yakuhai,
+  windYaku,
+} from '../../helpers/yakuhai';
 import { YakuId } from '../../helpers/yaku';
 import { PlayerInSession, RoundOutcome } from 'tsclients/proto/atoms.pb';
 
@@ -125,6 +131,15 @@ export function outcomeReducer(state: IAppState, action: AppActionTypes): IAppSt
       (state.currentOutcome.selectedOutcome === RoundOutcome.ROUND_OUTCOME_TSUMO
         ? state.currentOutcome.winner
         : undefined);
+    const aggregated = state.gameConfig?.rulesetConfig.useAggregatedYakuhai;
+    if (
+      action.type === ADD_YAKU &&
+      (aggregated
+        ? yakuhai.includes(action.payload.id)
+        : aggregatedYakuhai.includes(action.payload.id))
+    ) {
+      return state;
+    }
     const yaku = getWindYaku(
       action.payload.id,
       state.currentOutcome.roundIndex,

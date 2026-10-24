@@ -169,6 +169,9 @@ export async function checkRules(page: Page, configure: boolean) {
     await expect(input).toHaveValue(String(value));
   }
   await page.getByTestId('forseti-event-settings-tab-yaku').click();
+  const aggregatedYakuhai = page.getByTestId('forseti-event-settings-yakuhai-aggregated');
+  if (configure) await aggregatedYakuhai.uncheck();
+  await expect(aggregatedYakuhai).not.toBeChecked();
   const kuitan = page.getByTestId('forseti-event-settings-yaku-settings-ruleset-with-kuitan');
   if (configure) await kuitan.check();
   await expect(kuitan).toBeChecked();
@@ -179,7 +182,7 @@ export async function checkRules(page: Page, configure: boolean) {
         inputs.map((input) => Number(input.getAttribute('data-testid')!.split('-').at(-1)))
       )
     ).sort((a, b) => a - b)
-  ).toEqual(fixtures.yakuIds);
+  ).toEqual(fixtures.yakuIds.filter((id) => ![13, 14, 15, 16].includes(id)));
   for (const input of await allowed.all()) {
     if (configure) await input.check();
     await expect(input).toBeChecked();
@@ -241,7 +244,12 @@ export async function assertTable(page: Page, players: Account[], state: Round, 
   await expect(page.getByTestId('tyr-table-riichi-count')).toHaveText(String(state.pot));
 }
 
-export async function enterRound(page: Page, players: Account[], entry: Round) {
+export async function enterRound(
+  page: Page,
+  players: Account[],
+  entry: Round,
+  aggregatedYakuhai = false
+) {
   await page.getByTestId('tyr-table-add-round').click();
   await page.getByTestId(`tyr-table-outcome-${entry.outcome}`).click();
   await expect(page.getByTestId('tyr-select-player-status')).toBeVisible();
@@ -276,7 +284,7 @@ export async function enterRound(page: Page, players: Account[], entry: Round) {
     // A double wind has two persisted awards and one visible button.
     const buttonYaku = spec.yaku.filter((id) => !(id === 49 && spec.yaku.includes(48)));
     for (const id of [13, 14, 15, 16]) {
-      await expect(page.getByTestId(`${prefix}-yaku-${id}`)).toHaveCount(0);
+      await expect(page.getByTestId(`${prefix}-yaku-${id}`)).toHaveCount(aggregatedYakuhai ? 1 : 0);
     }
     for (const yaku of [...(spec.open ? [-1] : []), ...buttonYaku]) {
       const button = page.getByTestId(`${prefix}-yaku-${yaku}`);

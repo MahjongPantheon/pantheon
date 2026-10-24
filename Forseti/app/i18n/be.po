@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-24 22:29+0200\n"
+"POT-Creation-Date: 2026-10-25 00:35+0200\n"
 "PO-Revision-Date: 2026-10-20 01:13+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -330,7 +330,7 @@ msgstr "Скасаваць раздачу"
 msgid "Cancelled: "
 msgstr "Скасавана: "
 
-#: app/pages/OwnedEventsEdit/index.tsx:377:32
+#: app/pages/OwnedEventsEdit/index.tsx:378:32
 #: app/pages/PlayersManage/LocalIdsTab.tsx:113:28
 #: app/pages/PlayersManage/TeamNamesTab.tsx:114:28
 #: app/pages/ProfileManage.tsx:311:32 app/pages/ProfileManageAdmin.tsx:330:21
@@ -486,7 +486,7 @@ msgstr "Адключыць рэнчаны"
 msgid "Do not interrupt session until it ends"
 msgstr "Не перапыняць сесію да яе завяршэння"
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:82:25
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:90:25
 msgid "Double yakuman:"
 msgstr "Падвойны якуман:"
 
@@ -531,6 +531,10 @@ msgstr "Ліст адпраўлены"
 msgid "Enable \"Nagashi\" outcome to record this special draw"
 msgstr "Уключыць вынік «Нагасі манган» для запісу гэтай асаблівай нічыёй"
 
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:47:16
+msgid "Enable aggregated yakuhai"
+msgstr "Уключыць агрэгаваныя якухаі"
+
 #: app/pages/Penalties/CancelConfirmation.tsx:66:14
 msgid "Enter a reason for cancellation and confirm it."
 msgstr "Увядзіце прычыну скасавання і пацвердзіце яго."
@@ -566,8 +570,8 @@ msgstr "Параўну дзяліць ума пры роўных ачках"
 #: app/pages/EventPrescript.tsx:76:18 app/pages/EventPrescript.tsx:111:18
 #: app/pages/GamesControl/index.tsx:89:18
 #: app/pages/GamesControl/index.tsx:102:14 app/pages/OwnedEvents.tsx:95:14
-#: app/pages/OwnedEventsEdit/index.tsx:264:18
-#: app/pages/OwnedEventsEdit/index.tsx:303:18 app/pages/Penalties.tsx:102:18
+#: app/pages/OwnedEventsEdit/index.tsx:265:18
+#: app/pages/OwnedEventsEdit/index.tsx:304:18 app/pages/Penalties.tsx:102:18
 #: app/pages/Penalties/PenaltyForm.tsx:91:18
 #: app/pages/PlayersManage/index.tsx:86:18
 #: app/pages/PlayersManage/LocalIdsTab.tsx:72:18
@@ -670,8 +674,8 @@ msgstr ""
 msgid "Failed to definalize game"
 msgstr "Не ўдалося адмяніць завяршэнне гульні"
 
-#: app/pages/OwnedEventsEdit/index.tsx:245:29
-#: app/pages/OwnedEventsEdit/index.tsx:256:29
+#: app/pages/OwnedEventsEdit/index.tsx:246:29
+#: app/pages/OwnedEventsEdit/index.tsx:257:29
 msgid "Failed to fetch event data"
 msgstr "Не ўдалося атрымаць даныя падзеі"
 
@@ -728,7 +732,7 @@ msgid "Failed to save event script: server error or network unreachable"
 msgstr ""
 "Не ўдалося захаваць сцэнар падзеі: памылка сервера або сетка недаступная"
 
-#: app/pages/OwnedEventsEdit/index.tsx:298:27
+#: app/pages/OwnedEventsEdit/index.tsx:299:27
 msgid "Failed to save event: server error or network unreachable"
 msgstr "Не ўдалося захаваць падзею: памылка сервера або сетка недаступная"
 
@@ -867,7 +871,7 @@ msgstr "Перайсці да рэгістрацыі"
 msgid "Goal score"
 msgstr "Мэтавая колькасць ачкоў"
 
-#: app/pages/OwnedEventsEdit/index.tsx:164:15
+#: app/pages/OwnedEventsEdit/index.tsx:165:15
 msgid "Goal score must be at least the initial points"
 msgstr "Мэтавая колькасць ачкоў не можа быць меншай за пачатковыя ачкі"
 
@@ -1473,7 +1477,7 @@ msgstr "Адкрытае рыічы"
 msgid "Otherwise"
 msgstr "Інакш"
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:64:25
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:72:25
 msgid "Pao rule enabled for:"
 msgstr "Пао дазволена для:"
 
@@ -1905,7 +1909,7 @@ msgstr "Сансёку"
 msgid "Sanshoku doukou"
 msgstr "Сансёку дока"
 
-#: app/pages/OwnedEventsEdit/index.tsx:377:60
+#: app/pages/OwnedEventsEdit/index.tsx:378:60
 #: app/pages/PlayersManage/LocalIdsTab.tsx:113:56
 #: app/pages/PlayersManage/TeamNamesTab.tsx:114:56
 #: app/pages/ProfileManage.tsx:311:60
@@ -2449,6 +2453,10 @@ msgstr ""
 "Калі дылер выйграе або застаецца тэмпай пасля нічыёй, вятры ўсё роўна "
 "змяняюцца. Хонба дадаецца толькі пасля нічыёй."
 
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:48:22
+msgid "When disabled, use separate yakuhai names like \"East\" and \"White dragon\" instead of aggregated names like \"Yakuhai x3\"."
+msgstr "Калі выключана, выкарыстоўваюцца асобныя назвы якухаяў, напрыклад «Усход» і «Хаку», замест агрэгаваных, напрыклад «Якухай 3»."
+
 #: app/pages/OwnedEventsEdit/TournamentSettings.tsx:61:20
 msgid "When time is out, finish current hand and interrupt the session"
 msgstr "Калі час скончыўся, завяршыць бягучую раздачу і перапыніць сесію"
@@ -2477,7 +2485,7 @@ msgstr "Якіторы"
 msgid "Yakitori penalty"
 msgstr "Штраф за якіторы"
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:46:25
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:54:25
 msgid "Yaku allowed"
 msgstr "Дазволеныя яку"
 
@@ -2589,3 +2597,15 @@ msgstr "Ваш Telegram ID"
 #: app/pages/ProfileSignup.tsx:174:14
 msgid "show / hide"
 msgstr "паказаць / схаваць"
+
+#~ msgid "Disabled"
+#~ msgstr "Выключана"
+
+#~ msgid "Enabled"
+#~ msgstr "Уключана"
+
+#~ msgid "Use separate yakuhai names"
+#~ msgstr "Выкарыстоўваць асобныя назвы якухай"
+
+#~ msgid "Yakuhai names"
+#~ msgstr "Назвы якухай"

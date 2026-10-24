@@ -609,6 +609,8 @@ message RulesetConfig {
   bool chombo_ends_game = 38;
   int32 honba_value = 39;
   repeated int32 double_yakuman = 40;
+  // False uses separate wind and dragon yaku for new events.
+  bool use_aggregated_yakuhai = 41;
 }
 
 message MajsoulSearchEx {

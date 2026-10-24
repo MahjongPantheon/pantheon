@@ -21,7 +21,13 @@ import {
   unpack,
 } from '../../helpers/yakuCompatibility';
 import { IAppState } from '../interfaces';
-import { getWindYaku, getYakuhaiToAdd, yakuhai, windYaku } from '../../helpers/yakuhai';
+import {
+  aggregatedYakuhai,
+  getWindYaku,
+  getYakuhaiToAdd,
+  yakuhai,
+  windYaku,
+} from '../../helpers/yakuhai';
 import { YakuId } from '../../helpers/yaku';
 import { WinProps, Yaku } from '../../helpers/interfaces';
 import { RoundOutcome } from 'tsclients/proto/atoms.pb';
@@ -136,6 +142,14 @@ function _excludeYaku(
       return false;
     }
 
+    if (
+      state.gameConfig?.rulesetConfig.useAggregatedYakuhai
+        ? yakuhai.includes(yakuId)
+        : aggregatedYakuhai.includes(yakuId)
+    ) {
+      return false;
+    }
+
     if (yakuhai.includes(yakuId)) {
       const allowed = state.gameConfig?.rulesetConfig.allowedYaku ?? [];
       const added = (yaku ?? [yakuId]).filter((id) => allowed.includes(id));
@@ -231,6 +245,7 @@ function _getYakuList(state: IAppState): { [id: number]: Yaku[] } {
 
   const yakuList: { [key: number]: Yaku[] } = {};
   const allowedYaku = [...state.gameConfig.rulesetConfig.allowedYaku, YakuId.__OPENHAND];
+  const aggregated = state.gameConfig.rulesetConfig.useAggregatedYakuhai;
   for (const user of getWinningUsers(state)) {
     const simple = filterAllowed(yakuCommon, allowedYaku);
     const rare = filterAllowed(yakuRare, allowedYaku);
@@ -239,6 +254,9 @@ function _getYakuList(state: IAppState): { [id: number]: Yaku[] } {
       .concat(rare)
       .concat(yakuman)
       .filter((y) => {
+        if (aggregated ? yakuhai.includes(y.id) : aggregatedYakuhai.includes(y.id)) {
+          return false;
+        }
         const pair = windYaku.find((candidate) => candidate.includes(y.id));
         if (!pair) {
           return true;
