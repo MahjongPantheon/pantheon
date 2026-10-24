@@ -879,7 +879,7 @@ msgstr "Целевое количество очков должно быть н�
 
 #: app/helpers/yaku.ts:305:34
 msgid "Green dragon"
-msgstr "Зелёный дракон"
+msgstr "Хацу"
 
 #: app/helpers/yaku.ts:189:34
 msgid "Haitei"
@@ -1771,7 +1771,7 @@ msgstr "Восстановление пароля"
 
 #: app/helpers/yaku.ts:301:34
 msgid "Red dragon"
-msgstr "Красный дракон"
+msgstr "Чун"
 
 #: app/pages/PrivilegesManage/ManagementTab.tsx:250:14
 msgid "Referee privileges include:"
@@ -2496,7 +2496,7 @@ msgstr ""
 
 #: app/helpers/yaku.ts:309:34
 msgid "White dragon"
-msgstr "Белый дракон"
+msgstr "Хаку"
 
 #: app/pages/OwnedEventsEdit/TournamentSettings.tsx:96:18
 msgid "Wind shuffle mode"

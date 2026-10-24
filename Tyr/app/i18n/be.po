@@ -194,7 +194,7 @@ msgstr "Перайсці ў асабісты кабінет"
 
 #: app/helpers/yaku.ts:485:34 app/helpers/yaku.ts:486:39
 msgid "Green dragon"
-msgstr "Зялёны цмок"
+msgstr "Хацу"
 
 #: app/helpers/yaku.ts:383:34 app/helpers/yaku.ts:384:39
 msgid "Haitei"
@@ -385,7 +385,7 @@ msgstr "Папярэдняя гульня"
 
 #: app/helpers/yaku.ts:479:34 app/helpers/yaku.ts:480:39
 msgid "Red dragon"
-msgstr "Чырвоны цмок"
+msgstr "Чун"
 
 #: app/components/screens/TableCurrentGame/TableCurrentGame.tsx:128:10
 msgid "Referee has been requested to your table!"
@@ -579,7 +579,7 @@ msgstr "Вецер месца: Захад"
 
 #: app/helpers/yaku.ts:491:34 app/helpers/yaku.ts:492:39
 msgid "White dragon"
-msgstr "Белы цмок"
+msgstr "Хаку"
 
 #: app/helpers/yaku.ts:234:39
 msgid "Yakuhai"
