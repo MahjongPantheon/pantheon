@@ -262,6 +262,55 @@ describe('Achievement calculations', () => {
     }
   );
 
+  it.each([
+    [false, false],
+    [false, true],
+    [true, false],
+  ])(
+    'handles sessions with missing results or rounds (results: %s, rounds: %s)',
+    async (hasResults, hasRounds) => {
+      const { event, session } = fixture();
+      const { session: completeSession } = fixture();
+      completeSession.event = event;
+      event.ruleset.rules.riichiGoesToWinner = true;
+      session.intermediateResults.riichiBets = 2;
+      completeSession.intermediateResults.riichiBets = 1;
+      jest.spyOn(playerModel, 'findPlayersForEvents').mockResolvedValue({
+        players: [1, 2, 3, 4, 5].map(makePlayer),
+        replaceMap: new Map(),
+      });
+      jest
+        .spyOn(sessionModel, 'findByEventAndStatus')
+        .mockResolvedValue([session, completeSession]);
+      jest.spyOn(resultsModel, 'findBySession').mockResolvedValue([
+        Object.assign(new SessionResultsEntity(), {
+          session: completeSession,
+          playerId: 4,
+          place: 1,
+        }),
+        ...(hasResults
+          ? [Object.assign(new SessionResultsEntity(), { session, playerId: 4, place: 1 })]
+          : []),
+      ]);
+      jest
+        .spyOn(roundModel, 'findBySessionIds')
+        .mockResolvedValue([
+          round(completeSession, RoundOutcome.ROUND_OUTCOME_RON, [2], [1]),
+          ...(hasRounds ? [round(session, RoundOutcome.ROUND_OUTCOME_RON, [2], [1])] : []),
+        ]);
+
+      const stats = await calcRiichiStat(repo, event);
+      expect([...stats.data.values()]).toEqual([
+        { playerId: 1, won: 0, lost: hasRounds ? 2 : 1, stole: 0 },
+        { playerId: 2, won: 0, lost: 0, stole: hasRounds ? 2 : 1 },
+        { playerId: 3, won: 0, lost: 0, stole: 0 },
+        { playerId: 4, won: 0, lost: 0, stole: hasResults ? 3 : 1 },
+      ]);
+      await expect(getMaxStolenRiichiBetsCount(event, repo)).resolves.toHaveLength(2);
+      await expect(getMinLostRiichiBetsCount(event, repo)).resolves.toHaveLength(4);
+    }
+  );
+
   it('refreshes cached statistics after two minutes', async () => {
     jest.useFakeTimers();
     jest.setSystemTime(new Date('2026-01-01T00:00:00Z'));

@@ -89,7 +89,8 @@ export async function calcRiichiStat(repo: Repository, event: EventEntity): Prom
   for (const session of sessions) {
     if (rules.riichiGoesToWinner) {
       // find riichi bets collected in the end of the game by first place
-      const firstPlace = sessionResults[session.id].find((res) => res.place === 1);
+      // Missing results must not prevent counting the recorded rounds.
+      const firstPlace = sessionResults[session.id]?.find((res) => res.place === 1);
       const firstPlacePlayerId = firstPlace?.playerId;
       if (firstPlacePlayerId && stat.data.has(firstPlacePlayerId)) {
         stat.data.set(firstPlacePlayerId, {
@@ -101,7 +102,8 @@ export async function calcRiichiStat(repo: Repository, event: EventEntity): Prom
       }
     }
 
-    for (const round of rounds[session.id]) {
+    // Penalty sessions are finished sessions without any rounds.
+    for (const round of rounds[session.id] ?? []) {
       const riichiIds = round.riichi ?? [];
 
       if (
