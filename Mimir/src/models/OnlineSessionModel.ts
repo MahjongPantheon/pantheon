@@ -232,6 +232,7 @@ export class OnlineSessionModel extends Model {
     const [players] = await Promise.all([
       playerModel.findById(playerIds),
       cronModel.scheduleRecalcAchievements(event.id),
+      cronModel.scheduleRecalcStats(event.id, playerIds),
     ]);
 
     return {

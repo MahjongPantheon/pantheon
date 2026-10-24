@@ -134,7 +134,7 @@ describe('Session previews and finalization', () => {
       });
       if (finishing) {
         expect(state.isFinished()).toBe(true);
-        expect(recalc).toHaveBeenCalledTimes(1);
+        expect(recalc).toHaveBeenCalledTimes(syncEnd ? 0 : 1);
         expect(session.status).toBe(
           syncEnd ? SessionStatus.SESSION_STATUS_PREFINISHED : SessionStatus.SESSION_STATUS_FINISHED
         );
@@ -150,6 +150,30 @@ describe('Session previews and finalization', () => {
       }
     }
   );
+
+  it('queues statistics after synchronous finalization, and only once', async () => {
+    const { event, session, saved } = makeSession(EndingPolicy.ENDING_POLICY_EP_UNSPECIFIED, true);
+    const state = new SessionState(event.ruleset, players, saved);
+    jest
+      .spyOn(Model.getModel(repo, EventRegistrationModel), 'findByPlayerAndEvent')
+      .mockResolvedValue([]);
+    const history = jest
+      .spyOn(Model.getModel(repo, PlayerHistoryModel), 'makeNewHistoryItem')
+      .mockResolvedValue();
+    const recalc = jest
+      .spyOn(Model.getModel(repo, CronModel), 'scheduleRecalcStats')
+      .mockImplementation(async () => {
+        expect(session.status).toBe(SessionStatus.SESSION_STATUS_FINISHED);
+        expect(history).toHaveBeenCalledTimes(4);
+      });
+
+    await model.prefinish(event, session, state);
+    expect(recalc).not.toHaveBeenCalled();
+    await model.finish(event, session, state);
+    await model.finish(event, session, state);
+    expect(recalc).toHaveBeenCalledTimes(1);
+    expect(recalc).toHaveBeenCalledWith(event.id, players);
+  });
 
   it.each(roundFixtures)(
     'keeps saved state unchanged when previewing %s',
@@ -280,7 +304,10 @@ describe('Session previews and finalization', () => {
     jest.spyOn(repo.meta, 'personId', 'get').mockReturnValue(1);
     jest.spyOn(Model.getModel(repo, PlayerModel), 'isEventAdmin').mockResolvedValue(true);
     jest.spyOn(model, 'findByRepresentationalHash').mockResolvedValue([session]);
-    jest.spyOn(model, 'finish').mockResolvedValue();
+    jest.spyOn(model, 'finalizeGame').mockResolvedValue();
+    const recalc = jest
+      .spyOn(Model.getModel(repo, CronModel), 'scheduleRecalcStats')
+      .mockResolvedValue();
     jest
       .spyOn(Model.getModel(repo, AchievementsModel), 'scheduleRebuildAchievements')
       .mockResolvedValue();
@@ -305,5 +332,6 @@ describe('Session previews and finalization', () => {
     release();
     await completion;
     expect(finished).toBe(true);
+    expect(recalc).toHaveBeenCalledWith(session.event.id, players);
   });
 });

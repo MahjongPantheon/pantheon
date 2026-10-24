@@ -62,7 +62,7 @@ describe('Online replay import', () => {
   afterAll(() => repo.destroy());
 
   it.each([1, 2])(
-    'persists parsed content type %i, results and history, then schedules achievements',
+    'persists parsed content type %i, results and history, then schedules achievements and statistics',
     async (contentType) => {
       const { event, session, rounds } = fixture();
       const parser = jest
@@ -84,6 +84,7 @@ describe('Online replay import', () => {
       jest.spyOn(playerHistory, 'findAllLastByEventAndPlayer').mockResolvedValue(histories);
       jest.spyOn(playersModel, 'findById').mockResolvedValue(ids.map(makePlayer));
       const schedule = jest.spyOn(cron, 'scheduleRecalcAchievements').mockResolvedValue();
+      const stats = jest.spyOn(cron, 'scheduleRecalcStats').mockResolvedValue();
       const result = await model.addGameContent(
         event,
         'replay-hash',
@@ -126,6 +127,7 @@ describe('Online replay import', () => {
       const saved = persist.mock.calls[1][0] as object[];
       expect(saved.filter((item) => item instanceof PlayerHistoryEntity)).toHaveLength(4);
       expect(schedule).toHaveBeenCalledWith(event.id);
+      expect(stats).toHaveBeenCalledWith(event.id, ids);
     }
   );
 

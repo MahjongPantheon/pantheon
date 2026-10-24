@@ -598,7 +598,6 @@ export class SessionModel extends Model {
       riichi: {},
       honba: {},
     };
-    const cronModel = this.getModel(CronModel);
     const lastTimer = event.lastTimer;
     const noTimeLeft =
       event.useTimer &&
@@ -630,12 +629,7 @@ export class SessionModel extends Model {
         }
 
         if (sessionState.isFinished()) {
-          await Promise.all([
-            preventSaving
-              ? Promise.resolve()
-              : cronModel.scheduleRecalcStats(event.id, sessionState.state.playerIds),
-            this.prefinish(event, session, sessionState, preventSaving),
-          ]);
+          await this.prefinish(event, session, sessionState, preventSaving);
         } else {
           if (!preventSaving) {
             session.intermediateResults = sessionState.state;
@@ -655,12 +649,7 @@ export class SessionModel extends Model {
         }
 
         if (sessionState.isFinished()) {
-          await Promise.all([
-            preventSaving
-              ? Promise.resolve()
-              : cronModel.scheduleRecalcStats(event.id, sessionState.state.playerIds),
-            this.prefinish(event, session, sessionState, preventSaving),
-          ]);
+          await this.prefinish(event, session, sessionState, preventSaving);
         } else {
           if (!preventSaving) {
             session.intermediateResults = sessionState.state;
@@ -675,12 +664,7 @@ export class SessionModel extends Model {
         // We should finish game here for offline events, but online ones will be finished manually in model.
         // Looks ugly :( But works as expected, so let it be until we find better solution.
         if (!event.isOnline && sessionState.isFinished()) {
-          await Promise.all([
-            preventSaving
-              ? Promise.resolve()
-              : cronModel.scheduleRecalcStats(event.id, sessionState.state.playerIds),
-            this.prefinish(event, session, sessionState, preventSaving),
-          ]);
+          await this.prefinish(event, session, sessionState, preventSaving);
         } else {
           if (!preventSaving) {
             session.intermediateResults = sessionState.state;
@@ -793,7 +777,11 @@ export class SessionModel extends Model {
       session.endDate ??= new Date().toISOString();
       session.status = SessionStatus.SESSION_STATUS_FINISHED;
     }
-    return this.finalizeGame(event, session, sessionState, false, preventSaving);
+    await this.finalizeGame(event, session, sessionState, false, preventSaving);
+    if (!preventSaving) {
+      // Queue statistics only once final results are ready, including synchronous and forced ends.
+      await this.getModel(CronModel).scheduleRecalcStats(event.id, sessionState.state.playerIds);
+    }
   }
 
   async finalizeGame(
