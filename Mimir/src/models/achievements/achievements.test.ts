@@ -1,3 +1,4 @@
+import { getDieHard } from './dieHard.js';
 import { jest } from '@jest/globals';
 import { Model } from '../Model.js';
 import { SessionModel } from '../SessionModel.js';
@@ -73,6 +74,34 @@ describe('Achievement calculations', () => {
     jest.useRealTimers();
   });
   afterAll(() => repo.destroy());
+
+  it('uses three-seat dealer rotation and excludes the ghost from achievements', async () => {
+    const { event, session } = fixture();
+    event.ruleset = RulesetEntity.createRuleset('sanma');
+    session.players[3].playerId = -1;
+    const first = round(session, RoundOutcome.ROUND_OUTCOME_RON, [1]);
+    first.round = 4;
+    first.hands[0].han = 5;
+    first.hands[0].fu = 0;
+    const second = round(session, RoundOutcome.ROUND_OUTCOME_RON, [2]);
+    second.round = 5;
+    second.hands[0].han = 5;
+    second.hands[0].fu = 0;
+    const third = round(session, RoundOutcome.ROUND_OUTCOME_RON, [3]);
+    third.round = 6;
+    third.hands[0].han = 5;
+    third.hands[0].fu = 0;
+    first.hands[0].loserId = 2;
+    second.hands[0].loserId = 3;
+    third.hands[0].loserId = 1;
+    jest.spyOn(sessionModel, 'findByEventAndStatus').mockResolvedValue([session]);
+    jest.spyOn(roundModel, 'findBySessionIds').mockResolvedValue([first, second, third]);
+    expect(await getBestDealer(event, repo)).toEqual({ bestWinCount: 1, playerIds: [1, 2, 3] });
+    expect((await getImpossibleWait(event, repo)).map((item) => item.amount)).toEqual([
+      12000, 12000, 12000,
+    ]);
+    expect(await getDieHard(event, repo)).toEqual({ count: 1, playerIds: [1, 2, 3] });
+  });
 
   it('selects tied maximum tsumo counts within a single session rather than event totals', async () => {
     const { event, session: first } = fixture();

@@ -1,3 +1,4 @@
+import { GHOST_PLAYER_ID } from '../../../Common/constants.js';
 import { TransactionPropagation } from '@mikro-orm/core';
 import { Model } from './Model.js';
 import { SessionResultsEntity } from '../entities/SessionResults.entity.js';
@@ -48,34 +49,36 @@ export class SessionResultsModel extends Model {
       state.getReplacements() ?? {}
     );
 
-    return allPlayerIds.map((currentPlayerId) => {
-      const chips = ruleset.rules.chipsValue > 0 ? (state.getChips()[currentPlayerId] ?? 0) : 0;
-      const score = state.getScores()[currentPlayerId];
-      const place = placesMap[currentPlayerId];
+    return allPlayerIds
+      .filter((id) => id !== GHOST_PLAYER_ID)
+      .map((currentPlayerId) => {
+        const chips = ruleset.rules.chipsValue > 0 ? (state.getChips()[currentPlayerId] ?? 0) : 0;
+        const score = state.getScores()[currentPlayerId];
+        const place = placesMap[currentPlayerId];
 
-      const isReplaced = !!state.getReplacements()?.[currentPlayerId];
-      let ratingDeltaForPlayer = ratingDelta[currentPlayerId];
-      if (!isReplaced && ruleset.rules.chipsValue > 0) {
-        ratingDeltaForPlayer += chips * ruleset.rules.chipsValue;
-      }
-      if (!isReplaced && state.getChombo()[currentPlayerId]) {
-        ratingDeltaForPlayer += state.getChombo()[currentPlayerId];
-      }
-      if (!isReplaced && ruleset.rules.withYakitori && state.getYakitori()[currentPlayerId]) {
-        ratingDeltaForPlayer -= ruleset.rules.yakitoriPenalty;
-      }
+        const isReplaced = !!state.getReplacements()?.[currentPlayerId];
+        let ratingDeltaForPlayer = ratingDelta[currentPlayerId];
+        if (!isReplaced && ruleset.rules.chipsValue > 0) {
+          ratingDeltaForPlayer += chips * ruleset.rules.chipsValue;
+        }
+        if (!isReplaced && state.getChombo()[currentPlayerId]) {
+          ratingDeltaForPlayer += state.getChombo()[currentPlayerId];
+        }
+        if (!isReplaced && ruleset.rules.withYakitori && state.getYakitori()[currentPlayerId]) {
+          ratingDeltaForPlayer -= ruleset.rules.yakitoriPenalty;
+        }
 
-      const entity = new SessionResultsEntity();
-      entity.event = this.repo.em.getReference(EventEntity, eventId);
-      entity.session = this.repo.em.getReference(SessionEntity, sessionId);
-      entity.playerId = currentPlayerId;
-      entity.score = score;
-      entity.place = place;
-      entity.ratingDelta = ratingDeltaForPlayer;
-      entity.chips = chips;
+        const entity = new SessionResultsEntity();
+        entity.event = this.repo.em.getReference(EventEntity, eventId);
+        entity.session = this.repo.em.getReference(SessionEntity, sessionId);
+        entity.playerId = currentPlayerId;
+        entity.score = score;
+        entity.place = place;
+        entity.ratingDelta = ratingDeltaForPlayer;
+        entity.chips = chips;
 
-      return entity;
-    });
+        return entity;
+      });
   }
 
   public calcPlacesMap(scores: Record<number, number>) {
@@ -131,6 +134,7 @@ export class SessionResultsModel extends Model {
     sessionState: SessionState,
     playerIds: number[]
   ): SessionResultsEntity[] {
+    playerIds = playerIds.filter((id) => id !== GHOST_PLAYER_ID);
     const scores = sessionState.getScores();
     if (ruleset.rules.riichiGoesToWinner) {
       const highestScore = Math.max(...playerIds.map((playerId) => scores[playerId]));

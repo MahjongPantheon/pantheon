@@ -1,3 +1,4 @@
+import { GHOST_PLAYER_ID } from '../../../Common/constants.js';
 import { Collection, TransactionPropagation } from '@mikro-orm/core';
 import { JobsQueueEntity } from '../entities/JobsQueue.entity.js';
 import { Model } from './Model.js';
@@ -340,7 +341,7 @@ export class PlayerStatsModel extends Model {
         session: gameIds.map((id) => this.repo.em.getReference(SessionEntity, id)),
       },
     });
-    const playerIds = players.map((sp) => sp.playerId);
+    const playerIds = players.map((sp) => sp.playerId).filter((id) => id !== GHOST_PLAYER_ID);
     const playerModel = this.getModel(PlayerModel);
     const playerInfo = await playerModel.findById(playerIds);
     return playerInfo.reduce((acc, player) => {
@@ -363,6 +364,7 @@ export class PlayerStatsModel extends Model {
   ) {
     const withChips = ruleset.rules.chipsValue > 0;
     const playersBySessionGrouped = playerBySession.reduce((acc, [playerId, sessionId]) => {
+      if (playerId === GHOST_PLAYER_ID) return acc;
       const players = acc.get(sessionId) ?? [];
       players.push(playerId);
       acc.set(sessionId, players);

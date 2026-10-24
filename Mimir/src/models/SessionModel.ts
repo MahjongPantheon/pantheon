@@ -1,3 +1,4 @@
+import { GHOST_PLAYER_ID } from '../../../Common/constants.js';
 import { LockMode, TransactionPropagation } from '@mikro-orm/core';
 import { randomUUID } from 'node:crypto';
 import { TwirpError } from 'twirpscript';
@@ -403,7 +404,7 @@ export class SessionModel extends Model {
             title: (replaceMap.get(player.id) ?? player).title,
             hasAvatar: (replaceMap.get(player.id) ?? player).hasAvatar,
             lastUpdate: (replaceMap.get(player.id) ?? player).lastUpdate,
-            score: sessionState.getScores()[player.id],
+            score: sessionState.getScores()[player.id] ?? 0,
             yakitori: sessionState.getYakitori()[player.id],
             ratingDelta: 0, // probably unused, check and remove some day
             replacedBy: replaceMap.has(player.id)
@@ -709,6 +710,16 @@ export class SessionModel extends Model {
 
   // Internal method to start arbitrary session from seating code or other sources
   startSession(event: EventEntity, playerIds: number[], tableIndex: number | null) {
+    if (
+      playerIds.length !== event.ruleset.playerCount ||
+      new Set(playerIds).size !== playerIds.length ||
+      playerIds.some((id) => id <= 0)
+    ) {
+      throw new Error(
+        `Sessions require exactly ${event.ruleset.playerCount} distinct real players`
+      );
+    }
+    const seatIds = event.ruleset.rules.withSanma ? [...playerIds, GHOST_PLAYER_ID] : playerIds;
     const sessionState = new SessionState(event.ruleset, playerIds);
 
     if (event.ruleset.rules.withYakitori) {
@@ -728,7 +739,7 @@ export class SessionModel extends Model {
     });
     this.repo.em.persist(newSession);
 
-    const sessionPlayers = playerIds.map((playerId, order) => {
+    const sessionPlayers = seatIds.map((playerId, order) => {
       return this.repo.em.create(SessionPlayerEntity, {
         order: order + 1,
         playerId,
@@ -1102,9 +1113,14 @@ export class SessionModel extends Model {
           .andOnIn('session.event_id', [session.event.id])
           .andOnNotIn('session.status', [SessionStatus.SESSION_STATUS_CANCELLED])
       )
-      .whereIn('session_players.player_id', session.intermediateResults?.playerIds ?? [])
+      .whereIn(
+        'session_players.player_id',
+        session.intermediateResults?.playerIds.filter((id) => id !== GHOST_PLAYER_ID) ?? []
+      )
       .orderBy('session_players.id', 'desc')
-      .limit(4);
+      .limit(
+        session.intermediateResults?.playerIds.filter((id) => id !== GHOST_PLAYER_ID).length ?? 4
+      );
     const lastSessions = await this.repo.em.execute(query);
     for (const lastSession of lastSessions) {
       if (lastSession.id !== session.id) {

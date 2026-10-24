@@ -1,6 +1,7 @@
 import { jest } from '@jest/globals';
 import { TournamentGamesStatus, WindShuffleMode } from 'tsclients/proto/atoms.pb.js';
 import { EventEntity } from '../../entities/Event.entity.js';
+import { RulesetEntity } from '../../entities/Ruleset.entity.js';
 import { EventPrescriptEntity } from '../../entities/EventPrescript.entity.js';
 import { EventRegisteredPlayersEntity } from '../../entities/EventRegisteredPlayers.entity.js';
 import { SessionEntity } from '../../entities/Session.entity.js';
@@ -56,6 +57,7 @@ describe('seating creation', () => {
   beforeEach(() => {
     event = Object.assign(new EventEntity(), {
       id: eventId,
+      ruleset: RulesetEntity.createRuleset('ema'),
       useTimer: 1,
       gamesStatus: TournamentGamesStatus.TOURNAMENT_GAMES_STATUS_STARTED,
     });

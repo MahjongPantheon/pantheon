@@ -133,6 +133,7 @@ export const TablesState: React.FC<{ params: { eventId: string } }> = ({ params:
             key={`tbl_${tidx}`}
             table={table.table}
             basePoints={ruleset?.rulesetConfig.startPoints ?? 0}
+            playersCount={ruleset?.rulesetConfig.withSanma ? 3 : 4}
             index={table.index}
           />
         ))}
@@ -141,30 +142,33 @@ export const TablesState: React.FC<{ params: { eventId: string } }> = ({ params:
   );
 };
 
-const roundsMap: { [key: number]: string } = {
-  1: '東1',
-  2: '東2',
-  3: '東3',
-  4: '東4',
-  5: '南1',
-  6: '南2',
-  7: '南3',
-  8: '南4',
-  9: '西1',
-  10: '西2',
-  11: '西3',
-  12: '西4',
-};
+function makeRound(roundIndex: number, playersCount = 4) {
+  if (roundIndex < 1) {
+    return '?';
+  }
+  if (roundIndex > 3 * playersCount) {
+    return `北${roundIndex - 3 * playersCount}`;
+  }
+  if (roundIndex > 2 * playersCount) {
+    return `西${roundIndex - 2 * playersCount}`;
+  }
+  if (roundIndex > playersCount) {
+    return `南${roundIndex - playersCount}`;
+  }
+  return `東${roundIndex}`;
+}
 const winds = ['東', '南', '西', '北'];
 const colors: MantineColor[] = ['red', 'yellow', 'green', 'blue'];
 function Table({
   index,
   table,
   basePoints,
+  playersCount,
 }: {
   index: number;
   table: TableState;
   basePoints: number;
+  playersCount: number;
 }) {
   const isDark = useMantineColorScheme().colorScheme === 'dark';
   const theme = useMantineTheme();
@@ -191,7 +195,7 @@ function Table({
           </Badge>
         ) : (
           <Badge variant='filled' color='grape' size='xl' radius='sm' pl={8} pr={8}>
-            {roundsMap[table.currentRoundIndex]}
+            {makeRound(table.currentRoundIndex, playersCount)}
           </Badge>
         )}
       </Stack>

@@ -1,3 +1,4 @@
+import { GHOST_PLAYER_ID } from '../../../../Common/constants.js';
 import { Repository } from '../../services/Repository';
 import { EventEntity } from '../../entities/Event.entity';
 import { getRoundsOfSessions } from './helpers/getRoundsOfSessions';
@@ -20,7 +21,9 @@ export async function getImpossibleWait(event: EventEntity, repo: Repository) {
   }[] = [];
 
   for (const session of sessions) {
-    const sessionPlayersOrdered = [...session.players].sort((p1, p2) => p1.order - p2.order);
+    const sessionPlayersOrdered = [...session.players]
+      .filter((p) => p.playerId !== GHOST_PLAYER_ID)
+      .sort((p1, p2) => p1.order - p2.order);
     for (const round of rounds[session.id]) {
       if (
         round.outcome !== RoundOutcome.ROUND_OUTCOME_RON &&
@@ -28,7 +31,8 @@ export async function getImpossibleWait(event: EventEntity, repo: Repository) {
       ) {
         continue;
       }
-      const currentDealerId = sessionPlayersOrdered[(round.round - 1) % 4].playerId;
+      const currentDealerId =
+        sessionPlayersOrdered[(round.round - 1) % sessionPlayersOrdered.length].playerId;
 
       for (const hand of round.hands) {
         if ((round.riichi ?? []).includes(hand.loserId!)) {
@@ -38,7 +42,7 @@ export async function getImpossibleWait(event: EventEntity, repo: Repository) {
         calc.ron(
           event.ruleset.rules,
           hand.winnerId === currentDealerId,
-          Object.fromEntries(sessionPlayersOrdered.map((id) => [id, 0])),
+          Object.fromEntries(sessionPlayersOrdered.map((p) => [p.playerId, 0])),
           hand.winnerId!,
           hand.loserId!,
           hand.han!,
