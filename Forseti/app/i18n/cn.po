@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-19 22:18Z\n"
+"POT-Creation-Date: 2026-10-24 22:29+0200\n"
 "PO-Revision-Date: 2026-10-20 00:34+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -15,7 +15,7 @@ msgstr ""
 "X-Generator: Poedit 3.4.2\n"
 
 #: app/pages/GamesControl/GamesList.tsx:213:53
-#: app/pages/GamesControl/TournamentControls.tsx:296:45
+#: app/pages/GamesControl/TournamentControls.tsx:306:45
 msgid "1 minute"
 msgstr "1 分钟"
 
@@ -32,7 +32,7 @@ msgid "1st"
 msgstr "第 1 名"
 
 #: app/pages/GamesControl/GamesList.tsx:214:54
-#: app/pages/GamesControl/TournamentControls.tsx:297:46
+#: app/pages/GamesControl/TournamentControls.tsx:307:46
 msgid "2 minutes"
 msgstr "2 分钟"
 
@@ -41,7 +41,7 @@ msgid "2nd"
 msgstr "第 2 名"
 
 #: app/pages/GamesControl/GamesList.tsx:215:54
-#: app/pages/GamesControl/TournamentControls.tsx:298:46
+#: app/pages/GamesControl/TournamentControls.tsx:308:46
 msgid "3 minutes"
 msgstr "3 分钟"
 
@@ -54,7 +54,7 @@ msgid "3rd"
 msgstr "第 3 名"
 
 #: app/pages/GamesControl/GamesList.tsx:216:54
-#: app/pages/GamesControl/TournamentControls.tsx:299:46
+#: app/pages/GamesControl/TournamentControls.tsx:309:46
 msgid "4 minutes"
 msgstr "4 分钟"
 
@@ -63,12 +63,12 @@ msgid "4th"
 msgstr "第 4 名"
 
 #: app/pages/GamesControl/GamesList.tsx:217:54
-#: app/pages/GamesControl/TournamentControls.tsx:300:46
+#: app/pages/GamesControl/TournamentControls.tsx:310:46
 msgid "5 minutes"
 msgstr "5 分钟"
 
 #: app/pages/GamesControl/GamesList.tsx:218:54
-#: app/pages/GamesControl/TournamentControls.tsx:301:46
+#: app/pages/GamesControl/TournamentControls.tsx:311:46
 msgid "7 minutes"
 msgstr "7 分钟"
 
@@ -103,8 +103,8 @@ msgid "Add a penalty"
 msgstr "添加处罚"
 
 #: app/pages/GamesControl/GamesList.tsx:204:29
-#: app/pages/GamesControl/TournamentControls.tsx:286:22
-#: app/pages/GamesControl/TournamentControls.tsx:287:21
+#: app/pages/GamesControl/TournamentControls.tsx:296:22
+#: app/pages/GamesControl/TournamentControls.tsx:297:21
 msgid "Add extra time"
 msgstr "追加时间"
 
@@ -112,7 +112,7 @@ msgstr "追加时间"
 msgid "Add extra time for this table"
 msgstr "为本桌追加时间"
 
-#: app/pages/GamesControl/TournamentControls.tsx:305:26
+#: app/pages/GamesControl/TournamentControls.tsx:315:26
 msgid "Add selected amount of extra time for all tables?"
 msgstr "为所有桌追加所选时长？"
 
@@ -231,15 +231,15 @@ msgstr "已执行的犯规处罚"
 msgid "Apply penalty"
 msgstr "执行处罚"
 
-#: app/pages/GamesControl/TournamentControls.tsx:223:26
+#: app/pages/GamesControl/TournamentControls.tsx:232:28
 msgid "Apply seating for next session?"
 msgstr "应用下一场对局的座位表？"
 
-#: app/pages/GamesControl/TournamentControls.tsx:329:22
+#: app/pages/GamesControl/TournamentControls.tsx:339:22
 msgid "Approve session results and go on to next session"
 msgstr "确认对局结果并进入下一场对局"
 
-#: app/pages/GamesControl/TournamentControls.tsx:330:21
+#: app/pages/GamesControl/TournamentControls.tsx:340:21
 msgid "Approve sessions"
 msgstr "确认对局结果"
 
@@ -322,27 +322,27 @@ msgstr "已取消： "
 msgid "Changes saved!"
 msgstr "更改已保存！"
 
-#: app/helpers/yaku.ts:185:34
+#: app/helpers/yaku.ts:197:34
 msgid "Chankan"
 msgstr "抢杠"
 
-#: app/helpers/yaku.ts:105:34
+#: app/helpers/yaku.ts:117:34
 msgid "Chanta"
 msgstr "混全带幺九"
 
-#: app/helpers/yaku.ts:241:34
+#: app/helpers/yaku.ts:253:34
 msgid "Chihou"
 msgstr "地和"
 
-#: app/helpers/yaku.ts:93:34
+#: app/helpers/yaku.ts:105:34
 msgid "Chiitoitsu"
 msgstr "七对子"
 
-#: app/helpers/yaku.ts:221:34
+#: app/helpers/yaku.ts:233:34
 msgid "Chinitsu"
 msgstr "清一色"
 
-#: app/helpers/yaku.ts:217:34 app/helpers/yaku.ts:276:34
+#: app/helpers/yaku.ts:229:34 app/helpers/yaku.ts:332:34
 msgid "Chinroutou"
 msgstr "清老头"
 
@@ -364,11 +364,11 @@ msgstr "若对局尚未结束，可在对局管理页面取消相应局来取消
 msgid "Chombo, %1"
 msgstr "犯规，%1"
 
-#: app/helpers/yaku.ts:225:34
+#: app/helpers/yaku.ts:237:34
 msgid "Chuuren poutou"
 msgstr "九莲宝灯"
 
-#: app/helpers/yaku.ts:249:34 app/helpers/yaku.ts:295:34
+#: app/helpers/yaku.ts:261:34 app/helpers/yaku.ts:351:34
 msgid "Chuuren poutou 9-side"
 msgstr "纯正九莲宝灯"
 
@@ -439,16 +439,16 @@ msgstr "当前局"
 msgid "Current status"
 msgstr "当前状态"
 
-#: app/helpers/yaku.ts:77:34
+#: app/helpers/yaku.ts:89:34
 msgid "Daburu riichi"
 msgstr "两立直"
 
-#: app/helpers/yaku.ts:201:34 app/helpers/yaku.ts:260:34
+#: app/helpers/yaku.ts:213:34 app/helpers/yaku.ts:316:34
 msgid "Daisangen"
 msgstr "大三元"
 
-#: app/helpers/yaku.ts:209:34 app/helpers/yaku.ts:264:34
-#: app/helpers/yaku.ts:287:34
+#: app/helpers/yaku.ts:221:34 app/helpers/yaku.ts:320:34
+#: app/helpers/yaku.ts:343:34
 msgid "Daisuushii"
 msgstr "大四喜"
 
@@ -476,6 +476,15 @@ msgstr "双倍役满："
 #: app/pages/GamesControl/GamesList.tsx:459:12
 msgid "Draw, tempai: %1, riichi: %2"
 msgstr "流局，听牌：%1，立直：%2"
+
+#: app/helpers/yaku.ts:273:34
+msgid "East round wind"
+msgstr "场风：东"
+
+#: app/helpers/yaku.ts:269:34
+#, fuzzy
+msgid "East seat wind"
+msgstr "重置座位表"
 
 #: app/pages/OwnedEventsEdit/index.tsx:78:18
 msgid "Edit event :: %1"
@@ -543,8 +552,9 @@ msgstr "同分时平分顺位分"
 #: app/pages/OwnedEventsEdit/index.tsx:264:18
 #: app/pages/OwnedEventsEdit/index.tsx:303:18 app/pages/Penalties.tsx:102:18
 #: app/pages/Penalties/PenaltyForm.tsx:91:18
-#: app/pages/PlayersManage/index.tsx:76:18
+#: app/pages/PlayersManage/index.tsx:86:18
 #: app/pages/PlayersManage/LocalIdsTab.tsx:72:18
+#: app/pages/PlayersManage/ManagementTab.tsx:85:18
 #: app/pages/PlayersManage/TeamNamesTab.tsx:72:18
 #: app/pages/PrivilegesManage/index.tsx:60:18
 #: app/pages/PrivilegesManage/ManagementTab.tsx:65:18
@@ -732,7 +742,7 @@ msgstr "文件过大"
 msgid "Find and add administrator by name..."
 msgstr "按姓名查找并添加管理员..."
 
-#: app/pages/PlayersManage/ManagementTab.tsx:155:30
+#: app/pages/PlayersManage/ManagementTab.tsx:171:30
 msgid "Find and add player by name..."
 msgstr "按姓名查找并添加玩家..."
 
@@ -740,7 +750,7 @@ msgstr "按姓名查找并添加玩家..."
 msgid "Find and add referee by name..."
 msgstr "按姓名查找并添加裁判..."
 
-#: app/pages/PlayersManage/ManagementTab.tsx:138:24
+#: app/pages/PlayersManage/ManagementTab.tsx:154:24
 msgid "Find replacement player by name..."
 msgstr "查找替补玩家..."
 
@@ -811,7 +821,7 @@ msgstr "对局有效期（小时）"
 msgid "Games management"
 msgstr "对局管理"
 
-#: app/pages/GamesControl/TournamentControls.tsx:219:22
+#: app/pages/GamesControl/TournamentControls.tsx:228:24
 msgid "Generate seating for next session"
 msgstr "生成下一场对局的座位表"
 
@@ -833,7 +843,11 @@ msgstr "目标点数"
 msgid "Goal score must be at least the initial points"
 msgstr "目标点数不得低于起始点数"
 
-#: app/helpers/yaku.ts:177:34
+#: app/helpers/yaku.ts:305:34
+msgid "Green dragon"
+msgstr "发财"
+
+#: app/helpers/yaku.ts:189:34
 msgid "Haitei"
 msgstr "海底摸月"
 
@@ -842,8 +856,8 @@ msgid "Hands valued as 4/30 and 3/60 are rounded to mangan."
 msgstr "4 番 30 符和 3 番 60 符按满贯计算。"
 
 #: app/pages/GamesControl/TournamentControls.tsx:214:19
-#: app/pages/GamesControl/TournamentControls.tsx:319:19
-#: app/pages/GamesControl/TournamentControls.tsx:345:19
+#: app/pages/GamesControl/TournamentControls.tsx:329:19
+#: app/pages/GamesControl/TournamentControls.tsx:355:19
 msgid "Hide results table"
 msgstr "隐藏结果表"
 
@@ -861,15 +875,15 @@ msgid ""
 "payment will be given to all winners."
 msgstr "本场点数仅归首位和牌玩家。若未勾选，则所有和牌玩家均获得本场点数。"
 
-#: app/helpers/yaku.ts:153:34
+#: app/helpers/yaku.ts:165:34
 msgid "Honitsu"
 msgstr "混一色"
 
-#: app/helpers/yaku.ts:157:34
+#: app/helpers/yaku.ts:169:34
 msgid "Honroutou"
 msgstr "混老头"
 
-#: app/helpers/yaku.ts:173:34
+#: app/helpers/yaku.ts:185:34
 msgid "Houtei raoyui"
 msgstr "河底捞鱼"
 
@@ -963,7 +977,7 @@ msgid ""
 "is out and it is final hand of the game"
 msgstr "若启用，在时间已到且为对局最后一局时，犯规后不会再加赛一局"
 
-#: app/helpers/yaku.ts:113:34
+#: app/helpers/yaku.ts:125:34
 msgid "Iipeikou"
 msgstr "一杯口"
 
@@ -1012,15 +1026,15 @@ msgstr "电子邮箱无效"
 msgid "Invalid title"
 msgstr "名称无效"
 
-#: app/helpers/yaku.ts:85:34
+#: app/helpers/yaku.ts:97:34
 msgid "Ippatsu"
 msgstr "一发"
 
-#: app/helpers/yaku.ts:129:34
+#: app/helpers/yaku.ts:141:34
 msgid "Ittsu"
 msgstr "一气通贯"
 
-#: app/helpers/yaku.ts:109:34
+#: app/helpers/yaku.ts:121:34
 msgid "Junchan"
 msgstr "纯全带幺九"
 
@@ -1032,11 +1046,11 @@ msgstr "累计役满"
 msgid "Kiriage mangan"
 msgstr "切上满贯"
 
-#: app/helpers/yaku.ts:233:34
+#: app/helpers/yaku.ts:245:34
 msgid "Kokushi musou"
 msgstr "国士无双"
 
-#: app/helpers/yaku.ts:253:34 app/helpers/yaku.ts:299:34
+#: app/helpers/yaku.ts:265:34 app/helpers/yaku.ts:355:34
 msgid "Kokushi musou 13-side"
 msgstr "国士无双十三面听"
 
@@ -1068,7 +1082,7 @@ msgstr "大厅 ID"
 msgid "Local ID"
 msgstr "本地 ID"
 
-#: app/pages/PlayersManage/index.tsx:122:14
+#: app/pages/PlayersManage/index.tsx:132:14
 msgid "Local IDs"
 msgstr "本地 ID"
 
@@ -1133,7 +1147,7 @@ msgstr "管理处罚"
 msgid "Manage players"
 msgstr "管理玩家"
 
-#: app/pages/PlayersManage/index.tsx:53:16
+#: app/pages/PlayersManage/index.tsx:60:16
 msgid "Manage players in event"
 msgstr "管理活动玩家"
 
@@ -1169,7 +1183,7 @@ msgstr "额外处罚的最高罚分"
 msgid "Menu"
 msgstr "菜单"
 
-#: app/helpers/yaku.ts:89:34
+#: app/helpers/yaku.ts:101:34
 msgid "Menzentsumo"
 msgstr "门前清自摸和"
 
@@ -1212,7 +1226,7 @@ msgstr "流局满贯，流局满贯玩家：%1，听牌：%2，立直：%3"
 msgid "New event"
 msgstr "新活动"
 
-#: app/pages/GamesControl/TournamentControls.tsx:220:21
+#: app/pages/GamesControl/TournamentControls.tsx:229:23
 msgid "Next seating"
 msgstr "下次排座"
 
@@ -1228,9 +1242,23 @@ msgstr "尚未执行犯规处罚"
 msgid "No errors found"
 msgstr "未发现错误"
 
+#: app/pages/GamesControl/TournamentControls.tsx:222:18
+msgid "No more prescripted sessions available"
+msgstr "没有更多预设对局可用"
+
 #: app/pages/Penalties/PenaltiesList.tsx:82:45
 msgid "No penalties assigned yet"
 msgstr "尚未执行处罚"
+
+#: app/helpers/yaku.ts:297:34
+#, fuzzy
+msgid "North round wind"
+msgstr "未找到结果"
+
+#: app/helpers/yaku.ts:293:34
+#, fuzzy
+msgid "North seat wind"
+msgstr "下次排座"
 
 #: app/pages/GamesControl/TournamentControls.tsx:107:22
 msgid "Not ready"
@@ -1279,17 +1307,17 @@ msgstr "Pantheon 通过 Telegram 发送通知。请通过以下链接注册 Tele
 msgid "Notifications settings"
 msgstr "通知设置"
 
-#: app/pages/GamesControl/TournamentControls.tsx:259:26
+#: app/pages/GamesControl/TournamentControls.tsx:269:26
 msgid ""
 "Notify all subscribed players to come to their tables? This will send a "
 "message through notification service."
 msgstr "通知所有已订阅玩家前往各自牌桌？此操作将通过通知服务发送消息。"
 
-#: app/pages/GamesControl/TournamentControls.tsx:258:23
+#: app/pages/GamesControl/TournamentControls.tsx:268:23
 msgid "Notify players"
 msgstr "通知玩家"
 
-#: app/pages/GamesControl/TournamentControls.tsx:257:24
+#: app/pages/GamesControl/TournamentControls.tsx:267:24
 msgid "Notify players to come to their tables"
 msgstr "通知玩家前往牌桌"
 
@@ -1376,7 +1404,7 @@ msgstr "在新标签页中打开活动页面"
 msgid "Open menu"
 msgstr "打开菜单"
 
-#: app/helpers/yaku.ts:81:34
+#: app/helpers/yaku.ts:93:34
 msgid "Open riichi"
 msgstr "开立直"
 
@@ -1444,7 +1472,7 @@ msgstr "处罚原因"
 msgid "Phone number"
 msgstr "电话号码"
 
-#: app/helpers/yaku.ts:97:34
+#: app/helpers/yaku.ts:109:34
 msgid "Pinfu"
 msgstr "平和"
 
@@ -1464,11 +1492,11 @@ msgstr "仅进行东风战"
 msgid "Player details were successfully saved"
 msgstr "玩家资料已保存"
 
-#: app/pages/PlayersManage/ManagementTab.tsx:232:27
+#: app/pages/PlayersManage/ManagementTab.tsx:248:27
 msgid "Player is excluded from next seating. Click to include"
 msgstr "玩家已从下次排座中排除，点击加入"
 
-#: app/pages/PlayersManage/ManagementTab.tsx:233:27
+#: app/pages/PlayersManage/ManagementTab.tsx:249:27
 msgid "Player is included in next seating. Click to exclude"
 msgstr "玩家已加入下次排座，点击排除"
 
@@ -1480,7 +1508,7 @@ msgstr "玩家名"
 msgid "Player was successfully registered"
 msgstr "玩家注册成功"
 
-#: app/pages/PlayersManage/index.tsx:106:14
+#: app/pages/PlayersManage/index.tsx:116:14
 msgid "Players"
 msgstr "玩家"
 
@@ -1535,7 +1563,7 @@ msgstr "请选择玩家"
 msgid "Please type in your title to proceed with removal"
 msgstr "请输入你的玩家名以继续删除"
 
-#: app/pages/GamesControl/TournamentControls.tsx:237:17
+#: app/pages/GamesControl/TournamentControls.tsx:247:17
 msgid "Please wait unit seating is ready"
 msgstr "请等待座位表准备完成"
 
@@ -1649,6 +1677,10 @@ msgstr "已安排重新计算"
 msgid "Recover password"
 msgstr "恢复密码"
 
+#: app/helpers/yaku.ts:301:34
+msgid "Red dragon"
+msgstr "红中"
+
 #: app/pages/PrivilegesManage/ManagementTab.tsx:250:14
 msgid "Referee privileges include:"
 msgstr "裁判权限包括："
@@ -1686,7 +1718,7 @@ msgstr "删除对局结果"
 msgid "Remove my account"
 msgstr "删除我的账号"
 
-#: app/pages/PlayersManage/ManagementTab.tsx:247:28
+#: app/pages/PlayersManage/ManagementTab.tsx:264:28
 msgid "Remove player from event"
 msgstr "移除活动玩家"
 
@@ -1694,8 +1726,8 @@ msgstr "移除活动玩家"
 msgid "Remove referee from event"
 msgstr "移除活动裁判"
 
-#: app/pages/PlayersManage/ManagementTab.tsx:212:37
-#: app/pages/PlayersManage/ManagementTab.tsx:213:32
+#: app/pages/PlayersManage/ManagementTab.tsx:228:37
+#: app/pages/PlayersManage/ManagementTab.tsx:229:32
 msgid "Remove replacement"
 msgstr "取消替补"
 
@@ -1703,15 +1735,15 @@ msgstr "取消替补"
 msgid "Remove the game as it never existed"
 msgstr "彻底删除对局记录"
 
-#: app/helpers/yaku.ts:189:34
+#: app/helpers/yaku.ts:201:34
 msgid "Renhou"
 msgstr "人和"
 
-#: app/pages/PlayersManage/ManagementTab.tsx:188:28
+#: app/pages/PlayersManage/ManagementTab.tsx:204:28
 msgid "Replace player with someone else"
 msgstr "用其他玩家替换此玩家"
 
-#: app/pages/PlayersManage/ManagementTab.tsx:204:28
+#: app/pages/PlayersManage/ManagementTab.tsx:220:28
 msgid "Replaced by %1"
 msgstr "由 %1 替补"
 
@@ -1719,7 +1751,7 @@ msgstr "由 %1 替补"
 msgid "Request password reset"
 msgstr "请求重置密码"
 
-#: app/pages/GamesControl/TournamentControls.tsx:245:22
+#: app/pages/GamesControl/TournamentControls.tsx:255:22
 msgid "Reset generated seating"
 msgstr "重置已生成的座位表"
 
@@ -1727,7 +1759,7 @@ msgstr "重置已生成的座位表"
 msgid "Reset my password"
 msgstr "重置我的密码"
 
-#: app/pages/GamesControl/TournamentControls.tsx:246:21
+#: app/pages/GamesControl/TournamentControls.tsx:256:21
 msgid "Reset seating"
 msgstr "重置座位表"
 
@@ -1735,7 +1767,7 @@ msgstr "重置座位表"
 msgid "Reset your password"
 msgstr "重置你的密码"
 
-#: app/helpers/yaku.ts:73:34
+#: app/helpers/yaku.ts:85:34
 msgid "Riichi"
 msgstr "立直"
 
@@ -1753,7 +1785,7 @@ msgid ""
 "to session winner"
 msgstr "对局最后一局流局时，桌上剩余立直棒归对局第一名"
 
-#: app/helpers/yaku.ts:181:34
+#: app/helpers/yaku.ts:193:34
 msgid "Rinshan kaihou"
 msgstr "岭上开花"
 
@@ -1779,27 +1811,27 @@ msgstr ""
 msgid "Ruleset tuning"
 msgstr "规则微调"
 
-#: app/helpers/yaku.ts:117:34
+#: app/helpers/yaku.ts:129:34
 msgid "Ryanpeikou"
 msgstr "两杯口"
 
-#: app/helpers/yaku.ts:229:34 app/helpers/yaku.ts:272:34
+#: app/helpers/yaku.ts:241:34 app/helpers/yaku.ts:328:34
 msgid "Ryuuiisou"
 msgstr "绿一色"
 
-#: app/helpers/yaku.ts:161:34
+#: app/helpers/yaku.ts:173:34
 msgid "Sanankou"
 msgstr "三暗刻"
 
-#: app/helpers/yaku.ts:169:34
+#: app/helpers/yaku.ts:181:34
 msgid "Sankantsu"
 msgstr "三杠子"
 
-#: app/helpers/yaku.ts:121:34
+#: app/helpers/yaku.ts:133:34
 msgid "Sanshoku"
 msgstr "三色同顺"
 
-#: app/helpers/yaku.ts:125:34
+#: app/helpers/yaku.ts:137:34
 msgid "Sanshoku doukou"
 msgstr "三色同刻"
 
@@ -1839,7 +1871,7 @@ msgid "Select event type"
 msgstr "选择活动类型"
 
 #: app/pages/GamesControl/GamesList.tsx:209:36
-#: app/pages/GamesControl/TournamentControls.tsx:292:28
+#: app/pages/GamesControl/TournamentControls.tsx:302:28
 msgid "Select extra time"
 msgstr "选择追加时间"
 
@@ -1851,7 +1883,7 @@ msgstr "选择时间范围"
 msgid "Select player"
 msgstr "选择玩家"
 
-#: app/pages/PlayersManage/ManagementTab.tsx:132:16
+#: app/pages/PlayersManage/ManagementTab.tsx:148:16
 msgid "Select replacement player for %1"
 msgstr "选择 %1 的替补玩家"
 
@@ -1918,20 +1950,20 @@ msgstr "设置"
 msgid "Settings saved!"
 msgstr "设置已保存！"
 
-#: app/pages/PlayersManage/index.tsx:112:20
+#: app/pages/PlayersManage/index.tsx:122:20
 msgid ""
 "Setup local identifiers of players to be used in predefined event script"
 msgstr "设置预设活动脚本中使用的玩家本地 ID"
 
-#: app/pages/PlayersManage/index.tsx:127:20
+#: app/pages/PlayersManage/index.tsx:137:20
 msgid "Setup team name for each player (for team events)"
 msgstr "为每位玩家设置队名（团队活动）"
 
-#: app/helpers/yaku.ts:165:34
+#: app/helpers/yaku.ts:177:34
 msgid "Shousangen"
 msgstr "小三元"
 
-#: app/helpers/yaku.ts:205:34
+#: app/helpers/yaku.ts:217:34
 msgid "Shousuushii"
 msgstr "小四喜"
 
@@ -1948,8 +1980,8 @@ msgid "Show rating table for everyone"
 msgstr "向所有人显示排名表"
 
 #: app/pages/GamesControl/TournamentControls.tsx:213:19
-#: app/pages/GamesControl/TournamentControls.tsx:318:19
-#: app/pages/GamesControl/TournamentControls.tsx:344:19
+#: app/pages/GamesControl/TournamentControls.tsx:328:19
+#: app/pages/GamesControl/TournamentControls.tsx:354:19
 msgid "Show results table"
 msgstr "显示结果表"
 
@@ -1986,15 +2018,23 @@ msgstr "按顺位设置简单顺位分"
 msgid "Something went wrong. Contact pantheon service administrator"
 msgstr "发生错误，请联系 Pantheon 服务管理员"
 
-#: app/pages/GamesControl/TournamentControls.tsx:272:21
+#: app/helpers/yaku.ts:281:34
+msgid "South round wind"
+msgstr "场风：南"
+
+#: app/helpers/yaku.ts:277:34
+msgid "South seat wind"
+msgstr "自风：南"
+
+#: app/pages/GamesControl/TournamentControls.tsx:282:21
 msgid "Start timer"
 msgstr "启动计时器"
 
-#: app/pages/GamesControl/TournamentControls.tsx:273:24
+#: app/pages/GamesControl/TournamentControls.tsx:283:24
 msgid "Start timer and game sessions?"
 msgstr "启动计时器并开始对局？"
 
-#: app/pages/GamesControl/TournamentControls.tsx:271:22
+#: app/pages/GamesControl/TournamentControls.tsx:281:22
 msgid "Start timer and sessions"
 msgstr "启动计时器和对局"
 
@@ -2019,15 +2059,15 @@ msgstr "子系统"
 msgid "Success"
 msgstr "成功"
 
-#: app/helpers/yaku.ts:197:34
+#: app/helpers/yaku.ts:209:34
 msgid "Suuankou"
 msgstr "四暗刻"
 
-#: app/helpers/yaku.ts:245:34 app/helpers/yaku.ts:291:34
+#: app/helpers/yaku.ts:257:34 app/helpers/yaku.ts:347:34
 msgid "Suuankou Tanki"
 msgstr "四暗刻単騎"
 
-#: app/helpers/yaku.ts:193:34 app/helpers/yaku.ts:280:34
+#: app/helpers/yaku.ts:205:34 app/helpers/yaku.ts:336:34
 msgid "Suukantsu"
 msgstr "四杠子"
 
@@ -2051,7 +2091,7 @@ msgstr "系统统计"
 msgid "Table # %1"
 msgstr "第 # %1 桌"
 
-#: app/helpers/yaku.ts:101:34
+#: app/helpers/yaku.ts:113:34
 msgid "Tanyao"
 msgstr "断幺九"
 
@@ -2061,7 +2101,7 @@ msgid ""
 "open hand."
 msgstr "副露时断幺九计 1 番。若未勾选，则副露时断幺九不成立。"
 
-#: app/pages/PlayersManage/index.tsx:131:14
+#: app/pages/PlayersManage/index.tsx:141:14
 msgid "Team names"
 msgstr "队名"
 
@@ -2074,7 +2114,7 @@ msgstr "团队赛"
 msgid "Team:"
 msgstr "队伍："
 
-#: app/helpers/yaku.ts:237:34
+#: app/helpers/yaku.ts:249:34
 msgid "Tenhou"
 msgstr "天和"
 
@@ -2100,7 +2140,9 @@ msgid ""
 "The penalty applies to the rating table in this event by subtracting the "
 "suggested amount of points from player rating. If the amount is zero, the "
 "penalty is treated as a notice."
-msgstr "处罚通过扣除指定点数影响玩家在本活动排名表中的排名分。若罚分为零，则作为“提示”处理。"
+msgstr ""
+"处罚通过扣除指定点数影响玩家在本活动排名表中的排名分。若罚分为零，则作为“提"
+"示”处理。"
 
 #: app/pages/ProfileManage.tsx:353:14
 msgid ""
@@ -2153,7 +2195,7 @@ msgid ""
 "round separately. Continue?"
 msgstr "此操作仅删除对局结果，最后一局需另行取消。是否继续？"
 
-#: app/pages/GamesControl/TournamentControls.tsx:247:24
+#: app/pages/GamesControl/TournamentControls.tsx:257:24
 msgid "This will remove generated seating. Continue?"
 msgstr "此操作将删除已生成的座位表，是否继续？"
 
@@ -2183,7 +2225,7 @@ msgstr "切换成就显示状态"
 msgid "Toggle visibility of rating table"
 msgstr "切换排名表显示状态"
 
-#: app/helpers/yaku.ts:149:34
+#: app/helpers/yaku.ts:161:34
 msgid "Toitoi"
 msgstr "对对和"
 
@@ -2212,7 +2254,7 @@ msgstr "优先将玩家分配到此前较少使用的座风"
 msgid "Tsumo, %1 (%2), riichi: %3"
 msgstr "自摸，%1 (%2)，立直：%3"
 
-#: app/helpers/yaku.ts:213:34 app/helpers/yaku.ts:268:34
+#: app/helpers/yaku.ts:225:34 app/helpers/yaku.ts:324:34
 msgid "Tsuuiisou"
 msgstr "字一色"
 
@@ -2292,6 +2334,15 @@ msgstr "可见性"
 msgid "Visibility management"
 msgstr "可见性管理"
 
+#: app/helpers/yaku.ts:289:34
+msgid "West round wind"
+msgstr "场风：西"
+
+#: app/helpers/yaku.ts:285:34
+#, fuzzy
+msgid "West seat wind"
+msgstr "重置座位表"
+
 #: app/pages/ProfileManage.tsx:347:18
 msgid "What will NOT be deleted:"
 msgstr "以下内容不会被删除："
@@ -2320,6 +2371,10 @@ msgid ""
 "session"
 msgstr "时间到后，完成当前局，再进行一局，然后结束对局"
 
+#: app/helpers/yaku.ts:309:34
+msgid "White dragon"
+msgstr "白板"
+
 #: app/pages/OwnedEventsEdit/TournamentSettings.tsx:96:18
 msgid "Wind shuffle mode"
 msgstr "座风分配方式"
@@ -2340,19 +2395,19 @@ msgstr "允许的役种"
 msgid "Yaku settings"
 msgstr "役设置"
 
-#: app/helpers/yaku.ts:133:34
+#: app/helpers/yaku.ts:145:34
 msgid "Yakuhai x1"
 msgstr "役牌 x1"
 
-#: app/helpers/yaku.ts:137:34
+#: app/helpers/yaku.ts:149:34
 msgid "Yakuhai x2"
 msgstr "役牌 x2"
 
-#: app/helpers/yaku.ts:141:34
+#: app/helpers/yaku.ts:153:34
 msgid "Yakuhai x3"
 msgstr "役牌 x3"
 
-#: app/helpers/yaku.ts:145:34
+#: app/helpers/yaku.ts:157:34
 msgid "Yakuhai x4"
 msgstr "役牌 x4"
 
@@ -2376,7 +2431,7 @@ msgstr "请自行准备赛事脚本。启用此选项后，将无法使用自动
 msgid "You should read and accept the Privacy Policy"
 msgstr "请阅读并接受隐私政策"
 
-#: app/pages/GamesControl/TournamentControls.tsx:331:24
+#: app/pages/GamesControl/TournamentControls.tsx:341:24
 msgid ""
 "You won't be able to cancel last round after the results are approved. "
 "Approve session results?"
@@ -2432,7 +2487,3 @@ msgstr "你的 Telegram ID"
 #: app/pages/ProfileSignup.tsx:174:14
 msgid "show / hide"
 msgstr "显示 / 隐藏"
-
-#: app/pages/GamesControl/TournamentControls.tsx:222:23
-msgid "No more prescripted sessions available"
-msgstr "没有更多预设对局可用"

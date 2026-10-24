@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-19 22:18Z\n"
+"POT-Creation-Date: 2026-10-24 22:29+0200\n"
 "PO-Revision-Date: 2026-10-20 01:13+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -15,12 +15,13 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
 "Generated-By: i18n-json2po\n"
 "X-Generator: Poedit 3.6\n"
 
 #: app/pages/GamesControl/GamesList.tsx:213:53
-#: app/pages/GamesControl/TournamentControls.tsx:296:45
+#: app/pages/GamesControl/TournamentControls.tsx:306:45
 msgid "1 minute"
 msgstr "1 хвіліна"
 
@@ -37,7 +38,7 @@ msgid "1st"
 msgstr "1-е"
 
 #: app/pages/GamesControl/GamesList.tsx:214:54
-#: app/pages/GamesControl/TournamentControls.tsx:297:46
+#: app/pages/GamesControl/TournamentControls.tsx:307:46
 msgid "2 minutes"
 msgstr "2 хвіліны"
 
@@ -46,7 +47,7 @@ msgid "2nd"
 msgstr "2-е"
 
 #: app/pages/GamesControl/GamesList.tsx:215:54
-#: app/pages/GamesControl/TournamentControls.tsx:298:46
+#: app/pages/GamesControl/TournamentControls.tsx:308:46
 msgid "3 minutes"
 msgstr "3 хвіліны"
 
@@ -59,7 +60,7 @@ msgid "3rd"
 msgstr "3-е"
 
 #: app/pages/GamesControl/GamesList.tsx:216:54
-#: app/pages/GamesControl/TournamentControls.tsx:299:46
+#: app/pages/GamesControl/TournamentControls.tsx:309:46
 msgid "4 minutes"
 msgstr "4 хвіліны"
 
@@ -68,12 +69,12 @@ msgid "4th"
 msgstr "4-е"
 
 #: app/pages/GamesControl/GamesList.tsx:217:54
-#: app/pages/GamesControl/TournamentControls.tsx:300:46
+#: app/pages/GamesControl/TournamentControls.tsx:310:46
 msgid "5 minutes"
 msgstr "5 хвілін"
 
 #: app/pages/GamesControl/GamesList.tsx:218:54
-#: app/pages/GamesControl/TournamentControls.tsx:301:46
+#: app/pages/GamesControl/TournamentControls.tsx:311:46
 msgid "7 minutes"
 msgstr "7 хвілін"
 
@@ -110,8 +111,8 @@ msgid "Add a penalty"
 msgstr "Дадаць штраф"
 
 #: app/pages/GamesControl/GamesList.tsx:204:29
-#: app/pages/GamesControl/TournamentControls.tsx:286:22
-#: app/pages/GamesControl/TournamentControls.tsx:287:21
+#: app/pages/GamesControl/TournamentControls.tsx:296:22
+#: app/pages/GamesControl/TournamentControls.tsx:297:21
 msgid "Add extra time"
 msgstr "Дадаць час"
 
@@ -119,7 +120,7 @@ msgstr "Дадаць час"
 msgid "Add extra time for this table"
 msgstr "Дадаць час для гэтага стала"
 
-#: app/pages/GamesControl/TournamentControls.tsx:305:26
+#: app/pages/GamesControl/TournamentControls.tsx:315:26
 msgid "Add selected amount of extra time for all tables?"
 msgstr "Дадаць выбраны час для ўсіх сталоў?"
 
@@ -243,15 +244,15 @@ msgstr "Прызначаныя штрафы чомба"
 msgid "Apply penalty"
 msgstr "Прымяніць штраф"
 
-#: app/pages/GamesControl/TournamentControls.tsx:223:26
+#: app/pages/GamesControl/TournamentControls.tsx:232:28
 msgid "Apply seating for next session?"
 msgstr "Прымяніць рассадку для наступнай сесіі?"
 
-#: app/pages/GamesControl/TournamentControls.tsx:329:22
+#: app/pages/GamesControl/TournamentControls.tsx:339:22
 msgid "Approve session results and go on to next session"
 msgstr "Пацвердзіць вынікі сесіі і перайсці да наступнай"
 
-#: app/pages/GamesControl/TournamentControls.tsx:330:21
+#: app/pages/GamesControl/TournamentControls.tsx:340:21
 msgid "Approve sessions"
 msgstr "Пацвердзіць сесіі"
 
@@ -336,27 +337,27 @@ msgstr "Скасавана: "
 msgid "Changes saved!"
 msgstr "Змены захаваны!"
 
-#: app/helpers/yaku.ts:185:34
+#: app/helpers/yaku.ts:197:34
 msgid "Chankan"
 msgstr "Чанкан"
 
-#: app/helpers/yaku.ts:105:34
+#: app/helpers/yaku.ts:117:34
 msgid "Chanta"
 msgstr "Чанта"
 
-#: app/helpers/yaku.ts:241:34
+#: app/helpers/yaku.ts:253:34
 msgid "Chihou"
 msgstr "Чыхо"
 
-#: app/helpers/yaku.ts:93:34
+#: app/helpers/yaku.ts:105:34
 msgid "Chiitoitsu"
 msgstr "Чыітойцу"
 
-#: app/helpers/yaku.ts:221:34
+#: app/helpers/yaku.ts:233:34
 msgid "Chinitsu"
 msgstr "Чыніцу"
 
-#: app/helpers/yaku.ts:217:34 app/helpers/yaku.ts:276:34
+#: app/helpers/yaku.ts:229:34 app/helpers/yaku.ts:332:34
 msgid "Chinroutou"
 msgstr "Чынрота"
 
@@ -380,11 +381,11 @@ msgstr ""
 msgid "Chombo, %1"
 msgstr "Чомба, %1"
 
-#: app/helpers/yaku.ts:225:34
+#: app/helpers/yaku.ts:237:34
 msgid "Chuuren poutou"
 msgstr "Чуурэн путо"
 
-#: app/helpers/yaku.ts:249:34 app/helpers/yaku.ts:295:34
+#: app/helpers/yaku.ts:261:34 app/helpers/yaku.ts:351:34
 msgid "Chuuren poutou 9-side"
 msgstr "Чуурэн путо з чаканнем на 9 бакоў"
 
@@ -455,16 +456,16 @@ msgstr "Бягучая раздача"
 msgid "Current status"
 msgstr "Бягучы стан"
 
-#: app/helpers/yaku.ts:77:34
+#: app/helpers/yaku.ts:89:34
 msgid "Daburu riichi"
 msgstr "Дабл-рыічы"
 
-#: app/helpers/yaku.ts:201:34 app/helpers/yaku.ts:260:34
+#: app/helpers/yaku.ts:213:34 app/helpers/yaku.ts:316:34
 msgid "Daisangen"
 msgstr "Дайсангэн"
 
-#: app/helpers/yaku.ts:209:34 app/helpers/yaku.ts:264:34
-#: app/helpers/yaku.ts:287:34
+#: app/helpers/yaku.ts:221:34 app/helpers/yaku.ts:320:34
+#: app/helpers/yaku.ts:343:34
 msgid "Daisuushii"
 msgstr "Дайсусі"
 
@@ -492,6 +493,15 @@ msgstr "Падвойны якуман:"
 #: app/pages/GamesControl/GamesList.tsx:459:12
 msgid "Draw, tempai: %1, riichi: %2"
 msgstr "Нічыя, тэмпай: %1, рыічы: %2"
+
+#: app/helpers/yaku.ts:273:34
+msgid "East round wind"
+msgstr "Вецер раўнда: Усход"
+
+#: app/helpers/yaku.ts:269:34
+#, fuzzy
+msgid "East seat wind"
+msgstr "Скінуць рассадку"
 
 #: app/pages/OwnedEventsEdit/index.tsx:78:18
 msgid "Edit event :: %1"
@@ -559,8 +569,9 @@ msgstr "Параўну дзяліць ума пры роўных ачках"
 #: app/pages/OwnedEventsEdit/index.tsx:264:18
 #: app/pages/OwnedEventsEdit/index.tsx:303:18 app/pages/Penalties.tsx:102:18
 #: app/pages/Penalties/PenaltyForm.tsx:91:18
-#: app/pages/PlayersManage/index.tsx:76:18
+#: app/pages/PlayersManage/index.tsx:86:18
 #: app/pages/PlayersManage/LocalIdsTab.tsx:72:18
+#: app/pages/PlayersManage/ManagementTab.tsx:85:18
 #: app/pages/PlayersManage/TeamNamesTab.tsx:72:18
 #: app/pages/PrivilegesManage/index.tsx:60:18
 #: app/pages/PrivilegesManage/ManagementTab.tsx:65:18
@@ -753,7 +764,7 @@ msgstr "Файл занадта вялікі"
 msgid "Find and add administrator by name..."
 msgstr "Знайсці і дадаць адміністратара па імені..."
 
-#: app/pages/PlayersManage/ManagementTab.tsx:155:30
+#: app/pages/PlayersManage/ManagementTab.tsx:171:30
 msgid "Find and add player by name..."
 msgstr "Знайсці і дадаць гульца па імені..."
 
@@ -761,7 +772,7 @@ msgstr "Знайсці і дадаць гульца па імені..."
 msgid "Find and add referee by name..."
 msgstr "Знайсці і дадаць суддзю па імені..."
 
-#: app/pages/PlayersManage/ManagementTab.tsx:138:24
+#: app/pages/PlayersManage/ManagementTab.tsx:154:24
 msgid "Find replacement player by name..."
 msgstr "Знайсці гульца на замену..."
 
@@ -838,7 +849,7 @@ msgstr "Тэрмін дзеяння гульні (у гадзінах)"
 msgid "Games management"
 msgstr "Кіраванне гульнямі"
 
-#: app/pages/GamesControl/TournamentControls.tsx:219:22
+#: app/pages/GamesControl/TournamentControls.tsx:228:24
 msgid "Generate seating for next session"
 msgstr "Стварыць рассадку для наступнай сесіі"
 
@@ -860,7 +871,11 @@ msgstr "Мэтавая колькасць ачкоў"
 msgid "Goal score must be at least the initial points"
 msgstr "Мэтавая колькасць ачкоў не можа быць меншай за пачатковыя ачкі"
 
-#: app/helpers/yaku.ts:177:34
+#: app/helpers/yaku.ts:305:34
+msgid "Green dragon"
+msgstr "Зялёны цмок"
+
+#: app/helpers/yaku.ts:189:34
 msgid "Haitei"
 msgstr "Хайтэй"
 
@@ -869,8 +884,8 @@ msgid "Hands valued as 4/30 and 3/60 are rounded to mangan."
 msgstr "Рукі 4/30 і 3/60 акругляюцца да мангана."
 
 #: app/pages/GamesControl/TournamentControls.tsx:214:19
-#: app/pages/GamesControl/TournamentControls.tsx:319:19
-#: app/pages/GamesControl/TournamentControls.tsx:345:19
+#: app/pages/GamesControl/TournamentControls.tsx:329:19
+#: app/pages/GamesControl/TournamentControls.tsx:355:19
 msgid "Hide results table"
 msgstr "Схаваць табліцу вынікаў"
 
@@ -890,15 +905,15 @@ msgstr ""
 "Выплаты хонба атрымае толькі першы пераможца. Калі не адзначана, іх "
 "атрымаюць усе пераможцы."
 
-#: app/helpers/yaku.ts:153:34
+#: app/helpers/yaku.ts:165:34
 msgid "Honitsu"
 msgstr "Ханіцу"
 
-#: app/helpers/yaku.ts:157:34
+#: app/helpers/yaku.ts:169:34
 msgid "Honroutou"
 msgstr "Ханрота"
 
-#: app/helpers/yaku.ts:173:34
+#: app/helpers/yaku.ts:185:34
 msgid "Houtei raoyui"
 msgstr "Хотэй раоюі"
 
@@ -1007,7 +1022,7 @@ msgstr ""
 "Калі адзначана, чомба ў апошняй раздачы пасля заканчэння часу завершыць "
 "гульню і не дазволіць згуляць яшчэ адну раздачу"
 
-#: app/helpers/yaku.ts:113:34
+#: app/helpers/yaku.ts:125:34
 msgid "Iipeikou"
 msgstr "Ііпэйко"
 
@@ -1059,15 +1074,15 @@ msgstr "Няправільная электронная пошта"
 msgid "Invalid title"
 msgstr "Няправільнае імя"
 
-#: app/helpers/yaku.ts:85:34
+#: app/helpers/yaku.ts:97:34
 msgid "Ippatsu"
 msgstr "Іппацу"
 
-#: app/helpers/yaku.ts:129:34
+#: app/helpers/yaku.ts:141:34
 msgid "Ittsu"
 msgstr "Іццу"
 
-#: app/helpers/yaku.ts:109:34
+#: app/helpers/yaku.ts:121:34
 msgid "Junchan"
 msgstr "Джунчан"
 
@@ -1079,11 +1094,11 @@ msgstr "Кадзоэ якуман"
 msgid "Kiriage mangan"
 msgstr "Кірыягэ манган"
 
-#: app/helpers/yaku.ts:233:34
+#: app/helpers/yaku.ts:245:34
 msgid "Kokushi musou"
 msgstr "Кокусі мусо"
 
-#: app/helpers/yaku.ts:253:34 app/helpers/yaku.ts:299:34
+#: app/helpers/yaku.ts:265:34 app/helpers/yaku.ts:355:34
 msgid "Kokushi musou 13-side"
 msgstr "Кокусі мусо з чаканнем на 13 бакоў"
 
@@ -1115,7 +1130,7 @@ msgstr "ID лобі"
 msgid "Local ID"
 msgstr "Лакальны ID"
 
-#: app/pages/PlayersManage/index.tsx:122:14
+#: app/pages/PlayersManage/index.tsx:132:14
 msgid "Local IDs"
 msgstr "Лакальныя ID"
 
@@ -1183,7 +1198,7 @@ msgstr "Кіраванне штрафамі"
 msgid "Manage players"
 msgstr "Кіраванне гульцамі"
 
-#: app/pages/PlayersManage/index.tsx:53:16
+#: app/pages/PlayersManage/index.tsx:60:16
 msgid "Manage players in event"
 msgstr "Кіраванне гульцамі падзеі"
 
@@ -1219,7 +1234,7 @@ msgstr "Максімальны дадатковы штраф"
 msgid "Menu"
 msgstr "Меню"
 
-#: app/helpers/yaku.ts:89:34
+#: app/helpers/yaku.ts:101:34
 msgid "Menzentsumo"
 msgstr "Мэндзэнцумо"
 
@@ -1263,7 +1278,7 @@ msgstr "Нагасі манган: %1, тэмпай: %2, рыічы: %3"
 msgid "New event"
 msgstr "Новая падзея"
 
-#: app/pages/GamesControl/TournamentControls.tsx:220:21
+#: app/pages/GamesControl/TournamentControls.tsx:229:23
 msgid "Next seating"
 msgstr "Наступная рассадка"
 
@@ -1279,9 +1294,23 @@ msgstr "Штрафы чомба яшчэ не прызначаны"
 msgid "No errors found"
 msgstr "Памылак не знойдзена"
 
+#: app/pages/GamesControl/TournamentControls.tsx:222:18
+msgid "No more prescripted sessions available"
+msgstr "Больш няма даступных сесій паводле сцэнарыя"
+
 #: app/pages/Penalties/PenaltiesList.tsx:82:45
 msgid "No penalties assigned yet"
 msgstr "Штрафы яшчэ не прызначаны"
+
+#: app/helpers/yaku.ts:297:34
+#, fuzzy
+msgid "North round wind"
+msgstr "Нічога не знойдзена"
+
+#: app/helpers/yaku.ts:293:34
+#, fuzzy
+msgid "North seat wind"
+msgstr "Наступная рассадка"
 
 #: app/pages/GamesControl/TournamentControls.tsx:107:22
 msgid "Not ready"
@@ -1332,7 +1361,7 @@ msgstr ""
 msgid "Notifications settings"
 msgstr "Налады апавяшчэнняў"
 
-#: app/pages/GamesControl/TournamentControls.tsx:259:26
+#: app/pages/GamesControl/TournamentControls.tsx:269:26
 msgid ""
 "Notify all subscribed players to come to their tables? This will send a "
 "message through notification service."
@@ -1340,11 +1369,11 @@ msgstr ""
 "Апавясціць усіх падпісаных гульцоў, каб яны падышлі да сваіх сталоў? Будзе "
 "адпраўлена паведамленне праз сэрвіс апавяшчэнняў."
 
-#: app/pages/GamesControl/TournamentControls.tsx:258:23
+#: app/pages/GamesControl/TournamentControls.tsx:268:23
 msgid "Notify players"
 msgstr "Апавясціць гульцоў"
 
-#: app/pages/GamesControl/TournamentControls.tsx:257:24
+#: app/pages/GamesControl/TournamentControls.tsx:267:24
 msgid "Notify players to come to their tables"
 msgstr "Апавясціць гульцоў, каб яны падышлі да сталоў"
 
@@ -1436,7 +1465,7 @@ msgstr "Адкрыць старонку падзеі ў новай укладц�
 msgid "Open menu"
 msgstr "Адкрыць меню"
 
-#: app/helpers/yaku.ts:81:34
+#: app/helpers/yaku.ts:93:34
 msgid "Open riichi"
 msgstr "Адкрытае рыічы"
 
@@ -1506,7 +1535,7 @@ msgstr "Прычына штрафу"
 msgid "Phone number"
 msgstr "Нумар тэлефона"
 
-#: app/helpers/yaku.ts:97:34
+#: app/helpers/yaku.ts:109:34
 msgid "Pinfu"
 msgstr "Пін-фу"
 
@@ -1526,11 +1555,11 @@ msgstr "Гуляць толькі ўсходнія раўнды"
 msgid "Player details were successfully saved"
 msgstr "Даныя гульца паспяхова захаваны"
 
-#: app/pages/PlayersManage/ManagementTab.tsx:232:27
+#: app/pages/PlayersManage/ManagementTab.tsx:248:27
 msgid "Player is excluded from next seating. Click to include"
 msgstr "Гулец выключаны з наступнай рассадкі. Націсніце, каб уключыць"
 
-#: app/pages/PlayersManage/ManagementTab.tsx:233:27
+#: app/pages/PlayersManage/ManagementTab.tsx:249:27
 msgid "Player is included in next seating. Click to exclude"
 msgstr "Гулец уключаны ў наступную рассадку. Націсніце, каб выключыць"
 
@@ -1542,7 +1571,7 @@ msgstr "Імя гульца"
 msgid "Player was successfully registered"
 msgstr "Гулец паспяхова зарэгістраваны"
 
-#: app/pages/PlayersManage/index.tsx:106:14
+#: app/pages/PlayersManage/index.tsx:116:14
 msgid "Players"
 msgstr "Гульцы"
 
@@ -1598,7 +1627,7 @@ msgstr "Выберыце гульца"
 msgid "Please type in your title to proceed with removal"
 msgstr "Увядзіце сваё імя гульца, каб працягнуць выдаленне"
 
-#: app/pages/GamesControl/TournamentControls.tsx:237:17
+#: app/pages/GamesControl/TournamentControls.tsx:247:17
 msgid "Please wait unit seating is ready"
 msgstr "Пачакайце, пакуль рассадка будзе гатова"
 
@@ -1715,6 +1744,10 @@ msgstr "Пералік запланаваны"
 msgid "Recover password"
 msgstr "Аднавіць пароль"
 
+#: app/helpers/yaku.ts:301:34
+msgid "Red dragon"
+msgstr "Чырвоны цмок"
+
 #: app/pages/PrivilegesManage/ManagementTab.tsx:250:14
 msgid "Referee privileges include:"
 msgstr "Прывілеі суддзі:"
@@ -1752,7 +1785,7 @@ msgstr "Выдаліць вынікі гульні"
 msgid "Remove my account"
 msgstr "Выдаліць мой уліковы запіс"
 
-#: app/pages/PlayersManage/ManagementTab.tsx:247:28
+#: app/pages/PlayersManage/ManagementTab.tsx:264:28
 msgid "Remove player from event"
 msgstr "Выдаліць гульца з падзеі"
 
@@ -1760,8 +1793,8 @@ msgstr "Выдаліць гульца з падзеі"
 msgid "Remove referee from event"
 msgstr "Выдаліць суддзю з падзеі"
 
-#: app/pages/PlayersManage/ManagementTab.tsx:212:37
-#: app/pages/PlayersManage/ManagementTab.tsx:213:32
+#: app/pages/PlayersManage/ManagementTab.tsx:228:37
+#: app/pages/PlayersManage/ManagementTab.tsx:229:32
 msgid "Remove replacement"
 msgstr "Скасаваць замену"
 
@@ -1769,15 +1802,15 @@ msgstr "Скасаваць замену"
 msgid "Remove the game as it never existed"
 msgstr "Выдаліць гульню, нібыта яе не было"
 
-#: app/helpers/yaku.ts:189:34
+#: app/helpers/yaku.ts:201:34
 msgid "Renhou"
 msgstr "Рэнхо"
 
-#: app/pages/PlayersManage/ManagementTab.tsx:188:28
+#: app/pages/PlayersManage/ManagementTab.tsx:204:28
 msgid "Replace player with someone else"
 msgstr "Замяніць гульца іншым"
 
-#: app/pages/PlayersManage/ManagementTab.tsx:204:28
+#: app/pages/PlayersManage/ManagementTab.tsx:220:28
 msgid "Replaced by %1"
 msgstr "Замена: %1"
 
@@ -1785,7 +1818,7 @@ msgstr "Замена: %1"
 msgid "Request password reset"
 msgstr "Запытаць скід пароля"
 
-#: app/pages/GamesControl/TournamentControls.tsx:245:22
+#: app/pages/GamesControl/TournamentControls.tsx:255:22
 msgid "Reset generated seating"
 msgstr "Скінуць створаную рассадку"
 
@@ -1793,7 +1826,7 @@ msgstr "Скінуць створаную рассадку"
 msgid "Reset my password"
 msgstr "Скінуць мой пароль"
 
-#: app/pages/GamesControl/TournamentControls.tsx:246:21
+#: app/pages/GamesControl/TournamentControls.tsx:256:21
 msgid "Reset seating"
 msgstr "Скінуць рассадку"
 
@@ -1801,7 +1834,7 @@ msgstr "Скінуць рассадку"
 msgid "Reset your password"
 msgstr "Скінуць пароль"
 
-#: app/helpers/yaku.ts:73:34
+#: app/helpers/yaku.ts:85:34
 msgid "Riichi"
 msgstr "Рыічы"
 
@@ -1821,7 +1854,7 @@ msgstr ""
 "Стаўкі рыічы, якія засталіся на стале пасля нічыёй у апошняй раздачы, "
 "атрымлівае пераможца гульні"
 
-#: app/helpers/yaku.ts:181:34
+#: app/helpers/yaku.ts:193:34
 msgid "Rinshan kaihou"
 msgstr "Рыншан кайхо"
 
@@ -1848,27 +1881,27 @@ msgstr ""
 msgid "Ruleset tuning"
 msgstr "Дакладная наладка правілаў"
 
-#: app/helpers/yaku.ts:117:34
+#: app/helpers/yaku.ts:129:34
 msgid "Ryanpeikou"
 msgstr "Раянпэйко"
 
-#: app/helpers/yaku.ts:229:34 app/helpers/yaku.ts:272:34
+#: app/helpers/yaku.ts:241:34 app/helpers/yaku.ts:328:34
 msgid "Ryuuiisou"
 msgstr "Руіса"
 
-#: app/helpers/yaku.ts:161:34
+#: app/helpers/yaku.ts:173:34
 msgid "Sanankou"
 msgstr "Сананко"
 
-#: app/helpers/yaku.ts:169:34
+#: app/helpers/yaku.ts:181:34
 msgid "Sankantsu"
 msgstr "Санканцу"
 
-#: app/helpers/yaku.ts:121:34
+#: app/helpers/yaku.ts:133:34
 msgid "Sanshoku"
 msgstr "Сансёку"
 
-#: app/helpers/yaku.ts:125:34
+#: app/helpers/yaku.ts:137:34
 msgid "Sanshoku doukou"
 msgstr "Сансёку дока"
 
@@ -1908,7 +1941,7 @@ msgid "Select event type"
 msgstr "Выберыце тып падзеі"
 
 #: app/pages/GamesControl/GamesList.tsx:209:36
-#: app/pages/GamesControl/TournamentControls.tsx:292:28
+#: app/pages/GamesControl/TournamentControls.tsx:302:28
 msgid "Select extra time"
 msgstr "Выберыце дадатковы час"
 
@@ -1920,7 +1953,7 @@ msgstr "Выберыце інтэрвал"
 msgid "Select player"
 msgstr "Выбраць гульца"
 
-#: app/pages/PlayersManage/ManagementTab.tsx:132:16
+#: app/pages/PlayersManage/ManagementTab.tsx:148:16
 msgid "Select replacement player for %1"
 msgstr "Выберыце замену для гульца %1"
 
@@ -1989,20 +2022,20 @@ msgstr "Налады"
 msgid "Settings saved!"
 msgstr "Налады захаваны!"
 
-#: app/pages/PlayersManage/index.tsx:112:20
+#: app/pages/PlayersManage/index.tsx:122:20
 msgid ""
 "Setup local identifiers of players to be used in predefined event script"
 msgstr "Задаць лакальныя ідэнтыфікатары гульцоў для сцэнарыя падзеі"
 
-#: app/pages/PlayersManage/index.tsx:127:20
+#: app/pages/PlayersManage/index.tsx:137:20
 msgid "Setup team name for each player (for team events)"
 msgstr "Задаць назву каманды для кожнага гульца ў камандных падзеях"
 
-#: app/helpers/yaku.ts:165:34
+#: app/helpers/yaku.ts:177:34
 msgid "Shousangen"
 msgstr "Сёсангэн"
 
-#: app/helpers/yaku.ts:205:34
+#: app/helpers/yaku.ts:217:34
 msgid "Shousuushii"
 msgstr "Сёсусі"
 
@@ -2019,8 +2052,8 @@ msgid "Show rating table for everyone"
 msgstr "Паказваць рэйтынгавую табліцу ўсім"
 
 #: app/pages/GamesControl/TournamentControls.tsx:213:19
-#: app/pages/GamesControl/TournamentControls.tsx:318:19
-#: app/pages/GamesControl/TournamentControls.tsx:344:19
+#: app/pages/GamesControl/TournamentControls.tsx:328:19
+#: app/pages/GamesControl/TournamentControls.tsx:354:19
 msgid "Show results table"
 msgstr "Паказваць табліцу вынікаў"
 
@@ -2057,15 +2090,23 @@ msgstr "Просты, паводле месца"
 msgid "Something went wrong. Contact pantheon service administrator"
 msgstr "Нешта пайшло не так. Звярніцеся да адміністратара сэрвісу Pantheon"
 
-#: app/pages/GamesControl/TournamentControls.tsx:272:21
+#: app/helpers/yaku.ts:281:34
+msgid "South round wind"
+msgstr "Вецер раўнда: Поўдзень"
+
+#: app/helpers/yaku.ts:277:34
+msgid "South seat wind"
+msgstr "Вецер месца: Поўдзень"
+
+#: app/pages/GamesControl/TournamentControls.tsx:282:21
 msgid "Start timer"
 msgstr "Запусціць таймер"
 
-#: app/pages/GamesControl/TournamentControls.tsx:273:24
+#: app/pages/GamesControl/TournamentControls.tsx:283:24
 msgid "Start timer and game sessions?"
 msgstr "Запусціць таймер і гульнявыя сесіі?"
 
-#: app/pages/GamesControl/TournamentControls.tsx:271:22
+#: app/pages/GamesControl/TournamentControls.tsx:281:22
 msgid "Start timer and sessions"
 msgstr "Запусціць таймер і сесіі"
 
@@ -2090,15 +2131,15 @@ msgstr "Падсістэма"
 msgid "Success"
 msgstr "Паспяхова"
 
-#: app/helpers/yaku.ts:197:34
+#: app/helpers/yaku.ts:209:34
 msgid "Suuankou"
 msgstr "Суанко"
 
-#: app/helpers/yaku.ts:245:34 app/helpers/yaku.ts:291:34
+#: app/helpers/yaku.ts:257:34 app/helpers/yaku.ts:347:34
 msgid "Suuankou Tanki"
 msgstr "Суанко танкі"
 
-#: app/helpers/yaku.ts:193:34 app/helpers/yaku.ts:280:34
+#: app/helpers/yaku.ts:205:34 app/helpers/yaku.ts:336:34
 msgid "Suukantsu"
 msgstr "Суканцу"
 
@@ -2122,7 +2163,7 @@ msgstr "Сістэмная статыстыка"
 msgid "Table # %1"
 msgstr "Стол # %1"
 
-#: app/helpers/yaku.ts:101:34
+#: app/helpers/yaku.ts:113:34
 msgid "Tanyao"
 msgstr "Тан-яо"
 
@@ -2134,7 +2175,7 @@ msgstr ""
 "Тан-яо каштуе 1 хан на адкрытай руцэ. Калі не адзначана, тан-яо не дзейнічае "
 "на адкрытай руцэ."
 
-#: app/pages/PlayersManage/index.tsx:131:14
+#: app/pages/PlayersManage/index.tsx:141:14
 msgid "Team names"
 msgstr "Назвы каманд"
 
@@ -2147,7 +2188,7 @@ msgstr "Камандны турнір"
 msgid "Team:"
 msgstr "Каманда:"
 
-#: app/helpers/yaku.ts:237:34
+#: app/helpers/yaku.ts:249:34
 msgid "Tenhou"
 msgstr "Тэнхо"
 
@@ -2237,7 +2278,7 @@ msgstr ""
 "Гэта выдаліць толькі вынікі гульні. Апошнюю раздачу трэба скасаваць асобна. "
 "Працягнуць?"
 
-#: app/pages/GamesControl/TournamentControls.tsx:247:24
+#: app/pages/GamesControl/TournamentControls.tsx:257:24
 msgid "This will remove generated seating. Continue?"
 msgstr "Створаная рассадка будзе выдалена. Працягнуць?"
 
@@ -2269,7 +2310,7 @@ msgstr "Змяніць бачнасць намінацый"
 msgid "Toggle visibility of rating table"
 msgstr "Змяніць бачнасць рэйтынгавай табліцы"
 
-#: app/helpers/yaku.ts:149:34
+#: app/helpers/yaku.ts:161:34
 msgid "Toitoi"
 msgstr "Той-той"
 
@@ -2299,7 +2340,7 @@ msgstr ""
 msgid "Tsumo, %1 (%2), riichi: %3"
 msgstr "Цумо, %1 (%2), рыічы: %3"
 
-#: app/helpers/yaku.ts:213:34 app/helpers/yaku.ts:268:34
+#: app/helpers/yaku.ts:225:34 app/helpers/yaku.ts:324:34
 msgid "Tsuuiisou"
 msgstr "Цуіса"
 
@@ -2379,6 +2420,15 @@ msgstr "Бачнасць"
 msgid "Visibility management"
 msgstr "Кіраванне бачнасцю"
 
+#: app/helpers/yaku.ts:289:34
+msgid "West round wind"
+msgstr "Вецер раўнда: Захад"
+
+#: app/helpers/yaku.ts:285:34
+#, fuzzy
+msgid "West seat wind"
+msgstr "Скінуць рассадку"
+
 #: app/pages/ProfileManage.tsx:347:18
 msgid "What will NOT be deleted:"
 msgstr "Што НЕ будзе выдалена:"
@@ -2411,6 +2461,10 @@ msgstr ""
 "Калі час скончыўся, завяршыць бягучую раздачу, згуляць яшчэ адну і "
 "перапыніць сесію"
 
+#: app/helpers/yaku.ts:309:34
+msgid "White dragon"
+msgstr "Белы цмок"
+
 #: app/pages/OwnedEventsEdit/TournamentSettings.tsx:96:18
 msgid "Wind shuffle mode"
 msgstr "Спосаб размеркавання вятроў"
@@ -2431,19 +2485,19 @@ msgstr "Дазволеныя яку"
 msgid "Yaku settings"
 msgstr "Налады яку"
 
-#: app/helpers/yaku.ts:133:34
+#: app/helpers/yaku.ts:145:34
 msgid "Yakuhai x1"
 msgstr "Якухай x1"
 
-#: app/helpers/yaku.ts:137:34
+#: app/helpers/yaku.ts:149:34
 msgid "Yakuhai x2"
 msgstr "Якухай x2"
 
-#: app/helpers/yaku.ts:141:34
+#: app/helpers/yaku.ts:153:34
 msgid "Yakuhai x3"
 msgstr "Якухай x3"
 
-#: app/helpers/yaku.ts:145:34
+#: app/helpers/yaku.ts:157:34
 msgid "Yakuhai x4"
 msgstr "Якухай x4"
 
@@ -2471,7 +2525,7 @@ msgstr ""
 msgid "You should read and accept the Privacy Policy"
 msgstr "Неабходна прачытаць і прыняць палітыку прыватнасці"
 
-#: app/pages/GamesControl/TournamentControls.tsx:331:24
+#: app/pages/GamesControl/TournamentControls.tsx:341:24
 msgid ""
 "You won't be able to cancel last round after the results are approved. "
 "Approve session results?"
@@ -2535,7 +2589,3 @@ msgstr "Ваш Telegram ID"
 #: app/pages/ProfileSignup.tsx:174:14
 msgid "show / hide"
 msgstr "паказаць / схаваць"
-
-#: app/pages/GamesControl/TournamentControls.tsx:222:23
-msgid "No more prescripted sessions available"
-msgstr "Больш няма даступных сесій паводле сцэнарыя"
