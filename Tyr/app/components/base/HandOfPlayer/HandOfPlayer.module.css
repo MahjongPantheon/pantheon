@@ -16,6 +16,31 @@
   scrollbar-width: none;
 }
 
+.yakuhaiGroup {
+  flex-basis: 100%;
+  min-width: 0;
+  margin: 6px 0;
+}
+
+.yakuhaiHeading {
+  margin: 0 0 8px;
+  font-size: var(--font-md);
+  font-weight: 600;
+}
+
+.yakuhaiRow {
+  display: flex;
+  gap: 4px;
+}
+
+.yakuhaiTile {
+  display: block;
+  width: 30px;
+  height: 40px;
+  object-fit: contain;
+  background: url('../../../assets/mahjong-tiles/Front.svg') center / contain no-repeat;
+}
+
 .beforeYaku {
   position: absolute;
   top: 0;

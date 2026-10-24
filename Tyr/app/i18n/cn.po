@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-24 22:29+0200\n"
+"POT-Creation-Date: 2026-10-25 00:56+0200\n"
 "PO-Revision-Date: 2024-05-09 22:09+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -20,16 +20,16 @@ msgid "%1 deal left"
 msgid_plural "%1 deals left"
 msgstr[0] "剩余 %1 局 "
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:118:28
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:182:28
 msgid "%1 fu"
 msgstr "%1 符"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:157:17
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:221:17
 #: app/store/selectors/round.ts:36:15
 msgid "%1 han"
 msgstr "%1 番"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:156:17
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:220:17
 #: app/store/selectors/round.ts:39:12
 msgid "%1 han %2 fu"
 msgstr "%1 番 %2 符"
@@ -122,7 +122,7 @@ msgstr "大三元"
 msgid "Daisuushii"
 msgstr "大四喜"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:143:22
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:207:22
 msgid "Dora %1"
 msgstr "宝牌 %1"
 
@@ -286,7 +286,7 @@ msgstr "开始新对局"
 msgid "No games found"
 msgstr "未找到对局"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:164:18
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:228:18
 msgid "No pao"
 msgstr "无包牌"
 
@@ -298,7 +298,7 @@ msgstr "无结果"
 msgid "No tables are playing right now"
 msgstr "目前没有桌子在游戏中"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:100:30
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:164:30
 msgid "Nobody selected"
 msgstr "未选择任何玩家"
 
@@ -339,7 +339,7 @@ msgstr "他人进行中的对局"
 msgid "Pantheon"
 msgstr "Pantheon"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:93:19
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:157:19
 msgid "Pao"
 msgstr "包牌"
 
@@ -569,6 +569,7 @@ msgstr "自风：西"
 msgid "White dragon"
 msgstr "白板"
 
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:131:18
 #: app/helpers/yaku.ts:234:39
 msgid "Yakuhai"
 msgstr "役牌"
@@ -589,8 +590,8 @@ msgstr "役牌 x3"
 msgid "Yakuhai x4"
 msgstr "役牌 x4"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:153:20
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:154:17
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:217:20
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:218:17
 msgid "Yakuman"
 msgstr "役满"
 

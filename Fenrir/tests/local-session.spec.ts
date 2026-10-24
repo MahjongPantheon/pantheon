@@ -189,6 +189,53 @@ test('SMOKE-005: Registered player can finish a local session and view matching 
         await page.getByTestId('tyr-round-preview-back').click();
         await expect(page.getByTestId(`${prefix}-yaku-14`)).toHaveCount(aggregated ? 1 : 0);
         await expect(page.getByTestId(`${prefix}-yaku-56`)).toHaveCount(aggregated ? 0 : 1);
+        const yakuhaiGroup = page.getByTestId(`${prefix}-yakuhai`);
+        await expect
+          .poll(() =>
+            yakuhaiGroup.evaluate((group) =>
+              group.previousElementSibling?.getAttribute('data-testid')
+            )
+          )
+          .toBe(`${prefix}-yaku--1`);
+        await expect(
+          yakuhaiGroup.getByRole('heading', { name: 'Yakuhai', exact: true })
+        ).toBeVisible();
+        await expect(yakuhaiGroup.getByRole('button')).toHaveCount(aggregated ? 4 : 7);
+        if (!aggregated) {
+          for (const name of [
+            'East',
+            'South',
+            'West',
+            'North',
+            'Red dragon',
+            'Green dragon',
+            'White dragon',
+          ]) {
+            const tile = page.getByTestId(prefix).getByRole('img', { name, exact: true });
+            await expect(tile).toBeVisible();
+            await expect
+              .poll(() => tile.evaluate((image: HTMLImageElement) => image.naturalWidth))
+              .toBeGreaterThan(0);
+          }
+          const viewport = page.viewportSize()!;
+          await page.setViewportSize({ width: 390, height: 844 });
+          await expect
+            .poll(async () => {
+              const boxes = await yakuhaiGroup.getByRole('button').evaluateAll((buttons) =>
+                buttons.map((button) => {
+                  const box = button.getBoundingClientRect();
+                  return { top: Math.round(box.top), left: box.left, right: box.right };
+                })
+              );
+              return (
+                new Set(boxes.map((box) => box.top)).size === 1 &&
+                boxes.every((box) => box.left >= 0 && box.right <= 390)
+              );
+            })
+            .toBe(true);
+          await page.screenshot({ path: testInfo.outputPath('yakuhai-tiles.png') });
+          await page.setViewportSize(viewport);
+        }
         await page.getByTestId('tyr-hand-back').click();
         await page.getByTestId('tyr-select-player-back').click();
         await checkLog(page, players, 0);

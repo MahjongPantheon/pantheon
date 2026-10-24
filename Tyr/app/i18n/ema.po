@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-24 22:29+0200\n"
+"POT-Creation-Date: 2026-10-25 00:56+0200\n"
 "PO-Revision-Date: 2024-02-10 23:22+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -21,16 +21,16 @@ msgid_plural "%1 deals left"
 msgstr[0] "%1 deal left"
 msgstr[1] "%1 deals left"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:118:28
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:182:28
 msgid "%1 fu"
 msgstr "%1 fu"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:157:17
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:221:17
 #: app/store/selectors/round.ts:36:15
 msgid "%1 han"
 msgstr "%1 han"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:156:17
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:220:17
 #: app/store/selectors/round.ts:39:12
 msgid "%1 han %2 fu"
 msgstr "%1 han %2 fu"
@@ -123,7 +123,7 @@ msgstr "Big Three Dragons"
 msgid "Daisuushii"
 msgstr "Big Four Winds"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:143:22
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:207:22
 msgid "Dora %1"
 msgstr "Dora %1"
 
@@ -291,7 +291,7 @@ msgstr "New game"
 msgid "No games found"
 msgstr "No games found"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:164:18
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:228:18
 msgid "No pao"
 msgstr "No pao"
 
@@ -303,7 +303,7 @@ msgstr "No results found"
 msgid "No tables are playing right now"
 msgstr "No tables are playing right now"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:100:30
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:164:30
 msgid "Nobody selected"
 msgstr "Nobody selected"
 
@@ -344,7 +344,7 @@ msgstr "Other playing tables"
 msgid "Pantheon"
 msgstr "Pantheon"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:93:19
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:157:19
 msgid "Pao"
 msgstr "Pao"
 
@@ -574,6 +574,7 @@ msgstr "West seat wind"
 msgid "White dragon"
 msgstr "White dragon"
 
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:131:18
 #: app/helpers/yaku.ts:234:39
 msgid "Yakuhai"
 msgstr "Yakuhai"
@@ -594,8 +595,8 @@ msgstr "Yakuhai x3"
 msgid "Yakuhai x4"
 msgstr "Yakuhai x4"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:153:20
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:154:17
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:217:20
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:218:17
 msgid "Yakuman"
 msgstr "Yakuman"
 
