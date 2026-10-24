@@ -20,7 +20,11 @@ function _sendNext(bot: Bot) {
   if (id === 'TRACKER') {
     // send a notification to external tracker, if configured
     if (TRACKER_URL) {
-      get(TRACKER_URL.replace('%s', message));
+      try {
+        get(TRACKER_URL.replace('%s', message));
+      } catch {
+        console.error('Tracker is not accessible: ', TRACKER_URL);
+      }
     }
   } else {
     bot?.api
