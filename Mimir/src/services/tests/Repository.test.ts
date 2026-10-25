@@ -1,15 +1,15 @@
-import { jest } from '@jest/globals';
+import { vi } from 'vitest';
 import type { MikroORM } from '@mikro-orm/core';
 import { AccessAddRuleForPersonResponse } from 'tsclients/proto/frey.pb.js';
 import { Repository } from '../Repository.js';
 
 const orm = { em: { fork: () => ({}) } } as unknown as MikroORM;
 
-afterEach(() => jest.restoreAllMocks());
+afterEach(() => vi.restoreAllMocks());
 
 it('forwards each event creator identity to Frey across successive requests', async () => {
   const response = AccessAddRuleForPersonResponse.encode({ ruleId: 1 });
-  const transport = jest
+  const transport = vi
     .spyOn(globalThis, 'fetch')
     .mockImplementation(async () => new Response(Uint8Array.from(response).buffer));
   const first = Repository.instance(

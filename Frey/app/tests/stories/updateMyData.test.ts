@@ -6,7 +6,7 @@ describe('Update my data', () => {
   it('should update account', async () => {
     const email = makeUniqueEmail();
     const authData = await createUser(frey, email);
-    return expect(() =>
+    return expect(
       frey.UpdatePersonalInfo(
         {
           avatarData: '',
@@ -57,7 +57,7 @@ describe('Update my data', () => {
         },
       }
     );
-    return expect(() =>
+    return expect(
       frey.Me(
         { personId: authData.personId, authToken: authData.authToken },
         {

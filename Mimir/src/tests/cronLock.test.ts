@@ -1,4 +1,4 @@
-import { jest } from '@jest/globals';
+import { vi } from 'vitest';
 import { MikroORM } from '@mikro-orm/postgresql';
 import config from '../mikro-orm.config.js';
 import { Repository } from '../services/Repository.js';
@@ -24,7 +24,7 @@ it('excludes another worker of the same type and releases the lock on commit', a
     await pending;
     return 1;
   });
-  const handler = jest.fn<() => Promise<number>>().mockResolvedValue(2);
+  const handler = vi.fn<() => Promise<number>>().mockResolvedValue(2);
   try {
     await acquired;
     expect(await withJobLock(Repository.instance({}, orm), 'metrics', handler)).toEqual({

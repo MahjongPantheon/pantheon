@@ -1,4 +1,4 @@
-import { jest } from '@jest/globals';
+import { vi } from 'vitest';
 import { readFileSync } from 'fs';
 import { join } from 'path';
 import { init } from '../../tests/initOrm.js';
@@ -33,23 +33,19 @@ function replay(fixture: string) {
 
 describe('XML replay player order', () => {
   beforeEach(() => {
-    jest
-      .spyOn(registrations, 'fetchRegisteredPlayersByEvent')
-      .mockResolvedValue(ids.map(makePlayer));
+    vi.spyOn(registrations, 'fetchRegisteredPlayersByEvent').mockResolvedValue(ids.map(makePlayer));
     // Lookup order and numeric key enumeration both differ from replay seat order.
-    jest
-      .spyOn(players, 'findByTenhouId')
-      .mockResolvedValue(
-        Object.fromEntries(
-          [3, 2, 1, 0].map((seat) => [
-            names[seat],
-            { ...makePlayer(ids[seat]), tenhouId: names[seat] },
-          ])
-        )
-      );
+    vi.spyOn(players, 'findByTenhouId').mockResolvedValue(
+      Object.fromEntries(
+        [3, 2, 1, 0].map((seat) => [
+          names[seat],
+          { ...makePlayer(ids[seat]), tenhouId: names[seat] },
+        ])
+      )
+    );
   });
   afterEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
     repo.em.clear();
   });
   afterAll(() => repo.destroy());
@@ -89,7 +85,7 @@ describe('XML replay player order', () => {
   });
 
   it('reports a missing seat nickname even if the lookup returns an unrelated player', async () => {
-    jest.mocked(players.findByTenhouId).mockResolvedValue({
+    vi.mocked(players.findByTenhouId).mockResolvedValue({
       '30': makePlayer(303),
       '10': makePlayer(101),
       '40': makePlayer(404),

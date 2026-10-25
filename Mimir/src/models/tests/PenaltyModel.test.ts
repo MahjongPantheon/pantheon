@@ -1,4 +1,4 @@
-import { jest } from '@jest/globals';
+import { vi } from 'vitest';
 import { Model } from '../Model.js';
 import { PenaltyModel } from '../PenaltyModel.js';
 import { PlayerModel } from '../PlayerModel.js';
@@ -30,10 +30,10 @@ const playerData = [1, 2, 3, 4].map(makePlayer);
 describe('Penalty games', () => {
   beforeEach(() => {
     // Persistence is mocked here; transaction behavior has its own database-backed tests.
-    jest.spyOn(repo.em, 'transactional').mockImplementation(async (callback) => callback(repo.em));
+    vi.spyOn(repo.em, 'transactional').mockImplementation(async (callback) => callback(repo.em));
   });
   afterEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
     repo.em.clear();
   });
   afterAll(() => repo.destroy());
@@ -44,14 +44,14 @@ describe('Penalty games', () => {
       ruleset: RulesetEntity.createRuleset('ema'),
     });
     event.ruleset.rules.replacementPlayerFixedPoints = -30000;
-    jest.spyOn(players, 'isEventAdmin').mockResolvedValue(true);
-    jest.spyOn(players, 'findById').mockResolvedValue(playerData);
-    jest.spyOn(events, 'findById').mockResolvedValue([event]);
-    jest.spyOn(repo.em, 'execute').mockResolvedValue([{ id: 21 }]);
-    const persist = jest.spyOn(repo.em, 'persist');
-    jest.spyOn(repo.em, 'flush').mockResolvedValue();
-    const newHistory = jest.spyOn(history, 'makeNewHistoryItem').mockResolvedValue();
-    const schedule = jest.spyOn(stats, 'scheduleRebuildPlayersStats').mockResolvedValue();
+    vi.spyOn(players, 'isEventAdmin').mockResolvedValue(true);
+    vi.spyOn(players, 'findById').mockResolvedValue(playerData);
+    vi.spyOn(events, 'findById').mockResolvedValue([event]);
+    vi.spyOn(repo.em, 'execute').mockResolvedValue([{ id: 21 }]);
+    const persist = vi.spyOn(repo.em, 'persist');
+    vi.spyOn(repo.em, 'flush').mockResolvedValue();
+    const newHistory = vi.spyOn(history, 'makeNewHistoryItem').mockResolvedValue();
+    const schedule = vi.spyOn(stats, 'scheduleRebuildPlayersStats').mockResolvedValue();
     const result = await model.addPenaltyGame({ eventId: 19, players: [1, 2, 3, 4] });
     expect(result.sessionHash).toMatch(/^[a-f0-9]+$/);
     const entities = persist.mock.calls.flatMap(([entity]) =>
@@ -82,8 +82,8 @@ describe('Penalty games', () => {
   });
 
   it('requires administrator rights before adding a penalty game', async () => {
-    jest.spyOn(players, 'isEventAdmin').mockResolvedValue(false);
-    const find = jest.spyOn(events, 'findById');
+    vi.spyOn(players, 'isEventAdmin').mockResolvedValue(false);
+    const find = vi.spyOn(events, 'findById');
     await expect(model.addPenaltyGame({ eventId: 19, players: [1, 2, 3, 4] })).rejects.toThrow(
       'necessary permissions'
     );
@@ -91,13 +91,13 @@ describe('Penalty games', () => {
   });
 
   it('rejects missing events and incomplete player lists', async () => {
-    jest.spyOn(players, 'isEventAdmin').mockResolvedValue(true);
-    const find = jest.spyOn(events, 'findById').mockResolvedValue([]);
+    vi.spyOn(players, 'isEventAdmin').mockResolvedValue(true);
+    const find = vi.spyOn(events, 'findById').mockResolvedValue([]);
     await expect(model.addPenaltyGame({ eventId: 19, players: [1, 2, 3, 4] })).rejects.toThrow(
       'Event not found'
     );
     find.mockResolvedValue([new EventEntity()]);
-    jest.spyOn(players, 'findById').mockResolvedValue(playerData.slice(0, 3));
+    vi.spyOn(players, 'findById').mockResolvedValue(playerData.slice(0, 3));
     await expect(model.addPenaltyGame({ eventId: 19, players: [1, 2, 3, 4] })).rejects.toThrow(
       'Some players were not found'
     );
@@ -108,15 +108,15 @@ describe('Penalty games', () => {
       id: 19,
       ruleset: RulesetEntity.createRuleset('ema'),
     });
-    jest.spyOn(players, 'isEventAdmin').mockResolvedValue(false);
-    jest.spyOn(players, 'isEventReferee').mockResolvedValue(true);
-    jest.spyOn(repo.em, 'findOne').mockResolvedValue(event);
-    jest.spyOn(rounds, 'findChomboInEvent').mockResolvedValue([
+    vi.spyOn(players, 'isEventAdmin').mockResolvedValue(false);
+    vi.spyOn(players, 'isEventReferee').mockResolvedValue(true);
+    vi.spyOn(repo.em, 'findOne').mockResolvedValue(event);
+    vi.spyOn(rounds, 'findChomboInEvent').mockResolvedValue([
       Object.assign(new RoundEntity(), {
         hands: [Object.assign(new HandEntity(), { loserId: 2 })],
       }),
     ]);
-    const findPlayers = jest.spyOn(players, 'findById').mockResolvedValue([playerData[1]]);
+    const findPlayers = vi.spyOn(players, 'findById').mockResolvedValue([playerData[1]]);
     const result = await model.listChombo(19);
     expect(result.chombos).toEqual([{ playerId: 2, amount: event.ruleset.rules.chomboAmount }]);
     expect(result.players).toEqual([

@@ -1,5 +1,5 @@
 import { randomUUID } from 'node:crypto';
-import { jest } from '@jest/globals';
+import { vi } from 'vitest';
 import { MikroORM } from '@mikro-orm/postgresql';
 import { EventData, EventType } from 'tsclients/proto/atoms.pb.js';
 import { MimirTest } from '../services/MimirTest.js';
@@ -70,7 +70,7 @@ it('keeps an event after a failed permission grant and resumes without recreatin
     timezone: 'UTC',
     rulesetConfig: RulesetEntity.createRuleset('ema').rules,
   });
-  const grant = jest
+  const grant = vi
     .spyOn(repo.frey, 'AddRuleForPerson')
     .mockRejectedValueOnce(new Error('Frey unavailable'))
     .mockResolvedValue({ ruleId: 1 });

@@ -1,4 +1,4 @@
-import { jest } from '@jest/globals';
+import { vi } from 'vitest';
 import { MikroORM, SqliteDriver } from '@mikro-orm/sqlite';
 import { PlayersGetPlayerStatsResponse } from 'tsclients/proto/mimir.pb.js';
 import config from '../../mikro-orm.config.js';
@@ -12,7 +12,7 @@ import { EventRegisteredPlayersEntity } from '../../entities/EventRegisteredPlay
 import { AchievementsModel } from '../AchievementsModel.js';
 import { runJob } from '../../../cron/runner.js';
 
-const afterFlush = jest.fn<() => void>();
+const afterFlush = vi.fn<() => void>();
 const orm = await MikroORM.init({
   ...config(),
   driver: SqliteDriver,
@@ -37,14 +37,12 @@ describe('Explicit model transactions', () => {
     afterFlush.mockReset();
     repo.em.clear();
     await repo.em.nativeDelete(JobsQueueEntity, {});
-    jest.spyOn(repo.em, 'execute').mockResolvedValue([{ acquired: true }]);
-    jest
-      .spyOn(registrations, 'findByPlayerId')
-      .mockResolvedValue(
-        [19, 20].map((id) => Object.assign(new EventRegisteredPlayersEntity(), { event: { id } }))
-      );
+    vi.spyOn(repo.em, 'execute').mockResolvedValue([{ acquired: true }]);
+    vi.spyOn(registrations, 'findByPlayerId').mockResolvedValue(
+      [19, 20].map((id) => Object.assign(new EventRegisteredPlayersEntity(), { event: { id } }))
+    );
   });
-  afterEach(() => jest.restoreAllMocks());
+  afterEach(() => vi.restoreAllMocks());
   afterAll(() => repo.destroy());
 
   it('commits scheduled jobs with implicit transactions disabled', async () => {
@@ -78,7 +76,7 @@ describe('Explicit model transactions', () => {
   });
 
   it('joins an existing transaction without creating a nested transaction', async () => {
-    const begin = jest.spyOn(repo.em.getConnection(), 'begin');
+    const begin = vi.spyOn(repo.em.getConnection(), 'begin');
 
     await repo.em.transactional(async () => {
       await stats.invalidatePlayerStats(1);
@@ -91,9 +89,10 @@ describe('Explicit model transactions', () => {
 
   it('commits cron results and removes completed jobs together', async () => {
     await repo.em.transactional(() => model.scheduleRecalcAchievements(19));
-    jest
-      .spyOn(Model.getModel(repo, AchievementsModel), 'precalculateAchievements')
-      .mockImplementation((eventId) => model.scheduleRecalcStats(eventId, [1]));
+    vi.spyOn(
+      Model.getModel(repo, AchievementsModel),
+      'precalculateAchievements'
+    ).mockImplementation((eventId) => model.scheduleRecalcStats(eventId, [1]));
 
     await runJob(repo, 'achievements');
 
@@ -130,11 +129,12 @@ describe('Explicit model transactions', () => {
         await pending;
       };
       if (jobName === 'achievements') {
-        jest
-          .spyOn(Model.getModel(repo, AchievementsModel), 'precalculateAchievements')
-          .mockImplementation(waitForCompletion);
+        vi.spyOn(
+          Model.getModel(repo, AchievementsModel),
+          'precalculateAchievements'
+        ).mockImplementation(waitForCompletion);
       } else {
-        jest.spyOn(stats, 'getPlayerStats').mockImplementation(async () => {
+        vi.spyOn(stats, 'getPlayerStats').mockImplementation(async () => {
           await waitForCompletion();
           return PlayersGetPlayerStatsResponse.initialize();
         });
@@ -157,8 +157,7 @@ describe('Explicit model transactions', () => {
       await model.scheduleRecalcAchievements(19);
       await model.scheduleRecalcAchievements(20);
     });
-    jest
-      .spyOn(Model.getModel(repo, AchievementsModel), 'precalculateAchievements')
+    vi.spyOn(Model.getModel(repo, AchievementsModel), 'precalculateAchievements')
       .mockImplementationOnce((eventId) => model.scheduleRecalcStats(eventId, [1]))
       .mockRejectedValueOnce(new Error('Cron job failed'));
 

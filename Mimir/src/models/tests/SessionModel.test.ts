@@ -1,4 +1,4 @@
-import { jest } from '@jest/globals';
+import { vi } from 'vitest';
 import { setImmediate } from 'node:timers/promises';
 import { EndingPolicy, SessionStatus } from 'tsclients/proto/atoms.pb.js';
 import { Model } from '../Model.js';
@@ -60,11 +60,11 @@ function makeSession(endingPolicy: EndingPolicy, syncEnd = false, round = 2) {
 describe('Session previews and finalization', () => {
   beforeEach(() => {
     // Persistence is mocked here; transaction behavior has its own database-backed tests.
-    jest.spyOn(repo.em, 'transactional').mockImplementation(async (callback) => callback(repo.em));
+    vi.spyOn(repo.em, 'transactional').mockImplementation(async (callback) => callback(repo.em));
   });
   afterAll(() => repo.destroy());
   afterEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
     repo.em.clear();
   });
 
@@ -81,18 +81,19 @@ describe('Session previews and finalization', () => {
       const snapshot = saved.clone();
       const status = session.status;
       const endDate = session.endDate;
-      jest.spyOn(model, 'findByRepresentationalHash').mockResolvedValue([session]);
-      jest
-        .spyOn(Model.getModel(repo, EventRegistrationModel), 'findByPlayerAndEvent')
-        .mockResolvedValue([]);
-      const recalc = jest
+      vi.spyOn(model, 'findByRepresentationalHash').mockResolvedValue([session]);
+      vi.spyOn(
+        Model.getModel(repo, EventRegistrationModel),
+        'findByPlayerAndEvent'
+      ).mockResolvedValue([]);
+      const recalc = vi
         .spyOn(Model.getModel(repo, CronModel), 'scheduleRecalcStats')
         .mockResolvedValue();
-      const history = jest
+      const history = vi
         .spyOn(Model.getModel(repo, PlayerHistoryModel), 'makeNewHistoryItem')
         .mockResolvedValue();
-      const persist = jest.spyOn(repo.em, 'persist');
-      const flush = jest.spyOn(repo.em, 'flush').mockResolvedValue();
+      const persist = vi.spyOn(repo.em, 'persist');
+      const flush = vi.spyOn(repo.em, 'flush').mockResolvedValue();
       const roundData = {
         draw: { roundIndex: saved.round, honba: saved.honba, riichiBets: [2], tempai: [1, 2] },
       };
@@ -154,13 +155,14 @@ describe('Session previews and finalization', () => {
   it('queues statistics after synchronous finalization, and only once', async () => {
     const { event, session, saved } = makeSession(EndingPolicy.ENDING_POLICY_EP_UNSPECIFIED, true);
     const state = new SessionState(event.ruleset, players, saved);
-    jest
-      .spyOn(Model.getModel(repo, EventRegistrationModel), 'findByPlayerAndEvent')
-      .mockResolvedValue([]);
-    const history = jest
+    vi.spyOn(
+      Model.getModel(repo, EventRegistrationModel),
+      'findByPlayerAndEvent'
+    ).mockResolvedValue([]);
+    const history = vi
       .spyOn(Model.getModel(repo, PlayerHistoryModel), 'makeNewHistoryItem')
       .mockResolvedValue();
-    const recalc = jest
+    const recalc = vi
       .spyOn(Model.getModel(repo, CronModel), 'scheduleRecalcStats')
       .mockImplementation(async () => {
         expect(session.status).toBe(SessionStatus.SESSION_STATUS_FINISHED);
@@ -181,7 +183,7 @@ describe('Session previews and finalization', () => {
       const { session, saved } = makeSession(EndingPolicy.ENDING_POLICY_EP_UNSPECIFIED);
       const snapshot = saved.clone();
       const roundSnapshot = structuredClone(roundData);
-      jest.spyOn(model, 'findByRepresentationalHash').mockResolvedValue([session]);
+      vi.spyOn(model, 'findByRepresentationalHash').mockResolvedValue([session]);
       const first = await model.previewRound(session.representationalHash, roundData);
       expect(await model.previewRound(session.representationalHash, roundData)).toEqual(first);
       expect(session.intermediateResults).toBe(saved);
@@ -203,16 +205,16 @@ describe('Session previews and finalization', () => {
       } else if (invalidRound.multiron) {
         invalidRound.multiron.wins[1].yaku = [];
       }
-      jest.spyOn(model, 'findByRepresentationalHash').mockResolvedValue([session]);
-      const persist = jest.spyOn(repo.em, 'persist');
-      const flush = jest.spyOn(repo.em, 'flush').mockResolvedValue();
+      vi.spyOn(model, 'findByRepresentationalHash').mockResolvedValue([session]);
+      const persist = vi.spyOn(repo.em, 'persist');
+      const flush = vi.spyOn(repo.em, 'flush').mockResolvedValue();
 
       await expect(model.previewRound(session.representationalHash, invalidRound)).rejects.toThrow(
         "Can't record hand without yaku"
       );
-      jest
-        .spyOn(Model.getModel(repo, IdempotencyModel), 'execute')
-        .mockImplementation(async (_scope, _method, _key, _request, action) => action());
+      vi.spyOn(Model.getModel(repo, IdempotencyModel), 'execute').mockImplementation(
+        async (_scope, _method, _key, _request, action) => action()
+      );
       await expect(
         model.addRound(session.representationalHash, invalidRound, session.nextRoundToken)
       ).rejects.toThrow("Can't record hand without yaku");
@@ -226,16 +228,17 @@ describe('Session previews and finalization', () => {
   it('saves replacements by original player ID when finalizing', async () => {
     const { event, session, saved } = makeSession(EndingPolicy.ENDING_POLICY_EP_UNSPECIFIED);
     const state = new SessionState(event.ruleset, players, saved);
-    jest
-      .spyOn(Model.getModel(repo, EventRegistrationModel), 'findByPlayerAndEvent')
-      .mockResolvedValue([
-        Object.assign(new EventRegisteredPlayersEntity(), {
-          id: 901,
-          playerId: 1,
-          replacementId: 101,
-        }),
-      ]);
-    const history = jest
+    vi.spyOn(
+      Model.getModel(repo, EventRegistrationModel),
+      'findByPlayerAndEvent'
+    ).mockResolvedValue([
+      Object.assign(new EventRegisteredPlayersEntity(), {
+        id: 901,
+        playerId: 1,
+        replacementId: 101,
+      }),
+    ]);
+    const history = vi
       .spyOn(Model.getModel(repo, PlayerHistoryModel), 'makeNewHistoryItem')
       .mockResolvedValue();
 
@@ -253,7 +256,7 @@ describe('Session previews and finalization', () => {
     const results = model.getSessionResults(event, session, state);
     const releases: Array<() => void> = [];
     const completed: number[] = [];
-    const history = jest
+    const history = vi
       .spyOn(Model.getModel(repo, PlayerHistoryModel), 'makeNewHistoryItem')
       .mockImplementation(async (_ruleset, playerId) => {
         await new Promise<void>((resolve) => {
@@ -261,8 +264,8 @@ describe('Session previews and finalization', () => {
         });
         completed.push(playerId);
       });
-    const persist = jest.spyOn(repo.em, 'persist');
-    const flush = jest.spyOn(repo.em, 'flush').mockResolvedValue();
+    const persist = vi.spyOn(repo.em, 'persist');
+    const flush = vi.spyOn(repo.em, 'flush').mockResolvedValue();
     let finished = false;
     const finalization = model.finalizeGame(event, session, state, true).then(() => {
       finished = true;
@@ -301,21 +304,23 @@ describe('Session previews and finalization', () => {
 
   it('waits for session-end notification queries before force finishing returns', async () => {
     const { session } = makeSession(EndingPolicy.ENDING_POLICY_EP_UNSPECIFIED);
-    jest.spyOn(repo.meta, 'personId', 'get').mockReturnValue(1);
-    jest.spyOn(Model.getModel(repo, PlayerModel), 'isEventAdmin').mockResolvedValue(true);
-    jest.spyOn(model, 'findByRepresentationalHash').mockResolvedValue([session]);
-    jest.spyOn(model, 'finalizeGame').mockResolvedValue();
-    const recalc = jest
+    vi.spyOn(repo.meta, 'personId', 'get').mockReturnValue(1);
+    vi.spyOn(Model.getModel(repo, PlayerModel), 'isEventAdmin').mockResolvedValue(true);
+    vi.spyOn(model, 'findByRepresentationalHash').mockResolvedValue([session]);
+    vi.spyOn(model, 'finalizeGame').mockResolvedValue();
+    const recalc = vi
       .spyOn(Model.getModel(repo, CronModel), 'scheduleRecalcStats')
       .mockResolvedValue();
-    jest
-      .spyOn(Model.getModel(repo, AchievementsModel), 'scheduleRebuildAchievements')
-      .mockResolvedValue();
-    jest
-      .spyOn(Model.getModel(repo, EventRegistrationModel), 'getSubstitutionPlayers')
-      .mockResolvedValue({});
+    vi.spyOn(
+      Model.getModel(repo, AchievementsModel),
+      'scheduleRebuildAchievements'
+    ).mockResolvedValue();
+    vi.spyOn(
+      Model.getModel(repo, EventRegistrationModel),
+      'getSubstitutionPlayers'
+    ).mockResolvedValue({});
     let release!: () => void;
-    const notify = jest.spyOn(repo.skirnir, 'messageClubSessionEnd').mockImplementation(
+    const notify = vi.spyOn(repo.skirnir, 'messageClubSessionEnd').mockImplementation(
       () =>
         new Promise<void>((resolve) => {
           release = resolve;

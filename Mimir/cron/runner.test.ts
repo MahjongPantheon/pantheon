@@ -1,17 +1,17 @@
-import { jest } from '@jest/globals';
+import { vi } from 'vitest';
 import { MikroORM } from '@mikro-orm/postgresql';
 import { Repository } from '../src/services/Repository.js';
 import { runWorker } from './runner.js';
 
-afterEach(() => jest.restoreAllMocks());
+afterEach(() => vi.restoreAllMocks());
 
 function mockRepository() {
-  const connect = jest.fn<() => Promise<void>>().mockResolvedValue(undefined);
-  const destroy = jest.fn<() => Promise<void>>().mockResolvedValue(undefined);
-  const execute = jest
+  const connect = vi.fn<() => Promise<void>>().mockResolvedValue(undefined);
+  const destroy = vi.fn<() => Promise<void>>().mockResolvedValue(undefined);
+  const execute = vi
     .fn<() => Promise<{ acquired: boolean }[]>>()
     .mockResolvedValue([{ acquired: true }]);
-  const findAll = jest.fn<() => Promise<unknown[]>>().mockResolvedValue([]);
+  const findAll = vi.fn<() => Promise<unknown[]>>().mockResolvedValue([]);
   const repo = {
     cache: { connect },
     destroy,
@@ -21,8 +21,8 @@ function mockRepository() {
       transactional: async (handler: () => Promise<unknown>) => handler(),
     },
   } as unknown as Repository;
-  jest.spyOn(MikroORM, 'init').mockResolvedValue({} as MikroORM);
-  jest.spyOn(Repository, 'instance').mockReturnValue(repo);
+  vi.spyOn(MikroORM, 'init').mockResolvedValue({} as MikroORM);
+  vi.spyOn(Repository, 'instance').mockReturnValue(repo);
   return { connect, destroy, execute, findAll };
 }
 

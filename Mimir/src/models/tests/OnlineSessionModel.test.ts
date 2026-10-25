@@ -1,4 +1,4 @@
-import { jest } from '@jest/globals';
+import { vi } from 'vitest';
 import { UniqueConstraintViolationException } from '@mikro-orm/core';
 import { Model } from '../Model.js';
 import { OnlineSessionModel } from '../OnlineSessionModel.js';
@@ -56,7 +56,7 @@ function fixture() {
 
 describe('Online replay import', () => {
   afterEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
     repo.em.clear();
   });
   afterAll(() => repo.destroy());
@@ -65,13 +65,13 @@ describe('Online replay import', () => {
     'persists parsed content type %i, results and history, then schedules achievements and statistics',
     async (contentType) => {
       const { event, session, rounds } = fixture();
-      const parser = jest
+      const parser = vi
         .spyOn(
           contentType === 1 ? OnlineParser.prototype : Tenhou6OnlineParser.prototype,
           'parseToSession'
         )
         .mockResolvedValue([session, {}, rounds, []]);
-      const persist = jest.spyOn(repo.em, 'persist');
+      const persist = vi.spyOn(repo.em, 'persist');
       const histories = ids.map((playerId) =>
         Object.assign(new PlayerHistoryEntity(), {
           playerId,
@@ -81,10 +81,10 @@ describe('Online replay import', () => {
           chips: 0,
         })
       );
-      jest.spyOn(playerHistory, 'findAllLastByEventAndPlayer').mockResolvedValue(histories);
-      jest.spyOn(playersModel, 'findById').mockResolvedValue(ids.map(makePlayer));
-      const schedule = jest.spyOn(cron, 'scheduleRecalcAchievements').mockResolvedValue();
-      const stats = jest.spyOn(cron, 'scheduleRecalcStats').mockResolvedValue();
+      vi.spyOn(playerHistory, 'findAllLastByEventAndPlayer').mockResolvedValue(histories);
+      vi.spyOn(playersModel, 'findById').mockResolvedValue(ids.map(makePlayer));
+      const schedule = vi.spyOn(cron, 'scheduleRecalcAchievements').mockResolvedValue();
+      const stats = vi.spyOn(cron, 'scheduleRecalcStats').mockResolvedValue();
       const result = await model.addGameContent(
         event,
         'replay-hash',
@@ -134,12 +134,13 @@ describe('Online replay import', () => {
   it('downloads a validated replay and passes its content to the importer', async () => {
     const { event } = fixture();
     event.isOnline = 1;
-    jest.spyOn(repo.em, 'findOne').mockResolvedValue(event);
-    jest.spyOn(model, '_checkReplayHash').mockResolvedValue();
-    jest
-      .spyOn(Downloader.prototype, 'getReplay')
-      .mockResolvedValue({ decodedHash: 'decoded-hash', content: 'xml-content' });
-    const importer = jest.spyOn(model, 'addGameContent').mockResolvedValue({
+    vi.spyOn(repo.em, 'findOne').mockResolvedValue(event);
+    vi.spyOn(model, '_checkReplayHash').mockResolvedValue();
+    vi.spyOn(Downloader.prototype, 'getReplay').mockResolvedValue({
+      decodedHash: 'decoded-hash',
+      content: 'xml-content',
+    });
+    const importer = vi.spyOn(model, 'addGameContent').mockResolvedValue({
       game: { sessionHash: 'hash', replayLink: '', players: [], finalResults: [], rounds: [] },
       players: [],
     });
@@ -158,9 +159,9 @@ describe('Online replay import', () => {
 
   it('passes typed replay content and its platform to the importer', async () => {
     const { event } = fixture();
-    jest.spyOn(repo.em, 'findOne').mockResolvedValue(event);
-    jest.spyOn(model, '_checkReplayHash').mockResolvedValue();
-    const importer = jest.spyOn(model, 'addGameContent').mockResolvedValue({
+    vi.spyOn(repo.em, 'findOne').mockResolvedValue(event);
+    vi.spyOn(model, '_checkReplayHash').mockResolvedValue();
+    const importer = vi.spyOn(model, 'addGameContent').mockResolvedValue({
       game: { sessionHash: 'hash', replayLink: '', players: [], finalResults: [], rounds: [] },
       players: [],
     });
@@ -184,7 +185,7 @@ describe('Online replay import', () => {
   });
 
   it('rejects a missing link before accessing storage', async () => {
-    const find = jest.spyOn(repo.em, 'findOne');
+    const find = vi.spyOn(repo.em, 'findOne');
     await expect(model.addGame({ eventId: 19, link: '' })).rejects.toThrow(
       'Link to replay is required'
     );
@@ -196,7 +197,7 @@ describe('Online replay import', () => {
     [Object.assign(new EventEntity(), { id: 19, isOnline: 0 }), 'not online'],
     [Object.assign(new EventEntity(), { id: 19, isOnline: 1, finished: 1 }), 'already finished'],
   ])('rejects an unavailable event', async (event, error) => {
-    jest.spyOn(repo.em, 'findOne').mockResolvedValue(event);
+    vi.spyOn(repo.em, 'findOne').mockResolvedValue(event);
     await expect(model.addGame({ eventId: 19, link })).rejects.toThrow(error);
     if (event) {
       // Typed replays are imported into offline events.
@@ -215,13 +216,13 @@ describe('Online replay import', () => {
   });
 
   it('rejects a replay hash in the same event but allows it in another event', async () => {
-    jest.spyOn(repo.em, 'findOne').mockResolvedValue(new SessionEntity());
+    vi.spyOn(repo.em, 'findOne').mockResolvedValue(new SessionEntity());
     await expect(model._checkReplayHash(19, 'duplicate')).rejects.toThrow('already added');
     expect(repo.em.findOne).toHaveBeenLastCalledWith(SessionEntity, {
       event: repo.em.getReference(EventEntity, 19),
       replayHash: 'duplicate',
     });
-    jest.mocked(repo.em.findOne).mockResolvedValue(null);
+    vi.mocked(repo.em.findOne).mockResolvedValue(null);
     await expect(model._checkReplayHash(20, 'duplicate')).resolves.toBeUndefined();
     expect(repo.em.findOne).toHaveBeenLastCalledWith(SessionEntity, {
       event: repo.em.getReference(EventEntity, 20),
@@ -246,7 +247,7 @@ describe('Online replay import', () => {
       const error = new UniqueConstraintViolationException(
         Object.assign(new Error('duplicate key'), { constraint: 'session_replay_hash_index' })
       );
-      jest.spyOn(repo.em, 'transactional').mockRejectedValue(error);
+      vi.spyOn(repo.em, 'transactional').mockRejectedValue(error);
       await expect(importReplay()).rejects.toThrow('This game is already added to the system');
     });
 
@@ -256,19 +257,19 @@ describe('Online replay import', () => {
         Object.assign(new Error('another duplicate'), { constraint: 'session_pkey' })
       ),
     ])('preserves unrelated storage errors: %s', async (error) => {
-      jest.spyOn(repo.em, 'transactional').mockRejectedValue(error);
+      vi.spyOn(repo.em, 'transactional').mockRejectedValue(error);
       await expect(importReplay()).rejects.toBe(error);
     });
 
     it('awaits the duplicate check before importing content', async () => {
       const { event } = fixture();
       event.isOnline = source === 'link' ? 1 : 0;
-      jest.spyOn(repo.em, 'findOne').mockResolvedValue(event);
-      jest
-        .spyOn(model, '_checkReplayHash')
-        .mockRejectedValue(new Error('This game is already added to the system'));
-      const download = jest.spyOn(Downloader.prototype, 'getReplay');
-      const importer = jest.spyOn(model, 'addGameContent');
+      vi.spyOn(repo.em, 'findOne').mockResolvedValue(event);
+      vi.spyOn(model, '_checkReplayHash').mockRejectedValue(
+        new Error('This game is already added to the system')
+      );
+      const download = vi.spyOn(Downloader.prototype, 'getReplay');
+      const importer = vi.spyOn(model, 'addGameContent');
       await expect(importReplay()).rejects.toThrow('already added');
       expect(download).not.toHaveBeenCalled();
       expect(importer).not.toHaveBeenCalled();

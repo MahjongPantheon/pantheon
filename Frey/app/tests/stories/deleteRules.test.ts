@@ -29,7 +29,7 @@ describe('Delete rules for person', () => {
   });
 
   it('should not remove non-existing rule', async () => {
-    return expect(() =>
+    return expect(
       frey.DeleteRuleForPerson(
         {
           ruleId: 100500,
@@ -65,7 +65,7 @@ describe('Delete rules for person', () => {
       )
     ).ruleId;
 
-    return expect(() =>
+    return expect(
       frey.DeleteRuleForPerson(
         {
           ruleId,
@@ -104,7 +104,7 @@ describe('Delete rules for person', () => {
     ).ruleId;
 
     // try removing rule by one who's not an admin
-    return expect(() =>
+    return expect(
       frey.DeleteRuleForPerson(
         {
           ruleId,
@@ -122,7 +122,7 @@ describe('Delete rules for person', () => {
   });
 
   it('should not remove myself from administrators', async () => {
-    return expect(() =>
+    return expect(
       frey.DeleteRuleForPerson(
         {
           ruleId: adminRuleId,
@@ -162,7 +162,7 @@ describe('Delete rules for person', () => {
       )
     ).ruleId;
 
-    return expect(() =>
+    return expect(
       frey.DeleteRuleForPerson(
         { ruleId },
         {
@@ -199,7 +199,7 @@ describe('Delete rules for person', () => {
     ).ruleId;
 
     // try removing rule by one who's not an admin
-    return expect(() =>
+    return expect(
       frey.DeleteRuleForPerson(
         { ruleId },
         {
@@ -232,7 +232,7 @@ describe('Delete rules for person', () => {
       )
     ).ruleId;
 
-    return expect(() =>
+    return expect(
       frey.DeleteRuleForPerson(
         { ruleId },
         {

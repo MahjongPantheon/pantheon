@@ -10,7 +10,7 @@ describe('Add rules for person', () => {
     const authData = await createUser(frey, email);
 
     // Adding myself to event admins, when there is no admins - should work fine
-    return expect(() =>
+    return expect(
       frey.AddRuleForPerson(
         {
           ruleName: Rights.ADMIN_EVENT,
@@ -29,7 +29,7 @@ describe('Add rules for person', () => {
   });
 
   it('should not add rule for non-existing user for new event', async () => {
-    return expect(() =>
+    return expect(
       frey.AddRuleForPerson(
         {
           ruleName: Rights.ADMIN_EVENT,
@@ -51,7 +51,7 @@ describe('Add rules for person', () => {
     const email = makeUniqueEmail();
     const authData = await createUser(frey, email);
 
-    return expect(() =>
+    return expect(
       frey.AddRuleForPerson(
         {
           ruleName: Rights.ADMIN_EVENT,
@@ -90,7 +90,7 @@ describe('Add rules for person', () => {
       }
     );
 
-    return expect(() =>
+    return expect(
       frey.AddRuleForPerson(
         {
           ruleName: Rights.ADMIN_EVENT,
@@ -133,7 +133,7 @@ describe('Add rules for person', () => {
     );
 
     // try adding another user as admin by one who's not an admin
-    return expect(() =>
+    return expect(
       frey.AddRuleForPerson(
         {
           ruleName: Rights.ADMIN_EVENT,
@@ -173,7 +173,7 @@ describe('Add rules for person', () => {
       }
     );
 
-    return expect(() =>
+    return expect(
       frey.AddRuleForPerson(
         {
           ruleName: Rights.ADMIN_EVENT,
@@ -218,7 +218,7 @@ describe('Add rules for person', () => {
     );
 
     // add myself as admin but I'm not admin
-    return expect(() =>
+    return expect(
       frey.AddRuleForPerson(
         {
           ruleName: Rights.ADMIN_EVENT,
@@ -261,7 +261,7 @@ describe('Add rules for person', () => {
       }
     );
 
-    return expect(() =>
+    return expect(
       frey.AddRuleForPerson(
         {
           ruleName: Rights.REFEREE_FOR_EVENT,
@@ -304,7 +304,7 @@ describe('Add rules for person', () => {
     );
 
     // try adding another user as referee by one who's not an admin
-    return expect(() =>
+    return expect(
       frey.AddRuleForPerson(
         {
           ruleName: Rights.REFEREE_FOR_EVENT,
@@ -344,7 +344,7 @@ describe('Add rules for person', () => {
       }
     );
 
-    return expect(() =>
+    return expect(
       frey.AddRuleForPerson(
         {
           ruleName: Rights.REFEREE_FOR_EVENT,

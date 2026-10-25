@@ -1,4 +1,4 @@
-import { jest } from '@jest/globals';
+import { vi } from 'vitest';
 import * as Pb from 'tsclients/proto/frey.pb.js';
 import * as Atoms from 'tsclients/proto/atoms.pb.js';
 import { ConfigService } from '../Config.js';
@@ -296,12 +296,12 @@ describe('Frey transport', () => {
     { 'x-auth-token': 'token', 'x-current-person-id': '12', 'x-current-event-id': '19' },
     config
   );
-  afterEach(() => jest.restoreAllMocks());
+  afterEach(() => vi.restoreAllMocks());
 
   it.each(requests)(
     'sends $name to its Twirp endpoint with authentication and protobuf data',
     async ({ name, request, response, expected, call }) => {
-      const transport = jest
+      const transport = vi
         .spyOn(globalThis, 'fetch')
         .mockResolvedValue(new Response(Uint8Array.from(response).buffer));
       await expect(call(new FreyService(config, meta))).resolves.toEqual(expected);
@@ -319,7 +319,7 @@ describe('Frey transport', () => {
   );
 
   it('sends empty identity headers for anonymous requests', async () => {
-    const transport = jest
+    const transport = vi
       .spyOn(globalThis, 'fetch')
       .mockResolvedValue(
         new Response(
@@ -334,7 +334,7 @@ describe('Frey transport', () => {
   });
 
   it('reports internal errors to Hugin and exposes their cause', async () => {
-    const transport = jest
+    const transport = vi
       .spyOn(globalThis, 'fetch')
       .mockResolvedValueOnce(
         Response.json(
@@ -353,7 +353,7 @@ describe('Frey transport', () => {
   });
 
   it('propagates network errors without making a monitoring request', async () => {
-    const transport = jest
+    const transport = vi
       .spyOn(globalThis, 'fetch')
       .mockRejectedValue(new Error('network unavailable'));
     await expect(new FreyService(config, meta).Me({})).rejects.toThrow('network unavailable');

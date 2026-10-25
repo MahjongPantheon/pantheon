@@ -1,4 +1,4 @@
-import { jest } from '@jest/globals';
+import { vi } from 'vitest';
 import { Model } from '../Model.js';
 import { SessionModel } from '../SessionModel.js';
 import { RoundModel } from '../RoundModel.js';
@@ -72,8 +72,8 @@ function round(
 
 describe('Achievement calculations', () => {
   afterEach(() => {
-    jest.restoreAllMocks();
-    jest.useRealTimers();
+    vi.restoreAllMocks();
+    vi.useRealTimers();
   });
   afterAll(() => repo.destroy());
 
@@ -97,8 +97,8 @@ describe('Achievement calculations', () => {
       Yaku.NORTH_ROUND_WIND,
     ];
     hands[1].hands[0].yaku = [Yaku.YAKUHAI4, Yaku.YAKUHAI2];
-    jest.spyOn(sessionModel, 'findByEventAndStatus').mockResolvedValue([session]);
-    jest.spyOn(roundModel, 'findBySessionIds').mockResolvedValue(hands);
+    vi.spyOn(sessionModel, 'findByEventAndStatus').mockResolvedValue([session]);
+    vi.spyOn(roundModel, 'findBySessionIds').mockResolvedValue(hands);
     await expect(getDovakin(event, repo)).resolves.toEqual({ count: 11, playerIds: [1] });
     await expect(getCatchThemAll(event, repo)).resolves.toEqual({ count: 11, playerIds: [1] });
   });
@@ -109,19 +109,17 @@ describe('Achievement calculations', () => {
       id: ++fixtureId,
       representationalHash: `game-${fixtureId}`,
     });
-    jest.spyOn(sessionModel, 'findByEventAndStatus').mockResolvedValue([first, second]);
-    jest
-      .spyOn(roundModel, 'findBySessionIds')
-      .mockResolvedValue([
-        round(first, RoundOutcome.ROUND_OUTCOME_TSUMO, [1]),
-        round(first, RoundOutcome.ROUND_OUTCOME_TSUMO, [1]),
-        round(first, RoundOutcome.ROUND_OUTCOME_TSUMO, [2]),
-        round(first, RoundOutcome.ROUND_OUTCOME_RON, [3]),
-        round(second, RoundOutcome.ROUND_OUTCOME_TSUMO, [1]),
-        round(second, RoundOutcome.ROUND_OUTCOME_TSUMO, [2]),
-        round(second, RoundOutcome.ROUND_OUTCOME_TSUMO, [2]),
-        round(second, RoundOutcome.ROUND_OUTCOME_TSUMO, [4]),
-      ]);
+    vi.spyOn(sessionModel, 'findByEventAndStatus').mockResolvedValue([first, second]);
+    vi.spyOn(roundModel, 'findBySessionIds').mockResolvedValue([
+      round(first, RoundOutcome.ROUND_OUTCOME_TSUMO, [1]),
+      round(first, RoundOutcome.ROUND_OUTCOME_TSUMO, [1]),
+      round(first, RoundOutcome.ROUND_OUTCOME_TSUMO, [2]),
+      round(first, RoundOutcome.ROUND_OUTCOME_RON, [3]),
+      round(second, RoundOutcome.ROUND_OUTCOME_TSUMO, [1]),
+      round(second, RoundOutcome.ROUND_OUTCOME_TSUMO, [2]),
+      round(second, RoundOutcome.ROUND_OUTCOME_TSUMO, [2]),
+      round(second, RoundOutcome.ROUND_OUTCOME_TSUMO, [4]),
+    ]);
     await expect(getBestTsumoistInSingleSession(event, repo)).resolves.toEqual({
       tsumo: 2,
       playerIds: [1, 2],
@@ -142,8 +140,8 @@ describe('Achievement calculations', () => {
         hand.fu = 80;
       }
     }
-    jest.spyOn(sessionModel, 'findByEventAndStatus').mockResolvedValue([first, second]);
-    jest.spyOn(roundModel, 'findBySessionIds').mockResolvedValue([low, high, tied]);
+    vi.spyOn(sessionModel, 'findByEventAndStatus').mockResolvedValue([first, second]);
+    vi.spyOn(roundModel, 'findBySessionIds').mockResolvedValue([low, high, tied]);
     const gamesByPlayer = {
       1: [first.representationalHash, second.representationalHash],
       2: [first.representationalHash],
@@ -153,7 +151,7 @@ describe('Achievement calculations', () => {
       playerIds: [1, 2],
       gamesByPlayer,
     });
-    const query = jest.spyOn(repo.em, 'findAll').mockResolvedValue([high, tied, low]);
+    const query = vi.spyOn(repo.em, 'findAll').mockResolvedValue([high, tied, low]);
     await expect(getMaxFuHand(event.id, repo)).resolves.toEqual({
       fu: 80,
       playerIds: [1, 2],
@@ -168,13 +166,11 @@ describe('Achievement calculations', () => {
   it('keeps every tied session maximum for a player', async () => {
     const { event, session: first } = fixture();
     const { session: second } = fixture();
-    jest.spyOn(sessionModel, 'findByEventAndStatus').mockResolvedValue([first, second]);
-    jest
-      .spyOn(roundModel, 'findBySessionIds')
-      .mockResolvedValue([
-        round(first, RoundOutcome.ROUND_OUTCOME_TSUMO, [1]),
-        round(second, RoundOutcome.ROUND_OUTCOME_TSUMO, [1]),
-      ]);
+    vi.spyOn(sessionModel, 'findByEventAndStatus').mockResolvedValue([first, second]);
+    vi.spyOn(roundModel, 'findBySessionIds').mockResolvedValue([
+      round(first, RoundOutcome.ROUND_OUTCOME_TSUMO, [1]),
+      round(second, RoundOutcome.ROUND_OUTCOME_TSUMO, [1]),
+    ]);
     await expect(getBestTsumoistInSingleSession(event, repo)).resolves.toEqual({
       tsumo: 1,
       playerIds: [1],
@@ -189,8 +185,8 @@ describe('Achievement calculations', () => {
     win.hands[0].han = 13;
     win.hands[0].fu = 0;
     event.ruleset.rules.withKazoe = true;
-    jest.spyOn(sessionModel, 'findByEventAndStatus').mockResolvedValue([session]);
-    jest.spyOn(roundModel, 'findBySessionIds').mockResolvedValue([win]);
+    vi.spyOn(sessionModel, 'findByEventAndStatus').mockResolvedValue([session]);
+    vi.spyOn(roundModel, 'findBySessionIds').mockResolvedValue([win]);
     await expect(getYakumans(event, repo)).resolves.toEqual([
       { playerId: 1, kazoe: true, sessionHash: session.representationalHash },
     ]);
@@ -203,11 +199,9 @@ describe('Achievement calculations', () => {
       bestWinCount: 1,
       playerIds: [1],
     });
-    jest
-      .spyOn(repo.em, 'findAll')
-      .mockResolvedValue([
-        Object.assign(new SessionResultsEntity(), { playerId: 1, score: 65000, session }),
-      ]);
+    vi.spyOn(repo.em, 'findAll').mockResolvedValue([
+      Object.assign(new SessionResultsEntity(), { playerId: 1, score: 65000, session }),
+    ]);
     await expect(getNeedMoreGold(event, repo)).resolves.toEqual([
       { playerId: 1, score: 65000, sessionHash: session.representationalHash },
     ]);
@@ -218,29 +212,25 @@ describe('Achievement calculations', () => {
     event.ruleset.rules.riichiGoesToWinner = true;
     event.ruleset.rules.doubleronRiichiAtamahane = true;
     session.intermediateResults.riichiBets = 2;
-    jest.spyOn(playerModel, 'findPlayersForEvents').mockResolvedValue({
+    vi.spyOn(playerModel, 'findPlayersForEvents').mockResolvedValue({
       players: [1, 2, 3, 4].map(makePlayer),
       replaceMap: new Map(),
     });
-    jest.spyOn(sessionModel, 'findByEventAndStatus').mockResolvedValue([session]);
-    jest
-      .spyOn(resultsModel, 'findBySession')
-      .mockResolvedValue([
-        Object.assign(new SessionResultsEntity(), { session, playerId: 4, place: 1 }),
-      ]);
+    vi.spyOn(sessionModel, 'findByEventAndStatus').mockResolvedValue([session]);
+    vi.spyOn(resultsModel, 'findBySession').mockResolvedValue([
+      Object.assign(new SessionResultsEntity(), { session, playerId: 4, place: 1 }),
+    ]);
     const ron = round(session, RoundOutcome.ROUND_OUTCOME_RON, [2], [2, 3]);
     ron.lastSessionState.riichiBets = 1;
     const multiron = round(session, RoundOutcome.ROUND_OUTCOME_MULTIRON, [1, 2], [1, 2, 4]);
     multiron.lastSessionState.riichiBets = 2;
-    jest
-      .spyOn(roundModel, 'findBySessionIds')
-      .mockResolvedValue([
-        ron,
-        round(session, RoundOutcome.ROUND_OUTCOME_TSUMO, [4], [1]),
-        round(session, RoundOutcome.ROUND_OUTCOME_DRAW, [], [1]),
-        round(session, RoundOutcome.ROUND_OUTCOME_ABORT, [], [3]),
-        multiron,
-      ]);
+    vi.spyOn(roundModel, 'findBySessionIds').mockResolvedValue([
+      ron,
+      round(session, RoundOutcome.ROUND_OUTCOME_TSUMO, [4], [1]),
+      round(session, RoundOutcome.ROUND_OUTCOME_DRAW, [], [1]),
+      round(session, RoundOutcome.ROUND_OUTCOME_ABORT, [], [3]),
+      multiron,
+    ]);
     const stats = await calcRiichiStat(repo, event);
     expect(multiron.riichi).toEqual([1, 2, 4]);
     expect([...stats.data.values()]).toEqual([
@@ -267,19 +257,17 @@ describe('Achievement calculations', () => {
     'excludes registrations without completed sessions from riichi achievements (has sessions: %s)',
     async (hasSessions) => {
       const { event, session } = fixture();
-      jest.spyOn(playerModel, 'findPlayersForEvents').mockResolvedValue({
+      vi.spyOn(playerModel, 'findPlayersForEvents').mockResolvedValue({
         players: [5, 6, 7, 8, 9, 10, 1, 2, 3, 4].map(makePlayer),
         replaceMap: new Map(),
       });
-      jest
-        .spyOn(sessionModel, 'findByEventAndStatus')
-        .mockResolvedValue(hasSessions ? [session] : []);
-      jest
-        .spyOn(roundModel, 'findBySessionIds')
-        .mockResolvedValue(
-          hasSessions ? [round(session, RoundOutcome.ROUND_OUTCOME_DRAW, [])] : []
-        );
-      jest.spyOn(resultsModel, 'findBySession').mockResolvedValue([]);
+      vi.spyOn(sessionModel, 'findByEventAndStatus').mockResolvedValue(
+        hasSessions ? [session] : []
+      );
+      vi.spyOn(roundModel, 'findBySessionIds').mockResolvedValue(
+        hasSessions ? [round(session, RoundOutcome.ROUND_OUTCOME_DRAW, [])] : []
+      );
+      vi.spyOn(resultsModel, 'findBySession').mockResolvedValue([]);
       event.ruleset.rules.riichiGoesToWinner = false;
 
       const expected = hasSessions ? [1, 2, 3, 4].map((playerId) => ({ playerId, count: 0 })) : [];
@@ -304,14 +292,12 @@ describe('Achievement calculations', () => {
       event.ruleset.rules.riichiGoesToWinner = true;
       session.intermediateResults.riichiBets = 2;
       completeSession.intermediateResults.riichiBets = 1;
-      jest.spyOn(playerModel, 'findPlayersForEvents').mockResolvedValue({
+      vi.spyOn(playerModel, 'findPlayersForEvents').mockResolvedValue({
         players: [1, 2, 3, 4, 5].map(makePlayer),
         replaceMap: new Map(),
       });
-      jest
-        .spyOn(sessionModel, 'findByEventAndStatus')
-        .mockResolvedValue([session, completeSession]);
-      jest.spyOn(resultsModel, 'findBySession').mockResolvedValue([
+      vi.spyOn(sessionModel, 'findByEventAndStatus').mockResolvedValue([session, completeSession]);
+      vi.spyOn(resultsModel, 'findBySession').mockResolvedValue([
         Object.assign(new SessionResultsEntity(), {
           session: completeSession,
           playerId: 4,
@@ -321,12 +307,10 @@ describe('Achievement calculations', () => {
           ? [Object.assign(new SessionResultsEntity(), { session, playerId: 4, place: 1 })]
           : []),
       ]);
-      jest
-        .spyOn(roundModel, 'findBySessionIds')
-        .mockResolvedValue([
-          round(completeSession, RoundOutcome.ROUND_OUTCOME_RON, [2], [1]),
-          ...(hasRounds ? [round(session, RoundOutcome.ROUND_OUTCOME_RON, [2], [1])] : []),
-        ]);
+      vi.spyOn(roundModel, 'findBySessionIds').mockResolvedValue([
+        round(completeSession, RoundOutcome.ROUND_OUTCOME_RON, [2], [1]),
+        ...(hasRounds ? [round(session, RoundOutcome.ROUND_OUTCOME_RON, [2], [1])] : []),
+      ]);
 
       const stats = await calcRiichiStat(repo, event);
       expect([...stats.data.values()]).toEqual([
@@ -341,28 +325,28 @@ describe('Achievement calculations', () => {
   );
 
   it('refreshes cached statistics after two minutes', async () => {
-    jest.useFakeTimers();
-    jest.setSystemTime(new Date('2026-01-01T00:00:00Z'));
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date('2026-01-01T00:00:00Z'));
     const { event } = fixture();
-    const players = jest
+    const players = vi
       .spyOn(playerModel, 'findPlayersForEvents')
       .mockResolvedValue({ players: [], replaceMap: new Map() });
-    jest.spyOn(sessionModel, 'findByEventAndStatus').mockResolvedValue([]);
-    jest.spyOn(roundModel, 'findBySessionIds').mockResolvedValue([]);
-    jest.spyOn(resultsModel, 'findBySession').mockResolvedValue([]);
+    vi.spyOn(sessionModel, 'findByEventAndStatus').mockResolvedValue([]);
+    vi.spyOn(roundModel, 'findBySessionIds').mockResolvedValue([]);
+    vi.spyOn(resultsModel, 'findBySession').mockResolvedValue([]);
     const first = await calcRiichiStat(repo, event);
     expect(await calcRiichiStat(repo, event)).toBe(first);
-    jest.setSystemTime(new Date('2026-01-01T00:02:01Z'));
+    vi.setSystemTime(new Date('2026-01-01T00:02:01Z'));
     expect(await calcRiichiStat(repo, event)).not.toBe(first);
     expect(players).toHaveBeenCalledTimes(2);
   });
 
   it('returns empty rankings when source data cannot be loaded', async () => {
     const { event } = fixture();
-    jest
-      .spyOn(playerModel, 'findPlayersForEvents')
-      .mockRejectedValue(new Error('storage unavailable'));
-    const error = jest.spyOn(console, 'error').mockImplementation(() => {});
+    vi.spyOn(playerModel, 'findPlayersForEvents').mockRejectedValue(
+      new Error('storage unavailable')
+    );
+    const error = vi.spyOn(console, 'error').mockImplementation(() => {});
     await expect(getMaxStolenRiichiBetsCount(event, repo)).resolves.toEqual([]);
     await expect(getMinLostRiichiBetsCount(event, repo)).resolves.toEqual([]);
     expect(error).toHaveBeenCalledTimes(2);
