@@ -169,6 +169,7 @@ prebuild:
 	mkdir -p ../Hugin-dist/bin
 	cp -f bin/GeoLite2-*.mmdb ../Hugin-dist/bin/
 	cp -f package.json ../Hugin-dist/
+	cp -f pnpm-workspace.yaml ../Hugin-dist/
 	cp -f pnpm-lock.yaml ../Hugin-dist/
 
 .PHONY: container_prebuild

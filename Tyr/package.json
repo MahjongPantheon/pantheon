@@ -4,9 +4,6 @@
   "type": "module",
   "module": "index.ts",
   "license": "GPL-3.0-or-later",
-  "resolutions": {
-    "jackspeak": "2.1.1"
-  },
   "dependencies": {
     "@types/node": "22.5.5",
     "@types/react": "18.3.8",
@@ -69,8 +66,5 @@
   "scripts": {
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
-  },
-  "pnpm": {
-    "neverBuiltDependencies": []
   }
 }

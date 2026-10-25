@@ -167,6 +167,7 @@ prebuild:
 	mkdir -p ../Gullveig-dist
 	cp -f dist/server.js ../Gullveig-dist/
 	cp -f package.json ../Gullveig-dist/
+	cp -f pnpm-workspace.yaml ../Gullveig-dist/
 	cp -f pnpm-lock.yaml ../Gullveig-dist/
 
 .PHONY: container_prebuild

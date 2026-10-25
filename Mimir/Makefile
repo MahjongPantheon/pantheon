@@ -320,6 +320,7 @@ prebuild:
 	cp -f dist/metadata.json ../Mimir-dist/
 	if [ -f .env.production ]; then cp -f .env.production ../Mimir-dist/ ; fi
 	cp -f package.json ../Mimir-dist/
+	cp -f pnpm-workspace.yaml ../Mimir-dist/
 	cp -f pnpm-lock.yaml ../Mimir-dist/
 
 .PHONY: container_prebuild

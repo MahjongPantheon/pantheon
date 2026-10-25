@@ -104,6 +104,7 @@ prebuild:
 	if [ -f .env.production ]; then cp -f .env.production ../Skirnir-dist/ ; fi
 	if [ -f .env.development ]; then cp -f .env.development ../Skirnir-dist/ ; fi
 	cp -f package.json ../Skirnir-dist/
+	cp -f pnpm-workspace.yaml ../Skirnir-dist/
 	cp -f pnpm-lock.yaml ../Skirnir-dist/
 
 dev:

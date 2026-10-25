@@ -1,3 +1,7 @@
-onlyBuiltDependencies:
-  - node-expat
-  - sqlite3
+allowBuilds:
+  '@swc/core': false
+  bcrypt: false
+  esbuild: false
+  node-expat: true
+  sqlite3: true
+  unrs-resolver: false

@@ -273,6 +273,7 @@ prebuild:
 	cp -f dist/server.js ../Frey-dist/
 	if [ -f .env.production ]; then cp -f .env.production ../Frey-dist/ ; fi
 	cp -f package.json ../Frey-dist/
+	cp -f pnpm-workspace.yaml ../Frey-dist/
 	cp -f pnpm-lock.yaml ../Frey-dist/
 
 .PHONY: container_prebuild

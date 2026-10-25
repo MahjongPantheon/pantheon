@@ -169,6 +169,7 @@ prebuild:
 	mkdir -p ../Meili-dist/bin
 	cp -f bin/GeoLite2-City.mmdb ../Meili-dist/bin/
 	cp -f package.json ../Meili-dist/
+	cp -f pnpm-workspace.yaml ../Meili-dist/
 	cp -f pnpm-lock.yaml ../Meili-dist/
 
 .PHONY: container_prebuild

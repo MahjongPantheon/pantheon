@@ -111,6 +111,7 @@ prebuild:
 	if [ -f .env.development ]; then cp -f .env.development ../Bragi-dist/ ; fi
 	echo `date +"%Y-%m-%d"` > ../Bragi-dist/lastbuild.txt
 	cp -f package.json ../Bragi-dist/
+	cp -f pnpm-workspace.yaml ../Bragi-dist/
 	cp -f pnpm-lock.yaml ../Bragi-dist/
 
 PHONY: cleanup_prebuilts

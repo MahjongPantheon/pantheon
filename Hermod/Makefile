@@ -167,6 +167,7 @@ prebuild:
 	mkdir -p ../Hermod-dist
 	cp -f dist/server.js dist/dump-mail.js ../Hermod-dist/
 	cp -f package.json ../Hermod-dist/
+	cp -f pnpm-workspace.yaml ../Hermod-dist/
 	cp -f pnpm-lock.yaml ../Hermod-dist/
 
 .PHONY: container_prebuild

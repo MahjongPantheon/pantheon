@@ -112,6 +112,7 @@ prebuild:
 	if [ -f .env.production ]; then cp -f .env.production ../Sigrun-dist/ ; fi
 	if [ -f .env.development ]; then cp -f .env.development ../Sigrun-dist/ ; fi
 	cp -f package.json ../Sigrun-dist/
+	cp -f pnpm-workspace.yaml ../Sigrun-dist/
 	cp -f pnpm-lock.yaml ../Sigrun-dist/
 
 PHONY: cleanup_prebuilts

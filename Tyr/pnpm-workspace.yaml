@@ -1,0 +1,6 @@
+allowBuilds:
+  '@swc/core': true
+  esbuild: true
+
+overrides:
+  jackspeak: 2.1.1

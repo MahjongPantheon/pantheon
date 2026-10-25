@@ -35,8 +35,5 @@
     "oxlint-tsgolint": "^7.0.2001",
     "typescript": "7.0.2"
   },
-  "pnpm": {
-    "neverBuiltDependencies": []
-  },
   "module": "index.ts"
 }
