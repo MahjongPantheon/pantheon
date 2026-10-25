@@ -109,6 +109,33 @@ describe('PlayerStatsModel.getPlayerStats', () => {
   });
   afterAll(() => repo.destroy());
 
+  it('averages dora over won hands using the doraLord calculation', () => {
+    const doraRounds = [
+      [
+        RoundOutcome.ROUND_OUTCOME_RON,
+        [{ winnerId: 101, dora: 2, uradora: 3, kandora: 1, kanuradora: 1 }],
+      ],
+      [RoundOutcome.ROUND_OUTCOME_TSUMO, [{ winnerId: 101 }]],
+      [
+        RoundOutcome.ROUND_OUTCOME_MULTIRON,
+        [
+          { winnerId: 101, dora: 3 },
+          { winnerId: 303, dora: 8 },
+        ],
+      ],
+      [RoundOutcome.ROUND_OUTCOME_RON, [{ winnerId: 303, dora: 4 }]],
+      [RoundOutcome.ROUND_OUTCOME_DRAW, [{}]],
+      [RoundOutcome.ROUND_OUTCOME_ABORT, [{}]],
+      [RoundOutcome.ROUND_OUTCOME_CHOMBO, [{ loserId: 101 }]],
+      [RoundOutcome.ROUND_OUTCOME_NAGASHI, [{ nagashi: [101] }]],
+    ].map(([outcome, hands]) => Object.assign(new RoundEntity(), { outcome, hands }));
+
+    expect(stats._getDoraStat(101, doraRounds)).toEqual({ count: 5, average: 1.67 });
+    expect(stats._getDoraStat(202, doraRounds)).toEqual({ count: 0, average: 0 });
+    expect(stats._getDoraStat(101, [doraRounds[1]])).toEqual({ count: 0, average: 0 });
+    expect(stats._getDoraStat(101, [])).toEqual({ count: 0, average: 0 });
+  });
+
   it('reports the affected database records when a multiron winner is absent from saved seating', async () => {
     const round = Object.assign(new RoundEntity(), {
       id: 700,

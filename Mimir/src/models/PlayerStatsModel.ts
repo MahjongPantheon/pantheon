@@ -843,16 +843,24 @@ export class PlayerStatsModel extends Model {
   }
 
   _getDoraStat(playerId: number, rounds: RoundEntity[]) {
+    let handsWon = 0;
     const doraCount = rounds.reduce((acc, round) => {
+      if (
+        round.outcome !== RoundOutcome.ROUND_OUTCOME_RON &&
+        round.outcome !== RoundOutcome.ROUND_OUTCOME_MULTIRON &&
+        round.outcome !== RoundOutcome.ROUND_OUTCOME_TSUMO
+      ) {
+        return acc;
+      }
       round.hands.forEach((hand) => {
         if (hand.winnerId === playerId) {
-          acc +=
-            (hand.dora ?? 0) + (hand.uradora ?? 0) + (hand.kandora ?? 0) + (hand.kanuradora ?? 0);
+          acc += hand.dora ?? 0;
+          handsWon++;
         }
       });
       return acc;
     }, 0);
-    const average = doraCount > 0 ? doraCount / rounds.length : 0;
+    const average = handsWon > 0 ? +(doraCount / handsWon).toFixed(2) : 0;
     return { count: doraCount, average };
   }
 }
