@@ -1,6 +1,6 @@
 import { createServer, IncomingMessage } from 'http';
 import { createTwirpServer } from 'twirpscript';
-import { createSimpleLogger } from 'simple-node-logger';
+import { createLogger } from './helpers/logger';
 import { createFrey } from 'tsclients/proto/frey.pb';
 import { freyClient } from './frey';
 import { env } from './helpers/env';
@@ -14,7 +14,7 @@ import { wrapErrorObject } from './helpers/errors';
 export const freyHandler = [createFrey(freyClient)];
 const dbConstructor = createDbConstructor();
 const redisConstructor = createRedisConstructor();
-const logger = createSimpleLogger('/var/log/frey.log');
+const logger = createLogger();
 
 redisConstructor().then((redis) => {
   const app = createTwirpServer<Context, typeof freyHandler, IncomingMessage>(freyHandler, {
@@ -26,20 +26,20 @@ redisConstructor().then((redis) => {
     .use(metrics());
 
   app.on('requestReceived', (ctx) => {
-    logger.info('Request received ', ctx.method?.name ?? 'Unknown');
+    logger.info({ method: ctx.method?.name ?? 'Unknown' }, 'Request received');
   });
 
   app.on('responseSent', (ctx) => {
-    logger.info('Response sent ', ctx.method?.name ?? 'Unknown');
+    logger.info({ method: ctx.method?.name ?? 'Unknown' }, 'Response sent');
   });
 
   app.on('error', (ctx, err) => {
-    logger.error('Request errored ', ctx.method?.name ?? 'Unknown', err);
+    logger.error({ method: ctx.method?.name ?? 'Unknown', err }, 'Request errored');
   });
 
   createServer(app).listen(env.port, () => console.log(`Server listening on port ${env.port}`));
 });
 
 process.on('uncaughtException', (err, origin) => {
-  logger.error('Uncaught exception: ', origin, wrapErrorObject(err));
+  logger.error({ origin, err: wrapErrorObject(err) }, 'Uncaught exception');
 });
