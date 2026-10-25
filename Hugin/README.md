@@ -12,8 +12,8 @@ Analytics retain the existing session identifiers, device/location categories an
 
 ### TypeScript runtime and APIs
 
-The API uses Node.js, Kysely and PostgreSQL. Eight Supervisor-managed workers on
-ports 41081–41088 share nginx `least_conn` balancing and keepalive connections.
+The API uses Node.js, Kysely and PostgreSQL. Four Supervisor-managed workers on
+ports 41081–41084 share nginx `least_conn` balancing and keepalive connections.
 The development server uses port 4008; its inspector uses 4208. Host HTTP
 publication remains 4008. Prometheus, node exporter, the Munin proxy and the
 Prometheus storage volume keep their existing roles.

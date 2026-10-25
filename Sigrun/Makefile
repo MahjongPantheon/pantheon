@@ -256,5 +256,5 @@ container_warmup: get_container_id
 	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
 		echo "${RED}Sigrun container is not running.${NC}"; \
 	else \
-		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'for i in $$(seq 1 8); do curl http://sigrun.pantheon.internal > /dev/null; done' ; \
+		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'for i in $$(seq 1 6); do curl http://sigrun.pantheon.internal > /dev/null; done' ; \
 	fi

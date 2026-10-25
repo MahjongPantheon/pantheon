@@ -35,14 +35,14 @@ The [development reverse proxy](../../Common/ReverseProxy/nginx.conf) forwards o
 
 ## Processes inside service containers
 
-These ports are not separately host-published by Compose unless listed in the next section. Nginx connects to the local workers. Production worker ranges are inclusive. Mimir, Frey, Sigrun, Bragi and Hugin use eight workers each; Meili uses four; Gullveig, Skirnir and Hermod each run one production worker.
+These ports are not separately host-published by Compose unless listed in the next section. Nginx connects to the local workers. Production worker ranges are inclusive. Mimir, Sigrun and Bragi use six workers each; Frey uses eight; Hugin and Meili use four each; Gullveig, Skirnir and Hermod each run one production worker.
 
 | Service | Development process port | Production process port(s) | Configuration sources |
 | --- | --- | --- | --- |
-| Mimir | 4001 | 41011–41018 | [Nginx](../../Mimir/mimir-container.nginx.conf), [Supervisor](../../Mimir/supervisord.conf), [server](../../Mimir/src/server.ts) |
+| Mimir | 4001 | 41011–41016 | [Nginx](../../Mimir/mimir-container.nginx.conf), [Supervisor](../../Mimir/supervisord.conf), [server](../../Mimir/src/server.ts) |
 | Frey | 4004 | 41041–41048 | [Nginx](../../Frey/frey-container.nginx.conf), [Supervisor](../../Frey/supervisord.conf), [environment loader](../../Frey/app/helpers/env.ts) |
-| Sigrun | 4002 (Vite) | 41021–41028 (SSR) | [Vite](../../Sigrun/vite.config.ts), [Nginx](../../Sigrun/sigrun-container.nginx.conf), [Supervisor](../../Sigrun/supervisord.conf) |
-| Bragi | 4008 (Vite) | 41081–41088 (SSR) | [Vite](../../Bragi/vite.config.ts), [Nginx](../../Bragi/bragi-container.nginx.conf), [Supervisor](../../Bragi/supervisord.conf) |
+| Sigrun | 4002 (Vite) | 41021–41026 (SSR) | [Vite](../../Sigrun/vite.config.ts), [Nginx](../../Sigrun/sigrun-container.nginx.conf), [Supervisor](../../Sigrun/supervisord.conf) |
+| Bragi | 4008 (Vite) | 41081–41086 (SSR) | [Vite](../../Bragi/vite.config.ts), [Nginx](../../Bragi/bragi-container.nginx.conf), [Supervisor](../../Bragi/supervisord.conf) |
 | Tyr | 4003 (Vite) | Static files on Nginx port 80 | [Vite](../../Tyr/vite.config.ts), [Nginx](../../Tyr/tyr-container.nginx.conf) |
 | Forseti | 4007 (Vite) | Static files on Nginx port 80 | [Vite](../../Forseti/vite.config.ts), [Nginx](../../Forseti/forseti-container.nginx.conf) |
 | Skirnir | 4015 | 41151 | [Nginx](../../Skirnir/skirnir-container.nginx.conf), [Supervisor](../../Skirnir/supervisord.conf), [server](../../Skirnir/app/server.ts) |
@@ -50,7 +50,7 @@ These ports are not separately host-published by Compose unless listed in the ne
 | Gullveig | 4009 | 41091 | [Nginx](../../Gullveig/gullveig-container.nginx.conf), [Supervisor](../../Gullveig/supervisord.conf), [server](../../Gullveig/src/server.ts) |
 | Meili | 4012 | 41121–41124 | [Nginx](../../Meili/meili-container.nginx.conf), [Supervisor](../../Meili/supervisord.conf), [server](../../Meili/src/server.ts) |
 | Hermod | 4007 | 41071 | [Nginx](../../Hermod/hermod-container.nginx.conf), [Supervisor](../../Hermod/configs/supervisord.conf), [server](../../Hermod/src/server.ts) |
-| Hugin | 4008 | 41081–41088 | [Nginx](../../Hugin/hugin-container.nginx.conf), [Supervisor](../../Hugin/supervisord.conf), [server](../../Hugin/src/server.ts) |
+| Hugin | 4008 | 41081–41084 | [Nginx](../../Hugin/hugin-container.nginx.conf), [Supervisor](../../Hugin/supervisord.conf), [server](../../Hugin/src/server.ts) |
 | Hugin Prometheus | 9090 | 9090 | [Supervisor](../../Hugin/supervisord.conf), [Munin Nginx virtual host](../../Hugin/hugin-container.nginx.conf) |
 | Hugin node exporter | 9100 | 9100 | [Supervisor](../../Hugin/supervisord.conf), [scrape targets](../../Hugin/config/prometheus_partial_config.conf) |
 | Hermod SMTP | 25; 587 submission declared by image | Same; submission depends on mail setup | [Dockerfile](../../Hermod/Dockerfile), [mail setup](../../Hermod/scripts/common-run.sh); neither port is host-published by Compose |
