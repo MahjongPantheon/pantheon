@@ -46,16 +46,16 @@ it('preserves positional packing for legacy hands and round trips new yaku', () 
 
 it('checks the whole wind group before adding and allows exactly four yakuhai', () => {
   const winds = [Y.EAST_SEAT_WIND, Y.EAST_ROUND_WIND];
-  expect(getYakuhaiToAdd([Y.RED_DRAGON, Y.GREEN_DRAGON], winds, yakuhai)).toEqual(winds);
+  expect(getYakuhaiToAdd([Y.RED_DRAGON, Y.GREEN_DRAGON], winds)).toEqual(winds);
   expect(
-    getYakuhaiToAdd([Y.RED_DRAGON, Y.GREEN_DRAGON, Y.SOUTH_ROUND_WIND], winds, yakuhai)
+    getYakuhaiToAdd([Y.RED_DRAGON, Y.GREEN_DRAGON, Y.SOUTH_ROUND_WIND], winds)
   ).toBeUndefined();
 });
 
 it.each([Y.RED_DRAGON, Y.GREEN_DRAGON, Y.WHITE_DRAGON])(
-  'promotes any third dragon (%s) to Daisangen',
+  'rejects any third dragon (%s)',
   (third: Y) => {
     const selected = [Y.RED_DRAGON, Y.GREEN_DRAGON, Y.WHITE_DRAGON].filter((id) => id !== third);
-    expect(getYakuhaiToAdd(selected, [third], [...yakuhai, Y.DAISANGEN])).toEqual([Y.DAISANGEN]);
+    expect(getYakuhaiToAdd(selected, [third])).toBeUndefined();
   }
 );

@@ -24,6 +24,7 @@ import {
   doubleYakuman,
   aggregatedYakuhai,
   separateYakuhai,
+  windYaku,
 } from '../../helpers/yaku';
 import { FormHandle } from './types';
 
@@ -72,14 +73,42 @@ export const YakuSettings: React.FC<YakuSettingsProps> = ({ form, i18n }) => {
               ? !separateYakuhai.includes(id)
               : !aggregatedYakuhai.includes(id)
           )
-          .map((y) => (
-            <Checkbox
-              data-testid={`forseti-event-settings-yaku-allowed-${y.id}`}
-              key={y.id}
-              label={y.name(i18n)}
-              {...form.getInputProps(`ruleset.allowedYaku.${y.id}`, { type: 'checkbox' })}
-            />
-          ))}
+          .filter(({ id }) => !windYaku.some((wind) => wind.round === id))
+          .map((y) => {
+            const wind = windYaku.find((candidate) => candidate.seat === y.id);
+            if (wind) {
+              const seatEnabled = !!form.values.ruleset.allowedYaku[wind.seat];
+              const roundEnabled = !!form.values.ruleset.allowedYaku[wind.round];
+              return (
+                <Checkbox
+                  data-testid={`forseti-event-settings-yaku-allowed-${wind.seat}`}
+                  key={wind.seat}
+                  label={wind.name(i18n)}
+                  checked={seatEnabled && roundEnabled}
+                  indeterminate={seatEnabled !== roundEnabled}
+                  aria-checked={
+                    seatEnabled !== roundEnabled ? 'mixed' : seatEnabled && roundEnabled
+                  }
+                  onChange={(event) => {
+                    const enabled = event.currentTarget.checked;
+                    form.setFieldValue('ruleset.allowedYaku', {
+                      ...form.values.ruleset.allowedYaku,
+                      [wind.seat]: enabled,
+                      [wind.round]: enabled,
+                    });
+                  }}
+                />
+              );
+            }
+            return (
+              <Checkbox
+                data-testid={`forseti-event-settings-yaku-allowed-${y.id}`}
+                key={y.id}
+                label={y.name(i18n)}
+                {...form.getInputProps(`ruleset.allowedYaku.${y.id}`, { type: 'checkbox' })}
+              />
+            );
+          })}
       </SimpleGrid>
       <Title order={4}>{i18n._t('Pao rule enabled for:')}</Title>
       <SimpleGrid

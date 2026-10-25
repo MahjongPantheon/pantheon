@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-25 00:35+0200\n"
+"POT-Creation-Date: 2026-10-25 19:15+0100\n"
 "PO-Revision-Date: 2026-10-20 00:34+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -175,7 +175,7 @@ msgstr "允许手动添加牌谱"
 msgid "Allow bankruptcy"
 msgstr "允许击飞"
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:42:22
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:49:22
 msgid "Allow combination of yakumans, e.g. tsuuisou + daisangen"
 msgstr "允许役满复合，例如字一色 + 大三元"
 
@@ -469,7 +469,7 @@ msgstr "禁用连庄"
 msgid "Do not interrupt session until it ends"
 msgstr "对局自然结束前不终止"
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:90:25
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:128:25
 msgid "Double yakuman:"
 msgstr "双倍役满："
 
@@ -485,6 +485,10 @@ msgstr "场风：东"
 #, fuzzy
 msgid "East seat wind"
 msgstr "重置座位表"
+
+#: app/helpers/yaku.ts:370:34
+msgid "East wind"
+msgstr "东风"
 
 #: app/pages/OwnedEventsEdit/index.tsx:78:18
 msgid "Edit event :: %1"
@@ -514,7 +518,7 @@ msgstr "邮件已发送"
 msgid "Enable \"Nagashi\" outcome to record this special draw"
 msgstr "启用“流局满贯”结果以记录这种特殊流局"
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:47:16
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:54:16
 msgid "Enable aggregated yakuhai"
 msgstr "启用聚合役牌"
 
@@ -1058,7 +1062,7 @@ msgstr "国士无双"
 msgid "Kokushi musou 13-side"
 msgstr "国士无双十三面听"
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:33:16
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:40:16
 msgid "Kuitan"
 msgstr "食断"
 
@@ -1210,7 +1214,7 @@ msgstr "最少对局场数"
 msgid "Multiline. Markdown syntax supported."
 msgstr "支持多行文本及 Markdown 语法。"
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:41:16
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:48:16
 msgid "Multiple yakumans"
 msgstr "多倍役满"
 
@@ -1263,6 +1267,10 @@ msgstr "未找到结果"
 #, fuzzy
 msgid "North seat wind"
 msgstr "下次排座"
+
+#: app/helpers/yaku.ts:385:34
+msgid "North wind"
+msgstr "北风"
 
 #: app/pages/GamesControl/TournamentControls.tsx:107:22
 msgid "Not ready"
@@ -1416,7 +1424,7 @@ msgstr "开立直"
 msgid "Otherwise"
 msgstr "其他情况"
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:72:25
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:110:25
 msgid "Pao rule enabled for:"
 msgstr "以下役种启用包牌规则："
 
@@ -2030,6 +2038,10 @@ msgstr "场风：南"
 msgid "South seat wind"
 msgstr "自风：南"
 
+#: app/helpers/yaku.ts:375:34
+msgid "South wind"
+msgstr "南风"
+
 #: app/pages/GamesControl/TournamentControls.tsx:282:21
 msgid "Start timer"
 msgstr "启动计时器"
@@ -2099,7 +2111,7 @@ msgstr "第 # %1 桌"
 msgid "Tanyao"
 msgstr "断幺九"
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:34:22
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:41:22
 msgid ""
 "Tanyao costs 1 han on open hand. If not checked, tanyao does not work on "
 "open hand."
@@ -2347,6 +2359,10 @@ msgstr "场风：西"
 msgid "West seat wind"
 msgstr "重置座位表"
 
+#: app/helpers/yaku.ts:380:34
+msgid "West wind"
+msgstr "西风"
+
 #: app/pages/ProfileManage.tsx:347:18
 msgid "What will NOT be deleted:"
 msgstr "以下内容不会被删除："
@@ -2365,8 +2381,10 @@ msgid ""
 "Honba is added only after draw."
 msgstr "庄家和牌或流局听牌后仍轮换座风。本场仅在流局后增加。"
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:48:22
-msgid "When disabled, use separate yakuhai names like \"East\" and \"White dragon\" instead of aggregated names like \"Yakuhai x3\"."
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:55:22
+msgid ""
+"When disabled, use separate yakuhai names like \"East\" and \"White dragon\" "
+"instead of aggregated names like \"Yakuhai x3\"."
 msgstr "禁用时，使用“东”和“白板”等单独的役牌名称，而不是“役牌 x3”等聚合名称。"
 
 #: app/pages/OwnedEventsEdit/TournamentSettings.tsx:61:20
@@ -2395,7 +2413,7 @@ msgstr "烧鸡"
 msgid "Yakitori penalty"
 msgstr "烧鸡罚分"
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:54:25
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:61:25
 msgid "Yaku allowed"
 msgstr "允许的役种"
 

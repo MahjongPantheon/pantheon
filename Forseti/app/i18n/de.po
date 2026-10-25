@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-25 00:35+0200\n"
+"POT-Creation-Date: 2026-10-25 19:15+0100\n"
 "PO-Revision-Date: 2024-04-12 22:47+0300\n"
 "Last-Translator: Jesterboxboy <github@jesterbox.org>\n"
 "Language-Team: \n"
@@ -186,7 +186,7 @@ msgstr "Manuelles Hinzufügen von Replays erlauben"
 msgid "Allow bankruptcy"
 msgstr "Mit Tobi"
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:42:22
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:49:22
 msgid "Allow combination of yakumans, e.g. tsuuisou + daisangen"
 msgstr "Kombinationen aus Yakuman sind erlaubt, z.B.: Tsuuisou + Daisangen"
 
@@ -485,7 +485,7 @@ msgstr "Keine renchans"
 msgid "Do not interrupt session until it ends"
 msgstr "Match nicht unterbrechen bis zum Ablauf der Zeit"
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:90:25
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:128:25
 msgid "Double yakuman:"
 msgstr "Doppelter Yakuman:"
 
@@ -501,6 +501,10 @@ msgstr "Rundenwind: Ost"
 #, fuzzy
 msgid "East seat wind"
 msgstr "Sitzordnung zurücksetzen"
+
+#: app/helpers/yaku.ts:370:34
+msgid "East wind"
+msgstr "Ostwind"
 
 #: app/pages/OwnedEventsEdit/index.tsx:78:18
 msgid "Edit event :: %1"
@@ -532,7 +536,7 @@ msgstr ""
 "Erlaube \"Nagashi Mangan\", wenn ein Spieler nur Ends oder Honors discarded, "
 "und niemand von ihm ruft"
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:47:16
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:54:16
 msgid "Enable aggregated yakuhai"
 msgstr "Aggregierte Yakuhai aktivieren"
 
@@ -1109,7 +1113,7 @@ msgstr "Kokushi musou"
 msgid "Kokushi musou 13-side"
 msgstr "Kokushi musou mit 13-seitigem Warten"
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:33:16
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:40:16
 msgid "Kuitan"
 msgstr "Kuitan"
 
@@ -1271,7 +1275,7 @@ msgstr "Mindestanzahl an Spielen"
 msgid "Multiline. Markdown syntax supported."
 msgstr "Mehrlinienfeld. Markdown Syntax wird unterstützt."
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:41:16
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:48:16
 msgid "Multiple yakumans"
 msgstr "Mehrfach Yakuman"
 
@@ -1324,6 +1328,10 @@ msgstr "Keine Ergebnisse"
 #, fuzzy
 msgid "North seat wind"
 msgstr "Nächster Sitzplan"
+
+#: app/helpers/yaku.ts:385:34
+msgid "North wind"
+msgstr "Nordwind"
 
 #: app/pages/GamesControl/TournamentControls.tsx:107:22
 msgid "Not ready"
@@ -1484,7 +1492,7 @@ msgstr "Offenes Riichi"
 msgid "Otherwise"
 msgstr "Sonstiges"
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:72:25
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:110:25
 msgid "Pao rule enabled for:"
 msgstr "Pao Regel aktiv bei:"
 
@@ -2118,6 +2126,10 @@ msgstr "Rundenwind: Süd"
 msgid "South seat wind"
 msgstr "Sitzwind: Süd"
 
+#: app/helpers/yaku.ts:375:34
+msgid "South wind"
+msgstr "Südwind"
+
 #: app/pages/GamesControl/TournamentControls.tsx:282:21
 msgid "Start timer"
 msgstr "Starte Timer"
@@ -2191,7 +2203,7 @@ msgstr "Tisch # %1"
 msgid "Tanyao"
 msgstr "Tanyao"
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:34:22
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:41:22
 msgid ""
 "Tanyao costs 1 han on open hand. If not checked, tanyao does not work on "
 "open hand."
@@ -2451,6 +2463,10 @@ msgstr "Rundenwind: West"
 msgid "West seat wind"
 msgstr "Sitzordnung zurücksetzen"
 
+#: app/helpers/yaku.ts:380:34
+msgid "West wind"
+msgstr "Westwind"
+
 #: app/pages/ProfileManage.tsx:347:18
 msgid "What will NOT be deleted:"
 msgstr "Was nicht gelöscht wird:"
@@ -2471,9 +2487,13 @@ msgstr ""
 "Bei Gewinn oder Tenpai nach Unentschieden von Osten , werden Sitzwinde "
 "trotzdem weiter rotiert. Honba wird nur nach einem Unentschieden hinzugefügt."
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:48:22
-msgid "When disabled, use separate yakuhai names like \"East\" and \"White dragon\" instead of aggregated names like \"Yakuhai x3\"."
-msgstr "Wenn deaktiviert, werden einzelne Yakuhai-Namen wie „Osten“ und „Weißer Drache“ statt aggregierter Namen wie „Yakuhai x3“ verwendet."
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:55:22
+msgid ""
+"When disabled, use separate yakuhai names like \"East\" and \"White dragon\" "
+"instead of aggregated names like \"Yakuhai x3\"."
+msgstr ""
+"Wenn deaktiviert, werden einzelne Yakuhai-Namen wie „Osten“ und „Weißer "
+"Drache“ statt aggregierter Namen wie „Yakuhai x3“ verwendet."
 
 #: app/pages/OwnedEventsEdit/TournamentSettings.tsx:61:20
 msgid "When time is out, finish current hand and interrupt the session"
@@ -2502,7 +2522,7 @@ msgstr "Yakitori"
 msgid "Yakitori penalty"
 msgstr "Yakitori Strafe"
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:54:25
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:61:25
 msgid "Yaku allowed"
 msgstr "Erlaubte Yaku"
 

@@ -153,7 +153,7 @@ function _excludeYaku(
     if (yakuhai.includes(yakuId)) {
       const allowed = state.gameConfig?.rulesetConfig.allowedYaku ?? [];
       const added = (yaku ?? [yakuId]).filter((id) => allowed.includes(id));
-      if (!getYakuhaiToAdd(rawYakuList, added, allowed)) {
+      if (!getYakuhaiToAdd(rawYakuList, added)) {
         return false;
       }
     }
@@ -275,6 +275,26 @@ function _getYakuList(state: IAppState): { [id: number]: Yaku[] } {
 }
 
 export const getYakuList = memoize(_getYakuList);
+
+export function getDoubleWindYaku(state: IAppState): Record<number, YakuId | undefined> {
+  const result: Record<number, YakuId | undefined> = {};
+  if (!state.currentOutcome || !state.players || !state.gameConfig) return result;
+  if (state.gameConfig.rulesetConfig.useAggregatedYakuhai) return result;
+  const allowed = state.gameConfig.rulesetConfig.allowedYaku;
+  const roundIndex = state.currentOutcome.roundIndex;
+  const visible = getYakuList(state);
+  for (const user of getWinningUsers(state)) {
+    const playerIndex = state.players.findIndex((player) => player.id === user.id);
+    if (playerIndex < 0) continue;
+    const wind = windYaku.find(
+      (pair) =>
+        pair.every((id) => allowed.includes(id)) &&
+        getWindYaku(pair[0], roundIndex, playerIndex)?.length === 2
+    );
+    if (wind) result[user.id] = visible[user.id]?.find((yaku) => wind.includes(yaku.id))?.id;
+  }
+  return result;
+}
 
 export function getDisabledYaku(state: IAppState): Record<number, Array<number>> {
   const yakuList = getYakuList(state);

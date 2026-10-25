@@ -6,7 +6,7 @@ import { ADD_YAKU, REMOVE_YAKU, SET_DORA_COUNT, TOGGLE_WINNER } from '../actions
 import { YakuId as Y } from '../../helpers/yaku';
 import { yakuhai } from '../../helpers/yakuhai';
 import { makeYakuGraph, pack } from '../../helpers/yakuCompatibility';
-import { getDisabledYaku, getSelectedYaku, getYakuList } from './yaku';
+import { getDisabledYaku, getDoubleWindYaku, getSelectedYaku, getYakuList } from './yaku';
 
 function fixture(roundIndex: number, winner: number, ron = false): IAppState {
   const outcome = initBlankOutcome(
@@ -101,16 +101,20 @@ it('clears wind yaku when changing the tsumo winner and preserves dragons', () =
 });
 
 it.each([false, true])(
-  'replaces three dragons with Daisangen at the four-yakuhai limit (ron=%s)',
+  'disables the third dragon at the yakuhai limit and allows choosing Daisangen directly (ron=%s)',
   (ron: boolean) => {
     let state = fixture(1, 1, ron);
     for (const id of [Y.TOITOI, Y.EAST_SEAT_WIND, Y.RED_DRAGON, Y.GREEN_DRAGON]) {
       state = outcomeReducer(state, { type: ADD_YAKU, payload: { id, winner: 1 } });
     }
     expect(getSelectedYaku(state)[1].filter((id) => yakuhai.includes(id))).toHaveLength(4);
-    expect(getDisabledYaku(state)[1]).not.toContain(Y.WHITE_DRAGON);
+    expect(getDisabledYaku(state)[1]).toContain(Y.WHITE_DRAGON);
+    expect(getDisabledYaku(state)[1]).not.toContain(Y.DAISANGEN);
     state = outcomeReducer(state, { type: SET_DORA_COUNT, payload: { count: 3, winner: 1 } });
-    state = outcomeReducer(state, { type: ADD_YAKU, payload: { id: Y.WHITE_DRAGON, winner: 1 } });
+    expect(
+      outcomeReducer(state, { type: ADD_YAKU, payload: { id: Y.WHITE_DRAGON, winner: 1 } })
+    ).toBe(state);
+    state = outcomeReducer(state, { type: ADD_YAKU, payload: { id: Y.DAISANGEN, winner: 1 } });
     expect(getSelectedYaku(state)[1]).toEqual([Y.DAISANGEN]);
     const outcome = state.currentOutcome!;
     const hand =
@@ -210,3 +214,65 @@ it('rejects aggregate buttons when the event uses separate names', () => {
     state
   );
 });
+
+it.each([false, true])(
+  'marks the matching double wind before selection (ron=%s)',
+  (ron: boolean) => {
+    for (const [round, winner, expected] of [
+      [1, 1, Y.EAST_SEAT_WIND],
+      [2, 2, Y.EAST_SEAT_WIND],
+      [5, 2, Y.SOUTH_SEAT_WIND],
+      [6, 3, Y.SOUTH_SEAT_WIND],
+      [9, 3, Y.WEST_SEAT_WIND],
+      [13, 4, Y.NORTH_SEAT_WIND],
+      [1, 2, undefined],
+      [5, 1, undefined],
+    ] as const) {
+      const state = fixture(round, winner, ron);
+      expect(getDoubleWindYaku(state)[winner]).toBe(expected);
+      if (expected !== undefined) {
+        const selected = outcomeReducer(state, {
+          type: ADD_YAKU,
+          payload: { id: expected, winner },
+        });
+        expect(getDoubleWindYaku(selected)[winner]).toBe(expected);
+      }
+    }
+  }
+);
+
+it('does not mark a double wind when only one wind yaku is allowed or aggregated mode is enabled', () => {
+  const state = fixture(1, 1);
+  state.gameConfig!.rulesetConfig.allowedYaku = [Y.EAST_SEAT_WIND];
+  expect(getDoubleWindYaku(state)[1]).toBeUndefined();
+  state.gameConfig!.rulesetConfig.allowedYaku = [Y.EAST_ROUND_WIND];
+  expect(getDoubleWindYaku(state)[1]).toBeUndefined();
+  state.gameConfig!.rulesetConfig.allowedYaku = [...yakuhai];
+  state.gameConfig!.rulesetConfig.useAggregatedYakuhai = true;
+  expect(getDoubleWindYaku(state)).toEqual({});
+});
+
+it.each([false, true])(
+  'disables each third dragon and re-enables it when another is removed (ron=%s)',
+  (ron: boolean) => {
+    const dragons = [Y.RED_DRAGON, Y.GREEN_DRAGON, Y.WHITE_DRAGON];
+    for (const third of dragons) {
+      let state = fixture(1, 1, ron);
+      const selected = dragons.filter((id) => id !== third);
+      for (const id of selected) {
+        state = outcomeReducer(state, { type: ADD_YAKU, payload: { id, winner: 1 } });
+      }
+      expect(getSelectedYaku(state)[1]).toEqual(expect.arrayContaining(selected));
+      expect(getDisabledYaku(state)[1]).toContain(third);
+      for (const id of selected) expect(getDisabledYaku(state)[1]).not.toContain(id);
+      expect(outcomeReducer(state, { type: ADD_YAKU, payload: { id: third, winner: 1 } })).toBe(
+        state
+      );
+      state = outcomeReducer(state, { type: REMOVE_YAKU, payload: { id: selected[0], winner: 1 } });
+      expect(getDisabledYaku(state)[1]).not.toContain(third);
+      state = outcomeReducer(state, { type: ADD_YAKU, payload: { id: third, winner: 1 } });
+      expect(getSelectedYaku(state)[1]).toContain(third);
+      expect(getSelectedYaku(state)[1]).not.toContain(Y.DAISANGEN);
+    }
+  }
+);

@@ -1,5 +1,5 @@
 import { NumberSelect } from '../NumberSelect/NumberSelect';
-import { UIEvent, useContext, useId, useState } from 'react';
+import { UIEvent, useContext, useState } from 'react';
 import { i18n } from '../../i18n';
 import { aggregatedYakuhai, windYaku } from '../../../helpers/yakuhai';
 import { YakuId, yakuMap } from '../../../helpers/yaku';
@@ -37,6 +37,7 @@ export type IProps = {
   yaku: YakuId[];
   selectedYaku: YakuId[];
   disabledYaku: YakuId[];
+  doubleWindYaku?: YakuId;
   onYakuClick: (yaku: YakuId, playerId: number) => void;
   isYakuman: boolean;
   yakuHan: number;
@@ -59,7 +60,6 @@ export const HandOfPlayer = (props: IProps) => {
   const [topShadowDisabled, setTopShadowDisabled] = useState(true);
   const [bottomShadowDisabled, setBottomShadowDisabled] = useState(false);
 
-  const yakuhaiHeadingId = useId();
   const yakuhaiButtons = [
     ...windYaku.flat(),
     YakuId.RED_DRAGON,
@@ -77,6 +77,7 @@ export const HandOfPlayer = (props: IProps) => {
         style={{
           flex: 1,
           minWidth: isYakuhai ? 0 : undefined,
+          position: isYakuhai ? 'relative' : undefined,
           padding: isYakuhai ? '6px 2px' : undefined,
           fontSize: isYakuhai && !yakuhaiTiles[y] ? 'var(--font-sm)' : undefined,
           whiteSpace: 'nowrap',
@@ -90,13 +91,23 @@ export const HandOfPlayer = (props: IProps) => {
         testId={`tyr-hand-player-${props.playerId}-yaku-${y}`}
       >
         {yakuhaiTiles[y] ? (
-          <img
-            className={styles.yakuhaiTile}
-            src={yakuhaiTiles[y]}
-            alt={label}
-            title={label}
-            draggable={false}
-          />
+          <span className={styles.yakuhaiTileWrapper}>
+            <img
+              className={styles.yakuhaiTile}
+              src={yakuhaiTiles[y]}
+              alt={label}
+              title={label}
+              draggable={false}
+            />
+            {props.doubleWindYaku === y && (
+              <span
+                className={styles.doubleWindBadge}
+                data-testid={`tyr-hand-player-${props.playerId}-yaku-${y}-double-wind`}
+              >
+                x2
+              </span>
+            )}
+          </span>
         ) : (
           label
         )}
@@ -119,17 +130,15 @@ export const HandOfPlayer = (props: IProps) => {
       <div className={styles.yakuList} onScroll={onScroll}>
         {props.yaku.filter((y) => y === YakuId.__OPENHAND).map(renderYakuButton)}
         {yakuhaiButtons.length > 0 && (
-          <section
+          <div
             className={styles.yakuhaiGroup}
-            aria-labelledby={yakuhaiHeadingId}
+            role='group'
+            aria-label={loc._t('Yakuhai')}
             data-testid={`tyr-hand-player-${props.playerId}-yakuhai`}
             key='yakuhai'
           >
-            <h3 className={styles.yakuhaiHeading} id={yakuhaiHeadingId}>
-              {loc._t('Yakuhai')}
-            </h3>
             <div className={styles.yakuhaiRow}>{yakuhaiButtons.map(renderYakuButton)}</div>
-          </section>
+          </div>
         )}
         {props.yaku
           .filter((y) => y !== YakuId.__OPENHAND && !yakuhaiButtons.includes(y))

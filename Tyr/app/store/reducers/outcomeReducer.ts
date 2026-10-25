@@ -149,7 +149,7 @@ export function outcomeReducer(state: IAppState, action: AppActionTypes): IAppSt
     if (action.type === ADD_YAKU && yakuhai.includes(action.payload.id)) {
       const added = (yaku ?? [action.payload.id]).filter((id) => allowed.includes(id));
       const selected = winner ? (getSelectedYaku(state)[winner] ?? []) : [];
-      const resolved = getYakuhaiToAdd(selected, added, allowed);
+      const resolved = getYakuhaiToAdd(selected, added);
       if (!resolved) {
         return state;
       }

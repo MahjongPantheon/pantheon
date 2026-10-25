@@ -17,7 +17,12 @@
 
 import { IComponentProps } from '../../IComponentProps';
 import { getWinningUsers, hasYaku } from '../../../store/selectors/mimir';
-import { getDisabledYaku, getSelectedYaku, getYakuList } from '../../../store/selectors/yaku';
+import {
+  getDisabledYaku,
+  getDoubleWindYaku,
+  getSelectedYaku,
+  getYakuList,
+} from '../../../store/selectors/yaku';
 import {
   ADD_YAKU,
   GOTO_NEXT_SCREEN,
@@ -114,6 +119,7 @@ export const SelectHand = (props: IComponentProps) => {
   const selectedYaku = getSelectedYaku(state);
   const disabledYaku = getDisabledYaku(state);
   const yakuList = getYakuList(state);
+  const doubleWindYaku = getDoubleWindYaku(state);
 
   const hands = allWinners.map((user) => {
     const yakuHan = getHan(state, user.id);
@@ -140,6 +146,7 @@ export const SelectHand = (props: IComponentProps) => {
       yaku: sortByViewPriority(yakuList[user.id]).map((y) => y.id),
       selectedYaku: selectedYaku[user.id],
       disabledYaku: disabledYaku[user.id],
+      doubleWindYaku: doubleWindYaku[user.id],
       onYakuClick,
       shouldSelectFu,
       isYakuman,

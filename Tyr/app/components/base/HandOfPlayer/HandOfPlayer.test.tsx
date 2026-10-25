@@ -102,22 +102,22 @@ it.each([
 ])('groups yakuhai separately from the other buttons: %s', (...yaku: YakuId[]) => {
   renderHand({ yaku: [YakuId.__OPENHAND, YakuId.TANYAO, ...yaku, YakuId.RIICHI] });
   const group = container.querySelector('[data-testid="tyr-hand-player-7-yakuhai"]')!;
-  const heading = group.querySelector('h3')!;
-  expect(heading.textContent).toBe('Yakuhai');
+  expect(group.querySelector('h3')).toBeNull();
+  expect(group.getAttribute('role')).toBe('group');
   expect(group.previousElementSibling?.getAttribute('data-testid')).toBe(
     'tyr-hand-player-7-yaku--1'
   );
   expect(group.nextElementSibling?.getAttribute('data-testid')).toBe('tyr-hand-player-7-yaku-23');
-  expect(group.getAttribute('aria-labelledby')).toBe(heading.id);
+  expect(group.getAttribute('aria-label')).toBe('Yakuhai');
   expect(group.querySelectorAll('button')).toHaveLength(yaku.length);
   for (const id of yaku) expect(group.querySelector(`[data-testid$="-yaku-${id}"]`)).not.toBeNull();
   expect(group.querySelector('[data-testid$="-yaku-23"]')).toBeNull();
   expect(group.querySelector('[data-testid$="-yaku--1"]')).toBeNull();
 });
 
-it('omits the yakuhai heading when no yakuhai are allowed', () => {
+it('omits the yakuhai row when no yakuhai are allowed', () => {
   renderHand({ yaku: [YakuId.TANYAO] });
-  expect(container.querySelector('section')).toBeNull();
+  expect(container.querySelector('[data-testid="tyr-hand-player-7-yakuhai"]')).toBeNull();
 });
 
 it('orders dragon buttons red, white, green', () => {
@@ -128,4 +128,22 @@ it('orders dragon buttons red, white, green', () => {
     'tyr-hand-player-7-yaku-58',
     'tyr-hand-player-7-yaku-57',
   ]);
+});
+
+it.each([false, true])('shows the double-wind badge whether selected=%s', (selected: boolean) => {
+  renderHand({
+    doubleWindYaku: YakuId.EAST_SEAT_WIND,
+    selectedYaku: selected ? [YakuId.EAST_SEAT_WIND, YakuId.EAST_ROUND_WIND] : [],
+  });
+  const badges = container.querySelectorAll('[data-testid$="-double-wind"]');
+  expect(badges).toHaveLength(1);
+  expect(badges[0].textContent).toBe('x2');
+  expect(badges[0].closest('button')?.getAttribute('data-testid')).toBe(
+    'tyr-hand-player-7-yaku-48'
+  );
+});
+
+it('does not show a multiplier on ordinary wind or dragon buttons', () => {
+  renderHand();
+  expect(container.querySelector('[data-testid$="-double-wind"]')).toBeNull();
 });

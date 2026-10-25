@@ -182,7 +182,7 @@ export async function checkRules(page: Page, configure: boolean) {
         inputs.map((input) => Number(input.getAttribute('data-testid')!.split('-').at(-1)))
       )
     ).sort((a, b) => a - b)
-  ).toEqual(fixtures.yakuIds.filter((id) => ![13, 14, 15, 16].includes(id)));
+  ).toEqual(fixtures.yakuIds.filter((id) => ![13, 14, 15, 16, 49, 51, 53, 55].includes(id)));
   for (const input of await allowed.all()) {
     if (configure) await input.check();
     await expect(input).toBeChecked();
@@ -283,6 +283,9 @@ export async function enterRound(
     await expect(page.getByTestId(`${prefix}-yaku--1`)).toBeInViewport();
     // A double wind has two persisted awards and one visible button.
     const buttonYaku = spec.yaku.filter((id) => !(id === 49 && spec.yaku.includes(48)));
+    if (spec.yaku.includes(48) && spec.yaku.includes(49)) {
+      await expect(page.getByTestId(`${prefix}-yaku-48-double-wind`)).toHaveText('x2');
+    }
     for (const id of [13, 14, 15, 16]) {
       await expect(page.getByTestId(`${prefix}-yaku-${id}`)).toHaveCount(aggregatedYakuhai ? 1 : 0);
     }
@@ -290,6 +293,11 @@ export async function enterRound(
       const button = page.getByTestId(`${prefix}-yaku-${yaku}`);
       if (!(await button.getAttribute('class'))?.includes('checked')) await button.click();
       await expect(button).toHaveClass(/checked/);
+    }
+    const dragons = [56, 57, 58];
+    if (dragons.filter((id) => spec.yaku.includes(id)).length === 2) {
+      const third = dragons.find((id) => !spec.yaku.includes(id))!;
+      await expect(page.getByTestId(`${prefix}-yaku-${third}`)).toBeDisabled();
     }
     // Assert the complete selection: Tyr may suppress incompatible yaku automatically.
     const selected = await page

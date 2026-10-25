@@ -197,9 +197,8 @@ test('SMOKE-005: Registered player can finish a local session and view matching 
             )
           )
           .toBe(`${prefix}-yaku--1`);
-        await expect(
-          yakuhaiGroup.getByRole('heading', { name: 'Yakuhai', exact: true })
-        ).toBeVisible();
+        await expect(yakuhaiGroup.getByRole('heading')).toHaveCount(0);
+        await expect(yakuhaiGroup).toHaveAttribute('aria-label', 'Yakuhai');
         await expect(yakuhaiGroup.getByRole('button')).toHaveCount(aggregated ? 4 : 7);
         if (!aggregated) {
           for (const name of [

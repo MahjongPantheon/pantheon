@@ -12,11 +12,10 @@ export const aggregatedYakuhai = [Y.YAKUHAI1, Y.YAKUHAI2, Y.YAKUHAI3, Y.YAKUHAI4
 export const dragonYaku = [Y.RED_DRAGON, Y.GREEN_DRAGON, Y.WHITE_DRAGON];
 export const yakuhai = [...windYaku.flat(), ...dragonYaku];
 
-export function getYakuhaiToAdd(selected: Y[], added: Y[], allowed: Y[]): Y[] | undefined {
+export function getYakuhaiToAdd(selected: Y[], added: Y[]): Y[] | undefined {
   const combined = new Set([...selected, ...added]);
-  // Completing the dragons replaces ordinary yaku, even at the yakuhai limit.
   if (dragonYaku.every((id) => combined.has(id))) {
-    return allowed.includes(Y.DAISANGEN) ? [Y.DAISANGEN] : undefined;
+    return undefined;
   }
   return [...combined].filter((id) => yakuhai.includes(id)).length <= 4 ? added : undefined;
 }

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-25 00:35+0200\n"
+"POT-Creation-Date: 2026-10-25 19:15+0100\n"
 "PO-Revision-Date: 2025-03-23 23:41+0300\n"
 "Last-Translator: Geunmo Kim <kimgeunmo@gmail.com>\n"
 "Language-Team: \n"
@@ -185,7 +185,7 @@ msgstr "수동 패보 추가 허용"
 msgid "Allow bankruptcy"
 msgstr "들통 허용"
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:42:22
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:49:22
 msgid "Allow combination of yakumans, e.g. tsuuisou + daisangen"
 msgstr "역만 중첩을 허용, 예시: 자일색 + 대삼원"
 
@@ -483,7 +483,7 @@ msgstr "연장 비활성화"
 msgid "Do not interrupt session until it ends"
 msgstr "오라스에 인한 대국 종료시 종료"
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:90:25
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:128:25
 msgid "Double yakuman:"
 msgstr "더블 역만:"
 
@@ -499,6 +499,10 @@ msgstr "장풍: 동"
 #, fuzzy
 msgid "East seat wind"
 msgstr "좌석 초기화"
+
+#: app/helpers/yaku.ts:370:34
+msgid "East wind"
+msgstr "동풍"
 
 #: app/pages/OwnedEventsEdit/index.tsx:78:18
 msgid "Edit event :: %1"
@@ -528,7 +532,7 @@ msgstr "이메일이 전송되었습니다"
 msgid "Enable \"Nagashi\" outcome to record this special draw"
 msgstr "특별 유국인 \"유국만관\" 결과가 활성화됨"
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:47:16
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:54:16
 msgid "Enable aggregated yakuhai"
 msgstr "집계된 역패 사용"
 
@@ -1090,7 +1094,7 @@ msgstr "국사무쌍"
 msgid "Kokushi musou 13-side"
 msgstr "국사무쌍"
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:33:16
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:40:16
 msgid "Kuitan"
 msgstr "쿠이탕"
 
@@ -1242,7 +1246,7 @@ msgstr "최소 대국 수"
 msgid "Multiline. Markdown syntax supported."
 msgstr "여러 줄 입력 가능. 마크다운 문법 지원됨"
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:41:16
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:48:16
 msgid "Multiple yakumans"
 msgstr "역만 중첩"
 
@@ -1295,6 +1299,10 @@ msgstr "검색 결과 없음"
 #, fuzzy
 msgid "North seat wind"
 msgstr "다음 좌석"
+
+#: app/helpers/yaku.ts:385:34
+msgid "North wind"
+msgstr "북풍"
 
 #: app/pages/GamesControl/TournamentControls.tsx:107:22
 msgid "Not ready"
@@ -1453,7 +1461,7 @@ msgstr "오픈 리치"
 msgid "Otherwise"
 msgstr "기타"
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:72:25
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:110:25
 msgid "Pao rule enabled for:"
 msgstr "책임지불(파오) 해당 역:"
 
@@ -2075,6 +2083,10 @@ msgstr "장풍: 남"
 msgid "South seat wind"
 msgstr "자풍: 남"
 
+#: app/helpers/yaku.ts:375:34
+msgid "South wind"
+msgstr "남풍"
+
 #: app/pages/GamesControl/TournamentControls.tsx:282:21
 msgid "Start timer"
 msgstr "타이머 시작"
@@ -2145,7 +2157,7 @@ msgstr "제 #%1 탁"
 msgid "Tanyao"
 msgstr "탕야오"
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:34:22
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:41:22
 msgid ""
 "Tanyao costs 1 han on open hand. If not checked, tanyao does not work on "
 "open hand."
@@ -2400,6 +2412,10 @@ msgstr "장풍: 서"
 msgid "West seat wind"
 msgstr "좌석 초기화"
 
+#: app/helpers/yaku.ts:380:34
+msgid "West wind"
+msgstr "서풍"
+
 #: app/pages/ProfileManage.tsx:347:18
 msgid "What will NOT be deleted:"
 msgstr "다음 항목들은 삭제되지 않습니다:"
@@ -2420,9 +2436,13 @@ msgstr ""
 "친의 화료 또는 유국 시 텐파이에도 국이 연장되지 않음. 본장은 유국 시에만 추가"
 "됨"
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:48:22
-msgid "When disabled, use separate yakuhai names like \"East\" and \"White dragon\" instead of aggregated names like \"Yakuhai x3\"."
-msgstr "사용하지 않으면 \"역패 x3\"처럼 집계된 이름 대신 \"동\"과 \"백\" 같은 개별 역패 이름을 사용합니다."
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:55:22
+msgid ""
+"When disabled, use separate yakuhai names like \"East\" and \"White dragon\" "
+"instead of aggregated names like \"Yakuhai x3\"."
+msgstr ""
+"사용하지 않으면 \"역패 x3\"처럼 집계된 이름 대신 \"동\"과 \"백\" 같은 개별 역"
+"패 이름을 사용합니다."
 
 #: app/pages/OwnedEventsEdit/TournamentSettings.tsx:61:20
 msgid "When time is out, finish current hand and interrupt the session"
@@ -2450,7 +2470,7 @@ msgstr "야키토리"
 msgid "Yakitori penalty"
 msgstr "야키토리 벌부"
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:54:25
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:61:25
 msgid "Yaku allowed"
 msgstr "허용 역"
 

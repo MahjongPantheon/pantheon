@@ -819,7 +819,7 @@ msgstr "Собери их всех"
 
 #: app/helpers/yaku.ts:305:34
 msgid "Green dragon"
-msgstr "Хацу"
+msgstr "Зелёный дракон"
 
 #: app/pages/Achievements.tsx:308:14
 msgid "Guest of honors"
@@ -1243,7 +1243,7 @@ msgstr "Последние игры"
 
 #: app/helpers/yaku.ts:301:34
 msgid "Red dragon"
-msgstr "Чун"
+msgstr "Красный дракон"
 
 #: app/pages/RegisteredPlayers.tsx:90:19 app/pages/RegisteredPlayers.tsx:97:27
 msgid "Registered players"
@@ -1727,7 +1727,7 @@ msgstr ""
 
 #: app/helpers/yaku.ts:309:34
 msgid "White dragon"
-msgstr "Хаку"
+msgstr "Белый дракон"
 
 #: app/components/PlayerStatsListing.tsx:165:15
 msgid "Win stats"

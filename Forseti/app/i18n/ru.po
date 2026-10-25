@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-25 00:35+0200\n"
+"POT-Creation-Date: 2026-10-25 19:15+0100\n"
 "PO-Revision-Date: 2025-10-19 23:15+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -186,7 +186,7 @@ msgstr "Разрешить добавлять реплеи вручную"
 msgid "Allow bankruptcy"
 msgstr "Банкротство"
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:42:22
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:49:22
 msgid "Allow combination of yakumans, e.g. tsuuisou + daisangen"
 msgstr "Разрешить комбинации якуманов, напр. цуисо + дайсанген"
 
@@ -492,7 +492,7 @@ msgstr "Выключить ренчаны"
 msgid "Do not interrupt session until it ends"
 msgstr "Не прерывать игру до тех пор, пока она не закончена"
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:90:25
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:128:25
 msgid "Double yakuman:"
 msgstr "Двойной якуман:"
 
@@ -508,6 +508,10 @@ msgstr "Ветер раунда: Восток"
 #, fuzzy
 msgid "East seat wind"
 msgstr "Сбросить рассадку"
+
+#: app/helpers/yaku.ts:370:34
+msgid "East wind"
+msgstr "Восточный ветер"
 
 #: app/pages/OwnedEventsEdit/index.tsx:78:18
 msgid "Edit event :: %1"
@@ -537,7 +541,7 @@ msgstr "E-mail отправлен"
 msgid "Enable \"Nagashi\" outcome to record this special draw"
 msgstr "Включить возможность записи исхода \"Нагаши манган\""
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:47:16
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:54:16
 msgid "Enable aggregated yakuhai"
 msgstr "Включить агрегированные якухаи"
 
@@ -883,7 +887,7 @@ msgstr "Целевое количество очков должно быть н�
 
 #: app/helpers/yaku.ts:305:34
 msgid "Green dragon"
-msgstr "Хацу"
+msgstr "Зелёный дракон"
 
 #: app/helpers/yaku.ts:189:34
 msgid "Haitei"
@@ -1122,7 +1126,7 @@ msgstr "Кокушимусо"
 msgid "Kokushi musou 13-side"
 msgstr "Кокушимусо 13-ти сторонний"
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:33:16
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:40:16
 msgid "Kuitan"
 msgstr "Куитан"
 
@@ -1281,7 +1285,7 @@ msgstr "Минимальное число игр"
 msgid "Multiline. Markdown syntax supported."
 msgstr "Многострочное. Поддерживается синтаксис Markdown."
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:41:16
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:48:16
 msgid "Multiple yakumans"
 msgstr "Суммирование якуманов"
 
@@ -1334,6 +1338,10 @@ msgstr "Ничего не найдено"
 #, fuzzy
 msgid "North seat wind"
 msgstr "Следующая рассадка"
+
+#: app/helpers/yaku.ts:385:34
+msgid "North wind"
+msgstr "Северный ветер"
 
 #: app/pages/GamesControl/TournamentControls.tsx:107:22
 msgid "Not ready"
@@ -1497,7 +1505,7 @@ msgstr "Опен риичи"
 msgid "Otherwise"
 msgstr "Прочие ситуации"
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:72:25
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:110:25
 msgid "Pao rule enabled for:"
 msgstr "Пао разрешено для:"
 
@@ -1775,7 +1783,7 @@ msgstr "Восстановление пароля"
 
 #: app/helpers/yaku.ts:301:34
 msgid "Red dragon"
-msgstr "Чун"
+msgstr "Красный дракон"
 
 #: app/pages/PrivilegesManage/ManagementTab.tsx:250:14
 msgid "Referee privileges include:"
@@ -2130,6 +2138,10 @@ msgstr "Ветер раунда: Юг"
 msgid "South seat wind"
 msgstr "Ветер места: Юг"
 
+#: app/helpers/yaku.ts:375:34
+msgid "South wind"
+msgstr "Южный ветер"
+
 #: app/pages/GamesControl/TournamentControls.tsx:282:21
 msgid "Start timer"
 msgstr "Запустить таймер"
@@ -2200,7 +2212,7 @@ msgstr "Стол № %1"
 msgid "Tanyao"
 msgstr "Тан-яо"
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:34:22
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:41:22
 msgid ""
 "Tanyao costs 1 han on open hand. If not checked, tanyao does not work on "
 "open hand."
@@ -2465,6 +2477,10 @@ msgstr "Ветер раунда: Запад"
 msgid "West seat wind"
 msgstr "Сбросить рассадку"
 
+#: app/helpers/yaku.ts:380:34
+msgid "West wind"
+msgstr "Западный ветер"
+
 #: app/pages/ProfileManage.tsx:347:18
 msgid "What will NOT be deleted:"
 msgstr "Что НЕ будет удалено:"
@@ -2485,9 +2501,13 @@ msgstr ""
 "Когда дилер выигрывает или остается темпай, ветра все равно меняются. Хонба "
 "добавляется только после ничьей."
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:48:22
-msgid "When disabled, use separate yakuhai names like \"East\" and \"White dragon\" instead of aggregated names like \"Yakuhai x3\"."
-msgstr "Если выключено, используются отдельные названия якухаев, например «Восток» и «Хаку», вместо агрегированных, например «Якухай 3»."
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:55:22
+msgid ""
+"When disabled, use separate yakuhai names like \"East\" and \"White dragon\" "
+"instead of aggregated names like \"Yakuhai x3\"."
+msgstr ""
+"Если выключено, используются отдельные названия якухаев, например «Восток» и "
+"«Белый дракон», вместо агрегированных, например «Якухай 3»."
 
 #: app/pages/OwnedEventsEdit/TournamentSettings.tsx:61:20
 msgid "When time is out, finish current hand and interrupt the session"
@@ -2504,7 +2524,7 @@ msgstr ""
 
 #: app/helpers/yaku.ts:309:34
 msgid "White dragon"
-msgstr "Хаку"
+msgstr "Белый дракон"
 
 #: app/pages/OwnedEventsEdit/TournamentSettings.tsx:96:18
 msgid "Wind shuffle mode"
@@ -2518,7 +2538,7 @@ msgstr "Якитори"
 msgid "Yakitori penalty"
 msgstr "Штраф за якитори"
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:54:25
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:61:25
 msgid "Yaku allowed"
 msgstr "Разрешенные яку"
 

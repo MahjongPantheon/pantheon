@@ -194,7 +194,7 @@ msgstr "В личный кабинет"
 
 #: app/helpers/yaku.ts:485:34 app/helpers/yaku.ts:486:39
 msgid "Green dragon"
-msgstr "Хацу"
+msgstr "Зелёный дракон"
 
 #: app/helpers/yaku.ts:383:34 app/helpers/yaku.ts:384:39
 msgid "Haitei"
@@ -383,7 +383,7 @@ msgstr "Предыдущая игра"
 
 #: app/helpers/yaku.ts:479:34 app/helpers/yaku.ts:480:39
 msgid "Red dragon"
-msgstr "Чун"
+msgstr "Красный дракон"
 
 #: app/components/screens/TableCurrentGame/TableCurrentGame.tsx:128:10
 msgid "Referee has been requested to your table!"
@@ -577,7 +577,7 @@ msgstr "Ветер места: Запад"
 
 #: app/helpers/yaku.ts:491:34 app/helpers/yaku.ts:492:39
 msgid "White dragon"
-msgstr "Хаку"
+msgstr "Белый дракон"
 
 #: app/components/base/HandOfPlayer/HandOfPlayer.tsx:131:18
 #: app/helpers/yaku.ts:234:39

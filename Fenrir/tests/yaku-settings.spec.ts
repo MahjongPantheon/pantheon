@@ -9,6 +9,7 @@ test('Saving existing event settings preserves allowed and excluded yaku in both
   page,
   request,
 }) => {
+  test.setTimeout(120_000);
   const [administrator] = await createTestAccounts(request, 1);
   const mimir = `${process.env.MIMIR_URL}/v2/common.Mimir`;
   const authorized = await request.post(`${process.env.FREY_URL}/v2/common.Frey/Authorize`, {
@@ -60,7 +61,7 @@ test('Saving existing event settings preserves allowed and excluded yaku in both
       }
       await page.getByTestId('forseti-event-settings-yakuhai-aggregated').setChecked(aggregated);
       for (const id of [13, 14, 15, 16, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58]) {
-        const visible = aggregated ? id < 48 : id >= 48;
+        const visible = aggregated ? id < 48 : id >= 48 && ![49, 51, 53, 55].includes(id);
         const checkbox = page.getByTestId(`forseti-event-settings-yaku-allowed-${id}`);
         await expect(checkbox).toHaveCount(visible ? 1 : 0);
         if (visible) await expect(checkbox).toBeChecked();
@@ -88,4 +89,40 @@ test('Saving existing event settings preserves allowed and excluded yaku in both
     expect(event.rulesetConfig.withMultiYakumans).toBe(ruleset.withMultiYakumans);
     expect(event.rulesetConfig.useAggregatedYakuhai ?? false).toBe(aggregated ?? false);
   }
+  // Each of the four wind controls must persist both underlying yaku together.
+  for (const enabled of [false, true]) {
+    await page.goto(editUrl);
+    await expect(page.getByTestId('forseti-event-settings-save')).toBeEnabled();
+    await page.getByTestId('forseti-event-settings-tab-yaku').click();
+    for (const seat of [48, 50, 52, 54]) {
+      const checkbox = page.getByTestId(`forseti-event-settings-yaku-allowed-${seat}`);
+      await expect(checkbox).toBeChecked({ checked: !enabled });
+      await checkbox.setChecked(enabled);
+      await expect(page.getByTestId(`forseti-event-settings-yaku-allowed-${seat + 1}`)).toHaveCount(
+        0
+      );
+    }
+    const [saved] = await Promise.all([
+      page.waitForResponse(
+        (r) => r.url().endsWith('/common.Mimir/UpdateEvent') && r.request().method() === 'POST'
+      ),
+      page.getByTestId('forseti-event-settings-save').click(),
+    ]);
+    expect(saved.ok()).toBe(true);
+    const persisted = await request.post(`${mimir}/GetEventForEdit`, {
+      headers,
+      data: { id: eventId },
+    });
+    await expect(persisted).toBeOK();
+    const { event } = await persisted.json();
+    const expected = ruleset.allowedYaku.filter((id: number) => enabled || id < 48 || id > 55);
+    expect([...event.rulesetConfig.allowedYaku].sort((a, b) => a - b)).toEqual(
+      [...expected].sort((a, b) => a - b)
+    );
+  }
+  await page.reload();
+  await expect(page.getByTestId('forseti-event-settings-save')).toBeEnabled();
+  await page.getByTestId('forseti-event-settings-tab-yaku').click();
+  for (const seat of [48, 50, 52, 54])
+    await expect(page.getByTestId(`forseti-event-settings-yaku-allowed-${seat}`)).toBeChecked();
 });
