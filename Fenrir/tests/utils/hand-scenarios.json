@@ -1,7 +1,8 @@
 {
   "yakuIds": [
     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27,
-    28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47
+    28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51,
+    52, 53, 54, 55, 56, 57, 58
   ],
   "hands": [
     {
@@ -87,12 +88,12 @@
     },
     {
       "name": "All triplets and terminals/honors",
-      "yaku": [1, 2, 14],
+      "yaku": [1, 2, 56, 57],
       "han": 6,
       "fu": 0,
       "dora": 0,
       "open": true,
-      "labels": ["Toitoi", "Honroutou", "Yakuhai x2"]
+      "labels": ["Toitoi", "Honroutou", "Red dragon", "Green dragon"]
     },
     {
       "name": "Three concealed triplets and kans",
@@ -105,39 +106,39 @@
     },
     {
       "name": "Last discard honor hand",
-      "yaku": [13, 41],
+      "yaku": [56, 41],
       "han": 2,
       "fu": 70,
       "dora": 0,
       "open": true,
-      "labels": ["Yakuhai x1", "Houtei raoyui"]
+      "labels": ["Red dragon", "Houtei raoyui"]
     },
     {
       "name": "Three value honors",
-      "yaku": [15],
+      "yaku": [48, 49, 58],
       "han": 3,
       "fu": 80,
       "dora": 0,
       "open": true,
-      "labels": ["Yakuhai x3"]
+      "labels": ["East seat wind", "East round wind", "White dragon"]
     },
     {
       "name": "Four value honors",
-      "yaku": [16],
+      "yaku": [48, 49, 56, 57],
       "han": 4,
       "fu": 90,
       "dora": 0,
       "open": true,
-      "labels": ["Yakuhai x4"]
+      "labels": ["East seat wind", "East round wind", "Red dragon", "Green dragon"]
     },
     {
       "name": "Little three dragons",
-      "yaku": [14, 18],
+      "yaku": [56, 57, 18],
       "han": 6,
       "fu": 0,
       "dora": 2,
       "open": false,
-      "labels": ["Yakuhai x2", "Shousangen"]
+      "labels": ["Red dragon", "Green dragon", "Shousangen"]
     },
     {
       "name": "Open full flush",
@@ -186,21 +187,21 @@
     },
     {
       "name": "Rinshan honor hand",
-      "yaku": [38, 13],
+      "yaku": [38, 56],
       "han": 2,
       "fu": 100,
       "dora": 0,
       "open": true,
-      "labels": ["Rinshan kaihou", "Yakuhai x1"]
+      "labels": ["Rinshan kaihou", "Red dragon"]
     },
     {
       "name": "Robbing a kan",
-      "yaku": [42, 13],
+      "yaku": [42, 56],
       "han": 2,
       "fu": 110,
       "dora": 0,
       "open": false,
-      "labels": ["Chankan", "Yakuhai x1"]
+      "labels": ["Chankan", "Red dragon"]
     },
     {
       "name": "Counted sanbaiman",
@@ -321,57 +322,57 @@
     },
     {
       "name": "Advance dealer to finish",
-      "yaku": [13],
+      "yaku": [56],
       "han": 5,
       "fu": 0,
       "dora": 4,
       "open": true,
-      "labels": ["Yakuhai x1"]
+      "labels": ["Red dragon"]
     },
     {
       "name": "Advance dealer to finish",
-      "yaku": [13],
+      "yaku": [56],
       "han": 6,
       "fu": 0,
       "dora": 5,
       "open": true,
-      "labels": ["Yakuhai x1"]
+      "labels": ["Red dragon"]
     },
     {
       "name": "Advance dealer to finish",
-      "yaku": [13],
+      "yaku": [56],
       "han": 7,
       "fu": 0,
       "dora": 6,
       "open": true,
-      "labels": ["Yakuhai x1"]
+      "labels": ["Red dragon"]
     },
     {
       "name": "Advance dealer to finish",
-      "yaku": [13],
+      "yaku": [56],
       "han": 8,
       "fu": 0,
       "dora": 7,
       "open": true,
-      "labels": ["Yakuhai x1"]
+      "labels": ["Red dragon"]
     },
     {
       "name": "Advance dealer to finish",
-      "yaku": [13],
+      "yaku": [56],
       "han": 3,
       "fu": 50,
       "dora": 2,
       "open": true,
-      "labels": ["Yakuhai x1"]
+      "labels": ["Red dragon"]
     },
     {
       "name": "Advance dealer to finish",
-      "yaku": [13],
+      "yaku": [56],
       "han": 4,
       "fu": 60,
       "dora": 3,
       "open": true,
-      "labels": ["Yakuhai x1"]
+      "labels": ["Red dragon"]
     }
   ],
   "local": {

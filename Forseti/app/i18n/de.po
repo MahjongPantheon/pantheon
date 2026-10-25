@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-19 22:18Z\n"
+"POT-Creation-Date: 2026-10-25 19:15+0100\n"
 "PO-Revision-Date: 2024-04-12 22:47+0300\n"
 "Last-Translator: Jesterboxboy <github@jesterbox.org>\n"
 "Language-Team: \n"
@@ -22,7 +22,7 @@ msgstr ""
 "X-Poedit-SearchPath-0: de.po\n"
 
 #: app/pages/GamesControl/GamesList.tsx:213:53
-#: app/pages/GamesControl/TournamentControls.tsx:296:45
+#: app/pages/GamesControl/TournamentControls.tsx:306:45
 msgid "1 minute"
 msgstr "1 Minute"
 
@@ -39,7 +39,7 @@ msgid "1st"
 msgstr "1ter"
 
 #: app/pages/GamesControl/GamesList.tsx:214:54
-#: app/pages/GamesControl/TournamentControls.tsx:297:46
+#: app/pages/GamesControl/TournamentControls.tsx:307:46
 msgid "2 minutes"
 msgstr "2 Minuten"
 
@@ -48,7 +48,7 @@ msgid "2nd"
 msgstr "2ter"
 
 #: app/pages/GamesControl/GamesList.tsx:215:54
-#: app/pages/GamesControl/TournamentControls.tsx:298:46
+#: app/pages/GamesControl/TournamentControls.tsx:308:46
 msgid "3 minutes"
 msgstr "3 Minuten"
 
@@ -61,7 +61,7 @@ msgid "3rd"
 msgstr "3ter"
 
 #: app/pages/GamesControl/GamesList.tsx:216:54
-#: app/pages/GamesControl/TournamentControls.tsx:299:46
+#: app/pages/GamesControl/TournamentControls.tsx:309:46
 msgid "4 minutes"
 msgstr "4 Minuten"
 
@@ -70,12 +70,12 @@ msgid "4th"
 msgstr "4ter"
 
 #: app/pages/GamesControl/GamesList.tsx:217:54
-#: app/pages/GamesControl/TournamentControls.tsx:300:46
+#: app/pages/GamesControl/TournamentControls.tsx:310:46
 msgid "5 minutes"
 msgstr "5 Minuten"
 
 #: app/pages/GamesControl/GamesList.tsx:218:54
-#: app/pages/GamesControl/TournamentControls.tsx:301:46
+#: app/pages/GamesControl/TournamentControls.tsx:311:46
 msgid "7 minutes"
 msgstr "7 Minuten"
 
@@ -112,8 +112,8 @@ msgid "Add a penalty"
 msgstr "Strafe hinzufügen"
 
 #: app/pages/GamesControl/GamesList.tsx:204:29
-#: app/pages/GamesControl/TournamentControls.tsx:286:22
-#: app/pages/GamesControl/TournamentControls.tsx:287:21
+#: app/pages/GamesControl/TournamentControls.tsx:296:22
+#: app/pages/GamesControl/TournamentControls.tsx:297:21
 msgid "Add extra time"
 msgstr "Zusätzliche Zeit hinzufügen"
 
@@ -121,7 +121,7 @@ msgstr "Zusätzliche Zeit hinzufügen"
 msgid "Add extra time for this table"
 msgstr "Zusätzliche Zeit für diesen Tisch hinzufügen"
 
-#: app/pages/GamesControl/TournamentControls.tsx:305:26
+#: app/pages/GamesControl/TournamentControls.tsx:315:26
 msgid "Add selected amount of extra time for all tables?"
 msgstr "Ausgewählte zusätzliche Zeit für alle Tische hinzufügen?"
 
@@ -131,7 +131,8 @@ msgstr "Ausgewählte zusätzliche Zeit für diesen Tisch hinzufügen?"
 
 #: app/pages/PrivilegesManage/ManagementTab.tsx:265:14
 msgid "Administrator privileges include everything a referee can do plus:"
-msgstr "Administratoren haben alle Rechte eines Schiedsrichters und zusätzlich:"
+msgstr ""
+"Administratoren haben alle Rechte eines Schiedsrichters und zusätzlich:"
 
 #: app/pages/OwnedEventsEdit/RulesetSettings.tsx:69:16
 msgid "Agariyame"
@@ -185,7 +186,7 @@ msgstr "Manuelles Hinzufügen von Replays erlauben"
 msgid "Allow bankruptcy"
 msgstr "Mit Tobi"
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:42:22
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:49:22
 msgid "Allow combination of yakumans, e.g. tsuuisou + daisangen"
 msgstr "Kombinationen aus Yakuman sind erlaubt, z.B.: Tsuuisou + Daisangen"
 
@@ -244,15 +245,15 @@ msgstr "Angewandte Chombo Strafen"
 msgid "Apply penalty"
 msgstr "Strafe anwenden"
 
-#: app/pages/GamesControl/TournamentControls.tsx:223:26
+#: app/pages/GamesControl/TournamentControls.tsx:232:28
 msgid "Apply seating for next session?"
 msgstr "Sitzordnung für die nächste Runde anwenden?"
 
-#: app/pages/GamesControl/TournamentControls.tsx:329:22
+#: app/pages/GamesControl/TournamentControls.tsx:339:22
 msgid "Approve session results and go on to next session"
 msgstr "Ergebnisse bestätigen und zur nächsten Runde gehen"
 
-#: app/pages/GamesControl/TournamentControls.tsx:330:21
+#: app/pages/GamesControl/TournamentControls.tsx:340:21
 msgid "Approve sessions"
 msgstr "Runde bestätigen"
 
@@ -328,34 +329,34 @@ msgstr "Runde abbrechen"
 msgid "Cancelled: "
 msgstr "Aufgehoben: "
 
-#: app/pages/OwnedEventsEdit/index.tsx:377:32
+#: app/pages/OwnedEventsEdit/index.tsx:378:32
 #: app/pages/PlayersManage/LocalIdsTab.tsx:113:28
 #: app/pages/PlayersManage/TeamNamesTab.tsx:114:28
 #: app/pages/ProfileManage.tsx:311:32 app/pages/ProfileManageAdmin.tsx:330:21
 msgid "Changes saved!"
 msgstr "Änderungen gespeichert!"
 
-#: app/helpers/yaku.ts:185:34
+#: app/helpers/yaku.ts:197:34
 msgid "Chankan"
 msgstr "Chankan"
 
-#: app/helpers/yaku.ts:105:34
+#: app/helpers/yaku.ts:117:34
 msgid "Chanta"
 msgstr "Chanta"
 
-#: app/helpers/yaku.ts:241:34
+#: app/helpers/yaku.ts:253:34
 msgid "Chihou"
 msgstr "Chihou"
 
-#: app/helpers/yaku.ts:93:34
+#: app/helpers/yaku.ts:105:34
 msgid "Chiitoitsu"
 msgstr "Chiitoitsu"
 
-#: app/helpers/yaku.ts:221:34
+#: app/helpers/yaku.ts:233:34
 msgid "Chinitsu"
 msgstr "Chinitsu"
 
-#: app/helpers/yaku.ts:217:34 app/helpers/yaku.ts:276:34
+#: app/helpers/yaku.ts:229:34 app/helpers/yaku.ts:332:34
 msgid "Chinroutou"
 msgstr "Chinroutou"
 
@@ -371,17 +372,19 @@ msgstr "Chombo in der letzten Hand beendet das Spiel"
 msgid ""
 "Chombo penalties can be cancelled with round cancellation in Games Control "
 "page if game is not finished yet."
-msgstr "Chombo Strafen können durch Abbrechen der Runde unter „Spiele bearbeiten“ aufgehoben werden, solange das Spiel noch nicht beendet ist."
+msgstr ""
+"Chombo Strafen können durch Abbrechen der Runde unter „Spiele bearbeiten“ "
+"aufgehoben werden, solange das Spiel noch nicht beendet ist."
 
 #: app/pages/GamesControl/GamesList.tsx:455:12
 msgid "Chombo, %1"
 msgstr "Chombo, %1"
 
-#: app/helpers/yaku.ts:225:34
+#: app/helpers/yaku.ts:237:34
 msgid "Chuuren poutou"
 msgstr "Chuuren poutou"
 
-#: app/helpers/yaku.ts:249:34 app/helpers/yaku.ts:295:34
+#: app/helpers/yaku.ts:261:34 app/helpers/yaku.ts:351:34
 msgid "Chuuren poutou 9-side"
 msgstr "Chuuren poutou mit 9-seitigem Warten"
 
@@ -452,16 +455,16 @@ msgstr "Aktuelle Runde"
 msgid "Current status"
 msgstr "Aktueller Status"
 
-#: app/helpers/yaku.ts:77:34
+#: app/helpers/yaku.ts:89:34
 msgid "Daburu riichi"
 msgstr "Daburu riichi"
 
-#: app/helpers/yaku.ts:201:34 app/helpers/yaku.ts:260:34
+#: app/helpers/yaku.ts:213:34 app/helpers/yaku.ts:316:34
 msgid "Daisangen"
 msgstr "Daisangen"
 
-#: app/helpers/yaku.ts:209:34 app/helpers/yaku.ts:264:34
-#: app/helpers/yaku.ts:287:34
+#: app/helpers/yaku.ts:221:34 app/helpers/yaku.ts:320:34
+#: app/helpers/yaku.ts:343:34
 msgid "Daisuushii"
 msgstr "Daisuushii"
 
@@ -482,13 +485,26 @@ msgstr "Keine renchans"
 msgid "Do not interrupt session until it ends"
 msgstr "Match nicht unterbrechen bis zum Ablauf der Zeit"
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:82:25
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:128:25
 msgid "Double yakuman:"
 msgstr "Doppelter Yakuman:"
 
 #: app/pages/GamesControl/GamesList.tsx:459:12
 msgid "Draw, tempai: %1, riichi: %2"
 msgstr "Unentschieden, Tenpai: %1, Riichi: %2"
+
+#: app/helpers/yaku.ts:273:34
+msgid "East round wind"
+msgstr "Rundenwind: Ost"
+
+#: app/helpers/yaku.ts:269:34
+#, fuzzy
+msgid "East seat wind"
+msgstr "Sitzordnung zurücksetzen"
+
+#: app/helpers/yaku.ts:370:34
+msgid "East wind"
+msgstr "Ostwind"
 
 #: app/pages/OwnedEventsEdit/index.tsx:78:18
 msgid "Edit event :: %1"
@@ -519,6 +535,10 @@ msgid "Enable \"Nagashi\" outcome to record this special draw"
 msgstr ""
 "Erlaube \"Nagashi Mangan\", wenn ein Spieler nur Ends oder Honors discarded, "
 "und niemand von ihm ruft"
+
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:54:16
+msgid "Enable aggregated yakuhai"
+msgstr "Aggregierte Yakuhai aktivieren"
 
 #: app/pages/Penalties/CancelConfirmation.tsx:66:14
 msgid "Enter a reason for cancellation and confirm it."
@@ -555,11 +575,12 @@ msgstr "Uma teilen"
 #: app/pages/EventPrescript.tsx:76:18 app/pages/EventPrescript.tsx:111:18
 #: app/pages/GamesControl/index.tsx:89:18
 #: app/pages/GamesControl/index.tsx:102:14 app/pages/OwnedEvents.tsx:95:14
-#: app/pages/OwnedEventsEdit/index.tsx:264:18
-#: app/pages/OwnedEventsEdit/index.tsx:303:18 app/pages/Penalties.tsx:102:18
+#: app/pages/OwnedEventsEdit/index.tsx:265:18
+#: app/pages/OwnedEventsEdit/index.tsx:304:18 app/pages/Penalties.tsx:102:18
 #: app/pages/Penalties/PenaltyForm.tsx:91:18
-#: app/pages/PlayersManage/index.tsx:76:18
+#: app/pages/PlayersManage/index.tsx:86:18
 #: app/pages/PlayersManage/LocalIdsTab.tsx:72:18
+#: app/pages/PlayersManage/ManagementTab.tsx:85:18
 #: app/pages/PlayersManage/TeamNamesTab.tsx:72:18
 #: app/pages/PrivilegesManage/index.tsx:60:18
 #: app/pages/PrivilegesManage/ManagementTab.tsx:65:18
@@ -658,8 +679,8 @@ msgstr ""
 msgid "Failed to definalize game"
 msgstr "Spiel konnte nicht definalisiert werden"
 
-#: app/pages/OwnedEventsEdit/index.tsx:245:29
-#: app/pages/OwnedEventsEdit/index.tsx:256:29
+#: app/pages/OwnedEventsEdit/index.tsx:246:29
+#: app/pages/OwnedEventsEdit/index.tsx:257:29
 msgid "Failed to fetch event data"
 msgstr "Event Informationen konnten nicht abgerufen werden"
 
@@ -717,7 +738,7 @@ msgstr ""
 "Fehler beim Speichern  der Sitzordnung: Serverfehler oder Netzwerk nicht "
 "erreichbar"
 
-#: app/pages/OwnedEventsEdit/index.tsx:298:27
+#: app/pages/OwnedEventsEdit/index.tsx:299:27
 msgid "Failed to save event: server error or network unreachable"
 msgstr ""
 "Event konnte nicht gespeichert werden: Server Fehler oder Netzwerk nicht "
@@ -755,7 +776,7 @@ msgstr "Datei ist zu gross"
 msgid "Find and add administrator by name..."
 msgstr "Administrator nach Namen suchen und hinzufügen..."
 
-#: app/pages/PlayersManage/ManagementTab.tsx:155:30
+#: app/pages/PlayersManage/ManagementTab.tsx:171:30
 msgid "Find and add player by name..."
 msgstr "Spieler such und hinzufügen..."
 
@@ -763,7 +784,7 @@ msgstr "Spieler such und hinzufügen..."
 msgid "Find and add referee by name..."
 msgstr "Schiedsrichter nach Namen suchen und hinzufügen..."
 
-#: app/pages/PlayersManage/ManagementTab.tsx:138:24
+#: app/pages/PlayersManage/ManagementTab.tsx:154:24
 msgid "Find replacement player by name..."
 msgstr "Ersatzspieler suchen..."
 
@@ -839,7 +860,7 @@ msgstr "Gültigkeitsdauer des Spiels(in Stunden)"
 msgid "Games management"
 msgstr "Spiele bearbeiten"
 
-#: app/pages/GamesControl/TournamentControls.tsx:219:22
+#: app/pages/GamesControl/TournamentControls.tsx:228:24
 msgid "Generate seating for next session"
 msgstr "Sitzplan für die nächste Runde erstellen"
 
@@ -857,11 +878,15 @@ msgstr "Zur Anmeldeseite gehen"
 msgid "Goal score"
 msgstr "Zielpunkte"
 
-#: app/pages/OwnedEventsEdit/index.tsx:164:15
+#: app/pages/OwnedEventsEdit/index.tsx:165:15
 msgid "Goal score must be at least the initial points"
 msgstr "Die Zielpunkte müssen mindestens den Startpunkten entsprechen"
 
-#: app/helpers/yaku.ts:177:34
+#: app/helpers/yaku.ts:305:34
+msgid "Green dragon"
+msgstr "Grüner Drache"
+
+#: app/helpers/yaku.ts:189:34
 msgid "Haitei"
 msgstr "Haitei"
 
@@ -870,8 +895,8 @@ msgid "Hands valued as 4/30 and 3/60 are rounded to mangan."
 msgstr "Hände mit 4/30 und 3/60 werden auf Mangan aufgerundet."
 
 #: app/pages/GamesControl/TournamentControls.tsx:214:19
-#: app/pages/GamesControl/TournamentControls.tsx:319:19
-#: app/pages/GamesControl/TournamentControls.tsx:345:19
+#: app/pages/GamesControl/TournamentControls.tsx:329:19
+#: app/pages/GamesControl/TournamentControls.tsx:355:19
 msgid "Hide results table"
 msgstr "Ergebnistabelle ausblenden"
 
@@ -889,15 +914,15 @@ msgid ""
 "payment will be given to all winners."
 msgstr "Honba gehen nur an den ersten Gewinner."
 
-#: app/helpers/yaku.ts:153:34
+#: app/helpers/yaku.ts:165:34
 msgid "Honitsu"
 msgstr "Honitsu"
 
-#: app/helpers/yaku.ts:157:34
+#: app/helpers/yaku.ts:169:34
 msgid "Honroutou"
 msgstr "Honroutou"
 
-#: app/helpers/yaku.ts:173:34
+#: app/helpers/yaku.ts:185:34
 msgid "Houtei raoyui"
 msgstr "Houtei raoyui"
 
@@ -926,7 +951,10 @@ msgid ""
 "If checked, any player participating in event will be able to add new "
 "replays through user interface. Disable this if you have any external tool "
 "which adds replays automatically."
-msgstr "Wenn aktiviert, kann jeder Teilnehmer des Events neue Replays über die Benutzeroberfläche hinzufügen. Deaktiviere diese Option, wenn ein externes Werkzeug die Replays automatisch hinzufügt."
+msgstr ""
+"Wenn aktiviert, kann jeder Teilnehmer des Events neue Replays über die "
+"Benutzeroberfläche hinzufügen. Deaktiviere diese Option, wenn ein externes "
+"Werkzeug die Replays automatisch hinzufügt."
 
 #: app/pages/OwnedEventsEdit/BasicSettings.tsx:155:24
 msgid ""
@@ -991,15 +1019,20 @@ msgstr ""
 msgid ""
 "If the same person is added to both referees and administrators lists, the "
 "widest privileges are applied, so the person will have administrator rights."
-msgstr "Wenn eine Person sowohl als Schiedsrichter als auch als Administrator eingetragen ist, gelten die umfassenderen Rechte. Die Person erhält also Administratorrechte."
+msgstr ""
+"Wenn eine Person sowohl als Schiedsrichter als auch als Administrator "
+"eingetragen ist, gelten die umfassenderen Rechte. Die Person erhält also "
+"Administratorrechte."
 
 #: app/pages/OwnedEventsEdit/TournamentSettings.tsx:75:22
 msgid ""
 "If this is set, chombo will not allow players to play one more hand if time "
 "is out and it is final hand of the game"
-msgstr "Wenn aktiviert, wird nach einem Chombo keine weitere Hand gespielt, wenn die Zeit abgelaufen ist und es die letzte Hand des Spiels ist"
+msgstr ""
+"Wenn aktiviert, wird nach einem Chombo keine weitere Hand gespielt, wenn die "
+"Zeit abgelaufen ist und es die letzte Hand des Spiels ist"
 
-#: app/helpers/yaku.ts:113:34
+#: app/helpers/yaku.ts:125:34
 msgid "Iipeikou"
 msgstr "Iipeikou"
 
@@ -1052,15 +1085,15 @@ msgstr "Ungültige Emailadresse"
 msgid "Invalid title"
 msgstr "Ungültiger Name"
 
-#: app/helpers/yaku.ts:85:34
+#: app/helpers/yaku.ts:97:34
 msgid "Ippatsu"
 msgstr "Ippatsu"
 
-#: app/helpers/yaku.ts:129:34
+#: app/helpers/yaku.ts:141:34
 msgid "Ittsu"
 msgstr "Ittsu"
 
-#: app/helpers/yaku.ts:109:34
+#: app/helpers/yaku.ts:121:34
 msgid "Junchan"
 msgstr "Junchan"
 
@@ -1072,15 +1105,15 @@ msgstr "Kazoe yakuman"
 msgid "Kiriage mangan"
 msgstr "Kiriage mangan"
 
-#: app/helpers/yaku.ts:233:34
+#: app/helpers/yaku.ts:245:34
 msgid "Kokushi musou"
 msgstr "Kokushi musou"
 
-#: app/helpers/yaku.ts:253:34 app/helpers/yaku.ts:299:34
+#: app/helpers/yaku.ts:265:34 app/helpers/yaku.ts:355:34
 msgid "Kokushi musou 13-side"
 msgstr "Kokushi musou mit 13-seitigem Warten"
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:33:16
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:40:16
 msgid "Kuitan"
 msgstr "Kuitan"
 
@@ -1108,7 +1141,7 @@ msgstr "Lobby-ID"
 msgid "Local ID"
 msgstr "Lokale ID"
 
-#: app/pages/PlayersManage/index.tsx:122:14
+#: app/pages/PlayersManage/index.tsx:132:14
 msgid "Local IDs"
 msgstr "Lokale IDs"
 
@@ -1138,7 +1171,10 @@ msgid ""
 "Manage arbitrary penalties: adding a penalty, cancelling a penalty. Also "
 "referees get all the notifications from \"Call referee\" button in mobile "
 "assistant."
-msgstr "Individuelle Strafen verwalten: Strafen hinzufügen und aufheben. Schiedsrichter erhalten außerdem alle Benachrichtigungen über die Schaltfläche „Schiedsrichter rufen“ im mobilen Assistenten."
+msgstr ""
+"Individuelle Strafen verwalten: Strafen hinzufügen und aufheben. "
+"Schiedsrichter erhalten außerdem alle Benachrichtigungen über die "
+"Schaltfläche „Schiedsrichter rufen“ im mobilen Assistenten."
 
 #: app/pages/OwnedEvents.tsx:440:36
 msgid "Manage current games"
@@ -1146,7 +1182,9 @@ msgstr "Aktuelle Spiele bearbeiten"
 
 #: app/pages/PrivilegesManage/ManagementTab.tsx:268:18
 msgid "Manage event settings: rename event, change yaku settings, etc."
-msgstr "Eventeinstellungen bearbeiten: Event umbenennen, Yaku Einstellungen ändern usw."
+msgstr ""
+"Eventeinstellungen bearbeiten: Event umbenennen, Yaku Einstellungen ändern "
+"usw."
 
 #: app/components/MainMenu.tsx:135:29 app/pages/OwnedEvents.tsx:442:35
 msgid "Manage games"
@@ -1156,7 +1194,9 @@ msgstr "Spiele bearbeiten"
 msgid ""
 "Manage games: starting and resetting tournament timer, cancelling rounds and "
 "games, control seatings."
-msgstr "Spiele bearbeiten: Turnier-Timer starten und zurücksetzen, Runden und Spiele abbrechen, Sitzpläne bearbeiten."
+msgstr ""
+"Spiele bearbeiten: Turnier-Timer starten und zurücksetzen, Runden und Spiele "
+"abbrechen, Sitzpläne bearbeiten."
 
 #: app/pages/OwnedEvents.tsx:91:16
 msgid "Manage my events"
@@ -1171,13 +1211,15 @@ msgstr "Strafeinstellungen bearbeiten"
 msgid "Manage players"
 msgstr "Spieler bearbeiten"
 
-#: app/pages/PlayersManage/index.tsx:53:16
+#: app/pages/PlayersManage/index.tsx:60:16
 msgid "Manage players in event"
 msgstr "Eventspieler bearbeiten"
 
 #: app/pages/PrivilegesManage/ManagementTab.tsx:271:18
 msgid "Manage players in event: add, remove and exclude for seating."
-msgstr "Eventspieler bearbeiten: hinzufügen, entfernen und von der Sitzplatzzuweisung ausschließen."
+msgstr ""
+"Eventspieler bearbeiten: hinzufügen, entfernen und von der "
+"Sitzplatzzuweisung ausschließen."
 
 #: app/pages/OwnedEvents.tsx:448:38
 msgid "Manage predefined seating"
@@ -1193,7 +1235,9 @@ msgstr "Berechtigungen im Event bearbeiten"
 
 #: app/pages/PrivilegesManage/ManagementTab.tsx:274:18
 msgid "Manage privileges: assign referees and other administrators."
-msgstr "Berechtigungen bearbeiten: Schiedsrichter und weitere Administratoren zuweisen."
+msgstr ""
+"Berechtigungen bearbeiten: Schiedsrichter und weitere Administratoren "
+"zuweisen."
 
 #: app/pages/ProfileManage.tsx:61:16
 msgid "Manage your account"
@@ -1207,7 +1251,7 @@ msgstr "Höchste Strafe"
 msgid "Menu"
 msgstr "Menü"
 
-#: app/helpers/yaku.ts:89:34
+#: app/helpers/yaku.ts:101:34
 msgid "Menzentsumo"
 msgstr "Menzentsumo"
 
@@ -1231,7 +1275,7 @@ msgstr "Mindestanzahl an Spielen"
 msgid "Multiline. Markdown syntax supported."
 msgstr "Mehrlinienfeld. Markdown Syntax wird unterstützt."
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:41:16
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:48:16
 msgid "Multiple yakumans"
 msgstr "Mehrfach Yakuman"
 
@@ -1251,7 +1295,7 @@ msgstr "Nagashi Mangan, Nagashi: %1, Tenpai: %2, Riichi: %3"
 msgid "New event"
 msgstr "Neues Event erstellen"
 
-#: app/pages/GamesControl/TournamentControls.tsx:220:21
+#: app/pages/GamesControl/TournamentControls.tsx:229:23
 msgid "Next seating"
 msgstr "Nächster Sitzplan"
 
@@ -1267,9 +1311,27 @@ msgstr "Noch keine Chombo Strafen zugewiesen"
 msgid "No errors found"
 msgstr "Keine Fehler gefunden"
 
+#: app/pages/GamesControl/TournamentControls.tsx:222:18
+msgid "No more prescripted sessions available"
+msgstr "Keine weiteren vorgegebenen Partien verfügbar"
+
 #: app/pages/Penalties/PenaltiesList.tsx:82:45
 msgid "No penalties assigned yet"
 msgstr "Noch keine Strafen verhängt"
+
+#: app/helpers/yaku.ts:297:34
+#, fuzzy
+msgid "North round wind"
+msgstr "Keine Ergebnisse"
+
+#: app/helpers/yaku.ts:293:34
+#, fuzzy
+msgid "North seat wind"
+msgstr "Nächster Sitzplan"
+
+#: app/helpers/yaku.ts:385:34
+msgid "North wind"
+msgstr "Nordwind"
 
 #: app/pages/GamesControl/TournamentControls.tsx:107:22
 msgid "Not ready"
@@ -1320,7 +1382,7 @@ msgstr ""
 msgid "Notifications settings"
 msgstr "Benachrichtigungseinstellungen"
 
-#: app/pages/GamesControl/TournamentControls.tsx:259:26
+#: app/pages/GamesControl/TournamentControls.tsx:269:26
 msgid ""
 "Notify all subscribed players to come to their tables? This will send a "
 "message through notification service."
@@ -1328,11 +1390,11 @@ msgstr ""
 "Nachricht an all Spieler senden, mit der Aufforderung sich zu Ihren Tischen "
 "zu begeben?"
 
-#: app/pages/GamesControl/TournamentControls.tsx:258:23
+#: app/pages/GamesControl/TournamentControls.tsx:268:23
 msgid "Notify players"
 msgstr "Spieler benachrichtigen"
 
-#: app/pages/GamesControl/TournamentControls.tsx:257:24
+#: app/pages/GamesControl/TournamentControls.tsx:267:24
 msgid "Notify players to come to their tables"
 msgstr "Spieler auffordern zu Ihren Platz an den Tischen einzunehmen"
 
@@ -1344,7 +1406,9 @@ msgstr "Benachrichtigen wenn eine Hand aufgezeichnet wird"
 msgid ""
 "Notify when any hand has been recorded for any event you are administrator "
 "or referee of"
-msgstr "Benachrichtigen, wenn eine Hand in einem Event aufgezeichnet wird, in dem du Administrator oder Schiedsrichter bist"
+msgstr ""
+"Benachrichtigen, wenn eine Hand in einem Event aufgezeichnet wird, in dem du "
+"Administrator oder Schiedsrichter bist"
 
 #: app/pages/ProfileNotifications.tsx:133:18
 msgid "Notify when next tournament session is about to start (except online)"
@@ -1420,7 +1484,7 @@ msgstr "Eventseite in neuem Tab öffnen"
 msgid "Open menu"
 msgstr "Menü öffnen"
 
-#: app/helpers/yaku.ts:81:34
+#: app/helpers/yaku.ts:93:34
 msgid "Open riichi"
 msgstr "Offenes Riichi"
 
@@ -1428,7 +1492,7 @@ msgstr "Offenes Riichi"
 msgid "Otherwise"
 msgstr "Sonstiges"
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:64:25
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:110:25
 msgid "Pao rule enabled for:"
 msgstr "Pao Regel aktiv bei:"
 
@@ -1490,7 +1554,7 @@ msgstr "Begründung der Strafe"
 msgid "Phone number"
 msgstr "Telefonnummer"
 
-#: app/helpers/yaku.ts:97:34
+#: app/helpers/yaku.ts:109:34
 msgid "Pinfu"
 msgstr "Pinfu"
 
@@ -1510,13 +1574,13 @@ msgstr "Nur Ostrunden"
 msgid "Player details were successfully saved"
 msgstr "Spielerdetails konnten erfolgreich gespeichert werden"
 
-#: app/pages/PlayersManage/ManagementTab.tsx:232:27
+#: app/pages/PlayersManage/ManagementTab.tsx:248:27
 msgid "Player is excluded from next seating. Click to include"
 msgstr ""
 "Spieler wird bei der nächsten Sitzplatzzuweisung ausgeschlossen. Auswählen "
 "um Ihn hinzuzufügen"
 
-#: app/pages/PlayersManage/ManagementTab.tsx:233:27
+#: app/pages/PlayersManage/ManagementTab.tsx:249:27
 msgid "Player is included in next seating. Click to exclude"
 msgstr ""
 "Spieler wird bei der nächsten Sitzplatzzuweisung hinzugefügt. Auswählen um "
@@ -1530,7 +1594,7 @@ msgstr "Spielername"
 msgid "Player was successfully registered"
 msgstr "Spiele wurde erfolgreich angemeldet"
 
-#: app/pages/PlayersManage/index.tsx:106:14
+#: app/pages/PlayersManage/index.tsx:116:14
 msgid "Players"
 msgstr "Spieler"
 
@@ -1570,7 +1634,10 @@ msgstr "Bitte lesen"
 msgid ""
 "Please note: you should set up the rating accordingly to tournament settings "
 "in game platform, otherwise expect errors on replay submit!"
-msgstr "Bitte beachte: Das Ranking muss den Turniereinstellungen auf der Spielplattform entsprechen, sonst können beim Einreichen von Replays Fehler auftreten!"
+msgstr ""
+"Bitte beachte: Das Ranking muss den Turniereinstellungen auf der "
+"Spielplattform entsprechen, sonst können beim Einreichen von Replays Fehler "
+"auftreten!"
 
 #: app/pages/ProfileResetPasswordConfirm.tsx:94:12
 msgid "Please press the button below to proceed with password recovery"
@@ -1585,7 +1652,7 @@ msgstr "Spieler auswählen"
 msgid "Please type in your title to proceed with removal"
 msgstr "Bitte Spielername eintragen um den Account zu löschen"
 
-#: app/pages/GamesControl/TournamentControls.tsx:237:17
+#: app/pages/GamesControl/TournamentControls.tsx:247:17
 msgid "Please wait unit seating is ready"
 msgstr "Bitte warten bis die Sitzordnung bereit ist"
 
@@ -1618,7 +1685,10 @@ msgstr "Zeitzone des Events"
 msgid ""
 "Privileges are updated with delay of up to 10 minutes, so be careful with it "
 "as privileges assigned by mistake won't be revoked for 10 minutes."
-msgstr "Berechtigungen werden mit bis zu 10 Minuten Verzögerung aktualisiert. Sei daher vorsichtig: Irrtümlich vergebene Rechte können bis zu 10 Minuten lang bestehen bleiben."
+msgstr ""
+"Berechtigungen werden mit bis zu 10 Minuten Verzögerung aktualisiert. Sei "
+"daher vorsichtig: Irrtümlich vergebene Rechte können bis zu 10 Minuten lang "
+"bestehen bleiben."
 
 #: app/pages/ProfileLogin.tsx:99:14
 msgid "Proceed with sign in"
@@ -1662,7 +1732,9 @@ msgstr "Auszeichnungen und Spielerstatistiken neu berechnen."
 msgid ""
 "Recalculate achievements for event \"%1\" (id #%2)? Recalculation will be "
 "scheduled and will be completed in several minutes"
-msgstr "Auszeichnungen für das Event „%1“ (ID #%2) neu berechnen? Die Neuberechnung wird eingeplant und in einigen Minuten abgeschlossen"
+msgstr ""
+"Auszeichnungen für das Event „%1“ (ID #%2) neu berechnen? Die Neuberechnung "
+"wird eingeplant und in einigen Minuten abgeschlossen"
 
 #: app/components/MainMenu.tsx:191:24
 msgid "Recalculate players stats"
@@ -1672,7 +1744,9 @@ msgstr "Spielerstatistiken neu berechnen"
 msgid ""
 "Recalculate stats for all players in event \"%1\" (id #%2)? Recalculation "
 "will be scheduled and will be completed in several minutes"
-msgstr "Statistiken aller Spieler im Event „%1“ (ID #%2) neu berechnen? Die Neuberechnung wird eingeplant und in einigen Minuten abgeschlossen"
+msgstr ""
+"Statistiken aller Spieler im Event „%1“ (ID #%2) neu berechnen? Die "
+"Neuberechnung wird eingeplant und in einigen Minuten abgeschlossen"
 
 #: app/components/RecalcAchievementsModal.tsx:19:20
 msgid "Recalculation of achievements was successfully scheduled. Please wait."
@@ -1680,7 +1754,8 @@ msgstr "Die Neuberechnung der Auszeichnungen wurde eingeplant. Bitte warte."
 
 #: app/components/RecalcPlayerStatsModal.tsx:19:20
 msgid "Recalculation of players stats was successfully scheduled. Please wait."
-msgstr "Die Neuberechnung der Spielerstatistiken wurde eingeplant. Bitte warte."
+msgstr ""
+"Die Neuberechnung der Spielerstatistiken wurde eingeplant. Bitte warte."
 
 #: app/components/RecalcAchievementsModal.tsx:26:18
 #: app/components/RecalcPlayerStatsModal.tsx:26:18
@@ -1696,6 +1771,10 @@ msgstr "Neuberechnung eingeplant"
 #: app/pages/ProfileResetPasswordConfirm.tsx:218:14
 msgid "Recover password"
 msgstr "Passwort zurücksetzen"
+
+#: app/helpers/yaku.ts:301:34
+msgid "Red dragon"
+msgstr "Roter Drache"
 
 #: app/pages/PrivilegesManage/ManagementTab.tsx:250:14
 msgid "Referee privileges include:"
@@ -1734,7 +1813,7 @@ msgstr "Spielergebnisse entfernen"
 msgid "Remove my account"
 msgstr "Account löschen"
 
-#: app/pages/PlayersManage/ManagementTab.tsx:247:28
+#: app/pages/PlayersManage/ManagementTab.tsx:264:28
 msgid "Remove player from event"
 msgstr "Spieler aus dem Event entfernen"
 
@@ -1742,8 +1821,8 @@ msgstr "Spieler aus dem Event entfernen"
 msgid "Remove referee from event"
 msgstr "Schiedsrichter aus dem Event entfernen"
 
-#: app/pages/PlayersManage/ManagementTab.tsx:212:37
-#: app/pages/PlayersManage/ManagementTab.tsx:213:32
+#: app/pages/PlayersManage/ManagementTab.tsx:228:37
+#: app/pages/PlayersManage/ManagementTab.tsx:229:32
 msgid "Remove replacement"
 msgstr "Ersatzspieler entfernen"
 
@@ -1751,15 +1830,15 @@ msgstr "Ersatzspieler entfernen"
 msgid "Remove the game as it never existed"
 msgstr "Spiel entfernen, da es nicht stattgefunden hat"
 
-#: app/helpers/yaku.ts:189:34
+#: app/helpers/yaku.ts:201:34
 msgid "Renhou"
 msgstr "Renhou"
 
-#: app/pages/PlayersManage/ManagementTab.tsx:188:28
+#: app/pages/PlayersManage/ManagementTab.tsx:204:28
 msgid "Replace player with someone else"
 msgstr "Spieler mit einem anderen ersetzen"
 
-#: app/pages/PlayersManage/ManagementTab.tsx:204:28
+#: app/pages/PlayersManage/ManagementTab.tsx:220:28
 msgid "Replaced by %1"
 msgstr "Durch %1 ersetzt"
 
@@ -1767,7 +1846,7 @@ msgstr "Durch %1 ersetzt"
 msgid "Request password reset"
 msgstr "Passwort zurücksetzten"
 
-#: app/pages/GamesControl/TournamentControls.tsx:245:22
+#: app/pages/GamesControl/TournamentControls.tsx:255:22
 msgid "Reset generated seating"
 msgstr "Erstellte Sitzordnung zurücksetzen"
 
@@ -1775,7 +1854,7 @@ msgstr "Erstellte Sitzordnung zurücksetzen"
 msgid "Reset my password"
 msgstr "Passwort zurücksetzten"
 
-#: app/pages/GamesControl/TournamentControls.tsx:246:21
+#: app/pages/GamesControl/TournamentControls.tsx:256:21
 msgid "Reset seating"
 msgstr "Sitzordnung zurücksetzen"
 
@@ -1783,7 +1862,7 @@ msgstr "Sitzordnung zurücksetzen"
 msgid "Reset your password"
 msgstr "Passwort zurücksetzten"
 
-#: app/helpers/yaku.ts:73:34
+#: app/helpers/yaku.ts:85:34
 msgid "Riichi"
 msgstr "Riichi"
 
@@ -1803,7 +1882,7 @@ msgstr ""
 "Im Falle eines Unentschieden in der letzten Hand, gehen übrige "
 "Riichieinsätze an den Gewinner"
 
-#: app/helpers/yaku.ts:181:34
+#: app/helpers/yaku.ts:193:34
 msgid "Rinshan kaihou"
 msgstr "Rinshan kaihou"
 
@@ -1830,31 +1909,31 @@ msgstr ""
 msgid "Ruleset tuning"
 msgstr "Regeln"
 
-#: app/helpers/yaku.ts:117:34
+#: app/helpers/yaku.ts:129:34
 msgid "Ryanpeikou"
 msgstr "Ryanpeikou"
 
-#: app/helpers/yaku.ts:229:34 app/helpers/yaku.ts:272:34
+#: app/helpers/yaku.ts:241:34 app/helpers/yaku.ts:328:34
 msgid "Ryuuiisou"
 msgstr "Ryuuiisou"
 
-#: app/helpers/yaku.ts:161:34
+#: app/helpers/yaku.ts:173:34
 msgid "Sanankou"
 msgstr "Sanankou"
 
-#: app/helpers/yaku.ts:169:34
+#: app/helpers/yaku.ts:181:34
 msgid "Sankantsu"
 msgstr "Sankantsu"
 
-#: app/helpers/yaku.ts:121:34
+#: app/helpers/yaku.ts:133:34
 msgid "Sanshoku"
 msgstr "Sanshoku"
 
-#: app/helpers/yaku.ts:125:34
+#: app/helpers/yaku.ts:137:34
 msgid "Sanshoku doukou"
 msgstr "Sanshoku doukou"
 
-#: app/pages/OwnedEventsEdit/index.tsx:377:60
+#: app/pages/OwnedEventsEdit/index.tsx:378:60
 #: app/pages/PlayersManage/LocalIdsTab.tsx:113:56
 #: app/pages/PlayersManage/TeamNamesTab.tsx:114:56
 #: app/pages/ProfileManage.tsx:311:60
@@ -1890,7 +1969,7 @@ msgid "Select event type"
 msgstr "Art des Events auswählen"
 
 #: app/pages/GamesControl/GamesList.tsx:209:36
-#: app/pages/GamesControl/TournamentControls.tsx:292:28
+#: app/pages/GamesControl/TournamentControls.tsx:302:28
 msgid "Select extra time"
 msgstr "Zusätzliche Zeit auswählen"
 
@@ -1902,7 +1981,7 @@ msgstr "Intervall auswählen"
 msgid "Select player"
 msgstr "Spieler auswählen"
 
-#: app/pages/PlayersManage/ManagementTab.tsx:132:16
+#: app/pages/PlayersManage/ManagementTab.tsx:148:16
 msgid "Select replacement player for %1"
 msgstr "Ersatzspieler für Spieler %1 auswählen"
 
@@ -1971,20 +2050,20 @@ msgstr "Einstellungen"
 msgid "Settings saved!"
 msgstr "Einstellunge gespeichert!"
 
-#: app/pages/PlayersManage/index.tsx:112:20
+#: app/pages/PlayersManage/index.tsx:122:20
 msgid ""
 "Setup local identifiers of players to be used in predefined event script"
 msgstr "Lokale IDs vergeben die bei manueller Sitzplatzwahl Anwendung finden"
 
-#: app/pages/PlayersManage/index.tsx:127:20
+#: app/pages/PlayersManage/index.tsx:137:20
 msgid "Setup team name for each player (for team events)"
 msgstr "Teamname für Spieler festlegen(für Teamevents)"
 
-#: app/helpers/yaku.ts:165:34
+#: app/helpers/yaku.ts:177:34
 msgid "Shousangen"
 msgstr "Shousangen"
 
-#: app/helpers/yaku.ts:205:34
+#: app/helpers/yaku.ts:217:34
 msgid "Shousuushii"
 msgstr "Shousuushii"
 
@@ -2001,8 +2080,8 @@ msgid "Show rating table for everyone"
 msgstr "Rangliste für Alle einblenden"
 
 #: app/pages/GamesControl/TournamentControls.tsx:213:19
-#: app/pages/GamesControl/TournamentControls.tsx:318:19
-#: app/pages/GamesControl/TournamentControls.tsx:344:19
+#: app/pages/GamesControl/TournamentControls.tsx:328:19
+#: app/pages/GamesControl/TournamentControls.tsx:354:19
 msgid "Show results table"
 msgstr "Ergebnistabelle einblenden"
 
@@ -2039,15 +2118,27 @@ msgstr "Rang basiert"
 msgid "Something went wrong. Contact pantheon service administrator"
 msgstr "Ein Fehler ist aufgetreten. Wende dich an den Pantheon-Administrator"
 
-#: app/pages/GamesControl/TournamentControls.tsx:272:21
+#: app/helpers/yaku.ts:281:34
+msgid "South round wind"
+msgstr "Rundenwind: Süd"
+
+#: app/helpers/yaku.ts:277:34
+msgid "South seat wind"
+msgstr "Sitzwind: Süd"
+
+#: app/helpers/yaku.ts:375:34
+msgid "South wind"
+msgstr "Südwind"
+
+#: app/pages/GamesControl/TournamentControls.tsx:282:21
 msgid "Start timer"
 msgstr "Starte Timer"
 
-#: app/pages/GamesControl/TournamentControls.tsx:273:24
+#: app/pages/GamesControl/TournamentControls.tsx:283:24
 msgid "Start timer and game sessions?"
 msgstr "Runde und Timer starten?"
 
-#: app/pages/GamesControl/TournamentControls.tsx:271:22
+#: app/pages/GamesControl/TournamentControls.tsx:281:22
 msgid "Start timer and sessions"
 msgstr "Timer und Runde starten"
 
@@ -2074,15 +2165,15 @@ msgstr "Subsystem"
 msgid "Success"
 msgstr "Erfolgreich"
 
-#: app/helpers/yaku.ts:197:34
+#: app/helpers/yaku.ts:209:34
 msgid "Suuankou"
 msgstr "Suuankou"
 
-#: app/helpers/yaku.ts:245:34 app/helpers/yaku.ts:291:34
+#: app/helpers/yaku.ts:257:34 app/helpers/yaku.ts:347:34
 msgid "Suuankou Tanki"
 msgstr "Suuankou mit Tanki-Warten"
 
-#: app/helpers/yaku.ts:193:34 app/helpers/yaku.ts:280:34
+#: app/helpers/yaku.ts:205:34 app/helpers/yaku.ts:336:34
 msgid "Suukantsu"
 msgstr "Suukantsu"
 
@@ -2108,17 +2199,17 @@ msgstr "Systeminformationen"
 msgid "Table # %1"
 msgstr "Tisch # %1"
 
-#: app/helpers/yaku.ts:101:34
+#: app/helpers/yaku.ts:113:34
 msgid "Tanyao"
 msgstr "Tanyao"
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:34:22
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:41:22
 msgid ""
 "Tanyao costs 1 han on open hand. If not checked, tanyao does not work on "
 "open hand."
 msgstr "Tanyao gilt bei geöffneter Hand."
 
-#: app/pages/PlayersManage/index.tsx:131:14
+#: app/pages/PlayersManage/index.tsx:141:14
 msgid "Team names"
 msgstr "Teamnamen"
 
@@ -2131,7 +2222,7 @@ msgstr "Team Turnier"
 msgid "Team:"
 msgstr "Team:"
 
-#: app/helpers/yaku.ts:237:34
+#: app/helpers/yaku.ts:249:34
 msgid "Tenhou"
 msgstr "Tenhou"
 
@@ -2144,7 +2235,10 @@ msgid ""
 "Tenhou.net usernames can't be longer than 8 symbols. If you provided a login "
 "string instead, please note that you should NEVER do this again, in any "
 "service other than tenhou.net."
-msgstr "Benutzernamen auf Tenhou.net dürfen höchstens 8 Zeichen lang sein. Falls du stattdessen deine Anmeldekennung angegeben hast, gib diese NIEMALS wieder bei einem anderen Dienst als tenhou.net ein."
+msgstr ""
+"Benutzernamen auf Tenhou.net dürfen höchstens 8 Zeichen lang sein. Falls du "
+"stattdessen deine Anmeldekennung angegeben hast, gib diese NIEMALS wieder "
+"bei einem anderen Dienst als tenhou.net ein."
 
 #: app/pages/Penalties/CommonReasons.tsx:43:5
 msgid "Texting or speaking by phone during the game"
@@ -2155,7 +2249,10 @@ msgid ""
 "The penalty applies to the rating table in this event by subtracting the "
 "suggested amount of points from player rating. If the amount is zero, the "
 "penalty is treated as a notice."
-msgstr "Die Strafe wird in der Rangliste dieses Events angewandt, indem die angegebene Punktzahl vom Ranking des Spielers abgezogen wird. Bei null Punkten gilt die Strafe als Verwarnung."
+msgstr ""
+"Die Strafe wird in der Rangliste dieses Events angewandt, indem die "
+"angegebene Punktzahl vom Ranking des Spielers abgezogen wird. Bei null "
+"Punkten gilt die Strafe als Verwarnung."
 
 #: app/pages/ProfileManage.tsx:353:14
 msgid ""
@@ -2214,7 +2311,7 @@ msgstr ""
 "Diese Aktion entfernt die Spielergebnisse, die letzte Runde muss aber "
 "zusätzlich noch manuell beendet werden. Fortfahren?"
 
-#: app/pages/GamesControl/TournamentControls.tsx:247:24
+#: app/pages/GamesControl/TournamentControls.tsx:257:24
 msgid "This will remove generated seating. Continue?"
 msgstr "Erstellte Sitzordnung wirklich löschen?"
 
@@ -2246,7 +2343,7 @@ msgstr "Auszeichnungen ein/ausblenden"
 msgid "Toggle visibility of rating table"
 msgstr "Rangliste ein/ausblenden"
 
-#: app/helpers/yaku.ts:149:34
+#: app/helpers/yaku.ts:161:34
 msgid "Toitoi"
 msgstr "Toitoi"
 
@@ -2269,13 +2366,15 @@ msgstr "Einstellungen für Turniere"
 
 #: app/pages/OwnedEventsEdit/TournamentSettings.tsx:113:28
 msgid "Try to place players on winds they previously played less"
-msgstr "Spieler möglichst auf Winde setzen, auf denen sie bisher seltener gespielt haben"
+msgstr ""
+"Spieler möglichst auf Winde setzen, auf denen sie bisher seltener gespielt "
+"haben"
 
 #: app/pages/GamesControl/GamesList.tsx:447:12
 msgid "Tsumo, %1 (%2), riichi: %3"
 msgstr "Tsumo, %1 (%2), riichi: %3"
 
-#: app/helpers/yaku.ts:213:34 app/helpers/yaku.ts:268:34
+#: app/helpers/yaku.ts:225:34 app/helpers/yaku.ts:324:34
 msgid "Tsuuiisou"
 msgstr "Tsuuiisou"
 
@@ -2355,6 +2454,19 @@ msgstr "Sichtbarkeit"
 msgid "Visibility management"
 msgstr "Sichtbarkeit verwalten"
 
+#: app/helpers/yaku.ts:289:34
+msgid "West round wind"
+msgstr "Rundenwind: West"
+
+#: app/helpers/yaku.ts:285:34
+#, fuzzy
+msgid "West seat wind"
+msgstr "Sitzordnung zurücksetzen"
+
+#: app/helpers/yaku.ts:380:34
+msgid "West wind"
+msgstr "Westwind"
+
 #: app/pages/ProfileManage.tsx:347:18
 msgid "What will NOT be deleted:"
 msgstr "Was nicht gelöscht wird:"
@@ -2375,6 +2487,14 @@ msgstr ""
 "Bei Gewinn oder Tenpai nach Unentschieden von Osten , werden Sitzwinde "
 "trotzdem weiter rotiert. Honba wird nur nach einem Unentschieden hinzugefügt."
 
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:55:22
+msgid ""
+"When disabled, use separate yakuhai names like \"East\" and \"White dragon\" "
+"instead of aggregated names like \"Yakuhai x3\"."
+msgstr ""
+"Wenn deaktiviert, werden einzelne Yakuhai-Namen wie „Osten“ und „Weißer "
+"Drache“ statt aggregierter Namen wie „Yakuhai x3“ verwendet."
+
 #: app/pages/OwnedEventsEdit/TournamentSettings.tsx:61:20
 msgid "When time is out, finish current hand and interrupt the session"
 msgstr "Bei Ablauf der Zeit, muss nur noch die aktuelle Hand beendet werden"
@@ -2385,6 +2505,10 @@ msgid ""
 "session"
 msgstr ""
 "Bei Ablauf der Zeit, muss die aktuelle Hand und eine weitere gespielt werden"
+
+#: app/helpers/yaku.ts:309:34
+msgid "White dragon"
+msgstr "Weißer Drache"
 
 #: app/pages/OwnedEventsEdit/TournamentSettings.tsx:96:18
 msgid "Wind shuffle mode"
@@ -2398,7 +2522,7 @@ msgstr "Yakitori"
 msgid "Yakitori penalty"
 msgstr "Yakitori Strafe"
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:46:25
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:61:25
 msgid "Yaku allowed"
 msgstr "Erlaubte Yaku"
 
@@ -2406,19 +2530,19 @@ msgstr "Erlaubte Yaku"
 msgid "Yaku settings"
 msgstr "Yaku Einstellungen"
 
-#: app/helpers/yaku.ts:133:34
+#: app/helpers/yaku.ts:145:34
 msgid "Yakuhai x1"
 msgstr "Yakuhai x1"
 
-#: app/helpers/yaku.ts:137:34
+#: app/helpers/yaku.ts:149:34
 msgid "Yakuhai x2"
 msgstr "Yakuhai x2"
 
-#: app/helpers/yaku.ts:141:34
+#: app/helpers/yaku.ts:153:34
 msgid "Yakuhai x3"
 msgstr "Yakuhai x3"
 
-#: app/helpers/yaku.ts:145:34
+#: app/helpers/yaku.ts:157:34
 msgid "Yakuhai x4"
 msgstr "Yakuhai x4"
 
@@ -2447,7 +2571,7 @@ msgstr ""
 msgid "You should read and accept the Privacy Policy"
 msgstr "Bitte Datenschutzbestimmungen lesen und bestätigen"
 
-#: app/pages/GamesControl/TournamentControls.tsx:331:24
+#: app/pages/GamesControl/TournamentControls.tsx:341:24
 msgid ""
 "You won't be able to cancel last round after the results are approved. "
 "Approve session results?"
@@ -2509,6 +2633,12 @@ msgstr "Deine Telegram ID"
 msgid "show / hide"
 msgstr "anzeigen /ausblenden"
 
+#~ msgid "Disabled"
+#~ msgstr "Deaktiviert"
+
+#~ msgid "Enabled"
+#~ msgstr "Aktiviert"
+
 #~ msgid "Player is a regular user. Click to promote to event admin."
 #~ msgstr "Spieler ist normaler Nutzer. Klicken um Adminrechte hinzuzufügen."
 
@@ -2543,13 +2673,15 @@ msgstr "anzeigen /ausblenden"
 #~ "abgezogen sobald das Match endet. Eine Strafe kann nur während einer "
 #~ "laufenden Runde eingetragen werden."
 
+#~ msgid "Use separate yakuhai names"
+#~ msgstr "Einzelne Yakuhai-Namen verwenden"
+
+#~ msgid "Yakuhai names"
+#~ msgstr "Yakuhai-Namen"
+
 #~ msgid ""
 #~ "You have provided your tenhou login string instead of your username. You "
 #~ "should NEVER give anyone your login string!"
 #~ msgstr ""
 #~ "Tenhou login string statt Benutzername eingegeben. Bitte niemals den "
 #~ "login string weitergeben!"
-
-#: app/pages/GamesControl/TournamentControls.tsx:222:23
-msgid "No more prescripted sessions available"
-msgstr "Keine weiteren vorgegebenen Partien verfügbar"

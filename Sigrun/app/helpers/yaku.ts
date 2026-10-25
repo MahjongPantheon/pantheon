@@ -31,6 +31,7 @@ export enum YakuId {
   RYANPEIKOU = 10,
   SANSHOKUDOUJUN = 11,
   ITTSU = 12,
+  // Aggregated yakuhai IDs; used by aggregated mode and historical hands.
   YAKUHAI1 = 13,
   YAKUHAI2 = 14,
   YAKUHAI3 = 15,
@@ -65,6 +66,17 @@ export enum YakuId {
   SUUANKOUTANKI = 45,
   CHUURENPOUTOPURE = 46,
   KOKUSHIMUSOU13 = 47,
+  EAST_SEAT_WIND = 48,
+  EAST_ROUND_WIND = 49,
+  SOUTH_SEAT_WIND = 50,
+  SOUTH_ROUND_WIND = 51,
+  WEST_SEAT_WIND = 52,
+  WEST_ROUND_WIND = 53,
+  NORTH_SEAT_WIND = 54,
+  NORTH_ROUND_WIND = 55,
+  RED_DRAGON = 56,
+  GREEN_DRAGON = 57,
+  WHITE_DRAGON = 58,
 }
 
 export const yakuList = [
@@ -251,6 +263,50 @@ export const yakuList = [
   {
     id: YakuId.KOKUSHIMUSOU13,
     name: (i18n: I18nService) => i18n._t('Kokushi musou 13-side'),
+  },
+  {
+    id: YakuId.EAST_SEAT_WIND,
+    name: (i18n: I18nService) => i18n._t('East seat wind'),
+  },
+  {
+    id: YakuId.EAST_ROUND_WIND,
+    name: (i18n: I18nService) => i18n._t('East round wind'),
+  },
+  {
+    id: YakuId.SOUTH_SEAT_WIND,
+    name: (i18n: I18nService) => i18n._t('South seat wind'),
+  },
+  {
+    id: YakuId.SOUTH_ROUND_WIND,
+    name: (i18n: I18nService) => i18n._t('South round wind'),
+  },
+  {
+    id: YakuId.WEST_SEAT_WIND,
+    name: (i18n: I18nService) => i18n._t('West seat wind'),
+  },
+  {
+    id: YakuId.WEST_ROUND_WIND,
+    name: (i18n: I18nService) => i18n._t('West round wind'),
+  },
+  {
+    id: YakuId.NORTH_SEAT_WIND,
+    name: (i18n: I18nService) => i18n._t('North seat wind'),
+  },
+  {
+    id: YakuId.NORTH_ROUND_WIND,
+    name: (i18n: I18nService) => i18n._t('North round wind'),
+  },
+  {
+    id: YakuId.RED_DRAGON,
+    name: (i18n: I18nService) => i18n._t('Red dragon'),
+  },
+  {
+    id: YakuId.GREEN_DRAGON,
+    name: (i18n: I18nService) => i18n._t('Green dragon'),
+  },
+  {
+    id: YakuId.WHITE_DRAGON,
+    name: (i18n: I18nService) => i18n._t('White dragon'),
   },
 ];
 

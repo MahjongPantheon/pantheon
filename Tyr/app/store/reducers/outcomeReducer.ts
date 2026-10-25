@@ -42,7 +42,14 @@ import {
   removeYakuFromProps,
 } from './util';
 import { AppOutcome } from '../../helpers/interfaces';
-import { getRequiredYaku } from '../selectors/yaku';
+import { getRequiredYaku, getSelectedYaku } from '../selectors/yaku';
+import {
+  aggregatedYakuhai,
+  getWindYaku,
+  getYakuhaiToAdd,
+  yakuhai,
+  windYaku,
+} from '../../helpers/yakuhai';
 import { YakuId } from '../../helpers/yaku';
 import { PlayerInSession, RoundOutcome } from 'tsclients/proto/atoms.pb';
 
@@ -102,6 +109,68 @@ function addYakuList(state: IAppState, yakuToAdd: YakuId[], targetPlayer?: numbe
 }
 
 export function outcomeReducer(state: IAppState, action: AppActionTypes): IAppState {
+  if (
+    action.type === TOGGLE_WINNER &&
+    state.currentOutcome?.selectedOutcome === RoundOutcome.ROUND_OUTCOME_TSUMO
+  ) {
+    // A different winner has a different seat; require wind selection again.
+    const winner = state.currentOutcome.winner;
+    const cleared = windYaku.flat().reduce(
+      (next, id) =>
+        reduceOutcome(next, {
+          type: REMOVE_YAKU,
+          payload: { id, winner },
+        }),
+      state
+    );
+    return reduceOutcome(cleared, action);
+  }
+  if ((action.type === ADD_YAKU || action.type === REMOVE_YAKU) && state.currentOutcome) {
+    const winner =
+      action.payload.winner ??
+      (state.currentOutcome.selectedOutcome === RoundOutcome.ROUND_OUTCOME_TSUMO
+        ? state.currentOutcome.winner
+        : undefined);
+    const aggregated = state.gameConfig?.rulesetConfig.useAggregatedYakuhai;
+    if (
+      action.type === ADD_YAKU &&
+      (aggregated
+        ? yakuhai.includes(action.payload.id)
+        : aggregatedYakuhai.includes(action.payload.id))
+    ) {
+      return state;
+    }
+    const yaku = getWindYaku(
+      action.payload.id,
+      state.currentOutcome.roundIndex,
+      state.players?.findIndex((p) => p.id === winner) ?? -1
+    );
+    const allowed = state.gameConfig?.rulesetConfig.allowedYaku ?? [];
+    if (action.type === ADD_YAKU && yakuhai.includes(action.payload.id)) {
+      const added = (yaku ?? [action.payload.id]).filter((id) => allowed.includes(id));
+      const selected = winner ? (getSelectedYaku(state)[winner] ?? []) : [];
+      const resolved = getYakuhaiToAdd(selected, added);
+      if (!resolved) {
+        return state;
+      }
+      return resolved.reduce(
+        (next, id) => reduceOutcome(next, { ...action, payload: { ...action.payload, id } }),
+        state
+      );
+    }
+    if (yaku) {
+      return yaku
+        .filter((id) => allowed.includes(id))
+        .reduce(
+          (next, id) => reduceOutcome(next, { ...action, payload: { ...action.payload, id } }),
+          state
+        );
+    }
+  }
+  return reduceOutcome(state, action);
+}
+
+function reduceOutcome(state: IAppState, action: AppActionTypes): IAppState {
   let winProps;
   let playerId: number;
   switch (action.type) {

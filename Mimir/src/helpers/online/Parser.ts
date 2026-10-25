@@ -306,7 +306,11 @@ export class OnlineParser {
     const yakuList = attributes['yaku'] ?? '';
     const yakumanList = attributes['yakuman'] ?? '';
 
-    const yakuData = fromTenhou(yakuList, yakumanList);
+    const yakuData = fromTenhou(
+      yakuList,
+      yakumanList,
+      this._session?.event.ruleset.rules.useAggregatedYakuhai
+    );
 
     if (!this._lastTokenIsAgari) {
       // Single ron, or first ron in sequence

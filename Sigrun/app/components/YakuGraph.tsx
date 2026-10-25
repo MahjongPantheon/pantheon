@@ -42,6 +42,17 @@ export const YakuGraph = ({ yakuStat }: { yakuStat?: YakuStat[] }) => {
   yakuStat.forEach((stat) => {
     yaku.set(stat.yakuId, stat.count);
     switch (stat.yakuId) {
+      case YakuId.EAST_SEAT_WIND:
+      case YakuId.EAST_ROUND_WIND:
+      case YakuId.SOUTH_SEAT_WIND:
+      case YakuId.SOUTH_ROUND_WIND:
+      case YakuId.WEST_SEAT_WIND:
+      case YakuId.WEST_ROUND_WIND:
+      case YakuId.NORTH_SEAT_WIND:
+      case YakuId.NORTH_ROUND_WIND:
+      case YakuId.RED_DRAGON:
+      case YakuId.GREEN_DRAGON:
+      case YakuId.WHITE_DRAGON:
       case YakuId.YAKUHAI1:
         totalYakuhai += stat.count;
         break;

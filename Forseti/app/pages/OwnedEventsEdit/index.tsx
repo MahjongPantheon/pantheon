@@ -118,6 +118,7 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string; copyId?: string 
         withKazoe: false,
         withKiriageMangan: false,
         withKuitan: false,
+        useAggregatedYakuhai: false,
         withLeadingDealerGameOver: false,
         withMultiYakumans: false,
         withNagashiMangan: false,

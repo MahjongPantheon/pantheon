@@ -1,6 +1,7 @@
 import { NumberSelect } from '../NumberSelect/NumberSelect';
 import { UIEvent, useContext, useState } from 'react';
 import { i18n } from '../../i18n';
+import { aggregatedYakuhai, windYaku } from '../../../helpers/yakuhai';
 import { YakuId, yakuMap } from '../../../helpers/yaku';
 import styles from './HandOfPlayer.module.css';
 import { Toggle } from '../Toggle/Toggle';
@@ -9,12 +10,34 @@ import { Player } from '../Player/Player';
 import { PopupMenu } from '../PopupMenu/PopupMenu';
 import { PopupMenuItem } from '../PopupMenu/PopupMenuItem';
 import clsx from 'classnames';
+import eastTile from '../../../assets/mahjong-tiles/Ton.svg';
+import southTile from '../../../assets/mahjong-tiles/Nan.svg';
+import westTile from '../../../assets/mahjong-tiles/Shaa.svg';
+import northTile from '../../../assets/mahjong-tiles/Pei.svg';
+import redDragonTile from '../../../assets/mahjong-tiles/Chun.svg';
+import greenDragonTile from '../../../assets/mahjong-tiles/Hatsu.svg';
+import whiteDragonTile from '../../../assets/mahjong-tiles/Haku.svg';
+
+const yakuhaiTiles: Partial<Record<YakuId, string>> = {
+  [YakuId.EAST_SEAT_WIND]: eastTile,
+  [YakuId.EAST_ROUND_WIND]: eastTile,
+  [YakuId.SOUTH_SEAT_WIND]: southTile,
+  [YakuId.SOUTH_ROUND_WIND]: southTile,
+  [YakuId.WEST_SEAT_WIND]: westTile,
+  [YakuId.WEST_ROUND_WIND]: westTile,
+  [YakuId.NORTH_SEAT_WIND]: northTile,
+  [YakuId.NORTH_ROUND_WIND]: northTile,
+  [YakuId.RED_DRAGON]: redDragonTile,
+  [YakuId.GREEN_DRAGON]: greenDragonTile,
+  [YakuId.WHITE_DRAGON]: whiteDragonTile,
+};
 
 export type IProps = {
   playerId: number;
   yaku: YakuId[];
   selectedYaku: YakuId[];
   disabledYaku: YakuId[];
+  doubleWindYaku?: YakuId;
   onYakuClick: (yaku: YakuId, playerId: number) => void;
   isYakuman: boolean;
   yakuHan: number;
@@ -37,6 +60,61 @@ export const HandOfPlayer = (props: IProps) => {
   const [topShadowDisabled, setTopShadowDisabled] = useState(true);
   const [bottomShadowDisabled, setBottomShadowDisabled] = useState(false);
 
+  const yakuhaiButtons = [
+    ...windYaku.flat(),
+    YakuId.RED_DRAGON,
+    YakuId.WHITE_DRAGON,
+    YakuId.GREEN_DRAGON,
+    ...aggregatedYakuhai,
+  ].filter((y) => props.yaku.includes(y));
+  const renderYakuButton = (y: YakuId) => {
+    const isYakuhai = yakuhaiButtons.includes(y);
+    const label = windYaku.some((pair) => pair.includes(y))
+      ? yakuMap[y].shortName(loc)
+      : yakuMap[y].name(loc);
+    return (
+      <Toggle
+        style={{
+          flex: 1,
+          minWidth: isYakuhai ? 0 : undefined,
+          position: isYakuhai ? 'relative' : undefined,
+          padding: isYakuhai ? '6px 2px' : undefined,
+          fontSize: isYakuhai && !yakuhaiTiles[y] ? 'var(--font-sm)' : undefined,
+          whiteSpace: 'nowrap',
+          marginBottom: y === YakuId.__OPENHAND ? '10px' : undefined,
+        }}
+        key={y}
+        disabled={props.disabledYaku.includes(y)}
+        selected={props.selectedYaku.includes(y)}
+        size={y === YakuId.__OPENHAND ? 'fullwidth' : 'lg'}
+        onChange={() => props.onYakuClick(y, props.playerId)}
+        testId={`tyr-hand-player-${props.playerId}-yaku-${y}`}
+      >
+        {yakuhaiTiles[y] ? (
+          <span className={styles.yakuhaiTileWrapper}>
+            <img
+              className={styles.yakuhaiTile}
+              src={yakuhaiTiles[y]}
+              alt={label}
+              title={label}
+              draggable={false}
+            />
+            {props.doubleWindYaku === y && (
+              <span
+                className={styles.doubleWindBadge}
+                data-testid={`tyr-hand-player-${props.playerId}-yaku-${y}-double-wind`}
+              >
+                x2
+              </span>
+            )}
+          </span>
+        ) : (
+          label
+        )}
+      </Toggle>
+    );
+  };
+
   const onScroll = (e: UIEvent<HTMLDivElement>) => {
     setTopShadowDisabled(e.currentTarget.scrollTop < 4);
     setBottomShadowDisabled(
@@ -50,23 +128,21 @@ export const HandOfPlayer = (props: IProps) => {
     <div className={styles.wrapper} data-testid={`tyr-hand-player-${props.playerId}`}>
       <div className={clsx(styles.beforeYaku, topShadowDisabled ? styles.noShadow : null)}></div>
       <div className={styles.yakuList} onScroll={onScroll}>
-        {props.yaku.map((y, idx) => (
-          <Toggle
-            style={{
-              flex: 1,
-              whiteSpace: 'nowrap',
-              marginBottom: y === YakuId.__OPENHAND ? '10px' : undefined,
-            }}
-            key={`yaku_${idx}`}
-            disabled={props.disabledYaku.includes(y)}
-            selected={props.selectedYaku.includes(y)}
-            size={y === YakuId.__OPENHAND ? 'fullwidth' : 'lg'}
-            onChange={() => props.onYakuClick(y, props.playerId)}
-            testId={`tyr-hand-player-${props.playerId}-yaku-${y}`}
+        {props.yaku.filter((y) => y === YakuId.__OPENHAND).map(renderYakuButton)}
+        {yakuhaiButtons.length > 0 && (
+          <div
+            className={styles.yakuhaiGroup}
+            role='group'
+            aria-label={loc._t('Yakuhai')}
+            data-testid={`tyr-hand-player-${props.playerId}-yakuhai`}
+            key='yakuhai'
           >
-            {yakuMap[y].name(loc)}
-          </Toggle>
-        ))}
+            <div className={styles.yakuhaiRow}>{yakuhaiButtons.map(renderYakuButton)}</div>
+          </div>
+        )}
+        {props.yaku
+          .filter((y) => y !== YakuId.__OPENHAND && !yakuhaiButtons.includes(y))
+          .map(renderYakuButton)}
       </div>
       <div
         className={clsx(

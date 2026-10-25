@@ -37,6 +37,7 @@ export const enum Yaku {
   CHUURENPOUTO = 29,
   SHOSANGEN = 18,
   SHOSUUSHII = 20,
+  // Aggregated yakuhai IDs; used by aggregated mode and historical hands.
   YAKUHAI1 = 13,
   YAKUHAI2 = 14,
   YAKUHAI3 = 15,
@@ -45,6 +46,17 @@ export const enum Yaku {
   SUUANKOUTANKI = 45,
   CHUURENPOUTOPURE = 46,
   KOKUSHIMUSOU13 = 47,
+  EAST_SEAT_WIND = 48,
+  EAST_ROUND_WIND = 49,
+  SOUTH_SEAT_WIND = 50,
+  SOUTH_ROUND_WIND = 51,
+  WEST_SEAT_WIND = 52,
+  WEST_ROUND_WIND = 53,
+  NORTH_SEAT_WIND = 54,
+  NORTH_ROUND_WIND = 55,
+  RED_DRAGON = 56,
+  GREEN_DRAGON = 57,
+  WHITE_DRAGON = 58,
 }
 
 export const allYakuList = [
@@ -94,6 +106,17 @@ export const allYakuList = [
   Yaku.SUUANKOUTANKI,
   Yaku.CHUURENPOUTOPURE,
   Yaku.KOKUSHIMUSOU13,
+  Yaku.EAST_SEAT_WIND,
+  Yaku.EAST_ROUND_WIND,
+  Yaku.SOUTH_SEAT_WIND,
+  Yaku.SOUTH_ROUND_WIND,
+  Yaku.WEST_SEAT_WIND,
+  Yaku.WEST_ROUND_WIND,
+  Yaku.NORTH_SEAT_WIND,
+  Yaku.NORTH_ROUND_WIND,
+  Yaku.RED_DRAGON,
+  Yaku.GREEN_DRAGON,
+  Yaku.WHITE_DRAGON,
 ];
 
 export function yakuListExcept(yaku: Yaku[]) {
@@ -111,17 +134,17 @@ const tenhouIdMap = new Map([
   [7, Yaku.PINFU],
   [8, Yaku.TANYAO],
   [9, Yaku.IIPEIKOU],
-  // [10, 13], // yakuhai place wind ton
-  // [11, 13], // yakuhai place wind nan
-  // [12, 13], // yakuhai place wind sha
-  // [13, 13], // yakuhai place wind pei
-  // [14, 13], // yakuhai round wind ton
-  // [15, 13], // yakuhai round wind nan
-  // [16, 13], // yakuhai round wind sha
-  // [17, 13], // yakuhai round wind pei
-  // [18, 13], // yakuhai haku
-  // [19, 13], // yakuhai hatsu
-  // [20, 13], // yakuhai chun
+  [10, Yaku.EAST_SEAT_WIND],
+  [11, Yaku.SOUTH_SEAT_WIND],
+  [12, Yaku.WEST_SEAT_WIND],
+  [13, Yaku.NORTH_SEAT_WIND],
+  [14, Yaku.EAST_ROUND_WIND],
+  [15, Yaku.SOUTH_ROUND_WIND],
+  [16, Yaku.WEST_ROUND_WIND],
+  [17, Yaku.NORTH_ROUND_WIND],
+  [18, Yaku.WHITE_DRAGON],
+  [19, Yaku.GREEN_DRAGON],
+  [20, Yaku.RED_DRAGON],
   [21, Yaku.DOUBLERIICHI],
   [22, Yaku.CHIITOITSU],
   [23, Yaku.CHANTA],
@@ -158,20 +181,14 @@ const tenhouIdMap = new Map([
   // [54, -1], // akadora
 ]);
 
-const yakuhaiCountMap = new Map([
-  [1, Yaku.YAKUHAI1],
-  [2, Yaku.YAKUHAI2],
-  [3, Yaku.YAKUHAI3],
-  [4, Yaku.YAKUHAI4],
-]);
-
 /**
  * @param yakuList string|string[] csv: 'yaku,han,yaku2,han...'
  * @param yakumanList string|string[] csv: 'yakuman,yakuman2...'
  */
 export function fromTenhou(
   yakuList: string | string[],
-  yakumanList: string | string[]
+  yakumanList: string | string[],
+  useAggregatedYakuhai = false
 ): {
   yaku: Yaku[];
   dora: number;
@@ -188,7 +205,6 @@ export function fromTenhou(
     han: 0,
     yakuman: 0,
   };
-  let yakuhaiCount = 0;
 
   for (let i = 0; i < yListArr.length; i += 2) {
     const key = parseInt(yListArr[i], 10);
@@ -196,17 +212,10 @@ export function fromTenhou(
     if (key >= 52 && key <= 54) {
       result.dora += value;
       result.han += value;
-    } else if (key >= 10 && key <= 20) {
-      yakuhaiCount++;
     } else if (tenhouIdMap.has(key)) {
       result.yaku.push(tenhouIdMap.get(key)!);
       result.han += value;
     }
-  }
-
-  if (yakuhaiCount > 0 && yakuhaiCountMap.has(yakuhaiCount)) {
-    result.yaku.push(yakuhaiCountMap.get(yakuhaiCount)!);
-    result.han += yakuhaiCount;
   }
 
   for (const yman of ymanListArr) {
@@ -219,6 +228,17 @@ export function fromTenhou(
 
   if (result.yakuman > 0) {
     result.han = -result.yakuman;
+  }
+
+  if (useAggregatedYakuhai) {
+    const isIndividualYakuhai = (id: Yaku) => id >= Yaku.EAST_SEAT_WIND && id <= Yaku.WHITE_DRAGON;
+    const count = result.yaku.filter(isIndividualYakuhai).length;
+    const aggregated = [Yaku.YAKUHAI1, Yaku.YAKUHAI2, Yaku.YAKUHAI3, Yaku.YAKUHAI4];
+    if (count > 0 && count <= aggregated.length) {
+      result.yaku = result.yaku
+        .filter((id) => !isIndividualYakuhai(id))
+        .concat(aggregated[count - 1]);
+    }
   }
 
   return result;

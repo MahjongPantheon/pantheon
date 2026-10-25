@@ -588,6 +588,10 @@ export interface RulesetConfig {
   chomboEndsGame: boolean;
   honbaValue: number;
   doubleYakuman: number[];
+  /**
+   * False uses separate wind and dragon yaku for new events.
+   */
+  useAggregatedYakuhai: boolean;
 }
 
 export interface MajsoulSearchEx {
@@ -7060,6 +7064,7 @@ export const RulesetConfig = {
       chomboEndsGame: false,
       honbaValue: 0,
       doubleYakuman: [],
+      useAggregatedYakuhai: false,
       ...msg,
     };
   },
@@ -7190,6 +7195,9 @@ export const RulesetConfig = {
     }
     if (msg.doubleYakuman?.length) {
       writer.writePackedInt32(40, msg.doubleYakuman);
+    }
+    if (msg.useAggregatedYakuhai) {
+      writer.writeBool(41, msg.useAggregatedYakuhai);
     }
     return writer;
   },
@@ -7374,6 +7382,10 @@ export const RulesetConfig = {
           } else {
             msg.doubleYakuman.push(reader.readInt32());
           }
+          break;
+        }
+        case 41: {
+          msg.useAggregatedYakuhai = reader.readBool();
           break;
         }
         default: {
@@ -13406,6 +13418,7 @@ export const RulesetConfigJSON = {
       chomboEndsGame: false,
       honbaValue: 0,
       doubleYakuman: [],
+      useAggregatedYakuhai: false,
       ...msg,
     };
   },
@@ -13542,6 +13555,9 @@ export const RulesetConfigJSON = {
     }
     if (msg.doubleYakuman?.length) {
       json["doubleYakuman"] = msg.doubleYakuman;
+    }
+    if (msg.useAggregatedYakuhai) {
+      json["useAggregatedYakuhai"] = msg.useAggregatedYakuhai;
     }
     return json;
   },
@@ -13731,6 +13747,11 @@ export const RulesetConfigJSON = {
     const _doubleYakuman_ = json["doubleYakuman"] ?? json["double_yakuman"];
     if (_doubleYakuman_) {
       msg.doubleYakuman = _doubleYakuman_.map(protoscript.parseNumber);
+    }
+    const _useAggregatedYakuhai_ =
+      json["useAggregatedYakuhai"] ?? json["use_aggregated_yakuhai"];
+    if (_useAggregatedYakuhai_) {
+      msg.useAggregatedYakuhai = _useAggregatedYakuhai_;
     }
     return msg;
   },

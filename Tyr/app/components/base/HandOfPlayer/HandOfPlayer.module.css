@@ -16,6 +16,43 @@
   scrollbar-width: none;
 }
 
+.yakuhaiGroup {
+  flex-basis: 100%;
+  min-width: 0;
+  margin: 6px 0;
+}
+
+.yakuhaiRow {
+  display: flex;
+  gap: 4px;
+}
+
+.yakuhaiTile {
+  display: block;
+  width: 30px;
+  height: 40px;
+  object-fit: contain;
+  background: url('../../../assets/mahjong-tiles/Front.svg') center / contain no-repeat;
+}
+
+.yakuhaiTileWrapper {
+  display: block;
+}
+
+.doubleWindBadge {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  padding: 0 3px;
+  border: 1px solid var(--element-bg);
+  border-radius: 6px;
+  background: var(--color-action);
+  color: var(--color-text-contrast);
+  font-size: 10px;
+  line-height: 14px;
+  font-weight: 600;
+}
+
 .beforeYaku {
   position: absolute;
   top: 0;

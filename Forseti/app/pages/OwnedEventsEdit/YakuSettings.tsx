@@ -18,7 +18,14 @@
 import { I18nService } from '../../services/i18n';
 import * as React from 'react';
 import { Checkbox, SimpleGrid, Stack, Title } from '@mantine/core';
-import { yakuList, yakuWithPao, doubleYakuman } from '../../helpers/yaku';
+import {
+  yakuList,
+  yakuWithPao,
+  doubleYakuman,
+  aggregatedYakuhai,
+  separateYakuhai,
+  windYaku,
+} from '../../helpers/yaku';
 import { FormHandle } from './types';
 
 type YakuSettingsProps = {
@@ -43,6 +50,14 @@ export const YakuSettings: React.FC<YakuSettingsProps> = ({ form, i18n }) => {
         data-testid='forseti-event-settings-yaku-settings-ruleset-with-multi-yakumans'
         {...form.getInputProps('ruleset.withMultiYakumans', { type: 'checkbox' })}
       />
+      <Checkbox
+        label={i18n._t('Enable aggregated yakuhai')}
+        description={i18n._t(
+          'When disabled, use separate yakuhai names like "East" and "White dragon" instead of aggregated names like "Yakuhai x3".'
+        )}
+        data-testid='forseti-event-settings-yakuhai-aggregated'
+        {...form.getInputProps('ruleset.useAggregatedYakuhai', { type: 'checkbox' })}
+      />
       <Title order={4}>{i18n._t('Yaku allowed')}</Title>
       <SimpleGrid
         spacing='lg'
@@ -52,14 +67,48 @@ export const YakuSettings: React.FC<YakuSettingsProps> = ({ form, i18n }) => {
           { maxWidth: '36rem', cols: 1 },
         ]}
       >
-        {yakuList.map((y, idx) => (
-          <Checkbox
-            data-testid={`forseti-event-settings-yaku-allowed-${y.id}`}
-            key={`yaku_${idx}`}
-            label={y.name(i18n)}
-            {...form.getInputProps(`ruleset.allowedYaku.${y.id}`, { type: 'checkbox' })}
-          />
-        ))}
+        {yakuList
+          .filter(({ id }) =>
+            form.values.ruleset.useAggregatedYakuhai
+              ? !separateYakuhai.includes(id)
+              : !aggregatedYakuhai.includes(id)
+          )
+          .filter(({ id }) => !windYaku.some((wind) => wind.round === id))
+          .map((y) => {
+            const wind = windYaku.find((candidate) => candidate.seat === y.id);
+            if (wind) {
+              const seatEnabled = !!form.values.ruleset.allowedYaku[wind.seat];
+              const roundEnabled = !!form.values.ruleset.allowedYaku[wind.round];
+              return (
+                <Checkbox
+                  data-testid={`forseti-event-settings-yaku-allowed-${wind.seat}`}
+                  key={wind.seat}
+                  label={wind.name(i18n)}
+                  checked={seatEnabled && roundEnabled}
+                  indeterminate={seatEnabled !== roundEnabled}
+                  aria-checked={
+                    seatEnabled !== roundEnabled ? 'mixed' : seatEnabled && roundEnabled
+                  }
+                  onChange={(event) => {
+                    const enabled = event.currentTarget.checked;
+                    form.setFieldValue('ruleset.allowedYaku', {
+                      ...form.values.ruleset.allowedYaku,
+                      [wind.seat]: enabled,
+                      [wind.round]: enabled,
+                    });
+                  }}
+                />
+              );
+            }
+            return (
+              <Checkbox
+                data-testid={`forseti-event-settings-yaku-allowed-${y.id}`}
+                key={y.id}
+                label={y.name(i18n)}
+                {...form.getInputProps(`ruleset.allowedYaku.${y.id}`, { type: 'checkbox' })}
+              />
+            );
+          })}
       </SimpleGrid>
       <Title order={4}>{i18n._t('Pao rule enabled for:')}</Title>
       <SimpleGrid

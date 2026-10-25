@@ -22,6 +22,9 @@ import { getBestDealer } from './bestDealer.js';
 import { calcRiichiStat } from './helpers/getRiichiStat.js';
 import { getMaxStolenRiichiBetsCount } from './maxStolenRiichiBetsCount.js';
 import { getMinLostRiichiBetsCount } from './minLostRiichiBetsCount.js';
+import { getDovakin } from './dovakin.js';
+import { getCatchThemAll } from './catchThemAll.js';
+import { Yaku } from '../../helpers/yaku.js';
 import { getHonoredDonor } from './honoredDonor.js';
 import { init } from '../../tests/initOrm.js';
 import { makePlayer } from '../../tests/playerFixtures.js';
@@ -73,6 +76,32 @@ describe('Achievement calculations', () => {
     jest.useRealTimers();
   });
   afterAll(() => repo.destroy());
+
+  it('counts individual yakuhai for Dovakin and as distinct Catch Them All yaku', async () => {
+    const { event, session } = fixture();
+    const hands = [
+      round(session, RoundOutcome.ROUND_OUTCOME_RON, [1]),
+      round(session, RoundOutcome.ROUND_OUTCOME_TSUMO, [2]),
+    ];
+    hands[0].hands[0].yaku = [
+      Yaku.EAST_SEAT_WIND,
+      Yaku.EAST_ROUND_WIND,
+      Yaku.RED_DRAGON,
+      Yaku.GREEN_DRAGON,
+      Yaku.WHITE_DRAGON,
+      Yaku.SOUTH_SEAT_WIND,
+      Yaku.SOUTH_ROUND_WIND,
+      Yaku.WEST_SEAT_WIND,
+      Yaku.WEST_ROUND_WIND,
+      Yaku.NORTH_SEAT_WIND,
+      Yaku.NORTH_ROUND_WIND,
+    ];
+    hands[1].hands[0].yaku = [Yaku.YAKUHAI4, Yaku.YAKUHAI2];
+    jest.spyOn(sessionModel, 'findByEventAndStatus').mockResolvedValue([session]);
+    jest.spyOn(roundModel, 'findBySessionIds').mockResolvedValue(hands);
+    await expect(getDovakin(event, repo)).resolves.toEqual({ count: 11, playerIds: [1] });
+    await expect(getCatchThemAll(event, repo)).resolves.toEqual({ count: 11, playerIds: [1] });
+  });
 
   it('selects tied maximum tsumo counts within a single session rather than event totals', async () => {
     const { event, session: first } = fixture();
