@@ -15,6 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import './pwa';
 import * as React from 'react';
 import { createRoot } from 'react-dom/client';
 import { App } from './App';

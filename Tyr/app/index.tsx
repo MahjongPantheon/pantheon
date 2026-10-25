@@ -15,6 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import './pwa';
 import * as React from 'react';
 import { createRoot } from 'react-dom/client';
 import { App } from './components/App';
@@ -25,10 +26,7 @@ import { registerFrontErrorHandler } from './helpers/logFrontError';
 import { Storage } from '../../Common/storage';
 import { StorageStrategyClient } from '../../Common/storageStrategyClient';
 import { env } from './helpers/env';
-import { registerSW } from 'virtual:pwa-register';
 import './index.css';
-
-registerSW({ immediate: true });
 
 const storageStrategy = new StorageStrategyClient(env.cookieDomain);
 const storage = new Storage();

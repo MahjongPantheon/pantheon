@@ -60,6 +60,17 @@ if `VITE_*` variables have been changed, you should also run `make prod_compile`
 
 Please note that db and pgadmin containers are not restarted during `make prod_restart`. To stop these containers as well, use `make prod_stop_all`. This is rarely needed, though.
 
+#### Frontend PWA updates
+
+Tyr, Forseti, and Sigrun check for a new service worker on startup, when returning
+to a visible tab, when reconnecting, and every five minutes while visible and
+online. After the new worker has installed its precached assets, the PWA client
+reloads the page automatically. Unsaved form input can be lost on this reload.
+Failed checks leave the current version running and retry on the next check.
+
+This takes effect after a browser has loaded the updated client code. An already
+broken installation may still need a manual reload or its site cache cleared once.
+
 #### Updating container Node.js
 
 The application containers inherit Node.js from `Common/ContainerBase`. Its version and official SHA-256 checksums are pinned together in `Common/ContainerBase/node-release.env`; update that file when applying a Node.js security release. The Alpine base downloads the official musl binary for AMD64 and compiles the official source archive against musl for ARM64 in a separate build stage. npm comes with Node.js and pnpm 10 is installed through npm, so the shared base does not depend on Alpine's Node.js packages. Fenrir has a separate image and runtime.
