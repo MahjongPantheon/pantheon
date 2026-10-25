@@ -73,9 +73,9 @@ broken installation may still need a manual reload or its site cache cleared onc
 
 #### Updating container Node.js
 
-The application containers inherit Node.js from `Common/ContainerBase`. Its version and official SHA-256 checksums are pinned together in `Common/ContainerBase/node-release.env`; update that file when applying a Node.js security release. The Alpine base downloads the official musl binary for AMD64 and compiles the official source archive against musl for ARM64 in a separate build stage. npm comes with Node.js and pnpm 10 is installed through npm, so the shared base does not depend on Alpine's Node.js packages. Fenrir has a separate image and runtime.
+The application containers inherit Node.js and npm from Alpine's `nodejs` and `npm` packages in `Common/ContainerBase`. Both AMD64 and ARM64 use Alpine's prebuilt packages. pnpm 10 is installed through npm. Node.js updates follow the selected Alpine branch; update the Alpine base tag when moving to a newer branch. Fenrir has a separate image and runtime.
 
-Run `make container_base` to rebuild the shared base (the first ARM64 source build takes time; parallelism defaults to two jobs). Rebuild and recreate the application containers to apply it. The AMD64 and ARM64 registry workflows rebuild the shared base and application images when the shared release configuration changes. Existing running containers retain their previous runtime until recreated.
+Run `make container_base` to rebuild the shared base, or `make container` to rebuild it along with the dependent service images and recreate their containers. The AMD64 and ARM64 registry workflows rebuild the shared base and application images when its Dockerfile changes. Existing running containers retain their previous runtime until recreated.
 
 #### Email agent
 

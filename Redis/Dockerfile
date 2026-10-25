@@ -1,4 +1,4 @@
-FROM alpine:3.22.0
+FROM alpine:3.24.3
 
 RUN apk add --no-cache redis su-exec tzdata
 ENV TIMEZONE=Europe/Berlin

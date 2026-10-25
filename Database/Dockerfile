@@ -1,4 +1,4 @@
-FROM alpine:3.22.0
+FROM alpine:3.24.3
 
 # PostgreSQL runtime plus initialization, compression and remote-backup tools.
 RUN apk add --no-cache bash ca-certificates curl git make openssh postgresql16 su-exec tzdata zstd

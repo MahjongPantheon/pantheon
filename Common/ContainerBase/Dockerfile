@@ -1,17 +1,4 @@
-FROM alpine:3.22.0 AS node-build
-
-# Official musl binary on AMD64; compile the official source on ARM64.
-ARG NODE_BUILD_JOBS=2
-RUN apk add --no-cache libstdc++ libgcc curl ca-certificates xz && \
-  if [ "$(uname -m)" = aarch64 ]; then \
-    apk add --no-cache build-base linux-headers python3; \
-  fi
-COPY install-node.sh node-release.env /tmp/node-install/
-RUN sh /tmp/node-install/install-node.sh
-
-FROM alpine:3.22.0
-
-COPY --from=node-build /usr/local/ /usr/local/
+FROM alpine:3.24.3
 
 ENV TIMEZONE=Europe/Berlin
 ENV LANG=en_US.utf8
@@ -35,6 +22,8 @@ RUN apk update && \
     git \
     icu-data-full \
     nginx \
+    nodejs \
+    npm \
     libstdc++ \
     libgcc \
     ca-certificates \
@@ -42,7 +31,7 @@ RUN apk update && \
     protoc && \
     (rm "/tmp/"* 2>/dev/null || true) && (rm -rf /var/cache/apk/* 2>/dev/null || true)
 
-RUN node --version && npm install -g pnpm@10 i18n-stex i18n-po-json i18n-json-po && pnpm --version && chown -R root:root /usr/local/lib/node_modules/
+RUN node --version && npm install -g pnpm@10 i18n-stex i18n-po-json i18n-json-po && pnpm --version && chown -R root:root "$(npm root -g)"
 
 # ------------ Local user init (for make & build tasks) --------
 # Create user (workaround against too big uids)
