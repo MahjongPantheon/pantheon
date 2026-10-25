@@ -132,9 +132,6 @@ importers:
       oxlint-tsgolint:
         specifier: ^7.0.2001
         version: 7.0.2001
-      prettier:
-        specifier: ^3.5.3
-        version: 3.5.3
       ts-jest:
         specifier: ^29.2.5
         version: 29.4.0(@babel/core@7.29.7)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.29.7))(esbuild@0.28.1)(jest-util@29.7.0)(jest@29.7.0(@types/node@22.15.32)(babel-plugin-macros@3.1.0))(typescript@7.0.2)
@@ -2991,16 +2988,16 @@ packages:
     engines: {node: '>=10.17.0'}
 
   i18n-dialect@https://codeload.github.com/ctizen/i18n-dialect/tar.gz/392cc08f9937aa8bfdbe5e45a7327954d5dcb01e:
-    resolution: {tarball: https://codeload.github.com/ctizen/i18n-dialect/tar.gz/392cc08f9937aa8bfdbe5e45a7327954d5dcb01e}
+    resolution: {gitHosted: true, tarball: https://codeload.github.com/ctizen/i18n-dialect/tar.gz/392cc08f9937aa8bfdbe5e45a7327954d5dcb01e}
     version: 2.0.2
 
   i18n-json-po@https://codeload.github.com/ctizen/i18n-json-po/tar.gz/bdef8fefd3b939ea067e85ee520161d27d6afafd:
-    resolution: {tarball: https://codeload.github.com/ctizen/i18n-json-po/tar.gz/bdef8fefd3b939ea067e85ee520161d27d6afafd}
+    resolution: {gitHosted: true, tarball: https://codeload.github.com/ctizen/i18n-json-po/tar.gz/bdef8fefd3b939ea067e85ee520161d27d6afafd}
     version: 2.0.3
     hasBin: true
 
   i18n-po-json@https://codeload.github.com/ctizen/i18n-po-json/tar.gz/1fd6515e682ae38db21e71447669c1148cdec9b5:
-    resolution: {tarball: https://codeload.github.com/ctizen/i18n-po-json/tar.gz/1fd6515e682ae38db21e71447669c1148cdec9b5}
+    resolution: {gitHosted: true, tarball: https://codeload.github.com/ctizen/i18n-po-json/tar.gz/1fd6515e682ae38db21e71447669c1148cdec9b5}
     version: 2.0.8
     hasBin: true
 
@@ -3008,7 +3005,7 @@ packages:
     resolution: {integrity: sha512-GTfRkYXsLKH0geFb4JRP/KBFXN6YM6PpXkpuG2lEWrwAF6bGLaDSJfh/kwc3vqtIqEmvnQ+7fL6cgIcupKtROA==}
 
   i18n-stex@https://codeload.github.com/ctizen/stex/tar.gz/0b763d09939daef502510d78edccb94e4056f918:
-    resolution: {tarball: https://codeload.github.com/ctizen/stex/tar.gz/0b763d09939daef502510d78edccb94e4056f918}
+    resolution: {gitHosted: true, tarball: https://codeload.github.com/ctizen/stex/tar.gz/0b763d09939daef502510d78edccb94e4056f918}
     version: 2.1.2
     hasBin: true
 
