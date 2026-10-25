@@ -16,20 +16,20 @@ function run(command, args) {
 rmSync('coverage', { recursive: true, force: true });
 const testStatus = run('pnpm', [
   'exec',
-  'jest',
-  '--runInBand',
+  'vitest',
+  'run',
   '--coverage',
-  '--coverageProvider=v8',
-  '--coverageReporters=json',
-  '--coverageDirectory=coverage/jest',
+  '--coverage.provider=v8',
+  '--coverage.reporter=json',
+  '--coverage.reportsDirectory=coverage/vitest',
 ]);
 
-// Produce coverage even when assertions fail, while preserving Jest's exit status.
+// Produce coverage even when assertions fail, while preserving Vitest's exit status.
 const serverStatus = run('pnpm', [
   'exec',
   'c8',
   'report',
-  '--temp-directory=coverage/jest/server-v8',
+  '--temp-directory=coverage/vitest/server-v8',
   '--reports-dir=coverage/server',
   '--reporter=json',
   '--include=app/**',
@@ -45,7 +45,7 @@ if (Object.keys(serverCoverage).length === 0) {
 }
 
 mkdirSync('coverage/combined-input', { recursive: true });
-copyFileSync('coverage/jest/coverage-final.json', 'coverage/combined-input/jest.json');
+copyFileSync('coverage/vitest/coverage-final.json', 'coverage/combined-input/vitest.json');
 copyFileSync('coverage/server/coverage-final.json', 'coverage/combined-input/server.json');
 const reportStatus = run('pnpm', [
   'exec',

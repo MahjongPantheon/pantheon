@@ -11,7 +11,7 @@ describe('Registration process', () => {
 
   it('should request registration', async () => {
     const email = makeUniqueEmail();
-    return expect(() =>
+    return expect(
       frey.RequestRegistration({
         email,
         password: 'testpass123!!',
@@ -30,7 +30,7 @@ describe('Registration process', () => {
       title: 'Test user',
     });
 
-    return expect(() => frey.ApproveRegistration({ approvalCode })).resolves.toMatchObject({
+    return expect(frey.ApproveRegistration({ approvalCode })).resolves.toMatchObject({
       personId: expect.anything(),
     });
   });
@@ -38,7 +38,7 @@ describe('Registration process', () => {
   it('should not request registration for existing email', async () => {
     const email = makeUniqueEmail();
     await createUser(frey, email);
-    return expect(() =>
+    return expect(
       frey.RequestRegistration({
         email,
         password: 'testpass123!!',
@@ -49,7 +49,7 @@ describe('Registration process', () => {
 
   it('should fail to request registration for malformed email', async () => {
     const email = makeUniqueEmail();
-    return expect(() =>
+    return expect(
       frey.RequestRegistration({
         email,
         password: 'testpass',
@@ -59,7 +59,7 @@ describe('Registration process', () => {
   });
 
   it('should fail to request registration for weak password', async () => {
-    return expect(() =>
+    return expect(
       frey.RequestRegistration({
         email: '123123',
         password: 'testpass',
@@ -71,7 +71,7 @@ describe('Registration process', () => {
   it('should change password', async () => {
     const email = makeUniqueEmail();
     await createUser(frey, email);
-    return expect(() =>
+    return expect(
       frey.ChangePassword({
         email,
         password: '123456',
@@ -83,7 +83,7 @@ describe('Registration process', () => {
   it('should not change password if original password is incorrect', async () => {
     const email = makeUniqueEmail();
     await createUser(frey, email);
-    return expect(() =>
+    return expect(
       frey.ChangePassword({
         email,
         password: 'incorrect',
@@ -95,7 +95,7 @@ describe('Registration process', () => {
   it('should not change password if new password is too weak', async () => {
     const email = makeUniqueEmail();
     await createUser(frey, email);
-    return expect(() =>
+    return expect(
       frey.ChangePassword({
         email,
         password: '123456',
@@ -106,7 +106,7 @@ describe('Registration process', () => {
 
   it('should not change password for non-existing user', async () => {
     const email = makeUniqueEmail();
-    return expect(() =>
+    return expect(
       frey.ChangePassword({
         email,
         password: '123456',

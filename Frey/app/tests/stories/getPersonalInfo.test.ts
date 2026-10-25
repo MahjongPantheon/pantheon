@@ -7,7 +7,7 @@ describe('Get personal data', () => {
   it('should get personal data by regular user', async () => {
     const email = makeUniqueEmail();
     const authData = await createUser(frey, email);
-    return expect(() =>
+    return expect(
       frey.GetPersonalInfo(
         { ids: [authData.personId] },
         {
@@ -36,7 +36,7 @@ describe('Get personal data', () => {
   it('should get empty data by regular user for non-existing user', async () => {
     const email = makeUniqueEmail();
     const authData = await createUser(frey, email);
-    return expect(() =>
+    return expect(
       frey.GetPersonalInfo(
         { ids: [100500] },
         {
@@ -55,7 +55,7 @@ describe('Get personal data', () => {
     const adminCreds = await getAdminCreds();
     const email = makeUniqueEmail();
     const authData = await createUser(frey, email);
-    return expect(() =>
+    return expect(
       frey.GetPersonalInfo(
         { ids: [authData.personId] },
         {
@@ -85,7 +85,7 @@ describe('Get personal data', () => {
     const email = makeUniqueEmail();
     const authData = await createUser(frey, email);
     const adminCreds = await getAdminCreds();
-    return expect(() =>
+    return expect(
       frey.GetPersonalInfo(
         { ids: [authData.personId] },
         {

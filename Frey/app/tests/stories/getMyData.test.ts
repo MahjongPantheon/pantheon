@@ -7,7 +7,7 @@ describe('Get my data', () => {
   it('should get own data', async () => {
     const email = makeUniqueEmail();
     const authData = await createUser(frey, email);
-    return expect(() =>
+    return expect(
       frey.Me(
         { personId: authData.personId, authToken: authData.authToken },
         {
@@ -32,7 +32,7 @@ describe('Get my data', () => {
   it('should not get own data with wrong auth hash', async () => {
     const email = makeUniqueEmail();
     const authData2 = await createUser(frey, email);
-    return expect(() =>
+    return expect(
       frey.Me(
         {},
         {
@@ -48,7 +48,7 @@ describe('Get my data', () => {
   it('should not get data of non-existing user', async () => {
     const email = makeUniqueEmail();
     const authData = await createUser(frey, email);
-    return expect(() =>
+    return expect(
       frey.Me(
         {},
         {

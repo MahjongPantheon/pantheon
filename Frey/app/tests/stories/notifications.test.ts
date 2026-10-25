@@ -7,7 +7,7 @@ describe('Notifications', () => {
   it('should update own notifications settings', async () => {
     const email = makeUniqueEmail();
     const authData = await createUser(frey, email);
-    return expect(() =>
+    return expect(
       frey.SetNotificationsSettings(
         { personId: authData.personId, notifications: 'some_string', telegramId: 'some_id' },
         {
@@ -23,7 +23,7 @@ describe('Notifications', () => {
   it('should not update notifications settings of different user', async () => {
     const authData1 = await createUser(frey, makeUniqueEmail());
     const authData2 = await createUser(frey, makeUniqueEmail());
-    return expect(() =>
+    return expect(
       frey.SetNotificationsSettings(
         { personId: authData1.personId, notifications: 'some_string', telegramId: 'some_id' },
         {
@@ -39,7 +39,7 @@ describe('Notifications', () => {
   it('should update notifications settings of different user for superadmin', async () => {
     const adminCreds = await getAdminCreds();
     const authData = await createUser(frey, makeUniqueEmail());
-    return expect(() =>
+    return expect(
       frey.SetNotificationsSettings(
         { personId: authData.personId, notifications: 'some_string', telegramId: 'some_id' },
         {
@@ -54,7 +54,7 @@ describe('Notifications', () => {
 
   it('should not update notifications settings without authorization', async () => {
     const authData1 = await createUser(frey, makeUniqueEmail());
-    return expect(() =>
+    return expect(
       frey.SetNotificationsSettings({
         personId: authData1.personId,
         notifications: 'some_string',
@@ -65,7 +65,7 @@ describe('Notifications', () => {
 
   it('should not update notifications settings for non-existing user', async () => {
     const adminCreds = await getAdminCreds();
-    return expect(() =>
+    return expect(
       frey.SetNotificationsSettings(
         { personId: 100500, notifications: 'some_string', telegramId: 'some_id' },
         {
@@ -89,7 +89,7 @@ describe('Notifications', () => {
         },
       }
     );
-    return expect(() =>
+    return expect(
       frey.GetNotificationsSettings({ personId: authData.personId })
     ).resolves.toMatchObject({ notifications: 'some_string', telegramId: 'some_id' });
   });

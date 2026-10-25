@@ -6,7 +6,7 @@ describe('Superadmin flag', () => {
   it('should get superadmin flag of regular user', async () => {
     const email = makeUniqueEmail();
     const authData = await createUser(frey, email);
-    return expect(() =>
+    return expect(
       frey.GetSuperadminFlag({
         personId: authData.personId,
       })
@@ -14,7 +14,7 @@ describe('Superadmin flag', () => {
   });
 
   it('should not get superadmin flag of non-existing user', async () => {
-    return expect(() =>
+    return expect(
       frey.GetSuperadminFlag({
         personId: 100500,
       })
@@ -23,7 +23,7 @@ describe('Superadmin flag', () => {
 
   it('should get superadmin flag of superadmin user', async () => {
     const adminCreds = await getAdminCreds();
-    return expect(() =>
+    return expect(
       frey.GetSuperadminFlag({
         personId: adminCreds.id,
       })

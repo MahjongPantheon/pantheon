@@ -1,4 +1,4 @@
-import { jest } from '@jest/globals';
+import { vi } from 'vitest';
 import { readFileSync } from 'fs';
 import { join } from 'path';
 import { PlatformType } from 'tsclients/proto/atoms.pb.js';
@@ -34,13 +34,11 @@ function replay(name: string) {
 
 describe('Tenhou6 replay player order', () => {
   beforeEach(() => {
-    jest.spyOn(registrations, 'findByEventId').mockResolvedValue([]);
-    jest
-      .spyOn(registrations, 'fetchRegisteredPlayersByEvent')
-      .mockResolvedValue(ids.map(makePlayer));
-    jest
-      .spyOn(players, 'findById')
-      .mockImplementation(async (playerIds) => playerIds.map(makePlayer));
+    vi.spyOn(registrations, 'findByEventId').mockResolvedValue([]);
+    vi.spyOn(registrations, 'fetchRegisteredPlayersByEvent').mockResolvedValue(ids.map(makePlayer));
+    vi.spyOn(players, 'findById').mockImplementation(async (playerIds) =>
+      playerIds.map(makePlayer)
+    );
     // Reverse lookup insertion order and use numeric nicknames that objects enumerate in ascending order.
     const lookup = Object.fromEntries(
       [3, 2, 1, 0].map((seat) => [
@@ -51,10 +49,10 @@ describe('Tenhou6 replay player order', () => {
         },
       ])
     );
-    jest.spyOn(players, 'findByTenhouId').mockResolvedValue(lookup);
+    vi.spyOn(players, 'findByTenhouId').mockResolvedValue(lookup);
   });
   afterEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
     repo.em.clear();
   });
   afterAll(() => repo.destroy());
@@ -95,7 +93,7 @@ describe('Tenhou6 replay player order', () => {
         ];
       })
     );
-    jest.spyOn(players, 'findMajsoulAccounts').mockResolvedValue(lookup);
+    vi.spyOn(players, 'findMajsoulAccounts').mockResolvedValue(lookup);
 
     const [session, scores] = await new Tenhou6OnlineParser(repo).parseToSession(
       event,
@@ -111,16 +109,16 @@ describe('Tenhou6 replay player order', () => {
   });
 
   it('replaces a substitute without moving their replay slot', async () => {
-    jest.mocked(registrations.findByEventId).mockResolvedValue([
+    vi.mocked(registrations.findByEventId).mockResolvedValue([
       Object.assign(new EventRegisteredPlayersEntity(), {
         event,
         playerId: 909,
         replacementId: 101,
       }),
     ]);
-    jest
-      .mocked(registrations.fetchRegisteredPlayersByEvent)
-      .mockResolvedValue([303, 909, 404, 202].map(makePlayer));
+    vi.mocked(registrations.fetchRegisteredPlayersByEvent).mockResolvedValue(
+      [303, 909, 404, 202].map(makePlayer)
+    );
     const data = replay('usual');
     data.name = names;
 
@@ -137,7 +135,7 @@ describe('Tenhou6 replay player order', () => {
   });
 
   it('reports the missing replay nickname even when lookup returns another player', async () => {
-    jest.mocked(players.findByTenhouId).mockResolvedValue({
+    vi.mocked(players.findByTenhouId).mockResolvedValue({
       '30': makePlayer(303),
       '10': makePlayer(101),
       '40': makePlayer(404),

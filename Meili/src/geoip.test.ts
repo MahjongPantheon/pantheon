@@ -1,4 +1,4 @@
-import { beforeAll, describe, expect, it, jest } from '@jest/globals';
+import { beforeAll, describe, expect, it, vi } from 'vitest';
 import { createHash } from 'node:crypto';
 import { getData, loadLookup, type Lookup } from './geoip.js';
 
@@ -73,7 +73,7 @@ describe('GeoLite database compatibility', () => {
   });
 
   it('still lists choices when the database cannot be opened', async () => {
-    const log = jest.spyOn(console, 'error').mockImplementation(() => {});
+    const log = vi.spyOn(console, 'error').mockImplementation(() => {});
     try {
       const unavailable = await loadLookup('/nonexistent/meili/GeoLite2-City.mmdb');
       const data = getData('get_countries', '8.8.8.8', unavailable);

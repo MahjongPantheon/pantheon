@@ -8,7 +8,7 @@ describe('Depersonalize', () => {
   it('should depersonalize existing user', async () => {
     const email = makeUniqueEmail();
     const authData = await createUser(frey, email);
-    await expect(() =>
+    await expect(
       frey.DepersonalizeAccount(
         {},
         {
@@ -19,7 +19,7 @@ describe('Depersonalize', () => {
         }
       )
     ).resolves.toMatchObject({ success: true });
-    return expect(() => frey.GetPersonalInfo({ ids: [authData.personId] })).resolves.toMatchObject({
+    return expect(frey.GetPersonalInfo({ ids: [authData.personId] })).resolves.toMatchObject({
       people: [
         {
           city: '',
@@ -41,7 +41,7 @@ describe('Depersonalize', () => {
   it('should not depersonalize existing user with wrong hash', async () => {
     const email = makeUniqueEmail();
     const authData = await createUser(frey, email);
-    await expect(() =>
+    await expect(
       frey.DepersonalizeAccount(
         {},
         {
@@ -55,13 +55,13 @@ describe('Depersonalize', () => {
   });
 
   it('should not run depersonalize without authorization', async () => {
-    await expect(() => frey.DepersonalizeAccount({})).rejects.toEqual(
+    await expect(frey.DepersonalizeAccount({})).rejects.toEqual(
       new ActionNotAllowedError('Should be logged in to depersonalize')
     );
   });
 
   it('should not run depersonalize for non-existing-user', async () => {
-    await expect(() =>
+    await expect(
       frey.DepersonalizeAccount(
         {},
         {

@@ -1,4 +1,4 @@
-import { jest } from '@jest/globals';
+import { vi } from 'vitest';
 import {
   EventType,
   PlatformType,
@@ -47,7 +47,7 @@ describe('Event creation', () => {
   beforeAll(() => orm.schema.createSchema());
   afterAll(() => repo.destroy());
   afterEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
     repo.em.clear();
   });
 
@@ -138,24 +138,24 @@ describe('Event creation', () => {
     let savedEvent: EventEntity | undefined;
     let committed = false;
     let refreshed = false;
-    jest.spyOn(repo.em, 'persist').mockImplementation((entity) => {
+    vi.spyOn(repo.em, 'persist').mockImplementation((entity) => {
       savedEvent = entity as EventEntity;
       return repo.em;
     });
-    jest.spyOn(repo.em, 'transactional').mockImplementation(async (callback) => {
+    vi.spyOn(repo.em, 'transactional').mockImplementation(async (callback) => {
       const result = await callback(repo.em);
       savedEvent!.id = 123;
       committed = true;
       return result;
     });
-    jest.spyOn(repo.em, 'refresh').mockImplementation(async (entity) => {
+    vi.spyOn(repo.em, 'refresh').mockImplementation(async (entity) => {
       expect(committed).toBe(true);
       expect(entity).toBe(savedEvent);
       await Promise.resolve();
       refreshed = true;
       return entity;
     });
-    const grant = jest.spyOn(repo.frey, 'AddRuleForPerson').mockImplementation(async () => {
+    const grant = vi.spyOn(repo.frey, 'AddRuleForPerson').mockImplementation(async () => {
       expect(refreshed).toBe(true);
       return { ruleId: 7 };
     });
@@ -194,8 +194,8 @@ describe('Event creation', () => {
       type: EventType.EVENT_TYPE_TOURNAMENT,
     });
     const history = Model.getModel(repo, PlayerHistoryModel);
-    jest.spyOn(history, 'getHistoryItems').mockResolvedValue([]);
-    const personalInfo = jest
+    vi.spyOn(history, 'getHistoryItems').mockResolvedValue([]);
+    const personalInfo = vi
       .spyOn(repo.frey, 'GetPersonalInfo')
       .mockRejectedValue(new Error('Player IDs are required'));
 
@@ -206,7 +206,7 @@ describe('Event creation', () => {
   });
 
   it('returns an empty public feed without requesting players when no sessions are eligible', async () => {
-    const players = jest.spyOn(Model.getModel(repo, SessionModel), 'getPlayersOfGames');
+    const players = vi.spyOn(Model.getModel(repo, SessionModel), 'getPlayersOfGames');
     await expect(model.getRecentPublicGames()).resolves.toEqual({ games: [] });
     expect(players).not.toHaveBeenCalled();
   });
@@ -284,7 +284,7 @@ describe('Event creation', () => {
     );
     await repo.em.flush();
     repo.em.clear();
-    jest.spyOn(Model.getModel(repo, SessionModel), 'getPlayersOfGames').mockResolvedValue({
+    vi.spyOn(Model.getModel(repo, SessionModel), 'getPlayersOfGames').mockResolvedValue({
       players: new Map(
         sessions.map((session, index) => [
           session.id,
@@ -300,7 +300,7 @@ describe('Event creation', () => {
       ),
       replaceMap: new Map(),
     });
-    const rounds = jest.spyOn(Model.getModel(repo, RoundModel), 'findBySessionIds');
+    const rounds = vi.spyOn(Model.getModel(repo, RoundModel), 'findBySessionIds');
 
     const feed = await model.getRecentPublicGames();
     expect(feed.games.map((game) => game.sessionHash)).toEqual(['public-4', 'public-3']);
@@ -353,7 +353,7 @@ describe('Event creation', () => {
     repo.em.persist([...sessions, ...busyEventGames]);
     await repo.em.flush();
     repo.em.clear();
-    jest.spyOn(Model.getModel(repo, SessionModel), 'getPlayersOfGames').mockResolvedValue({
+    vi.spyOn(Model.getModel(repo, SessionModel), 'getPlayersOfGames').mockResolvedValue({
       players: new Map(),
       replaceMap: new Map(),
     });
@@ -370,9 +370,9 @@ describe('Event creation', () => {
   });
 
   it('does not grant rights when saving the event fails', async () => {
-    jest.spyOn(repo.em, 'transactional').mockRejectedValue(new Error('Save failed'));
-    const refresh = jest.spyOn(repo.em, 'refresh');
-    const grant = jest.spyOn(repo.frey, 'AddRuleForPerson');
+    vi.spyOn(repo.em, 'transactional').mockRejectedValue(new Error('Save failed'));
+    const refresh = vi.spyOn(repo.em, 'refresh');
+    const grant = vi.spyOn(repo.frey, 'AddRuleForPerson');
 
     await expect(model.createEvent(eventData)).rejects.toThrow('Save failed');
     expect(refresh).not.toHaveBeenCalled();

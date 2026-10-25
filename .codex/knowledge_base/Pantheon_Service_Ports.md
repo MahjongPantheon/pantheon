@@ -65,7 +65,7 @@ Standalone SSR launchers default to Sigrun 4102 and Bragi 4108 when `PORT` is ab
 | Mimir | 4201 | Development Node inspector; host-published at the same port | [Makefile](../../Mimir/Makefile), Compose |
 | Mimir | 4301 | HTTP test server; host-published at the same port. Also mentioned as an optional cron inspector, so these uses must not run together. | [Test server](../../Mimir/src/tests/testserver.ts), [Supervisor comment](../../Mimir/supervisord.conf), Compose |
 | Mimir | 4401 | Test-server Node inspector; host-published at the same port | [Makefile](../../Mimir/Makefile), Compose |
-| Mimir | 4501 | Optional Jest inspector in a commented Makefile command; host-published at the same port | [Makefile](../../Mimir/Makefile), Compose |
+| Mimir | 4501 | Optional Vitest inspector in a commented Makefile command; host-published at the same port | [Makefile](../../Mimir/Makefile), Compose |
 | Frey | 4204 | Development Node inspector; host-published at the same port | [Makefile](../../Frey/Makefile), Compose |
 | Frey | 4304 | HTTP test server; no host publication | [Test server](../../Frey/app/tests/testserver.ts) |
 | Frey | 4404 | Test-server Node inspector; host-published at the same port | [Makefile](../../Frey/Makefile), Compose |

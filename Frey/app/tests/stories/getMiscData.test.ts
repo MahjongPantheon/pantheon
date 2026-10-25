@@ -162,7 +162,7 @@ describe('Get misc data', () => {
   });
 
   it('should get event referees', async () => {
-    return expect(() =>
+    return expect(
       frey.GetEventReferees({
         eventId: 200,
       })
@@ -180,7 +180,7 @@ describe('Get misc data', () => {
   });
 
   it('should get owned event for original admin', async () => {
-    return expect(() =>
+    return expect(
       frey.GetOwnedEventIds({
         personId: adminAuthData.personId,
       })
@@ -188,7 +188,7 @@ describe('Get misc data', () => {
   });
 
   it('should get owned event for another admin', async () => {
-    return expect(() =>
+    return expect(
       frey.GetOwnedEventIds({
         personId: anotherAdminData.personId,
       })
@@ -196,7 +196,7 @@ describe('Get misc data', () => {
   });
 
   it('should get owned event for referee', async () => {
-    return expect(() =>
+    return expect(
       frey.GetOwnedEventIds({
         personId: refereeData.personId,
       })

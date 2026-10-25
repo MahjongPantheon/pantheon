@@ -15,7 +15,7 @@
     "noEmit": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "types": ["jest"]
+    "types": ["vitest/globals"]
   },
   "include": ["build.ts", "src/**/*", "cron/**/*"],
   "exclude": ["node_modules/**/*", "dist/**/*", "src/seeders/*"]

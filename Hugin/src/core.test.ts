@@ -1,4 +1,4 @@
-import { describe, expect, it } from '@jest/globals';
+import { describe, expect, it } from 'vitest';
 import { BatchWriter, Busy } from './batch.js';
 import { analyticsRow } from './ingest.js';
 import { previousPeriod, mergeHistograms } from './aggregation.js';

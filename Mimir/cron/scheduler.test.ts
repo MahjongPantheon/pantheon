@@ -1,19 +1,19 @@
-import { jest } from '@jest/globals';
+import { vi } from 'vitest';
 import { ChildProcess, spawn } from 'node:child_process';
 import { EventEmitter } from 'node:events';
 import { JobScheduler } from './scheduler.js';
 
 function createChild() {
   const child = new EventEmitter() as ChildProcess;
-  child.kill = jest.fn<ChildProcess['kill']>().mockReturnValue(true);
+  child.kill = vi.fn<ChildProcess['kill']>().mockReturnValue(true);
   return child;
 }
 
-afterEach(() => jest.useRealTimers());
+afterEach(() => vi.useRealTimers());
 
 it('skips duplicate executions until the child closes, while allowing other job types', async () => {
   const children = [createChild(), createChild(), createChild()];
-  const launch = jest
+  const launch = vi
     .fn<(name: string) => ChildProcess>()
     .mockReturnValueOnce(children[0])
     .mockReturnValueOnce(children[1])
@@ -36,21 +36,21 @@ it('skips duplicate executions until the child closes, while allowing other job 
 });
 
 it('escalates a deadline to SIGKILL and retains exclusion until termination', async () => {
-  jest.useFakeTimers();
+  vi.useFakeTimers();
   const child = createChild();
-  const launch = jest.fn<() => ChildProcess>().mockReturnValue(child);
+  const launch = vi.fn<() => ChildProcess>().mockReturnValue(child);
   const scheduler = new JobScheduler(1000, 100, launch);
   const execution = scheduler.run('achievements');
   const rejected = expect(execution).rejects.toThrow('exceeded 1000ms');
-  await jest.advanceTimersByTimeAsync(1000);
+  await vi.advanceTimersByTimeAsync(1000);
   expect(child.kill).toHaveBeenCalledWith('SIGTERM');
-  await jest.advanceTimersByTimeAsync(100);
+  await vi.advanceTimersByTimeAsync(100);
   expect(child.kill).toHaveBeenCalledWith('SIGKILL');
   await scheduler.run('achievements');
   expect(launch).toHaveBeenCalledTimes(1);
   child.emit('close', null, 'SIGKILL');
   await rejected;
-  expect(jest.getTimerCount()).toBe(0);
+  expect(vi.getTimerCount()).toBe(0);
 });
 
 it('reports spawn failures and permits a later attempt', async () => {
@@ -68,7 +68,7 @@ it('reports spawn failures and permits a later attempt', async () => {
 
 it('stops active children, waits for closure, and refuses new executions', async () => {
   const child = createChild();
-  const launch = jest.fn<() => ChildProcess>().mockReturnValue(child);
+  const launch = vi.fn<() => ChildProcess>().mockReturnValue(child);
   const scheduler = new JobScheduler(1000, 100, launch);
   const execution = scheduler.run('metrics');
   const rejected = expect(execution).rejects.toThrow('SIGTERM');

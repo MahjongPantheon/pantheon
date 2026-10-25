@@ -1,4 +1,4 @@
-import { afterAll, beforeAll, beforeEach, describe, expect, it, jest } from '@jest/globals';
+import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
 import { mkdtemp, readFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
@@ -99,7 +99,7 @@ describe('Hermod HTTP compatibility', () => {
   it('returns an error and retains the previous mail if submission fails', async () => {
     await post({ actionkey: 'test-key', data: encoded });
     failSubmission = true;
-    const log = jest.spyOn(console, 'error').mockImplementation(() => {});
+    const log = vi.spyOn(console, 'error').mockImplementation(() => {});
     try {
       const response = await post({ actionkey: 'test-key', data: encoded });
       expect(response.status).toBe(500);

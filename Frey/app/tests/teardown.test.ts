@@ -1,22 +1,23 @@
+import { vi, type MockInstance } from 'vitest';
 import { ChildProcess } from 'node:child_process';
 import { EventEmitter } from 'node:events';
 import teardown from './teardown';
 
 describe('Test server coverage teardown', () => {
   let child: ChildProcess;
-  let fetchMock: jest.SpiedFunction<typeof fetch>;
+  let fetchMock: MockInstance<typeof fetch>;
 
   beforeEach(() => {
     child = Object.assign(new EventEmitter(), {
       exitCode: null,
       signalCode: null,
-      kill: jest.fn(() => {
+      kill: vi.fn(() => {
         queueMicrotask(() => child.emit('exit', null, 'SIGTERM'));
         return true;
       }),
     }) as unknown as ChildProcess;
     globalThis.freyTestServer = child;
-    fetchMock = jest.spyOn(globalThis, 'fetch');
+    fetchMock = vi.spyOn(globalThis, 'fetch');
   });
 
   afterEach(() => {
@@ -40,7 +41,7 @@ describe('Test server coverage teardown', () => {
     expect(globalThis.freyTestServer).toBeUndefined();
   });
 
-  it('stops the server without requesting coverage for a normal Jest run', async () => {
+  it('stops the server without requesting coverage for a normal Vitest run', async () => {
     await teardown({ collectCoverage: false });
 
     expect(fetchMock).not.toHaveBeenCalled();

@@ -1,4 +1,4 @@
-import { jest } from '@jest/globals';
+import { vi } from 'vitest';
 import moment from 'moment';
 import { Model } from '../Model.js';
 import { RoundModel } from '../RoundModel.js';
@@ -22,15 +22,15 @@ const state = new SessionState(ruleset, players).state;
 describe('Round persistence', () => {
   afterAll(() => repo.destroy());
   afterEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
     repo.em.clear();
   });
 
   it.each(roundFixtures)(
     'saves %s with session, event and previous state',
     async (kind, message) => {
-      const persist = jest.spyOn(repo.em, 'persist');
-      const flush = jest.spyOn(repo.em, 'flush').mockResolvedValue();
+      const persist = vi.spyOn(repo.em, 'persist');
+      const flush = vi.spyOn(repo.em, 'flush').mockResolvedValue();
       const endDate = moment.utc('2026-01-01T12:00:00Z');
       await model.saveRound(19, 21, players, players, ruleset, message, endDate, state);
       const round = persist.mock.calls
@@ -52,7 +52,7 @@ describe('Round persistence', () => {
   );
 
   it('rejects an unregistered player before persisting any data', async () => {
-    const persist = jest.spyOn(repo.em, 'persist');
+    const persist = vi.spyOn(repo.em, 'persist');
     await expect(
       model.saveRound(19, 21, players, [1, 2, 3], ruleset, roundFixtures[0][1], moment(), state)
     ).rejects.toThrow('not registered');

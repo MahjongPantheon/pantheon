@@ -68,7 +68,6 @@
     "i18n-json-po": "https://github.com/ctizen/i18n-json-po#2.0.3",
     "i18n-po-json": "https://github.com/ctizen/i18n-po-json#2.0.8",
     "i18n-stex": "https://github.com/ctizen/stex#2.1.2",
-    "prettier": "^3.5.3",
     "oxfmt": "0.60.0",
     "oxlint": "1.75.0",
     "oxlint-tsgolint": "^7.0.2001",

@@ -1,4 +1,4 @@
-import { jest } from '@jest/globals';
+import { vi } from 'vitest';
 import { PlatformType } from 'tsclients/proto/atoms.pb.js';
 import { Repository } from '../../services/Repository.js';
 import { init } from '../../tests/initOrm.js';
@@ -61,22 +61,22 @@ const registration = Object.assign(new EventRegisteredPlayersEntity(), {
 
 describe('Identifier mappings', () => {
   beforeEach(() => {
-    jest.spyOn(repo.em, 'transactional').mockImplementation(async (callback) => callback(repo.em));
+    vi.spyOn(repo.em, 'transactional').mockImplementation(async (callback) => callback(repo.em));
   });
   afterEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
     repo.em.clear();
   });
   afterAll(() => repo.destroy());
 
   it('keeps player and session IDs in the correct positions in score history', async () => {
-    jest
-      .spyOn(repo.em, 'findAll')
-      .mockResolvedValue([Object.assign(new SessionPlayerEntity(), { session, playerId: 101 })]);
+    vi.spyOn(repo.em, 'findAll').mockResolvedValue([
+      Object.assign(new SessionPlayerEntity(), { session, playerId: 101 }),
+    ]);
     const playerBySession = await players.findPlayerIdsForSessions([session.id]);
     const stats = Model.getModel(repo, PlayerStatsModel);
     const playerInfo = new Map([[101, makePlayer(101)]]);
-    jest.spyOn(stats, '_fetchPlayerInfo').mockResolvedValue(playerInfo);
+    vi.spyOn(stats, '_fetchPlayerInfo').mockResolvedValue(playerInfo);
     const result = Object.assign(new SessionResultsEntity(), {
       session,
       playerId: 101,
@@ -98,10 +98,10 @@ describe('Identifier mappings', () => {
   });
 
   it('associates a substitute with the original player rather than their registration', async () => {
-    jest.spyOn(sessions, 'findByRepresentationalHash').mockResolvedValue([session]);
-    jest.spyOn(players, 'findPlayerIdsForSessions').mockResolvedValue([[101, session.id]]);
-    jest.spyOn(registrations, 'fetchPlayersRegDataByIds').mockResolvedValue([registration]);
-    jest.spyOn(players, 'findById').mockImplementation(async (ids) => ids.map(makePlayer));
+    vi.spyOn(sessions, 'findByRepresentationalHash').mockResolvedValue([session]);
+    vi.spyOn(players, 'findPlayerIdsForSessions').mockResolvedValue([[101, session.id]]);
+    vi.spyOn(registrations, 'fetchPlayersRegDataByIds').mockResolvedValue([registration]);
+    vi.spyOn(players, 'findById').mockImplementation(async (ids) => ids.map(makePlayer));
 
     const { playersData } = await players.findPlayersForSessions(['session-501'], true);
 
@@ -111,13 +111,13 @@ describe('Identifier mappings', () => {
   });
 
   it('uses replacement names in game getters while keeping original score IDs', async () => {
-    jest.spyOn(sessions, 'findByRepresentationalHash').mockResolvedValue([session]);
-    jest.spyOn(players, 'findPlayerIdsForSessions').mockResolvedValue([
+    vi.spyOn(sessions, 'findByRepresentationalHash').mockResolvedValue([session]);
+    vi.spyOn(players, 'findPlayerIdsForSessions').mockResolvedValue([
       [101, session.id],
       [102, session.id],
     ]);
-    jest.spyOn(registrations, 'fetchPlayersRegDataByIds').mockResolvedValue([registration]);
-    jest.spyOn(players, 'findById').mockImplementation(async (ids) => ids.map(makePlayer));
+    vi.spyOn(registrations, 'fetchPlayersRegDataByIds').mockResolvedValue([registration]);
+    vi.spyOn(players, 'findById').mockImplementation(async (ids) => ids.map(makePlayer));
 
     const display = await sessions.getPlayersOfGames([session]);
     const rating = await sessions.getPlayersOfGames([session], false);
@@ -127,7 +127,7 @@ describe('Identifier mappings', () => {
     ]);
     expect(rating.players.get(session.id)).toEqual([makePlayer(101), makePlayer(102)]);
 
-    jest.spyOn(registrations, 'fetchPlayersRegDataByIds').mockResolvedValue([]);
+    vi.spyOn(registrations, 'fetchPlayersRegDataByIds').mockResolvedValue([]);
     expect((await sessions.getPlayersOfGames([session])).players.get(session.id)).toEqual([
       makePlayer(101),
       makePlayer(102),
@@ -135,13 +135,14 @@ describe('Identifier mappings', () => {
   });
 
   it('loads seating details using player IDs rather than registration IDs', async () => {
-    jest.spyOn(repo.em, 'findOne').mockResolvedValue(event);
-    jest.spyOn(repo.em, 'findAll').mockResolvedValue([registration]);
-    jest.spyOn(players, 'findById').mockImplementation(async (ids) => ids.map(makePlayer));
-    jest.spyOn(Model.getModel(repo, PlayerHistoryModel), 'findLastByEvent').mockResolvedValue([]);
-    jest
-      .spyOn(Model.getModel(repo, PlayerInSessionModel), 'getPlayersSeatingInEvent')
-      .mockResolvedValue([{ player_id: 101, session_id: session.id, table_index: 1, order: 0 }]);
+    vi.spyOn(repo.em, 'findOne').mockResolvedValue(event);
+    vi.spyOn(repo.em, 'findAll').mockResolvedValue([registration]);
+    vi.spyOn(players, 'findById').mockImplementation(async (ids) => ids.map(makePlayer));
+    vi.spyOn(Model.getModel(repo, PlayerHistoryModel), 'findLastByEvent').mockResolvedValue([]);
+    vi.spyOn(
+      Model.getModel(repo, PlayerInSessionModel),
+      'getPlayersSeatingInEvent'
+    ).mockResolvedValue([{ player_id: 101, session_id: session.id, table_index: 1, order: 0 }]);
 
     const result = await Model.getModel(repo, SeatingModel).getCurrentSeating(event.id);
 
@@ -151,27 +152,26 @@ describe('Identifier mappings', () => {
   });
 
   it('keeps original IDs in session state when notifying replacement players of seating', async () => {
-    jest.spyOn(repo.meta, 'personId', 'get').mockReturnValue(1);
-    jest.spyOn(players, 'isEventAdmin').mockResolvedValue(true);
-    jest.spyOn(repo.em, 'findOne').mockResolvedValue(event);
-    jest.spyOn(sessions, 'findByEventAndStatus').mockResolvedValue([]);
-    jest
-      .spyOn(registrations, 'findByEventId')
-      .mockResolvedValue([
-        registration,
-        ...[102, 103, 104].map((playerId) =>
-          Object.assign(new EventRegisteredPlayersEntity(), { playerId })
-        ),
-      ]);
-    jest.spyOn(registrations, 'findIgnoredPlayersIdsByEvent').mockResolvedValue([]);
-    jest.spyOn(Model.getModel(repo, PenaltyModel), 'findByEventId').mockResolvedValue([]);
-    jest.spyOn(Model.getModel(repo, PlayerHistoryModel), 'findLastByEvent').mockResolvedValue([]);
-    jest
-      .spyOn(Model.getModel(repo, PlayerInSessionModel), 'getPlayersSeatingInEvent')
-      .mockResolvedValue([]);
-    jest.spyOn(repo.skirnir, 'messageSeatingReady').mockResolvedValue();
+    vi.spyOn(repo.meta, 'personId', 'get').mockReturnValue(1);
+    vi.spyOn(players, 'isEventAdmin').mockResolvedValue(true);
+    vi.spyOn(repo.em, 'findOne').mockResolvedValue(event);
+    vi.spyOn(sessions, 'findByEventAndStatus').mockResolvedValue([]);
+    vi.spyOn(registrations, 'findByEventId').mockResolvedValue([
+      registration,
+      ...[102, 103, 104].map((playerId) =>
+        Object.assign(new EventRegisteredPlayersEntity(), { playerId })
+      ),
+    ]);
+    vi.spyOn(registrations, 'findIgnoredPlayersIdsByEvent').mockResolvedValue([]);
+    vi.spyOn(Model.getModel(repo, PenaltyModel), 'findByEventId').mockResolvedValue([]);
+    vi.spyOn(Model.getModel(repo, PlayerHistoryModel), 'findLastByEvent').mockResolvedValue([]);
+    vi.spyOn(
+      Model.getModel(repo, PlayerInSessionModel),
+      'getPlayersSeatingInEvent'
+    ).mockResolvedValue([]);
+    vi.spyOn(repo.skirnir, 'messageSeatingReady').mockResolvedValue();
     let state: SessionState | undefined;
-    jest.spyOn(sessions, 'startSession').mockImplementation((_event, ids) => {
+    vi.spyOn(sessions, 'startSession').mockImplementation((_event, ids) => {
       state = new SessionState(event.ruleset, ids);
       return session;
     });
@@ -197,13 +197,13 @@ describe('Identifier mappings', () => {
 
   it('returns local IDs even when they differ from global player IDs', async () => {
     const events = Model.getModel(repo, EventModel);
-    jest.spyOn(events, 'findById').mockResolvedValue([event]);
-    jest.spyOn(players, 'findPlayersForEvents').mockResolvedValue({
+    vi.spyOn(events, 'findById').mockResolvedValue([event]);
+    vi.spyOn(players, 'findPlayersForEvents').mockResolvedValue({
       players: [makePlayer(101)],
       replaceMap: new Map(),
     });
-    jest.spyOn(registrations, 'findIgnoredPlayersIdsByEvent').mockResolvedValue([]);
-    jest.spyOn(registrations, 'findByEventId').mockResolvedValue([registration]);
+    vi.spyOn(registrations, 'findIgnoredPlayersIdsByEvent').mockResolvedValue([]);
+    vi.spyOn(registrations, 'findByEventId').mockResolvedValue([registration]);
 
     const result = await events.getAllRegisteredPlayers({ eventIds: [event.id] });
 
@@ -225,7 +225,7 @@ describe('Identifier mappings', () => {
   });
 
   it('includes all event IDs in the ignored-player query', async () => {
-    jest.spyOn(repo.em, 'findAll').mockImplementation(async (entity, options) => {
+    vi.spyOn(repo.em, 'findAll').mockImplementation(async (entity, options) => {
       const query = repo.em
         .createQueryBuilder(entity)
         .select('*')

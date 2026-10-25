@@ -116,13 +116,12 @@ container_typecheck: get_container_id
 
 .PHONY: test
 test: export TEST=true
-test: export NODE_OPTIONS=--experimental-vm-modules
 test: seed_test_db build
 	echo "======= Mimir: test ======"
 	node src/tests/production.mjs
 	node src/tests/coverage.mjs
 	# For debugging:
-	#node --inspect=0.0.0.0:4501 node_modules/jest/bin/jest.js --runInBand -t 'Mimir Twirp API'
+	#pnpm exec vitest run --inspect=0.0.0.0:4501 --no-file-parallelism -t 'Mimir Twirp API'
 
 .PHONY: container_test
 container_test: get_container_id
@@ -135,10 +134,9 @@ container_test: get_container_id
 .PHONY: test_verbose
 test_verbose: export TEST=true
 test_verbose: export TEST_VERBOSE=true
-test_verbose: export NODE_OPTIONS=--experimental-vm-modules
 test_verbose: seed_test_db
 	echo "======= Mimir: test ======"
-	pnpm exec jest
+	pnpm exec vitest run
 
 .PHONY: container_test_verbose
 container_test_verbose: get_container_id
@@ -154,7 +152,7 @@ run_test_server: export TEST_VERBOSE=true
 run_test_server:
 	@echo "${GREEN}Running test server on port 4401${NC}"
 	@echo "Use node inspector in your browser (chrome://inspect or similar) to connect to the test server"
-	@echo "Use 'make test_noserver' in separate terminal to run jest on already started server"
+	@echo "Use 'make test_noserver' in separate terminal to run vitest on already started server"
 	pnpm exec tsx watch --inspect=0.0.0.0:4401/debug src/tests/testserver.ts
 
 .PHONY: container_run_test_server
@@ -168,10 +166,9 @@ container_run_test_server: get_container_id
 .PHONY: test_noserver
 test_noserver: export TEST=true
 test_noserver: export NO_SERVER=true
-test_noserver: export NODE_OPTIONS=--experimental-vm-modules
 test_noserver:
 	echo "======= Mimir: test_noserver ======"
-	pnpm exec jest
+	pnpm exec vitest run
 
 .PHONY: container_test_noserver
 container_test_noserver: get_container_id

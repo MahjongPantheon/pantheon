@@ -1,4 +1,4 @@
-import { jest } from '@jest/globals';
+import { vi } from 'vitest';
 import dotenv from 'dotenv';
 import { ConfigService } from '../Config.js';
 
@@ -6,11 +6,11 @@ describe('Service configuration', () => {
   const environment = { ...process.env };
   beforeEach(() => {
     process.env = {};
-    jest.spyOn(dotenv, 'config').mockReturnValue({ parsed: {} });
+    vi.spyOn(dotenv, 'config').mockReturnValue({ parsed: {} });
   });
   afterEach(() => {
     process.env = { ...environment };
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 
   it('provides development defaults without an environment file', () => {
@@ -54,7 +54,7 @@ describe('Service configuration', () => {
     process.env.FREY_URL_INTERNAL = 'http://override-frey';
     process.env.INTERNAL_QUERY_SECRET = 'override-secret';
     process.env.DB_MIMIR_NAME = 'override-db';
-    jest.mocked(dotenv.config).mockReturnValue({
+    vi.mocked(dotenv.config).mockReturnValue({
       parsed: {
         FREY_URL_INTERNAL: 'http://file-frey',
         INTERNAL_QUERY_SECRET: 'file-secret',

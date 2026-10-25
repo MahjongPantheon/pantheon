@@ -1,5 +1,5 @@
 import { RoundOutcome, SessionStatus } from 'tsclients/proto/atoms.pb.js';
-import { jest } from '@jest/globals';
+import { vi } from 'vitest';
 import { init } from '../tests/initOrm.js';
 import { EventRegisteredPlayersEntity } from '../entities/EventRegisteredPlayers.entity.js';
 import { SessionEntity } from '../entities/Session.entity.js';
@@ -21,7 +21,7 @@ describe('development seed fixtures', () => {
   });
 
   it('uses returned Frey IDs in order across request batches', async () => {
-    const CreateAccount = jest.fn(async ({ title }: { title: string }) => ({
+    const CreateAccount = vi.fn(async ({ title }: { title: string }) => ({
       personId: 1000 + Number(title.split(' ').at(-1)) * 7,
     }));
     const ids = await createPlayers({ CreateAccount } as unknown as FreyService, 9);
@@ -34,7 +34,7 @@ describe('development seed fixtures', () => {
   });
 
   it('stops when Frey cannot create a player', async () => {
-    const CreateAccount = jest
+    const CreateAccount = vi
       .fn<FreyService['CreateAccount']>()
       .mockRejectedValue(new Error('Frey unavailable'));
     await expect(createPlayers({ CreateAccount } as unknown as FreyService, 8)).rejects.toThrow(
@@ -44,9 +44,7 @@ describe('development seed fixtures', () => {
   });
 
   it('rejects invalid IDs before populating Mimir', async () => {
-    const CreateAccount = jest
-      .fn<FreyService['CreateAccount']>()
-      .mockResolvedValue({ personId: 0 });
+    const CreateAccount = vi.fn<FreyService['CreateAccount']>().mockResolvedValue({ personId: 0 });
     await expect(createPlayers({ CreateAccount } as unknown as FreyService, 1)).rejects.toThrow(
       'invalid player ID'
     );

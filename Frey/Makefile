@@ -126,7 +126,7 @@ container_test: get_container_id
 test_verbose: export TEST_VERBOSE=true
 test_verbose:
 	echo "======= Frey: test ======"
-	pnpm exec jest
+	pnpm exec vitest run
 
 .PHONY: container_test_verbose
 container_test_verbose: get_container_id
@@ -141,7 +141,7 @@ run_test_server: export TEST_VERBOSE=true
 run_test_server:
 	@echo "${GREEN}Running test server on port 4404${NC}"
 	@echo "Use node inspector in your browser (chrome://inspect or similar) to connect to the test server"
-	@echo "Use 'make test_noserver' in separate terminal to run jest on already started server"
+	@echo "Use 'make test_noserver' in separate terminal to run vitest on already started server"
 	pnpm exec tsx watch --inspect=0.0.0.0:4404/debug app/tests/testserver.ts
 
 .PHONY: container_run_test_server
@@ -151,7 +151,7 @@ container_run_test_server: get_container_id
 	else \
 	  echo "${GREEN}Running test server on port 4404${NC}"; \
 		echo "Use node inspector in your browser (chrome://inspect or similar) to connect to the test server"; \
-		echo "Use 'make container_test_noserver' in separate terminal to run jest on already started server"; \
+		echo "Use 'make container_test_noserver' in separate terminal to run vitest on already started server"; \
 		$(CONTAINER_COMMAND) exec -t $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user pnpm exec tsx watch --inspect=0.0.0.0:4404/debug app/tests/testserver.ts' ; \
 	fi
 
@@ -159,7 +159,7 @@ container_run_test_server: get_container_id
 test_noserver: export DEBUG=true
 test_noserver:
 	echo "======= Frey: test_noserver ======"
-	pnpm exec jest
+	pnpm exec vitest run
 
 .PHONY: container_test_noserver
 container_test_noserver: get_container_id

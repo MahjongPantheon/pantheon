@@ -1,3 +1,4 @@
+import { vi } from 'vitest';
 import { Context } from '../context';
 import { env } from '../helpers/env';
 import { ActionNotAllowedError, DataMalformedError, InvalidInputError } from '../helpers/errors';
@@ -6,34 +7,32 @@ import { createAccount } from './persons';
 import { RegisterPlayer, UnregisterPlayer } from 'tsclients/proto/mimir.pb';
 import { e2eCreateAccounts, e2eRegisterPlayers, e2eUnregisterPlayers } from './e2e';
 
-jest.mock('../helpers/auth', () => ({ verifyHash: jest.fn() }));
-jest.mock('./persons', () => ({ createAccount: jest.fn() }));
-jest.mock('tsclients/proto/mimir.pb', () => ({
-  RegisterPlayer: jest.fn(),
-  UnregisterPlayer: jest.fn(),
+vi.mock('../helpers/auth', () => ({ verifyHash: vi.fn() }));
+vi.mock('./persons', () => ({ createAccount: vi.fn() }));
+vi.mock('tsclients/proto/mimir.pb', () => ({
+  RegisterPlayer: vi.fn(),
+  UnregisterPlayer: vi.fn(),
 }));
 
 const originalE2eMode = env.e2eTestMode;
 
 function context(isSuperadmin = 1): Context {
   const query = {
-    select: jest.fn().mockReturnThis(),
-    where: jest.fn().mockReturnThis(),
-    executeTakeFirst: jest
-      .fn()
-      .mockResolvedValue({ auth_hash: 'hash', is_superadmin: isSuperadmin }),
-    execute: jest.fn().mockResolvedValue([{ id: 10 }, { id: 11 }]),
+    select: vi.fn().mockReturnThis(),
+    where: vi.fn().mockReturnThis(),
+    executeTakeFirst: vi.fn().mockResolvedValue({ auth_hash: 'hash', is_superadmin: isSuperadmin }),
+    execute: vi.fn().mockResolvedValue([{ id: 10 }, { id: 11 }]),
   };
   return {
     personId: 1,
     authToken: 'token',
     isInternalQuery: false,
-    db: { selectFrom: jest.fn().mockReturnValue(query) },
+    db: { selectFrom: vi.fn().mockReturnValue(query) },
   } as unknown as Context;
 }
 
 beforeEach(() => {
-  jest.clearAllMocks();
+  vi.clearAllMocks();
   env.e2eTestMode = true;
 });
 
@@ -66,7 +65,7 @@ it('requires a real superadmin and validates the authentication token', async ()
   );
   expect(verifyHash).toHaveBeenCalledWith('token', 'hash');
 
-  jest.mocked(verifyHash).mockRejectedValueOnce(new InvalidInputError('Password check failed'));
+  vi.mocked(verifyHash).mockRejectedValueOnce(new InvalidInputError('Password check failed'));
   await expect(e2eCreateAccounts(context(), { people: [] })).rejects.toBeInstanceOf(
     InvalidInputError
   );
@@ -74,8 +73,7 @@ it('requires a real superadmin and validates the authentication token', async ()
 });
 
 it('creates a batch and returns person IDs in input order', async () => {
-  jest
-    .mocked(createAccount)
+  vi.mocked(createAccount)
     .mockResolvedValueOnce({ personId: 10 })
     .mockResolvedValueOnce({ personId: 11 });
   const admin = context();
@@ -101,7 +99,7 @@ it('creates a batch and returns person IDs in input order', async () => {
   ];
   await expect(e2eCreateAccounts(admin, { people })).resolves.toEqual({ personIds: [10, 11] });
   expect(createAccount).toHaveBeenCalledTimes(2);
-  expect(jest.mocked(createAccount).mock.calls[0][3].isInternalQuery).toBe(false);
+  expect(vi.mocked(createAccount).mock.calls[0][3].isInternalQuery).toBe(false);
 });
 
 it('registers and unregisters each person through Mimir with the admin identity', async () => {

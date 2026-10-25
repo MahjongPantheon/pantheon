@@ -38,7 +38,7 @@ From the repository root:
 - `make dev_meili` starts the TypeScript watcher on port 4012, with the Node
   inspector on port 4212. `parallel_dev.sh` also starts Meili.
 - `make meili_oxlint meili_oxfmt meili_typecheck` runs the container checks.
-- `make meili_test` runs Jest API tests and real database lookup regression tests.
+- `make meili_test` runs Vitest API tests and real database lookup regression tests.
   Meili is included in `make test` and `make test_verbose`.
 - `make prod_build_meili` stages the compiled server and GeoLite database in
   `Meili-dist` and installs production dependencies. `prod_compile` and

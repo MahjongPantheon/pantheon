@@ -1,4 +1,4 @@
-import { jest } from '@jest/globals';
+import { vi } from 'vitest';
 import { SessionStatus, TournamentGamesStatus } from 'tsclients/proto/atoms.pb.js';
 import { EventEntity } from '../../entities/Event.entity.js';
 import { EventRegisteredPlayersEntity } from '../../entities/EventRegisteredPlayers.entity.js';
@@ -22,7 +22,7 @@ let statuses: SessionStatus[];
 
 // Model this query against current session statuses, including historical finished sessions.
 function mockActiveSessions() {
-  return jest.spyOn(repo.em, 'count').mockImplementation(async (entity, where) => {
+  return vi.spyOn(repo.em, 'count').mockImplementation(async (entity, where) => {
     expect(entity).toBe(SessionEntity);
     expect(where).toEqual({
       event: eventId,
@@ -47,16 +47,16 @@ describe('player seating flag lifecycle', () => {
       ignoreSeating: 0,
     });
     statuses = [];
-    jest.spyOn(repo.em, 'transactional').mockImplementation(async (callback) => callback(repo.em));
-    jest.spyOn(repo.meta, 'personId', 'get').mockReturnValue(1);
-    jest.spyOn(players, 'isEventAdmin').mockResolvedValue(true);
-    jest.spyOn(registrations, 'findByPlayerAndEvent').mockResolvedValue([registration]);
-    jest.spyOn(repo.em, 'findOneOrFail').mockResolvedValue(event);
-    jest.spyOn(repo.em, 'persist').mockReturnValue(repo.em);
+    vi.spyOn(repo.em, 'transactional').mockImplementation(async (callback) => callback(repo.em));
+    vi.spyOn(repo.meta, 'personId', 'get').mockReturnValue(1);
+    vi.spyOn(players, 'isEventAdmin').mockResolvedValue(true);
+    vi.spyOn(registrations, 'findByPlayerAndEvent').mockResolvedValue([registration]);
+    vi.spyOn(repo.em, 'findOneOrFail').mockResolvedValue(event);
+    vi.spyOn(repo.em, 'persist').mockReturnValue(repo.em);
     mockActiveSessions();
   });
   afterEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
     repo.em.clear();
   });
   afterAll(() => repo.destroy());
@@ -113,7 +113,7 @@ describe('player seating flag lifecycle', () => {
   });
 
   it('still rejects callers without event administration rights', async () => {
-    jest.spyOn(players, 'isEventAdmin').mockResolvedValue(false);
+    vi.spyOn(players, 'isEventAdmin').mockResolvedValue(false);
     await expect(toggle(true)).rejects.toThrow('necessary permissions');
     expect(repo.em.persist).not.toHaveBeenCalled();
   });

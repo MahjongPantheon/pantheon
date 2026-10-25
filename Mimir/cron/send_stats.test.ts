@@ -1,4 +1,4 @@
-import { jest } from '@jest/globals';
+import { vi } from 'vitest';
 import { Repository } from '../src/services/Repository.js';
 import { sendStats } from './send_stats.js';
 
@@ -11,10 +11,10 @@ const repo = {
   },
 } as unknown as Repository;
 
-afterEach(() => jest.restoreAllMocks());
+afterEach(() => vi.restoreAllMocks());
 
 it('publishes all metrics with a request deadline', async () => {
-  const transport = jest
+  const transport = vi
     .spyOn(globalThis, 'fetch')
     .mockResolvedValue(new Response(null, { status: 204 }));
   expect(await sendStats(repo)).toBe(6);
@@ -29,6 +29,6 @@ it('publishes all metrics with a request deadline', async () => {
 });
 
 it('reports rejected metrics requests as failed executions', async () => {
-  jest.spyOn(globalThis, 'fetch').mockResolvedValue(new Response('Unavailable', { status: 503 }));
+  vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response('Unavailable', { status: 503 }));
   await expect(sendStats(repo)).rejects.toThrow('HTTP 503');
 });

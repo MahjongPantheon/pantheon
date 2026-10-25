@@ -32,7 +32,7 @@ From the repository root:
 - `make dev_gullveig` starts the TypeScript watcher and Node inspector (host port 4209).
   `parallel_dev.sh` also starts Gullveig with the other services.
 - `make gullveig_oxlint gullveig_oxfmt gullveig_typecheck` runs the container checks.
-- `make gullveig_test` runs the Jest upload tests using isolated temporary storage.
+- `make gullveig_test` runs the Vitest upload tests using isolated temporary storage.
   Gullveig is also included in `make test` and `make test_verbose`.
 - `make prod_build_gullveig` builds and stages the server in `Gullveig-dist` and
   installs production dependencies. `prod_compile` and `e2e_compile` include it.

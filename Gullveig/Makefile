@@ -192,10 +192,10 @@ container_stop: get_container_id
 
 .PHONY: test test_verbose container_test container_test_verbose
 test:
-	pnpm test --runInBand
+	pnpm test
 
 test_verbose:
-	pnpm test --runInBand --verbose
+	pnpm test --reporter=verbose
 
 container_test container_test_verbose: get_container_id
 	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \

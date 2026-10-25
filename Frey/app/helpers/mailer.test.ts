@@ -1,7 +1,8 @@
+import { vi, type MockInstance } from 'vitest';
 import { env } from './env';
 import { sendAlreadyRegisteredMail, sendPasswordRecovery, sendSignupMail } from './mailer';
 
-jest.mock('./env', () => ({
+vi.mock('./env', () => ({
   env: {
     mailer: {
       remoteUrl: 'https://mail.test.example/send',
@@ -18,13 +19,13 @@ function decode(input: string): string {
 
 describe('Mailer', () => {
   const email = 'player@test.example';
-  let fetchMock: jest.SpiedFunction<typeof fetch>;
+  let fetchMock: MockInstance<typeof fetch>;
   let response: Response;
 
   beforeEach(() => {
     env.mailer.remoteActionKey = 'test-action-key';
     response = new Response(null, { status: 200 });
-    fetchMock = jest.spyOn(globalThis, 'fetch').mockResolvedValue(response);
+    fetchMock = vi.spyOn(globalThis, 'fetch').mockResolvedValue(response);
   });
 
   afterEach(() => {
@@ -144,7 +145,7 @@ describe('Mailer', () => {
   it('logs and propagates a mail service connection failure', async () => {
     const error = new Error('Mail service unavailable');
     fetchMock.mockRejectedValue(error);
-    const errorLog = jest.spyOn(console, 'error').mockImplementation(() => {});
+    const errorLog = vi.spyOn(console, 'error').mockImplementation(() => {});
     try {
       await expect(sendSignupMail(email, '/profile/confirmRegistration/token')).rejects.toBe(error);
       expect(errorLog).toHaveBeenCalledWith(error);

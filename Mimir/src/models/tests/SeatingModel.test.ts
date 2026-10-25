@@ -1,4 +1,4 @@
-import { jest } from '@jest/globals';
+import { vi } from 'vitest';
 import { TournamentGamesStatus, WindShuffleMode } from 'tsclients/proto/atoms.pb.js';
 import { EventEntity } from '../../entities/Event.entity.js';
 import { EventPrescriptEntity } from '../../entities/EventPrescript.entity.js';
@@ -64,26 +64,27 @@ describe('seating creation', () => {
     );
     ignoredPlayerIds = [];
     // No database writes: retain the in-memory event to detect premature state changes.
-    jest.spyOn(repo.em, 'transactional').mockImplementation(async (callback) => callback(repo.em));
-    jest.spyOn(repo.em, 'findOne').mockResolvedValue(event);
-    jest.spyOn(repo.em, 'persist').mockReturnValue(repo.em);
-    jest.spyOn(repo.meta, 'personId', 'get').mockReturnValue(1);
-    jest.spyOn(Model.getModel(repo, PlayerModel), 'isEventAdmin').mockResolvedValue(true);
-    jest.spyOn(registrations, 'findByEventId').mockImplementation(async () => regs);
-    jest
-      .spyOn(registrations, 'findIgnoredPlayersIdsByEvent')
-      .mockImplementation(async () => ignoredPlayerIds);
-    jest.spyOn(sessions, 'findByEventAndStatus').mockResolvedValue([]);
-    jest.spyOn(sessions, 'startSession').mockReturnValue(new SessionEntity());
-    jest.spyOn(Model.getModel(repo, PenaltyModel), 'findByEventId').mockResolvedValue([]);
-    jest.spyOn(Model.getModel(repo, PlayerHistoryModel), 'findLastByEvent').mockResolvedValue([]);
-    jest
-      .spyOn(Model.getModel(repo, PlayerInSessionModel), 'getPlayersSeatingInEvent')
-      .mockResolvedValue([]);
-    jest.spyOn(repo.skirnir, 'messageSeatingReady').mockResolvedValue();
+    vi.spyOn(repo.em, 'transactional').mockImplementation(async (callback) => callback(repo.em));
+    vi.spyOn(repo.em, 'findOne').mockResolvedValue(event);
+    vi.spyOn(repo.em, 'persist').mockReturnValue(repo.em);
+    vi.spyOn(repo.meta, 'personId', 'get').mockReturnValue(1);
+    vi.spyOn(Model.getModel(repo, PlayerModel), 'isEventAdmin').mockResolvedValue(true);
+    vi.spyOn(registrations, 'findByEventId').mockImplementation(async () => regs);
+    vi.spyOn(registrations, 'findIgnoredPlayersIdsByEvent').mockImplementation(
+      async () => ignoredPlayerIds
+    );
+    vi.spyOn(sessions, 'findByEventAndStatus').mockResolvedValue([]);
+    vi.spyOn(sessions, 'startSession').mockReturnValue(new SessionEntity());
+    vi.spyOn(Model.getModel(repo, PenaltyModel), 'findByEventId').mockResolvedValue([]);
+    vi.spyOn(Model.getModel(repo, PlayerHistoryModel), 'findLastByEvent').mockResolvedValue([]);
+    vi.spyOn(
+      Model.getModel(repo, PlayerInSessionModel),
+      'getPlayersSeatingInEvent'
+    ).mockResolvedValue([]);
+    vi.spyOn(repo.skirnir, 'messageSeatingReady').mockResolvedValue();
   });
   afterEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
     repo.em.clear();
   });
   afterAll(() => repo.destroy());
@@ -145,12 +146,12 @@ describe('seating creation', () => {
       script: '1-2-3-4',
       nextGame: 0,
     });
-    jest.spyOn(repo.em, 'findOne').mockImplementation(async (entity) => {
+    vi.spyOn(repo.em, 'findOne').mockImplementation(async (entity) => {
       return entity === EventPrescriptEntity ? prescript : event;
     });
-    jest
-      .spyOn(registrations, 'findLocalIdsMapByEvent')
-      .mockResolvedValue(new Map(playerIds.map((id, index) => [index + 1, id])));
+    vi.spyOn(registrations, 'findLocalIdsMapByEvent').mockResolvedValue(
+      new Map(playerIds.map((id, index) => [index + 1, id]))
+    );
 
     await expect(model.makePrescriptedSeating({ eventId, windShuffleMode })).resolves.toEqual({
       success: true,

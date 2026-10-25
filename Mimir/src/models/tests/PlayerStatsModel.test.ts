@@ -1,4 +1,4 @@
-import { jest } from '@jest/globals';
+import { vi } from 'vitest';
 import { RoundOutcome } from 'tsclients/proto/atoms.pb.js';
 import { PlayersGetPlayerStatsResponse } from 'tsclients/proto/mimir.pb.js';
 import { init } from '../../tests/initOrm.js';
@@ -75,36 +75,34 @@ let cache: PlayerStatsEntity | null;
 describe('PlayerStatsModel.getPlayerStats', () => {
   beforeEach(() => {
     cache = null;
-    jest.spyOn(repo.em, 'transactional').mockImplementation(async (callback) => callback(repo.em));
-    jest.spyOn(repo.em, 'findAll').mockImplementation(async (entity) => {
+    vi.spyOn(repo.em, 'transactional').mockImplementation(async (callback) => callback(repo.em));
+    vi.spyOn(repo.em, 'findAll').mockImplementation(async (entity) => {
       if (entity === EventEntity) return [event];
       if (entity === PlayerStatsEntity) return cache ? [cache] : [];
       throw new Error(`Unexpected query: ${String(entity)}`);
     });
-    jest.spyOn(repo.em, 'findOne').mockImplementation(async () => cache);
-    jest.spyOn(repo.em, 'persist').mockImplementation((entity) => {
+    vi.spyOn(repo.em, 'findOne').mockImplementation(async () => cache);
+    vi.spyOn(repo.em, 'persist').mockImplementation((entity) => {
       // Exercise the JSON representation stored in PostgreSQL, including cache updates.
       cache = Object.assign(new PlayerStatsEntity(), entity, {
         data: JSON.parse(JSON.stringify((entity as PlayerStatsEntity).data)),
       });
       return repo.em;
     });
-    jest.spyOn(players, 'findById').mockImplementation(async (ids) => ids.map(makePlayer));
-    jest
-      .spyOn(players, 'findPlayerIdsForSessions')
-      .mockResolvedValue(
-        Array.from(games.keys()).flatMap((sessionId) =>
-          playerIds.map((id): [number, number] => [id, sessionId])
-        )
-      );
-    jest.spyOn(stats, '_fetchGamesHistory').mockResolvedValue(games);
-    jest.spyOn(stats, '_fetchRounds').mockResolvedValue(rounds);
-    jest
-      .spyOn(stats, '_fetchPlayerInfo')
-      .mockResolvedValue(new Map(playerIds.map((id) => [id, makePlayer(id)])));
+    vi.spyOn(players, 'findById').mockImplementation(async (ids) => ids.map(makePlayer));
+    vi.spyOn(players, 'findPlayerIdsForSessions').mockResolvedValue(
+      Array.from(games.keys()).flatMap((sessionId) =>
+        playerIds.map((id): [number, number] => [id, sessionId])
+      )
+    );
+    vi.spyOn(stats, '_fetchGamesHistory').mockResolvedValue(games);
+    vi.spyOn(stats, '_fetchRounds').mockResolvedValue(rounds);
+    vi.spyOn(stats, '_fetchPlayerInfo').mockResolvedValue(
+      new Map(playerIds.map((id) => [id, makePlayer(id)]))
+    );
   });
   afterEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
     repo.em.clear();
   });
   afterAll(() => repo.destroy());
@@ -148,7 +146,7 @@ describe('PlayerStatsModel.getPlayerStats', () => {
         Object.assign(new HandEntity(), { winnerId, loserId: 202, han: 2, fu: 30 })
       ),
     });
-    jest.spyOn(stats, '_fetchRounds').mockResolvedValue([round]);
+    vi.spyOn(stats, '_fetchRounds').mockResolvedValue([round]);
 
     await expect(stats.getPlayerStats({ playerId: 101, eventIdList: [19] })).rejects.toThrow(
       'round 700, session 501, event 19: Error: Invalid multiron participants: ' +
@@ -228,7 +226,7 @@ describe('PlayerStatsModel.getPlayerStats', () => {
         { playerId: 101, eventIdList: [19] },
         { forceRebuild: true }
       );
-      const fetchGames = jest.mocked(stats._fetchGamesHistory);
+      const fetchGames = vi.mocked(stats._fetchGamesHistory);
       fetchGames.mockClear();
 
       const cached = await stats.getPlayerStats({ playerId: 101, eventIdList: [19] });
@@ -299,7 +297,7 @@ describe('PlayerStatsModel.getPlayerStats', () => {
   it('rebuilds cached null ratings so played games can be returned over protobuf', async () => {
     const calculated = await stats.getPlayerStats({ playerId: 101, eventIdList: [19] });
     cache!.data.ratingHistory = JSON.parse('[null, null, null]');
-    jest.mocked(stats._fetchGamesHistory).mockClear();
+    vi.mocked(stats._fetchGamesHistory).mockClear();
 
     const result = await stats.getPlayerStats({ playerId: 101, eventIdList: [19] });
 
@@ -313,10 +311,10 @@ describe('PlayerStatsModel.getPlayerStats', () => {
   });
 
   it('returns empty summaries when no games have been played', async () => {
-    jest.mocked(stats._fetchGamesHistory).mockResolvedValue(new Map());
-    jest.mocked(stats._fetchRounds).mockResolvedValue([]);
-    jest.mocked(stats._fetchPlayerInfo).mockResolvedValue(new Map());
-    jest.mocked(players.findPlayerIdsForSessions).mockResolvedValue([]);
+    vi.mocked(stats._fetchGamesHistory).mockResolvedValue(new Map());
+    vi.mocked(stats._fetchRounds).mockResolvedValue([]);
+    vi.mocked(stats._fetchPlayerInfo).mockResolvedValue(new Map());
+    vi.mocked(players.findPlayerIdsForSessions).mockResolvedValue([]);
 
     const result = await stats.getPlayerStats({ playerId: 101, eventIdList: [19] });
 
@@ -344,7 +342,7 @@ describe('PlayerStatsModel.getPlayerStats', () => {
   it('fills zero counts when reading an existing sparse places cache', async () => {
     await stats.getPlayerStats({ playerId: 101, eventIdList: [19] });
     cache!.data.placesSummary = { 1: 2 };
-    jest.mocked(stats._fetchGamesHistory).mockClear();
+    vi.mocked(stats._fetchGamesHistory).mockClear();
 
     const result = await stats.getPlayerStats({ playerId: 101, eventIdList: [19] });
 

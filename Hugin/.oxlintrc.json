@@ -22,7 +22,7 @@
     "server.js",
     "eslint.config.mjs",
     "proto.config.mjs",
-    "jest.config.js",
+    "vitest.config.ts",
     "vendor",
     ".pnpm-store"
   ],

@@ -1,6 +1,7 @@
+import { vi } from 'vitest';
 import { getGullveigUrl, uploadAvatar } from './avatars';
 
-afterEach(() => jest.restoreAllMocks());
+afterEach(() => vi.restoreAllMocks());
 
 describe('avatar storage configuration', () => {
   it('supports the development URL and internal URL overrides', () => {
@@ -25,14 +26,14 @@ describe('avatar storage configuration', () => {
 
 describe('avatar uploads', () => {
   it('keeps the existing image when no replacement was selected', async () => {
-    const fetch = jest.spyOn(globalThis, 'fetch');
+    const fetch = vi.spyOn(globalThis, 'fetch');
     await uploadAvatar('http://storage', 42, '');
     expect(fetch).not.toHaveBeenCalled();
   });
 
   it('waits for storage acknowledgement and sends the target person ID', async () => {
     let acknowledge!: (response: Response) => void;
-    const fetch = jest.spyOn(globalThis, 'fetch').mockImplementation(
+    const fetch = vi.spyOn(globalThis, 'fetch').mockImplementation(
       () =>
         new Promise<Response>((resolve) => {
           acknowledge = resolve;
@@ -56,14 +57,14 @@ describe('avatar uploads', () => {
   });
 
   it.each([400, 500])('rejects HTTP %i instead of reporting success', async (status) => {
-    jest
-      .spyOn(globalThis, 'fetch')
-      .mockResolvedValue(Response.json({ error: 'Invalid image' }, { status }));
+    vi.spyOn(globalThis, 'fetch').mockResolvedValue(
+      Response.json({ error: 'Invalid image' }, { status })
+    );
     await expect(uploadAvatar('http://storage', 42, 'bad')).rejects.toThrow('Avatar upload failed');
   });
 
   it('rejects legacy error responses even with HTTP 200', async () => {
-    jest.spyOn(globalThis, 'fetch').mockResolvedValue(Response.json({ error: 'Failed' }));
+    vi.spyOn(globalThis, 'fetch').mockResolvedValue(Response.json({ error: 'Failed' }));
     await expect(uploadAvatar('http://storage', 42, 'bad')).rejects.toThrow('Avatar upload failed');
   });
 });

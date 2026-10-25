@@ -24,11 +24,11 @@ We accept any help with developing, testing and improving our system, so please 
 pull requests for missing functionality.
 
 Run `make container_test` from this directory to seed the test database and run the tests with
-combined coverage from Jest and the separate Twirp test server. The server flushes its V8 coverage
-before teardown; c8 converts it to Istanbul JSON, and nyc merges it with Jest's V8 coverage.
+combined coverage from Vitest and the separate Twirp test server. The server flushes its V8 coverage
+before teardown; c8 converts it to Istanbul JSON, and nyc merges it with Vitest's V8 coverage.
 The combined console summary, `coverage/index.html`, `coverage/lcov.info`, and
 `coverage/coverage-final.json` include both processes. The separate reports remain in
-`coverage/jest` and `coverage/server` for inspection. Coverage is cleared before each run,
+`coverage/vitest` and `coverage/server` for inspection. Coverage is cleared before each run,
 and failed tests still return a failing exit status after report generation.
 
 The `test_verbose` and `test_noserver` targets retain their existing debugging behavior without

@@ -78,9 +78,6 @@ importers:
       oxlint-tsgolint:
         specifier: ^7.0.2001
         version: 7.0.2001
-      prettier:
-        specifier: ^3.3.3
-        version: 3.3.3
       typescript:
         specifier: 7.0.2
         version: 7.0.2
@@ -1280,16 +1277,16 @@ packages:
     engines: {node: '>= 0.8'}
 
   i18n-dialect@https://codeload.github.com/ctizen/i18n-dialect/tar.gz/392cc08f9937aa8bfdbe5e45a7327954d5dcb01e:
-    resolution: {tarball: https://codeload.github.com/ctizen/i18n-dialect/tar.gz/392cc08f9937aa8bfdbe5e45a7327954d5dcb01e}
+    resolution: {gitHosted: true, tarball: https://codeload.github.com/ctizen/i18n-dialect/tar.gz/392cc08f9937aa8bfdbe5e45a7327954d5dcb01e}
     version: 2.0.2
 
   i18n-json-po@https://codeload.github.com/ctizen/i18n-json-po/tar.gz/bdef8fefd3b939ea067e85ee520161d27d6afafd:
-    resolution: {tarball: https://codeload.github.com/ctizen/i18n-json-po/tar.gz/bdef8fefd3b939ea067e85ee520161d27d6afafd}
+    resolution: {gitHosted: true, tarball: https://codeload.github.com/ctizen/i18n-json-po/tar.gz/bdef8fefd3b939ea067e85ee520161d27d6afafd}
     version: 2.0.3
     hasBin: true
 
   i18n-po-json@https://codeload.github.com/ctizen/i18n-po-json/tar.gz/1fd6515e682ae38db21e71447669c1148cdec9b5:
-    resolution: {tarball: https://codeload.github.com/ctizen/i18n-po-json/tar.gz/1fd6515e682ae38db21e71447669c1148cdec9b5}
+    resolution: {gitHosted: true, tarball: https://codeload.github.com/ctizen/i18n-po-json/tar.gz/1fd6515e682ae38db21e71447669c1148cdec9b5}
     version: 2.0.8
     hasBin: true
 
@@ -1297,7 +1294,7 @@ packages:
     resolution: {integrity: sha512-GTfRkYXsLKH0geFb4JRP/KBFXN6YM6PpXkpuG2lEWrwAF6bGLaDSJfh/kwc3vqtIqEmvnQ+7fL6cgIcupKtROA==}
 
   i18n-stex@https://codeload.github.com/ctizen/stex/tar.gz/0b763d09939daef502510d78edccb94e4056f918:
-    resolution: {tarball: https://codeload.github.com/ctizen/stex/tar.gz/0b763d09939daef502510d78edccb94e4056f918}
+    resolution: {gitHosted: true, tarball: https://codeload.github.com/ctizen/stex/tar.gz/0b763d09939daef502510d78edccb94e4056f918}
     version: 2.1.2
     hasBin: true
 
@@ -1605,11 +1602,6 @@ packages:
   prelude-ls@1.2.1:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
     engines: {node: '>= 0.8.0'}
-
-  prettier@3.3.3:
-    resolution: {integrity: sha512-i2tDNA0O5IrMO757lfrdQZCc2jPNDVntV0m/+4whiDfWaTKfMNgR7Qz0NAeGz/nRqF4m5/6CLzbP4/liHt12Ew==}
-    engines: {node: '>=14'}
-    hasBin: true
 
   proxy-addr@2.0.7:
     resolution: {integrity: sha512-llQsMLSUDUPT44jdrU/O37qlnifitDP+ZwrmmZcoSKyLKvtZxpyV0n2/bD/N4tBAAZ/gJEdZU7KMraoK1+XYAg==}
@@ -3157,8 +3149,6 @@ snapshots:
   path-to-regexp@0.1.10: {}
 
   prelude-ls@1.2.1: {}
-
-  prettier@3.3.3: {}
 
   proxy-addr@2.0.7:
     dependencies:

@@ -7,27 +7,23 @@
   "license": "GPLv3",
   "scripts": {
     "build": "tsx build.ts",
-    "test": "NODE_OPTIONS=\"$NODE_OPTIONS --experimental-vm-modules\" jest",
+    "test": "vitest run",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "sharp": "^0.35.5"
   },
   "devDependencies": {
-    "@jest/globals": "^30.4.1",
-    "@swc/core": "^1.13.2",
-    "@swc/jest": "^0.2.39",
-    "@types/jest": "^30.0.0",
     "@types/node": "^24.0.13",
     "@typescript/native": "npm:typescript@7.0.2",
+    "@vitest/coverage-v8": "^4.1.10",
     "esbuild": "^0.28.1",
     "eslint-plugin-unused-imports": "^4.1.4",
-    "jest": "^30.0.5",
-    "jest-spec-reporter": "^1.0.19",
     "oxfmt": "0.60.0",
     "oxlint": "1.75.0",
     "oxlint-tsgolint": "^7.0.2001",
     "tsx": "^4.20.3",
-    "typescript": "npm:@typescript/typescript6"
+    "typescript": "npm:@typescript/typescript6",
+    "vitest": "^4.1.10"
   }
 }

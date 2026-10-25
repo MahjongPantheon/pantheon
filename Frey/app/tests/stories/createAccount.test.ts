@@ -6,7 +6,7 @@ describe('Create Account', () => {
 
   it('should not create new account from api without bootstrap', () => {
     const email = makeUniqueEmail();
-    return expect(() =>
+    return expect(
       frey.CreateAccount({
         city: 'testcity',
         country: 'testcountry',
@@ -29,7 +29,7 @@ describe('Create Account', () => {
   it('should not create another account with same email', async () => {
     const email = makeUniqueEmail();
     await createUser(frey, email);
-    return expect(() => createUser(frey, email)).rejects.toEqual(
+    return expect(createUser(frey, email)).rejects.toEqual(
       new ExistsError('This account is already registered')
     );
   });
