@@ -59,6 +59,13 @@ export const BasicSettings: React.FC<BasicSettingsProps> = ({
               data-testid='forseti-event-settings-basic-settings-event-type'
               label={i18n._t('Select event type')}
               {...form.getInputProps('event.type')}
+              onChange={(value) => {
+                form.setFieldValue('event.type', value);
+                form.setFieldValue(
+                  'ruleset.useAggregatedYakuhai',
+                  value === EventType.EVENT_TYPE_TOURNAMENT
+                );
+              }}
             >
               <Group mt='xs'>
                 {(Object.keys(typeMap) as EventType[])
@@ -100,7 +107,10 @@ export const BasicSettings: React.FC<BasicSettingsProps> = ({
                 form.setFieldValue('event.ruleset', v);
                 const rules = rulesets.find((r) => r.value === v)?.rules;
                 if (rules) {
-                  setFormValues(form.getTransformedValues().event, rules);
+                  setFormValues(form.getTransformedValues().event, {
+                    ...rules,
+                    useAggregatedYakuhai: form.values.ruleset.useAggregatedYakuhai,
+                  });
                 }
               }
             }}

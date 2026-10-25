@@ -5,6 +5,44 @@ import { withScreenshotsOnTestFail } from './utils/screenshots';
 
 withScreenshotsOnTestFail();
 
+test('New event types set yakuhai defaults and ruleset selection preserves the choice', async ({
+  page,
+  request,
+}) => {
+  test.setTimeout(120_000);
+  const [administrator] = await createTestAccounts(request, 1);
+  await page.goto(process.env.FORSETI_URL!);
+  await page.getByTestId('forseti-login-email').fill(administrator.email);
+  await page.getByTestId('forseti-login-password').fill(administrator.password);
+  await page.getByTestId('forseti-login-submit').click();
+  await expect(page.getByTestId('forseti-owned-events-page')).toBeVisible();
+  await page.getByTestId('forseti-menu-sidebar-create-event').click();
+  const checkbox = page.getByTestId('forseti-event-settings-yakuhai-aggregated');
+  const basic = page.getByTestId('forseti-event-settings-tab-basic');
+  const yaku = page.getByTestId('forseti-event-settings-tab-yaku');
+  await yaku.click();
+  await expect(checkbox).not.toBeChecked();
+  for (const type of ['TOURNAMENT', 'ONLINE', 'LOCAL', 'TOURNAMENT']) {
+    await basic.click();
+    await page.getByTestId(`forseti-event-settings-event-type-EVENT_TYPE_${type}`).check();
+    await yaku.click();
+    await expect(checkbox).toBeChecked({ checked: type === 'TOURNAMENT' });
+  }
+  await basic.click();
+  await page.getByTestId('forseti-event-settings-basic-settings-event-ruleset').click();
+  await page
+    .getByRole('option', { name: 'European Mahjong Association rules', exact: true })
+    .click();
+  await yaku.click();
+  await expect(checkbox).toBeChecked();
+  await checkbox.uncheck();
+  await basic.click();
+  await page.getByTestId('forseti-event-settings-basic-settings-event-ruleset').click();
+  await page.getByRole('option', { name: 'Russian Riichi Community rules', exact: true }).click();
+  await yaku.click();
+  await expect(checkbox).not.toBeChecked();
+});
+
 test('Saving existing event settings preserves allowed and excluded yaku in both modes', async ({
   page,
   request,

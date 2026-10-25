@@ -142,5 +142,7 @@ remain valid for historical hands. The event ruleset selects separate wind/drago
 names or aggregated Yakuhai ×1–×4 for Tyr entry and new online imports. Existing imported hands are unchanged.
 
 Apply `Migration20261025000000` to keep all existing events in aggregated mode.
-New events default to separate names (`useAggregatedYakuhai = false`). Admins can
-switch the mode in Forseti’s yaku settings. No historical hands are rewritten.
+Ruleset presets default to separate names (`useAggregatedYakuhai = false`).
+Forseti’s Create event page defaults tournaments to aggregated yakuhai and local
+or online events to separate names. Admins can change the checkbox manually.
+No historical hands are rewritten.
