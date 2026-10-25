@@ -22,7 +22,7 @@ RUN apk update && \
     git \
     icu-data-full \
     nginx \
-    nodejs \
+    nodejs-current \
     npm \
     libstdc++ \
     libgcc \
