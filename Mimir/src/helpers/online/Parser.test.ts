@@ -82,6 +82,49 @@ const prepareTestEntities = async () => {
  * Replay parser integration test suite
  */
 describe('OnlinelogParserTest', () => {
+  test('persists independent pre-round states from XML', async () => {
+    const [repo, event] = await prepareTestEntities();
+    try {
+      const content = readFileSync(join(import.meta.dirname, 'testdata/usual.xml'), 'utf-8');
+      const [session, , rounds] = await new OnlineParser(repo).parseToSession(event, content);
+      const playerIds = session.intermediateResults!.playerIds;
+      const initTokens = [...content.matchAll(/<INIT\b[^>]*>/g)].map(([token]) => ({
+        counters: token
+          .match(/seed="([^"]+)"/)![1]
+          .split(',')
+          .map(Number),
+        scores: token
+          .match(/ten="([^"]+)"/)![1]
+          .split(',')
+          .map((score) => Number(score) * 100),
+      }));
+      session.extraTime = 0;
+      await repo.em.flush();
+      const roundIds = rounds.map((round) => round.id);
+      repo.em.clear();
+      const savedRounds = await repo.em.find(
+        RoundEntity,
+        { id: { $in: roundIds } },
+        { orderBy: { id: 1 } }
+      );
+
+      expect(savedRounds).toHaveLength(initTokens.length);
+      savedRounds.forEach((round, index) => {
+        const { counters, scores } = initTokens[index];
+        expect(round.lastSessionState).toMatchObject({
+          scores: Object.fromEntries(playerIds.map((id, seat) => [id, scores[seat]])),
+          playerIds,
+          round: counters[0] + 1,
+          honba: counters[1],
+          riichiBets: counters[2],
+          ...(index > 0 ? { lastOutcome: savedRounds[index - 1].outcome } : {}),
+        });
+      });
+    } finally {
+      await repo.destroy();
+    }
+  });
+
   test.each([false, true])('uses the event yakuhai mode (aggregated=%s)', async (aggregated) => {
     const [repo, event] = await prepareTestEntities();
     try {

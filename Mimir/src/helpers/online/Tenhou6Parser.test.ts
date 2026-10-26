@@ -87,6 +87,58 @@ const prepareTestEntities = async () => {
  * Replay parser integration test suite
  */
 describe('Tenhou6ParserTest', () => {
+  test.each([
+    ['usual.json', '2023101214gm-00a9-0000-8cb902d4', PlatformType.PLATFORM_TYPE_TENHOUNET],
+    [
+      'tensoul_usual.json',
+      '231014-84c11a6f-b3f7-4363-966e-25f37886cfbf',
+      PlatformType.PLATFORM_TYPE_MAHJONGSOUL,
+    ],
+    [
+      'doubleron_and_honba.json',
+      '2018020420gm-0001-14423-3290b527',
+      PlatformType.PLATFORM_TYPE_TENHOUNET,
+    ],
+  ])('persists independent pre-round states for %s', async (file, replayHash, platform) => {
+    const [repo, event] = await prepareTestEntities();
+    try {
+      const content = readFileSync(join(import.meta.dirname, 'testdata/format6', file), 'utf-8');
+      const [session, , rounds] = await new Tenhou6OnlineParser(repo).parseToSession(
+        event,
+        replayHash,
+        content,
+        false,
+        platform
+      );
+      const playerIds = session.intermediateResults!.playerIds;
+      const replayRounds = JSON.parse(content).log;
+      session.extraTime = 0;
+      await repo.em.flush();
+      const roundIds = rounds.map((round) => round.id);
+      repo.em.clear();
+      const savedRounds = await repo.em.find(
+        RoundEntity,
+        { id: { $in: roundIds } },
+        { orderBy: { id: 1 } }
+      );
+
+      expect(savedRounds).toHaveLength(replayRounds.length);
+      savedRounds.forEach((round, index) => {
+        const [counters, scores] = replayRounds[index];
+        expect(round.lastSessionState).toMatchObject({
+          scores: Object.fromEntries(playerIds.map((id, seat) => [id, scores[seat]])),
+          playerIds,
+          round: counters[0] + 1,
+          honba: counters[1],
+          riichiBets: counters[2],
+          ...(index > 0 ? { lastOutcome: savedRounds[index - 1].outcome } : {}),
+        });
+      });
+    } finally {
+      await repo.destroy();
+    }
+  });
+
   test.each([false, true])('uses the event yakuhai mode (aggregated=%s)', async (aggregated) => {
     const [repo, event] = await prepareTestEntities();
     try {
