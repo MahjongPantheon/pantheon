@@ -26,13 +26,52 @@ export function formatRoundIndex(roundIndex: number) {
   return winds[roundIndex] ?? '?';
 }
 
-// Return plain text: player names and translations are rendered by React, never as HTML.
+export type LastRoundPart = { text: string; playerId?: number };
+
 export function formatLastRound(
   round: Round,
   players: Record<number, Pick<Player, 'title'>>,
   i18n: I18nService
 ): string[] {
-  const player = (id: number) => players[id]?.title || i18n._t('Player #%1', [id]);
+  return formatLastRoundParts(round, players, i18n).map((line) =>
+    line.map((part) => part.text).join('')
+  );
+}
+
+export function formatLastRoundParts(
+  round: Round,
+  players: Record<number, Pick<Player, 'title'>>,
+  i18n: I18nService
+): LastRoundPart[][] {
+  const references: LastRoundPart[] = [];
+  const lines = formatWithPlayerTokens(round, i18n, (id) => {
+    const index =
+      references.push({
+        text: players[id]?.title || i18n._t('Player #%1', [id]),
+        playerId: id,
+      }) - 1;
+    return `\u0000player:${index}\u0000`;
+  });
+  return lines.map((line) => {
+    const parts: LastRoundPart[] = [];
+    let offset = 0;
+    // Parse only our placeholders. Names are inserted afterwards, so overlapping names,
+    // HTML characters, and names matching yaku or placeholder text remain literal text.
+    for (const match of line.matchAll(/\u0000player:(\d+)\u0000/g)) {
+      if (match.index > offset) parts.push({ text: line.slice(offset, match.index) });
+      parts.push(references[Number(match[1])]);
+      offset = match.index + match[0].length;
+    }
+    if (offset < line.length) parts.push({ text: line.slice(offset) });
+    return parts;
+  });
+}
+
+function formatWithPlayerTokens(
+  round: Round,
+  i18n: I18nService,
+  player: (id: number) => string
+): string[] {
   const names = (ids: number[]) => ids.map(player).join(', ') || '--';
   const tenpai = (ids: number[]) =>
     ids.length === 4 ? i18n._t('all tenpai') : ids.length === 0 ? i18n._t('all noten') : names(ids);

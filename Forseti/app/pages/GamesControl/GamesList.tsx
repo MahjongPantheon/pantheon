@@ -49,9 +49,10 @@ import {
 import * as React from 'react';
 import { useMediaQuery } from '@mantine/hooks';
 import { I18nService } from '../../services/i18n';
-import { formatLastRound, formatRoundIndex } from '../../helpers/lastRound';
+import { formatLastRoundParts, formatRoundIndex } from '../../helpers/lastRound';
 import { useI18n } from '../../hooks/i18n';
 import { Confirmation } from './Confirmation';
+import { LastRoundText } from '../../components/LastRoundText';
 import { PlayerAvatar } from '../../components/PlayerAvatar';
 import { useState } from 'react';
 import { EventsGetTimerStateResponse } from 'tsclients/proto/mimir.pb';
@@ -188,9 +189,9 @@ export function GamesList({
                     </Text>
                   )}
                   {t.lastRound &&
-                    formatLastRound(t.lastRound, players, i18n).map((line, index) => (
+                    formatLastRoundParts(t.lastRound, players, i18n).map((line, index) => (
                       <Text size='sm' key={index}>
-                        {line}
+                        <LastRoundText parts={line} />
                       </Text>
                     ))}
                 </Box>

@@ -1,6 +1,9 @@
 // @vitest-environment node
 
 import { describe, expect, it } from 'vitest';
+import { createElement } from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
+import { LastRoundText } from '../components/LastRoundText';
 import {
   AbortResult,
   ChomboResult,
@@ -13,7 +16,7 @@ import {
   TsumoResult,
 } from 'tsclients/proto/atoms.pb';
 import { I18nService } from '../services/i18n';
-import { formatLastRound, formatRoundIndex } from './lastRound';
+import { formatLastRound, formatLastRoundParts, formatRoundIndex } from './lastRound';
 import { YakuId } from './yaku';
 
 const i18n = {
@@ -184,5 +187,124 @@ describe('last round in games management', () => {
     expect(formatRoundIndex(0)).toBe('?');
     expect(formatRoundIndex(17)).toBe('?');
     expect(formatRoundIndex(16)).toBe('北4');
+  });
+});
+
+describe('last round player emphasis', () => {
+  const render = (round: Round, profiles = players, locale = i18n) =>
+    formatLastRoundParts(round, profiles, locale).map((parts) =>
+      renderToStaticMarkup(createElement(LastRoundText, { parts }))
+    );
+
+  it('bolds winner, loser, pao, and each riichi player without bolding scoring details', () => {
+    const round = Round.initialize({
+      ron: RonResult.initialize({
+        winnerId: 1,
+        loserId: 2,
+        paoPlayerId: 3,
+        riichiBets: [1, 4],
+        yaku: [YakuId.RIICHI],
+        han: 3,
+        fu: 30,
+      }),
+    });
+    expect(render(round)).toEqual([
+      'Ron, <strong>Alice</strong> from <strong>Bob</strong> (Riichi, 3 han, 30 fu, pao: <strong>Carol</strong>), riichi: <strong>Alice</strong>, <strong>Dave</strong>',
+    ]);
+  });
+
+  it.each<[Round, string[]]>([
+    [
+      Round.initialize({
+        tsumo: TsumoResult.initialize({ winnerId: 1, paoPlayerId: 2, riichiBets: [3], han: 5 }),
+      }),
+      ['Alice', 'Bob', 'Carol'],
+    ],
+    [
+      Round.initialize({ draw: DrawResult.initialize({ tempai: [1, 2], riichiBets: [3] }) }),
+      ['Alice', 'Bob', 'Carol'],
+    ],
+    [Round.initialize({ abort: AbortResult.initialize({ riichiBets: [4] }) }), ['Dave']],
+    [Round.initialize({ chombo: ChomboResult.initialize({ loserId: 2 }) }), ['Bob']],
+    [
+      Round.initialize({
+        nagashi: NagashiResult.initialize({ nagashi: [1, 2], tempai: [3], riichiBets: [4] }),
+      }),
+      ['Alice', 'Bob', 'Carol', 'Dave'],
+    ],
+  ])('bolds every player in outcome %j', (round, expected) => {
+    const html = render(round).join('');
+    expect([...html.matchAll(/<strong>(.*?)<\/strong>/g)].map((match) => match[1])).toEqual(
+      expected
+    );
+  });
+
+  it('keeps multiron winners on separate lines with all participants bold', () => {
+    const round = Round.initialize({
+      multiron: MultironResult.initialize({
+        loserId: 4,
+        riichiBets: [3],
+        wins: [
+          MultironWin.initialize({ winnerId: 1, paoPlayerId: 2, han: 5 }),
+          MultironWin.initialize({ winnerId: 2, han: 5 }),
+        ],
+      }),
+    });
+    const lines = render(round);
+    expect(lines).toHaveLength(2);
+    expect(lines[0]).toBe(
+      'Ron, <strong>Alice</strong> from <strong>Dave</strong> (5 han, pao: <strong>Bob</strong>), riichi: <strong>Carol</strong>'
+    );
+    expect(lines[1]).toBe(
+      'Ron, <strong>Bob</strong> from <strong>Dave</strong> (5 han), riichi: <strong>Carol</strong>'
+    );
+  });
+
+  it('bolds only names when they overlap or equal yaku and escapes hostile characters', () => {
+    const round = Round.initialize({
+      ron: RonResult.initialize({
+        winnerId: 1,
+        loserId: 2,
+        paoPlayerId: 3,
+        riichiBets: [4],
+        yaku: [YakuId.RIICHI],
+        han: 3,
+        fu: 30,
+      }),
+    });
+    expect(
+      render(round, {
+        1: { title: 'Riichi' },
+        2: { title: 'Riichi Riichi' },
+        3: { title: '<script>%1 $&</script>' },
+        4: { title: '\u0000player:0\u0000' },
+      })
+    ).toEqual([
+      'Ron, <strong>Riichi</strong> from <strong>Riichi Riichi</strong> (Riichi, 3 han, 30 fu, pao: <strong>&lt;script&gt;%1 $&amp;&lt;/script&gt;</strong>), riichi: <strong>\u0000player:0\u0000</strong>',
+    ]);
+  });
+
+  it('preserves translated placeholder order and repeated player references', () => {
+    const locale = {
+      _t: (message: string, values: (string | number)[] = []) =>
+        i18n._t(
+          message === 'Ron, %1 from %2 (%3), riichi: %4' ? '%2 → %1 (%3), %1; %4' : message,
+          values
+        ),
+    } as unknown as I18nService;
+    const round = Round.initialize({
+      ron: RonResult.initialize({ winnerId: 1, loserId: 2, han: 5 }),
+    });
+    expect(render(round, players, locale)).toEqual([
+      '<strong>Bob</strong> → <strong>Alice</strong> (5 han), <strong>Alice</strong>; --',
+    ]);
+  });
+
+  it('bolds fallback player labels but keeps all-tenpai and empty-list labels plain', () => {
+    const round = Round.initialize({ chombo: ChomboResult.initialize({ loserId: 99 }) });
+    expect(render(round)).toEqual(['Chombo, <strong>Player #99</strong>']);
+    expect(
+      render(Round.initialize({ draw: DrawResult.initialize({ tempai: [1, 2, 3, 4] }) }))
+    ).toEqual(['Draw, tempai: all tenpai, riichi: --']);
   });
 });
