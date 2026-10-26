@@ -21,7 +21,12 @@ import {
   AppActionTypes,
   REMOVE_YAKU,
   TOGGLE_RIICHI_NOTIFICATION,
+  SET_YAKU_ADVICE,
+  RESOLVE_YAKU_ADVICE,
 } from '../actions/interfaces';
+import { getWindYaku, windYaku } from '../../helpers/yakuhai';
+import { getYakuAdvice } from '../../helpers/yakuValues';
+import { getSelectedYaku } from '../selectors/yaku';
 import { YakuId } from '../../helpers/yaku';
 import { IAppState } from '../interfaces';
 import { RoundOutcome } from 'tsclients/proto/atoms.pb';
@@ -30,6 +35,21 @@ export const yaku =
   (mw: MiddlewareAPI<Dispatch<AppActionTypes>, IAppState>) =>
   (next: Dispatch<AppActionTypes>) =>
   (action: AppActionTypes) => {
+    if (action.type === RESOLVE_YAKU_ADVICE) {
+      const advice = mw.getState().yakuAdvice;
+      // Ignore duplicate clicks or callbacks from a dialog that has been replaced.
+      if (!advice || advice !== action.payload.advice) return;
+      mw.dispatch({ type: SET_YAKU_ADVICE, payload: undefined });
+      mw.dispatch({
+        type: action.payload.approve ? ADD_YAKU : REMOVE_YAKU,
+        payload: {
+          id: action.payload.approve ? advice.expectedYaku : advice.lastYaku,
+          winner: advice.winner,
+        },
+      });
+      return;
+    }
+    const before = mw.getState();
     switch (action.type) {
       case ADD_YAKU:
       case REMOVE_YAKU:
@@ -56,4 +76,47 @@ export const yaku =
       default:
         next(action);
     }
+    const after = mw.getState();
+    if (action.type === SET_YAKU_ADVICE) return;
+    if (
+      after.yakuAdvice &&
+      (before.currentOutcome !== after.currentOutcome ||
+        before.currentScreen !== after.currentScreen)
+    ) {
+      mw.dispatch({ type: SET_YAKU_ADVICE, payload: undefined });
+    }
+    if (action.type !== ADD_YAKU) return;
+    const outcome = after.currentOutcome;
+    if (
+      outcome?.selectedOutcome !== RoundOutcome.ROUND_OUTCOME_TSUMO &&
+      outcome?.selectedOutcome !== RoundOutcome.ROUND_OUTCOME_RON
+    )
+      return;
+    const winner =
+      action.payload.winner ??
+      (outcome.selectedOutcome === RoundOutcome.ROUND_OUTCOME_TSUMO ? outcome.winner : undefined);
+    if (!winner) return;
+    const selected = getSelectedYaku(after)[winner];
+    if (
+      !selected?.includes(action.payload.id) ||
+      getSelectedYaku(before)[winner]?.includes(action.payload.id)
+    )
+      return;
+    const playerIndex = after.players?.findIndex((player) => player.id === winner) ?? -1;
+    // Four yakuhai han imply four triplets only when the two winds differ.
+    // A double wind and two dragons contain just three triplets in either entry mode.
+    const distinctWinds =
+      playerIndex >= 0 &&
+      outcome.roundIndex > 0 &&
+      !windYaku.some((pair) => getWindYaku(pair[0], outcome.roundIndex, playerIndex)?.length === 2);
+    const advice = getYakuAdvice(selected, outcome.selectedOutcome, distinctWinds);
+    if (advice)
+      mw.dispatch({
+        type: SET_YAKU_ADVICE,
+        payload: {
+          winner,
+          lastYaku: action.payload.id,
+          expectedYaku: advice === 'suuankou' ? YakuId.SUUANKOU : YakuId.SANANKOU,
+        },
+      });
   };

@@ -27,6 +27,7 @@ import {
 import { YakuId } from '../../helpers/yaku';
 import { addYakuToList, limits, pack, unpack } from '../../helpers/yakuCompatibility';
 import { getFixedFu, getHan } from '../../helpers/yakuValues';
+import { canSelectShosangen, yakuhaiCount } from '../../helpers/yakuhai';
 import { Graph } from '../../helpers/graph';
 import { RoundOutcome } from 'tsclients/proto/atoms.pb';
 
@@ -191,6 +192,16 @@ type YakuModException = (
 ) => YakuId[];
 
 const yakuModAfterExceptions: YakuModException[] = [
+  function requiredShosangenYaku(outcome, winProps, yList) {
+    if (!canSelectShosangen(yList)) yList = yList.filter((id) => id !== YakuId.SHOSANGEN);
+    if (
+      yList.includes(YakuId.SHOSANGEN) &&
+      (yakuhaiCount(yList) === 4 || yList.includes(YakuId.IIPEIKOU)) &&
+      !yList.includes(YakuId.HONITSU)
+    )
+      yList.push(YakuId.HONITSU);
+    return yList;
+  },
   function ensureTsumoIfRiichi(outcome, winProps, yList) {
     if (outcome === RoundOutcome.ROUND_OUTCOME_TSUMO) {
       if (
@@ -210,7 +221,7 @@ const yakuModAfterExceptions: YakuModException[] = [
         if (pIdx !== -1) {
           yList.splice(pIdx, 1);
         }
-        if (!yList.includes(YakuId.MENZENTSUMO)) {
+        if (!yList.includes(YakuId.MENZENTSUMO) && !yList.some((id) => limits.includes(id))) {
           yList.push(YakuId.__OPENHAND);
         }
       } else if (yakuId === YakuId.__OPENHAND) {
@@ -244,7 +255,8 @@ export function addYakuToProps(
   yakuId: YakuId,
   enabledYaku: YakuId[],
   yakuGraph: Graph<Yaku> | undefined,
-  riichiPlayers: number[]
+  riichiPlayers: number[],
+  withKuitan = true
 ): WinProps | undefined {
   if (!yakuGraph) {
     return;
@@ -255,6 +267,9 @@ export function addYakuToProps(
     return undefined;
   }
 
+  if (yakuId === YakuId.SHOSANGEN && !canSelectShosangen(yList)) return;
+  if (yakuId === YakuId.TANYAO && yList.includes(YakuId.__OPENHAND) && !withKuitan) return;
+
   // reset dora count if limit is added
   if (limits.includes(yakuId)) {
     winProps = {
@@ -264,15 +279,18 @@ export function addYakuToProps(
   }
 
   yList = yakuModBeforeExceptions.reduce(
-    (list, ex) => ex(selectedOutcome, winProps, yList, yakuId, riichiPlayers),
+    (list, ex) => ex(selectedOutcome, winProps, list, yakuId, riichiPlayers),
     yList
   );
   yList = addYakuToList(yakuGraph, yakuId, yList);
   yList = yakuModAfterExceptions.reduce(
-    (list, ex) => ex(selectedOutcome, winProps, yList, yakuId, riichiPlayers),
+    (list, ex) => ex(selectedOutcome, winProps, list, yakuId, riichiPlayers),
     yList
   );
 
+  if (!withKuitan && yList.includes(YakuId.__OPENHAND)) {
+    yList = yList.filter((id) => id !== YakuId.TANYAO);
+  }
   const packedList = pack(yList);
 
   if (winProps.yaku !== packedList) {
@@ -289,7 +307,7 @@ export function addYakuToProps(
     winProps = {
       ...winProps,
       yaku: packedList,
-      han: han || winProps.han,
+      han,
       fu: fu || winProps.fu,
       possibleFu: possibleFu || winProps.possibleFu,
     };
@@ -310,7 +328,7 @@ export function removeYakuFromProps(
   }
 
   yList = yakuModBeforeExceptions.reduce(
-    (list, ex) => ex(selectedOutcome, winProps, yList, yakuId, riichiPlayers),
+    (list, ex) => ex(selectedOutcome, winProps, list, yakuId, riichiPlayers),
     yList
   );
 
@@ -320,7 +338,7 @@ export function removeYakuFromProps(
   }
 
   yList = yakuModAfterExceptions.reduce(
-    (list, ex) => ex(selectedOutcome, winProps, yList, yakuId, riichiPlayers),
+    (list, ex) => ex(selectedOutcome, winProps, list, yakuId, riichiPlayers),
     yList
   );
 

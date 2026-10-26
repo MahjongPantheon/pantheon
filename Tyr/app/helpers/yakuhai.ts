@@ -33,3 +33,22 @@ export function getWindYaku(id: Y, roundIndex: number, playerIndex: number): Y[]
     ...(wind === roundWind ? [windYaku[wind][1]] : []),
   ];
 }
+
+// Aggregated entry records han, not dragon identities. Two or more may contain
+// the required dragon pons; named entry can check them precisely.
+export function canSelectShosangen(selected: Y[]): boolean {
+  return (
+    dragonYaku.filter((id) => selected.includes(id)).length >= 2 ||
+    selected.some((id) => [Y.YAKUHAI2, Y.YAKUHAI3, Y.YAKUHAI4].includes(id))
+  );
+}
+
+export function yakuhaiCount(selected: Y[]): number {
+  return (
+    selected.filter((id) => yakuhai.includes(id)).length +
+    aggregatedYakuhai.reduce(
+      (count, id, index) => count + (selected.includes(id) ? index + 1 : 0),
+      0
+    )
+  );
+}

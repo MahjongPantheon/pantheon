@@ -51,6 +51,7 @@ import { i18n } from './i18n';
 import { IStorage } from '../../../Common/storage';
 import { v4 } from 'uuid';
 import { fontLoader } from '../helpers/fontLoader';
+import { YakuAdviceDialog } from './base/YakuAdviceDialog/YakuAdviceDialog';
 import { ModalDialog } from './base/ModalDialog/ModalDialog';
 import clsx from 'classnames';
 import { TableCurrentGame } from './screens/TableCurrentGame/TableCurrentGame';
@@ -182,6 +183,7 @@ export const App = (props: IProps) => {
       >
         <i18n.Provider value={i18nService}>
           <CurrentScreen state={state} dispatch={dispatch} newyear={haveNySpecs} />
+          {state.yakuAdvice && <YakuAdviceDialog advice={state.yakuAdvice} dispatch={dispatch} />}
           {state.riichiNotificationShown && (
             <ModalDialog
               testIdPrefix='tyr-riichi-dialog'

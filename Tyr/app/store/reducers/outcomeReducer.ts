@@ -77,7 +77,8 @@ function addYakuList(state: IAppState, yakuToAdd: YakuId[], targetPlayer?: numbe
           yId,
           stateUpdated.gameConfig?.rulesetConfig.allowedYaku ?? [],
           stateUpdated.yakuList,
-          stateUpdated.currentOutcome.riichiBets
+          stateUpdated.currentOutcome.riichiBets,
+          stateUpdated.gameConfig?.rulesetConfig.withKuitan ?? false
         );
         if (!winProps) {
           return;
@@ -93,7 +94,8 @@ function addYakuList(state: IAppState, yakuToAdd: YakuId[], targetPlayer?: numbe
           yId,
           stateUpdated.gameConfig?.rulesetConfig.allowedYaku ?? [],
           stateUpdated.yakuList,
-          stateUpdated.currentOutcome.riichiBets
+          stateUpdated.currentOutcome.riichiBets,
+          stateUpdated.gameConfig?.rulesetConfig.withKuitan ?? false
         );
         if (!winProps) {
           return;

@@ -15,6 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import { YakuId } from '../helpers/yaku';
 import { AppOutcome, Yaku } from '../helpers/interfaces';
 import { Graph } from '../helpers/graph';
 import { RemoteError } from '../services/remoteError';
@@ -152,6 +153,11 @@ export interface IAppState {
   networkDialogShown: boolean;
 
   riichiNotificationShown?: boolean;
+  yakuAdvice?: {
+    winner: number;
+    lastYaku: YakuId;
+    expectedYaku: YakuId.SUUANKOU | YakuId.SANANKOU;
+  };
 
   penalties: Penalty[];
   penaltiesError?: ErrorState;
