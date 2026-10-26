@@ -15,6 +15,7 @@ Use a stable ID and one Markdown file per case, named `<lowercase-id>-<scenario>
 | [SMOKE-004](smoke-004-create-event-with-users.md)      | Create a local event and register eight players                            | `SMOKE-004: Create a local event and add players there` in `tests/events.spec.ts`                                                                 |
 | [SMOKE-005](smoke-005-local-session-round-outcomes.md) | Finish a local session with varied outcomes and compare Tyr/Sigrun results | `SMOKE-005: Registered player can finish a local session and view matching results in Tyr and Sigrun` in `tests/local-session.spec.ts`            |
 | [SMOKE-006](smoke-006-basic-tournament-seatings.md)    | Complete a two-table tournament with random, Swiss, and interval seating   | `SMOKE-006: Administrator and players can complete a two-table tournament with random, Swiss, and interval seating` in `tests/tournament.spec.ts` |
+| [SETTINGS-001](settings-001-tobi-persistence.md)       | Save and reload enabled and disabled tobi settings                         | `SETTINGS-001: Administrator can save and reload the tobi setting` in `tests/tobi-settings.spec.ts`                                               |
 
 SMOKE-005 and SMOKE-006 share the [complete yaku hand catalogue](smoke-hand-catalogue.md) and explicit per-game score fixtures. Each event covers all 46 yaku, compatible combinations, and varied fu/dora; their per-attempt budgets are 30 and 60 minutes respectively.
 
