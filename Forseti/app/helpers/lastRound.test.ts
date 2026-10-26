@@ -28,7 +28,7 @@ const players = {
 };
 
 describe('last round in games management', () => {
-  it('includes the recorded round, dora plus ura-dora, han, fu, pao, and riichi in ron', () => {
+  it('includes dora plus ura-dora, han, fu, pao, and riichi without a round prefix in ron', () => {
     const round = Round.initialize({
       ron: RonResult.initialize({
         roundIndex: 5,
@@ -44,7 +44,7 @@ describe('last round in games management', () => {
       }),
     });
     expect(formatLastRound(round, players, i18n)).toEqual([
-      '南1: Ron, Alice from Bob (Riichi, dora 3, 4 han, 30 fu, pao: Carol), riichi: Alice, Dave',
+      'Ron, Alice from Bob (Riichi, dora 3, 4 han, 30 fu, pao: Carol), riichi: Alice, Dave',
     ]);
   });
 
@@ -62,7 +62,7 @@ describe('last round in games management', () => {
       }),
     });
     expect(formatLastRound(round, players, i18n)).toEqual([
-      '西1: Tsumo, Alice (Menzentsumo, dora 4, 5 han, pao: Carol), riichi: --',
+      'Tsumo, Alice (Menzentsumo, dora 4, 5 han, pao: Carol), riichi: --',
     ]);
   });
 
@@ -91,8 +91,8 @@ describe('last round in games management', () => {
       }),
     });
     expect(formatLastRound(round, players, i18n)).toEqual([
-      '東3: Ron, Alice from Dave (Riichi, dora 2, 3 han, 40 fu), riichi: Alice',
-      '東3: Ron, Bob from Dave (Daisangen, yakuman!, pao: Carol), riichi: Alice',
+      'Ron, Alice from Dave (Riichi, dora 2, 3 han, 40 fu), riichi: Alice',
+      'Ron, Bob from Dave (Daisangen, yakuman!, pao: Carol), riichi: Alice',
     ]);
   });
 
@@ -118,25 +118,25 @@ describe('last round in games management', () => {
       draw: DrawResult.initialize({ roundIndex: 8, tempai, riichiBets: [2] }),
     });
     expect(formatLastRound(round, players, i18n)).toEqual([
-      `南4: Draw, tempai: ${expected}, riichi: Bob`,
+      `Draw, tempai: ${expected}, riichi: Bob`,
     ]);
   });
 
-  it('includes the recorded round and players for abortive draw, chombo, and nagashi', () => {
+  it('includes players without a round prefix for abortive draw, chombo, and nagashi', () => {
     expect(
       formatLastRound(
         Round.initialize({ abort: AbortResult.initialize({ roundIndex: 2, riichiBets: [3] }) }),
         players,
         i18n
       )
-    ).toEqual(['東2: Abortive draw, riichi: Carol']);
+    ).toEqual(['Abortive draw, riichi: Carol']);
     expect(
       formatLastRound(
         Round.initialize({ chombo: ChomboResult.initialize({ roundIndex: 4, loserId: 2 }) }),
         players,
         i18n
       )
-    ).toEqual(['東4: Chombo, Bob']);
+    ).toEqual(['Chombo, Bob']);
     expect(
       formatLastRound(
         Round.initialize({
@@ -150,7 +150,7 @@ describe('last round in games management', () => {
         players,
         i18n
       )
-    ).toEqual(['南2: Nagashi mangan, nagashi: Alice, Bob, tempai: all noten, riichi: Carol']);
+    ).toEqual(['Nagashi mangan, nagashi: Alice, Bob, tempai: all noten, riichi: Carol']);
   });
 
   it('keeps a hand readable when player profiles are missing', () => {
@@ -166,7 +166,7 @@ describe('last round in games management', () => {
       }),
     });
     expect(formatLastRound(round, {}, i18n)).toEqual([
-      '東1: Ron, Player #1 from Player #2 (1 han, 30 fu, pao: Player #3), riichi: Player #4',
+      'Ron, Player #1 from Player #2 (1 han, 30 fu, pao: Player #3), riichi: Player #4',
     ]);
   });
 
@@ -175,7 +175,7 @@ describe('last round in games management', () => {
       chombo: ChomboResult.initialize({ roundIndex: 1, loserId: 1 }),
     });
     expect(formatLastRound(round, { 1: { title: '<b>Alice & Bob</b>' } }, i18n)).toEqual([
-      '東1: Chombo, <b>Alice & Bob</b>',
+      'Chombo, <b>Alice & Bob</b>',
     ]);
   });
 

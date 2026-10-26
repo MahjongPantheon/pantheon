@@ -36,7 +36,6 @@ export function formatLastRound(
   const names = (ids: number[]) => ids.map(player).join(', ') || '--';
   const tenpai = (ids: number[]) =>
     ids.length === 4 ? i18n._t('all tenpai') : ids.length === 0 ? i18n._t('all noten') : names(ids);
-  const line = (roundIndex: number, text: string) => `${formatRoundIndex(roundIndex)}: ${text}`;
   const hand = (win: {
     yaku: number[];
     dora: number;
@@ -65,76 +64,56 @@ export function formatLastRound(
   if (round.ron) {
     const ron = round.ron;
     return [
-      line(
-        ron.roundIndex,
-        i18n._t('Ron, %1 from %2 (%3), riichi: %4', [
-          player(ron.winnerId),
-          player(ron.loserId),
-          hand(ron),
-          names(ron.riichiBets),
-        ])
-      ),
+      i18n._t('Ron, %1 from %2 (%3), riichi: %4', [
+        player(ron.winnerId),
+        player(ron.loserId),
+        hand(ron),
+        names(ron.riichiBets),
+      ]),
     ];
   }
   if (round.multiron) {
     const ron = round.multiron;
     return ron.wins.map((win) =>
-      line(
-        ron.roundIndex,
-        i18n._t('Ron, %1 from %2 (%3), riichi: %4', [
-          player(win.winnerId),
-          player(ron.loserId),
-          hand(win),
-          names(ron.riichiBets),
-        ])
-      )
+      i18n._t('Ron, %1 from %2 (%3), riichi: %4', [
+        player(win.winnerId),
+        player(ron.loserId),
+        hand(win),
+        names(ron.riichiBets),
+      ])
     );
   }
   if (round.tsumo) {
     const tsumo = round.tsumo;
     return [
-      line(
-        tsumo.roundIndex,
-        i18n._t('Tsumo, %1 (%2), riichi: %3', [
-          player(tsumo.winnerId),
-          hand(tsumo),
-          names(tsumo.riichiBets),
-        ])
-      ),
+      i18n._t('Tsumo, %1 (%2), riichi: %3', [
+        player(tsumo.winnerId),
+        hand(tsumo),
+        names(tsumo.riichiBets),
+      ]),
     ];
   }
   if (round.chombo) {
-    return [line(round.chombo.roundIndex, i18n._t('Chombo, %1', [player(round.chombo.loserId)]))];
+    return [i18n._t('Chombo, %1', [player(round.chombo.loserId)])];
   }
   if (round.draw) {
     return [
-      line(
-        round.draw.roundIndex,
-        i18n._t('Draw, tempai: %1, riichi: %2', [
-          tenpai(round.draw.tempai),
-          names(round.draw.riichiBets),
-        ])
-      ),
+      i18n._t('Draw, tempai: %1, riichi: %2', [
+        tenpai(round.draw.tempai),
+        names(round.draw.riichiBets),
+      ]),
     ];
   }
   if (round.abort) {
-    return [
-      line(
-        round.abort.roundIndex,
-        i18n._t('Abortive draw, riichi: %1', [names(round.abort.riichiBets)])
-      ),
-    ];
+    return [i18n._t('Abortive draw, riichi: %1', [names(round.abort.riichiBets)])];
   }
   if (round.nagashi) {
     return [
-      line(
-        round.nagashi.roundIndex,
-        i18n._t('Nagashi mangan, nagashi: %1, tempai: %2, riichi: %3', [
-          names(round.nagashi.nagashi),
-          tenpai(round.nagashi.tempai),
-          names(round.nagashi.riichiBets),
-        ])
-      ),
+      i18n._t('Nagashi mangan, nagashi: %1, tempai: %2, riichi: %3', [
+        names(round.nagashi.nagashi),
+        tenpai(round.nagashi.tempai),
+        names(round.nagashi.riichiBets),
+      ]),
     ];
   }
   return [];
