@@ -23,6 +23,7 @@ import {
 import { IAppState } from '../interfaces';
 import {
   aggregatedYakuhai,
+  canSelectShosangen,
   getWindYaku,
   getYakuhaiToAdd,
   yakuhai,
@@ -149,6 +150,15 @@ function _excludeYaku(
     ) {
       return false;
     }
+
+    if (yakuId === YakuId.SHOSANGEN && !canSelectShosangen(rawYakuList)) return false;
+    if (
+      yakuId === YakuId.TANYAO &&
+      rawYakuList.includes(YakuId.__OPENHAND) &&
+      !state.gameConfig?.rulesetConfig.withKuitan
+    )
+      return false;
+    if (yakuId === YakuId.MENZENTSUMO && rawYakuList.includes(YakuId.__OPENHAND)) return false;
 
     if (yakuhai.includes(yakuId)) {
       const allowed = state.gameConfig?.rulesetConfig.allowedYaku ?? [];

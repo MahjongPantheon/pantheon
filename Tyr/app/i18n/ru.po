@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-25 00:56+0200\n"
+"POT-Creation-Date: 2026-10-26 20:56+0100\n"
 "PO-Revision-Date: 2025-08-08 00:45+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -28,16 +28,16 @@ msgstr[0] "Осталась %1 раздача"
 msgstr[1] "Осталось %1 раздачи"
 msgstr[2] "Осталось %1 раздач"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:182:28
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:201:28
 msgid "%1 fu"
 msgstr "%1 фу"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:221:17
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:240:17
 #: app/store/selectors/round.ts:36:15
 msgid "%1 han"
 msgstr "%1 хан"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:220:17
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:239:17
 #: app/store/selectors/round.ts:39:12
 msgid "%1 han %2 fu"
 msgstr "%1 хан, %2 фу"
@@ -130,7 +130,7 @@ msgstr "Дайсанген"
 msgid "Daisuushii"
 msgstr "Дайсуши"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:207:22
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:226:22
 msgid "Dora %1"
 msgstr "Дора %1"
 
@@ -296,7 +296,7 @@ msgstr "Новая игра"
 msgid "No games found"
 msgstr "Игры не найдены"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:228:18
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:247:18
 msgid "No pao"
 msgstr "Нет пао"
 
@@ -308,7 +308,7 @@ msgstr "Результаты отсутствуют"
 msgid "No tables are playing right now"
 msgstr "На данный момент ни один стол не играет"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:164:30
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:183:30
 msgid "Nobody selected"
 msgstr "Никто не выбран"
 
@@ -349,7 +349,7 @@ msgstr "Другие столы"
 msgid "Pantheon"
 msgstr "Pantheon"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:157:19
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:176:19
 msgid "Pao"
 msgstr "Пао"
 
@@ -538,9 +538,19 @@ msgstr "Оформление"
 msgid "There are no events you participate in right now"
 msgstr "На данный момент нет активных событий, в которых вы участвуете"
 
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:138:17
+msgid "This combination requires Sanankou. Please select Sanankou as well."
+msgstr ""
+
 #: app/helpers/yaku.ts:155:34 app/helpers/yaku.ts:156:39
 msgid "Toitoi"
 msgstr "Тойтой"
+
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:135:17
+msgid ""
+"Toitoi in a closed hand won by tsumo is Suuankou. Please select Suuankou "
+"instead."
+msgstr ""
 
 #: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:96:22
 #: app/store/selectors/table.ts:142:25 app/store/selectors/table.ts:410:14
@@ -579,7 +589,7 @@ msgstr "Ветер места: Запад"
 msgid "White dragon"
 msgstr "Белый дракон"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:131:18
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:146:25
 #: app/helpers/yaku.ts:234:39
 msgid "Yakuhai"
 msgstr "Якухай"
@@ -600,8 +610,8 @@ msgstr "Якухай 3"
 msgid "Yakuhai x4"
 msgstr "Якухай 4"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:217:20
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:218:17
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:236:20
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:237:17
 msgid "Yakuman"
 msgstr "Якуман"
 

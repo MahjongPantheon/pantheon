@@ -38,6 +38,7 @@ export type IProps = {
   selectedYaku: YakuId[];
   disabledYaku: YakuId[];
   doubleWindYaku?: YakuId;
+  yakuAdvice?: 'suuankou' | 'sanankou';
   onYakuClick: (yaku: YakuId, playerId: number) => void;
   isYakuman: boolean;
   yakuHan: number;
@@ -128,6 +129,15 @@ export const HandOfPlayer = (props: IProps) => {
     <div className={styles.wrapper} data-testid={`tyr-hand-player-${props.playerId}`}>
       <div className={clsx(styles.beforeYaku, topShadowDisabled ? styles.noShadow : null)}></div>
       <div className={styles.yakuList} onScroll={onScroll}>
+        {props.yakuAdvice && (
+          <div role='status' data-testid={`tyr-hand-player-${props.playerId}-yaku-advice`}>
+            {props.yakuAdvice === 'suuankou'
+              ? loc._t(
+                  'Toitoi in a closed hand won by tsumo is Suuankou. Please select Suuankou instead.'
+                )
+              : loc._t('This combination requires Sanankou. Please select Sanankou as well.')}
+          </div>
+        )}
         {props.yaku.filter((y) => y === YakuId.__OPENHAND).map(renderYakuButton)}
         {yakuhaiButtons.length > 0 && (
           <div

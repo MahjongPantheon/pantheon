@@ -80,7 +80,7 @@ it('shows four wind buttons and three dragons, hides legacy yaku, and disables n
     Y.SHOSANGEN,
     Y.DAISANGEN,
   ]);
-  expect(getDisabledYaku(state)[1]).toEqual([Y.WEST_SEAT_WIND, Y.NORTH_SEAT_WIND]);
+  expect(getDisabledYaku(state)[1]).toEqual([Y.WEST_SEAT_WIND, Y.NORTH_SEAT_WIND, Y.SHOSANGEN]);
 });
 
 it('uses each winner’s own seat on multiron', () => {

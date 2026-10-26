@@ -150,6 +150,7 @@ const combinableYaku = [
   [Y.__OPENHAND, Y.CHANKAN],
   [Y.__OPENHAND, Y.MENZENTSUMO], // TODO: this is handled on upper level by disabling buttons
 
+  [Y.TOITOI, Y.MENZENTSUMO],
   [Y.TOITOI, Y.HONROTO], // this is actually a requirement!
   [Y.TOITOI, Y.SANANKOU],
   [Y.TOITOI, Y.SANSHOKUDOUKOU],
@@ -269,6 +270,7 @@ const combinableYaku = [
   [Y.IIPEIKOU, Y.ITTSU],
   [Y.IIPEIKOU, Y.YAKUHAI1],
   [Y.IIPEIKOU, Y.YAKUHAI2],
+  [Y.IIPEIKOU, Y.YAKUHAI3],
   [Y.IIPEIKOU, Y.TANYAO],
   [Y.IIPEIKOU, Y.CHANTA],
   [Y.IIPEIKOU, Y.JUNCHAN],

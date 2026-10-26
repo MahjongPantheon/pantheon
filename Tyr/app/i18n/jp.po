@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-25 00:56+0200\n"
+"POT-Creation-Date: 2026-10-26 20:56+0100\n"
 "PO-Revision-Date: 2024-05-09 22:07+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -20,16 +20,16 @@ msgid "%1 deal left"
 msgid_plural "%1 deals left"
 msgstr[0] "残り %1 局 "
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:182:28
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:201:28
 msgid "%1 fu"
 msgstr "%1 符"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:221:17
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:240:17
 #: app/store/selectors/round.ts:36:15
 msgid "%1 han"
 msgstr "%1 番"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:220:17
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:239:17
 #: app/store/selectors/round.ts:39:12
 msgid "%1 han %2 fu"
 msgstr "%1 番 %2 符"
@@ -122,7 +122,7 @@ msgstr "大三元"
 msgid "Daisuushii"
 msgstr "大四喜"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:207:22
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:226:22
 msgid "Dora %1"
 msgstr "ドラ %1"
 
@@ -288,7 +288,7 @@ msgstr "対局開始"
 msgid "No games found"
 msgstr "対局が見つかりません"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:228:18
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:247:18
 msgid "No pao"
 msgstr "パオなし"
 
@@ -300,7 +300,7 @@ msgstr "結果が見つかりません"
 msgid "No tables are playing right now"
 msgstr "現在、テーブルでのゲームはありません"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:164:30
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:183:30
 msgid "Nobody selected"
 msgstr "誰も選択しませんでした"
 
@@ -341,7 +341,7 @@ msgstr "他のプレイヤーの対局"
 msgid "Pantheon"
 msgstr "Pantheon"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:157:19
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:176:19
 msgid "Pao"
 msgstr "パオ"
 
@@ -530,9 +530,19 @@ msgstr "テーマ"
 msgid "There are no events you participate in right now"
 msgstr "参加しているイベントはありません"
 
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:138:17
+msgid "This combination requires Sanankou. Please select Sanankou as well."
+msgstr ""
+
 #: app/helpers/yaku.ts:155:34 app/helpers/yaku.ts:156:39
 msgid "Toitoi"
 msgstr "対々和"
+
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:135:17
+msgid ""
+"Toitoi in a closed hand won by tsumo is Suuankou. Please select Suuankou "
+"instead."
+msgstr ""
 
 #: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:96:22
 #: app/store/selectors/table.ts:142:25 app/store/selectors/table.ts:410:14
@@ -571,7 +581,7 @@ msgstr "自風：西"
 msgid "White dragon"
 msgstr "白"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:131:18
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:146:25
 #: app/helpers/yaku.ts:234:39
 msgid "Yakuhai"
 msgstr "役牌"
@@ -592,8 +602,8 @@ msgstr "役牌 x3"
 msgid "Yakuhai x4"
 msgstr "役牌 x4"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:217:20
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:218:17
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:236:20
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:237:17
 msgid "Yakuman"
 msgstr "役満"
 

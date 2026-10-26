@@ -16,6 +16,7 @@
  */
 
 import { YakuId as Y } from './yaku';
+import { yakuhaiCount } from './yakuhai';
 import { RoundOutcome } from 'tsclients/proto/atoms.pb';
 
 const handValues: [Y, number, number][] = [
@@ -104,6 +105,14 @@ export function getFixedFu(yakuList: Y[], outcome: RoundOutcome): number[] {
     return [20];
   }
 
+  const tsumo = outcome === RoundOutcome.ROUND_OUTCOME_TSUMO;
+  if (
+    yakuList.includes(Y.SANANKOU) ||
+    (tsumo && (yakuList.includes(Y.SHOSANGEN) || yakuList.includes(Y.TOITOI)))
+  ) {
+    return [40, 50, 60, 70, 80, 90, 100, 110];
+  }
+
   if (outcome === RoundOutcome.ROUND_OUTCOME_RON && !yakuList.includes(Y.__OPENHAND)) {
     if (yakuList.includes(Y.PINFU)) {
       return [30];
@@ -121,7 +130,7 @@ export function getHan(yakuList: Y[]): number {
     if (id === Y.__OPENHAND) {
       return acc;
     }
-    return acc + (openHand ? openHandValues[id] : closedHandValues[id]);
+    return acc + (openHand ? (openHandValues[id] ?? 0) : (closedHandValues[id] ?? 0));
   }, 0);
 }
 
@@ -134,4 +143,23 @@ export function enableDoubleYakuman(doubleYakuman: Y[]): void {
       closedHandValues[id] = -2;
     }
   });
+}
+
+export function getYakuAdvice(
+  yakuList: Y[],
+  outcome: RoundOutcome
+): 'suuankou' | 'sanankou' | undefined {
+  if (yakuList.includes(Y.__OPENHAND)) return;
+  if (outcome === RoundOutcome.ROUND_OUTCOME_TSUMO && yakuList.includes(Y.TOITOI))
+    return 'suuankou';
+  if (
+    !yakuList.includes(Y.SANANKOU) &&
+    ((outcome === RoundOutcome.ROUND_OUTCOME_RON && yakuList.includes(Y.TOITOI)) ||
+      (outcome === RoundOutcome.ROUND_OUTCOME_TSUMO &&
+        yakuList.includes(Y.MENZENTSUMO) &&
+        (yakuhaiCount(yakuList) === 4 ||
+          yakuList.includes(Y.SANKANTSU) ||
+          yakuList.includes(Y.SANSHOKUDOUKOU))))
+  )
+    return 'sanankou';
 }

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-25 00:56+0200\n"
+"POT-Creation-Date: 2026-10-26 20:56+0100\n"
 "PO-Revision-Date: 2024-03-22 12:07+0100\n"
 "Last-Translator: Jesterboxboy <github@jesterbox.org>\n"
 "Language-Team: \n"
@@ -26,16 +26,16 @@ msgid_plural "%1 deals left"
 msgstr[0] "Noch %1 Hand "
 msgstr[1] "Noch %1 Hände"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:182:28
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:201:28
 msgid "%1 fu"
 msgstr "%1 fu"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:221:17
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:240:17
 #: app/store/selectors/round.ts:36:15
 msgid "%1 han"
 msgstr "%1 han"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:220:17
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:239:17
 #: app/store/selectors/round.ts:39:12
 msgid "%1 han %2 fu"
 msgstr "%1 han %2 fu"
@@ -128,7 +128,7 @@ msgstr "Daisangen"
 msgid "Daisuushii"
 msgstr "Daisuushii"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:207:22
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:226:22
 msgid "Dora %1"
 msgstr "Dora %1"
 
@@ -295,7 +295,7 @@ msgstr "Neues Spiel"
 msgid "No games found"
 msgstr "Keine Spiele gefunden"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:228:18
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:247:18
 msgid "No pao"
 msgstr "Kein Pao"
 
@@ -307,7 +307,7 @@ msgstr "Keine Ergebnisse"
 msgid "No tables are playing right now"
 msgstr "Keine anderen laufenden Spiele"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:164:30
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:183:30
 msgid "Nobody selected"
 msgstr "Niemand ausgewählt"
 
@@ -348,7 +348,7 @@ msgstr "Laufende Spiele"
 msgid "Pantheon"
 msgstr "Pantheon"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:157:19
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:176:19
 msgid "Pao"
 msgstr "Pao"
 
@@ -537,9 +537,19 @@ msgstr "Design"
 msgid "There are no events you participate in right now"
 msgstr "Du nimmst derzeit an keinem Event teil"
 
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:138:17
+msgid "This combination requires Sanankou. Please select Sanankou as well."
+msgstr ""
+
 #: app/helpers/yaku.ts:155:34 app/helpers/yaku.ts:156:39
 msgid "Toitoi"
 msgstr "Toitoi"
+
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:135:17
+msgid ""
+"Toitoi in a closed hand won by tsumo is Suuankou. Please select Suuankou "
+"instead."
+msgstr ""
 
 #: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:96:22
 #: app/store/selectors/table.ts:142:25 app/store/selectors/table.ts:410:14
@@ -578,7 +588,7 @@ msgstr "Sitzwind: West"
 msgid "White dragon"
 msgstr "Weißer Drache"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:131:18
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:146:25
 #: app/helpers/yaku.ts:234:39
 msgid "Yakuhai"
 msgstr "Yakuhai"
@@ -599,8 +609,8 @@ msgstr "Yakuhai x3"
 msgid "Yakuhai x4"
 msgstr "Yakuhai x4"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:217:20
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:218:17
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:236:20
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:237:17
 msgid "Yakuman"
 msgstr "Yakuman"
 
