@@ -97,7 +97,7 @@ export class TestSeeder extends Seeder {
       tonpuusen: false,
       withAbortives: true,
       withAtamahane: false,
-      withButtobi: false,
+      withTobi: false,
       withKiriageMangan: false,
       withLeadingDealerGameOver: false,
       withNagashiMangan: true,

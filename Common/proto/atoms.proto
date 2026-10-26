@@ -582,7 +582,7 @@ message RulesetConfig {
   bool tonpuusen = 11;
   bool with_abortives = 12;
   bool with_atamahane = 13;
-  bool with_buttobi = 14;
+  bool with_tobi = 14;
   bool with_kazoe = 15;
   bool with_kiriage_mangan = 16;
   bool with_kuitan = 17;

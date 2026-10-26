@@ -40,6 +40,7 @@ import {
   nagashiDisabled,
   nagashiPressed,
   riichiPressed,
+  riichiDisabled,
   winDisabled,
   winPressed,
 } from './userItem';
@@ -73,7 +74,9 @@ export function getPlayerData(
   }
 
   let points: number | string = player.score;
-  let pointsMode = PlayerPointsMode.IDLE;
+  let pointsMode = riichiDisabled(state, player)
+    ? PlayerPointsMode.NEGATIVE
+    : PlayerPointsMode.IDLE;
   let penaltyPoints = state.sessionState?.chombo.find((p) => p.playerId === player.id)?.amount;
 
   if (state.overviewDiffBy) {
@@ -233,12 +236,16 @@ export function getPlayerButtons(
   if (hasRiichiButton) {
     if (riichiPressed(state, player)) {
       riichiButton = PlayerButtonMode.PRESSED;
+    } else if (riichiDisabled(state, player)) {
+      riichiButton = PlayerButtonMode.DISABLE;
     } else {
       riichiButton = PlayerButtonMode.IDLE;
     }
-    onRiichiButtonClick = () => {
-      dispatch({ type: TOGGLE_RIICHI, payload: player.id });
-    };
+    if (riichiButton !== PlayerButtonMode.DISABLE) {
+      onRiichiButtonClick = () => {
+        dispatch({ type: TOGGLE_RIICHI, payload: player.id });
+      };
+    }
   }
 
   let deadButton: PlayerButtonMode | undefined;
@@ -366,7 +373,9 @@ export function getOtherTablePlayerData(
   }
 
   let points: number | string = player.score;
-  let pointsMode = PlayerPointsMode.IDLE;
+  let pointsMode = riichiDisabled(state, player)
+    ? PlayerPointsMode.NEGATIVE
+    : PlayerPointsMode.IDLE;
   let penaltyPoints = state.currentOtherTable?.state?.chombo.find(
     (p) => p.playerId === player.id
   )?.amount;

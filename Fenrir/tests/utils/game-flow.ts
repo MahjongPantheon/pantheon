@@ -124,7 +124,7 @@ const checkboxRules: Record<string, boolean> = {
   tonpuusen: false,
   'with-leading-dealer-game-over': false,
   'with-winning-dealer-honba-skipped': false,
-  'with-buttobi': false,
+  'with-tobi': false,
   'play-additional-rounds': false,
   'with-atamahane': false,
   'with-abortives': true,

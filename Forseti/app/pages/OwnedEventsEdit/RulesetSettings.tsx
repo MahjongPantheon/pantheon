@@ -86,8 +86,8 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ form, i18n }) 
       <Checkbox
         label={i18n._t('Allow bankruptcy')}
         description={i18n._t('When a player runs out of score points, the game immediately ends')}
-        data-testid='forseti-event-settings-ruleset-settings-ruleset-with-buttobi'
-        {...form.getInputProps('ruleset.withButtobi', { type: 'checkbox' })}
+        data-testid='forseti-event-settings-ruleset-settings-ruleset-with-tobi'
+        {...form.getInputProps('ruleset.withTobi', { type: 'checkbox' })}
       />
       <Checkbox
         label={i18n._t('Play additional rounds')}

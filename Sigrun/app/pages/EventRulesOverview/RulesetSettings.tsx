@@ -81,7 +81,7 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ config, i18n }
       <Checkbox
         label={i18n._t('Allow bankruptcy')}
         description={i18n._t('When a player runs out of score points, the game immediately ends')}
-        checked={config.rulesetConfig.withButtobi}
+        checked={config.rulesetConfig.withTobi}
         onChange={() => {}}
       />
       <Checkbox
