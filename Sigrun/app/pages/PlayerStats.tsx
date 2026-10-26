@@ -96,7 +96,7 @@ export const PlayerStats: React.FC<{
   );
 
   if (!events || !player || !playerStats) {
-    return null;
+    return <Meta />;
   }
 
   function getPlayerUrl(_playerId: number): string {
@@ -292,6 +292,8 @@ export const PlayerStats: React.FC<{
                   <Group gap={2} grow={!largeScreen}>
                     <Badge
                       w={65}
+                      miw='max-content'
+                      maw='none'
                       size='lg'
                       color={calcDimmedBackground(isDimmed, isDark)}
                       c={calcDimmedText(isDimmed, isDark)}
@@ -302,6 +304,8 @@ export const PlayerStats: React.FC<{
                     </Badge>
                     <Badge
                       w={75}
+                      miw='max-content'
+                      maw='none'
                       size='lg'
                       variant='filled'
                       color={seat.ratingDelta > 0 ? 'lime' : 'red'}

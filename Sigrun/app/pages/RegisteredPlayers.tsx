@@ -71,12 +71,13 @@ export const RegisteredPlayers: React.FC<{
   );
 
   if (!players || !event) {
-    return null;
+    return <Meta />;
   }
 
   if (globals.data.loading) {
     return (
       <Container h='100%'>
+        <Meta />
         <Center h='100%'>
           <Loader size='xl' />
         </Center>

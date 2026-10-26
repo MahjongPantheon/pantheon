@@ -173,6 +173,8 @@ export const GameListing: React.FC<GameListingProps> = ({
                 <Group gap={2} mt={10}>
                   <Badge
                     w={75}
+                    miw='max-content'
+                    maw='none'
                     size='lg'
                     variant='filled'
                     color={result.ratingDelta > 0 ? 'lime' : 'red'}
@@ -183,6 +185,8 @@ export const GameListing: React.FC<GameListingProps> = ({
                   </Badge>
                   <Badge
                     w={65}
+                    miw='max-content'
+                    maw='none'
                     size='lg'
                     color={calcDimmedBackground(isDimmed, isDark)}
                     c={calcDimmedText(isDimmed, isDark)}

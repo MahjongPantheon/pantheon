@@ -320,6 +320,12 @@ test('SMOKE-005: Registered player can finish a local session and view matching 
           await expect(badges).toHaveCount(2);
           await assertNumber(badges.nth(0), Number(results.get(player.id)!.delta));
           await assertNumber(badges.nth(1), Number(results.get(player.id)!.score));
+          for (const badge of await badges.all()) {
+            const label = badge.locator('.mantine-Badge-label');
+            expect(
+              await label.evaluate((element) => element.scrollWidth <= element.clientWidth)
+            ).toBe(true);
+          }
         }
         await assertPublishedGame(sigrun, hash, players);
         await expect(game.locator('ul').first().locator(':scope > li').last()).toContainText('南4');
@@ -348,6 +354,12 @@ test('SMOKE-005: Registered player can finish a local session and view matching 
             row.getByTestId('sigrun-recent-game-score'),
             Number(results.get(player.id)!.score)
           );
+          const scoreLabel = row
+            .getByTestId('sigrun-recent-game-score')
+            .locator('.mantine-Badge-label');
+          expect(
+            await scoreLabel.evaluate((element) => element.scrollWidth <= element.clientWidth)
+          ).toBe(true);
         }
         await expect(summary.getByTestId('sigrun-recent-game-date')).toHaveText(
           /^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}$/
@@ -360,8 +372,15 @@ test('SMOKE-005: Registered player can finish a local session and view matching 
         await expect(sigrun).toHaveURL(new RegExp(`/event/${eventId}/game/${hash}$`));
         await expect(sigrun.getByTestId('sigrun-game-page')).toContainText(eventTitle);
         await sigrun.goto(process.env.SIGRUN_URL!);
+        await sigrun.evaluate(() => {
+          document.documentElement.dataset.sigrunSpaNavigation = 'pending';
+        });
         await sigrun.getByTestId(`sigrun-recent-game-event-${hash}`).click();
         await expect(sigrun).toHaveURL(new RegExp(`/event/${eventId}/info$`));
+        await expect(sigrun.locator('html')).toHaveAttribute(
+          'data-sigrun-spa-navigation',
+          'pending'
+        );
       });
     });
   } catch (error) {

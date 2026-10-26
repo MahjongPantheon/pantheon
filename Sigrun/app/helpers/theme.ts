@@ -2,6 +2,7 @@ import { MantineThemeColorsOverride, MantineThemeOverride } from '@mantine/core'
 
 export const themeOptions: MantineThemeOverride = {
   primaryColor: 'blue',
+  defaultRadius: 'sm',
   fontFamily: 'IBM Plex Sans, Noto Sans Wind, Sans, serif',
 };
 

@@ -107,7 +107,7 @@ R8–R42 enter **H01–H35 in order** from the [catalogue](smoke-hand-catalogue.
 8. In an anonymous Sigrun context, open this event's Last games page. Expect exactly one game and 46 retained rounds (Ron 35 / Tsumo 7 / Draw 2 / Chombo 1 / Nagashi 1). Compare all four results with the explicit fixture and captured Tyr results. Check every persisted round's starting wind, players, yaku, han/fu, and dora, including both R7 winners and the final South 4 hand.
 9. Open the game's details via its link, retain its hash, reload, and repeat the results/history checks. Do not identify the event by a global latest-game query.
 
-10. With the event listed publicly, open the Sigrun homepage. Find this known session hash in Last games above the events list. Verify its owning event title, game date, and all four player names and final scores, with no round log, then follow the session and event links to this event's details pages.
+10. With the event listed publicly, open the Sigrun homepage. Find this known session hash in Last games above the events list. Verify its owning event title, game date, and all four player names and final scores, with no round log. Score and rating-delta badges on the event's Last games page, and score badges on the homepage, must display every digit without clipping. Follow the session and event links to this event's details pages; the homepage event link must navigate within the SPA without replacing the document.
 
 ## Timeout and implementation requirements
 

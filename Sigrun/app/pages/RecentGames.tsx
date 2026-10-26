@@ -67,7 +67,7 @@ export const RecentGames: React.FC<{
   );
 
   if (!games || !events) {
-    return null;
+    return <Meta />;
   }
 
   return (

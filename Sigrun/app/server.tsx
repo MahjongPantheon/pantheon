@@ -22,16 +22,17 @@ import { StorageStrategyServer } from '../../Common/storageStrategyServer';
 import { Isomorphic } from './hooks/isomorphic';
 import staticLocationHook from 'wouter/static-location';
 import { Layout } from './Layout';
-import { HelmetProvider, HelmetServerState } from 'react-helmet-async';
+import { HelmetProvider } from 'react-helmet-async';
 import { JSDOM } from 'jsdom';
 import { storage } from './hooks/storage';
 import { i18n } from './hooks/i18n';
 import createEmotionServer from '@emotion/server/create-instance';
-import { emotionCache } from './emotion/cache';
-
-const stylesServer = createEmotionServer(emotionCache);
+import { createEmotionCache } from './emotion/cache';
+import { renderDocument } from './helpers/renderDocument';
 
 export async function SSRRender(url: string, cookies: Record<string, string>) {
+  const emotionCache = createEmotionCache();
+  const stylesServer = createEmotionServer(emotionCache);
   const storageStrategy = new StorageStrategyServer();
   storageStrategy.fill(cookies);
   storage.setStrategy(storageStrategy);
@@ -46,14 +47,12 @@ export async function SSRRender(url: string, cookies: Record<string, string>) {
   const locHook = staticLocationHook(url);
   (global as any).JSDOM = JSDOM;
 
-  const helmetContext: { helmet?: HelmetServerState } = {};
-
   // First pass to collect effects
   ReactDOMServer.renderToString(
     <Isomorphic.Provider value={isomorphicCtxValue}>
-      <HelmetProvider context={helmetContext}>
+      <HelmetProvider>
         <Router hook={locHook}>
-          <Layout>
+          <Layout emotionCache={emotionCache}>
             <App />
           </Layout>
         </Router>
@@ -66,11 +65,11 @@ export async function SSRRender(url: string, cookies: Record<string, string>) {
     delete isomorphicCtxValue.requests;
   }
 
-  const appHtml = ReactDOMServer.renderToString(
+  const { appHtml, head } = renderDocument(
     <Isomorphic.Provider value={isomorphicCtxValue}>
-      <HelmetProvider context={helmetContext}>
+      <HelmetProvider>
         <Router hook={locHook}>
-          <Layout>
+          <Layout emotionCache={emotionCache}>
             <App />
           </Layout>
         </Router>
@@ -78,15 +77,12 @@ export async function SSRRender(url: string, cookies: Record<string, string>) {
     </Isomorphic.Provider>
   );
 
-  const { helmet } = helmetContext;
   return {
     appHtml,
-    helmet: [
-      helmet?.title.toString(),
-      helmet?.meta.toString(),
-      helmet?.link.toString(),
-      `<style>${stylesServer.extractCritical(appHtml).css}</style>`,
-    ].join('\n'),
+    helmet: head,
+    styles: stylesServer.constructStyleTagsFromChunks(
+      stylesServer.extractCriticalToChunks(appHtml)
+    ),
     cookies: storageStrategy.getCookies(),
     serverData: `<script>window.initialData = ${JSON.stringify(isomorphicCtxValue)};</script>`,
   };

@@ -48,7 +48,7 @@ export const Game: React.FC<{
   );
 
   if (game === undefined || !events) {
-    return null;
+    return <Meta />;
   }
   const players = game?.game.players?.reduce(
     (acc, p) => {

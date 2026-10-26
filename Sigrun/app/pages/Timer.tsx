@@ -139,12 +139,13 @@ export const Timer: React.FC<{ params: { eventId: string } }> = ({ params: { eve
   }, []);
 
   if (!events || !seating) {
-    return null;
+    return <Meta />;
   }
 
   if (events?.length > 1) {
     return (
       <Container>
+        <Meta />
         <Alert color='red'>{i18n._t('Timer is not available for aggregated events')}</Alert>
       </Container>
     );

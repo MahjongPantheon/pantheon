@@ -67,12 +67,13 @@ export const TablesState: React.FC<{ params: { eventId: string } }> = ({ params:
   }, []);
 
   if (!events || !tableState) {
-    return null;
+    return <Meta />;
   }
 
   if (events?.length > 1) {
     return (
       <Container>
+        <Meta />
         <Alert color='red'>{i18n._t('Tables state is not available for aggregated events')}</Alert>
       </Container>
     );
@@ -206,6 +207,8 @@ function Table({
             </Text>
             <Badge
               w={60}
+              miw='max-content'
+              maw='none'
               radius='sm'
               pl={5}
               pr={5}

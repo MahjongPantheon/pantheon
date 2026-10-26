@@ -134,7 +134,7 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
   );
 
   if (!achievementsData || !events) {
-    return null;
+    return <Meta />;
   }
 
   const playerById = achievementsData.players.reduce(
@@ -824,6 +824,7 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
   ) {
     return (
       <Container>
+        <Meta />
         <h2 style={{ display: 'flex', gap: '20px' }}>
           {events?.[0] && <EventTypeIcon event={events?.[0]} />}
           {events?.[0]?.title} - {i18n._t('Rating table')}
@@ -838,6 +839,7 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
   if ((events?.length ?? 0) > 1) {
     return (
       <Container>
+        <Meta />
         <Alert color='red'>{i18n._t('Achievements are not available for aggregated events')}</Alert>
       </Container>
     );
@@ -877,7 +879,9 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
               <AccordionLabel {...item} />
             </Accordion.Control>
             <Accordion.Panel>
-              <Text size='sm'>{item.content}</Text>
+              <Text component='div' size='sm'>
+                {item.content}
+              </Text>
             </Accordion.Panel>
           </Accordion.Item>
         ))}
