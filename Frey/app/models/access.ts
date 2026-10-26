@@ -230,7 +230,8 @@ export async function getEventReferees(
         qb('acl_value', '=', 1),
       ])
     )
-    .selectAll()
+    .selectAll('person_access')
+    .select(['person.last_update', 'person.has_avatar', 'person.title'])
     .execute();
   return {
     referees: result.map((r) => ({

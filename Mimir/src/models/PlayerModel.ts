@@ -176,7 +176,7 @@ export class PlayerModel extends Model {
         const personId = this.repo.meta.personId;
         if (!personId) return false;
         const isSuperadmin = await this.repo.frey.GetSuperadminFlag({ personId });
-        if (isSuperadmin) return true;
+        if (isSuperadmin.isAdmin) return true;
         const data = await this.repo.frey.GetEventAdmins({ eventId });
         return data.admins.some((admin) => admin.personId === personId);
       },

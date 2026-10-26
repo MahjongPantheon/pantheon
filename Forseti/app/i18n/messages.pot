@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-25 19:15+0100\n"
+"POT-Creation-Date: 2026-10-26 20:19+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -218,6 +218,63 @@ msgstr ""
 #: app/components/StopEventModal.tsx:52:12
 #: app/pages/OwnedEvents.tsx:265:14
 msgid "Stop event"
+msgstr ""
+
+#: app/helpers/lastRound.ts:35:56
+msgid "Player #%1"
+msgstr ""
+
+#: app/helpers/lastRound.ts:38:24
+msgid "all tenpai"
+msgstr ""
+
+#: app/helpers/lastRound.ts:38:67
+msgid "all noten"
+msgstr ""
+
+#: app/helpers/lastRound.ts:53:32
+msgid "dora %1"
+msgstr ""
+
+#: app/helpers/lastRound.ts:56:11
+msgid "yakuman!"
+msgstr ""
+
+#: app/helpers/lastRound.ts:58:13
+msgid "%1 han"
+msgstr ""
+
+#: app/helpers/lastRound.ts:59:13
+msgid "%1 han, %2 fu"
+msgstr ""
+
+#: app/helpers/lastRound.ts:61:39
+msgid "pao: %1"
+msgstr ""
+
+#: app/helpers/lastRound.ts:70:9
+#: app/helpers/lastRound.ts:84:9
+msgid "Ron, %1 from %2 (%3), riichi: %4"
+msgstr ""
+
+#: app/helpers/lastRound.ts:98:9
+msgid "Tsumo, %1 (%2), riichi: %3"
+msgstr ""
+
+#: app/helpers/lastRound.ts:107:43
+msgid "Chombo, %1"
+msgstr ""
+
+#: app/helpers/lastRound.ts:113:9
+msgid "Draw, tempai: %1, riichi: %2"
+msgstr ""
+
+#: app/helpers/lastRound.ts:124:9
+msgid "Abortive draw, riichi: %1"
+msgstr ""
+
+#: app/helpers/lastRound.ts:132:9
+msgid "Nagashi mangan, nagashi: %1, tempai: %2, riichi: %3"
 msgstr ""
 
 #: app/helpers/yaku.ts:85:34
@@ -564,159 +621,134 @@ msgstr ""
 msgid "Confirm"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:120:30
+#: app/pages/GamesControl/GamesList.tsx:119:30
 msgid "Table # %1"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:136:30
+#: app/pages/GamesControl/GamesList.tsx:135:30
 msgid "Current round"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:188:24
+#: app/pages/GamesControl/GamesList.tsx:187:24
 msgid "Extra minutes: %1"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:203:30
+#: app/pages/GamesControl/GamesList.tsx:205:30
 msgid "Add extra time for this table"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:204:29
+#: app/pages/GamesControl/GamesList.tsx:206:29
 #: app/pages/GamesControl/TournamentControls.tsx:296:22
 #: app/pages/GamesControl/TournamentControls.tsx:297:21
 msgid "Add extra time"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:209:36
+#: app/pages/GamesControl/GamesList.tsx:211:36
 #: app/pages/GamesControl/TournamentControls.tsx:302:28
 msgid "Select extra time"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:213:53
+#: app/pages/GamesControl/GamesList.tsx:215:53
 #: app/pages/GamesControl/TournamentControls.tsx:306:45
 msgid "1 minute"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:214:54
+#: app/pages/GamesControl/GamesList.tsx:216:54
 #: app/pages/GamesControl/TournamentControls.tsx:307:46
 msgid "2 minutes"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:215:54
+#: app/pages/GamesControl/GamesList.tsx:217:54
 #: app/pages/GamesControl/TournamentControls.tsx:308:46
 msgid "3 minutes"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:216:54
+#: app/pages/GamesControl/GamesList.tsx:218:54
 #: app/pages/GamesControl/TournamentControls.tsx:309:46
 msgid "4 minutes"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:217:54
+#: app/pages/GamesControl/GamesList.tsx:219:54
 #: app/pages/GamesControl/TournamentControls.tsx:310:46
 msgid "5 minutes"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:218:54
+#: app/pages/GamesControl/GamesList.tsx:220:54
 #: app/pages/GamesControl/TournamentControls.tsx:311:46
 msgid "7 minutes"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:223:30
+#: app/pages/GamesControl/GamesList.tsx:225:30
 msgid "Add selected amount of extra time for this table?"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:243:30
+#: app/pages/GamesControl/GamesList.tsx:245:30
 msgid "Cancel last played round"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:244:29
+#: app/pages/GamesControl/GamesList.tsx:246:29
 msgid "Cancel round"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:245:32
-#: app/pages/GamesControl/GamesList.tsx:261:32
+#: app/pages/GamesControl/GamesList.tsx:247:32
+#: app/pages/GamesControl/GamesList.tsx:263:32
 msgid "This action can't be undone. Continue?"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:259:30
+#: app/pages/GamesControl/GamesList.tsx:261:30
 msgid "Remove the game as it never existed"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:260:29
+#: app/pages/GamesControl/GamesList.tsx:262:29
 msgid "Remove game"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:277:30
+#: app/pages/GamesControl/GamesList.tsx:279:30
 msgid "Forcefully finish the game"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:278:29
+#: app/pages/GamesControl/GamesList.tsx:280:29
 msgid "Force finish game"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:279:32
+#: app/pages/GamesControl/GamesList.tsx:281:32
 msgid "You are going to forcefully finish this game. Continue?"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:293:30
+#: app/pages/GamesControl/GamesList.tsx:295:30
 msgid "Remove game results"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:294:29
+#: app/pages/GamesControl/GamesList.tsx:296:29
 msgid "Cancel results"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:295:32
+#: app/pages/GamesControl/GamesList.tsx:297:32
 msgid "This will only remove the game results, but you will need to cancel last round separately. Continue?"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:328:20
+#: app/pages/GamesControl/GamesList.tsx:330:20
 msgid "Session is ready to start"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:340:20
+#: app/pages/GamesControl/GamesList.tsx:342:20
 msgid "Session in progress"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:353:18
+#: app/pages/GamesControl/GamesList.tsx:355:18
 msgid "Session finished, but not confirmed"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:365:18
+#: app/pages/GamesControl/GamesList.tsx:367:18
 msgid "Session finished"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:377:18
+#: app/pages/GamesControl/GamesList.tsx:379:18
 msgid "Session cancelled"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:389:18
+#: app/pages/GamesControl/GamesList.tsx:391:18
 msgid "Session is scheduled"
-msgstr ""
-
-#: app/pages/GamesControl/GamesList.tsx:425:12
-#: app/pages/GamesControl/GamesList.tsx:436:9
-msgid "Ron, %1 from %2 (%3), riichi: %4"
-msgstr ""
-
-#: app/pages/GamesControl/GamesList.tsx:447:12
-msgid "Tsumo, %1 (%2), riichi: %3"
-msgstr ""
-
-#: app/pages/GamesControl/GamesList.tsx:455:12
-msgid "Chombo, %1"
-msgstr ""
-
-#: app/pages/GamesControl/GamesList.tsx:459:12
-msgid "Draw, tempai: %1, riichi: %2"
-msgstr ""
-
-#: app/pages/GamesControl/GamesList.tsx:466:12
-msgid "Abortive draw, riichi: %1"
-msgstr ""
-
-#: app/pages/GamesControl/GamesList.tsx:472:12
-msgid "Nagashi mangan, nagashi: %1, tempai: %2, riichi: %3"
 msgstr ""
 
 #: app/pages/GamesControl/index.tsx:64:16
@@ -1065,73 +1097,73 @@ msgstr ""
 msgid "Select event type"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:81:18
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:88:18
 msgid "Event title"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:82:24
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:89:24
 msgid "Please include a \"TEST\" word if you make a test tournament. Events that have \"TEST\" in title do not send any notifications to players."
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:91:20
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:98:20
 msgid "Basic ruleset"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:92:26
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:99:26
 msgid "Ruleset to be used as a template for the event. Fine tuning is available in adjacent tabs. Please note that all ruleset settings will be reset when you select another ruleset here."
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:111:18
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:121:18
 msgid "Primary timezone for event"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:112:24
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:122:24
 msgid "All dates and time will be displayed according to the selected timezone."
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:116:25
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:126:25
 #: app/pages/ProfileManage.tsx:234:29
 #: app/pages/ProfileManageAdmin.tsx:260:27
 msgid "Nothing found"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:123:18
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:133:18
 msgid "Brief description"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:124:24
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:134:24
 msgid "Multiline. Markdown syntax supported."
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:130:18
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:140:18
 msgid "Show in ratings global list"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:131:24
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:141:24
 msgid "If checked, the event will be publicly visible on main page of ratings subsystem. If unchecked, event will not be visible in the list, but still will be accessible via particular link"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:138:18
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:148:18
 msgid "Show rating table for everyone"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:139:24
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:149:24
 msgid "If checked, the rating table will be shown for everyone, otherwise only for event administrators"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:146:18
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:156:18
 msgid "Show achievements for everyone"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:147:24
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:157:24
 msgid "If checked, achievements will be shown for everyone, otherwise only for event administrators"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:154:18
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:164:18
 msgid "Allow viewing of other tables during ongoing game"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:155:24
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:165:24
 msgid "If checked, players will be able to see other tables state even if they are currently in game. It is strongly recommended to keep this checkbox disabled for all tournament events."
 msgstr ""
 
@@ -1661,11 +1693,11 @@ msgstr ""
 msgid "Yaku allowed"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:110:25
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:113:25
 msgid "Pao rule enabled for:"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:128:25
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:131:25
 msgid "Double yakuman:"
 msgstr ""
 

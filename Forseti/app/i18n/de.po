@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-25 19:15+0100\n"
+"POT-Creation-Date: 2026-10-26 20:19+0100\n"
 "PO-Revision-Date: 2024-04-12 22:47+0300\n"
 "Last-Translator: Jesterboxboy <github@jesterbox.org>\n"
 "Language-Team: \n"
@@ -21,7 +21,15 @@ msgstr ""
 "X-Poedit-Basepath: ../../../Sigrun/app/i18n\n"
 "X-Poedit-SearchPath-0: de.po\n"
 
-#: app/pages/GamesControl/GamesList.tsx:213:53
+#: app/helpers/lastRound.ts:58:13
+msgid "%1 han"
+msgstr "%1 han"
+
+#: app/helpers/lastRound.ts:59:13
+msgid "%1 han, %2 fu"
+msgstr "%1 han, %2 fu"
+
+#: app/pages/GamesControl/GamesList.tsx:215:53
 #: app/pages/GamesControl/TournamentControls.tsx:306:45
 msgid "1 minute"
 msgstr "1 Minute"
@@ -38,7 +46,7 @@ msgstr "13+ han Hände werden als Yakuman, nicht als sanbaiman, gewertet."
 msgid "1st"
 msgstr "1ter"
 
-#: app/pages/GamesControl/GamesList.tsx:214:54
+#: app/pages/GamesControl/GamesList.tsx:216:54
 #: app/pages/GamesControl/TournamentControls.tsx:307:46
 msgid "2 minutes"
 msgstr "2 Minuten"
@@ -47,7 +55,7 @@ msgstr "2 Minuten"
 msgid "2nd"
 msgstr "2ter"
 
-#: app/pages/GamesControl/GamesList.tsx:215:54
+#: app/pages/GamesControl/GamesList.tsx:217:54
 #: app/pages/GamesControl/TournamentControls.tsx:308:46
 msgid "3 minutes"
 msgstr "3 Minuten"
@@ -60,7 +68,7 @@ msgstr "Drei Spieler sind unter den Startpunkten"
 msgid "3rd"
 msgstr "3ter"
 
-#: app/pages/GamesControl/GamesList.tsx:216:54
+#: app/pages/GamesControl/GamesList.tsx:218:54
 #: app/pages/GamesControl/TournamentControls.tsx:309:46
 msgid "4 minutes"
 msgstr "4 Minuten"
@@ -69,12 +77,12 @@ msgstr "4 Minuten"
 msgid "4th"
 msgstr "4ter"
 
-#: app/pages/GamesControl/GamesList.tsx:217:54
+#: app/pages/GamesControl/GamesList.tsx:219:54
 #: app/pages/GamesControl/TournamentControls.tsx:310:46
 msgid "5 minutes"
 msgstr "5 Minuten"
 
-#: app/pages/GamesControl/GamesList.tsx:218:54
+#: app/pages/GamesControl/GamesList.tsx:220:54
 #: app/pages/GamesControl/TournamentControls.tsx:311:46
 msgid "7 minutes"
 msgstr "7 Minuten"
@@ -91,7 +99,7 @@ msgstr ""
 msgid "A reason for penalty is mandatory"
 msgstr "Ein Strafgrund muss eingetragen werden"
 
-#: app/pages/GamesControl/GamesList.tsx:466:12
+#: app/helpers/lastRound.ts:124:9
 msgid "Abortive draw, riichi: %1"
 msgstr "Abgebrochenes Unentschieden, Riichi: %1"
 
@@ -111,13 +119,13 @@ msgstr "Aktionen"
 msgid "Add a penalty"
 msgstr "Strafe hinzufügen"
 
-#: app/pages/GamesControl/GamesList.tsx:204:29
+#: app/pages/GamesControl/GamesList.tsx:206:29
 #: app/pages/GamesControl/TournamentControls.tsx:296:22
 #: app/pages/GamesControl/TournamentControls.tsx:297:21
 msgid "Add extra time"
 msgstr "Zusätzliche Zeit hinzufügen"
 
-#: app/pages/GamesControl/GamesList.tsx:203:30
+#: app/pages/GamesControl/GamesList.tsx:205:30
 msgid "Add extra time for this table"
 msgstr "Zusätzliche Zeit für diesen Tisch hinzufügen"
 
@@ -125,7 +133,7 @@ msgstr "Zusätzliche Zeit für diesen Tisch hinzufügen"
 msgid "Add selected amount of extra time for all tables?"
 msgstr "Ausgewählte zusätzliche Zeit für alle Tische hinzufügen?"
 
-#: app/pages/GamesControl/GamesList.tsx:223:30
+#: app/pages/GamesControl/GamesList.tsx:225:30
 msgid "Add selected amount of extra time for this table?"
 msgstr "Ausgewählte zusätzliche Zeit für diesen Tisch hinzufügen?"
 
@@ -138,7 +146,7 @@ msgstr ""
 msgid "Agariyame"
 msgstr "Agariyame"
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:112:24
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:122:24
 msgid ""
 "All dates and time will be displayed according to the selected timezone."
 msgstr ""
@@ -190,7 +198,7 @@ msgstr "Mit Tobi"
 msgid "Allow combination of yakumans, e.g. tsuuisou + daisangen"
 msgstr "Kombinationen aus Yakuman sind erlaubt, z.B.: Tsuuisou + Daisangen"
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:154:18
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:164:18
 msgid "Allow viewing of other tables during ongoing game"
 msgstr "Andere laufende Tische während einer laufenden Runde anzeigen"
 
@@ -281,7 +289,7 @@ msgstr ""
 msgid "Balanced wind shuffle"
 msgstr "Ausgewogene Windverteilung"
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:91:20
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:98:20
 msgid "Basic ruleset"
 msgstr "Basisregelsatz"
 
@@ -293,7 +301,7 @@ msgstr "Basiseinstellungen"
 msgid "Being late for a session"
 msgstr "Verspätung zum Match"
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:123:18
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:133:18
 msgid "Brief description"
 msgstr "Kurze Beschreibung"
 
@@ -309,7 +317,7 @@ msgstr ""
 msgid "Cancel"
 msgstr "Abbrechen"
 
-#: app/pages/GamesControl/GamesList.tsx:243:30
+#: app/pages/GamesControl/GamesList.tsx:245:30
 msgid "Cancel last played round"
 msgstr "Letzte gespielte Runde abbrechen"
 
@@ -317,11 +325,11 @@ msgstr "Letzte gespielte Runde abbrechen"
 msgid "Cancel penalty"
 msgstr "Strafe aufheben"
 
-#: app/pages/GamesControl/GamesList.tsx:294:29
+#: app/pages/GamesControl/GamesList.tsx:296:29
 msgid "Cancel results"
 msgstr "Spielergebnis abbrechen"
 
-#: app/pages/GamesControl/GamesList.tsx:244:29
+#: app/pages/GamesControl/GamesList.tsx:246:29
 msgid "Cancel round"
 msgstr "Runde abbrechen"
 
@@ -376,7 +384,7 @@ msgstr ""
 "Chombo Strafen können durch Abbrechen der Runde unter „Spiele bearbeiten“ "
 "aufgehoben werden, solange das Spiel noch nicht beendet ist."
 
-#: app/pages/GamesControl/GamesList.tsx:455:12
+#: app/helpers/lastRound.ts:107:43
 msgid "Chombo, %1"
 msgstr "Chombo, %1"
 
@@ -447,7 +455,7 @@ msgstr "Neues Event erstellen"
 msgid "Current penalties"
 msgstr "Aktuelle Strafen"
 
-#: app/pages/GamesControl/GamesList.tsx:136:30
+#: app/pages/GamesControl/GamesList.tsx:135:30
 msgid "Current round"
 msgstr "Aktuelle Runde"
 
@@ -485,11 +493,11 @@ msgstr "Keine renchans"
 msgid "Do not interrupt session until it ends"
 msgstr "Match nicht unterbrechen bis zum Ablauf der Zeit"
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:128:25
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:131:25
 msgid "Double yakuman:"
 msgstr "Doppelter Yakuman:"
 
-#: app/pages/GamesControl/GamesList.tsx:459:12
+#: app/helpers/lastRound.ts:113:9
 msgid "Draw, tempai: %1, riichi: %2"
 msgstr "Unentschieden, Tenpai: %1, Riichi: %2"
 
@@ -498,9 +506,8 @@ msgid "East round wind"
 msgstr "Rundenwind: Ost"
 
 #: app/helpers/yaku.ts:269:34
-#, fuzzy
 msgid "East seat wind"
-msgstr "Sitzordnung zurücksetzen"
+msgstr "Sitzwind: Ost"
 
 #: app/helpers/yaku.ts:370:34
 msgid "East wind"
@@ -618,7 +625,7 @@ msgstr "Sitzordnung"
 msgid "Event script filling instruction"
 msgstr "Manuelles Festlegen der Sitzordnung"
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:81:18
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:88:18
 msgid "Event title"
 msgstr "Eventname"
 
@@ -634,7 +641,7 @@ msgstr "Event: %1"
 msgid "External gaming platform for the tournament"
 msgstr "Externe Spielplattform für das Turnier"
 
-#: app/pages/GamesControl/GamesList.tsx:188:24
+#: app/pages/GamesControl/GamesList.tsx:187:24
 msgid "Extra minutes: %1"
 msgstr "Zusätzliche Minuten: %1"
 
@@ -825,11 +832,11 @@ msgstr "Fixe Punktzahl für Ersatzspieler"
 msgid "Fixed uma for replacement player"
 msgstr "Uma für Ersatzspieler"
 
-#: app/pages/GamesControl/GamesList.tsx:278:29
+#: app/pages/GamesControl/GamesList.tsx:280:29
 msgid "Force finish game"
 msgstr "Spielende erzwingen"
 
-#: app/pages/GamesControl/GamesList.tsx:277:30
+#: app/pages/GamesControl/GamesList.tsx:279:30
 msgid "Forcefully finish the game"
 msgstr "Spielende erzwingen"
 
@@ -938,7 +945,7 @@ msgstr "Wie die Spieler am selben Tisch verteilt werden"
 msgid "I've read the privacy policy listed below and accept its terms"
 msgstr "Ich habe die Datenschutzbestimmungen gelesen und akzeptiert"
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:147:24
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:157:24
 msgid ""
 "If checked, achievements will be shown for everyone, otherwise only for "
 "event administrators"
@@ -956,7 +963,7 @@ msgstr ""
 "Benutzeroberfläche hinzufügen. Deaktiviere diese Option, wenn ein externes "
 "Werkzeug die Replays automatisch hinzufügt."
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:155:24
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:165:24
 msgid ""
 "If checked, players will be able to see other tables state even if they are "
 "currently in game. It is strongly recommended to keep this checkbox disabled "
@@ -974,7 +981,7 @@ msgstr ""
 "Uma wird bei gleichem Punktestand auf mehrere Spieler aufgeteilt, ansonsten "
 "nach Windreihenfolge."
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:131:24
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:141:24
 msgid ""
 "If checked, the event will be publicly visible on main page of ratings "
 "subsystem. If unchecked, event will not be visible in the list, but still "
@@ -983,7 +990,7 @@ msgstr ""
 "Wenn ausgewählt wird das Event öffentlich sichtbar auf der Hauptseite "
 "angezeigt. Ansonsten ist es nur über den Eventlink zugänglich"
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:139:24
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:149:24
 msgid ""
 "If checked, the rating table will be shown for everyone, otherwise only for "
 "event administrators"
@@ -1271,7 +1278,7 @@ msgstr ""
 msgid "Minimal games count"
 msgstr "Mindestanzahl an Spielen"
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:124:24
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:134:24
 msgid "Multiline. Markdown syntax supported."
 msgstr "Mehrlinienfeld. Markdown Syntax wird unterstützt."
 
@@ -1287,7 +1294,7 @@ msgstr "Meine Events"
 msgid "Nagashi mangan"
 msgstr "Nagashi mangan"
 
-#: app/pages/GamesControl/GamesList.tsx:472:12
+#: app/helpers/lastRound.ts:132:9
 msgid "Nagashi mangan, nagashi: %1, tempai: %2, riichi: %3"
 msgstr "Nagashi Mangan, Nagashi: %1, Tenpai: %2, Riichi: %3"
 
@@ -1320,14 +1327,12 @@ msgid "No penalties assigned yet"
 msgstr "Noch keine Strafen verhängt"
 
 #: app/helpers/yaku.ts:297:34
-#, fuzzy
 msgid "North round wind"
-msgstr "Keine Ergebnisse"
+msgstr "Rundenwind: Nord"
 
 #: app/helpers/yaku.ts:293:34
-#, fuzzy
 msgid "North seat wind"
-msgstr "Nächster Sitzplan"
+msgstr "Sitzwind: Nord"
 
 #: app/helpers/yaku.ts:385:34
 msgid "North wind"
@@ -1349,7 +1354,7 @@ msgstr "Nicht gestartet"
 msgid "Notes on privileges"
 msgstr "Hinweise zu Berechtigungen"
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:116:25
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:126:25
 #: app/pages/ProfileManage.tsx:234:29 app/pages/ProfileManageAdmin.tsx:260:27
 msgid "Nothing found"
 msgstr "Keine Ergebnisse"
@@ -1492,7 +1497,7 @@ msgstr "Offenes Riichi"
 msgid "Otherwise"
 msgstr "Sonstiges"
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:110:25
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:113:25
 msgid "Pao rule enabled for:"
 msgstr "Pao Regel aktiv bei:"
 
@@ -1570,6 +1575,10 @@ msgstr "Weitere Runden erlauben"
 msgid "Play only east rounds"
 msgstr "Nur Ostrunden"
 
+#: app/helpers/lastRound.ts:35:56
+msgid "Player #%1"
+msgstr "Spieler #%1"
+
 #: app/pages/ProfileManageAdmin.tsx:159:26
 msgid "Player details were successfully saved"
 msgstr "Spielerdetails konnten erfolgreich gespeichert werden"
@@ -1618,7 +1627,7 @@ msgstr "Bitte Passwort eingeben"
 msgid "Please enter you telegram ID"
 msgstr "Bitte Telegram ID eingeben"
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:82:24
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:89:24
 msgid ""
 "Please include a \"TEST\" word if you make a test tournament. Events that "
 "have \"TEST\" in title do not send any notifications to players."
@@ -1677,7 +1686,7 @@ msgstr ""
 msgid "Prescripted wind shuffle"
 msgstr "Windverteilung nach manueller Sitzordnung"
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:111:18
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:121:18
 msgid "Primary timezone for event"
 msgstr "Zeitzone des Events"
 
@@ -1801,11 +1810,11 @@ msgstr "Anmeldung abgeschlossen!"
 msgid "Remove administrator from event"
 msgstr "Administrator aus dem Event entfernen"
 
-#: app/pages/GamesControl/GamesList.tsx:260:29
+#: app/pages/GamesControl/GamesList.tsx:262:29
 msgid "Remove game"
 msgstr "Spiel entfernen"
 
-#: app/pages/GamesControl/GamesList.tsx:293:30
+#: app/pages/GamesControl/GamesList.tsx:295:30
 msgid "Remove game results"
 msgstr "Spielergebnisse entfernen"
 
@@ -1826,7 +1835,7 @@ msgstr "Schiedsrichter aus dem Event entfernen"
 msgid "Remove replacement"
 msgstr "Ersatzspieler entfernen"
 
-#: app/pages/GamesControl/GamesList.tsx:259:30
+#: app/pages/GamesControl/GamesList.tsx:261:30
 msgid "Remove the game as it never existed"
 msgstr "Spiel entfernen, da es nicht stattgefunden hat"
 
@@ -1886,8 +1895,7 @@ msgstr ""
 msgid "Rinshan kaihou"
 msgstr "Rinshan kaihou"
 
-#: app/pages/GamesControl/GamesList.tsx:425:12
-#: app/pages/GamesControl/GamesList.tsx:436:9
+#: app/helpers/lastRound.ts:70:9 app/helpers/lastRound.ts:84:9
 msgid "Ron, %1 from %2 (%3), riichi: %4"
 msgstr "Ron, %1 von %2 (%3), Riichi: %4"
 
@@ -1895,7 +1903,7 @@ msgstr "Ron, %1 von %2 (%3), Riichi: %4"
 msgid "Round outcomes"
 msgstr "Rundenergebniss"
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:92:26
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:99:26
 msgid ""
 "Ruleset to be used as a template for the event. Fine tuning is available in "
 "adjacent tabs. Please note that all ruleset settings will be reset when you "
@@ -1968,7 +1976,7 @@ msgstr "Wähle ein Profilbild"
 msgid "Select event type"
 msgstr "Art des Events auswählen"
 
-#: app/pages/GamesControl/GamesList.tsx:209:36
+#: app/pages/GamesControl/GamesList.tsx:211:36
 #: app/pages/GamesControl/TournamentControls.tsx:302:28
 msgid "Select extra time"
 msgstr "Zusätzliche Zeit auswählen"
@@ -2006,7 +2014,7 @@ msgstr ""
 "Die Daten können auch von Administratoren nicht mehr wiederhergestellt "
 "werden."
 
-#: app/pages/GamesControl/GamesList.tsx:377:18
+#: app/pages/GamesControl/GamesList.tsx:379:18
 msgid "Session cancelled"
 msgstr "Runde abgebrochen"
 
@@ -2018,23 +2026,23 @@ msgstr "Matchdauer in Minuten"
 msgid "Session ending policy"
 msgstr "Einstellungen zum Matchende"
 
-#: app/pages/GamesControl/GamesList.tsx:365:18
+#: app/pages/GamesControl/GamesList.tsx:367:18
 msgid "Session finished"
 msgstr "Runde beendet"
 
-#: app/pages/GamesControl/GamesList.tsx:353:18
+#: app/pages/GamesControl/GamesList.tsx:355:18
 msgid "Session finished, but not confirmed"
 msgstr "Runde beendet, aber noch nicht bestätigt"
 
-#: app/pages/GamesControl/GamesList.tsx:340:20
+#: app/pages/GamesControl/GamesList.tsx:342:20
 msgid "Session in progress"
 msgstr "Runde läuft"
 
-#: app/pages/GamesControl/GamesList.tsx:328:20
+#: app/pages/GamesControl/GamesList.tsx:330:20
 msgid "Session is ready to start"
 msgstr "Runde ist bereit gestartet zu werden"
 
-#: app/pages/GamesControl/GamesList.tsx:389:18
+#: app/pages/GamesControl/GamesList.tsx:391:18
 msgid "Session is scheduled"
 msgstr "Runde ist geplant"
 
@@ -2067,15 +2075,15 @@ msgstr "Shousangen"
 msgid "Shousuushii"
 msgstr "Shousuushii"
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:146:18
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:156:18
 msgid "Show achievements for everyone"
 msgstr "Auszeichnungen für Alle einblenden"
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:130:18
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:140:18
 msgid "Show in ratings global list"
 msgstr "In globaler Rangliste anzeigen"
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:138:18
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:148:18
 msgid "Show rating table for everyone"
 msgstr "Rangliste für Alle einblenden"
 
@@ -2195,7 +2203,7 @@ msgstr "System ID"
 msgid "System stats"
 msgstr "Systeminformationen"
 
-#: app/pages/GamesControl/GamesList.tsx:120:30
+#: app/pages/GamesControl/GamesList.tsx:119:30
 msgid "Table # %1"
 msgstr "Tisch # %1"
 
@@ -2267,8 +2275,8 @@ msgstr ""
 "Ein \"Abgebrochen durch Unentschieden\"  kann durch vier Riichi Ansagen, "
 "vier gleiche Winde, 9 Ends or Honors oder vier Kans hervorgerufen werden."
 
-#: app/pages/GamesControl/GamesList.tsx:245:32
-#: app/pages/GamesControl/GamesList.tsx:261:32
+#: app/pages/GamesControl/GamesList.tsx:247:32
+#: app/pages/GamesControl/GamesList.tsx:263:32
 msgid "This action can't be undone. Continue?"
 msgstr ""
 "Diese Aktion kann nicht rückgängig gemacht werden. Trotzdem Fortfahren?"
@@ -2303,7 +2311,7 @@ msgstr ""
 "Dies ist die Rundennummer des nächsten manuellen Sitzplans(startet von eins "
 "weg). Bei jedem Rundenstart wird dieser Wert automatisch erhöht."
 
-#: app/pages/GamesControl/GamesList.tsx:295:32
+#: app/pages/GamesControl/GamesList.tsx:297:32
 msgid ""
 "This will only remove the game results, but you will need to cancel last "
 "round separately. Continue?"
@@ -2370,7 +2378,7 @@ msgstr ""
 "Spieler möglichst auf Winde setzen, auf denen sie bisher seltener gespielt "
 "haben"
 
-#: app/pages/GamesControl/GamesList.tsx:447:12
+#: app/helpers/lastRound.ts:98:9
 msgid "Tsumo, %1 (%2), riichi: %3"
 msgstr "Tsumo, %1 (%2), riichi: %3"
 
@@ -2459,9 +2467,8 @@ msgid "West round wind"
 msgstr "Rundenwind: West"
 
 #: app/helpers/yaku.ts:285:34
-#, fuzzy
 msgid "West seat wind"
-msgstr "Sitzordnung zurücksetzen"
+msgstr "Sitzwind: West"
 
 #: app/helpers/yaku.ts:380:34
 msgid "West wind"
@@ -2555,7 +2562,7 @@ msgstr ""
 "kann nicht rückgängig gemacht werden. Bitte bestätigen Sie  oder schliessen "
 "sie das Fenster zum Abbruch."
 
-#: app/pages/GamesControl/GamesList.tsx:279:32
+#: app/pages/GamesControl/GamesList.tsx:281:32
 msgid "You are going to forcefully finish this game. Continue?"
 msgstr "Das Spiel wird jetzt beendet. Fortfahren?"
 
@@ -2629,9 +2636,29 @@ msgstr "Passwort zu schwach."
 msgid "Your telegram ID"
 msgstr "Deine Telegram ID"
 
+#: app/helpers/lastRound.ts:38:67
+msgid "all noten"
+msgstr "Alle in Noten"
+
+#: app/helpers/lastRound.ts:38:24
+msgid "all tenpai"
+msgstr "Alle in Tenpai"
+
+#: app/helpers/lastRound.ts:53:32
+msgid "dora %1"
+msgstr "dora %1"
+
+#: app/helpers/lastRound.ts:61:39
+msgid "pao: %1"
+msgstr ""
+
 #: app/pages/ProfileSignup.tsx:174:14
 msgid "show / hide"
 msgstr "anzeigen /ausblenden"
+
+#: app/helpers/lastRound.ts:56:11
+msgid "yakuman!"
+msgstr "yakuman!"
 
 #~ msgid "Disabled"
 #~ msgstr "Deaktiviert"
