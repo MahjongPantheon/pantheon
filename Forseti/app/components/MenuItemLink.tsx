@@ -32,7 +32,7 @@ export const MenuItemLink = ({
               e.preventDefault();
             }
       }
-      icon={icon}
+      leftSection={icon}
       title={title ?? text}
     >
       {text}

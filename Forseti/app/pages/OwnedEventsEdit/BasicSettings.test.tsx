@@ -31,7 +31,7 @@ function Fixture({
     },
   });
   return (
-    <MantineProvider>
+    <MantineProvider env='test'>
       <BasicSettings
         form={form}
         i18n={i18n}

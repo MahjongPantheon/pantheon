@@ -26,7 +26,7 @@ function Fixture({ aggregated = false, allowedYaku = {} as Record<string, boolea
     },
   });
   return (
-    <MantineProvider>
+    <MantineProvider env='test'>
       <YakuSettings form={form} i18n={i18n} />
       <output data-testid='allowed-yaku-values'>
         {JSON.stringify(form.values.ruleset.allowedYaku)}

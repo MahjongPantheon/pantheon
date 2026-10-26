@@ -30,7 +30,7 @@ import {
   ActionIcon,
   Text,
   Badge,
-  Container,
+  Box,
   Group,
   Modal,
   rem,
@@ -159,7 +159,7 @@ export const ManagementTab: React.FC<{
         />
         <Filler h='200px' />
       </Modal>
-      <Container pos='relative' sx={{ minHeight: '400px' }}>
+      <Box pos='relative' style={{ minHeight: '400px' }}>
         {showAddRemove && (
           <>
             <Space h='xl' />
@@ -181,7 +181,7 @@ export const ManagementTab: React.FC<{
           </>
         )}
         <Space h='xl' />
-        <Stack justify='flex-start' spacing='0'>
+        <Stack justify='flex-start' gap='0'>
           {players.map((p, idx) => (
             <Group
               data-testid={`forseti-players-row-${p.id}`}
@@ -192,9 +192,9 @@ export const ManagementTab: React.FC<{
                   idx % 2 ? (isDark ? theme.colors.dark[7] : theme.colors.gray[1]) : 'transparent',
               }}
             >
-              <Group sx={{ flex: 1, minWidth: '300px' }}>
+              <Group style={{ flex: 1, minWidth: '300px' }}>
                 <PlayerAvatar p={p} />
-                <Stack spacing='0'>
+                <Stack gap='0'>
                   <Text>{p.title}</Text>
                   {config?.isOnline && <Text c='dimmed'>{p.tenhouId}</Text>}
                 </Stack>
@@ -276,7 +276,7 @@ export const ManagementTab: React.FC<{
           ))}
         </Stack>
         <Filler h='150px' />
-      </Container>
+      </Box>
     </>
   );
 };

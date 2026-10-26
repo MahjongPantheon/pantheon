@@ -16,7 +16,11 @@ Features:
 ### Technologies of Forseti
 
 - Forseti is a single-page application (SPA).
-- Written in Typescript v4.
+- Written in TypeScript and React 19.
+- Uses Mantine UI v9 with package stylesheets and CSS Modules.
+- `app/components/NumberInput.tsx` preserves numeric form values and integer precision while allowing intermediate editing states.
+- Settings tabs use `keepMountedMode="display-none"` so validation can find and focus invalid fields across tabs.
+- Theme preferences retain the shared `day`/`night` cookies and separate dimmed palette.
 
 ### Legend
 

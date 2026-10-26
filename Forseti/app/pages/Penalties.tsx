@@ -120,7 +120,7 @@ export const Penalties: React.FC<{ params: { id?: string } }> = ({ params: { id 
 
   return (
     <Container data-testid='forseti-penalties-page'>
-      <LoadingOverlay visible={isLoading} overlayOpacity={1} />
+      <LoadingOverlay visible={isLoading} overlayProps={{ opacity: 1 }} />
       <PenaltyForm
         eventId={id}
         playersList={playersList}

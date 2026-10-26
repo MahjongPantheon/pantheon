@@ -100,15 +100,15 @@ export const PlayersManage: React.FC<{ params: { id: string } }> = ({ params: { 
 
   return (
     <Container data-testid='forseti-players-page'>
-      <LoadingOverlay visible={isLoading} overlayOpacity={1} />
+      <LoadingOverlay visible={isLoading} overlayProps={{ opacity: 1 }} />
       <Tabs defaultValue='management' keepMounted={false}>
-        <Tabs.List position='left'>
+        <Tabs.List justify='flex-start'>
           <Tabs.Tab
             data-testid='forseti-players-tab-management'
             value='management'
-            icon={<IconUserCircle size='0.8rem' />}
+            leftSection={<IconUserCircle size='0.8rem' />}
             rightSection={
-              <Badge sx={{ pointerEvents: 'none' }} variant='filled' size='md' p={4}>
+              <Badge style={{ pointerEvents: 'none' }} variant='filled' size='md' p={4}>
                 {players.length}
               </Badge>
             }
@@ -122,7 +122,7 @@ export const PlayersManage: React.FC<{ params: { id: string } }> = ({ params: { 
             title={i18n._t(
               'Setup local identifiers of players to be used in predefined event script'
             )}
-            icon={<IconScript size='0.8rem' />}
+            leftSection={<IconScript size='0.8rem' />}
             rightSection={
               config?.isPrescripted && localIdsWarn ? (
                 <IconAlertTriangleFilled size='1.2rem' style={{ color: 'red' }} />
@@ -136,7 +136,7 @@ export const PlayersManage: React.FC<{ params: { id: string } }> = ({ params: { 
             disabled={!config?.isTeam}
             title={i18n._t('Setup team name for each player (for team events)')}
             value='teams'
-            icon={<IconUsers size='0.8rem' />}
+            leftSection={<IconUsers size='0.8rem' />}
           >
             {i18n._t('Team names')}
           </Tabs.Tab>

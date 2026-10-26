@@ -59,14 +59,7 @@ export const YakuSettings: React.FC<YakuSettingsProps> = ({ form, i18n }) => {
         {...form.getInputProps('ruleset.useAggregatedYakuhai', { type: 'checkbox' })}
       />
       <Title order={4}>{i18n._t('Yaku allowed')}</Title>
-      <SimpleGrid
-        spacing='lg'
-        cols={3}
-        breakpoints={[
-          { maxWidth: '48rem', cols: 2 },
-          { maxWidth: '36rem', cols: 1 },
-        ]}
-      >
+      <SimpleGrid spacing='lg' cols={{ base: 1, xs: 2, sm: 3 }}>
         {yakuList
           .filter(({ id }) =>
             form.values.ruleset.useAggregatedYakuhai
@@ -111,14 +104,7 @@ export const YakuSettings: React.FC<YakuSettingsProps> = ({ form, i18n }) => {
           })}
       </SimpleGrid>
       <Title order={4}>{i18n._t('Pao rule enabled for:')}</Title>
-      <SimpleGrid
-        spacing='lg'
-        cols={3}
-        breakpoints={[
-          { maxWidth: '48rem', cols: 2 },
-          { maxWidth: '36rem', cols: 1 },
-        ]}
-      >
+      <SimpleGrid spacing='lg' cols={{ base: 1, xs: 2, sm: 3 }}>
         {yakuWithPao.map((y, idx) => (
           <Checkbox
             data-testid={`forseti-event-settings-yaku-pao-${y.id}`}
@@ -129,14 +115,7 @@ export const YakuSettings: React.FC<YakuSettingsProps> = ({ form, i18n }) => {
         ))}
       </SimpleGrid>
       <Title order={4}>{i18n._t('Double yakuman:')}</Title>
-      <SimpleGrid
-        spacing='lg'
-        cols={3}
-        breakpoints={[
-          { maxWidth: '48rem', cols: 2 },
-          { maxWidth: '36rem', cols: 1 },
-        ]}
-      >
+      <SimpleGrid spacing='lg' cols={{ base: 1, xs: 2, sm: 3 }}>
         {doubleYakuman.map((y, idx) => (
           <Checkbox
             data-testid={`forseti-event-settings-yaku-double-${y.id}`}

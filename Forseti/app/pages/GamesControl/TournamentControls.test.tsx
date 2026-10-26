@@ -11,6 +11,7 @@ import {
 } from 'tsclients/proto/atoms.pb';
 import type { EventsGetPrescriptedEventConfigResponse } from 'tsclients/proto/mimir.pb';
 import { TournamentControls } from './TournamentControls';
+import { MantineProvider } from '@mantine/core';
 
 vi.mock('../../hooks/i18n', () => ({
   useI18n: () => ({ _t: (message: string) => message }),
@@ -77,11 +78,17 @@ describe('prescripted tournament controls', () => {
   });
 
   function render(props = fixture()) {
-    act(() => root.render(<TournamentControls {...props} />));
+    act(() =>
+      root.render(
+        <MantineProvider env='test'>
+          <TournamentControls {...props} />
+        </MantineProvider>
+      )
+    );
   }
 
   function control(testId: string) {
-    return container.querySelector<HTMLButtonElement>(`[data-testid="${testId}"]`);
+    return document.querySelector<HTMLButtonElement>(`[data-testid="${testId}"]`);
   }
 
   it.each([false, true])(

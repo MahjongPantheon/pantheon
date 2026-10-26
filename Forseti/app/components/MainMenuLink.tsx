@@ -41,6 +41,7 @@ export const MainMenuLink = ({
   return (
     <Anchor
       data-testid={testId}
+      c='var(--mantine-color-text)'
       style={{ borderLeft: '10px solid ' + color, marginBottom: '2px', textDecoration: 'none' }}
       href={href}
       onClick={
@@ -55,7 +56,12 @@ export const MainMenuLink = ({
       target={external ? '_blank' : undefined}
       title={title ?? text}
     >
-      <NavLink styles={{ label: { fontSize: '18px' } }} icon={icon} label={text} />
+      <NavLink
+        component='span'
+        styles={{ label: { fontSize: '18px' } }}
+        leftSection={icon}
+        label={text}
+      />
     </Anchor>
   );
 };

@@ -122,14 +122,14 @@ export const ProfileSignup: React.FC = () => {
         <form onSubmit={form.onSubmit(submitForm)}>
           <TextInput
             data-testid='forseti-signup-email'
-            icon={<IconMailQuestion size='1rem' />}
+            leftSection={<IconMailQuestion size='1rem' />}
             description={i18n._t('Enter your e-mail address')}
             {...form.getInputProps('email')}
           />
           <Space h='md' />
           <TextInput
             data-testid='forseti-signup-title'
-            icon={<IconSignature size='1rem' />}
+            leftSection={<IconSignature size='1rem' />}
             description={i18n._t(
               "This is a title that will be shown in rating table and in mobile assistant, also event administrators will use this title to find you and add to the event. Please don't use your single name here, as it's not unique enough. Name and surname is fine."
             )}
@@ -139,7 +139,7 @@ export const ProfileSignup: React.FC = () => {
           <PasswordInput
             data-testid='forseti-signup-password'
             description={i18n._t('Enter strong password')}
-            icon={<IconLock size='1rem' />}
+            leftSection={<IconLock size='1rem' />}
             {...form.getInputProps('password')}
           />
           <Space h='md' />
@@ -149,7 +149,7 @@ export const ProfileSignup: React.FC = () => {
             label={i18n._t("I've read the privacy policy listed below and accept its terms")}
             {...form.getInputProps('privacyPolicy', { type: 'checkbox' })}
           />
-          <Group position='right' mt='md'>
+          <Group justify='flex-end' mt='md'>
             <Link to='/profile/login'>
               <Button data-testid='forseti-signup-go-to-login' variant='outline'>
                 {i18n._t('Already registered?')}
@@ -175,7 +175,7 @@ export const ProfileSignup: React.FC = () => {
           </Button>
         </Group>
         <small>Effective date: July 07, 2023</small>
-        <Collapse in={opened}>
+        <Collapse expanded={opened}>
           <p>
             Pantheon ("us", "we", or "our") operates the {env.rootHost} domain and subdomains (the
             "Service").

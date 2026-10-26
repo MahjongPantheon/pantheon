@@ -1,0 +1,17 @@
+.inner {
+  height: 44px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.eventTitle {
+  display: inline-flex;
+  color: white;
+  height: 100%;
+  align-items: center;
+}
+
+.drawerContent {
+  touch-action: pan-y pinch-zoom;
+}

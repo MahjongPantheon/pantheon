@@ -93,7 +93,7 @@ export const PenaltiesList: React.FC<PenaltiesListProps> = ({
               idx % 2 ? (isDark ? theme.colors.dark[7] : theme.colors.gray[1]) : 'transparent',
           }}
         >
-          <Stack spacing='4px' style={{ flex: 1 }}>
+          <Stack gap='4px' style={{ flex: 1 }}>
             <Group>
               <PlayerAvatar size='sm' p={playersListFull[p.who]} />
               <Text>{playersListFull[p.who].title}</Text>
@@ -144,7 +144,7 @@ export const PenaltiesList: React.FC<PenaltiesListProps> = ({
               idx % 2 ? (isDark ? theme.colors.dark[7] : theme.colors.gray[1]) : 'transparent',
           }}
         >
-          <Stack spacing='4px' style={{ flex: 1 }}>
+          <Stack gap='4px' style={{ flex: 1 }}>
             <Group>
               <PlayerAvatar size='sm' p={chomboPlayersList[chombo.playerId]} />
               <Text>{chomboPlayersList[chombo.playerId].title}</Text>

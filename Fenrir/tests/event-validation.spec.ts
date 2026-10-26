@@ -28,14 +28,14 @@ async function checkValidationNavigation(page: Page, eventTitle: string) {
   await initialPoints.fill('35000');
   await yakuTab.click();
   await save.click();
-  await expect(basicTab).toHaveAttribute('data-active', 'true');
+  await expect(basicTab).toHaveAttribute('aria-selected', 'true');
   await expect(title).toBeFocused();
   await expect(title).toBeInViewport();
 
   // Repeated submissions must navigate even when the first error has not changed.
   await yakuTab.click();
   await save.click();
-  await expect(basicTab).toHaveAttribute('data-active', 'true');
+  await expect(basicTab).toHaveAttribute('aria-selected', 'true');
   await expect(title).toBeFocused();
   await expect(title).toBeInViewport();
   await title.fill(eventTitle);
@@ -44,7 +44,7 @@ async function checkValidationNavigation(page: Page, eventTitle: string) {
     // Move to the next invalid field within the same tab.
     await yakuTab.click();
     await save.click();
-    await expect(basicTab).toHaveAttribute('data-active', 'true');
+    await expect(basicTab).toHaveAttribute('aria-selected', 'true');
     await expect(timezone).toBeFocused();
     await expect(timezone).toBeInViewport();
     await timezone.fill('Europe/Moscow');
@@ -53,7 +53,7 @@ async function checkValidationNavigation(page: Page, eventTitle: string) {
 
   await yakuTab.click();
   await save.click();
-  await expect(rulesetTab).toHaveAttribute('data-active', 'true');
+  await expect(rulesetTab).toHaveAttribute('aria-selected', 'true');
   await expect(goal).toBeFocused();
   await expect(goal).toBeInViewport();
   await goal.fill('35000');

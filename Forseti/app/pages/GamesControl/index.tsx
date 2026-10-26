@@ -363,7 +363,7 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
 
   return (
     <Container data-testid='forseti-games-control-page'>
-      <LoadingOverlay visible={isLoading} overlayOpacity={1} />
+      <LoadingOverlay visible={isLoading} overlayProps={{ opacity: 1 }} />
       {eventConfig?.syncStart && (
         <TournamentControls
           seatingLoading={seatingLoading}

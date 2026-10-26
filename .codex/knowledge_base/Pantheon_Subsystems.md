@@ -45,7 +45,7 @@ Pantheon is a set of services, not one application. `Mimir` owns game, event, to
 ### Forseti specifics
 
 - Use React context to share state and functions to modify the state among the components.
-- Use Mantine UI v6 framework as base for new components.
+- Use Mantine UI v9 with React 19 for new components. Import package stylesheets at the client entry point and use CSS Modules or style props; use the local numeric-input adapter for integer form fields.
 - Do not use any server-side rendering and keep the subsystem client-only.
 
 ### Sigrun specifics

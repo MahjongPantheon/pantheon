@@ -16,11 +16,12 @@
  */
 
 import * as React from 'react';
+import { NumberInput } from '../../components/NumberInput';
 import { createRef, useState } from 'react';
 import { useApi } from '../../hooks/api';
 import { useI18n } from '../../hooks/i18n';
 import { useForm } from '@mantine/form';
-import { Text, Button, NumberInput, Select, Space, TextInput, Group } from '@mantine/core';
+import { Text, Button, Select, Space, TextInput, Group } from '@mantine/core';
 import {
   IconAlertOctagon,
   IconCircleCheck,
@@ -50,25 +51,26 @@ export const PenaltyForm: React.FC<PenaltyFormProps> = ({
   const api = useApi();
   const i18n = useI18n();
   const storage = useStorage();
-  const formRef: React.RefObject<HTMLFormElement> = createRef();
+  const formRef: React.RefObject<HTMLFormElement | null> = createRef();
   const [isSaving, setIsSaving] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
 
   const form = useForm({
     initialValues: {
-      player: 0,
+      player: null as string | null,
       amount: 0,
       reason: '',
     },
 
     validate: {
-      player: (value: number) => (value > 0 ? null : i18n._t('Please select player')),
+      player: (value: string | null) =>
+        Number(value) > 0 ? null : i18n._t('Please select player'),
       reason: (value: string) =>
         value.trim() !== '' ? null : i18n._t('A reason for penalty is mandatory'),
     },
   });
 
-  const submitForm = (vals: { player: number; amount: number; reason: string }) => {
+  const submitForm = (vals: { player: string | null; amount: number; reason: string }) => {
     if (!eventId) {
       return;
     }
@@ -76,7 +78,7 @@ export const PenaltyForm: React.FC<PenaltyFormProps> = ({
     setIsSaved(false);
 
     api
-      .addPenalty(parseInt(eventId, 10), vals.player, vals.amount, vals.reason)
+      .addPenalty(parseInt(eventId, 10), Number(vals.player), vals.amount, vals.reason)
       .then((r) => {
         if (r) {
           setIsSaved(true);
@@ -109,7 +111,7 @@ export const PenaltyForm: React.FC<PenaltyFormProps> = ({
       <Select
         data-testid='forseti-penalty-player'
         withAsterisk
-        icon={<IconUserExclamation size='1rem' />}
+        leftSection={<IconUserExclamation size='1rem' />}
         label={i18n._t('Select player')}
         searchable
         description={i18n._t('This is a player to be penalized')}
@@ -120,7 +122,7 @@ export const PenaltyForm: React.FC<PenaltyFormProps> = ({
       <NumberInput
         data-testid='forseti-penalty-amount'
         {...form.getInputProps('amount')}
-        icon={<IconAlertOctagon size='1rem' />}
+        leftSection={<IconAlertOctagon size='1rem' />}
         label={i18n._t('Penalty amount')}
         description={i18n._t(
           'The penalty applies to the rating table in this event by subtracting the suggested amount of points from player rating. If the amount is zero, the penalty is treated as a notice.'
@@ -136,7 +138,7 @@ export const PenaltyForm: React.FC<PenaltyFormProps> = ({
           data-testid='forseti-penalty-reason'
           style={{ flex: 1 }}
           withAsterisk
-          icon={<IconSignature size='1rem' />}
+          leftSection={<IconSignature size='1rem' />}
           label={i18n._t('Penalty reason')}
           {...form.getInputProps('reason')}
         />
@@ -150,14 +152,14 @@ export const PenaltyForm: React.FC<PenaltyFormProps> = ({
         />
       </Group>
       <Space h='lg' />
-      <Group position='right'>
+      <Group justify='flex-end'>
         <Button
           data-testid='forseti-penalty-submit'
           type='submit'
           style={{ alignSelf: 'flex-end' }}
           title={isSaved ? i18n._t('Penalty applied!') : i18n._t('Apply penalty')}
           loading={isSaving || isSaved}
-          rightIcon={isSaved ? <IconCircleCheck /> : <IconDeviceFloppy />}
+          rightSection={isSaved ? <IconCircleCheck /> : <IconDeviceFloppy />}
         >
           {isSaved ? i18n._t('Penalty applied!') : i18n._t('Apply penalty')}
         </Button>

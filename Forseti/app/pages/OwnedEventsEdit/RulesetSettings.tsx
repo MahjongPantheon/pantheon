@@ -17,7 +17,8 @@
 
 import { I18nService } from '../../services/i18n';
 import * as React from 'react';
-import { Checkbox, NumberInput, Stack, Title } from '@mantine/core';
+import { NumberInput } from '../../components/NumberInput';
+import { Checkbox, Stack, Title } from '@mantine/core';
 import {
   IconBrandStackoverflow,
   IconArrowBadgeDownFilled,
@@ -41,7 +42,7 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ form, i18n }) 
       <NumberInput
         data-testid='forseti-event-settings-ruleset-settings-ruleset-start-rating'
         {...form.getInputProps('ruleset.startRating')}
-        icon={<IconArrowBadgeDownFilled size='1rem' />}
+        leftSection={<IconArrowBadgeDownFilled size='1rem' />}
         label={i18n._t('Initial rating')}
         description={i18n._t('Score given to all players in the beginning of the rating')}
         defaultValue={0}
@@ -50,7 +51,7 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ form, i18n }) 
       <NumberInput
         data-testid='forseti-event-settings-ruleset-settings-ruleset-start-points'
         {...form.getInputProps('ruleset.startPoints')}
-        icon={<IconCash size='1rem' />}
+        leftSection={<IconCash size='1rem' />}
         label={i18n._t('Initial points')}
         description={i18n._t(
           'Amount of points given to every player in the beginning of every session'
@@ -99,7 +100,7 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ form, i18n }) 
       />
       {!!form.getTransformedValues().ruleset.playAdditionalRounds && (
         <NumberInput
-          icon={<IconTargetArrow size='1rem' />}
+          leftSection={<IconTargetArrow size='1rem' />}
           label={i18n._t('Goal score')}
           description={i18n._t('Amount of score player should get to end the game.')}
           defaultValue={30000}
@@ -170,7 +171,7 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ form, i18n }) 
         {...form.getInputProps('ruleset.withKiriageMangan', { type: 'checkbox' })}
       />
       <NumberInput
-        icon={<IconMountain size='1rem' />}
+        leftSection={<IconMountain size='1rem' />}
         label={i18n._t('Oka bonus')}
         description={i18n._t('Amount of points given to player at 1st place')}
         defaultValue={20000}
@@ -179,7 +180,7 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ form, i18n }) 
         {...form.getInputProps('ruleset.oka')}
       />
       <NumberInput
-        icon={<IconBrandStackoverflow size='1rem' />}
+        leftSection={<IconBrandStackoverflow size='1rem' />}
         label={i18n._t('Honba Value')}
         description={i18n._t('Value of one honba stick')}
         defaultValue={300}
@@ -237,7 +238,7 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ form, i18n }) 
       />
       {!form.getTransformedValues().ruleset.extraChomboPayments && (
         <NumberInput
-          icon={<IconHandStop size='1rem' />}
+          leftSection={<IconHandStop size='1rem' />}
           label={i18n._t('Amount of chombo penalty')}
           description={i18n._t(
             'Amount of penalty applied in the end of the session after uma bonus.'
@@ -256,7 +257,7 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ form, i18n }) 
       />
       {form.getTransformedValues().ruleset.withYakitori && (
         <NumberInput
-          icon={<IconHandStop size='1rem' />}
+          leftSection={<IconHandStop size='1rem' />}
           label={i18n._t('Yakitori penalty')}
           description={i18n._t("Amount of penalty applied to those who didn't win once in game.")}
           defaultValue={0}

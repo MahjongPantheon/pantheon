@@ -50,7 +50,7 @@ export const TopActionButton: React.FC<TopActionButtonProps> = ({
             size='xs'
             loading={loading}
             style={{ width: '200px' }}
-            leftIcon={icon}
+            leftSection={icon}
             onClick={onClick}
           >
             {title}

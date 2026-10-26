@@ -81,7 +81,7 @@ export function CancelConfirmation({
           ))}
           <Button
             data-testid={`${testId}-confirm`}
-            rightIcon={<IconArrowRight />}
+            rightSection={<IconArrowRight />}
             variant='filled'
             color='red'
             onClick={() => {

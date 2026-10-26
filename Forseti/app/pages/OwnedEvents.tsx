@@ -270,9 +270,9 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
         data-testid='forseti-owned-events-page'
         aria-busy={isLoading}
         pos='relative'
-        sx={{ minHeight: '400px' }}
+        style={{ minHeight: '400px' }}
       >
-        <Group spacing='xs' mb='md'>
+        <Group gap='xs' mb='md'>
           <Badge
             data-testid='forseti-owned-events-filter-ongoing'
             component='button'
@@ -302,7 +302,7 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
             {i18n._t('All my events')}
           </Badge>
         </Group>
-        <Stack justify='flex-start' spacing='0'>
+        <Stack justify='flex-start' gap='0'>
           {events.map((event, idx) => {
             return (
               <Group
@@ -318,7 +318,7 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
                       : 'transparent',
                 }}
               >
-                <Group sx={{ flex: 1, flexWrap: 'nowrap' }}>
+                <Group style={{ flex: 1, flexWrap: 'nowrap' }}>
                   {event.type === EventType.EVENT_TYPE_LOCAL && (
                     <Tooltip
                       events={{ hover: true, touch: true, focus: true }}
@@ -380,7 +380,7 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
                     </ActionIcon>
                   </a>
                 </Group>
-                <Group position='right' spacing='xs' ml='auto'>
+                <Group justify='flex-end' gap='xs' ml='auto'>
                   {event.finished && (
                     <Badge color='pink' variant='outline'>
                       {i18n._t('Event finished')}
@@ -459,7 +459,7 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
                                   data-testid={`forseti-owned-event-menu-rebuild-scoring-${event.id}`}
                                   title={i18n._t('Rebuild scoring')}
                                   onClick={() => rebuildScoring(event.id)}
-                                  icon={<IconRefreshAlert />}
+                                  leftSection={<IconRefreshAlert />}
                                 >
                                   {i18n._t('Rebuild scoring')}
                                 </Menu.Item>
@@ -469,7 +469,7 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
                                 data-testid={`forseti-owned-event-menu-finish-${event.id}`}
                                 title={i18n._t('Finish event')}
                                 color='red'
-                                icon={<IconHandStop />}
+                                leftSection={<IconHandStop />}
                                 onClick={() => {
                                   setStopEventData({ id: event.id, title: event.title });
                                   stopEventModalOpen();
@@ -507,7 +507,7 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
                         <Menu.Item
                           data-testid={`forseti-owned-event-toggle-listed-${event.id}`}
                           title={i18n._t('Toggle visibility in ratings global list')}
-                          icon={event.isListed ? <IconSquareCheckFilled /> : <IconSquare />}
+                          leftSection={event.isListed ? <IconSquareCheckFilled /> : <IconSquare />}
                           onClick={() => toggleVisibility(event.id)}
                         >
                           {i18n._t('Event visible in global list')}
@@ -516,7 +516,9 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
                       <Menu.Item
                         data-testid={`forseti-owned-event-toggle-rating-${event.id}`}
                         title={i18n._t('Toggle visibility of rating table')}
-                        icon={event.isRatingShown ? <IconSquareCheckFilled /> : <IconSquare />}
+                        leftSection={
+                          event.isRatingShown ? <IconSquareCheckFilled /> : <IconSquare />
+                        }
                         onClick={() => onToggleResults(event.id)}
                       >
                         {i18n._t('Rating table visible')}
@@ -524,7 +526,9 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
                       <Menu.Item
                         data-testid={`forseti-owned-event-toggle-achievements-${event.id}`}
                         title={i18n._t('Toggle visibility of achievements')}
-                        icon={event.achievementsShown ? <IconSquareCheckFilled /> : <IconSquare />}
+                        leftSection={
+                          event.achievementsShown ? <IconSquareCheckFilled /> : <IconSquare />
+                        }
                         onClick={() => onToggleAchievements(event.id)}
                       >
                         {i18n._t('Achievements visible')}

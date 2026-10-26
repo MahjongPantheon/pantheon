@@ -72,7 +72,7 @@ export const MainMenu = ({
 
   return (
     <Stack justify='space-between' style={{ height: '100%' }}>
-      <Stack spacing={0}>
+      <Stack gap={0}>
         {(match || matchEdit || matchPrivileges) && (
           <>
             <Divider
@@ -166,7 +166,7 @@ export const MainMenu = ({
                   closeMenu?.();
                   rebuildScoring(parseInt(eventId ?? '', 10));
                 }}
-                icon={<IconRefreshAlert />}
+                leftSection={<IconRefreshAlert />}
               />
             )}
             {eventData && !eventData.finished && privilegesLevel >= PrivilegesLevel.ADMIN && (
@@ -174,7 +174,7 @@ export const MainMenu = ({
                 data-testid={`forseti-menu-${testIdScope}-recalculate-achievements`}
                 label={i18n._t('Recalculate achievements')}
                 styles={{ label: { fontSize: '18px', color: 'red' } }}
-                icon={<IconRefresh />}
+                leftSection={<IconRefresh />}
                 onClick={() => {
                   closeMenu?.();
                   modals.setRecalcAchievementsModalData({
@@ -190,7 +190,7 @@ export const MainMenu = ({
                 data-testid={`forseti-menu-${testIdScope}-recalculate-player-stats`}
                 label={i18n._t('Recalculate players stats')}
                 styles={{ label: { fontSize: '18px', color: 'red' } }}
-                icon={<IconRefresh />}
+                leftSection={<IconRefresh />}
                 onClick={() => {
                   closeMenu?.();
                   modals.setRecalcPlayerStatsModalData({
@@ -206,7 +206,7 @@ export const MainMenu = ({
                 data-testid={`forseti-menu-${testIdScope}-finish-event`}
                 label={i18n._t('Finish event')}
                 styles={{ label: { fontSize: '18px', color: 'red' } }}
-                icon={<IconHandStop />}
+                leftSection={<IconHandStop />}
                 onClick={() => {
                   closeMenu?.();
                   modals.setStopEventModalData({
@@ -324,11 +324,11 @@ export const MainMenu = ({
           onClick={closeMenu}
         />
       </Stack>
-      <Group mt={0} spacing={0}>
+      <Group mt={0} gap={0}>
         <NavLink
           data-testid={`forseti-menu-${testIdScope}-language`}
           styles={{ label: { fontSize: '18px' }, children: { paddingLeft: 0 } }}
-          icon={<IconLanguageHiragana size={20} />}
+          leftSection={<IconLanguageHiragana size={20} />}
           label={i18n._t('Language')}
         >
           <NavLink
@@ -337,7 +337,7 @@ export const MainMenu = ({
               saveLang('en');
               closeMenu?.();
             }}
-            icon={<FlagEn width={24} />}
+            leftSection={<FlagEn width={24} />}
             label='en'
           />
           <NavLink
@@ -346,7 +346,7 @@ export const MainMenu = ({
               saveLang('ru');
               closeMenu?.();
             }}
-            icon={<FlagRu width={24} />}
+            leftSection={<FlagRu width={24} />}
             label='ru'
           />
           <NavLink
@@ -355,7 +355,7 @@ export const MainMenu = ({
               saveLang('de');
               closeMenu?.();
             }}
-            icon={<FlagDe width={24} />}
+            leftSection={<FlagDe width={24} />}
             label='de'
           />
           <NavLink
@@ -364,7 +364,7 @@ export const MainMenu = ({
               saveLang('ko');
               closeMenu?.();
             }}
-            icon={<FlagKo width={24} />}
+            leftSection={<FlagKo width={24} />}
             label='ko'
           />
           <NavLink
@@ -373,7 +373,7 @@ export const MainMenu = ({
               saveLang('jp');
               closeMenu?.();
             }}
-            icon={<FlagJa width={24} />}
+            leftSection={<FlagJa width={24} />}
             label='jp'
           />
           <NavLink
@@ -382,7 +382,7 @@ export const MainMenu = ({
               saveLang('cn');
               closeMenu?.();
             }}
-            icon={<FlagCn width={24} />}
+            leftSection={<FlagCn width={24} />}
             label='cn'
           />
           <NavLink
@@ -391,14 +391,14 @@ export const MainMenu = ({
               saveLang('be');
               closeMenu?.();
             }}
-            icon={<FlagBe width={24} />}
+            leftSection={<FlagBe width={24} />}
             label='be'
           />
         </NavLink>
         <NavLink
           data-testid={`forseti-menu-${testIdScope}-dimmed-colors`}
           styles={{ label: { fontSize: '18px' } }}
-          icon={<IconSun size={20} />}
+          leftSection={<IconSun size={20} />}
           onClick={() => {
             toggleDimmed();
             closeMenu?.();
@@ -408,7 +408,7 @@ export const MainMenu = ({
         <NavLink
           data-testid={`forseti-menu-${testIdScope}-color-scheme`}
           styles={{ label: { fontSize: '18px' } }}
-          icon={dark ? <IconSun size={20} /> : <IconMoonStars size={20} />}
+          leftSection={dark ? <IconSun size={20} /> : <IconMoonStars size={20} />}
           onClick={() => {
             toggleColorScheme();
             closeMenu?.();

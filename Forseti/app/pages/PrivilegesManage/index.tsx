@@ -79,7 +79,7 @@ export const PrivilegesManage: React.FC<{ params: { id: string } }> = ({ params:
   return (
     !isLoading && (
       <Container>
-        <LoadingOverlay visible={isLoading} overlayOpacity={1} />
+        <LoadingOverlay visible={isLoading} overlayProps={{ opacity: 1 }} />
         <ManagementTab
           eventAdmins={eventAdmins}
           setEventAdmins={setEventAdmins}
