@@ -7,6 +7,7 @@ import { SessionModel } from '../SessionModel.js';
 import { CronModel } from '../CronModel.js';
 import { EventRegistrationModel } from '../EventRegistrationModel.js';
 import { PlayerHistoryModel } from '../PlayerHistoryModel.js';
+import { RoundModel } from '../RoundModel.js';
 import { PlayerModel } from '../PlayerModel.js';
 import { AchievementsModel } from '../AchievementsModel.js';
 import { Repository } from '../../services/Repository.js';
@@ -57,12 +58,13 @@ function makeSession(endingPolicy: EndingPolicy, syncEnd = false, round = 2) {
   return { event, session, saved };
 }
 
+afterAll(() => repo.destroy());
+
 describe('Session previews and finalization', () => {
   beforeEach(() => {
     // Persistence is mocked here; transaction behavior has its own database-backed tests.
     vi.spyOn(repo.em, 'transactional').mockImplementation(async (callback) => callback(repo.em));
   });
-  afterAll(() => repo.destroy());
   afterEach(() => {
     vi.restoreAllMocks();
     repo.em.clear();
@@ -338,5 +340,102 @@ describe('Session previews and finalization', () => {
     await completion;
     expect(finished).toBe(true);
     expect(recalc).toHaveBeenCalledWith(session.event.id, players);
+  });
+});
+
+describe('Event role cancellation permissions', () => {
+  beforeEach(() => {
+    vi.spyOn(repo.em, 'transactional').mockImplementation(async (callback) => callback(repo.em));
+    vi.spyOn(repo.em, 'persist').mockReturnValue(repo.em);
+    vi.spyOn(repo.em, 'remove').mockReturnValue(repo.em);
+    vi.spyOn(repo.frey, 'GetSuperadminFlag').mockResolvedValue({ isAdmin: false });
+    vi.spyOn(repo.frey, 'GetEventAdmins').mockResolvedValue({ admins: [] });
+    vi.spyOn(repo.frey, 'GetEventReferees').mockResolvedValue({ referees: [] });
+    vi.spyOn(repo.meta, 'personId', 'get').mockReturnValue(101);
+  });
+  afterEach(() => {
+    vi.restoreAllMocks();
+    repo.em.clear();
+  });
+
+  const role = {
+    personId: 101,
+    ruleId: 901,
+    personName: 'New administrator',
+    hasAvatar: false,
+    lastUpdate: '2026-10-26T00:00:00.000Z',
+  };
+
+  it.each(['administrator', 'referee', 'superadmin'])(
+    'allows an event %s to cancel games and the last round',
+    async (actor) => {
+      const { event, session, saved } = makeSession(policies[0]);
+      if (actor === 'administrator') {
+        vi.mocked(repo.frey.GetEventAdmins).mockImplementation(async ({ eventId }) => ({
+          admins: eventId === event.id ? [role] : [],
+        }));
+      } else if (actor === 'referee') {
+        vi.mocked(repo.frey.GetEventReferees).mockImplementation(async ({ eventId }) => ({
+          referees: eventId === event.id ? [role] : [],
+        }));
+      } else {
+        vi.mocked(repo.frey.GetSuperadminFlag).mockResolvedValue({ isAdmin: true });
+      }
+      vi.spyOn(model, 'findByRepresentationalHash').mockResolvedValue([session]);
+      const round = Object.assign(new RoundEntity(), {
+        id: 999,
+        hands: [],
+        lastSessionState: { ...saved, round: 1 },
+      });
+      vi.spyOn(Model.getModel(repo, RoundModel), 'findBySessionIds').mockResolvedValue([round]);
+
+      await expect(
+        model.cancelGame({ sessionHash: session.representationalHash })
+      ).resolves.toEqual({
+        success: true,
+      });
+      expect(session.status).toBe(SessionStatus.SESSION_STATUS_CANCELLED);
+      session.status = SessionStatus.SESSION_STATUS_INPROGRESS;
+      await expect(
+        model.dropLastRound({ sessionHash: session.representationalHash, intermediateResults: [] })
+      ).resolves.toEqual({ success: true });
+      expect(session.intermediateResults).toBe(round.lastSessionState);
+      expect(repo.em.remove).toHaveBeenCalledWith(round);
+      expect(repo.frey.GetSuperadminFlag).toHaveBeenCalledWith({ personId: 101 });
+      if (actor === 'administrator') {
+        expect(repo.frey.GetEventAdmins).toHaveBeenCalledWith({ eventId: event.id });
+        expect(repo.frey.GetEventReferees).not.toHaveBeenCalled();
+      }
+    }
+  );
+
+  it.each([
+    'unrelated user',
+    'administrator of another event',
+    'referee of another event',
+    'guest',
+  ])('denies cancellation by an %s', async (actor) => {
+    const { event, session, saved } = makeSession(policies[0]);
+    vi.spyOn(model, 'findByRepresentationalHash').mockResolvedValue([session]);
+    vi.mocked(repo.frey.GetEventAdmins).mockImplementation(async ({ eventId }) => ({
+      admins: actor === 'administrator of another event' && eventId === event.id + 1 ? [role] : [],
+    }));
+    vi.mocked(repo.frey.GetEventReferees).mockImplementation(async ({ eventId }) => ({
+      referees: actor === 'referee of another event' && eventId === event.id + 1 ? [role] : [],
+    }));
+    if (actor === 'guest') {
+      vi.spyOn(repo.meta, 'personId', 'get').mockReturnValue(null);
+    }
+
+    await expect(model.cancelGame({ sessionHash: session.representationalHash })).rejects.toThrow(
+      "You don't have the necessary permissions to cancel game"
+    );
+    await expect(
+      model.dropLastRound({ sessionHash: session.representationalHash, intermediateResults: [] })
+    ).rejects.toThrow("You don't have the necessary permissions to drop last round");
+    expect(session.status).toBe(SessionStatus.SESSION_STATUS_INPROGRESS);
+    expect(session.intermediateResults).toBe(saved);
+    expect(repo.em.persist).not.toHaveBeenCalled();
+    expect(repo.em.remove).not.toHaveBeenCalled();
   });
 });
