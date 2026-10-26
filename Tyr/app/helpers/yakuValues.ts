@@ -147,7 +147,8 @@ export function enableDoubleYakuman(doubleYakuman: Y[]): void {
 
 export function getYakuAdvice(
   yakuList: Y[],
-  outcome: RoundOutcome
+  outcome: RoundOutcome,
+  distinctWinds: boolean
 ): 'suuankou' | 'sanankou' | undefined {
   if (yakuList.includes(Y.__OPENHAND)) return;
   if (outcome === RoundOutcome.ROUND_OUTCOME_TSUMO && yakuList.includes(Y.TOITOI))
@@ -157,7 +158,7 @@ export function getYakuAdvice(
     ((outcome === RoundOutcome.ROUND_OUTCOME_RON && yakuList.includes(Y.TOITOI)) ||
       (outcome === RoundOutcome.ROUND_OUTCOME_TSUMO &&
         yakuList.includes(Y.MENZENTSUMO) &&
-        (yakuhaiCount(yakuList) === 4 ||
+        ((distinctWinds && yakuhaiCount(yakuList) === 4) ||
           yakuList.includes(Y.SANKANTSU) ||
           yakuList.includes(Y.SANSHOKUDOUKOU))))
   )

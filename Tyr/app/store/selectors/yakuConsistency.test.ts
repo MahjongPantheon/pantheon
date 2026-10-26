@@ -84,17 +84,17 @@ it.each([false, true])(
 it('allows closed tsumo with toitoi and honroutou and advises suuankou', () => {
   const state = select(fixture(), Y.MENZENTSUMO, Y.HONROTO, Y.TOITOI);
   expect(selected(state)).toEqual(expect.arrayContaining([Y.MENZENTSUMO, Y.HONROTO, Y.TOITOI]));
-  expect(getYakuAdvice(selected(state), tsumo)).toBe('suuankou');
-  expect(getYakuAdvice([Y.TOITOI], ron)).toBe('sanankou');
-  expect(getYakuAdvice([Y.TOITOI, Y.SANANKOU], ron)).toBeUndefined();
+  expect(getYakuAdvice(selected(state), tsumo, true)).toBe('suuankou');
+  expect(getYakuAdvice([Y.TOITOI], ron, true)).toBe('sanankou');
+  expect(getYakuAdvice([Y.TOITOI, Y.SANANKOU], ron, true)).toBeUndefined();
 });
 
 it.each([Y.YAKUHAI4, Y.SANKANTSU, Y.SANSHOKUDOUKOU])(
   'advises sanankou for closed tsumo with %s',
   (id: Y) => {
     const state = select(fixture(tsumo, true), Y.MENZENTSUMO, id);
-    expect(getYakuAdvice(selected(state), tsumo)).toBe('sanankou');
-    expect(getYakuAdvice([...selected(state), Y.__OPENHAND], tsumo)).toBeUndefined();
+    expect(getYakuAdvice(selected(state), tsumo, true)).toBe('sanankou');
+    expect(getYakuAdvice([...selected(state), Y.__OPENHAND], tsumo, true)).toBeUndefined();
   }
 );
 

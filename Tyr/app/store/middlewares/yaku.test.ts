@@ -18,9 +18,9 @@ import { GameConfig, PlayerInSession, RoundOutcome, RulesetConfig } from 'tsclie
 
 const tsumo = RoundOutcome.ROUND_OUTCOME_TSUMO;
 const ron = RoundOutcome.ROUND_OUTCOME_RON;
-function setup(outcome: RoundOutcome = tsumo, aggregated = true) {
+function setup(outcome: RoundOutcome = tsumo, aggregated = true, roundIndex = 1, tsumoWinner = 1) {
   const win = {
-    winner: 1,
+    winner: tsumoWinner,
     winnerIsDealer: true,
     han: 0,
     fu: 30,
@@ -43,9 +43,9 @@ function setup(outcome: RoundOutcome = tsumo, aggregated = true) {
     yakuList: makeYakuGraph(),
     currentOutcome:
       outcome === tsumo
-        ? { ...initBlankOutcome(1, tsumo), ...win, selectedOutcome: tsumo, riichiBets: [] }
+        ? { ...initBlankOutcome(roundIndex, tsumo), ...win, selectedOutcome: tsumo, riichiBets: [] }
         : {
-            ...initBlankOutcome(1, ron),
+            ...initBlankOutcome(roundIndex, ron),
             selectedOutcome: ron,
             wins: { 1: win, 2: { ...win, winner: 2 } },
             riichiBets: [],
@@ -108,7 +108,7 @@ it.each([false, true])(
 it.each([Y.YAKUHAI4, Y.SANKANTSU, Y.SANSHOKUDOUKOU])(
   'confirms sanankou for tsumo and %s',
   (id: Y) => {
-    const store = setup();
+    const store = setup(tsumo, true, 5);
     store.add(Y.MENZENTSUMO);
     store.add(id);
     store.resolve(true);
@@ -118,12 +118,19 @@ it.each([Y.YAKUHAI4, Y.SANKANTSU, Y.SANSHOKUDOUKOU])(
 );
 
 it('recognizes four named yakuhai and cancels only the final dragon selection', () => {
-  const store = setup(tsumo, false);
-  for (const id of [Y.MENZENTSUMO, Y.EAST_SEAT_WIND, Y.RED_DRAGON, Y.GREEN_DRAGON]) store.add(id);
+  const store = setup(tsumo, false, 5);
+  for (const id of [
+    Y.MENZENTSUMO,
+    Y.EAST_SEAT_WIND,
+    Y.SOUTH_ROUND_WIND,
+    Y.RED_DRAGON,
+    Y.GREEN_DRAGON,
+  ])
+    store.add(id);
   expect(store.state().yakuAdvice?.lastYaku).toBe(Y.GREEN_DRAGON);
   store.resolve(false);
   expect(store.selected()).toEqual(
-    expect.arrayContaining([Y.MENZENTSUMO, Y.EAST_SEAT_WIND, Y.EAST_ROUND_WIND, Y.RED_DRAGON])
+    expect.arrayContaining([Y.MENZENTSUMO, Y.EAST_SEAT_WIND, Y.SOUTH_ROUND_WIND, Y.RED_DRAGON])
   );
   expect(store.selected()).not.toContain(Y.GREEN_DRAGON);
   expect(store.state().yakuAdvice).toBeUndefined();
@@ -195,3 +202,46 @@ it('does not repeat the dialog on duplicate additions and clears it on navigatio
   store.dispatch({ type: GOTO_PREV_SCREEN });
   expect(store.state().yakuAdvice).toBeUndefined();
 });
+
+it.each([false, true])(
+  'checks the winner’s actual winds for four yakuhai (aggregate=%s)',
+  (aggregate: boolean) => {
+    for (const [round, winner, distinct, winds] of [
+      [1, 1, false, [Y.EAST_SEAT_WIND]],
+      [1, 2, true, [Y.SOUTH_SEAT_WIND, Y.EAST_ROUND_WIND]],
+      [2, 2, false, [Y.EAST_SEAT_WIND]],
+      [5, 2, false, [Y.SOUTH_SEAT_WIND]],
+      [5, 1, true, [Y.EAST_SEAT_WIND, Y.SOUTH_ROUND_WIND]],
+      [6, 3, false, [Y.SOUTH_SEAT_WIND]],
+    ] as const) {
+      const store = setup(tsumo, aggregate, round, winner);
+      const ids = aggregate ? [Y.YAKUHAI4] : [...winds, Y.RED_DRAGON, Y.GREEN_DRAGON];
+      store.add(Y.MENZENTSUMO, winner);
+      for (const id of ids) store.add(id, winner);
+      if (distinct) {
+        expect(store.state().yakuAdvice).toMatchObject({ winner, expectedYaku: Y.SANANKOU });
+        store.resolve(true);
+        expect(store.selected(winner)).toContain(Y.SANANKOU);
+      } else {
+        expect(store.state().yakuAdvice).toBeUndefined();
+        expect(store.selected(winner)).not.toContain(Y.SANANKOU);
+      }
+    }
+  }
+);
+
+it.each([Y.SANKANTSU, Y.SANSHOKUDOUKOU])(
+  'keeps the independent %s prompt with double-wind yakuhai',
+  (id: Y) => {
+    const store = setup();
+    store.add(Y.MENZENTSUMO);
+    store.add(Y.YAKUHAI2);
+    expect(store.state().yakuAdvice).toBeUndefined();
+    store.add(id);
+    expect(store.state().yakuAdvice).toMatchObject({
+      winner: 1,
+      lastYaku: id,
+      expectedYaku: Y.SANANKOU,
+    });
+  }
+);

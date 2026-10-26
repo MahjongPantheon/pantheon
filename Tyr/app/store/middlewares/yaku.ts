@@ -24,6 +24,7 @@ import {
   SET_YAKU_ADVICE,
   RESOLVE_YAKU_ADVICE,
 } from '../actions/interfaces';
+import { getWindYaku, windYaku } from '../../helpers/yakuhai';
 import { getYakuAdvice } from '../../helpers/yakuValues';
 import { getSelectedYaku } from '../selectors/yaku';
 import { YakuId } from '../../helpers/yaku';
@@ -101,7 +102,14 @@ export const yaku =
       getSelectedYaku(before)[winner]?.includes(action.payload.id)
     )
       return;
-    const advice = getYakuAdvice(selected, outcome.selectedOutcome);
+    const playerIndex = after.players?.findIndex((player) => player.id === winner) ?? -1;
+    // Four yakuhai han imply four triplets only when the two winds differ.
+    // A double wind and two dragons contain just three triplets in either entry mode.
+    const distinctWinds =
+      playerIndex >= 0 &&
+      outcome.roundIndex > 0 &&
+      !windYaku.some((pair) => getWindYaku(pair[0], outcome.roundIndex, playerIndex)?.length === 2);
+    const advice = getYakuAdvice(selected, outcome.selectedOutcome, distinctWinds);
     if (advice)
       mw.dispatch({
         type: SET_YAKU_ADVICE,
