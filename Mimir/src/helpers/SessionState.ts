@@ -100,7 +100,7 @@ export class SessionState {
     return (
       this._lastPossibleRoundWasPlayed() ||
       this._state.prematurelyFinished ||
-      (this._ruleset.rules.withButtobi && this._tobi()) ||
+      (this._ruleset.rules.withTobi && this._tobi()) ||
       (this._ruleset.rules.withLeadingDealerGameOver && this._dealerIsLeaderOnOorasu())
     );
   }

@@ -70,6 +70,34 @@ describe('Session previews and finalization', () => {
     repo.em.clear();
   });
 
+  it.each(policies)(
+    'rejects unaffordable riichi in previews and new rounds (policy=%s)',
+    async (policy) => {
+      const { event, session, saved } = makeSession(policy);
+      event.ruleset.rules.withTobi = true;
+      saved.scores[1] = 900;
+      const before = saved.clone();
+      vi.spyOn(model, 'findByRepresentationalHash').mockResolvedValue([session]);
+      const roundData = {
+        draw: { roundIndex: saved.round, honba: saved.honba, riichiBets: [1], tempai: [1, 2] },
+      };
+      await expect(model.previewRound(session.representationalHash, roundData)).rejects.toThrow(
+        'needs at least 1000 points'
+      );
+      const state = new SessionState(event.ruleset, players, saved);
+      await expect(
+        model.updateSessionState(
+          event,
+          session,
+          state,
+          RoundEntity.fromMessage(session, event, roundData, saved)
+        )
+      ).rejects.toThrow('needs at least 1000 points');
+      expect(state.state).toEqual(before);
+      expect(session.intermediateResults).toEqual(before);
+    }
+  );
+
   const previewCases = policies.flatMap((policy) =>
     [false, true].flatMap((syncEnd) =>
       [false, true].map((finishing) => ({ policy, syncEnd, finishing }))

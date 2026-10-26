@@ -35,6 +35,7 @@ import { RoundOutcome } from 'tsclients/proto/atoms.pb';
 import { memoize } from '../../helpers/memoize';
 import { getWinningUsers, hasYaku } from './mimir';
 import { filterAllowed, yakuCommon, yakumans, yakuRare } from '../../helpers/yakuLists';
+import { riichiDisabled } from './userItem';
 
 export function getRequiredYaku(state: IAppState): Record<number, YakuId[]> {
   const outcome = state.currentOutcome;
@@ -132,8 +133,16 @@ function _excludeYaku(
   if (!winner || !outcome) {
     return [];
   }
+  const player = state.players?.find((candidate) => candidate.id === winner);
 
   return list.filter((yakuId: YakuId) => {
+    if (
+      (yakuId === YakuId.RIICHI || yakuId === YakuId.DOUBLERIICHI) &&
+      player &&
+      riichiDisabled(state, player)
+    ) {
+      return false;
+    }
     const yaku = getWindYaku(
       yakuId,
       outcome.roundIndex,

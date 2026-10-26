@@ -146,3 +146,10 @@ Ruleset presets default to separate names (`useAggregatedYakuhai = false`).
 Forseti’s Create event page defaults tournaments to aggregated yakuhai and local
 or online events to separate names. Admins can change the checkbox manually.
 No historical hands are rewritten.
+
+### Tobi ruleset setting
+
+Apply `Migration20261027000000` before deploying the updated server and clients.
+It renames the stored `withButtobi` rule to `withTobi`, preserving each event's
+setting. The protobuf field keeps number 14; JSON clients must use `withTobi`.
+With tobi enabled, riichi requires at least 1,000 points before the round's payments.

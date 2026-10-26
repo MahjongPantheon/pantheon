@@ -1,3 +1,4 @@
+import { checkRiichiPoints } from '../helpers/roundValidation.js';
 import { LockMode, TransactionPropagation } from '@mikro-orm/core';
 import { randomUUID } from 'node:crypto';
 import { TwirpError } from 'twirpscript';
@@ -593,6 +594,8 @@ export class SessionModel extends Model {
     round: RoundEntity,
     preventSaving = false
   ) {
+    checkRiichiPoints(event.ruleset, sessionState.getScores(), round);
+
     let payments: PaymentsInfo = {
       direct: {},
       riichi: {},

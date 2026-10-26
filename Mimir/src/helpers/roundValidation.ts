@@ -14,6 +14,23 @@ import {
   TsumoResult,
 } from 'tsclients/proto/atoms.pb.js';
 
+// Validate only newly submitted outcomes; imported historical rounds retain their original accounting.
+export function checkRiichiPoints(
+  ruleset: RulesetEntity,
+  scores: Record<number, number>,
+  round: RoundEntity
+): void {
+  if (ruleset.rules.withTobi) {
+    for (const playerId of round.riichi ?? []) {
+      if (scores[playerId] < 1000) {
+        throw new Error(
+          `Player #${playerId} needs at least 1000 points to declare riichi with tobi`
+        );
+      }
+    }
+  }
+}
+
 export function checkRound(
   players: number[],
   allRegisteredPlayersIds: number[],

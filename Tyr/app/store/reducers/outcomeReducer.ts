@@ -15,6 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import { riichiDisabled } from '../selectors/userItem';
 import { initBlankOutcome } from '../state';
 import {
   ADD_YAKU,
@@ -255,6 +256,15 @@ function reduceOutcome(state: IAppState, action: AppActionTypes): IAppState {
       const outcome = state.currentOutcome;
       playerId = action.payload;
       if (outcome && outcome.selectedOutcome === RoundOutcome.ROUND_OUTCOME_CHOMBO) {
+        return state;
+      }
+
+      const riichiPlayer = state.players?.find((player) => player.id === playerId);
+      if (
+        !outcome?.riichiBets.includes(playerId) &&
+        riichiPlayer &&
+        riichiDisabled(state, riichiPlayer)
+      ) {
         return state;
       }
 

@@ -1,3 +1,4 @@
+import { checkRiichiPoints } from './roundValidation.js';
 import { RulesetEntity } from '../entities/Ruleset.entity.js';
 import { SessionState } from './SessionState.js';
 import { RoundEntity } from '../entities/Round.entity.js';
@@ -816,5 +817,95 @@ describe('Session state', () => {
       3: 30000,
       4: 30000,
     });
+  });
+});
+
+describe('Tobi riichi eligibility', () => {
+  it.each([
+    RoundOutcome.ROUND_OUTCOME_RON,
+    RoundOutcome.ROUND_OUTCOME_MULTIRON,
+    RoundOutcome.ROUND_OUTCOME_TSUMO,
+    RoundOutcome.ROUND_OUTCOME_DRAW,
+    RoundOutcome.ROUND_OUTCOME_ABORT,
+    RoundOutcome.ROUND_OUTCOME_NAGASHI,
+  ])('rejects insufficient pre-round points without changing state for outcome %s', (outcome) => {
+    for (const score of [-100, 0, 900, 999]) {
+      const rules = RulesetEntity.createRuleset('ema');
+      rules.rules.withAbortives = true;
+      rules.rules.withTobi = true;
+      const state = new SessionState(rules, [1, 2, 3, 4]);
+      state.setScores({ 1: score, 2: 30000, 3: 30000, 4: 30000 });
+      const before = structuredClone(state.state);
+      const round = makeRoundWithDefaults({
+        outcome,
+        sessionId: 1,
+        eventId: 1,
+        roundIndex: 1,
+        riichi: [1],
+        rounds: [{ winnerId: 1, loserId: 2, han: 3, fu: 30 }],
+      });
+      expect(() => checkRiichiPoints(rules, state.getScores(), round)).toThrow(
+        'needs at least 1000 points'
+      );
+      expect(structuredClone(state.state)).toEqual(before);
+    }
+  });
+
+  it.each([true, false])('accepts exactly 1000 points (tobi=%s)', (withTobi) => {
+    const rules = RulesetEntity.createRuleset('ema');
+    rules.rules.withAbortives = true;
+    rules.rules.withTobi = withTobi;
+    const state = new SessionState(rules, [1, 2, 3, 4]);
+    state.setScores({ 1: 1000, 2: 30000, 3: 30000, 4: 30000 });
+    const round = makeRoundWithDefaults({
+      outcome: RoundOutcome.ROUND_OUTCOME_ABORT,
+      sessionId: 1,
+      eventId: 1,
+      roundIndex: 1,
+      riichi: [1],
+      rounds: [{}],
+    });
+    checkRiichiPoints(rules, state.getScores(), round);
+    state.update(round);
+    expect(state.getScores()[1]).toBe(0);
+    expect(state.getRiichiBets()).toBe(1);
+  });
+
+  it('preserves accounting when replaying historical riichi recorded below 1000', () => {
+    const rules = RulesetEntity.createRuleset('ema');
+    rules.rules.withAbortives = true;
+    rules.rules.withTobi = true;
+    const state = new SessionState(rules, [1, 2, 3, 4]);
+    state.setScores({ 1: 900, 2: 30000, 3: 30000, 4: 30000 });
+    state.update(
+      makeRoundWithDefaults({
+        outcome: RoundOutcome.ROUND_OUTCOME_ABORT,
+        sessionId: 1,
+        eventId: 1,
+        roundIndex: 1,
+        riichi: [1],
+        rounds: [{}],
+      })
+    );
+    expect(state.getScores()[1]).toBe(-100);
+  });
+
+  it('allows riichi below 1000 when tobi is disabled', () => {
+    const rules = RulesetEntity.createRuleset('ema');
+    rules.rules.withAbortives = true;
+    rules.rules.withTobi = false;
+    const state = new SessionState(rules, [1, 2, 3, 4]);
+    state.setScores({ 1: 900, 2: 30000, 3: 30000, 4: 30000 });
+    const round = makeRoundWithDefaults({
+      outcome: RoundOutcome.ROUND_OUTCOME_ABORT,
+      sessionId: 1,
+      eventId: 1,
+      roundIndex: 1,
+      riichi: [1],
+      rounds: [{}],
+    });
+    checkRiichiPoints(rules, state.getScores(), round);
+    state.update(round);
+    expect(state.getScores()[1]).toBe(-100);
   });
 });

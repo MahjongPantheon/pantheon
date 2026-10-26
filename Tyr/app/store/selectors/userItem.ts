@@ -37,6 +37,10 @@ export function riichiPressed(state: IAppState, userData: PlayerInSession) {
   return -1 !== getRiichiUsers(state).indexOf(userData);
 }
 
+export function riichiDisabled(state: IAppState, userData: PlayerInSession) {
+  return !!state.gameConfig?.rulesetConfig.withTobi && userData.score < 1000;
+}
+
 export function deadPressed(state: IAppState, userData: PlayerInSession) {
   return -1 !== getDeadhandUsers(state).indexOf(userData);
 }

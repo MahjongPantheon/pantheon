@@ -114,7 +114,7 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string; copyId?: string 
         doubleronRiichiAtamahane: false,
         withAtamahane: false,
         withAbortives: false,
-        withButtobi: false,
+        withTobi: false,
         withKazoe: false,
         withKiriageMangan: false,
         withKuitan: false,

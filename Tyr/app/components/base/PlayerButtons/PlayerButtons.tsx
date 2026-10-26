@@ -38,7 +38,10 @@ export const PlayerButtons = (props: IProps) => {
       {!!props.riichiButton && (
         <RiichiBigIcon
           data-testid={props.testIdPrefix ? `${props.testIdPrefix}-riichi` : undefined}
-          onClick={props.onRiichiButtonClick}
+          aria-disabled={props.riichiButton === PlayerButtonMode.DISABLE}
+          onClick={
+            props.riichiButton === PlayerButtonMode.DISABLE ? undefined : props.onRiichiButtonClick
+          }
           className={clsx(
             styles.riichiButton,
             props.riichiButton === PlayerButtonMode.DISABLE ||

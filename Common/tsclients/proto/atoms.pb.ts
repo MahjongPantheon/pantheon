@@ -561,7 +561,7 @@ export interface RulesetConfig {
   tonpuusen: boolean;
   withAbortives: boolean;
   withAtamahane: boolean;
-  withButtobi: boolean;
+  withTobi: boolean;
   withKazoe: boolean;
   withKiriageMangan: boolean;
   withKuitan: boolean;
@@ -7037,7 +7037,7 @@ export const RulesetConfig = {
       tonpuusen: false,
       withAbortives: false,
       withAtamahane: false,
-      withButtobi: false,
+      withTobi: false,
       withKazoe: false,
       withKiriageMangan: false,
       withKuitan: false,
@@ -7115,8 +7115,8 @@ export const RulesetConfig = {
     if (msg.withAtamahane) {
       writer.writeBool(13, msg.withAtamahane);
     }
-    if (msg.withButtobi) {
-      writer.writeBool(14, msg.withButtobi);
+    if (msg.withTobi) {
+      writer.writeBool(14, msg.withTobi);
     }
     if (msg.withKazoe) {
       writer.writeBool(15, msg.withKazoe);
@@ -7265,7 +7265,7 @@ export const RulesetConfig = {
           break;
         }
         case 14: {
-          msg.withButtobi = reader.readBool();
+          msg.withTobi = reader.readBool();
           break;
         }
         case 15: {
@@ -13391,7 +13391,7 @@ export const RulesetConfigJSON = {
       tonpuusen: false,
       withAbortives: false,
       withAtamahane: false,
-      withButtobi: false,
+      withTobi: false,
       withKazoe: false,
       withKiriageMangan: false,
       withKuitan: false,
@@ -13475,8 +13475,8 @@ export const RulesetConfigJSON = {
     if (msg.withAtamahane) {
       json["withAtamahane"] = msg.withAtamahane;
     }
-    if (msg.withButtobi) {
-      json["withButtobi"] = msg.withButtobi;
+    if (msg.withTobi) {
+      json["withTobi"] = msg.withTobi;
     }
     if (msg.withKazoe) {
       json["withKazoe"] = msg.withKazoe;
@@ -13623,9 +13623,9 @@ export const RulesetConfigJSON = {
     if (_withAtamahane_) {
       msg.withAtamahane = _withAtamahane_;
     }
-    const _withButtobi_ = json["withButtobi"] ?? json["with_buttobi"];
-    if (_withButtobi_) {
-      msg.withButtobi = _withButtobi_;
+    const _withTobi_ = json["withTobi"] ?? json["with_tobi"];
+    if (_withTobi_) {
+      msg.withTobi = _withTobi_;
     }
     const _withKazoe_ = json["withKazoe"] ?? json["with_kazoe"];
     if (_withKazoe_) {
