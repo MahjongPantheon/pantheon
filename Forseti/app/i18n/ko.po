@@ -3,7 +3,6 @@
 # This file is distributed under the same license as the PROJECT project.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
@@ -504,9 +503,8 @@ msgid "East round wind"
 msgstr "장풍: 동"
 
 #: app/helpers/yaku.ts:269:34
-#, fuzzy
 msgid "East seat wind"
-msgstr "좌석 초기화"
+msgstr "자풍: 동"
 
 #: app/helpers/yaku.ts:370:34
 msgid "East wind"
@@ -1299,14 +1297,12 @@ msgid "No penalties assigned yet"
 msgstr "아직 부과된 벌부가 없습니다"
 
 #: app/helpers/yaku.ts:297:34
-#, fuzzy
 msgid "North round wind"
-msgstr "검색 결과 없음"
+msgstr "장풍: 북"
 
 #: app/helpers/yaku.ts:293:34
-#, fuzzy
 msgid "North seat wind"
-msgstr "다음 좌석"
+msgstr "자풍: 북"
 
 #: app/helpers/yaku.ts:385:34
 msgid "North wind"
@@ -1548,9 +1544,8 @@ msgid "Play only east rounds"
 msgstr "동장전만 진행함"
 
 #: app/helpers/lastRound.ts:35:56
-#, fuzzy
 msgid "Player #%1"
-msgstr "작사"
+msgstr "작사 #%1"
 
 #: app/pages/ProfileManageAdmin.tsx:159:26
 msgid "Player details were successfully saved"
@@ -2420,9 +2415,8 @@ msgid "West round wind"
 msgstr "장풍: 서"
 
 #: app/helpers/yaku.ts:285:34
-#, fuzzy
 msgid "West seat wind"
-msgstr "좌석 초기화"
+msgstr "자풍: 서"
 
 #: app/helpers/yaku.ts:380:34
 msgid "West wind"
@@ -2589,9 +2583,8 @@ msgid "Your telegram ID"
 msgstr "텔레그램 ID"
 
 #: app/helpers/lastRound.ts:38:67
-#, fuzzy
 msgid "all noten"
-msgstr "참고"
+msgstr "전원 노텐"
 
 #: app/helpers/lastRound.ts:38:24
 msgid "all tenpai"
@@ -2610,9 +2603,8 @@ msgid "show / hide"
 msgstr "표시 / 숨김"
 
 #: app/helpers/lastRound.ts:56:11
-#, fuzzy
 msgid "yakuman!"
-msgstr "헤아림 역만"
+msgstr "역만!"
 
 #~ msgid "Disabled"
 #~ msgstr "사용 안 함"

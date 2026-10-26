@@ -490,9 +490,8 @@ msgid "East round wind"
 msgstr "场风：东"
 
 #: app/helpers/yaku.ts:269:34
-#, fuzzy
 msgid "East seat wind"
-msgstr "重置座位表"
+msgstr "自风：东"
 
 #: app/helpers/yaku.ts:370:34
 msgid "East wind"
@@ -1267,14 +1266,12 @@ msgid "No penalties assigned yet"
 msgstr "尚未执行处罚"
 
 #: app/helpers/yaku.ts:297:34
-#, fuzzy
 msgid "North round wind"
-msgstr "未找到结果"
+msgstr "场风：北"
 
 #: app/helpers/yaku.ts:293:34
-#, fuzzy
 msgid "North seat wind"
-msgstr "下次排座"
+msgstr "自风：北"
 
 #: app/helpers/yaku.ts:385:34
 msgid "North wind"
@@ -1509,9 +1506,8 @@ msgid "Play only east rounds"
 msgstr "仅进行东风战"
 
 #: app/helpers/lastRound.ts:35:56
-#, fuzzy
 msgid "Player #%1"
-msgstr "玩家"
+msgstr "玩家 #%1"
 
 #: app/pages/ProfileManageAdmin.tsx:159:26
 msgid "Player details were successfully saved"
@@ -2367,9 +2363,8 @@ msgid "West round wind"
 msgstr "场风：西"
 
 #: app/helpers/yaku.ts:285:34
-#, fuzzy
 msgid "West seat wind"
-msgstr "重置座位表"
+msgstr "自风：西"
 
 #: app/helpers/yaku.ts:380:34
 msgid "West wind"
@@ -2523,9 +2518,8 @@ msgid "Your telegram ID"
 msgstr "你的 Telegram ID"
 
 #: app/helpers/lastRound.ts:38:67
-#, fuzzy
 msgid "all noten"
-msgstr "请注意"
+msgstr "全员未听牌"
 
 #: app/helpers/lastRound.ts:38:24
 msgid "all tenpai"
@@ -2544,9 +2538,8 @@ msgid "show / hide"
 msgstr "显示 / 隐藏"
 
 #: app/helpers/lastRound.ts:56:11
-#, fuzzy
 msgid "yakuman!"
-msgstr "累计役满"
+msgstr "役满！"
 
 #~ msgid "Disabled"
 #~ msgstr "禁用"

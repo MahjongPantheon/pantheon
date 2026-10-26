@@ -507,9 +507,8 @@ msgid "East round wind"
 msgstr "Вецер раўнда: Усход"
 
 #: app/helpers/yaku.ts:269:34
-#, fuzzy
 msgid "East seat wind"
-msgstr "Скінуць рассадку"
+msgstr "Вецер месца: Усход"
 
 #: app/helpers/yaku.ts:370:34
 msgid "East wind"
@@ -1319,14 +1318,12 @@ msgid "No penalties assigned yet"
 msgstr "Штрафы яшчэ не прызначаны"
 
 #: app/helpers/yaku.ts:297:34
-#, fuzzy
 msgid "North round wind"
-msgstr "Нічога не знойдзена"
+msgstr "Вецер раўнда: Поўнач"
 
 #: app/helpers/yaku.ts:293:34
-#, fuzzy
 msgid "North seat wind"
-msgstr "Наступная рассадка"
+msgstr "Вецер месца: Поўнач"
 
 #: app/helpers/yaku.ts:385:34
 msgid "North wind"
@@ -1572,9 +1569,8 @@ msgid "Play only east rounds"
 msgstr "Гуляць толькі ўсходнія раўнды"
 
 #: app/helpers/lastRound.ts:35:56
-#, fuzzy
 msgid "Player #%1"
-msgstr "Гульцы"
+msgstr "Гулец №%1"
 
 #: app/pages/ProfileManageAdmin.tsx:159:26
 msgid "Player details were successfully saved"
@@ -2453,9 +2449,8 @@ msgid "West round wind"
 msgstr "Вецер раўнда: Захад"
 
 #: app/helpers/yaku.ts:285:34
-#, fuzzy
 msgid "West seat wind"
-msgstr "Скінуць рассадку"
+msgstr "Вецер месца: Захад"
 
 #: app/helpers/yaku.ts:380:34
 msgid "West wind"
@@ -2627,9 +2622,8 @@ msgid "Your telegram ID"
 msgstr "Ваш Telegram ID"
 
 #: app/helpers/lastRound.ts:38:67
-#, fuzzy
 msgid "all noten"
-msgstr "Звярніце ўвагу"
+msgstr "усе нотэн"
 
 #: app/helpers/lastRound.ts:38:24
 msgid "all tenpai"
@@ -2648,9 +2642,8 @@ msgid "show / hide"
 msgstr "паказаць / схаваць"
 
 #: app/helpers/lastRound.ts:56:11
-#, fuzzy
 msgid "yakuman!"
-msgstr "Кадзоэ якуман"
+msgstr "якуман!"
 
 #~ msgid "Disabled"
 #~ msgstr "Выключана"
