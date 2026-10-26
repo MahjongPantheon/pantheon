@@ -233,19 +233,15 @@ export function getPlayerButtons(
 
   let riichiButton: PlayerButtonMode | undefined;
   let onRiichiButtonClick: (() => void) | undefined;
-  if (hasRiichiButton) {
+  if (hasRiichiButton && (riichiPressed(state, player) || !riichiDisabled(state, player))) {
     if (riichiPressed(state, player)) {
       riichiButton = PlayerButtonMode.PRESSED;
-    } else if (riichiDisabled(state, player)) {
-      riichiButton = PlayerButtonMode.DISABLE;
     } else {
       riichiButton = PlayerButtonMode.IDLE;
     }
-    if (riichiButton !== PlayerButtonMode.DISABLE) {
-      onRiichiButtonClick = () => {
-        dispatch({ type: TOGGLE_RIICHI, payload: player.id });
-      };
-    }
+    onRiichiButtonClick = () => {
+      dispatch({ type: TOGGLE_RIICHI, payload: player.id });
+    };
   }
 
   let deadButton: PlayerButtonMode | undefined;
