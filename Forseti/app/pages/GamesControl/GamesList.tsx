@@ -19,7 +19,6 @@ import {
   GameConfig,
   IntermediateResultOfSession,
   RegisteredPlayer,
-  Round,
   SessionStatus,
   TableState,
   TournamentGamesStatus,
@@ -50,7 +49,7 @@ import {
 import * as React from 'react';
 import { useMediaQuery } from '@mantine/hooks';
 import { I18nService } from '../../services/i18n';
-import { yakuList } from '../../helpers/yaku';
+import { formatLastRound, formatRoundIndex } from '../../helpers/lastRound';
 import { useI18n } from '../../hooks/i18n';
 import { Confirmation } from './Confirmation';
 import { PlayerAvatar } from '../../components/PlayerAvatar';
@@ -135,7 +134,7 @@ export function GamesList({
                       size='lg'
                       title={i18n._t('Current round')}
                     >
-                      {makeRound(t.currentRoundIndex)}
+                      {formatRoundIndex(t.currentRoundIndex)}
                     </ActionIcon>
                   )}
                 </Stack>
@@ -188,9 +187,12 @@ export function GamesList({
                       {i18n._t('Extra minutes: %1', [t.extraTime / 60])}
                     </Text>
                   )}
-                  <Text size='sm'>
-                    {t.lastRound && <Box>{formatRound(t.lastRound, players, i18n)}</Box>}
-                  </Text>
+                  {t.lastRound &&
+                    formatLastRound(t.lastRound, players, i18n).map((line, index) => (
+                      <Text size='sm' key={index}>
+                        {line}
+                      </Text>
+                    ))}
                 </Box>
               </Group>
               <Group position='right'>
@@ -395,88 +397,4 @@ function getBadge(
     default:
       return <></>;
   }
-}
-
-const winds = [
-  '?',
-  '東1',
-  '東2',
-  '東3',
-  '東4',
-  '南1',
-  '南2',
-  '南3',
-  '南4',
-  '西1',
-  '西2',
-  '西3',
-  '西4',
-  '北1',
-  '北2',
-  '北3',
-  '北4',
-];
-function makeRound(roundIndex: number) {
-  return winds[roundIndex] ?? '?';
-}
-
-function formatRound(round: Round, players: Record<number, RegisteredPlayer>, i18n: I18nService) {
-  if (round.ron) {
-    return i18n._t('Ron, %1 from %2 (%3), riichi: %4', [
-      players[round.ron.winnerId].title,
-      players[round.ron.loserId].title,
-      formatYaku(round.ron.yaku, i18n).join(', '),
-      round.ron.riichiBets.map((id) => players[id].title).join(', ') || '--',
-    ]);
-  }
-
-  if (round.multiron) {
-    return round.multiron.wins
-      .map((win) =>
-        i18n._t('Ron, %1 from %2 (%3), riichi: %4', [
-          players[win.winnerId].title,
-          players[round.multiron!.loserId].title,
-          formatYaku(win.yaku, i18n).join(', '),
-          round.multiron!.riichiBets.map((id) => players[id].title).join(', ') || '--',
-        ])
-      )
-      .join(', ');
-  }
-
-  if (round.tsumo) {
-    return i18n._t('Tsumo, %1 (%2), riichi: %3', [
-      players[round.tsumo.winnerId].title,
-      formatYaku(round.tsumo.yaku, i18n).join(', '),
-      round.tsumo.riichiBets.map((id) => players[id].title).join(', ') || '--',
-    ]);
-  }
-
-  if (round.chombo) {
-    return i18n._t('Chombo, %1', [players[round.chombo.loserId].title]);
-  }
-
-  if (round.draw) {
-    return i18n._t('Draw, tempai: %1, riichi: %2', [
-      round.draw.tempai.map((id) => players[id].title).join(', ') || '--',
-      round.draw.riichiBets.map((id) => players[id].title).join(', ') || '--',
-    ]);
-  }
-
-  if (round.abort) {
-    return i18n._t('Abortive draw, riichi: %1', [
-      round.abort.riichiBets.map((id) => players[id].title).join(', ') || '--',
-    ]);
-  }
-
-  if (round.nagashi) {
-    return i18n._t('Nagashi mangan, nagashi: %1, tempai: %2, riichi: %3', [
-      round.nagashi.nagashi.map((id) => players[id].title).join(', ') || '--',
-      round.nagashi.tempai.map((id) => players[id].title).join(', ') || '--',
-      round.nagashi.riichiBets.map((id) => players[id].title).join(', ') || '--',
-    ]);
-  }
-}
-
-function formatYaku(yaku: number[], i18n: I18nService) {
-  return yakuList.filter((y) => yaku.includes(y.id)).map((y) => y.name(i18n));
 }
