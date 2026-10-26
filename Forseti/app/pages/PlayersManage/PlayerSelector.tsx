@@ -16,20 +16,12 @@
  */
 
 import * as React from 'react';
-import { Autocomplete, Group, Loader, Text } from '@mantine/core';
-import { forwardRef, useCallback, useEffect, useMemo, useState } from 'react';
+import { Combobox, Group, Loader, Text, TextInput, useCombobox } from '@mantine/core';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import debounce from 'lodash.debounce';
 import { useApi } from '../../hooks/api';
 import { IconSearch } from '@tabler/icons-react';
-import { RegisteredPlayer } from 'tsclients/proto/atoms.pb';
-type ItemProps = {
-  title: string;
-  value: string; // playerID
-  city: string;
-  tenhouId: string;
-  hasAvatar?: boolean;
-  lastUpdate: string;
-};
+import { Person, RegisteredPlayer } from 'tsclients/proto/atoms.pb';
 
 export const PlayerSelector: React.FC<{
   eventId: number;
@@ -39,92 +31,114 @@ export const PlayerSelector: React.FC<{
   testId: string;
 }> = ({ eventId, onPlayerSelect, placeholder, excludePlayers, testId }) => {
   const api = useApi();
-  const [userAddLoading, setUserAddLoading] = useState(false);
-  const [userAddValue, setUserAddValue] = useState('');
-  const [userAddData, setUserAddData] = useState<ItemProps[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [query, setQuery] = useState('');
+  const [players, setPlayers] = useState<Person[]>([]);
+  const request = useRef(0);
+  const combobox = useCombobox({ onDropdownClose: () => combobox.resetSelectedOption() });
+  const search = useMemo(
+    () =>
+      debounce(async (value: string, requestId: number) => {
+        try {
+          const result = await api.findByTitle(value);
+          if (requestId === request.current) {
+            setPlayers(result);
+          }
+        } catch {
+          if (requestId === request.current) {
+            setPlayers([]);
+          }
+        } finally {
+          if (requestId === request.current) {
+            setLoading(false);
+          }
+        }
+      }, 300),
+    [api]
+  );
 
-  const AutoCompleteItem = forwardRef<HTMLDivElement, ItemProps>(
-    ({ title, value, city, tenhouId, ...others }: ItemProps, ref) => (
-      <div ref={ref} {...others}>
-        <Group noWrap>
-          <Text>
-            {title} [#{value}, {city}
-            {!!tenhouId && `, Tenhou nickname: ${tenhouId}`}]
-          </Text>
-        </Group>
-      </div>
+  useEffect(
+    () => () => {
+      search.cancel();
+      request.current += 1;
+    },
+    [search, eventId]
+  );
+
+  const options = players
+    .filter(
+      (player) =>
+        !excludePlayers.includes(player.id) &&
+        player.title.toLowerCase().includes(query.toLowerCase().trim())
     )
-  );
-
-  const fetchData = (query: string) => {
-    api.findByTitle(query).then((persons) => {
-      setUserAddData(
-        persons
-          .filter((p) => !excludePlayers.includes(p.id))
-          .map((person) => ({
-            title: person.title,
-            value: person.id.toString(),
-            city: person.city,
-            tenhouId: person.tenhouId,
-            hasAvatar: person.hasAvatar,
-            lastUpdate: person.lastUpdate,
-          }))
-      );
-      setUserAddLoading(false);
-    });
-  };
-
-  const fetchDataD = useMemo(() => debounce(fetchData, 300), [api, excludePlayers]);
-
-  useEffect(() => {
-    return () => {
-      fetchDataD.cancel();
-    };
-  }, []);
-
-  const handleChange = useCallback(
-    (query: string) => {
-      setUserAddValue(query);
-      setUserAddData([]);
-      if (query.trim().length === 0) {
-        setUserAddLoading(false);
-      } else {
-        setUserAddLoading(true);
-        fetchDataD(query);
-      }
-    },
-    [api, excludePlayers]
-  );
-
-  const handlePlayerAdd = useCallback(
-    (item: ItemProps) => {
-      setUserAddValue('');
-      setUserAddData([]);
-      onPlayerSelect({
-        id: parseInt(item.value, 10),
-        title: item.title,
-        hasAvatar: item.hasAvatar ?? false,
-        lastUpdate: item.lastUpdate,
-        tenhouId: '', // TODO: not required here, maybe fix type
-        ignoreSeating: false,
-      });
-    },
-    [api, eventId, excludePlayers]
-  );
+    .slice(0, 5);
 
   return (
-    <Autocomplete
-      data-testid={testId}
-      value={userAddValue}
-      data={userAddData}
-      onChange={handleChange}
-      onItemSubmit={handlePlayerAdd}
-      itemComponent={AutoCompleteItem}
-      filter={(value, item) => item.title.toLowerCase().includes(value.toLowerCase().trim())}
-      rightSection={
-        userAddLoading ? <Loader variant='dots' size='1rem' /> : <IconSearch color='#bbb' />
-      }
-      placeholder={placeholder}
-    />
+    <Combobox
+      shadow='sm'
+      transitionProps={{ duration: 0 }}
+      store={combobox}
+      onOptionSubmit={(value) => {
+        const player = options.find((candidate) => candidate.id.toString() === value);
+        if (!player) {
+          return;
+        }
+        search.cancel();
+        request.current += 1;
+        setQuery('');
+        setPlayers([]);
+        setLoading(false);
+        combobox.closeDropdown();
+        onPlayerSelect({
+          id: player.id,
+          title: player.title,
+          hasAvatar: player.hasAvatar ?? false,
+          lastUpdate: player.lastUpdate,
+          tenhouId: '',
+          ignoreSeating: false,
+        });
+      }}
+    >
+      <Combobox.Target>
+        <TextInput
+          data-testid={testId}
+          value={query}
+          onChange={(event) => {
+            const value = event.currentTarget.value;
+            const requestId = ++request.current;
+            setQuery(value);
+            setPlayers([]);
+            search.cancel();
+            combobox.resetSelectedOption();
+            combobox.openDropdown();
+            setLoading(value.trim().length > 0);
+            if (value.trim()) {
+              search(value, requestId);
+            }
+          }}
+          onFocus={() => combobox.openDropdown()}
+          onClick={() => combobox.openDropdown()}
+          onBlur={() => combobox.closeDropdown()}
+          rightSection={
+            loading ? <Loader variant='dots' size='1rem' /> : <IconSearch color='#bbb' />
+          }
+          placeholder={placeholder}
+        />
+      </Combobox.Target>
+      <Combobox.Dropdown hidden={options.length === 0}>
+        <Combobox.Options>
+          {options.map((player) => (
+            <Combobox.Option value={player.id.toString()} key={player.id}>
+              <Group wrap='nowrap'>
+                <Text>
+                  {player.title} [#{player.id}, {player.city}
+                  {!!player.tenhouId && `, Tenhou nickname: ${player.tenhouId}`}]
+                </Text>
+              </Group>
+            </Combobox.Option>
+          ))}
+        </Combobox.Options>
+      </Combobox.Dropdown>
+    </Combobox>
   );
 };

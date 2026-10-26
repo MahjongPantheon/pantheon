@@ -81,11 +81,11 @@ export const ProfileResetPassword: React.FC = () => {
         <Container>
           <TextInput
             data-testid='forseti-reset-password-email'
-            icon={<IconLogin size='1rem' />}
+            leftSection={<IconLogin size='1rem' />}
             placeholder={i18n._t('Your e-mail address')}
             {...form.getInputProps('email')}
           />
-          <Group position='right' mt='md'>
+          <Group justify='flex-end' mt='md'>
             <Button data-testid='forseti-reset-password-submit' disabled={isLoading} type='submit'>
               {i18n._t('Request password reset')}
             </Button>

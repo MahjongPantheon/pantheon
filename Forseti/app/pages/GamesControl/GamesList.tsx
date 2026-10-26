@@ -139,7 +139,7 @@ export function GamesList({
                     </ActionIcon>
                   )}
                 </Stack>
-                <Stack spacing='0'>
+                <Stack gap='0'>
                   {t.players.map((p) => {
                     const score = t.scores.find((s) => s.playerId === p.id)?.score ?? 0;
                     return (
@@ -159,7 +159,7 @@ export function GamesList({
                         </Badge>
                         <PlayerAvatar p={p} size='sm' />
                         <Text
-                          weight='bold'
+                          fw='bold'
                           style={
                             matches
                               ? {
@@ -184,7 +184,7 @@ export function GamesList({
                 </Stack>
                 <Box style={{ flex: 1 }}>
                   {!!t.extraTime && (
-                    <Text size='sm' weight='bold'>
+                    <Text size='sm' fw='bold'>
                       {i18n._t('Extra minutes: %1', [t.extraTime / 60])}
                     </Text>
                   )}
@@ -196,7 +196,7 @@ export function GamesList({
                     ))}
                 </Box>
               </Group>
-              <Group position='right'>
+              <Group justify='flex-end'>
                 {eventConfig?.syncStart &&
                   t.status === SessionStatus.SESSION_STATUS_INPROGRESS &&
                   !timerState?.waitingForTimer && (

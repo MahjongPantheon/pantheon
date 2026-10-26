@@ -93,10 +93,10 @@ const TableTotalView = ({
     }, [])
     .sort((a, b) => b.data - a.data);
   const rows = sums.map((element, idx) => (
-    <tr key={`table_${idx}`}>
-      <td>{element.label}</td>
-      <td>{element.data}</td>
-    </tr>
+    <Table.Tr key={`table_${idx}`}>
+      <Table.Td>{element.label}</Table.Td>
+      <Table.Td>{element.data}</Table.Td>
+    </Table.Tr>
   ));
 
   const total = sums.reduce((acc, v) => acc + v.data, 0);
@@ -107,13 +107,13 @@ const TableTotalView = ({
         Total by {selectedField}: {total}
       </h3>
       <Table>
-        <thead>
-          <tr>
-            <th>Item</th>
-            <th>Value</th>
-          </tr>
-        </thead>
-        <tbody>{rows}</tbody>
+        <Table.Thead>
+          <Table.Tr>
+            <Table.Th>Item</Table.Th>
+            <Table.Th>Value</Table.Th>
+          </Table.Tr>
+        </Table.Thead>
+        <Table.Tbody>{rows}</Table.Tbody>
       </Table>
     </>
   );
@@ -204,8 +204,8 @@ export const SystemStats: React.FC<{ params: { period?: string } }> = ({ params:
 
   return (
     <Container data-testid='forseti-system-stats-page'>
-      <LoadingOverlay visible={isLoading} overlayOpacity={1} />
-      <Group position='apart'>
+      <LoadingOverlay visible={isLoading} overlayProps={{ opacity: 1 }} />
+      <Group justify='space-between'>
         <Group>
           <Link to='/stats/lastday'>
             <Button data-testid='forseti-system-stats-last-day' variant='filled'>

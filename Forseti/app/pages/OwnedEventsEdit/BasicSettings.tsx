@@ -60,7 +60,7 @@ export const BasicSettings: React.FC<BasicSettingsProps> = ({
               label={i18n._t('Select event type')}
               {...form.getInputProps('event.type')}
               onChange={(value) => {
-                form.setFieldValue('event.type', value);
+                form.setFieldValue('event.type', value as EventType);
                 form.setFieldValue(
                   'ruleset.useAggregatedYakuhai',
                   value === EventType.EVENT_TYPE_TOURNAMENT
@@ -84,7 +84,7 @@ export const BasicSettings: React.FC<BasicSettingsProps> = ({
         )}
         <TextInput
           withAsterisk
-          icon={<IconAbc size='1rem' />}
+          leftSection={<IconAbc size='1rem' />}
           label={i18n._t('Event title')}
           description={i18n._t(
             'Please include a "TEST" word if you make a test tournament. Events that have "TEST" in title do not send any notifications to players.'
@@ -94,7 +94,7 @@ export const BasicSettings: React.FC<BasicSettingsProps> = ({
         />
         {newEvent && (
           <Select
-            icon={<IconChecklist size='1rem' />}
+            leftSection={<IconChecklist size='1rem' />}
             label={i18n._t('Basic ruleset')}
             description={i18n._t(
               'Ruleset to be used as a template for the event. Fine tuning is available in adjacent tabs. Please note that all ruleset settings will be reset when you select another ruleset here.'
@@ -117,13 +117,13 @@ export const BasicSettings: React.FC<BasicSettingsProps> = ({
           />
         )}
         <Select
-          icon={<IconMap2 size='1rem' />}
+          leftSection={<IconMap2 size='1rem' />}
           label={i18n._t('Primary timezone for event')}
           description={i18n._t(
             'All dates and time will be displayed according to the selected timezone.'
           )}
           searchable
-          nothingFound={i18n._t('Nothing found')}
+          nothingFoundMessage={i18n._t('Nothing found')}
           maxDropdownHeight={280}
           data={timezones}
           data-testid='forseti-event-settings-basic-settings-event-timezone'

@@ -16,11 +16,11 @@
  */
 
 import * as React from 'react';
+import { NumberInput } from '../components/NumberInput';
 import {
   Box,
   Container,
   Group,
-  NumberInput,
   Textarea,
   Text,
   Space,
@@ -124,12 +124,12 @@ export const EventPrescript: React.FC<{ params: { id?: string } }> = ({ params: 
 
   return (
     <Container data-testid='forseti-event-prescript-page'>
-      <LoadingOverlay visible={isLoading} overlayOpacity={1} />
+      <LoadingOverlay visible={isLoading} overlayProps={{ opacity: 1 }} />
       <Modal
         data-testid='forseti-event-prescript-instructions-modal'
         opened={opened}
         onClose={close}
-        title={<Text weight='bold'>{i18n._t('Event script filling instruction')}</Text>}
+        title={<Text fw='bold'>{i18n._t('Event script filling instruction')}</Text>}
         centered
       >
         {i18n._t(
@@ -161,7 +161,7 @@ export const EventPrescript: React.FC<{ params: { id?: string } }> = ({ params: 
           placeholder={i18n._t('Please enter event script here')}
           label={
             <Group>
-              <Text weight='bold'>{i18n._t('Event script')}</Text>{' '}
+              <Text fw='bold'>{i18n._t('Event script')}</Text>{' '}
               <Button
                 data-testid='forseti-event-prescript-instructions-open'
                 variant='subtle'
@@ -177,7 +177,7 @@ export const EventPrescript: React.FC<{ params: { id?: string } }> = ({ params: 
           onChange={(event) => setScript(event.currentTarget.value)}
         />
         <Box>
-          <Text weight='bold'>
+          <Text fw='bold'>
             {errors.length > 0 &&
               i18n._nt(['Found %1 error', 'Found %1 errors'], errors.length, [errors.length])}
             {errors.length === 0 && i18n._t('No errors found')}

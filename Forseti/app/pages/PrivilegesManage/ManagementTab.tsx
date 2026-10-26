@@ -22,7 +22,7 @@ import { EventAdmin, EventReferee } from 'tsclients/proto/atoms.pb';
 import {
   ActionIcon,
   Text,
-  Container,
+  Box,
   Group,
   Space,
   Stack,
@@ -88,7 +88,7 @@ export const ManagementTab: React.FC<{
 
   return (
     <>
-      <Container data-testid='forseti-privileges-page' pos='relative' sx={{ minHeight: '400px' }}>
+      <Box data-testid='forseti-privileges-page' pos='relative' style={{ minHeight: '400px' }}>
         <Space h='xl' />
         <Title order={5}>{i18n._t('Event referees list')}</Title>
         <Space h='xl' />
@@ -126,7 +126,7 @@ export const ManagementTab: React.FC<{
           />
         </Group>
         <Space h='xl' />
-        <Stack justify='flex-start' spacing='0'>
+        <Stack justify='flex-start' gap='0'>
           {eventReferees.map((p, idx) => (
             <Group
               data-testid={`forseti-privileges-referee-row-${p.personId}`}
@@ -137,7 +137,7 @@ export const ManagementTab: React.FC<{
                   idx % 2 ? (isDark ? theme.colors.dark[7] : theme.colors.gray[1]) : 'transparent',
               }}
             >
-              <Group sx={{ flex: 1, minWidth: '300px' }}>
+              <Group style={{ flex: 1, minWidth: '300px' }}>
                 <PlayerAvatar
                   p={{
                     title: p.personName,
@@ -202,7 +202,7 @@ export const ManagementTab: React.FC<{
           />
         </Group>
         <Space h='xl' />
-        <Stack justify='flex-start' spacing='0'>
+        <Stack justify='flex-start' gap='0'>
           {eventAdmins.map((p, idx) => (
             <Group
               data-testid={`forseti-privileges-admin-row-${p.personId}`}
@@ -213,7 +213,7 @@ export const ManagementTab: React.FC<{
                   idx % 2 ? (isDark ? theme.colors.dark[7] : theme.colors.gray[1]) : 'transparent',
               }}
             >
-              <Group sx={{ flex: 1, minWidth: '300px' }}>
+              <Group style={{ flex: 1, minWidth: '300px' }}>
                 <PlayerAvatar
                   p={{
                     title: p.personName,
@@ -289,7 +289,7 @@ export const ManagementTab: React.FC<{
           </List.Item>
         </List>
         <Filler h='150px' />
-      </Container>
+      </Box>
     </>
   );
 };

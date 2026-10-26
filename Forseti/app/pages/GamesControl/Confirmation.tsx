@@ -60,7 +60,7 @@ export function Confirmation({
         <Button
           data-testid={`${testId}-open`}
           disabled={!!disabled}
-          leftIcon={icon}
+          leftSection={icon}
           title={title}
           color={color}
           onClick={() => setOpened((o) => !o)}
@@ -70,7 +70,7 @@ export function Confirmation({
       </Popover.Target>
       <Popover.Dropdown>
         <Group grow align='flex-end'>
-          <Text size='sm' style={{ flex: 1, minWidth: '222px' }}>
+          <Text component='div' size='sm' style={{ flex: 1, minWidth: '222px' }}>
             {warning}
           </Text>
           <ActionIcon

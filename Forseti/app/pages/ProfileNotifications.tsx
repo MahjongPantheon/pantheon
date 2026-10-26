@@ -16,7 +16,7 @@ export const ProfileNotifications: React.FC<{ params: { id?: string } }> = ({ pa
   api.setEventId(0);
   const i18n = useI18n();
   const personId = storage.getPersonId();
-  const formRef: React.RefObject<HTMLFormElement> = createRef();
+  const formRef: React.RefObject<HTMLFormElement | null> = createRef();
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
@@ -117,7 +117,7 @@ export const ProfileNotifications: React.FC<{ params: { id?: string } }> = ({ pa
       <Container data-testid='forseti-profile-notifications-form'>
         <TextInput
           label={i18n._t('Your telegram ID')}
-          icon={<IconUserCode size='1rem' />}
+          leftSection={<IconUserCode size='1rem' />}
           placeholder={i18n._t('Your telegram ID')}
           data-testid='forseti-profile-notifications-id'
           {...form.getInputProps('id')}

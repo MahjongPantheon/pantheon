@@ -16,14 +16,14 @@
  */
 
 import * as React from 'react';
+import { NumberInput } from '../../components/NumberInput';
 import { useApi } from '../../hooks/api';
 import { useI18n } from '../../hooks/i18n';
 import { RegisteredPlayer } from 'tsclients/proto/atoms.pb';
 import {
   Text,
-  Container,
+  Box,
   Group,
-  NumberInput,
   Space,
   Stack,
   useMantineColorScheme,
@@ -79,9 +79,9 @@ export const LocalIdsTab: React.FC<{
 
   return (
     <>
-      <Container pos='relative' sx={{ minHeight: '400px' }}>
+      <Box pos='relative' style={{ minHeight: '400px' }}>
         <Space h='xl' />
-        <Stack justify='flex-start' spacing='0'>
+        <Stack justify='flex-start' gap='0'>
           {players.map((p, idx) => (
             <Group
               data-testid={`forseti-players-local-id-row-${p.id}`}
@@ -92,7 +92,7 @@ export const LocalIdsTab: React.FC<{
                   idx % 2 ? (isDark ? theme.colors.dark[7] : theme.colors.gray[1]) : 'transparent',
               }}
             >
-              <Group sx={{ flex: 1, minWidth: '300px' }}>
+              <Group style={{ flex: 1, minWidth: '300px' }}>
                 <PlayerAvatar p={p} />
                 {p.title}
               </Group>
@@ -115,7 +115,7 @@ export const LocalIdsTab: React.FC<{
           icon={isSaved ? <IconCircleCheck /> : <IconDeviceFloppy />}
           onClick={updateLocalIds}
         />
-      </Container>
+      </Box>
     </>
   );
 };

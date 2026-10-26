@@ -17,7 +17,8 @@
 
 import { I18nService } from '../../services/i18n';
 import * as React from 'react';
-import { Checkbox, Group, NumberInput, Radio, Space, Stack } from '@mantine/core';
+import { NumberInput } from '../../components/NumberInput';
+import { Checkbox, Group, Radio, Space, Stack } from '@mantine/core';
 import { IconClockPlay, IconUserX } from '@tabler/icons-react';
 import { FormHandle } from './types';
 import { EndingPolicy, EventType, WindShuffleMode } from 'tsclients/proto/atoms.pb';
@@ -31,7 +32,7 @@ export const TournamentSettings: React.FC<TournamentSettingsProps> = ({ form, i1
   return (
     <>
       <NumberInput
-        icon={<IconClockPlay size='1rem' />}
+        leftSection={<IconClockPlay size='1rem' />}
         data-testid='forseti-event-settings-tournament-settings-event-duration'
         {...form.getInputProps('event.duration')}
         label={i18n._t('Session duration in minutes')}
@@ -49,7 +50,7 @@ export const TournamentSettings: React.FC<TournamentSettingsProps> = ({ form, i1
         {...form.getInputProps('ruleset.endingPolicy')}
       >
         <Space h='md' />
-        <Stack spacing='xs'>
+        <Stack gap='xs'>
           <Radio
             data-testid='forseti-event-settings-ending-policy-natural'
             value={EndingPolicy.ENDING_POLICY_EP_UNSPECIFIED}
@@ -124,7 +125,7 @@ export const TournamentSettings: React.FC<TournamentSettingsProps> = ({ form, i1
         </Radio.Group>
       )}
       <NumberInput
-        icon={<IconUserX size='1rem' />}
+        leftSection={<IconUserX size='1rem' />}
         data-testid='forseti-event-settings-tournament-settings-ruleset-replacement-player-fixed-points'
         {...form.getInputProps('ruleset.replacementPlayerFixedPoints')}
         label={i18n._t('Fixed score applied to replacement player')}
@@ -135,7 +136,7 @@ export const TournamentSettings: React.FC<TournamentSettingsProps> = ({ form, i1
         max={0}
       />
       <NumberInput
-        icon={<IconUserX size='1rem' />}
+        leftSection={<IconUserX size='1rem' />}
         data-testid='forseti-event-settings-tournament-settings-ruleset-replacement-player-override-uma'
         {...form.getInputProps('ruleset.replacementPlayerOverrideUma')}
         label={i18n._t('Fixed uma for replacement player')}

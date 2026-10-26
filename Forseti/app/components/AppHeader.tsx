@@ -15,38 +15,15 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { ActionIcon, Button, Container, createStyles, Drawer, Group, Header } from '@mantine/core';
+import { ActionIcon, Button, Container, Drawer, Group, AppShell } from '@mantine/core';
 import * as React from 'react';
+import classes from './AppHeader.module.css';
 import { IconList } from '@tabler/icons-react';
 import { useI18n } from '../hooks/i18n';
 import { Event } from 'tsclients/proto/atoms.pb';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import { MainMenu } from './MainMenu';
-
-const useStyles = createStyles((theme) => ({
-  header: {
-    backgroundColor: theme.fn.variant({
-      variant: 'filled',
-      color: theme.primaryColor,
-    }).background,
-    borderBottom: 0,
-    zIndex: 10000,
-  },
-
-  inner: {
-    height: '44px',
-    position: 'absolute',
-    top: 0,
-    left: 0,
-  },
-
-  eventTitle: {
-    display: 'inline-flex',
-    color: 'white',
-    height: '100%',
-    alignItems: 'center',
-  },
-}));
+import { useSwipeToClose } from '../hooks/useSwipeToClose';
 
 export const AppHeader: React.FC<{
   eventData: Event | null;
@@ -56,23 +33,18 @@ export const AppHeader: React.FC<{
   toggleDimmed: () => void;
   saveLang: (lang: string) => void;
 }> = ({ title, eventData, dark, toggleColorScheme, toggleDimmed, saveLang }) => {
-  const { classes } = useStyles();
   const i18n = useI18n();
 
   const largeScreen = useMediaQuery('(min-width: 768px)');
   const veryLargeScreen = useMediaQuery('(min-width: 1024px)');
   const [menuOpened, { open: openMenu, close: closeMenu }] = useDisclosure(false);
+  const drawerSwipe = useSwipeToClose(closeMenu);
 
   return (
-    <Header
-      bg={dark ? '#784421' : '#DCA57F'}
-      height={44}
-      mb={120}
-      pt={0}
-      pl={veryLargeScreen ? 350 : 0}
-    >
+    <AppShell.Header bg={dark ? '#784421' : '#DCA57F'} pt={0} pl={veryLargeScreen ? 350 : 0}>
       {!veryLargeScreen && (
         <Drawer
+          {...drawerSwipe}
           data-testid='forseti-menu-drawer'
           size='sm'
           opened={menuOpened}
@@ -84,7 +56,8 @@ export const AppHeader: React.FC<{
           withOverlay={true}
           overlayProps={{ opacity: 0.5, blur: 4 }}
           transitionProps={{ transition: 'slide-right', duration: 150, timingFunction: 'linear' }}
-          style={{ zIndex: 10000, position: 'fixed' }}
+          zIndex={10000}
+          classNames={{ content: classes.drawerContent }}
           styles={{ body: { height: 'calc(100% - 68px)', paddingTop: 0 } }}
         >
           <Drawer.CloseButton
@@ -115,7 +88,7 @@ export const AppHeader: React.FC<{
                 title={i18n._t('Open menu')}
                 variant='filled'
                 color='green'
-                leftIcon={<IconList size='2rem' />}
+                leftSection={<IconList size='2rem' />}
                 size='lg'
                 style={{ height: '44px' }}
                 onClick={() => (menuOpened ? closeMenu() : openMenu())}
@@ -137,11 +110,11 @@ export const AppHeader: React.FC<{
             ))}
         </div>
         {title && (
-          <Group position='right' h={44}>
+          <Group justify='flex-end' h={44}>
             <div className={classes.eventTitle}>{title}</div>
           </Group>
         )}
       </Container>
-    </Header>
+    </AppShell.Header>
   );
 };

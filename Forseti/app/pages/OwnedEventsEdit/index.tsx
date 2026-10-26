@@ -327,13 +327,19 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string; copyId?: string 
   return (
     <>
       <Container data-testid='forseti-event-settings-page' pos='relative'>
-        <LoadingOverlay visible={isLoading} overlayOpacity={1} />
+        <LoadingOverlay visible={isLoading} overlayProps={{ opacity: 1 }} />
         <form
           ref={formRef}
           onSubmit={form.onSubmit(submitForm, () => setValidationAttempt((attempt) => attempt + 1))}
         >
-          <Tabs keepMounted value={activeTab} onTabChange={setActiveTab}>
-            <Tabs.List position='left'>
+          {/* Validation must be able to inspect current errors in inactive panels. */}
+          <Tabs
+            keepMounted
+            keepMountedMode='display-none'
+            value={activeTab}
+            onChange={setActiveTab}
+          >
+            <Tabs.List justify='flex-start'>
               <TabsList i18n={i18n} form={form} />
             </Tabs.List>
             <Tabs.Panel value='basic' data-settings-tab='basic' pt='xs'>

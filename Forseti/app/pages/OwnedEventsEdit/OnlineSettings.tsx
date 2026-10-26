@@ -17,7 +17,8 @@
 
 import { I18nService } from '../../services/i18n';
 import * as React from 'react';
-import { Checkbox, NumberInput, Select, Text, TextInput } from '@mantine/core';
+import { NumberInput } from '../../components/NumberInput';
+import { Checkbox, Select, Text, TextInput } from '@mantine/core';
 import {
   IconChartHistogram,
   IconCoins,
@@ -48,7 +49,7 @@ export const OnlineSettings: React.FC<OnlineSettingsProps> = ({ form, i18n }) =>
       </Text>
       {privilegesLevel === PrivilegesLevel.SUPERADMIN && (
         <Select
-          icon={<IconAffiliateFilled size='1rem' />}
+          leftSection={<IconAffiliateFilled size='1rem' />}
           label={i18n._t('Event platform')}
           description={i18n._t('External gaming platform for the tournament')}
           data={[
@@ -71,7 +72,7 @@ export const OnlineSettings: React.FC<OnlineSettingsProps> = ({ form, i18n }) =>
       )}
       <TextInput
         withAsterisk
-        icon={<IconUsers size='1rem' />}
+        leftSection={<IconUsers size='1rem' />}
         label={i18n._t('Lobby ID')}
         data-testid='forseti-event-settings-online-settings-event-lobby-id'
         {...form.getInputProps('event.lobbyId')}
@@ -92,7 +93,7 @@ export const OnlineSettings: React.FC<OnlineSettingsProps> = ({ form, i18n }) =>
       <NumberInput
         data-testid='forseti-event-settings-online-settings-ruleset-game-expiration-time'
         {...form.getInputProps('ruleset.gameExpirationTime')}
-        icon={<IconHourglass size='1rem' />}
+        leftSection={<IconHourglass size='1rem' />}
         label={i18n._t('Game expiration time (in hours)')}
         description={i18n._t(
           'Interval of time when played online game is still considered valid and can be added to the rating. Set to 0 to disable expiration.'
@@ -103,7 +104,7 @@ export const OnlineSettings: React.FC<OnlineSettingsProps> = ({ form, i18n }) =>
       <NumberInput
         data-testid='forseti-event-settings-online-settings-ruleset-chips-value'
         {...form.getInputProps('ruleset.chipsValue')}
-        icon={<IconCoins size='1rem' />}
+        leftSection={<IconCoins size='1rem' />}
         label={i18n._t('Chips value')}
         description={i18n._t(
           'Amount of points given for each chip. Chips should be set up in tournament settings in Tenhou.net. Set to 0 to disable chips.'
@@ -115,7 +116,7 @@ export const OnlineSettings: React.FC<OnlineSettingsProps> = ({ form, i18n }) =>
       <NumberInput
         data-testid='forseti-event-settings-online-settings-event-series-length'
         {...form.getInputProps('event.seriesLength')}
-        icon={<IconChartHistogram size='1rem' />}
+        leftSection={<IconChartHistogram size='1rem' />}
         label={i18n._t('Series length')}
         description={i18n._t(
           'Count of session in game series. Set to 0 to disable series functionality.'
@@ -127,7 +128,7 @@ export const OnlineSettings: React.FC<OnlineSettingsProps> = ({ form, i18n }) =>
       <NumberInput
         data-testid='forseti-event-settings-online-settings-event-min-games'
         {...form.getInputProps('event.minGames')}
-        icon={<IconNumbers size='1rem' />}
+        leftSection={<IconNumbers size='1rem' />}
         label={i18n._t('Minimal games count')}
         description={i18n._t(
           'Minimal count of games the player should play to get into the rating table.'
@@ -137,7 +138,7 @@ export const OnlineSettings: React.FC<OnlineSettingsProps> = ({ form, i18n }) =>
         min={0}
       />
       <NumberInput
-        icon={<IconUserX size='1rem' />}
+        leftSection={<IconUserX size='1rem' />}
         data-testid='forseti-event-settings-online-settings-ruleset-replacement-player-fixed-points'
         {...form.getInputProps('ruleset.replacementPlayerFixedPoints')}
         label={i18n._t('Fixed score applied to replacement player')}
@@ -148,7 +149,7 @@ export const OnlineSettings: React.FC<OnlineSettingsProps> = ({ form, i18n }) =>
         max={0}
       />
       <NumberInput
-        icon={<IconUserX size='1rem' />}
+        leftSection={<IconUserX size='1rem' />}
         data-testid='forseti-event-settings-online-settings-ruleset-replacement-player-override-uma'
         {...form.getInputProps('ruleset.replacementPlayerOverrideUma')}
         label={i18n._t('Fixed uma for replacement player')}

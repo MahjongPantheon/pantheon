@@ -63,7 +63,7 @@ export const ProfileManage: React.FC = () => {
   api.setEventId(0);
   const storage = useStorage();
   const personId = storage.getPersonId()!;
-  const formRef: React.RefObject<HTMLFormElement> = createRef();
+  const formRef: React.RefObject<HTMLFormElement | null> = createRef();
   const [countries, setCountries] = useState<Array<{ value: string; label: string }>>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
@@ -195,12 +195,12 @@ export const ProfileManage: React.FC = () => {
   return (
     <>
       <Container data-testid='forseti-profile-page'>
-        <LoadingOverlay visible={isLoading} overlayOpacity={1} />
+        <LoadingOverlay visible={isLoading} overlayProps={{ opacity: 1 }} />
         <Box pos='relative'>
           <form ref={formRef} onSubmit={form.onSubmit(submitForm)}>
             <TextInput
               disabled={true}
-              icon={<IconMail size='1rem' />}
+              leftSection={<IconMail size='1rem' />}
               label={i18n._t('Your e-mail address')}
               description={i18n._t(
                 'Your e-mail will not be shared with anyone else and will not be visible anywhere. If you want to change your address, contact chief administrator.'
@@ -210,7 +210,7 @@ export const ProfileManage: React.FC = () => {
             />
             <Space h='md' />
             <TextInput
-              icon={<IconId size='1rem' />}
+              leftSection={<IconId size='1rem' />}
               label={i18n._t('Player title')}
               description={i18n._t(
                 "This is a title that will be shown in rating table and in mobile assistant, also event administrators will use this title to find you and add to the event. Please don't use your single name here, as it's not unique enough. Name and surname is fine."
@@ -221,17 +221,17 @@ export const ProfileManage: React.FC = () => {
             <TextInput
               data-testid='forseti-profile-system-id'
               disabled={true}
-              icon={<IconNumber size='1rem' />}
+              leftSection={<IconNumber size='1rem' />}
               label={i18n._t('System ID')}
               description={i18n._t('Numerical identifier of your user profile.')}
               value={personId}
             />
             <Space h='md' />
             <Select
-              icon={<IconMap2 size='1rem' />}
+              leftSection={<IconMap2 size='1rem' />}
               label={i18n._t('Country')}
               searchable
-              nothingFound={i18n._t('Nothing found')}
+              nothingFoundMessage={i18n._t('Nothing found')}
               maxDropdownHeight={280}
               data={countries}
               data-testid='forseti-profile-manage-country'
@@ -239,21 +239,21 @@ export const ProfileManage: React.FC = () => {
             />
             <Space h='md' />
             <TextInput
-              icon={<IconMapPin size='1rem' />}
+              leftSection={<IconMapPin size='1rem' />}
               label={i18n._t('City')}
               data-testid='forseti-profile-manage-city'
               {...form.getInputProps('city')}
             />
             <Space h='md' />
             <TextInput
-              icon={<IconPhoneCall size='1rem' />}
+              leftSection={<IconPhoneCall size='1rem' />}
               label={i18n._t('Phone number')}
               data-testid='forseti-profile-manage-phone'
               {...form.getInputProps('phone')}
             />
             <Space h='md' />
             <TextInput
-              icon={<IconIdBadge2 size='1rem' />}
+              leftSection={<IconIdBadge2 size='1rem' />}
               label={i18n._t('Tenhou nickname')}
               data-testid='forseti-profile-manage-tenhou-id'
               {...form.getInputProps('tenhouId')}
@@ -324,7 +324,7 @@ export const ProfileManage: React.FC = () => {
           title={i18n._t('Please confirm account removal')}
           centered
         >
-          <Text color='red' weight='bold'>
+          <Text c='red' fw='bold'>
             {i18n._t(
               'You are about to delete your account data from the system. Please confirm the action. You can close the window to cancel.'
             )}
@@ -355,7 +355,7 @@ export const ProfileManage: React.FC = () => {
           <Space h='md' />
           <TextInput
             data-testid='forseti-profile-remove-title-confirmation'
-            icon={<IconUserX size='1rem' />}
+            leftSection={<IconUserX size='1rem' />}
             label={i18n._t('Please type in your title to proceed with removal')}
             onChange={(e) => setRemoveTitle(e.currentTarget.value)}
           />

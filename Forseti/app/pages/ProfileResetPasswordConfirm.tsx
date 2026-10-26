@@ -186,10 +186,10 @@ function ResetForm({
         <PasswordInput
           data-testid='forseti-reset-password-confirm-new-password'
           placeholder={i18n._t('Enter new strong password')}
-          icon={<IconLock size='1rem' />}
+          leftSection={<IconLock size='1rem' />}
           {...form.getInputProps('password')}
         />
-        <Group position='right' mt='md'>
+        <Group justify='flex-end' mt='md'>
           <Button data-testid='forseti-reset-password-confirm-submit' type='submit'>
             {i18n._t('Update password')}
           </Button>
@@ -212,7 +212,7 @@ function ErrorAlert({ i18n }: { i18n: I18nService }) {
         )}
       </Alert>
       <Space h='xl' />
-      <Group position='right'>
+      <Group justify='flex-end'>
         <Link to='/profile/resetPassword'>
           <Button data-testid='forseti-reset-password-confirm-retry' variant='filled'>
             {i18n._t('Recover password')}
@@ -234,7 +234,7 @@ function SuccessAlert({ i18n }: { i18n: I18nService }) {
         {i18n._t('Your password has been successfully reset. Now you can proceed to login page.')}
       </Alert>
       <Space h='xl' />
-      <Group position='right'>
+      <Group justify='flex-end'>
         <Link to='/profile/login'>
           <Button data-testid='forseti-reset-password-confirm-go-to-login' variant='filled'>
             {i18n._t('Go to Login page')}

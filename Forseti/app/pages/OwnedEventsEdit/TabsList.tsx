@@ -40,7 +40,7 @@ export const TabsList: React.FC<TabsProps> = ({ form, i18n }) => {
       <Tabs.Tab
         data-testid='forseti-event-settings-tab-basic'
         value='basic'
-        icon={<IconTool size='0.8rem' />}
+        leftSection={<IconTool size='0.8rem' />}
       >
         {i18n._t('Basic settings')}
       </Tabs.Tab>
@@ -48,7 +48,7 @@ export const TabsList: React.FC<TabsProps> = ({ form, i18n }) => {
         <Tabs.Tab
           data-testid='forseti-event-settings-tab-local'
           value={EventType.EVENT_TYPE_LOCAL}
-          icon={<IconFriends size='0.8rem' />}
+          leftSection={<IconFriends size='0.8rem' />}
         >
           {i18n._t('Local event settings')}
         </Tabs.Tab>
@@ -57,7 +57,7 @@ export const TabsList: React.FC<TabsProps> = ({ form, i18n }) => {
         <Tabs.Tab
           data-testid='forseti-event-settings-tab-tournament'
           value={EventType.EVENT_TYPE_TOURNAMENT}
-          icon={<IconTournament size='0.8rem' />}
+          leftSection={<IconTournament size='0.8rem' />}
         >
           {i18n._t('Tournament settings')}
         </Tabs.Tab>
@@ -66,7 +66,7 @@ export const TabsList: React.FC<TabsProps> = ({ form, i18n }) => {
         <Tabs.Tab
           data-testid='forseti-event-settings-tab-online'
           value={EventType.EVENT_TYPE_ONLINE}
-          icon={<IconNetwork size='0.8rem' />}
+          leftSection={<IconNetwork size='0.8rem' />}
         >
           {i18n._t('Online event settings')}
         </Tabs.Tab>
@@ -74,7 +74,7 @@ export const TabsList: React.FC<TabsProps> = ({ form, i18n }) => {
       <Tabs.Tab
         data-testid='forseti-event-settings-tab-ruleset'
         value='ruleset_tuning'
-        icon={<IconAdjustments size='0.8rem' />}
+        leftSection={<IconAdjustments size='0.8rem' />}
       >
         {i18n._t('Ruleset tuning')}
       </Tabs.Tab>
@@ -82,7 +82,7 @@ export const TabsList: React.FC<TabsProps> = ({ form, i18n }) => {
       <Tabs.Tab
         data-testid='forseti-event-settings-tab-yaku'
         value='yaku_tuning'
-        icon={<IconListCheck size='0.8rem' />}
+        leftSection={<IconListCheck size='0.8rem' />}
       >
         {i18n._t('Yaku settings')}
       </Tabs.Tab>

@@ -78,7 +78,7 @@ export const ProfileLogin: React.FC = () => {
       <Container>
         <TextInput
           data-testid='forseti-login-email'
-          icon={<IconLogin size='1rem' />}
+          leftSection={<IconLogin size='1rem' />}
           placeholder={i18n._t('Your e-mail address')}
           {...form.getInputProps('email')}
         />
@@ -86,10 +86,10 @@ export const ProfileLogin: React.FC = () => {
         <PasswordInput
           data-testid='forseti-login-password'
           placeholder={i18n._t('Your password')}
-          icon={<IconLock size='1rem' />}
+          leftSection={<IconLock size='1rem' />}
           {...form.getInputProps('password')}
         />
-        <Group position='right' mt='md'>
+        <Group justify='flex-end' mt='md'>
           <Link to='/profile/resetPassword'>
             <Button data-testid='forseti-login-forgot-password' variant='outline'>
               {i18n._t('Forgot your password?')}

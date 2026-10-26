@@ -44,7 +44,14 @@ export function CommonReasons({
   ];
 
   return (
-    <Popover position='bottom' withArrow shadow='md' opened={opened} onChange={setOpened}>
+    <Popover
+      position='bottom'
+      width={340}
+      withArrow
+      shadow='md'
+      opened={opened}
+      onChange={setOpened}
+    >
       <Popover.Target>
         <ActionIcon
           data-testid='forseti-penalty-common-reasons-open'
@@ -57,15 +64,17 @@ export function CommonReasons({
           <IconQuestionMark />
         </ActionIcon>
       </Popover.Target>
-      <Popover.Dropdown>
+      <Popover.Dropdown maw='calc(100vw - 24px)'>
         <Stack>
-          <Text size='sm' style={{ flex: 1, minWidth: '222px' }}>
-            {i18n._t('Common reasons for the penalty')}
-          </Text>
+          <Text size='sm'>{i18n._t('Common reasons for the penalty')}</Text>
           {commonReasons.map((r, idx) => (
             <Button
               data-testid={`forseti-penalty-common-reason-${idx}`}
               key={`btn_${idx}`}
+              h='auto'
+              mih={36}
+              py='xs'
+              styles={{ label: { whiteSpace: 'normal', overflowWrap: 'anywhere' } }}
               onClick={() => {
                 setOpened(false);
                 onConfirm(r);

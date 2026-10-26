@@ -15,8 +15,9 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Center, Group, NumberInput, Radio, SimpleGrid, Stack, Text } from '@mantine/core';
+import { Center, Group, Radio, SimpleGrid, Stack, Text } from '@mantine/core';
 import * as React from 'react';
+import { NumberInput } from '../../components/NumberInput';
 import { I18nService } from '../../services/i18n';
 import { FormHandle } from './types';
 import { UmaType } from 'tsclients/proto/atoms.pb';
@@ -83,16 +84,16 @@ export const UmaSelect: React.FC<UmaSelectProps> = ({ form, i18n }) => {
         <Group align='flex-end'>
           <Stack w='20%'>
             <Center>{i18n._t('Place / Session result')}</Center>
-            <Text h='34px' align='right'>
+            <Text h='34px' ta='right'>
               {i18n._t('1st')}
             </Text>
-            <Text h='34px' align='right'>
+            <Text h='34px' ta='right'>
               {i18n._t('2nd')}
             </Text>
-            <Text h='34px' align='right'>
+            <Text h='34px' ta='right'>
               {i18n._t('3rd')}
             </Text>
-            <Text h='34px' align='right'>
+            <Text h='34px' ta='right'>
               {i18n._t('4th')}
             </Text>
           </Stack>
