@@ -41,7 +41,7 @@ import { i18n } from '../../i18n';
 import { Hand, IProps as HandProps } from '../../pages/Hand/Hand';
 import { sortByViewPriority } from '../../../helpers/yaku';
 import { getPlayerWithPao } from '../../../store/selectors/pao';
-import { enableDoubleYakuman, getYakuAdvice } from '../../../helpers/yakuValues';
+import { enableDoubleYakuman } from '../../../helpers/yakuValues';
 
 export const SelectHand = (props: IComponentProps) => {
   const loc = useContext(i18n);
@@ -147,7 +147,6 @@ export const SelectHand = (props: IComponentProps) => {
       selectedYaku: selectedYaku[user.id],
       disabledYaku: disabledYaku[user.id],
       doubleWindYaku: doubleWindYaku[user.id],
-      yakuAdvice: getYakuAdvice(selectedYaku[user.id], state.currentOutcome!.selectedOutcome),
       onYakuClick,
       shouldSelectFu,
       isYakuman,

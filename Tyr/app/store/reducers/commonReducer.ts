@@ -38,6 +38,7 @@ import {
   TOGGLE_ADDITIONAL_TABLE_INFO,
   TOGGLE_OVERVIEW_DIFFBY,
   TOGGLE_RIICHI_NOTIFICATION,
+  SET_YAKU_ADVICE,
 } from '../actions/interfaces';
 import { IAppState } from '../interfaces';
 
@@ -107,6 +108,8 @@ export function commonReducer(state: IAppState, action: AppActionTypes): IAppSta
         ...state,
         showAdditionalTableInfo: !state.showAdditionalTableInfo,
       };
+    case SET_YAKU_ADVICE:
+      return { ...state, yakuAdvice: action.payload };
     case TOGGLE_RIICHI_NOTIFICATION:
       return {
         ...state,

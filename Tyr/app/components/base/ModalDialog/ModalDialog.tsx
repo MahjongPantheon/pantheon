@@ -39,7 +39,7 @@ export const ModalDialog = ({
 }: PropsWithChildren & DialogProps) => {
   return (
     <div className={styles.overlay} onClick={onClose} data-testid={testIdPrefix}>
-      <div className={styles.wrapper}>
+      <div className={styles.wrapper} onClick={(event) => event.stopPropagation()}>
         <div className={styles.content}>{children}</div>
         <div className={styles.actions}>
           <div>

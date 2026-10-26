@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-26 20:56+0100\n"
+"POT-Creation-Date: 2026-10-26 21:08+0100\n"
 "PO-Revision-Date: 2025-08-08 00:45+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -28,16 +28,16 @@ msgstr[0] "Осталась %1 раздача"
 msgstr[1] "Осталось %1 раздачи"
 msgstr[2] "Осталось %1 раздач"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:201:28
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:191:28
 msgid "%1 fu"
 msgstr "%1 фу"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:240:17
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:230:17
 #: app/store/selectors/round.ts:36:15
 msgid "%1 han"
 msgstr "%1 хан"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:239:17
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:229:17
 #: app/store/selectors/round.ts:39:12
 msgid "%1 han %2 fu"
 msgstr "%1 хан, %2 фу"
@@ -63,6 +63,7 @@ msgstr "Вызвать судью"
 msgid "Call referee for your table?"
 msgstr "Вызвать судью за ваш стол?"
 
+#: app/components/base/YakuAdviceDialog/YakuAdviceDialog.tsx:26:29
 #: app/components/screens/TableCurrentGame/TableCurrentGame.tsx:121:33
 msgid "Cancel"
 msgstr "Отмена"
@@ -130,7 +131,7 @@ msgstr "Дайсанген"
 msgid "Daisuushii"
 msgstr "Дайсуши"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:226:22
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:216:22
 msgid "Dora %1"
 msgstr "Дора %1"
 
@@ -233,7 +234,7 @@ msgstr "Иипейко"
 msgid "Ippatsu"
 msgstr "Иппацу"
 
-#: app/components/App.tsx:222:16
+#: app/components/App.tsx:224:16
 msgid ""
 "It looks like there are issues with your network connection. Would you like "
 "to retry starting the application or clear the credentials and try logging "
@@ -296,7 +297,7 @@ msgstr "Новая игра"
 msgid "No games found"
 msgstr "Игры не найдены"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:247:18
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:237:18
 msgid "No pao"
 msgstr "Нет пао"
 
@@ -308,7 +309,7 @@ msgstr "Результаты отсутствуют"
 msgid "No tables are playing right now"
 msgstr "На данный момент ни один стол не играет"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:183:30
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:173:30
 msgid "Nobody selected"
 msgstr "Никто не выбран"
 
@@ -328,7 +329,8 @@ msgstr "Ветер места: Север"
 msgid "Notice"
 msgstr "Предупреждение"
 
-#: app/components/App.tsx:194:35
+#: app/components/App.tsx:196:35
+#: app/components/base/YakuAdviceDialog/YakuAdviceDialog.tsx:24:27
 #: app/components/pages/Login/LoginError.tsx:44:12
 msgid "OK"
 msgstr "ОК"
@@ -349,7 +351,7 @@ msgstr "Другие столы"
 msgid "Pantheon"
 msgstr "Pantheon"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:176:19
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:166:19
 msgid "Pao"
 msgstr "Пао"
 
@@ -373,7 +375,7 @@ msgstr "Пин-фу"
 msgid "Player name"
 msgstr "Имя игрока"
 
-#: app/components/App.tsx:196:16
+#: app/components/App.tsx:198:16
 msgid "Please return back and press riichi button for the winner"
 msgstr "Пожалуйста, вернитесь назад и нажмите кнопку риичи для выигравшего"
 
@@ -393,11 +395,11 @@ msgstr "Судья был вызван за ваш стол!"
 msgid "Renhou"
 msgstr "Ренхо"
 
-#: app/components/App.tsx:220:37
+#: app/components/App.tsx:222:37
 msgid "Reset & logout"
 msgstr "Сброс и выход"
 
-#: app/components/App.tsx:219:35
+#: app/components/App.tsx:221:35
 msgid "Retry"
 msgstr "Повторить"
 
@@ -538,18 +540,17 @@ msgstr "Оформление"
 msgid "There are no events you participate in right now"
 msgstr "На данный момент нет активных событий, в которых вы участвуете"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:138:17
-msgid "This combination requires Sanankou. Please select Sanankou as well."
+#: app/components/base/YakuAdviceDialog/YakuAdviceDialog.tsx:30:11
+msgid "This combination requires Sanankou. Select Sanankou as well?"
 msgstr ""
 
 #: app/helpers/yaku.ts:155:34 app/helpers/yaku.ts:156:39
 msgid "Toitoi"
 msgstr "Тойтой"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:135:17
+#: app/components/base/YakuAdviceDialog/YakuAdviceDialog.tsx:29:11
 msgid ""
-"Toitoi in a closed hand won by tsumo is Suuankou. Please select Suuankou "
-"instead."
+"Toitoi in a closed hand won by tsumo is Suuankou. Select Suuankou instead?"
 msgstr ""
 
 #: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:96:22
@@ -589,7 +590,7 @@ msgstr "Ветер места: Запад"
 msgid "White dragon"
 msgstr "Белый дракон"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:146:25
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:136:25
 #: app/helpers/yaku.ts:234:39
 msgid "Yakuhai"
 msgstr "Якухай"
@@ -610,8 +611,8 @@ msgstr "Якухай 3"
 msgid "Yakuhai x4"
 msgstr "Якухай 4"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:236:20
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:237:17
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:226:20
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:227:17
 msgid "Yakuman"
 msgstr "Якуман"
 

@@ -133,6 +133,8 @@ export const TRACK_ARBITRARY_EVENT = 'TRACK_ARBITRARY_EVENT';
 export const TRACK_SCREEN_ENTER = 'TRACK_SCREEN_ENTER';
 export const HISTORY_INIT = 'HISTORY_INIT';
 export const CALL_REFEREE = 'CALL_REFEREE';
+export const SET_YAKU_ADVICE = 'SET_YAKU_ADVICE';
+export const RESOLVE_YAKU_ADVICE = 'RESOLVE_YAKU_ADVICE';
 export const TOGGLE_RIICHI_NOTIFICATION = 'TOGGLE_RIICHI_NOTIFICATION';
 export const GET_PENALTIES_INIT = 'GET_PENALTIES_INIT';
 export const GET_PENALTIES_SUCCESS = 'GET_PENALTIES_SUCCESS';
@@ -585,6 +587,16 @@ interface CallRefereeAction {
   type: typeof CALL_REFEREE;
 }
 
+interface SetYakuAdviceAction {
+  type: typeof SET_YAKU_ADVICE;
+  payload: IAppState['yakuAdvice'];
+}
+
+interface ResolveYakuAdviceAction {
+  type: typeof RESOLVE_YAKU_ADVICE;
+  payload: { approve: boolean; advice: NonNullable<IAppState['yakuAdvice']> };
+}
+
 interface ToggleRiichiNotificationAction {
   type: typeof TOGGLE_RIICHI_NOTIFICATION;
   payload: boolean;
@@ -713,4 +725,6 @@ export type AppActionTypes =
   | GetPenaltiesSuccess
   | GetPenaltiesFail
   | ToggleRiichiNotificationAction
+  | SetYakuAdviceAction
+  | ResolveYakuAdviceAction
   | ShowNetworkDialog;

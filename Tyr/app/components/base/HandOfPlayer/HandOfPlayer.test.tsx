@@ -147,12 +147,3 @@ it('does not show a multiplier on ordinary wind or dragon buttons', () => {
   renderHand();
   expect(container.querySelector('[data-testid$="-double-wind"]')).toBeNull();
 });
-
-it.each(['suuankou', 'sanankou'] as const)(
-  'renders %s guidance',
-  (yakuAdvice: 'suuankou' | 'sanankou') => {
-    renderHand({ yakuAdvice });
-    const notice = container.querySelector('[role="status"]');
-    expect(notice?.textContent).toContain(yakuAdvice === 'suuankou' ? 'Suuankou' : 'Sanankou');
-  }
-);
