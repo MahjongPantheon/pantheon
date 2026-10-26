@@ -540,7 +540,7 @@ msgstr "현재 참가중인 이벤트가 없습니다"
 
 #: app/components/base/YakuAdviceDialog/YakuAdviceDialog.tsx:30:11
 msgid "This combination requires Sanankou. Select Sanankou as well?"
-msgstr ""
+msgstr "이 조합에는 산안커가 필요합니다. 산안커도 선택하시겠습니까?"
 
 #: app/helpers/yaku.ts:155:34 app/helpers/yaku.ts:156:39
 msgid "Toitoi"
@@ -549,7 +549,7 @@ msgstr "또이또이"
 #: app/components/base/YakuAdviceDialog/YakuAdviceDialog.tsx:29:11
 msgid ""
 "Toitoi in a closed hand won by tsumo is Suuankou. Select Suuankou instead?"
-msgstr ""
+msgstr "멘젠 상태에서 쯔모로 화료한 또이또이는 스안커입니다. 대신 스안커를 선택하시겠습니까?"
 
 #: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:96:22
 #: app/store/selectors/table.ts:142:25 app/store/selectors/table.ts:410:14

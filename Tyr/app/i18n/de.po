@@ -541,7 +541,7 @@ msgstr "Du nimmst derzeit an keinem Event teil"
 
 #: app/components/base/YakuAdviceDialog/YakuAdviceDialog.tsx:30:11
 msgid "This combination requires Sanankou. Select Sanankou as well?"
-msgstr ""
+msgstr "Diese Kombination erfordert Sanankou. Sanankou ebenfalls auswählen?"
 
 #: app/helpers/yaku.ts:155:34 app/helpers/yaku.ts:156:39
 msgid "Toitoi"
@@ -550,7 +550,7 @@ msgstr "Toitoi"
 #: app/components/base/YakuAdviceDialog/YakuAdviceDialog.tsx:29:11
 msgid ""
 "Toitoi in a closed hand won by tsumo is Suuankou. Select Suuankou instead?"
-msgstr ""
+msgstr "Toitoi in einer geschlossenen, durch Tsumo gewonnenen Hand ist Suuankou. Stattdessen Suuankou auswählen?"
 
 #: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:96:22
 #: app/store/selectors/table.ts:142:25 app/store/selectors/table.ts:410:14

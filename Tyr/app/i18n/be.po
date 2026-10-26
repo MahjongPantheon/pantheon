@@ -544,7 +544,7 @@ msgstr "Зараз вы не ўдзельнічаеце ні ў адной па�
 
 #: app/components/base/YakuAdviceDialog/YakuAdviceDialog.tsx:30:11
 msgid "This combination requires Sanankou. Select Sanankou as well?"
-msgstr ""
+msgstr "Гэтая камбінацыя патрабуе Сананко. Дадаць Сананко?"
 
 #: app/helpers/yaku.ts:155:34 app/helpers/yaku.ts:156:39
 msgid "Toitoi"
@@ -553,7 +553,7 @@ msgstr "Той-той"
 #: app/components/base/YakuAdviceDialog/YakuAdviceDialog.tsx:29:11
 msgid ""
 "Toitoi in a closed hand won by tsumo is Suuankou. Select Suuankou instead?"
-msgstr ""
+msgstr "Той-той у закрытай руцэ пры перамозе па цумо — гэта Суанко. Выбраць Суанко замест яго?"
 
 #: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:96:22
 #: app/store/selectors/table.ts:142:25 app/store/selectors/table.ts:410:14

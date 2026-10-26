@@ -534,7 +534,7 @@ msgstr "参加しているイベントはありません"
 
 #: app/components/base/YakuAdviceDialog/YakuAdviceDialog.tsx:30:11
 msgid "This combination requires Sanankou. Select Sanankou as well?"
-msgstr ""
+msgstr "この組み合わせには三暗刻が必要です。三暗刻も選択しますか？"
 
 #: app/helpers/yaku.ts:155:34 app/helpers/yaku.ts:156:39
 msgid "Toitoi"
@@ -543,7 +543,7 @@ msgstr "対々和"
 #: app/components/base/YakuAdviceDialog/YakuAdviceDialog.tsx:29:11
 msgid ""
 "Toitoi in a closed hand won by tsumo is Suuankou. Select Suuankou instead?"
-msgstr ""
+msgstr "門前の手でツモ和了した対々和は四暗刻です。代わりに四暗刻を選択しますか？"
 
 #: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:96:22
 #: app/store/selectors/table.ts:142:25 app/store/selectors/table.ts:410:14

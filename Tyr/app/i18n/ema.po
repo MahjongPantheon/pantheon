@@ -537,7 +537,7 @@ msgstr "There are no events you participate in right now"
 
 #: app/components/base/YakuAdviceDialog/YakuAdviceDialog.tsx:30:11
 msgid "This combination requires Sanankou. Select Sanankou as well?"
-msgstr ""
+msgstr "This combination requires Three Concealed Pungs. Select Three Concealed Pungs as well?"
 
 #: app/helpers/yaku.ts:155:34 app/helpers/yaku.ts:156:39
 msgid "Toitoi"
@@ -546,7 +546,7 @@ msgstr "All Pungs"
 #: app/components/base/YakuAdviceDialog/YakuAdviceDialog.tsx:29:11
 msgid ""
 "Toitoi in a closed hand won by tsumo is Suuankou. Select Suuankou instead?"
-msgstr ""
+msgstr "All Pungs in a closed hand won by Tsumo is Four Concealed Pungs. Select Four Concealed Pungs instead?"
 
 #: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:96:22
 #: app/store/selectors/table.ts:142:25 app/store/selectors/table.ts:410:14
