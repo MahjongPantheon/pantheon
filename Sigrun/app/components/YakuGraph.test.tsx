@@ -12,15 +12,15 @@ import { YakuGraph } from './YakuGraph';
 vi.mock('./BarGraph', () => ({
   default: ({
     data,
-    options,
+    xAxisLabel,
   }: {
-    data: { datasets: { data: { x: number; y: string }[] }[] };
-    options: { scales: { x: { title: { text: string } } } };
+    data: { count: number; yaku: string }[];
+    xAxisLabel: string;
   }) => (
-    <ul aria-label={options.scales.x.title.text}>
-      {data.datasets[0].data.map(({ x, y }) => (
-        <li key={y} data-count={x}>
-          {y}
+    <ul aria-label={xAxisLabel}>
+      {data.map(({ count, yaku }) => (
+        <li key={yaku} data-count={count}>
+          {yaku} ({count})
         </li>
       ))}
     </ul>

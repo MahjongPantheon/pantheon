@@ -119,6 +119,10 @@ msgstr ""
 msgid "Nagashi: %1"
 msgstr ""
 
+#: app/components/HandsGraph.tsx:68:33
+msgid "Hands count"
+msgstr ""
+
 #: app/components/HandsGraph.tsx:85:21
 msgid "Hands value"
 msgstr ""
@@ -440,6 +444,10 @@ msgstr ""
 
 #: app/components/YakuGraph.tsx:80:42
 msgid "Yakuhai: total"
+msgstr ""
+
+#: app/components/HandsGraph.tsx:77:27
+msgid "Yakumans"
 msgstr ""
 
 #: app/components/YakuGraph.tsx:111:23

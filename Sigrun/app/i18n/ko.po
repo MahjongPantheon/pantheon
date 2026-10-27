@@ -795,6 +795,10 @@ msgstr "\"귀족\""
 msgid "Haitei"
 msgstr "해저로월"
 
+#: app/components/HandsGraph.tsx:68:33
+msgid "Hands count"
+msgstr "화료 횟수"
+
 #: app/components/HandsGraph.tsx:85:21
 msgid "Hands value"
 msgstr "판수"
@@ -1708,6 +1712,10 @@ msgstr "야키토리 벌부"
 #: app/pages/EventRulesOverview/YakuSettings.tsx:46:25
 msgid "Yaku allowed"
 msgstr "허용 역"
+
+#: app/components/HandsGraph.tsx:77:27
+msgid "Yakumans"
+msgstr "역만"
 
 #: app/components/YakuGraph.tsx:111:23
 msgid "Yaku collected over all time"

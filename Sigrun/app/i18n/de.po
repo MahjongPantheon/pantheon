@@ -814,6 +814,10 @@ msgstr "Ehrengäste"
 msgid "Haitei"
 msgstr "Haitei"
 
+#: app/components/HandsGraph.tsx:68:33
+msgid "Hands count"
+msgstr "Anzahl der Hände"
+
 #: app/components/HandsGraph.tsx:85:21
 msgid "Hands value"
 msgstr "Wert der Hand"
@@ -1739,6 +1743,10 @@ msgstr "Yakitori Strafe"
 #: app/pages/EventRulesOverview/YakuSettings.tsx:46:25
 msgid "Yaku allowed"
 msgstr "Erlaubte Yaku"
+
+#: app/components/HandsGraph.tsx:77:27
+msgid "Yakumans"
+msgstr "Yakuman"
 
 #: app/components/YakuGraph.tsx:111:23
 msgid "Yaku collected over all time"

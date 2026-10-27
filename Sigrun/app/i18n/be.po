@@ -822,6 +822,10 @@ msgstr "Ганаровы госць"
 msgid "Haitei"
 msgstr "Хайтэй"
 
+#: app/components/HandsGraph.tsx:68:33
+msgid "Hands count"
+msgstr "Колькасць рук"
+
 #: app/components/HandsGraph.tsx:85:21
 msgid "Hands value"
 msgstr "Кошт рук"
@@ -1748,6 +1752,10 @@ msgstr "Штраф за якіторы"
 #: app/pages/EventRulesOverview/YakuSettings.tsx:46:25
 msgid "Yaku allowed"
 msgstr "Дазволеныя яку"
+
+#: app/components/HandsGraph.tsx:77:27
+msgid "Yakumans"
+msgstr "Якуманы"
 
 #: app/components/YakuGraph.tsx:111:23
 msgid "Yaku collected over all time"

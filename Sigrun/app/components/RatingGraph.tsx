@@ -15,14 +15,15 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useMemo } from 'react';
 import * as React from 'react';
+import type { LineChartProps } from '@mantine/charts';
 import { useI18n } from '../hooks/i18n';
 import { useMantineColorScheme, useMantineTheme } from '@mantine/core';
 import starSvg from '../../assets/img/star.svg';
 import { PlayersGetPlayerStatsResponse } from 'tsclients/proto/mimir.pb';
 import { SessionHistoryResultTable } from 'tsclients/proto/atoms.pb';
-import { Chart } from 'chart.js';
+
 const LineGraph = React.lazy(() => import('./LineGraph'));
 
 export const RatingGraph = ({
@@ -45,141 +46,106 @@ export const RatingGraph = ({
   const i18n = useI18n();
   const theme = useMantineTheme();
   const isDark = useMantineColorScheme().colorScheme === 'dark';
-
+  const color = isDark ? theme.colors.blue[8] : theme.colors.blue[3];
   const games = playerStats?.scoreHistory;
-  const points = (playerStats?.ratingHistory ?? []).map((item, idx) => ({
-    x: idx,
-    y: Math.floor(item),
-  }));
-
-  const ticks = [];
-  for (let idx = 0; idx < points.length; idx++) {
-    ticks.push(idx);
-  }
-
-  const gamesIdx: number[] = [];
-  games?.forEach((g, idx) => gamesIdx.push(idx));
-  const chartRef = useRef<Chart<'line', unknown> | undefined>(null);
-
-  useEffect(() => {
-    const idx =
-      playerStats?.scoreHistory?.findIndex((v) => v.tables[0].sessionHash === lastSelectionHash) ??
-      null;
-    if (idx !== null) {
-      setLastSelectionX(1 + idx);
-    } else {
-      setLastSelectionX(null);
-    }
-  }, [playerId, playerStats]);
+  const points = useMemo(
+    () =>
+      (playerStats?.ratingHistory ?? []).map((item, idx) => ({
+        x: idx,
+        rating: Math.floor(item),
+        winning:
+          idx > 0 &&
+          !!games?.[idx - 1]?.tables.length &&
+          games[idx - 1].tables.every((v) => v.playerId === playerId || v.ratingDelta < 0),
+      })),
+    [playerStats?.ratingHistory, games, playerId]
+  );
 
   useEffect(() => {
-    if (!(window as any).__ratingStarIcon) {
-      const ico = new Image();
-      ico.src = starSvg;
-      ico.height = 20;
-      ico.width = 20;
-      (window as any).__ratingStarIcon = ico;
+    const idx = lastSelectionHash
+      ? (games?.findIndex((v) => v.tables[0]?.sessionHash === lastSelectionHash) ?? -1)
+      : -1;
+    setLastSelectionX(idx >= 0 ? idx + 1 : null);
+  }, [playerId, games, lastSelectionHash, setLastSelectionX]);
 
-      const icoBig = new Image();
-      icoBig.src = starSvg;
-      icoBig.height = 32;
-      icoBig.width = 32;
-      (window as any).__ratingStarIconBig = icoBig;
-    }
-  });
+  const handleClick: NonNullable<LineChartProps['lineChartProps']>['onClick'] = (data, event) => {
+    if (event.target instanceof Element && event.target.closest('.recharts-brush')) return;
+    // The category is the original game index even when the brush slices the data.
+    const index = Number(data.activeLabel);
+    if (data.activeLabel === undefined || !Number.isInteger(index) || index < 1) return;
+    const game = games?.[index - 1];
+    if (!game?.tables[0]) return;
+    setLastSelectionX(index);
+    setLastSelectionHash(game.tables[0].sessionHash);
+    onSelectGame(game);
+  };
+
+  const renderDot = (
+    {
+      cx,
+      cy,
+      payload,
+    }: {
+      cx?: number;
+      cy?: number;
+      payload?: { x: number; winning: boolean };
+    },
+    active = false
+  ) => {
+    if (cx === undefined || cy === undefined || !payload) return <g />;
+    const selected = payload.x === lastSelectionX;
+    const size = selected || active ? 32 : 20;
+    return payload.winning ? (
+      <image
+        key={payload.x}
+        href={starSvg}
+        x={cx - size / 2}
+        y={cy - size / 2}
+        width={size}
+        height={size}
+      />
+    ) : (
+      <circle
+        key={payload.x}
+        cx={cx}
+        cy={cy}
+        r={selected || active ? 8 : 3}
+        fill={color}
+        stroke={color}
+      />
+    );
+  };
 
   return (
     <LineGraph
-      ref={chartRef}
-      data={{ labels: ticks, datasets: [{ data: points }] }}
-      options={{
-        interaction: {
-          mode: 'nearest',
-        },
-        backgroundColor: isDark ? theme.colors.blue[8] : theme.colors.blue[3],
-        borderColor: isDark ? theme.colors.blue[8] : theme.colors.blue[3],
-        color: isDark ? theme.colors.gray[2] : theme.colors.dark[7],
-        font: { size: 16, family: '"PT Sans Narrow", Arial' },
-        onClick: (e: any) => {
-          // @ts-expect-error
-          const d = getElementAtEvent(chartRef.current, { nativeEvent: e });
-          if (d.length) {
-            const { index } = d[0];
-            setLastSelectionX(index);
-            setLastSelectionHash(games?.[gamesIdx[index - 1]]?.tables[0]?.sessionHash ?? null);
-            if (games?.[gamesIdx[index - 1]]) {
-              onSelectGame(games?.[gamesIdx[index - 1]]);
-            }
-          }
-        },
-        plugins: {
-          legend: { display: false },
-          tooltip: { enabled: false },
-          zoom: {
-            zoom: {
-              wheel: {
-                enabled: true,
-              },
-              pinch: {
-                enabled: true,
-              },
-              mode: 'x',
-            },
-          },
-        },
-        elements: {
-          point: {
-            radius: (context: any) =>
-              lastSelectionX && context.dataIndex === lastSelectionX ? 8 : 3,
-            hoverRadius: 8,
-            hoverBorderWidth: 1,
-            pointStyle: (context: any) => {
-              if (context.dataIndex === 0) {
-                return undefined;
-              }
-              if (
-                games?.[gamesIdx[context.dataIndex - 1]]?.tables?.every(
-                  (v) => v.playerId === playerId || v.ratingDelta < 0
-                )
-              ) {
-                return context.dataIndex === lastSelectionX
-                  ? (window as any).__ratingStarIconBig
-                  : (window as any).__ratingStarIcon;
-              }
-              return undefined;
-            },
-          },
-          line: { tension: 0.3 },
-        },
-        scales: {
-          x: {
-            grid: {
-              color: isDark ? theme.colors.gray[8] : theme.colors.gray[3],
-            },
-            position: 'bottom',
-            title: {
-              display: true,
-              text: i18n._t('Games played'),
-            },
-          },
-          y: {
-            grid: {
-              color: isDark ? theme.colors.gray[8] : theme.colors.gray[3],
-            },
-            position: 'left',
-            title: {
-              display: true,
-              text: i18n._t('Rating'),
-            },
-          },
+      key={playerId}
+      h={400}
+      data={points}
+      dataKey='x'
+      series={[{ name: 'rating', label: i18n._t('Rating'), color: isDark ? 'blue.8' : 'blue.3' }]}
+      gridAxis='xy'
+      textColor={isDark ? theme.colors.gray[2] : theme.colors.dark[7]}
+      tooltipProps={{ labelFormatter: () => null }}
+      styles={{ tooltipBody: { paddingTop: 'var(--mantine-spacing-sm)' } }}
+      yAxisLabel={i18n._t('Rating')}
+      xAxisProps={{
+        allowDecimals: false,
+        height: 55,
+        label: {
+          value: i18n._t('Games played'),
+          position: 'insideBottom',
+          offset: 0,
+          fill: 'currentColor',
+          fontSize: 12,
         },
       }}
+      yAxisProps={{ allowDecimals: false, width: 65, domain: ['auto', 'auto'] }}
+      lineChartProps={{ onClick: handleClick, margin: { top: 16, left: 16, right: 16, bottom: 8 } }}
+      lineProps={{ dot: (props) => renderDot(props), activeDot: (props) => renderDot(props, true) }}
+      withBrush={points.length > 1}
+      brushProps={{ height: 30, travellerWidth: 10 }}
     />
   );
 };
-
-function getElementAtEvent(chart: any /* ChartJS*/, event: React.MouseEvent<HTMLCanvasElement>) {
-  return chart.getElementsAtEventForMode(event.nativeEvent, 'nearest', { intersect: false }, false);
-}
 
 export { RatingGraph as default }; // for React.lazy

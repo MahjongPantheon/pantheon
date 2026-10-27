@@ -790,6 +790,10 @@ msgstr "字牌のお客様"
 msgid "Haitei"
 msgstr "海底摸月"
 
+#: app/components/HandsGraph.tsx:68:33
+msgid "Hands count"
+msgstr "和了回数"
+
 #: app/components/HandsGraph.tsx:85:21
 msgid "Hands value"
 msgstr "手の価値"
@@ -1703,6 +1707,10 @@ msgstr "焼き鳥のペナルティ"
 #: app/pages/EventRulesOverview/YakuSettings.tsx:46:25
 msgid "Yaku allowed"
 msgstr "有効な役"
+
+#: app/components/HandsGraph.tsx:77:27
+msgid "Yakumans"
+msgstr "役満"
 
 #: app/components/YakuGraph.tsx:111:23
 msgid "Yaku collected over all time"

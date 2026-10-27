@@ -51,47 +51,33 @@ export const HandsGraph = ({ handValueStat }: { handValueStat?: HandValueStat[] 
   Object.entries(hands).forEach(([hanStr, count]) => {
     const han = parseInt(hanStr, 10);
     if (han >= 0) {
-      handValueStats.push({ x: han.toString(), y: count });
+      handValueStats.push({ x: han.toString(), count });
     } else {
       yakumanCount += count;
     }
   });
 
-  handValueStats.push({ x: '★', y: yakumanCount > 0 ? yakumanCount : 0 });
+  handValueStats.push({ x: '★', count: yakumanCount > 0 ? yakumanCount : 0 });
 
   return (
     <BarGraph
-      data={{ datasets: [{ data: handValueStats }] }}
-      options={{
-        backgroundColor: isDark ? theme.colors.blue[8] : theme.colors.blue[3],
-        borderColor: isDark ? theme.colors.blue[8] : theme.colors.blue[3],
-        color: isDark ? theme.colors.gray[2] : theme.colors.dark[7],
-        font: { size: 16, family: '"PT Sans Narrow", Arial' },
-        plugins: {
-          legend: { display: false },
-          tooltip: { enabled: true },
-        },
-        scales: {
-          x: {
-            grid: {
-              color: isDark ? theme.colors.gray[8] : theme.colors.gray[3],
-            },
-            ticks: {
-              autoSkip: false,
-            },
-            position: 'bottom',
-            title: {
-              display: true,
-              text: i18n._t('Hands value'),
-            },
-          },
-          y: {
-            grid: {
-              color: isDark ? theme.colors.gray[8] : theme.colors.gray[3],
-            },
-          },
-        },
+      h={350}
+      data={handValueStats}
+      dataKey='x'
+      series={[
+        { name: 'count', label: i18n._t('Hands count'), color: isDark ? 'blue.8' : 'blue.3' },
+      ]}
+      gridAxis='xy'
+      textColor={isDark ? theme.colors.gray[2] : theme.colors.dark[7]}
+      xAxisLabel={i18n._t('Hands value')}
+      xAxisProps={{ interval: 0 }}
+      yAxisProps={{ allowDecimals: false }}
+      tooltipProps={{
+        labelFormatter: (label) =>
+          label === '★' ? i18n._t('Yakumans') : i18n._t('%1 han', [String(label)]),
       }}
+      valueFormatter={(value) => String(value)}
+      withBarValueLabel
     />
   );
 };
