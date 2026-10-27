@@ -45,12 +45,13 @@ export const EventRulesOverview: React.FC<{ params: { eventId: string } }> = ({
   );
 
   if (!events || !ruleset) {
-    return null;
+    return <Meta />;
   }
 
   if ((events?.length ?? 0) > 1) {
     return (
       <Container>
+        <Meta />
         <Alert color='red'>
           {i18n._t('Ruleset details page is not available for aggregated events')}
         </Alert>

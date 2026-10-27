@@ -1,4 +1,4 @@
-import { Anchor, NavLink, useMantineColorScheme } from '@mantine/core';
+import { NavLink, useMantineColorScheme } from '@mantine/core';
 import * as React from 'react';
 import { useLocation } from 'wouter';
 
@@ -39,8 +39,11 @@ export const MainMenuLink = ({
         ? '#b1ffa8'
         : '#7e95c4';
   return (
-    <Anchor
+    <NavLink
       data-testid={testId}
+      styles={{ label: { fontSize: '18px' } }}
+      leftSection={icon}
+      label={text}
       style={{ borderLeft: '10px solid ' + color, marginBottom: '2px', textDecoration: 'none' }}
       href={href}
       c={isDark ? 'gray' : 'dark'}
@@ -55,8 +58,6 @@ export const MainMenuLink = ({
       }
       target={external ? '_blank' : undefined}
       title={title ?? text}
-    >
-      <NavLink styles={{ label: { fontSize: '18px' } }} leftSection={icon} label={text} />
-    </Anchor>
+    />
   );
 };

@@ -28,6 +28,7 @@ import { Achievements } from './pages/Achievements';
 import { EventRulesOverview } from './pages/EventRulesOverview';
 import { RegisteredPlayers } from './pages/RegisteredPlayers';
 import './App.css';
+import { Meta } from './components/Meta';
 import { TablesState } from './pages/TablesState';
 
 export function App() {
@@ -77,6 +78,9 @@ export function App() {
       <Route path='/event/:eventId/timer' component={Timer} />
       <Route path='/event/:eventId/achievements' component={Achievements} />
       <Route path='/event/:eventId/rules' component={EventRulesOverview} />
+      <Route>
+        <Meta />
+      </Route>
     </Switch>
   );
 }

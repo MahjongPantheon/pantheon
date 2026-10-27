@@ -140,9 +140,11 @@ export async function createServer(app, env) {
     const template = fs.readFileSync(resolve('dist/client/index.html'), 'utf-8');
     const render = (await import('./dist/server/server.js')).SSRRender;
 
-    render(url, req.cookies).then(({ cookies, helmet, appHtml, serverData }) => {
+    render(url, req.cookies).then(({ cookies, helmet, styles, appHtml, serverData }) => {
       const html = template
         .replace(`<!--app-head-->`, helmet)
+        // Custom Emotion rules must follow the bundled Mantine stylesheets.
+        .replace('</head>', `${styles}</head>`)
         .replace(`<!--app-html-->`, appHtml)
         .replace(`<!--app-server-data-->`, serverData);
       res.status(200);

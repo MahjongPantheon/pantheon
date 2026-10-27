@@ -51,7 +51,7 @@ Pantheon is a set of services, not one application. `Mimir` owns game, event, to
 ### Sigrun specifics
 
 - Use React context to share state and functions to modify the state among the components.
-- Use Mantine UI v7 and the existing Emotion integration for new components. `@mantine/ssr` still has a v6 dependency; that does not make Sigrun a Mantine v6 application. See [its package manifest](../../Sigrun/package.json).
+- Use Mantine UI v9 with React 19 and the existing Emotion integration for new components. `app/ThemeProvider.tsx` preserves the previous radius and light-variant colors; SSR uses a fresh Emotion cache per request. See [its package manifest](../../Sigrun/package.json).
 - All components are expected to render on both server and client, unless the contrary is required.
 - The normal Vite development flow is client-rendered. Validate SSR using the built client/server bundles through `server.js` and `app/server.tsx`; use the root README's production-build e2e flow for integration coverage.
 

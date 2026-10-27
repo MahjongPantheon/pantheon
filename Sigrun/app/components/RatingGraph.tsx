@@ -22,6 +22,7 @@ import { useMantineColorScheme, useMantineTheme } from '@mantine/core';
 import starSvg from '../../assets/img/star.svg';
 import { PlayersGetPlayerStatsResponse } from 'tsclients/proto/mimir.pb';
 import { SessionHistoryResultTable } from 'tsclients/proto/atoms.pb';
+import { Chart } from 'chart.js';
 const LineGraph = React.lazy(() => import('./LineGraph'));
 
 export const RatingGraph = ({
@@ -58,7 +59,7 @@ export const RatingGraph = ({
 
   const gamesIdx: number[] = [];
   games?.forEach((g, idx) => gamesIdx.push(idx));
-  const chartRef = useRef();
+  const chartRef = useRef<Chart<'line', unknown> | undefined>(null);
 
   useEffect(() => {
     const idx =
@@ -101,7 +102,7 @@ export const RatingGraph = ({
         font: { size: 16, family: '"PT Sans Narrow", Arial' },
         onClick: (e: any) => {
           // @ts-expect-error
-          const d = getElementAtEvent(chartRef.current!, { nativeEvent: e });
+          const d = getElementAtEvent(chartRef.current, { nativeEvent: e });
           if (d.length) {
             const { index } = d[0];
             setLastSelectionX(index);

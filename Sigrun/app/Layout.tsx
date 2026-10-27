@@ -15,8 +15,9 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { AppShell, MantineProvider, ScrollArea, createTheme } from '@mantine/core';
-import { MantineEmotionProvider } from '@mantine/emotion';
+import { EmotionCache } from '@emotion/cache';
+import { AppShell, ScrollArea } from '@mantine/core';
+import { ThemeProvider } from './ThemeProvider';
 import { Main } from './Main';
 import { AppHeader } from './components/AppHeader';
 import { AnalyticsProvider, useAnalytics } from './hooks/analytics';
@@ -29,7 +30,6 @@ import { useCallback, useState, ReactNode, useEffect } from 'react';
 import { Globals, globalsCtx } from './hooks/globals';
 import { AppFooter } from './components/AppFooter';
 import { NavigationProgress } from '@mantine/nprogress';
-import { Meta } from './components/Meta';
 import { useIsomorphicState } from './hooks/useIsomorphicState';
 import { PersonEx, PlatformType } from 'tsclients/proto/atoms.pb';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
@@ -37,9 +37,6 @@ import { MainMenu } from './components/MainMenu';
 import { AddOnlineReplayModal } from './components/AddOnlineReplayModal';
 import { useRoute } from 'wouter';
 import { fontLoader } from './helpers/fontLoader';
-import { getThemeOptions } from './helpers/theme';
-import { colorSchemeManager } from './helpers/colorSchemeManager';
-import '@mantine/core/styles.css';
 import './App.css';
 
 const curDate = new Date();
@@ -47,7 +44,13 @@ const haveNySpecs =
   (curDate.getMonth() === 11 && curDate.getDate() > 20) ||
   (curDate.getMonth() === 0 && curDate.getDate() < 10);
 
-export function Layout({ children }: { children: ReactNode }) {
+export function Layout({
+  children,
+  emotionCache,
+}: {
+  children: ReactNode;
+  emotionCache?: EmotionCache;
+}) {
   const storage = useStorage();
   const i18n = useI18n();
   const [useDimmed, setUseDimmed] = useState<boolean>(storage.getDimmed());
@@ -95,9 +98,6 @@ export function Layout({ children }: { children: ReactNode }) {
     },
     [personId]
   );
-
-  const defaultTheme = createTheme(getThemeOptions(false));
-  const dimmedTheme = createTheme(getThemeOptions(true));
 
   useEffect(() => {
     setIsLoggedIn(authVals?.[0] ?? false);
@@ -150,88 +150,77 @@ export function Layout({ children }: { children: ReactNode }) {
   };
 
   return (
-    <MantineProvider
-      theme={useDimmed ? dimmedTheme : defaultTheme}
-      colorSchemeManager={colorSchemeManager(storage)}
-    >
-      <MantineEmotionProvider>
-        <AnalyticsProvider>
-          <modalsCtx.Provider value={{ onlineModalShown, showOnlineModal, hideOnlineModal }}>
-            <authCtx.Provider
-              value={{
-                isLoggedIn,
-                setIsLoggedIn,
-                isSuperadmin,
-                setIsSuperadmin,
-                userInfo,
-                setUserInfo,
-                ownEvents,
-                setOwnEvents,
-              }}
-            >
-              <globalsCtx.Provider value={{ data, setData }}>
-                <StorageProvider>
-                  <I18nProvider>
-                    <ApiProvider>
-                      <Meta
-                        title={i18n._t('Sigrun: riichi mahjong ratings and statistics')}
-                        description={i18n._t(
-                          'Sigrun is the statistics viewer for riichi mahjong club games and tournaments powered by Mahjong Pantheon system. It provides game logs, player statistics with graphs, rating tables and achievements list.'
-                        )}
+    <ThemeProvider storage={storage} dimmed={useDimmed} emotionCache={emotionCache}>
+      <AnalyticsProvider>
+        <modalsCtx.Provider value={{ onlineModalShown, showOnlineModal, hideOnlineModal }}>
+          <authCtx.Provider
+            value={{
+              isLoggedIn,
+              setIsLoggedIn,
+              isSuperadmin,
+              setIsSuperadmin,
+              userInfo,
+              setUserInfo,
+              ownEvents,
+              setOwnEvents,
+            }}
+          >
+            <globalsCtx.Provider value={{ data, setData }}>
+              <StorageProvider>
+                <I18nProvider>
+                  <ApiProvider>
+                    <NavigationProgress color='green' zIndex={10100} />
+                    <AppShell
+                      padding='md'
+                      header={{ height: 44 }}
+                      navbar={{
+                        width: showLabels ? 350 : 80,
+                        breakpoint: 'md',
+                      }}
+                      footer={{
+                        height: veryLargeScreen ? 0 : 60,
+                      }}
+                      classNames={{
+                        main: haveNySpecs ? 'newyear' : '',
+                      }}
+                    >
+                      <AppHeader
+                        isLoggedIn={isLoggedIn}
+                        saveLang={saveLang}
+                        toggleDimmed={toggleDimmed}
                       />
-                      <NavigationProgress color='green' zIndex={10100} />
-                      <AppShell
-                        padding='md'
-                        header={{ height: 44 }}
-                        navbar={{
-                          width: showLabels ? 350 : 80,
-                          breakpoint: 'md',
-                        }}
-                        footer={{
-                          height: veryLargeScreen ? 0 : 60,
-                        }}
-                        classNames={{
-                          main: haveNySpecs ? 'newyear' : '',
-                        }}
-                      >
-                        <AppHeader
-                          isLoggedIn={isLoggedIn}
-                          saveLang={saveLang}
-                          toggleDimmed={toggleDimmed}
-                        />
 
-                        {veryLargeScreen ? (
-                          <AppShell.Navbar p='xs'>
-                            <ScrollArea scrollbars='y'>
-                              <MainMenu
-                                testIdScope='sidebar'
-                                isLoggedIn={isLoggedIn}
-                                saveLang={saveLang}
-                                toggleDimmed={toggleDimmed}
-                                showLabels={showLabels}
-                              />
-                            </ScrollArea>
-                          </AppShell.Navbar>
-                        ) : undefined}
+                      {veryLargeScreen ? (
+                        <AppShell.Navbar p='xs'>
+                          <ScrollArea scrollbars='y'>
+                            <MainMenu
+                              testIdScope='sidebar'
+                              isLoggedIn={isLoggedIn}
+                              saveLang={saveLang}
+                              toggleDimmed={toggleDimmed}
+                              showLabels={showLabels}
+                            />
+                          </ScrollArea>
+                        </AppShell.Navbar>
+                      ) : undefined}
 
-                        <Main children={children}></Main>
+                      <Main children={children}></Main>
 
-                        {veryLargeScreen ? undefined : (
-                          <AppShell.Footer style={{ display: 'flex', alignItems: 'center' }}>
-                            <AppFooter />
-                          </AppShell.Footer>
-                        )}
+                      {veryLargeScreen ? undefined : (
+                        <AppShell.Footer style={{ display: 'flex', alignItems: 'center' }}>
+                          <AppFooter />
+                        </AppShell.Footer>
+                      )}
 
-                        <AddOnlineReplayModal />
-                      </AppShell>
-                    </ApiProvider>
-                  </I18nProvider>
-                </StorageProvider>
-              </globalsCtx.Provider>
-            </authCtx.Provider>
-          </modalsCtx.Provider>
-        </AnalyticsProvider>
-      </MantineEmotionProvider>
-    </MantineProvider>
+                      <AddOnlineReplayModal />
+                    </AppShell>
+                  </ApiProvider>
+                </I18nProvider>
+              </StorageProvider>
+            </globalsCtx.Provider>
+          </authCtx.Provider>
+        </modalsCtx.Provider>
+      </AnalyticsProvider>
+    </ThemeProvider>
   );
 }

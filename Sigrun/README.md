@@ -17,6 +17,22 @@ Sigrun provides a convenient view of games and player statistics for japanese (r
 
 ### Developer information
 
+Sigrun uses Mantine 9 with React 19.2 or later. Keep all `@mantine/*` packages
+on the same version. `app/ThemeProvider.tsx` retains the previous radius,
+light-variant colors, and shared day/night cookie mapping. Emotion remains the
+styling integration; SSR creates a cache per request and emits extracted styles
+after the bundled stylesheets so custom component styles take precedence.
+Page metadata is emitted once per page using React 19's document-head handling,
+including fallback metadata for loading and unavailable views.
+
+Migration references: [v6 to v7](https://mantine.dev/guides/6x-to-7x/),
+[v7 to v8](https://mantine.dev/guides/7x-to-8x/), and
+[v8 to v9](https://mantine.dev/guides/8x-to-9x/).
+`app/ThemeProvider.test.tsx` and `app/helpers/renderDocument.test.tsx` cover
+theme persistence, hydration, and request-specific CSS extraction.
+Fenrir's UI-004 case covers responsive navigation and display preferences;
+run it against a production SSR build as well as the development server.
+
 We accept any help with developing, testing and improving our system, so please feel free to create issues or send
 pull requests for missing functionality.
 

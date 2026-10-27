@@ -235,7 +235,9 @@ export const MainMenu = ({
             styles={{
               label: { fontSize: '18px' },
               children: { paddingLeft: 0 },
-              icon: { marginRight: showLabels ? '0.75rem' : '0' },
+              section: {
+                '&[data-position="left"]': { marginRight: showLabels ? '0.75rem' : '0' },
+              },
             }}
             leftSection={<IconLanguageHiragana size={20} />}
             label={showLabels ? i18n._t('Language') : ''}

@@ -4,7 +4,7 @@ import { useIsomorphicState } from '../hooks/useIsomorphicState';
 import { useApi } from '../hooks/api';
 import { useI18n } from '../hooks/i18n';
 import { IconShare } from '@tabler/icons-react';
-import { useLocation } from 'wouter';
+import { Link, useLocation } from 'wouter';
 
 export const RecentPublicGames: React.FC = () => {
   const api = useApi();
@@ -44,6 +44,7 @@ export const RecentPublicGames: React.FC = () => {
           >
             <Group justify='space-between' gap='xs' wrap='nowrap'>
               <Anchor
+                component={Link}
                 data-testid={`sigrun-recent-game-event-${game.sessionHash}`}
                 href={`/event/${game.eventId}/info`}
                 fw={600}
@@ -93,6 +94,8 @@ export const RecentPublicGames: React.FC = () => {
                     color={player.score < game.startPoints ? 'red' : 'lime'}
                     radius='sm'
                     w={80}
+                    miw='max-content'
+                    maw='none'
                     style={{ flexShrink: 0 }}
                     data-testid='sigrun-recent-game-score'
                   >

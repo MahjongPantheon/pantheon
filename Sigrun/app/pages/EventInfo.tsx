@@ -47,7 +47,7 @@ export const EventInfo: React.FC<{ params: { eventId: string } }> = ({ params: {
     [eventId]
   );
   if (!events) {
-    return null;
+    return <Meta />;
   }
 
   return (

@@ -51,12 +51,13 @@ export const SeriesRating: React.FC<{ params: { eventId: string } }> = ({
     [eventId, events]
   );
   if (!events) {
-    return null;
+    return <Meta />;
   }
 
   if (events?.length > 1) {
     return (
       <Container>
+        <Meta />
         <Alert color='red'>{i18n._t('Series rating is not available for aggregated events')}</Alert>
       </Container>
     );

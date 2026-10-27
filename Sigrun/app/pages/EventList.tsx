@@ -96,7 +96,7 @@ export const EventList: React.FC<{ params: { page?: string; filter?: string } }>
         {(events?.events ?? []).map((e, idx) => {
           const desc = useRemarkSync(e.description, {
             remarkPlugins: [strip as any],
-          }) as JSX.Element;
+          }) as React.JSX.Element;
           const renderedDesc = stripHtml(renderToString(desc)).slice(0, 300);
           return (
             <Group

@@ -33,6 +33,7 @@ import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import { authCtx } from '../hooks/auth';
 import { MainMenu } from './MainMenu';
 import { useLocation } from 'wouter';
+import { useSwipeToClose } from '../hooks/useSwipeToClose';
 
 const useStyles = createStyles(() => ({
   header: {
@@ -52,6 +53,9 @@ const useStyles = createStyles(() => ({
     height: '100%',
     alignItems: 'center',
   },
+  drawerContent: {
+    touchAction: 'pan-y pinch-zoom',
+  },
 }));
 
 interface AppHeaderProps {
@@ -66,6 +70,7 @@ export function AppHeader({ isLoggedIn, saveLang, toggleDimmed }: AppHeaderProps
   const [location, navigate] = useLocation();
   const auth = useContext(authCtx);
   const [menuOpened, { open: openMenu, close: closeMenu }] = useDisclosure(false);
+  const drawerSwipe = useSwipeToClose(closeMenu);
   const largeScreen = useMediaQuery('(min-width: 768px)');
   const veryLargeScreen = useMediaQuery('(min-width: 1024px)');
   const matchedEventId = location.match(/\/event\/([^/]+)\//);
@@ -75,6 +80,7 @@ export function AppHeader({ isLoggedIn, saveLang, toggleDimmed }: AppHeaderProps
     <AppShell.Header className={classes.header} pl={veryLargeScreen ? 350 : 0} mb={120}>
       {!veryLargeScreen && (
         <Drawer
+          {...drawerSwipe}
           data-testid='sigrun-menu-drawer'
           size='sm'
           opened={menuOpened}
@@ -87,11 +93,12 @@ export function AppHeader({ isLoggedIn, saveLang, toggleDimmed }: AppHeaderProps
           overlayProps={{ opacity: 0.5, blur: 4 }}
           transitionProps={{ transition: 'slide-right', duration: 150, timingFunction: 'linear' }}
           style={{ zIndex: 10000, position: 'fixed' }}
+          classNames={{ content: classes.drawerContent }}
           styles={{ body: { height: 'calc(100% - 68px)', paddingTop: 0 } }}
         >
           <Drawer.CloseButton
             data-testid='sigrun-menu-drawer-close'
-            size='lg'
+            size='xl'
             pos='absolute'
             style={{ right: 0, top: 3, backgroundColor: isDark ? '#242424' : '#fff' }}
           />

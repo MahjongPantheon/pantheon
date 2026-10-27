@@ -114,12 +114,13 @@ export const RatingTable: React.FC<{
   );
 
   if (!players || !events) {
-    return null;
+    return <Meta />;
   }
 
   if (globals.data.loading) {
     return (
       <Container h='100%'>
+        <Meta />
         <Center h='100%'>
           <Loader size='xl' />
         </Center>
@@ -136,6 +137,7 @@ export const RatingTable: React.FC<{
   ) {
     return (
       <Container>
+        <Meta />
         <h2 style={{ display: 'flex', gap: '20px' }}>
           {events?.[0] && <EventTypeIcon event={events?.[0]} />}
           {events?.[0]?.title} - {i18n._t('Rating table')}
@@ -502,6 +504,8 @@ export const RatingTable: React.FC<{
                     <Group gap={2} grow={!largeScreen}>
                       <Badge
                         w={75}
+                        miw='max-content'
+                        maw='none'
                         size='lg'
                         variant={
                           orderBy === 'rating' || orderBy === 'games_and_rating'
@@ -516,6 +520,8 @@ export const RatingTable: React.FC<{
                       </Badge>
                       <Badge
                         w={65}
+                        miw='max-content'
+                        maw='none'
                         size='lg'
                         variant={orderBy === 'avg_score' ? 'filled' : 'light'}
                         color={player.winnerZone ? 'green' : 'pink'}

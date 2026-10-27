@@ -79,6 +79,8 @@ export const TeamTable = ({ players, events }: { players: PlayerInRating[]; even
                   </Text>
                   <Badge
                     w={75}
+                    miw='max-content'
+                    maw='none'
                     size='lg'
                     variant='filled'
                     color={team.data.rating > 0 ? 'lime' : 'red'}
@@ -117,6 +119,8 @@ export const TeamTable = ({ players, events }: { players: PlayerInRating[]; even
                     </Group>
                     <Badge
                       w={75}
+                      miw='max-content'
+                      maw='none'
                       size='lg'
                       variant='filled'
                       color={player.winnerZone ? 'lime' : 'red'}
