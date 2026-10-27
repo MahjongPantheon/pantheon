@@ -63,6 +63,7 @@ export const PlayersManage: React.FC<{ params: { id: string } }> = ({ params: { 
     if (!isLoggedIn) {
       return;
     }
+    let cancelled = false;
     nprogress.reset();
     nprogress.start();
     setIsLoading(true);
@@ -73,15 +74,19 @@ export const PlayersManage: React.FC<{ params: { id: string } }> = ({ params: { 
       api.getAllPlayers(eventId),
     ])
       .then(async ([conf, [eventData], playersList]) => {
-        if (conf.syncStart && eventData.type !== EventType.EVENT_TYPE_ONLINE) {
-          setTables(await api.getTablesState(eventId));
-        }
+        const eventTables =
+          conf.syncStart && eventData.type !== EventType.EVENT_TYPE_ONLINE
+            ? await api.getTablesState(eventId)
+            : undefined;
+        if (cancelled) return;
+        setTables(eventTables);
         setEvent(eventData);
         setConfig(conf);
         setPlayers(playersList.sort((a, b) => a.title.localeCompare(b.title)));
         setLocalIdsWarn(playersList.some((p) => !p.localId));
       })
       .catch((err: Error) => {
+        if (cancelled) return;
         notifications.show({
           title: i18n._t('Error has occurred'),
           message: err.message,
@@ -89,10 +94,14 @@ export const PlayersManage: React.FC<{ params: { id: string } }> = ({ params: { 
         });
       })
       .finally(() => {
+        if (cancelled) return;
         setIsLoading(false);
         nprogress.complete();
       });
-  }, [isLoggedIn]);
+    return () => {
+      cancelled = true;
+    };
+  }, [isLoggedIn, api, eventId, i18n]);
 
   if (!storage.getPersonId()) {
     return <Redirect to='/profile/login' />;

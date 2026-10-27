@@ -90,13 +90,16 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
   const [scoringLoading, setScoringLoading] = useState<Record<number, boolean>>({});
   usePageTitle(i18n._t('Manage my events'));
 
-  const errHandler = useCallback((err: Error) => {
-    notifications.show({
-      title: i18n._t('Error has occurred'),
-      message: err.message,
-      color: 'red',
-    });
-  }, []);
+  const errHandler = useCallback(
+    (err: Error) => {
+      notifications.show({
+        title: i18n._t('Error has occurred'),
+        message: err.message,
+        color: 'red',
+      });
+    },
+    [i18n]
+  );
 
   const loadPageData = useCallback(
     async (pageToLoad: number) => {
@@ -129,7 +132,7 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
         }
       }
     },
-    [isLoggedIn, onlyOngoing]
+    [isLoggedIn, onlyOngoing, api, storage, errHandler]
   );
 
   const setPage = (newPage: number) => {
@@ -142,28 +145,32 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
   };
 
   const toggleVisibility = (id: number) => {
-    setVisibilityLoading({ ...scoringLoading, [id]: true });
+    setVisibilityLoading((current) => ({ ...current, [id]: true }));
     api
       .toggleListed(id)
       .then((resp) => {
         if (resp) {
-          const idx = events.findIndex((ev) => ev.id === id);
-          setEvents([
-            ...events.slice(0, idx),
-            { ...events[idx], isListed: !events[idx].isListed },
-            ...events.slice(idx + 1),
-          ]);
+          setEvents((current) =>
+            current.map((event) =>
+              event.id === id ? { ...event, isListed: !event.isListed } : event
+            )
+          );
         }
-        setVisibilityLoading({ ...scoringLoading, [id]: false });
       })
-      .catch(errHandler);
+      .catch(errHandler)
+      .finally(() => {
+        setVisibilityLoading((current) => ({ ...current, [id]: false }));
+      });
   };
 
   const rebuildScoring = (id: number) => {
-    setScoringLoading({ ...scoringLoading, [id]: true });
-    api.rebuildScoring(id).finally(() => {
-      setScoringLoading({ ...scoringLoading, [id]: false });
-    });
+    setScoringLoading((current) => ({ ...current, [id]: true }));
+    api
+      .rebuildScoring(id)
+      .catch(errHandler)
+      .finally(() => {
+        setScoringLoading((current) => ({ ...current, [id]: false }));
+      });
   };
 
   const stopEvent = (id: number) => {
@@ -178,45 +185,43 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
   };
 
   const onToggleResults = (id: number) => {
-    setResultsLoading({ ...resultsLoading, [id]: true });
+    setResultsLoading((current) => ({ ...current, [id]: true }));
     api
       .toggleResults(id)
       .then((r) => {
         if (!r) {
           throw new Error(i18n._t('Failed to toggle results visibility'));
         }
-        if (r) {
-          const idx = events.findIndex((ev) => ev.id === id);
-          setEvents([
-            ...events.slice(0, idx),
-            { ...events[idx], isRatingShown: !events[idx].isRatingShown },
-            ...events.slice(idx + 1),
-          ]);
-        }
-        setResultsLoading({ ...resultsLoading, [id]: false });
+        setEvents((current) =>
+          current.map((event) =>
+            event.id === id ? { ...event, isRatingShown: !event.isRatingShown } : event
+          )
+        );
       })
-      .catch(errHandler);
+      .catch(errHandler)
+      .finally(() => {
+        setResultsLoading((current) => ({ ...current, [id]: false }));
+      });
   };
 
   const onToggleAchievements = (id: number) => {
-    setAchievementsLoading({ ...achievementsLoading, [id]: true });
+    setAchievementsLoading((current) => ({ ...current, [id]: true }));
     api
       .toggleAchievements(id)
       .then((r) => {
         if (!r) {
           throw new Error(i18n._t('Failed to toggle achievements visibility'));
         }
-        if (r) {
-          const idx = events.findIndex((ev) => ev.id === id);
-          setEvents([
-            ...events.slice(0, idx),
-            { ...events[idx], achievementsShown: !events[idx].achievementsShown },
-            ...events.slice(idx + 1),
-          ]);
-        }
-        setAchievementsLoading({ ...resultsLoading, [id]: false });
+        setEvents((current) =>
+          current.map((event) =>
+            event.id === id ? { ...event, achievementsShown: !event.achievementsShown } : event
+          )
+        );
       })
-      .catch(errHandler);
+      .catch(errHandler)
+      .finally(() => {
+        setAchievementsLoading((current) => ({ ...current, [id]: false }));
+      });
   };
 
   useEffect(() => {
@@ -307,7 +312,7 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
             return (
               <Group
                 data-testid={`forseti-owned-event-row-${event.id}`}
-                key={`ev_${idx}`}
+                key={event.id}
                 style={{
                   padding: '10px',
                   backgroundColor:
@@ -458,6 +463,7 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
                                 <Menu.Item
                                   data-testid={`forseti-owned-event-menu-rebuild-scoring-${event.id}`}
                                   title={i18n._t('Rebuild scoring')}
+                                  disabled={scoringLoading[event.id]}
                                   onClick={() => rebuildScoring(event.id)}
                                   leftSection={<IconRefreshAlert />}
                                 >

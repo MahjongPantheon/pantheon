@@ -33,6 +33,7 @@ import {
   useMantineTheme,
 } from '@mantine/core';
 
+import { notifications } from '@mantine/notifications';
 import { useStorage } from '../hooks/storage';
 import { HuginData } from 'tsclients/proto/hugin.pb';
 import { Link, Redirect } from 'wouter';
@@ -92,8 +93,8 @@ const TableTotalView = ({
       };
     }, [])
     .sort((a, b) => b.data - a.data);
-  const rows = sums.map((element, idx) => (
-    <Table.Tr key={`table_${idx}`}>
+  const rows = sums.map((element) => (
+    <Table.Tr key={element.label}>
       <Table.Td>{element.label}</Table.Td>
       <Table.Td>{element.data}</Table.Td>
     </Table.Tr>
@@ -124,7 +125,7 @@ const subsystems: Subsystems[] = ['all', 'Sigrun', 'Bragi', 'Forseti', 'Tyr'];
 
 export const SystemStats: React.FC<{ params: { period?: string } }> = ({ params: { period } }) => {
   period = period ?? 'lastday';
-  const { privilegesLevel } = useContext(authCtx);
+  const { privilegesLevel, privilegesLoading } = useContext(authCtx);
   const api = useApi();
   const i18n = useI18n();
   const storage = useStorage();
@@ -160,47 +161,55 @@ export const SystemStats: React.FC<{ params: { period?: string } }> = ({ params:
     theme.colors.teal[shade2],
   ];
 
-  const [selectedStats, setSelectedStats] = useState<Stats | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   usePageTitle(i18n._t('System stats'));
 
   useEffect(() => {
+    let cancelled = false;
     setIsLoading(true);
-    if (!personId) {
+    if (privilegesLoading) return;
+    if (!personId || privilegesLevel !== PrivilegesLevel.SUPERADMIN) {
+      setStats(null);
       setIsLoading(false);
       return;
     }
-
-    if (privilegesLevel !== PrivilegesLevel.SUPERADMIN) {
-      setIsLoading(false);
-    } else {
-      (period === 'lastyear'
-        ? api.getLastYearStats()
-        : period === 'lastmonth'
-          ? api.getLastMonthStats()
-          : api.getLastDayStats()
-      ).then((st) => {
-        setStats(st);
-        setIsLoading(false);
+    (period === 'lastyear'
+      ? api.getLastYearStats()
+      : period === 'lastmonth'
+        ? api.getLastMonthStats()
+        : api.getLastDayStats()
+    )
+      .then((st) => {
+        if (!cancelled) setStats(st);
+      })
+      .catch((err: Error) => {
+        if (cancelled) return;
+        setStats(null);
+        notifications.show({
+          title: i18n._t('Error has occurred'),
+          message: err.message,
+          color: 'red',
+        });
+      })
+      .finally(() => {
+        if (!cancelled) setIsLoading(false);
       });
-    }
-  }, [personId, period]);
+    return () => {
+      cancelled = true;
+    };
+  }, [personId, period, privilegesLevel, privilegesLoading, api, i18n]);
 
-  if (!isLoading && (!personId || privilegesLevel !== PrivilegesLevel.SUPERADMIN)) {
+  if (!privilegesLoading && (!personId || privilegesLevel !== PrivilegesLevel.SUPERADMIN)) {
     return <Redirect to='/' />;
   }
 
-  useEffect(() => {
-    setSelectedStats(
-      makeStat(
-        stats,
-        selectedItem,
-        selectedSubsystem,
-        colors,
-        period as 'lastday' | 'lastmonth' | 'lastyear'
-      )
-    );
-  }, [stats, selectedItem, selectedSubsystem, isDark]);
+  const selectedStats = makeStat(
+    stats,
+    selectedItem,
+    selectedSubsystem,
+    colors,
+    period as 'lastday' | 'lastmonth' | 'lastyear'
+  );
 
   return (
     <Container data-testid='forseti-system-stats-page'>
