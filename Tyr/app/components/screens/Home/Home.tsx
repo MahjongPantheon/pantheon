@@ -40,13 +40,18 @@ export const Home = (props: IComponentProps) => {
     if (props.state.currentEventId) {
       props.dispatch({ type: UPDATE_CURRENT_GAMES_INIT });
     }
-  }, [props.state.currentEventId]);
+  }, [props.state.currentEventId, props.dispatch]);
 
   useEffect(() => {
     if (props.state.currentPlayerId && props.state.currentEventId) {
       props.dispatch({ type: ADMIN_ACCESS_INIT });
     }
-  }, [props.state.currentPlayerId, props.state.analyticsSession, props.state.currentEventId]);
+  }, [
+    props.state.currentPlayerId,
+    props.state.analyticsSession,
+    props.state.currentEventId,
+    props.dispatch,
+  ]);
 
   useEffect(() => {
     setComponentReady(true);
@@ -95,7 +100,9 @@ export const Home = (props: IComponentProps) => {
         gameConfig.eventStatHost.includes('.pantheon.local')
           ? gameConfig.eventStatHost
           : 'https://' + gameConfig.eventStatHost
-        ).replace(/\/info$/, '/order/rating')}`
+        ).replace(/\/info$/, '/order/rating')}`,
+        '_blank',
+        'noopener'
       );
     }
   };
@@ -122,7 +129,11 @@ export const Home = (props: IComponentProps) => {
       eventName={playerName}
       canAccessAdminPanel={props.state.canAccessAdminPanel && !!props.state.currentEventId}
       onAdminPanelClick={() =>
-        window.open(`${env.urls.forseti}/event/${props.state.currentEventId}/games`)
+        window.open(
+          `${env.urls.forseti}/event/${props.state.currentEventId}/games`,
+          '_blank',
+          'noopener'
+        )
       }
       canStartGame={
         !props.state.gameConfig?.autoSeating &&

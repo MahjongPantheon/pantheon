@@ -1,3 +1,5 @@
+import { useDialog } from '../../hooks/useDialog';
+import { i18n } from '../../i18n';
 /* Tyr - Japanese mahjong assistant application
  * Copyright (C) 2016 Oleg Klimenko aka ctizen
  *
@@ -15,7 +17,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { PropsWithChildren } from 'react';
+import { PropsWithChildren, useContext } from 'react';
 import styles from './ModalDialog.module.css';
 import { Button } from '../Button/Button';
 
@@ -37,37 +39,49 @@ export const ModalDialog = ({
   actionSecondaryLabel,
   testIdPrefix,
 }: PropsWithChildren & DialogProps) => {
+  const loc = useContext(i18n);
+  const dialogRef = useDialog(true);
   return (
-    <div className={styles.overlay} onClick={onClose} data-testid={testIdPrefix}>
-      <div className={styles.wrapper} onClick={(event) => event.stopPropagation()}>
-        <div className={styles.content}>{children}</div>
-        <div className={styles.actions}>
-          <div>
-            {actionSecondary && (
-              <Button
-                size='md'
-                variant='contained'
-                onClick={actionSecondary}
-                testId={testIdPrefix ? `${testIdPrefix}-secondary` : undefined}
-              >
-                {actionSecondaryLabel}
-              </Button>
-            )}
-          </div>
-          <div>
-            {actionPrimary && (
-              <Button
-                size='md'
-                variant='primary'
-                onClick={actionPrimary}
-                testId={testIdPrefix ? `${testIdPrefix}-primary` : undefined}
-              >
-                {actionPrimaryLabel}
-              </Button>
-            )}
+    <dialog
+      ref={dialogRef}
+      aria-label={loc._t('Notice')}
+      onCancel={(event) => {
+        event.preventDefault();
+        onClose?.();
+      }}
+      className={styles.dialog}
+    >
+      <div className={styles.overlay} onClick={onClose} data-testid={testIdPrefix}>
+        <div className={styles.wrapper} onClick={(event) => event.stopPropagation()}>
+          <div className={styles.content}>{children}</div>
+          <div className={styles.actions}>
+            <div>
+              {actionSecondary && (
+                <Button
+                  size='md'
+                  variant='contained'
+                  onClick={actionSecondary}
+                  testId={testIdPrefix ? `${testIdPrefix}-secondary` : undefined}
+                >
+                  {actionSecondaryLabel}
+                </Button>
+              )}
+            </div>
+            <div>
+              {actionPrimary && (
+                <Button
+                  size='md'
+                  variant='primary'
+                  onClick={actionPrimary}
+                  testId={testIdPrefix ? `${testIdPrefix}-primary` : undefined}
+                >
+                  {actionPrimaryLabel}
+                </Button>
+              )}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </dialog>
   );
 };

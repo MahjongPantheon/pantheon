@@ -70,7 +70,7 @@ export const Settings = (props: IComponentProps) => {
   };
 
   const onGotoPersonalArea = () => {
-    window.open(`${env.urls.forseti}/profile/manage`);
+    window.open(`${env.urls.forseti}/profile/manage`, '_blank', 'noopener');
   };
 
   const { state } = props;

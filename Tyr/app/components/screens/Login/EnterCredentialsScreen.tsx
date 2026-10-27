@@ -33,14 +33,16 @@ export const EnterCredentialsScreen = (props: IComponentProps) => {
         });
       }
     },
-    [dispatch]
+    [dispatch, state.analyticsSession]
   );
 
   return (
     <Login
       onSubmit={onSubmit}
-      onSignupClick={() => window.open(`${env.urls.forseti}/profile/signup`)}
-      onRecoveryClick={() => window.open(`${env.urls.forseti}/profile/resetPassword`)}
+      onSignupClick={() => window.open(`${env.urls.forseti}/profile/signup`, '_blank', 'noopener')}
+      onRecoveryClick={() =>
+        window.open(`${env.urls.forseti}/profile/resetPassword`, '_blank', 'noopener')
+      }
     />
   );
 };

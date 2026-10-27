@@ -16,6 +16,7 @@
 }
 
 .table {
+  width: calc(100% - 32px);
   margin: 0 16px 20px 16px;
   display: flex;
   gap: 20px;

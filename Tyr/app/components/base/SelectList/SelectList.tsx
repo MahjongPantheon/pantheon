@@ -1,3 +1,4 @@
+import { ActionButton } from '../ActionButton/ActionButton';
 import styles from './SelectList.module.css';
 import { ReactElement } from 'react';
 import clsx from 'classnames';
@@ -15,15 +16,16 @@ type IProps = {
 export const SelectList = ({ items, currentSelection, onSelect, testIdPrefix }: IProps) => {
   return (
     <div className={styles.wrapper}>
-      {items.map((item, idx) => (
-        <div
-          key={`listItem_${idx}`}
+      {items.map((item) => (
+        <ActionButton
+          key={item.id}
+          aria-pressed={currentSelection === item.id}
           data-testid={testIdPrefix ? `${testIdPrefix}-${item.id}` : undefined}
           className={clsx(styles.listItem, currentSelection === item.id ? styles.selected : null)}
           onClick={() => onSelect(item.id)}
         >
           {item.label}
-        </div>
+        </ActionButton>
       ))}
     </div>
   );

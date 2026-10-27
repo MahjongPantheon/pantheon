@@ -24,9 +24,9 @@ export const GameResult = (props: IProps) => {
       {results && results.length > 0 && (
         <>
           <div className={styles.players}>
-            {results.map((result, i) => (
+            {results.map((result) => (
               <div
-                key={i}
+                key={result.playerId}
                 className={styles.playerResult}
                 data-testid={`tyr-game-result-player-${result.playerId}`}
               >

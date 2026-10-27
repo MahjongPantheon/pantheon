@@ -1,5 +1,5 @@
 import { IProps as PlayerProps, PlayerPlace } from '../../base/PlayerPlace/PlayerPlace';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import { FourSidedScreen } from '../../base/FourSidedScreen/FourSidedScreen';
 import { BottomPanel } from '../../base/BottomPanel/BottomPanel';
 import { Button } from '../../base/Button/Button';
@@ -43,23 +43,7 @@ export const TablePrimaryView = (props: IProps) => {
   const [centerDims, setCenterDims] = useState({ width: 0, height: 0 });
   const [newGameOpen, setNewGameOpen] = useState(false);
 
-  const [toimen, setToimen] = useState(props.toimen);
-  const [kamicha, setKamicha] = useState(props.kamicha);
-  const [self, setSelf] = useState(props.self);
-  const [shimocha, setShimocha] = useState(props.shimocha);
-
-  useEffect(() => {
-    setToimen(props.toimen);
-    setKamicha(props.kamicha);
-    setSelf(props.self);
-    setShimocha(props.shimocha);
-  }, [
-    props.self.points,
-    props.shimocha.points,
-    props.kamicha.points,
-    props.toimen.points,
-    props.self.currentWind, // to allow rotation on other tables screen
-  ]);
+  const { toimen, kamicha, self, shimocha } = props;
 
   return (
     <div className={styles.wrapper} data-testid='tyr-table'>

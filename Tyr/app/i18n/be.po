@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-26 21:08+0100\n"
+"POT-Creation-Date: 2026-10-28 00:29+0100\n"
 "PO-Revision-Date: 2026-10-20 01:13+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -28,16 +28,16 @@ msgstr[0] "Засталася %1 раздача"
 msgstr[1] "Засталіся %1 раздачы"
 msgstr[2] "Засталося %1 раздач"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:191:28
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:193:28
 msgid "%1 fu"
 msgstr "%1 фу"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:230:17
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:232:17
 #: app/store/selectors/round.ts:36:15
 msgid "%1 han"
 msgstr "%1 хан"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:229:17
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:231:17
 #: app/store/selectors/round.ts:39:12
 msgid "%1 han %2 fu"
 msgstr "%1 хан %2 фу"
@@ -46,12 +46,12 @@ msgstr "%1 хан %2 фу"
 msgid "%1 ← %2"
 msgstr "%1 ← %2"
 
-#: app/store/selectors/table.ts:414:14
+#: app/store/selectors/table.ts:419:14
 msgid "Abort"
 msgstr "Перапыніць"
 
-#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:107:24
-#: app/store/selectors/round.ts:178:14 app/store/selectors/table.ts:133:25
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:91:24
+#: app/store/selectors/round.ts:178:14 app/store/selectors/table.ts:136:25
 msgid "Abortive draw"
 msgstr "Абартыўная нічыя"
 
@@ -93,11 +93,15 @@ msgid "Chinroutou"
 msgstr "Чынрота"
 
 #: app/components/base/Player/Player.tsx:59:58
-#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:113:22
-#: app/store/selectors/round.ts:191:14 app/store/selectors/table.ts:136:25
-#: app/store/selectors/table.ts:416:14
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:97:22
+#: app/store/selectors/round.ts:191:14 app/store/selectors/table.ts:139:25
+#: app/store/selectors/table.ts:421:14
 msgid "Chombo"
 msgstr "Чомба"
+
+#: app/components/base/PopupMenu/PopupMenu.tsx:18:19
+msgid "Choose an option"
+msgstr ""
 
 #: app/helpers/yaku.ts:323:34 app/helpers/yaku.ts:324:39
 msgid "Chuuren poutou"
@@ -131,11 +135,15 @@ msgstr "Дайсангэн"
 msgid "Daisuushii"
 msgstr "Дайсусі"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:216:22
+#: app/components/base/NumberSelect/NumberSelect.tsx:67:23
+msgid "Decrease"
+msgstr ""
+
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:218:22
 msgid "Dora %1"
 msgstr "Дора %1"
 
-#: app/store/selectors/table.ts:412:14
+#: app/store/selectors/table.ts:417:14
 msgid "Draw"
 msgstr "Нічыя"
 
@@ -159,16 +167,16 @@ msgstr "Вецер месца: Усход"
 msgid "Email"
 msgstr "Электронная пошта"
 
-#: app/components/screens/Home/Home.tsx:111:60
+#: app/components/screens/Home/Home.tsx:118:60
 msgid "Event title"
 msgstr "Назва падзеі"
 
-#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:101:22
-#: app/store/selectors/round.ts:166:14 app/store/selectors/table.ts:139:25
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:85:22
+#: app/store/selectors/round.ts:166:14 app/store/selectors/table.ts:142:25
 msgid "Exhaustive draw"
 msgstr "Нічыя"
 
-#: app/components/pages/Penalties/Penalties.tsx:43:12
+#: app/components/pages/Penalties/Penalties.tsx:44:12
 msgid "Failed to load penalties. Connection issues?"
 msgstr "Не ўдалося загрузіць штрафы. Праблемы са злучэннем?"
 
@@ -232,6 +240,10 @@ msgstr ""
 msgid "Iipeikou"
 msgstr "Ііпэйко"
 
+#: app/components/base/NumberSelect/NumberSelect.tsx:86:23
+msgid "Increase"
+msgstr ""
+
 #: app/helpers/yaku.ts:371:34 app/helpers/yaku.ts:372:39
 msgid "Ippatsu"
 msgstr "Іппацу"
@@ -282,12 +294,12 @@ msgstr "Мэндзэнцумо"
 msgid "Multiron, from %1"
 msgstr "Мультырон, з %1"
 
-#: app/store/selectors/table.ts:418:14
+#: app/store/selectors/table.ts:423:14
 msgid "Nagashi"
 msgstr "Нагасі"
 
-#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:119:24
-#: app/store/selectors/round.ts:204:14 app/store/selectors/table.ts:148:25
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:103:24
+#: app/store/selectors/round.ts:204:14 app/store/selectors/table.ts:151:25
 msgid "Nagashi mangan"
 msgstr "Нагасі манган"
 
@@ -295,11 +307,15 @@ msgstr "Нагасі манган"
 msgid "New game"
 msgstr "Новая гульня"
 
+#: app/components/base/TabbedView/TabbedView.tsx:95:23
+msgid "Next tab"
+msgstr ""
+
 #: app/components/pages/GameResult/GameResult.tsx:84:14
 msgid "No games found"
 msgstr "Гульні не знойдзены"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:237:18
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:239:18
 msgid "No pao"
 msgstr "Без пао"
 
@@ -307,11 +323,11 @@ msgstr "Без пао"
 msgid "No results found"
 msgstr "Вынікі не знойдзены"
 
-#: app/components/pages/OtherTablesList/OtherTablesList.tsx:49:14
+#: app/components/pages/OtherTablesList/OtherTablesList.tsx:50:14
 msgid "No tables are playing right now"
 msgstr "Зараз ні за адным сталом не гуляюць"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:173:30
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:175:30
 msgid "Nobody selected"
 msgstr "Ніхто не выбраны"
 
@@ -327,7 +343,8 @@ msgstr "Вецер раўнда: Поўнач"
 msgid "North seat wind"
 msgstr "Вецер месца: Поўнач"
 
-#: app/components/pages/Penalties/Penalties.tsx:68:51
+#: app/components/base/ModalDialog/ModalDialog.tsx:47:19
+#: app/components/pages/Penalties/Penalties.tsx:69:51
 msgid "Notice"
 msgstr "Папярэджанне"
 
@@ -353,7 +370,7 @@ msgstr "Іншыя сталы, дзе ідзе гульня"
 msgid "Pantheon"
 msgstr "Pantheon"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:166:19
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:167:19
 msgid "Pao"
 msgstr "Пао"
 
@@ -383,6 +400,11 @@ msgstr "Вярніцеся назад і націсніце кнопку рыі�
 
 #: app/components/pages/Home/Home.tsx:131:14
 msgid "Previous game"
+msgstr "Папярэдняя гульня"
+
+#: app/components/base/TabbedView/TabbedView.tsx:74:23
+#, fuzzy
+msgid "Previous tab"
 msgstr "Папярэдняя гульня"
 
 #: app/helpers/yaku.ts:479:34 app/helpers/yaku.ts:480:39
@@ -421,8 +443,8 @@ msgstr "Рыншан"
 msgid "Rinshan kaihou"
 msgstr "Рыншан кайхо"
 
-#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:91:22
-#: app/store/selectors/table.ts:145:25 app/store/selectors/table.ts:408:14
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:75:22
+#: app/store/selectors/table.ts:148:25 app/store/selectors/table.ts:413:14
 msgid "Ron"
 msgstr "Рон"
 
@@ -482,7 +504,7 @@ msgstr "Перамяшаць гульцоў"
 msgid "Sign up"
 msgstr "Зарэгістравацца"
 
-#: app/components/pages/Settings/Settings.tsx:152:16
+#: app/components/pages/Settings/Settings.tsx:154:16
 msgid "Single device mode"
 msgstr "Рэжым адной прылады"
 
@@ -534,7 +556,7 @@ msgstr "Тэмпай: %1"
 msgid "Tenhou"
 msgstr "Тэнхо"
 
-#: app/components/base/ThemeSelector/ThemeSelector.tsx:18:45
+#: app/components/base/ThemeSelector/ThemeSelector.tsx:19:45
 msgid "Theme"
 msgstr "Тэма"
 
@@ -553,10 +575,12 @@ msgstr "Той-той"
 #: app/components/base/YakuAdviceDialog/YakuAdviceDialog.tsx:29:11
 msgid ""
 "Toitoi in a closed hand won by tsumo is Suuankou. Select Suuankou instead?"
-msgstr "Той-той у закрытай руцэ пры перамозе па цумо — гэта Суанко. Выбраць Суанко замест яго?"
+msgstr ""
+"Той-той у закрытай руцэ пры перамозе па цумо — гэта Суанко. Выбраць Суанко "
+"замест яго?"
 
-#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:96:22
-#: app/store/selectors/table.ts:142:25 app/store/selectors/table.ts:410:14
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:80:22
+#: app/store/selectors/table.ts:145:25 app/store/selectors/table.ts:415:14
 msgid "Tsumo"
 msgstr "Цумо"
 
@@ -568,7 +592,7 @@ msgstr "Цумо, %1"
 msgid "Tsuuiisou"
 msgstr "Цуіса"
 
-#: app/components/pages/Settings/Settings.tsx:153:22
+#: app/components/pages/Settings/Settings.tsx:155:22
 msgid "Turn on if you use a single device for all players"
 msgstr "Уключыце, калі ўсе гульцы выкарыстоўваюць адну прыладу"
 
@@ -592,7 +616,7 @@ msgstr "Вецер месца: Захад"
 msgid "White dragon"
 msgstr "Белы цмок"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:136:25
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:137:25
 #: app/helpers/yaku.ts:234:39
 msgid "Yakuhai"
 msgstr "Якухай"
@@ -613,16 +637,16 @@ msgstr "Якухай x3"
 msgid "Yakuhai x4"
 msgstr "Якухай x4"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:226:20
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:227:17
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:228:20
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:229:17
 msgid "Yakuman"
 msgstr "Якуман"
 
-#: app/components/pages/Penalties/Penalties.tsx:78:14
+#: app/components/pages/Penalties/Penalties.tsx:79:14
 msgid "You don't have any penalties in this event 🎉"
 msgstr "У вас няма штрафаў у гэтай падзеі 🎉"
 
-#: app/components/pages/Penalties/Penalties.tsx:58:40
+#: app/components/pages/Penalties/Penalties.tsx:59:40
 msgid "Your penalties in current event"
 msgstr "Вашы штрафы ў бягучай падзеі"
 

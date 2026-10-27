@@ -24,6 +24,19 @@ import { GOTO_NEXT_SCREEN, START_NEW_GAME } from '../../../store/actions/interfa
 export const GameResultScreen = (props: IComponentProps) => {
   const { state, dispatch } = props;
 
+  const onCheckClick = useCallback(() => {
+    dispatch({ type: GOTO_NEXT_SCREEN });
+  }, [dispatch]);
+
+  const onRepeatClick = useCallback(() => {
+    let playerIds: number[] | undefined;
+    if (state.lastResults) {
+      playerIds = state.lastResults.map((x) => x.playerId);
+    }
+
+    dispatch({ type: START_NEW_GAME, payload: playerIds });
+  }, [state.lastResults, dispatch]);
+
   if (
     state.currentScreen !== 'lastResults' ||
     state.loading.overview ||
@@ -37,19 +50,6 @@ export const GameResultScreen = (props: IComponentProps) => {
   const results = [...(state.lastResults ?? [])].sort((p1, p2) => p2.score - p1.score);
   const canStartGame =
     !state.gameConfig.autoSeating && !state.currentSessionHash && !state.gameConfig.isPrescripted;
-
-  const onCheckClick = useCallback(() => {
-    dispatch({ type: GOTO_NEXT_SCREEN });
-  }, [dispatch]);
-
-  const onRepeatClick = useCallback(() => {
-    let playerIds: number[] | undefined;
-    if (state.lastResults) {
-      playerIds = state.lastResults.map((x) => x.playerId);
-    }
-
-    dispatch({ type: START_NEW_GAME, payload: playerIds });
-  }, [state.lastResults, dispatch]);
 
   return (
     <GameResultPage

@@ -23,6 +23,7 @@ import { PageDecorator } from '../../../../.storybook/PageDecorator';
 
 const makeOptions = (selection: number, setSelection: (selection: number) => void) => [
   {
+    id: 'option1',
     label: 'option1',
     selected: selection === 0,
     onSelect: () => {
@@ -30,6 +31,7 @@ const makeOptions = (selection: number, setSelection: (selection: number) => voi
     },
   },
   {
+    id: 'option2',
     label: 'option2',
     selected: selection === 1,
     onSelect: () => {
@@ -37,6 +39,7 @@ const makeOptions = (selection: number, setSelection: (selection: number) => voi
     },
   },
   {
+    id: 'option3',
     label: 'option3',
     selected: selection === 2,
     onSelect: () => {
@@ -44,6 +47,7 @@ const makeOptions = (selection: number, setSelection: (selection: number) => voi
     },
   },
   {
+    id: 'option4',
     label: 'option4',
     selected: selection === 3,
     onSelect: () => {
@@ -51,6 +55,7 @@ const makeOptions = (selection: number, setSelection: (selection: number) => voi
     },
   },
   {
+    id: 'option5',
     label: 'option5',
     selected: selection === 4,
     onSelect: () => {
@@ -58,6 +63,7 @@ const makeOptions = (selection: number, setSelection: (selection: number) => voi
     },
   },
   {
+    id: 'option6',
     label: 'option6',
     selected: selection === 5,
     onSelect: () => {
@@ -65,6 +71,7 @@ const makeOptions = (selection: number, setSelection: (selection: number) => voi
     },
   },
   {
+    id: 'option7',
     label: 'option7',
     selected: selection === 6,
     onSelect: () => {
@@ -72,6 +79,7 @@ const makeOptions = (selection: number, setSelection: (selection: number) => voi
     },
   },
   {
+    id: 'option8',
     label: 'option8',
     selected: selection === 7,
     onSelect: () => {
@@ -79,6 +87,7 @@ const makeOptions = (selection: number, setSelection: (selection: number) => voi
     },
   },
   {
+    id: 'option9',
     label: 'option9',
     selected: selection === 8,
     onSelect: () => {

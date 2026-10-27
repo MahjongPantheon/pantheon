@@ -32,7 +32,7 @@ import { PlayersSearch } from '../../pages/PlayersSearch/PlayersSearch';
 export const SearchPlayerScreen = (props: IComponentProps) => {
   useEffect(() => {
     props.dispatch({ type: GET_ALL_PLAYERS_INIT });
-  }, []);
+  }, [props.dispatch, props.state.currentEventId]);
 
   const onUserClick = (user: RegisteredPlayer) => {
     if (props.state.newGameSelectedPlayerSide) {

@@ -133,6 +133,8 @@ export const Settings = (props: IProps) => {
       <div className={styles.sectionTitle}>{loc._t('Language')}</div>
       <ScrollableSwitch
         options={supportedLanguages.map((lang) => ({
+          id: lang,
+          ariaLabel: lang,
           label: flags[lang],
           onSelect: () => onLangChange(lang),
           selected: lang === currentLanguage,

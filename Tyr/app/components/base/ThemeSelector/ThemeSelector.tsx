@@ -1,3 +1,4 @@
+import { ActionButton } from '../ActionButton/ActionButton';
 import classNames from 'classnames';
 
 import { Theme } from '../../../services/themes';
@@ -25,8 +26,10 @@ export const ThemeSelector = ({ supportedThemes, currentTheme, onThemeSelect }: 
               theme.name === currentTheme ? styles.selected : null
             )}
           >
-            <div
+            <ActionButton
               className={styles.visual}
+              aria-label={theme.name}
+              aria-pressed={theme.name === currentTheme}
               onClick={() => onThemeSelect(theme.name)}
               data-testid={`tyr-settings-theme-${theme.name}`}
             >
@@ -44,7 +47,7 @@ export const ThemeSelector = ({ supportedThemes, currentTheme, onThemeSelect }: 
                   style={{ backgroundColor: theme.primaryColor }}
                 />
               </div>
-            </div>
+            </ActionButton>
             <div className={styles.themeName}>{theme.name}</div>
           </div>
         ))}

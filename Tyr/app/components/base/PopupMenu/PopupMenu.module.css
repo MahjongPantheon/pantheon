@@ -1,3 +1,18 @@
+.dialog {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  margin: 0;
+  border: 0;
+  padding: 0;
+  max-width: none;
+  max-height: none;
+  background: transparent;
+  color: inherit;
+}
+
 .overlay {
   position: absolute;
   top: 0;
@@ -40,4 +55,12 @@
 .menuOpen {
   opacity: 1;
   bottom: 0;
+}
+
+.dialog:not([open]) {
+  display: none;
+}
+
+.dialog::backdrop {
+  background: transparent;
 }
