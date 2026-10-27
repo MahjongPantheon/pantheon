@@ -71,56 +71,33 @@ export const YakuGraph = ({ yakuStat }: { yakuStat?: YakuStat[] }) => {
 
   const yakuStats = [...yaku.entries()]
     .map(([key, value]) => {
-      return { x: value, y: yakuNameMap.get(key) + ` (${value})` };
+      return { count: value, yaku: yakuNameMap.get(key) };
     })
-    .filter((v) => v.x > 0)
-    .sort((a, b) => b.x - a.x);
+    .filter((v) => v.count > 0)
+    .sort((a, b) => b.count - a.count);
 
   if (totalYakuhai > 0) {
-    yakuStats.push({ x: totalYakuhai, y: i18n._t('Yakuhai: total') + ` (${totalYakuhai})` });
+    yakuStats.push({ count: totalYakuhai, yaku: i18n._t('Yakuhai: total') });
   }
 
   const yakuStatsHeight = 40 + 24 * (yakuStats.length < 3 ? 3 : yakuStats.length);
   return (
     <div style={{ position: 'relative', height: `${yakuStatsHeight}px` }}>
       <BarGraph
-        data={{ datasets: [{ data: yakuStats }] }}
-        options={{
-          maintainAspectRatio: false,
-          backgroundColor: isDark ? theme.colors.blue[8] : theme.colors.blue[3],
-          borderColor: isDark ? theme.colors.blue[8] : theme.colors.blue[3],
-          color: isDark ? theme.colors.gray[2] : theme.colors.dark[7],
-          font: { size: 16, family: '"PT Sans Narrow", Arial' },
-          plugins: {
-            legend: { display: false },
-            tooltip: {
-              enabled: false,
-            },
-          },
-          events: [],
-          indexAxis: 'y',
-          // grouped: false,
-          scales: {
-            x: {
-              grid: {
-                color: isDark ? theme.colors.gray[8] : theme.colors.gray[3],
-              },
-              position: 'bottom',
-              title: {
-                display: true,
-                text: i18n._t('Yaku collected over all time'),
-              },
-            },
-            y: {
-              ticks: {
-                autoSkip: false,
-              },
-              grid: {
-                color: isDark ? theme.colors.gray[8] : theme.colors.gray[3],
-              },
-            },
-          },
-        }}
+        h={yakuStatsHeight}
+        data={yakuStats}
+        dataKey='yaku'
+        orientation='vertical'
+        series={[{ name: 'count', color: isDark ? 'blue.8' : 'blue.3' }]}
+        gridAxis='xy'
+        textColor={isDark ? theme.colors.gray[2] : theme.colors.dark[7]}
+        xAxisLabel={i18n._t('Yaku collected over all time')}
+        xAxisProps={{ allowDecimals: false }}
+        yAxisProps={{ interval: 0, width: 150 }}
+        barChartProps={{ margin: { right: 32, bottom: 30 } }}
+        withTooltip={false}
+        valueFormatter={(value) => String(value)}
+        withBarValueLabel
       />
     </div>
   );

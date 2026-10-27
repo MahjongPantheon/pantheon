@@ -189,11 +189,11 @@ export const PlayerStats: React.FC<{
                 disabled={lastSelectionX === null || lastSelectionX < 2}
                 onClick={() => {
                   if (lastSelectionX !== null) {
-                    setLastSelectionX((x) => {
-                      const newSelection = x ? x - 1 : 1;
-                      setSelectedGame(playerStats?.scoreHistory?.[newSelection - 1] ?? null);
-                      return newSelection;
-                    });
+                    const newSelection = lastSelectionX - 1;
+                    const game = playerStats?.scoreHistory?.[newSelection - 1] ?? null;
+                    setLastSelectionX(newSelection);
+                    setLastSelectionHash(game?.tables[0]?.sessionHash ?? null);
+                    setSelectedGame(game);
                   }
                 }}
               >
@@ -211,11 +211,11 @@ export const PlayerStats: React.FC<{
                 }
                 onClick={() => {
                   if (lastSelectionX !== null) {
-                    setLastSelectionX((x) => {
-                      const newSelection = x ? x + 1 : 1;
-                      setSelectedGame(playerStats?.scoreHistory?.[newSelection - 1] ?? null);
-                      return newSelection;
-                    });
+                    const newSelection = lastSelectionX + 1;
+                    const game = playerStats?.scoreHistory?.[newSelection - 1] ?? null;
+                    setLastSelectionX(newSelection);
+                    setLastSelectionHash(game?.tables[0]?.sessionHash ?? null);
+                    setSelectedGame(game);
                   }
                 }}
               >
@@ -230,6 +230,7 @@ export const PlayerStats: React.FC<{
                 title={i18n._t('Close game preview')}
                 onClick={() => {
                   setLastSelectionX(null);
+                  setLastSelectionHash(null);
                   setSelectedGame(null);
                 }}
               >

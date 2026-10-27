@@ -22,6 +22,10 @@ on the same version. `app/ThemeProvider.tsx` retains the previous radius,
 light-variant colors, and shared day/night cookie mapping. Emotion remains the
 styling integration; SSR creates a cache per request and emits extracted styles
 after the bundled stylesheets so custom component styles take precedence.
+Statistics charts use `@mantine/charts` on the same version as Mantine core, with
+Recharts 3. Rating history uses the range brush to zoom and pan; selecting a point
+opens its game, and the preview controls keep the selected point highlighted.
+Winning-game stars, live language changes, and the dimmed palette are preserved.
 Page metadata is emitted once per page using React 19's document-head handling,
 including fallback metadata for loading and unavailable views.
 
