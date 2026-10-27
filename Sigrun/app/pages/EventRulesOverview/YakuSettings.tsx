@@ -45,9 +45,9 @@ export const YakuSettings: React.FC<YakuSettingsProps> = ({ config, i18n }) => {
       />
       <Title order={4}>{i18n._t('Yaku allowed')}</Title>
       <SimpleGrid spacing='lg' cols={{ base: 3, '48rem': 2, '36rem': 1 }}>
-        {yakuList.map((y, idx) => (
+        {yakuList.map((y) => (
           <Checkbox
-            key={`yaku_${idx}`}
+            key={y.id}
             label={y.name(i18n)}
             checked={config.rulesetConfig.allowedYaku.includes(y.id)}
             onChange={() => {}}
@@ -56,9 +56,9 @@ export const YakuSettings: React.FC<YakuSettingsProps> = ({ config, i18n }) => {
       </SimpleGrid>
       <Title order={4}>{i18n._t('Pao rule enabled for:')}</Title>
       <SimpleGrid spacing='lg' cols={{ base: 3, '48rem': 2, '36rem': 1 }}>
-        {yakuWithPao.map((y, idx) => (
+        {yakuWithPao.map((y) => (
           <Checkbox
-            key={`yaku_${idx}`}
+            key={y.id}
             label={y.name(i18n)}
             checked={config.rulesetConfig.yakuWithPao.includes(y.id)}
             onChange={() => {}}
@@ -67,9 +67,9 @@ export const YakuSettings: React.FC<YakuSettingsProps> = ({ config, i18n }) => {
       </SimpleGrid>
       <Title order={4}>{i18n._t('Double Yakuman:')}</Title>
       <SimpleGrid spacing='lg' cols={{ base: 3, '48rem': 2, '36rem': 1 }}>
-        {doubleYakuman.map((y, idx) => (
+        {doubleYakuman.map((y) => (
           <Checkbox
-            key={`yaku_${idx}`}
+            key={y.id}
             label={y.name(i18n)}
             checked={config.rulesetConfig.doubleYakuman.includes(y.id)}
             onChange={() => {}}

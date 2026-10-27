@@ -17,9 +17,11 @@
 
 import yakitori from '../../assets/img/yakitori.svg';
 import { useMantineTheme } from '@mantine/core';
+import { useI18n } from '../hooks/i18n';
 
 export const YakitoriIndicator = () => {
   const theme = useMantineTheme();
+  const i18n = useI18n();
   return (
     <div
       style={{
@@ -33,7 +35,7 @@ export const YakitoriIndicator = () => {
         alignItems: 'center',
       }}
     >
-      <img src={yakitori} />
+      <img src={yakitori} alt={i18n._t('Yakitori')} />
     </div>
   );
 };

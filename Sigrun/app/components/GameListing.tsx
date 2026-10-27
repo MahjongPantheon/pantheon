@@ -131,7 +131,7 @@ export const GameListing: React.FC<GameListingProps> = ({
       <Stack style={{ flexGrow: 0, minWidth: '300px' }}>
         <Text>{dateTime}</Text>
         {game.finalResults.map((result, idx) => (
-          <Group key={`pl_${idx}`} style={{ alignItems: 'flex-start' }}>
+          <Group key={result.playerId} style={{ alignItems: 'flex-start' }}>
             <Badge
               w={54}
               pr={0}

@@ -60,7 +60,7 @@ export const TeamTable = ({ players, events }: { players: PlayerInRating[]; even
         return (
           <DataCmp
             data-testid={`sigrun-rating-team-row-${idx}`}
-            key={`pl_${idx}`}
+            key={team.name}
             gap='xs'
             style={{
               padding: '10px',

@@ -171,8 +171,8 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
       content: achDataByKey[Achievement.BEST_HAND] ? (
         <Group align='flex-start' justify='space-between' pl={20}>
           <List>
-            {achDataByKey[Achievement.BEST_HAND].playerIds.map((playerId: number, idx: number) => (
-              <List.Item key={`li_${idx}`}>
+            {achDataByKey[Achievement.BEST_HAND].playerIds.map((playerId: number) => (
+              <List.Item key={playerId}>
                 <AchievementPlayer
                   eventId={eventId}
                   title={playerById[playerId].title}
@@ -198,8 +198,8 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
       content: achDataByKey[Achievement.BEST_FU] ? (
         <Group align='flex-start' justify='space-between' pl={20}>
           <List>
-            {achDataByKey[Achievement.BEST_FU].playerIds.map((playerId: number, idx: number) => (
-              <List.Item key={`li_${idx}`}>
+            {achDataByKey[Achievement.BEST_FU].playerIds.map((playerId: number) => (
+              <List.Item key={playerId}>
                 <AchievementPlayer
                   eventId={eventId}
                   title={playerById[playerId].title}
@@ -225,20 +225,16 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
       content: achDataByKey[Achievement.BEST_TSUMOIST] ? (
         <Group align='flex-start' justify='space-between' pl={20}>
           <List>
-            {achDataByKey[Achievement.BEST_TSUMOIST].playerIds.map(
-              (playerId: number, idx: number) => (
-                <List.Item key={`li_${idx}`}>
-                  <AchievementPlayer
-                    eventId={eventId}
-                    title={playerById[playerId].title}
-                    sessionHashes={
-                      achDataByKey[Achievement.BEST_TSUMOIST].gamesByPlayer?.[playerId]
-                    }
-                    gameLabel={i18n._t('View game')}
-                  />
-                </List.Item>
-              )
-            )}
+            {achDataByKey[Achievement.BEST_TSUMOIST].playerIds.map((playerId: number) => (
+              <List.Item key={playerId}>
+                <AchievementPlayer
+                  eventId={eventId}
+                  title={playerById[playerId].title}
+                  sessionHashes={achDataByKey[Achievement.BEST_TSUMOIST].gamesByPlayer?.[playerId]}
+                  gameLabel={i18n._t('View game')}
+                />
+              </List.Item>
+            ))}
           </List>
           <Badge color='teal' pl={8} leftSection={<IconAward />} variant='filled' size='xl'>
             {i18n._pt('Achievements badge', '%1 tsumo', [
@@ -258,8 +254,8 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
       content: achDataByKey[Achievement.DIE_HARD] ? (
         <Group align='flex-start' justify='space-between' pl={20}>
           <List>
-            {achDataByKey[Achievement.DIE_HARD].playerIds.map((playerId: number, idx: number) => (
-              <List.Item key={`li_${idx}`}>{playerById[playerId].title}</List.Item>
+            {achDataByKey[Achievement.DIE_HARD].playerIds.map((playerId: number) => (
+              <List.Item key={playerId}>{playerById[playerId].title}</List.Item>
             ))}
           </List>
           <Badge color='teal' pl={8} leftSection={<IconAward />} variant='filled' size='xl'>
@@ -283,11 +279,9 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
       content: achDataByKey[Achievement.BRAVE_SAPPER] ? (
         <Group align='flex-start' justify='space-between' pl={20}>
           <List>
-            {achDataByKey[Achievement.BRAVE_SAPPER].playerIds.map(
-              (playerId: number, idx: number) => (
-                <List.Item key={`li_${idx}`}>{playerById[playerId].title}</List.Item>
-              )
-            )}
+            {achDataByKey[Achievement.BRAVE_SAPPER].playerIds.map((playerId: number) => (
+              <List.Item key={playerId}>{playerById[playerId].title}</List.Item>
+            ))}
           </List>
           <Badge color='teal' pl={8} leftSection={<IconAward />} variant='filled' size='xl'>
             {i18n._npt(
@@ -310,8 +304,8 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
       content: achDataByKey[Achievement.DOVAKINS] ? (
         <Group align='flex-start' justify='space-between' pl={20}>
           <List>
-            {achDataByKey[Achievement.DOVAKINS].playerIds.map((playerId: number, idx: number) => (
-              <List.Item key={`li_${idx}`}>{playerById[playerId].title}</List.Item>
+            {achDataByKey[Achievement.DOVAKINS].playerIds.map((playerId: number) => (
+              <List.Item key={playerId}>{playerById[playerId].title}</List.Item>
             ))}
           </List>
           <Badge color='teal' pl={8} leftSection={<IconAward />} variant='filled' size='xl'>
@@ -335,11 +329,9 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
       content: achDataByKey[Achievement.BEST_DEALER] ? (
         <Group align='flex-start' justify='space-between' pl={20}>
           <List>
-            {achDataByKey[Achievement.BEST_DEALER].playerIds.map(
-              (playerId: number, idx: number) => (
-                <List.Item key={`li_${idx}`}>{playerById[playerId].title}</List.Item>
-              )
-            )}
+            {achDataByKey[Achievement.BEST_DEALER].playerIds.map((playerId: number) => (
+              <List.Item key={playerId}>{playerById[playerId].title}</List.Item>
+            ))}
           </List>
           <Badge color='teal' pl={8} leftSection={<IconAward />} variant='filled' size='xl'>
             {i18n._npt(
@@ -362,8 +354,8 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
       content: achDataByKey[Achievement.SHITHANDER] ? (
         <Group align='flex-start' justify='space-between' pl={20}>
           <List>
-            {achDataByKey[Achievement.SHITHANDER].playerIds.map((playerId: number, idx: number) => (
-              <List.Item key={`li_${idx}`}>{playerById[playerId].title}</List.Item>
+            {achDataByKey[Achievement.SHITHANDER].playerIds.map((playerId: number) => (
+              <List.Item key={playerId}>{playerById[playerId].title}</List.Item>
             ))}
           </List>
           <Badge color='teal' pl={8} leftSection={<IconAward />} variant='filled' size='xl'>
@@ -488,8 +480,8 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
         <Group align='flex-start' justify='space-between' pl={20}>
           <List>
             {achDataByKey[Achievement.HONORED_DONOR].map(
-              (item: { playerId: number; count: number }, idx: number) => (
-                <List.Item key={`li_${idx}`}>
+              (item: { playerId: number; count: number }) => (
+                <List.Item key={item.playerId}>
                   <b>{playerById[item.playerId].title}</b>:{' '}
                   {i18n._npt('Achievements badge', ['%1 bet', '%1 bets'], item.count, [
                     item.count || '0',
@@ -512,13 +504,11 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
       content: achDataByKey[Achievement.JUST_AS_PLANNED] ? (
         <Group align='flex-start' justify='space-between' pl={20}>
           <List>
-            {achDataByKey[Achievement.JUST_AS_PLANNED].playerIds.map(
-              (playerId: number, idx: number) => (
-                <List.Item key={`li_${idx}`}>
-                  <b>{playerById[playerId].title}</b>
-                </List.Item>
-              )
-            )}
+            {achDataByKey[Achievement.JUST_AS_PLANNED].playerIds.map((playerId: number) => (
+              <List.Item key={playerId}>
+                <b>{playerById[playerId].title}</b>
+              </List.Item>
+            ))}
           </List>
           <Badge color='teal' pl={8} leftSection={<IconAward />} variant='filled' size='xl'>
             {i18n._npt(
@@ -544,8 +534,8 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
         <Group align='flex-start' justify='space-between' pl={20}>
           <List>
             {achDataByKey[Achievement.CAREFUL_PLANNING].map(
-              (item: { playerId: number; score: number }, idx: number) => (
-                <List.Item key={`li_${idx}`}>
+              (item: { playerId: number; score: number }) => (
+                <List.Item key={item.playerId}>
                   <b>{playerById[item.playerId].title}</b>:{' '}
                   {i18n._pt('Achievements badge', '%1 points', [item.score || '0'])}
                 </List.Item>
@@ -567,8 +557,8 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
         <Group align='flex-start' justify='space-between' pl={20}>
           <List>
             {achDataByKey[Achievement.DORA_LORD].map(
-              (item: { playerId: number; average: number }, idx: number) => (
-                <List.Item key={`li_${idx}`}>
+              (item: { playerId: number; average: number }) => (
+                <List.Item key={item.playerId}>
                   <b>{playerById[item.playerId].title}</b>:{' '}
                   {i18n._npt(
                     'Achievements badge',
@@ -596,13 +586,11 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
       content: achDataByKey[Achievement.CATCH_EM_ALL] ? (
         <Group align='flex-start' justify='space-between' pl={20}>
           <List>
-            {achDataByKey[Achievement.CATCH_EM_ALL].playerIds.map(
-              (playerId: number, idx: number) => (
-                <List.Item key={`li_${idx}`}>
-                  <b>{playerById[playerId].title}</b>
-                </List.Item>
-              )
-            )}
+            {achDataByKey[Achievement.CATCH_EM_ALL].playerIds.map((playerId: number) => (
+              <List.Item key={playerId}>
+                <b>{playerById[playerId].title}</b>
+              </List.Item>
+            ))}
           </List>
           <Badge color='teal' pl={8} leftSection={<IconAward />} variant='filled' size='xl'>
             {i18n._npt(
@@ -628,8 +616,8 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
         <Group align='flex-start' justify='space-between' pl={20}>
           <List>
             {achDataByKey[Achievement.FAVORITE_ASAPIN_APPRENTICE].map(
-              (item: { playerId: number; score: number }, idx: number) => (
-                <List.Item key={`li_${idx}`}>
+              (item: { playerId: number; score: number }) => (
+                <List.Item key={item.playerId}>
                   <b>{playerById[item.playerId].title}</b>:{' '}
                   {i18n._pt('Achievements badge', '%1 points', [item.score || '0'])}
                 </List.Item>
@@ -653,8 +641,8 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
         <Group align='flex-start' justify='space-between' pl={20}>
           <List>
             {achDataByKey[Achievement.AND_YOUR_RIICHI_BET].map(
-              (item: { playerId: number; count: number }, idx: number) => (
-                <List.Item key={`li_${idx}`}>
+              (item: { playerId: number; count: number }) => (
+                <List.Item key={item.playerId}>
                   <b>{playerById[item.playerId].title}</b>:{' '}
                   {i18n._npt(
                     'Achievements badge',
@@ -681,8 +669,8 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
         <Group align='flex-start' justify='space-between' pl={20}>
           <List>
             {achDataByKey[Achievement.COVETOUS_KNIGHT].map(
-              (item: { playerId: number; count: number }, idx: number) => (
-                <List.Item key={`li_${idx}`}>
+              (item: { playerId: number; count: number }) => (
+                <List.Item key={item.playerId}>
                   <b>{playerById[item.playerId].title}</b>:{' '}
                   {i18n._npt(
                     'Achievements badge',
@@ -708,8 +696,8 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
       content: achDataByKey[Achievement.NINJA] ? (
         <Group align='flex-start' justify='space-between' pl={20}>
           <List>
-            {achDataByKey[Achievement.NINJA].playerIds.map((playerId: number, idx: number) => (
-              <List.Item key={`li_${idx}`}>
+            {achDataByKey[Achievement.NINJA].playerIds.map((playerId: number) => (
+              <List.Item key={playerId}>
                 <b>{playerById[playerId].title}</b>
               </List.Item>
             ))}
@@ -767,13 +755,11 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
       content: achDataByKey[Achievement.RIICHI_NOMI] ? (
         <Group align='flex-start' justify='space-between' pl={20}>
           <List>
-            {achDataByKey[Achievement.RIICHI_NOMI].playerIds.map(
-              (playerId: number, idx: number) => (
-                <List.Item key={`li_${idx}`}>
-                  <b>{playerById[playerId].title}</b>
-                </List.Item>
-              )
-            )}
+            {achDataByKey[Achievement.RIICHI_NOMI].playerIds.map((playerId: number) => (
+              <List.Item key={playerId}>
+                <b>{playerById[playerId].title}</b>
+              </List.Item>
+            ))}
           </List>
           <Badge color='teal' pl={8} leftSection={<IconAward />} variant='filled' size='xl'>
             {i18n._npt(
@@ -799,8 +785,8 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
         <Group align='flex-start' justify='space-between' pl={20}>
           <List>
             {achDataByKey[Achievement.FAVORITE_TSUCHIDA_APPRENTICE].map(
-              (item: { playerId: number; count: number }, idx: number) => (
-                <List.Item key={`li_${idx}`}>
+              (item: { playerId: number; count: number }) => (
+                <List.Item key={item.playerId}>
                   <b>{playerById[item.playerId].title}</b>:{' '}
                   {i18n._pt('Achievements badge', '%1 chiitoitsu', [item.count || '0'])}
                 </List.Item>
@@ -873,8 +859,8 @@ export const Achievements: React.FC<{ params: { eventId: string } }> = ({
       <Divider size='xs' />
       <Space h='md' />
       <Accordion chevronPosition='right' variant='contained' multiple={true}>
-        {ach.map((item, idx) => (
-          <Accordion.Item value={item.id} key={`ach_${idx}`}>
+        {ach.map((item) => (
+          <Accordion.Item value={item.id} key={item.id}>
             <Accordion.Control data-testid={`sigrun-achievement-toggle-${item.id}`}>
               <AccordionLabel {...item} />
             </Accordion.Control>

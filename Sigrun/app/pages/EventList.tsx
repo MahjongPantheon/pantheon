@@ -33,7 +33,7 @@ import { useLocation } from 'wouter';
 import { useI18n } from '../hooks/i18n';
 import { CSSProperties } from 'react';
 import { EventTypeIcon } from '../components/EventTypeIcon';
-import { useRemarkSync } from 'react-remark';
+import { useRemarkSync as renderMarkdown } from 'react-remark';
 import strip from 'strip-markdown';
 import { renderToString } from 'react-dom/server';
 import { useEvent } from '../hooks/useEvent';
@@ -94,14 +94,14 @@ export const EventList: React.FC<{ params: { page?: string; filter?: string } }>
       <Divider size='xs' />
       <Stack justify='flex-start' gap='0'>
         {(events?.events ?? []).map((e, idx) => {
-          const desc = useRemarkSync(e.description, {
+          const desc = renderMarkdown(e.description, {
             remarkPlugins: [strip as any],
           }) as React.JSX.Element;
           const renderedDesc = stripHtml(renderToString(desc)).slice(0, 300);
           return (
             <Group
               data-testid={`sigrun-event-row-${e.id}`}
-              key={`ev_${idx}`}
+              key={e.id}
               style={{
                 padding: '10px',
                 backgroundColor:

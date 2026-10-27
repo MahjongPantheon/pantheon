@@ -443,7 +443,7 @@ export const RatingTable: React.FC<{
                 return (
                   <DataCmp
                     data-testid={`sigrun-rating-player-row-${player.id}`}
-                    key={`pl_${idx}`}
+                    key={player.id}
                     gap='xs'
                     style={{
                       padding: '10px',
@@ -641,15 +641,21 @@ function downloadCsv(
 
   if (URL && 'download' in a) {
     // html5 A[download]
-    a.href = URL.createObjectURL(
+    const url = URL.createObjectURL(
       new Blob([finalVal.join('\n')], {
         type: mimeType,
       })
     );
+    a.href = url;
     a.setAttribute('download', fileName);
     document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
+    try {
+      a.click();
+    } finally {
+      a.remove();
+      // Keep the URL valid until the browser has handled the download click.
+      setTimeout(() => URL.revokeObjectURL(url), 0);
+    }
   } else {
     // only this mime type is supported
     location.href = 'data:application/octet-stream,' + encodeURIComponent(finalVal.join('\n'));

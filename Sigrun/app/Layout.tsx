@@ -71,7 +71,12 @@ export function Layout({
     window.addEventListener('popstate', track);
     window.addEventListener('pushState', track);
     window.addEventListener('replaceState', track);
-  }, []);
+    return () => {
+      window.removeEventListener('popstate', track);
+      window.removeEventListener('pushState', track);
+      window.removeEventListener('replaceState', track);
+    };
+  }, [analytics]);
 
   const [authVals] = useIsomorphicState<
     [boolean, boolean, PersonEx | null, number[]],
@@ -130,9 +135,9 @@ export function Layout({
     platformType: PlatformType.PLATFORM_TYPE_UNSPECIFIED,
     allowManualAddReplay: false,
   });
-  const setData = (newData: Partial<Globals>) => {
+  const setData = useCallback((newData: Partial<Globals>) => {
     setDataInt((old) => ({ ...old, ...newData }));
-  };
+  }, []);
 
   // Small kludge to forcefully rerender after language change
   const [, updateState] = useState({});

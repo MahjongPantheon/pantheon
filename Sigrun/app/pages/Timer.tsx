@@ -34,26 +34,21 @@ import { EventTypeIcon } from '../components/EventTypeIcon';
 import { useEvent } from '../hooks/useEvent';
 import { useIsomorphicState } from '../hooks/useIsomorphicState';
 import { useApi } from '../hooks/api';
-import { ReactNode, useEffect, useState } from 'react';
 import { IconAlarm } from '@tabler/icons-react';
 import { PlayerSeating } from 'tsclients/proto/atoms.pb';
-import sound from '../../assets/snd/5min.wav';
-import gong from '../../assets/snd/gong.mp3';
-import gong2 from '../../assets/snd/gong2.mp3';
 import { useI18n } from '../hooks/i18n';
 import { Meta } from '../components/Meta';
 import { useMediaQuery } from '@mantine/hooks';
+import { useTournamentTimer } from '../hooks/useTournamentTimer';
 
 export const Timer: React.FC<{ params: { eventId: string } }> = ({ params: { eventId } }) => {
   const events = useEvent(eventId);
   const i18n = useI18n();
-  const [, setSoundPlayed] = useState(false);
-  const [, setGongPlayed] = useState(false);
-  const [, setCurrentTimer] = useState(0);
   const largeScreen = useMediaQuery('(min-width: 768px)');
-  const [formatterTimer, setFormattedTimer] = useState<ReactNode | null>(null);
-  const [showSeating, setShowSeating] = useState(false);
-  const [timerWaiting, setTimerWaiting] = useState(false);
+  const { timerState, showSeating, timerWaiting } = useTournamentTimer(eventId, events?.[0]?.title);
+  const formatterTimer = timerState
+    ? formatTimer(timerState.finished, timerState.timeRemaining, showSeating || !largeScreen)
+    : null;
 
   const api = useApi();
   const [seating] = useIsomorphicState(
@@ -62,81 +57,6 @@ export const Timer: React.FC<{ params: { eventId: string } }> = ({ params: { eve
     () => api.getSeating(parseInt(eventId, 10)),
     [eventId]
   );
-
-  useEffect(() => {
-    if (!(window as any).__endingSound) {
-      (window as any).__endingSound = new Audio(sound); // buffers automatically when created
-    }
-  });
-
-  useEffect(() => {
-    if (!events) {
-      return;
-    }
-    if (!(window as any).__gongSound) {
-      if (events?.[0]?.title?.toLowerCase().includes('волк')) {
-        (window as any).__gongSound = new Audio(gong2); // buffers automatically when created
-      } else {
-        (window as any).__gongSound = new Audio(gong); // buffers automatically when created
-      }
-    }
-  }, [events]);
-
-  useEffect(() => {
-    let shouldUpdateTimerFromServer = true;
-    let hideSeatingAfter = 0;
-    const timer = setInterval(() => {
-      if (shouldUpdateTimerFromServer) {
-        api.getTimerState(parseInt(eventId, 10)).then((newState) => {
-          setShowSeating(
-            newState.timeRemaining > newState.hideSeatingAfter || newState.waitingForTimer
-          );
-          setTimerWaiting(newState.waitingForTimer);
-          hideSeatingAfter = newState.hideSeatingAfter;
-          // If we're still waiting, we do updates every second.
-          shouldUpdateTimerFromServer = newState.waitingForTimer;
-          setSoundPlayed((old) => {
-            if (newState.finished && !old) {
-              (window as any).__endingSound.play();
-              return true;
-            } else {
-              return old;
-            }
-          });
-          setGongPlayed((old) => {
-            if (newState.started && !old) {
-              (window as any).__gongSound.play();
-              return true;
-            } else {
-              return old;
-            }
-          });
-
-          setCurrentTimer(newState.timeRemaining);
-          setFormattedTimer(
-            formatTimer(
-              newState.finished,
-              newState.timeRemaining,
-              newState.timeRemaining > newState.hideSeatingAfter
-            )
-          );
-        });
-      } else {
-        setCurrentTimer((oldT) => {
-          const newT = oldT - 1;
-          const showSeat = newT > hideSeatingAfter; // hideSeatingAfter contains time point on decreasing scale.
-          setFormattedTimer(formatTimer(newT <= 0, newT, showSeat || !largeScreen));
-          setShowSeating(showSeat);
-          if (oldT > 0 && oldT % 60 === 0) {
-            // update timer from server once a minute (auto update in case of timer reset, for example)
-            shouldUpdateTimerFromServer = true;
-          }
-          return newT;
-        });
-      }
-    }, 1000);
-    return () => clearInterval(timer);
-  }, []);
 
   if (!events || !seating) {
     return <Meta />;
@@ -151,25 +71,7 @@ export const Timer: React.FC<{ params: { eventId: string } }> = ({ params: { eve
     );
   }
 
-  const tables = new Map<number, PlayerSeating[]>();
-  for (const t of seating ?? []) {
-    if (!tables.has(t.tableIndex)) {
-      tables.set(t.tableIndex, []);
-    }
-
-    const table = tables.get(t.tableIndex);
-    if (table) {
-      table.push(t);
-    }
-  }
-
-  for (const v of tables.values()) {
-    v.sort((a, b) => a.order - b.order);
-  }
-
-  const tablesIterable = [...tables.entries()]
-    .map(([index, table]) => ({ index, table }))
-    .sort((a, b) => a.index - b.index);
+  const tablesIterable = groupSeating(seating);
 
   return (
     <Container data-testid='sigrun-timer-page' w='100%' m={10} maw='100%'>
@@ -192,14 +94,36 @@ export const Timer: React.FC<{ params: { eventId: string } }> = ({ params: { eve
       {!timerWaiting && <Center>{formatterTimer}</Center>}
       {showSeating && (
         <Group style={{ alignItems: 'flex-start' }}>
-          {tablesIterable.map((table, tidx) => (
-            <Table key={`tbl_${tidx}`} table={table.table} index={table.index} />
+          {tablesIterable.map((table) => (
+            <Table key={table.index} table={table.table} index={table.index} />
           ))}
         </Group>
       )}
     </Container>
   );
 };
+
+function groupSeating(seating: PlayerSeating[]) {
+  const tables = new Map<number, PlayerSeating[]>();
+  for (const t of seating ?? []) {
+    if (!tables.has(t.tableIndex)) {
+      tables.set(t.tableIndex, []);
+    }
+
+    const table = tables.get(t.tableIndex);
+    if (table) {
+      table.push(t);
+    }
+  }
+
+  for (const v of tables.values()) {
+    v.sort((a, b) => a.order - b.order);
+  }
+
+  return [...tables.entries()]
+    .map(([index, table]) => ({ index, table }))
+    .sort((a, b) => a.index - b.index);
+}
 
 const winds = ['東', '南', '西', '北'];
 const colors: MantineColor[] = ['red', 'yellow', 'green', 'blue'];
@@ -223,7 +147,7 @@ function Table({ index, table }: { index: number; table: PlayerSeating[] }) {
       </Badge>
       <Stack gap={0}>
         {table.map((seat, idx) => (
-          <Group key={`st_${idx}`} justify='space-between' style={{ alignItems: 'flex-start' }}>
+          <Group key={seat.playerId} justify='space-between' style={{ alignItems: 'flex-start' }}>
             <Badge size='xl' radius='sm' p={5} color={colors[idx]}>
               {winds[idx]}
             </Badge>

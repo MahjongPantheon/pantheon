@@ -104,7 +104,7 @@ export const RegisteredPlayers: React.FC<{
             return (
               <DataCmp
                 data-testid={`sigrun-registered-player-row-${player.id}`}
-                key={`pl_${idx}`}
+                key={player.id}
                 gap='xs'
                 style={{
                   padding: '10px',

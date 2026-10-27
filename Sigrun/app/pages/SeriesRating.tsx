@@ -79,7 +79,7 @@ export const SeriesRating: React.FC<{ params: { eventId: string } }> = ({
       <Space h='md' />
       {seriesData &&
         seriesData.map((item, idx) => (
-          <Group style={{ flex: 1 }} key={`series_${idx}`}>
+          <Group style={{ flex: 1 }} key={item.player.id}>
             <Badge w={50} size='xl' color='blue' radius='sm' style={{ padding: 0 }}>
               {idx + 1}
             </Badge>

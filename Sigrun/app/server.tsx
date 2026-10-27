@@ -29,6 +29,7 @@ import { i18n } from './hooks/i18n';
 import createEmotionServer from '@emotion/server/create-instance';
 import { createEmotionCache } from './emotion/cache';
 import { renderDocument } from './helpers/renderDocument';
+import { serializeServerData } from './helpers/serializeServerData';
 
 export async function SSRRender(url: string, cookies: Record<string, string>) {
   const emotionCache = createEmotionCache();
@@ -84,6 +85,6 @@ export async function SSRRender(url: string, cookies: Record<string, string>) {
       stylesServer.extractCriticalToChunks(appHtml)
     ),
     cookies: storageStrategy.getCookies(),
-    serverData: `<script>window.initialData = ${JSON.stringify(isomorphicCtxValue)};</script>`,
+    serverData: `<script>window.initialData = ${serializeServerData(isomorphicCtxValue)};</script>`,
   };
 }
