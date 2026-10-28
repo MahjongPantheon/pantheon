@@ -351,4 +351,38 @@ describe('PlayerStatsModel.getPlayerStats', () => {
     );
     expect(stats._fetchGamesHistory).not.toHaveBeenCalled();
   });
+  it('supplies backwards-compatible defaults for an empty saved statistics cache', async () => {
+    cache = Object.assign(new PlayerStatsEntity(), { event, playerId: 101, data: {} });
+    const result = await stats.getPlayerStats({ playerId: 101, eventIdList: [19] });
+    expect(result).toMatchObject({
+      ratingHistory: [],
+      scoreHistory: [],
+      playersInfo: [],
+      totalPlayedGames: 0,
+      totalPlayedRounds: 0,
+      handsValueSummary: [],
+      yakuSummary: [],
+    });
+    expect(result.placesSummary.every((place) => place.count === 0)).toBe(true);
+    expect(Number.isFinite(Date.parse(result.lastUpdate))).toBe(true);
+    expect(stats._fetchGamesHistory).not.toHaveBeenCalled();
+  });
+
+  it('defaults missing chip and account fields and tolerates sparse score-history ordering', async () => {
+    cache = Object.assign(new PlayerStatsEntity(), {
+      event,
+      playerId: 101,
+      data: {
+        totalPlayedGames: 0,
+        scoreHistoryOrder: [501, 502],
+        scoreHistory: { 501: [{ playerId: 101, score: 25000, place: 1, ratingDelta: 0 }] },
+        playersInfo: [{ id: 101, title: 'Alice' }],
+      },
+    });
+    const result = await stats.getPlayerStats({ playerId: 101, eventIdList: [19] });
+    expect(result.scoreHistory[0].tables[0]).toMatchObject({ chips: 0 });
+    expect(result.scoreHistory[1].tables).toEqual([]);
+    expect(result.playersInfo[0].tenhouId).toBe('');
+    expect(stats._fetchGamesHistory).not.toHaveBeenCalled();
+  });
 });

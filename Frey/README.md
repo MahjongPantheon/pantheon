@@ -22,14 +22,21 @@ Frey is a simple authentication service with abilities of personal data storage.
 #### Test coverage
 
 `make test` runs Vitest and the external test server with V8 coverage enabled.
-The server flushes its counters before teardown; `c8` maps them back to the
-TypeScript sources, and `nyc` merges them with Vitest's coverage. The combined
+The server captures its executed sources and flushes its counters before teardown.
+Both processes use Vitest's V8-to-Istanbul AST converter and source maps; `nyc`
+merges their source coverage. Generated tsx module helpers are excluded, and
+function/branch locations are aligned by their original source nodes so the same
+code is counted once across the two transforms. The combined
 text, HTML, LCOV, and JSON reports are written to `Frey/coverage/` (open
 `coverage/index.html` for the HTML report). Each run clears the previous reports
 and preserves Vitest's failing exit status while still reporting coverage.
 
 The debug flows (`make test_verbose` and `make test_noserver`) continue to run
 Vitest directly without collecting server coverage.
+
+The combined report must reach at least 85% for lines, statements, functions, and
+branches. Coverage tooling regression tests run before the suite and verify that
+source alignment preserves counters and rejects ambiguous mappings.
 
 #### Password recovery and avatar authorization
 

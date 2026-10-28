@@ -12,6 +12,9 @@ function run(command, args) {
   return result.status ?? 1;
 }
 
+const toolingStatus = run('node', ['--test', 'src/tests/coverageTools.test.mjs']);
+if (toolingStatus !== 0) process.exit(toolingStatus);
+
 // Each run starts fresh so previous requests cannot inflate coverage.
 rmSync('coverage', { recursive: true, force: true });
 const testStatus = run('pnpm', [
@@ -25,16 +28,11 @@ const testStatus = run('pnpm', [
 ]);
 
 // Produce coverage even when assertions fail, while preserving Vitest's exit status.
-const serverStatus = run('pnpm', [
-  'exec',
-  'c8',
-  'report',
-  '--temp-directory=coverage/vitest/server-v8',
-  '--reports-dir=coverage/server',
-  '--reporter=json',
-  '--include=src/**',
-  '--include=cron/**',
-  '--exclude=src/tests/**',
+mkdirSync('coverage/server', { recursive: true });
+const serverStatus = run('node', [
+  '--input-type=module',
+  '-e',
+  "import { mergeServerCoverage } from './src/tests/mergeCoverage.mjs'; await mergeServerCoverage(process.cwd(), ['src', 'cron']);",
 ]);
 if (serverStatus !== 0) {
   process.exit(testStatus !== 0 ? testStatus : serverStatus);
@@ -59,4 +57,17 @@ const reportStatus = run('pnpm', [
   '--reporter=json',
   '--reporter=json-summary',
 ]);
-process.exit(testStatus !== 0 ? testStatus : reportStatus);
+const thresholdStatus =
+  reportStatus === 0
+    ? run('pnpm', [
+        'exec',
+        'nyc',
+        'check-coverage',
+        '--temp-dir=coverage/combined-input',
+        '--branches=85',
+        '--lines=85',
+        '--functions=85',
+        '--statements=85',
+      ])
+    : 0;
+process.exit(testStatus || reportStatus || thresholdStatus);
