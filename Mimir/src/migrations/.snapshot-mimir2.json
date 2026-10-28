@@ -1,8 +1,6 @@
 {
   "name": "public",
-  "namespaces": [
-    "public"
-  ],
+  "namespaces": ["public"],
   "tables": [
     {
       "name": "achievements",
@@ -79,9 +77,7 @@
       },
       "indexes": [
         {
-          "columnNames": [
-            "event_id"
-          ],
+          "columnNames": ["event_id"],
           "composite": false,
           "constraint": false,
           "keyName": "achievements_event_id_index",
@@ -89,9 +85,7 @@
           "unique": false
         },
         {
-          "columnNames": [
-            "id"
-          ],
+          "columnNames": ["id"],
           "composite": false,
           "constraint": true,
           "keyName": "achievements_pkey",
@@ -103,14 +97,10 @@
       "triggers": [],
       "foreignKeys": {
         "achievements_event_id_foreign": {
-          "columnNames": [
-            "event_id"
-          ],
+          "columnNames": ["event_id"],
           "constraintName": "achievements_event_id_foreign",
           "localTableName": "public.achievements",
-          "referencedColumnNames": [
-            "id"
-          ],
+          "referencedColumnNames": ["id"],
           "referencedTableName": "public.event",
           "updateRule": "cascade"
         }
@@ -651,9 +641,7 @@
       },
       "indexes": [
         {
-          "columnNames": [
-            "finished"
-          ],
+          "columnNames": ["finished"],
           "composite": false,
           "constraint": false,
           "keyName": "event_finished_index",
@@ -661,9 +649,7 @@
           "unique": false
         },
         {
-          "columnNames": [
-            "lobby_id"
-          ],
+          "columnNames": ["lobby_id"],
           "composite": false,
           "constraint": false,
           "keyName": "event_lobby_id_index",
@@ -671,9 +657,7 @@
           "unique": false
         },
         {
-          "columnNames": [
-            "id"
-          ],
+          "columnNames": ["id"],
           "composite": false,
           "constraint": true,
           "keyName": "event_pkey",
@@ -681,9 +665,7 @@
           "unique": true
         },
         {
-          "columnNames": [
-            "title"
-          ],
+          "columnNames": ["title"],
           "composite": false,
           "constraint": false,
           "keyName": "event_title_index",
@@ -771,9 +753,7 @@
       },
       "indexes": [
         {
-          "columnNames": [
-            "event_id"
-          ],
+          "columnNames": ["event_id"],
           "composite": false,
           "constraint": false,
           "keyName": "event_prescript_event_id_index",
@@ -781,9 +761,7 @@
           "unique": false
         },
         {
-          "columnNames": [
-            "event_id"
-          ],
+          "columnNames": ["event_id"],
           "composite": false,
           "constraint": true,
           "keyName": "event_prescript_event_id_unique",
@@ -791,9 +769,7 @@
           "unique": true
         },
         {
-          "columnNames": [
-            "id"
-          ],
+          "columnNames": ["id"],
           "composite": false,
           "constraint": true,
           "keyName": "event_prescript_pkey",
@@ -805,14 +781,10 @@
       "triggers": [],
       "foreignKeys": {
         "event_prescript_event_id_foreign": {
-          "columnNames": [
-            "event_id"
-          ],
+          "columnNames": ["event_id"],
           "constraintName": "event_prescript_event_id_foreign",
           "localTableName": "public.event_prescript",
-          "referencedColumnNames": [
-            "id"
-          ],
+          "referencedColumnNames": ["id"],
           "referencedTableName": "public.event",
           "updateRule": "cascade"
         }
@@ -945,10 +917,7 @@
       },
       "indexes": [
         {
-          "columnNames": [
-            "event_id",
-            "local_id"
-          ],
+          "columnNames": ["event_id", "local_id"],
           "composite": true,
           "constraint": true,
           "keyName": "event_registered_players_event_id_local_id_unique",
@@ -956,10 +925,7 @@
           "unique": true
         },
         {
-          "columnNames": [
-            "event_id",
-            "player_id"
-          ],
+          "columnNames": ["event_id", "player_id"],
           "composite": true,
           "constraint": true,
           "keyName": "event_registered_players_event_id_player_id_unique",
@@ -967,9 +933,7 @@
           "unique": true
         },
         {
-          "columnNames": [
-            "ignore_seating"
-          ],
+          "columnNames": ["ignore_seating"],
           "composite": false,
           "constraint": false,
           "keyName": "event_registered_players_ignore_seating_index",
@@ -977,9 +941,7 @@
           "unique": false
         },
         {
-          "columnNames": [
-            "id"
-          ],
+          "columnNames": ["id"],
           "composite": false,
           "constraint": true,
           "keyName": "event_registered_players_pkey",
@@ -991,14 +953,10 @@
       "triggers": [],
       "foreignKeys": {
         "event_registered_players_event_id_foreign": {
-          "columnNames": [
-            "event_id"
-          ],
+          "columnNames": ["event_id"],
           "constraintName": "event_registered_players_event_id_foreign",
           "localTableName": "public.event_registered_players",
-          "referencedColumnNames": [
-            "id"
-          ],
+          "referencedColumnNames": ["id"],
           "referencedTableName": "public.event",
           "updateRule": "cascade"
         }
@@ -1267,9 +1225,7 @@
       },
       "indexes": [
         {
-          "columnNames": [
-            "id"
-          ],
+          "columnNames": ["id"],
           "composite": false,
           "constraint": true,
           "keyName": "hand_pkey",
@@ -1277,9 +1233,7 @@
           "unique": true
         },
         {
-          "columnNames": [
-            "round_id"
-          ],
+          "columnNames": ["round_id"],
           "composite": false,
           "constraint": false,
           "keyName": "hand_round_id_index",
@@ -1291,14 +1245,10 @@
       "triggers": [],
       "foreignKeys": {
         "hand_round_id_foreign": {
-          "columnNames": [
-            "round_id"
-          ],
+          "columnNames": ["round_id"],
           "constraintName": "hand_round_id_foreign",
           "localTableName": "public.hand",
-          "referencedColumnNames": [
-            "id"
-          ],
+          "referencedColumnNames": ["id"],
           "referencedTableName": "public.round",
           "updateRule": "cascade"
         }
@@ -1380,9 +1330,7 @@
       },
       "indexes": [
         {
-          "columnNames": [
-            "created_at"
-          ],
+          "columnNames": ["created_at"],
           "composite": false,
           "constraint": false,
           "keyName": "jobs_queue_created_at_index",
@@ -1390,9 +1338,7 @@
           "unique": false
         },
         {
-          "columnNames": [
-            "id"
-          ],
+          "columnNames": ["id"],
           "composite": false,
           "constraint": true,
           "keyName": "jobs_queue_pkey",
@@ -1582,9 +1528,7 @@
       },
       "indexes": [
         {
-          "columnNames": [
-            "assigned_by"
-          ],
+          "columnNames": ["assigned_by"],
           "composite": false,
           "constraint": false,
           "keyName": "penalty_assigned_by_index",
@@ -1592,9 +1536,7 @@
           "unique": false
         },
         {
-          "columnNames": [
-            "cancelled"
-          ],
+          "columnNames": ["cancelled"],
           "composite": false,
           "constraint": false,
           "keyName": "penalty_cancelled_index",
@@ -1602,9 +1544,7 @@
           "unique": false
         },
         {
-          "columnNames": [
-            "created_at"
-          ],
+          "columnNames": ["created_at"],
           "composite": false,
           "constraint": false,
           "keyName": "penalty_created_at_index",
@@ -1612,9 +1552,7 @@
           "unique": false
         },
         {
-          "columnNames": [
-            "event_id"
-          ],
+          "columnNames": ["event_id"],
           "composite": false,
           "constraint": false,
           "keyName": "penalty_event_id_index",
@@ -1622,9 +1560,7 @@
           "unique": false
         },
         {
-          "columnNames": [
-            "id"
-          ],
+          "columnNames": ["id"],
           "composite": false,
           "constraint": true,
           "keyName": "penalty_pkey",
@@ -1632,9 +1568,7 @@
           "unique": true
         },
         {
-          "columnNames": [
-            "player_id"
-          ],
+          "columnNames": ["player_id"],
           "composite": false,
           "constraint": false,
           "keyName": "penalty_player_id_index",
@@ -1642,9 +1576,7 @@
           "unique": false
         },
         {
-          "columnNames": [
-            "session_id"
-          ],
+          "columnNames": ["session_id"],
           "composite": false,
           "constraint": false,
           "keyName": "penalty_session_id_index",
@@ -1656,26 +1588,18 @@
       "triggers": [],
       "foreignKeys": {
         "penalty_event_id_foreign": {
-          "columnNames": [
-            "event_id"
-          ],
+          "columnNames": ["event_id"],
           "constraintName": "penalty_event_id_foreign",
           "localTableName": "public.penalty",
-          "referencedColumnNames": [
-            "id"
-          ],
+          "referencedColumnNames": ["id"],
           "referencedTableName": "public.event",
           "updateRule": "cascade"
         },
         "penalty_session_id_foreign": {
-          "columnNames": [
-            "session_id"
-          ],
+          "columnNames": ["session_id"],
           "constraintName": "penalty_session_id_foreign",
           "localTableName": "public.penalty",
-          "referencedColumnNames": [
-            "id"
-          ],
+          "referencedColumnNames": ["id"],
           "referencedTableName": "public.session",
           "updateRule": "cascade",
           "deleteRule": "set null"
@@ -1826,9 +1750,7 @@
       },
       "indexes": [
         {
-          "columnNames": [
-            "event_id"
-          ],
+          "columnNames": ["event_id"],
           "composite": false,
           "constraint": false,
           "keyName": "player_history_event_id_index",
@@ -1836,9 +1758,7 @@
           "unique": false
         },
         {
-          "columnNames": [
-            "id"
-          ],
+          "columnNames": ["id"],
           "composite": false,
           "constraint": true,
           "keyName": "player_history_pkey",
@@ -1850,14 +1770,10 @@
       "triggers": [],
       "foreignKeys": {
         "player_history_event_id_foreign": {
-          "columnNames": [
-            "event_id"
-          ],
+          "columnNames": ["event_id"],
           "constraintName": "player_history_event_id_foreign",
           "localTableName": "public.player_history",
-          "referencedColumnNames": [
-            "id"
-          ],
+          "referencedColumnNames": ["id"],
           "referencedTableName": "public.event",
           "updateRule": "cascade"
         }
@@ -1956,10 +1872,7 @@
       },
       "indexes": [
         {
-          "columnNames": [
-            "event_id",
-            "player_id"
-          ],
+          "columnNames": ["event_id", "player_id"],
           "composite": true,
           "constraint": false,
           "keyName": "player_stats_event_id_player_id_index",
@@ -1967,9 +1880,7 @@
           "unique": false
         },
         {
-          "columnNames": [
-            "id"
-          ],
+          "columnNames": ["id"],
           "composite": false,
           "constraint": true,
           "keyName": "player_stats_pkey",
@@ -1981,14 +1892,10 @@
       "triggers": [],
       "foreignKeys": {
         "player_stats_event_id_foreign": {
-          "columnNames": [
-            "event_id"
-          ],
+          "columnNames": ["event_id"],
           "constraintName": "player_stats_event_id_foreign",
           "localTableName": "public.player_stats",
-          "referencedColumnNames": [
-            "id"
-          ],
+          "referencedColumnNames": ["id"],
           "referencedTableName": "public.event",
           "updateRule": "cascade"
         }
@@ -2155,9 +2062,7 @@
       },
       "indexes": [
         {
-          "columnNames": [
-            "event_id"
-          ],
+          "columnNames": ["event_id"],
           "composite": false,
           "constraint": false,
           "keyName": "round_event_id_index",
@@ -2165,9 +2070,7 @@
           "unique": false
         },
         {
-          "columnNames": [
-            "outcome"
-          ],
+          "columnNames": ["outcome"],
           "composite": false,
           "constraint": false,
           "keyName": "round_outcome_index",
@@ -2175,9 +2078,7 @@
           "unique": false
         },
         {
-          "columnNames": [
-            "id"
-          ],
+          "columnNames": ["id"],
           "composite": false,
           "constraint": true,
           "keyName": "round_pkey",
@@ -2185,9 +2086,7 @@
           "unique": true
         },
         {
-          "columnNames": [
-            "session_id"
-          ],
+          "columnNames": ["session_id"],
           "composite": false,
           "constraint": false,
           "keyName": "round_session_id_index",
@@ -2199,26 +2098,18 @@
       "triggers": [],
       "foreignKeys": {
         "round_event_id_foreign": {
-          "columnNames": [
-            "event_id"
-          ],
+          "columnNames": ["event_id"],
           "constraintName": "round_event_id_foreign",
           "localTableName": "public.round",
-          "referencedColumnNames": [
-            "id"
-          ],
+          "referencedColumnNames": ["id"],
           "referencedTableName": "public.event",
           "updateRule": "cascade"
         },
         "round_session_id_foreign": {
-          "columnNames": [
-            "session_id"
-          ],
+          "columnNames": ["session_id"],
           "constraintName": "round_session_id_foreign",
           "localTableName": "public.round",
-          "referencedColumnNames": [
-            "id"
-          ],
+          "referencedColumnNames": ["id"],
           "referencedTableName": "public.session",
           "updateRule": "cascade"
         }
@@ -2300,9 +2191,7 @@
       },
       "indexes": [
         {
-          "columnNames": [
-            "id"
-          ],
+          "columnNames": ["id"],
           "composite": false,
           "constraint": true,
           "keyName": "rpc_operation_pkey",
@@ -2526,9 +2415,7 @@
       },
       "indexes": [
         {
-          "columnNames": [
-            "end_date"
-          ],
+          "columnNames": ["end_date"],
           "composite": false,
           "constraint": false,
           "keyName": "session_end_date_index",
@@ -2536,9 +2423,7 @@
           "unique": false
         },
         {
-          "columnNames": [
-            "event_id"
-          ],
+          "columnNames": ["event_id"],
           "composite": false,
           "constraint": false,
           "keyName": "session_event_id_index",
@@ -2546,9 +2431,7 @@
           "unique": false
         },
         {
-          "columnNames": [
-            "id"
-          ],
+          "columnNames": ["id"],
           "composite": false,
           "constraint": true,
           "keyName": "session_pkey",
@@ -2556,10 +2439,7 @@
           "unique": true
         },
         {
-          "columnNames": [
-            "event_id",
-            "replay_hash"
-          ],
+          "columnNames": ["event_id", "replay_hash"],
           "composite": true,
           "constraint": true,
           "keyName": "session_replay_hash_index",
@@ -2567,9 +2447,7 @@
           "unique": true
         },
         {
-          "columnNames": [
-            "representational_hash"
-          ],
+          "columnNames": ["representational_hash"],
           "composite": false,
           "constraint": false,
           "keyName": "session_representational_hash_index",
@@ -2577,9 +2455,7 @@
           "unique": false
         },
         {
-          "columnNames": [
-            "status"
-          ],
+          "columnNames": ["status"],
           "composite": false,
           "constraint": false,
           "keyName": "session_status_index",
@@ -2587,9 +2463,7 @@
           "unique": false
         },
         {
-          "columnNames": [
-            "table_index"
-          ],
+          "columnNames": ["table_index"],
           "composite": false,
           "constraint": false,
           "keyName": "session_table_index_index",
@@ -2601,14 +2475,10 @@
       "triggers": [],
       "foreignKeys": {
         "session_event_id_foreign": {
-          "columnNames": [
-            "event_id"
-          ],
+          "columnNames": ["event_id"],
           "constraintName": "session_event_id_foreign",
           "localTableName": "public.session",
-          "referencedColumnNames": [
-            "id"
-          ],
+          "referencedColumnNames": ["id"],
           "referencedTableName": "public.event",
           "updateRule": "cascade"
         }
@@ -2690,9 +2560,7 @@
       },
       "indexes": [
         {
-          "columnNames": [
-            "id"
-          ],
+          "columnNames": ["id"],
           "composite": false,
           "constraint": true,
           "keyName": "session_players_pkey",
@@ -2700,10 +2568,7 @@
           "unique": true
         },
         {
-          "columnNames": [
-            "session_id",
-            "player_id"
-          ],
+          "columnNames": ["session_id", "player_id"],
           "composite": true,
           "constraint": false,
           "keyName": "session_players_session_id_player_id_index",
@@ -2715,14 +2580,10 @@
       "triggers": [],
       "foreignKeys": {
         "session_players_session_id_foreign": {
-          "columnNames": [
-            "session_id"
-          ],
+          "columnNames": ["session_id"],
           "constraintName": "session_players_session_id_foreign",
           "localTableName": "public.session_players",
-          "referencedColumnNames": [
-            "id"
-          ],
+          "referencedColumnNames": ["id"],
           "referencedTableName": "public.session",
           "updateRule": "cascade"
         }
@@ -2872,9 +2733,7 @@
       },
       "indexes": [
         {
-          "columnNames": [
-            "event_id"
-          ],
+          "columnNames": ["event_id"],
           "composite": false,
           "constraint": false,
           "keyName": "session_results_event_id_index",
@@ -2882,9 +2741,7 @@
           "unique": false
         },
         {
-          "columnNames": [
-            "id"
-          ],
+          "columnNames": ["id"],
           "composite": false,
           "constraint": true,
           "keyName": "session_results_pkey",
@@ -2892,9 +2749,7 @@
           "unique": true
         },
         {
-          "columnNames": [
-            "session_id"
-          ],
+          "columnNames": ["session_id"],
           "composite": false,
           "constraint": false,
           "keyName": "session_results_session_id_index",
@@ -2906,26 +2761,18 @@
       "triggers": [],
       "foreignKeys": {
         "session_results_event_id_foreign": {
-          "columnNames": [
-            "event_id"
-          ],
+          "columnNames": ["event_id"],
           "constraintName": "session_results_event_id_foreign",
           "localTableName": "public.session_results",
-          "referencedColumnNames": [
-            "id"
-          ],
+          "referencedColumnNames": ["id"],
           "referencedTableName": "public.event",
           "updateRule": "cascade"
         },
         "session_results_session_id_foreign": {
-          "columnNames": [
-            "session_id"
-          ],
+          "columnNames": ["session_id"],
           "constraintName": "session_results_session_id_foreign",
           "localTableName": "public.session_results",
-          "referencedColumnNames": [
-            "id"
-          ],
+          "referencedColumnNames": ["id"],
           "referencedTableName": "public.session",
           "updateRule": "cascade"
         }
