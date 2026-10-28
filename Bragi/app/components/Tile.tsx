@@ -1,4 +1,4 @@
-import { createStyles } from '@mantine/core';
+import { createStyles } from '@mantine/emotion';
 
 export enum TileValue {
   Space = 'SPACE',

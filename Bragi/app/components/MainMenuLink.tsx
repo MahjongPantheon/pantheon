@@ -52,7 +52,7 @@ export const MainMenuLink = ({
       target={external ? '_blank' : undefined}
       title={title ?? text}
     >
-      <NavLink styles={{ label: { fontSize: '18px' } }} icon={icon} label={text} />
+      <NavLink styles={{ label: { fontSize: '18px' } }} leftSection={icon} label={text} />
     </Anchor>
   );
 };

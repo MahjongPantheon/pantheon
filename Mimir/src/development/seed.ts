@@ -58,7 +58,7 @@ async function main() {
     },
   });
   try {
-    await orm.schema.dropSchema({ dropMigrationsTable: true });
+    await orm.schema.drop({ dropMigrationsTable: true });
     await orm.migrator.up();
     const playerIds = await createPlayers(frey, scenarios[scenario as Scenario].players);
     const em = orm.em.fork();

@@ -1,3 +1,4 @@
+/* oxlint-disable typescript/no-var-requires -- This Node entry point runs as CommonJS. */
 const { spawnSync } = require('node:child_process');
 const { copyFileSync, mkdirSync, readFileSync, rmSync } = require('node:fs');
 

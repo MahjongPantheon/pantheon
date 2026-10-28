@@ -1,3 +1,4 @@
+import { createStyles } from '@mantine/emotion';
 /*  Bragi: Pantheon landing pages
  *  Copyright (C) 2023  o.klimenko aka ctizen
  *
@@ -38,6 +39,14 @@ import { FlagEn, FlagRu } from '../helpers/flags';
 import { env } from '../env';
 import { useStorage } from '../hooks/storage';
 
+const useStyles = createStyles((theme) => ({
+  grid: {
+    gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
+    gap: theme.spacing.lg,
+    '@media (max-width: 25em)': { gridTemplateColumns: '1fr', gap: theme.spacing.sm },
+  },
+}));
+
 interface AppHeaderProps {
   dark: boolean;
   toggleColorScheme: () => void;
@@ -45,15 +54,14 @@ interface AppHeaderProps {
 }
 
 export function AppFooter({ dark, toggleColorScheme, saveLang }: AppHeaderProps) {
+  const { classes } = useStyles();
   const i18n = useI18n();
   const theme = useMantineTheme();
   const storage = useStorage();
 
   return (
     <SimpleGrid
-      cols={2}
-      spacing='lg'
-      breakpoints={[{ maxWidth: '25rem', cols: 1, spacing: 'sm' }]}
+      className={classes.grid}
       style={{
         backgroundColor: dark ? theme.colors.gray[9] : theme.colors.gray[3],
         borderRadius: 4,
@@ -97,9 +105,9 @@ export function AppFooter({ dark, toggleColorScheme, saveLang }: AppHeaderProps)
           </a>
         </List.Item>
       </List>
-      <Stack align='flex-end' spacing={0}>
+      <Stack align='flex-end' gap={0}>
         <Text size='xs'>Mahjong Pantheon dream team, {new Date().getFullYear()}.</Text>
-        <Group mt={0} spacing={16} position='right'>
+        <Group mt={0} gap={16} justify='flex-end'>
           <ActionIcon
             onClick={() => {
               saveLang('en');

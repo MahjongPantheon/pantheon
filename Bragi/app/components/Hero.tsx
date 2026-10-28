@@ -1,9 +1,10 @@
+import { createStyles } from '@mantine/emotion';
 import {
+  useMantineColorScheme,
   ActionIcon,
   Burger,
   Button,
   Container,
-  createStyles,
   Group,
   Paper,
   rem,
@@ -27,16 +28,13 @@ import {
 import { env } from '../env';
 import { links } from '../Nav';
 
-const useStyles = createStyles((theme) => ({
+const useStyles = createStyles((theme, { dark }: { dark: boolean }, u) => ({
   wrapper: {
     backgroundImage: `linear-gradient(250deg, rgba(130, 201, 30, 0) 0%, rgba(0, 0, 0, 1) 70%), url(/assets/img/head.avif)`,
     backgroundRepeat: 'no-repeat',
     borderBottomRightRadius: 32,
     borderBottomLeftRadius: 32,
-    boxShadow:
-      theme.colorScheme === 'dark'
-        ? 'inset 0px -6px 16px 12px rgba(0,0,0,1)'
-        : '0px 6px 16px 4px rgba(0,0,0,0.6)',
+    boxShadow: dark ? 'inset 0px -6px 16px 12px rgba(0,0,0,1)' : '0px 6px 16px 4px rgba(0,0,0,0.6)',
     color: '#ccc',
     position: 'relative',
     // backgroundSize: 'cover',
@@ -72,20 +70,20 @@ const useStyles = createStyles((theme) => ({
     overflow: 'hidden',
     boxShadow: '0px 6px 12px 0px rgba(0,0,0,0.3)',
 
-    [theme.fn.largerThan('sm')]: {
+    [u.largerThan('sm')]: {
       display: 'none',
     },
   },
 
   links: {
-    [theme.fn.smallerThan('sm')]: {
+    [u.smallerThan('sm')]: {
       display: 'none',
     },
   },
 
   burger: {
     color: '#eee',
-    [theme.fn.largerThan('sm')]: {
+    [u.largerThan('sm')]: {
       display: 'none',
     },
   },
@@ -96,8 +94,8 @@ const useStyles = createStyles((theme) => ({
     padding: `${rem(8)} ${rem(12)}`,
     borderRadius: theme.radius.sm,
     textDecoration: 'none',
-    color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[7],
-    [theme.fn.largerThan('sm')]: {
+    color: dark ? theme.colors.dark[0] : theme.colors.gray[7],
+    [u.largerThan('sm')]: {
       color: theme.colors.dark[0],
     },
     fontSize: theme.fontSizes.sm,
@@ -105,12 +103,12 @@ const useStyles = createStyles((theme) => ({
     borderBottom: `3px solid transparent`,
 
     '&:hover': {
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[7],
+      backgroundColor: dark ? theme.colors.dark[6] : theme.colors.gray[7],
     },
 
-    [theme.fn.smallerThan('sm')]: {
+    [u.smallerThan('sm')]: {
       '&:hover': {
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[2],
+        backgroundColor: dark ? theme.colors.dark[6] : theme.colors.gray[2],
       },
       borderRadius: 0,
       padding: theme.spacing.md,
@@ -120,11 +118,11 @@ const useStyles = createStyles((theme) => ({
   linkActive: {
     '&, &:hover': {
       borderBottom: `3px solid ${theme.colors.dark[3]}`,
-      [theme.fn.smallerThan('sm')]: {
+      [u.smallerThan('sm')]: {
         borderBottom: 'none',
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[2],
+        backgroundColor: dark ? theme.colors.dark[6] : theme.colors.gray[2],
       },
-      color: theme.fn.variant({ variant: 'light', color: theme.primaryColor }).color,
+      color: `var(--mantine-color-${theme.primaryColor}-light-color)`,
     },
   },
 
@@ -136,12 +134,12 @@ const useStyles = createStyles((theme) => ({
     maxWidth: rem(450),
     fontSize: rem(48),
 
-    [theme.fn.smallerThan('sm')]: {
+    [u.smallerThan('sm')]: {
       fontSize: rem(34),
       lineHeight: 1.15,
     },
 
-    [theme.fn.smallerThan('xs')]: {
+    [u.smallerThan('xs')]: {
       maxWidth: '100%',
       fontSize: rem(24),
       lineHeight: 1.15,
@@ -164,7 +162,7 @@ const useStyles = createStyles((theme) => ({
     maxWidth: rem(500),
     fontFamily: `Greycliff CF, ${theme.fontFamily}`,
     fontSize: rem(22),
-    [theme.fn.smallerThan('xs')]: {
+    [u.smallerThan('xs')]: {
       fontSize: rem(16),
       paddingLeft: rem(20),
       paddingRight: rem(20),
@@ -206,7 +204,7 @@ export const Hero = () => {
   const lang = storage.getLang() ?? 'en';
   const [opened, { toggle, close }] = useDisclosure(false);
   const [active, setActive] = useState('/');
-  const { classes, cx } = useStyles();
+  const { classes, cx } = useStyles({ dark: useMantineColorScheme().colorScheme === 'dark' });
   const [location, navigate] = useLocation();
   const collapsed = location !== '/' + lang;
 
@@ -259,7 +257,7 @@ export const Hero = () => {
         >
           <Filler h='28px' color='#eee' />
         </a>
-        <Group spacing={5} className={classes.links}>
+        <Group gap={5} className={classes.links}>
           {items}
         </Group>
 

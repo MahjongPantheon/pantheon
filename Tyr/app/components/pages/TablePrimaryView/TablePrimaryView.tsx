@@ -69,7 +69,7 @@ export const TablePrimaryView = (props: IProps) => {
           onDimensionChange={setCenterDims}
         />
         {!!props.onAddNewGame && (
-          <PopupMenu isOpen={newGameOpen} onClose={() => setNewGameOpen(false)}>
+          <PopupMenu withinParent isOpen={newGameOpen} onClose={() => setNewGameOpen(false)}>
             <PopupMenuItem
               onClick={() => props.onAddNewGame?.('ron')}
               label={loc._t('Ron')}

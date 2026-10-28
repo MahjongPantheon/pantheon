@@ -4,11 +4,11 @@ import {
   Index,
   ManyToOne,
   OneToMany,
-  OptionalProps,
   PrimaryKey,
   Property,
   Unique,
-} from '@mikro-orm/postgresql';
+} from '@mikro-orm/decorators/legacy';
+import { OptionalProps } from '@mikro-orm/postgresql';
 import { EventEntity } from './Event.entity.js';
 import { SessionPlayerEntity } from './SessionPlayer.entity.js';
 import { SessionStateEntity } from './SessionState.entity.js';

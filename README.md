@@ -217,10 +217,10 @@ Please see UPDATE.md for details.
 #### Service tests
 
 Run `make test` from the root to execute every existing service suite: Tyr,
-Frey, Mimir, Gullveig, Meili, Hermod, Hugin, Forseti and Sigrun. The runner
+Frey, Mimir, Gullveig, Meili, Hermod, Hugin, Forseti, Sigrun and Bragi. The runner
 attempts all suites even after a failure and returns a failing exit status if
 any suite fails or its container is missing. `make test_verbose` covers the same
-services. Bragi and Skirnir currently have no test files. GitHub Actions runs
+services. Skirnir currently has no test files. GitHub Actions runs
 these suites independently of lint results after dependency and migration setup;
 Fenrir's lint, formatting, type checks, and Playwright tests run in the separate
 e2e workflow. The service-check workflow prepares one shared container

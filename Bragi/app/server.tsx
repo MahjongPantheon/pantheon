@@ -20,20 +20,19 @@ import { App } from './App';
 import { Router } from 'wouter';
 import { StorageStrategyServer } from '../../Common/storageStrategyServer';
 import { Isomorphic } from './hooks/isomorphic';
-import staticLocationHook from 'wouter/static-location';
 import { Layout } from './components/Layout';
 import React from 'react';
-import { HelmetProvider, HelmetServerState } from 'react-helmet-async';
+import { renderDocument } from './helpers/renderDocument';
+import { HelmetProvider } from 'react-helmet-async';
 import { JSDOM } from 'jsdom';
 import { storage } from './hooks/storage';
 import { i18n } from './hooks/i18n';
-import { createEmotionCache } from '@mantine/core';
-import { createStylesServer } from '@mantine/ssr';
-
-const cache = createEmotionCache({ key: 'cs', speedy: true, prepend: true });
-const stylesServer = createStylesServer(cache);
+import createEmotionCache from '@emotion/cache';
+import createEmotionServer from '@emotion/server/create-instance';
 
 export async function SSRRender(url: string, cookies: Record<string, string>) {
+  const cache = createEmotionCache({ key: 'cs', speedy: true });
+  const stylesServer = createEmotionServer(cache);
   const storageStrategy = new StorageStrategyServer();
   storageStrategy.fill(cookies);
   storage.setStrategy(storageStrategy);
@@ -45,16 +44,13 @@ export async function SSRRender(url: string, cookies: Record<string, string>) {
   );
 
   const isomorphicCtxValue: Record<string, any> & { requests?: any[] } = { requests: [] };
-  const locHook = staticLocationHook(url);
   (global as any).JSDOM = JSDOM;
-
-  const helmetContext: { helmet?: HelmetServerState } = {};
 
   // First pass to collect effects
   ReactDOMServer.renderToString(
     <Isomorphic.Provider value={isomorphicCtxValue}>
-      <HelmetProvider context={helmetContext}>
-        <Router hook={locHook}>
+      <HelmetProvider>
+        <Router ssrPath={url}>
           <Layout cache={cache}>
             <App />
           </Layout>
@@ -68,10 +64,10 @@ export async function SSRRender(url: string, cookies: Record<string, string>) {
     delete isomorphicCtxValue.requests;
   }
 
-  const appHtml = ReactDOMServer.renderToString(
+  const { appHtml, head } = renderDocument(
     <Isomorphic.Provider value={isomorphicCtxValue}>
-      <HelmetProvider context={helmetContext}>
-        <Router hook={locHook}>
+      <HelmetProvider>
+        <Router ssrPath={url}>
           <Layout cache={cache}>
             <App />
           </Layout>
@@ -80,15 +76,12 @@ export async function SSRRender(url: string, cookies: Record<string, string>) {
     </Isomorphic.Provider>
   );
 
-  const { helmet } = helmetContext;
   return {
     appHtml,
-    helmet: [
-      helmet?.title.toString(),
-      helmet?.meta.toString(),
-      helmet?.link.toString(),
-      `<style>${stylesServer.extractCritical(appHtml).css}</style>`,
-    ].join('\n'),
+    helmet: head,
+    styles: stylesServer.constructStyleTagsFromChunks(
+      stylesServer.extractCriticalToChunks(appHtml)
+    ),
     cookies: storageStrategy.getCookies(),
     serverData: `<script>window.initialData = ${JSON.stringify(isomorphicCtxValue)};</script>`,
   };

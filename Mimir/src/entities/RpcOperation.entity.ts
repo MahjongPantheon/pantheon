@@ -1,4 +1,4 @@
-import { Entity, PrimaryKey, Property } from '@mikro-orm/core';
+import { Entity, PrimaryKey, Property } from '@mikro-orm/decorators/legacy';
 
 // Kept independently of rounds so undo never makes a consumed token reusable.
 @Entity({ tableName: 'rpc_operation' })

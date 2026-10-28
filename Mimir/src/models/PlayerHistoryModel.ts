@@ -10,39 +10,39 @@ import { EventRegisteredPlayersEntity } from '../entities/EventRegisteredPlayers
 
 export class PlayerHistoryModel extends Model {
   async findLastByEvent(eventIds: number[]) {
+    if (eventIds.length === 0) {
+      return [];
+    }
     const qb = this.repo.em
-      .getKnex()
-      .from('player_history')
+      .getKysely<any>()
+      .selectFrom('player_history')
       .select(['player_id', 'event_id'])
-      .whereIn('event_id', eventIds)
-      .max('id as mx')
+      .where('event_id', 'in', eventIds)
+      .select((eb) => eb.fn.max<number>('id').as('mx'))
       .groupBy(['player_id', 'event_id']);
-    const ids = await this.repo.em.execute(qb);
+    const ids = await qb.execute();
     return this.repo.em.findAll(PlayerHistoryEntity, {
       where: { id: { $in: ids.map((i) => i.mx) } },
     });
   }
 
   async findLastByEventAndDate(eventIds: number[], date: Moment | null) {
+    if (eventIds.length === 0) {
+      return [];
+    }
     const qb = this.repo.em
-      .getKnex()
-      .from('player_history')
+      .getKysely<any>()
+      .selectFrom('player_history')
       .leftJoin('session', 'session.id', 'player_history.session_id')
       .select(['player_history.player_id', 'player_history.event_id'])
-      .whereIn('event_id', eventIds)
-      .where({
-        ...(date
-          ? {
-              'session.end_date': {
-                $lt: date.utc().format('YYYY-MM-DD HH:mm:ss'),
-              },
-            }
-          : {}),
-      })
-      .max('player_history.id as mx')
+      .where('player_history.event_id', 'in', eventIds)
+      .$if(!!date, (query) =>
+        query.where('session.end_date', '<', date!.utc().format('YYYY-MM-DD HH:mm:ss'))
+      )
+      .select((eb) => eb.fn.max<number>('player_history.id').as('mx'))
       .groupBy(['player_history.player_id', 'player_history.event_id']);
 
-    const ids = await this.repo.em.execute(qb);
+    const ids = await qb.execute();
     return this.repo.em.findAll(PlayerHistoryEntity, {
       where: {
         id: { $in: ids.map((i) => i.mx) },
@@ -63,14 +63,14 @@ export class PlayerHistoryModel extends Model {
 
   async findAllLastByEventAndPlayer(eventId: number) {
     const qb = this.repo.em
-      .getKnex()
-      .from('player_history')
-      .select('*')
+      .getKysely<any>()
+      .selectFrom('player_history')
+      .selectAll()
       .distinctOn('player_id')
       .where('event_id', '=', eventId)
-      .orderBy('player_id')
+      .orderBy('player_id', 'asc')
       .orderBy('games_played', 'desc');
-    const result = await this.repo.em.execute(qb);
+    const result = await qb.execute();
     return result.map((row) => this.repo.em.map(PlayerHistoryEntity, row));
   }
 

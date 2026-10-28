@@ -922,7 +922,7 @@ describe('Mimir Twirp API', () => {
   test('AddRound: invalid ron', async () => {
     const { sessionHash } = await mimirClient.StartGame(CLUB_RATING_EVENT_ID, [2, 10, 97, 110]);
     await timeout(100);
-    expect(
+    await expect(
       mimirClient.AddRound({
         sessionHash,
         roundData: {
@@ -984,7 +984,7 @@ describe('Mimir Twirp API', () => {
   test('AddRound: invalid tsumo', async () => {
     const { sessionHash } = await mimirClient.StartGame(CLUB_RATING_EVENT_ID, [2, 10, 97, 110]);
     await timeout(100);
-    expect(
+    await expect(
       mimirClient.AddRound({
         sessionHash,
         roundData: {
@@ -1036,7 +1036,7 @@ describe('Mimir Twirp API', () => {
   test('AddRound: invalid draw', async () => {
     const { sessionHash } = await mimirClient.StartGame(CLUB_RATING_EVENT_ID, [2, 10, 97, 110]);
     await timeout(100);
-    expect(
+    await expect(
       mimirClient.AddRound({
         sessionHash,
         roundData: {
@@ -1078,7 +1078,7 @@ describe('Mimir Twirp API', () => {
   test('AddRound: invalid abortive', async () => {
     const { sessionHash } = await mimirClient.StartGame(CLUB_RATING_EVENT_ID, [2, 10, 97, 110]);
     await timeout(100);
-    expect(
+    await expect(
       mimirClient.AddRound({
         sessionHash,
         roundData: {
@@ -1121,7 +1121,7 @@ describe('Mimir Twirp API', () => {
   test('AddRound: invalid nagashi', async () => {
     const { sessionHash } = await mimirClient.StartGame(CLUB_RATING_EVENT_ID, [2, 10, 97, 110]);
     await timeout(100);
-    expect(
+    await expect(
       mimirClient.AddRound({
         sessionHash,
         roundData: {
@@ -1164,7 +1164,7 @@ describe('Mimir Twirp API', () => {
   test('AddRound: invalid chombo', async () => {
     const { sessionHash } = await mimirClient.StartGame(CLUB_RATING_EVENT_ID, [2, 10, 97, 110]);
     await timeout(100);
-    expect(
+    await expect(
       mimirClient.AddRound({
         sessionHash,
         roundData: {
@@ -1231,7 +1231,7 @@ describe('Mimir Twirp API', () => {
     const sessionOverview = await mimirClient.GetSessionOverview(sessionHash);
     expect(sessionOverview.state.roundIndex).toBe(1);
     expect(sessionOverview.state.honbaCount).toBe(2);
-    expect(mimirClient.DropLastRound(sessionHash, response.scores)).rejects.toThrow();
+    await expect(mimirClient.DropLastRound(sessionHash, response.scores)).rejects.toThrow();
   });
 
   test('ForceFinishGame: valid finish', async () => {
@@ -1357,7 +1357,7 @@ describe('Mimir Twirp API', () => {
   });
 
   test('GetAllRounds: non-existing game', async () => {
-    expect(mimirClient.GetAllRounds('non-existing-game')).rejects.toThrow();
+    await expect(mimirClient.GetAllRounds('non-existing-game')).rejects.toThrow();
   });
 
   test('GetLastRoundByHash: valid result, finished game', async () => {
@@ -1417,7 +1417,7 @@ describe('Mimir Twirp API', () => {
   });
 
   test('GetLastRoundByHash: non-existing game', async () => {
-    expect(mimirClient.GetLastRoundByHash('non-existing-game')).rejects.toThrow();
+    await expect(mimirClient.GetLastRoundByHash('non-existing-game')).rejects.toThrow();
   });
 
   test('GetEventForEdit', async () => {
@@ -1471,7 +1471,7 @@ describe('Mimir Twirp API', () => {
   });
 
   test('RegisterPlayer failure: tournament rating which is already started', async () => {
-    expect(mimirClient.RegisterPlayer(TOURNAMENT_EVENT_ID, 100)).rejects.toThrow();
+    await expect(mimirClient.RegisterPlayer(TOURNAMENT_EVENT_ID, 100)).rejects.toThrow();
   });
 
   test('UpdatePlayerSeatingFlag', async () => {

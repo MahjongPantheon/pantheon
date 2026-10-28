@@ -56,7 +56,7 @@ describe('development seed fixtures', () => {
       const settings = scenarios[scenario];
       const orm = await init();
       try {
-        await orm.schema.createSchema();
+        await orm.schema.create();
         const em = orm.em.fork();
         const ids = Array.from({ length: settings.players }, (_, index) => 5000 + index * 11);
         const event = await populate(em, scenario, ids, 'http://sigrun.pantheon.local');

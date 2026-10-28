@@ -233,72 +233,71 @@ export async function migrateFromMimir1() {
         ).rows;
       },
       async (rows, lastId) => {
-        await em.getConnection().execute(
-          em
-            .getKnex()
-            .into('event')
-            .insert(
-              rows.map((rec) => {
-                if (rec.id > lastId) {
-                  lastId = rec.id;
-                }
-                return {
-                  id: rec.id,
-                  title: rec.title,
-                  description: rec.description,
-                  start_time: rec.start_time,
-                  end_time: rec.end_time,
-                  game_duration: rec.game_duration,
-                  last_timer: rec.last_timer,
-                  is_online: rec.is_online,
-                  is_team: rec.is_team,
-                  sync_start: rec.sync_start,
-                  sync_end: rec.sync_end,
-                  auto_seating: rec.auto_seating,
-                  use_timer: rec.use_timer,
-                  use_penalty: rec.use_penalty,
-                  allow_player_append: rec.allow_player_append,
-                  stat_host: rec.stat_host,
-                  lobby_id: rec.lobby_id,
-                  ruleset_config: JSON.stringify({
-                    baseRuleset: 'custom',
-                    title: 'Custom',
-                    rules: JSON.parse(rec.ruleset_config),
-                  }),
-                  timezone: rec.timezone,
-                  series_length: rec.series_length,
-                  games_status:
-                    rec.games_status === 'seating_ready'
-                      ? TournamentGamesStatus.TOURNAMENT_GAMES_STATUS_SEATING_READY
-                      : rec.games_status === 'started'
-                        ? TournamentGamesStatus.TOURNAMENT_GAMES_STATUS_STARTED
-                        : TournamentGamesStatus.TOURNAMENT_GAMES_STATUS_UNSPECIFIED,
-                  hide_results: rec.hide_results,
-                  hide_achievements: rec.hide_achievements,
-                  is_prescripted: rec.is_prescripted,
-                  min_games_count: rec.min_games_count,
-                  finished: rec.finished,
-                  is_listed: rec.is_listed,
-                  online_platform:
-                    rec.platform_id === 1
-                      ? 'PLATFORM_TYPE_TENHOUNET'
-                      : rec.platform_id === 2
-                        ? 'PLATFORM_TYPE_MAHJONGSOUL'
+        await em
+          .getKysely<any>()
+          .insertInto('event')
+          .values(
+            rows.map((rec) => {
+              if (rec.id > lastId) {
+                lastId = rec.id;
+              }
+              return {
+                id: rec.id,
+                title: rec.title,
+                description: rec.description,
+                start_time: rec.start_time,
+                end_time: rec.end_time,
+                game_duration: rec.game_duration,
+                last_timer: rec.last_timer,
+                is_online: rec.is_online,
+                is_team: rec.is_team,
+                sync_start: rec.sync_start,
+                sync_end: rec.sync_end,
+                auto_seating: rec.auto_seating,
+                use_timer: rec.use_timer,
+                use_penalty: rec.use_penalty,
+                allow_player_append: rec.allow_player_append,
+                stat_host: rec.stat_host,
+                lobby_id: rec.lobby_id,
+                ruleset_config: JSON.stringify({
+                  baseRuleset: 'custom',
+                  title: 'Custom',
+                  rules: JSON.parse(rec.ruleset_config),
+                }),
+                timezone: rec.timezone,
+                series_length: rec.series_length,
+                games_status:
+                  rec.games_status === 'seating_ready'
+                    ? TournamentGamesStatus.TOURNAMENT_GAMES_STATUS_SEATING_READY
+                    : rec.games_status === 'started'
+                      ? TournamentGamesStatus.TOURNAMENT_GAMES_STATUS_STARTED
+                      : TournamentGamesStatus.TOURNAMENT_GAMES_STATUS_UNSPECIFIED,
+                hide_results: rec.hide_results,
+                hide_achievements: rec.hide_achievements,
+                is_prescripted: rec.is_prescripted,
+                min_games_count: rec.min_games_count,
+                finished: rec.finished,
+                is_listed: rec.is_listed,
+                online_platform:
+                  rec.platform_id === 1
+                    ? 'PLATFORM_TYPE_TENHOUNET'
+                    : rec.platform_id === 2
+                      ? 'PLATFORM_TYPE_MAHJONGSOUL'
+                      : null,
+                allow_view_other_tables: rec.allow_view_other_tables,
+                allow_manual_add_replay: rec.manual_add_replay,
+                wind_shuffle_mode:
+                  rec.wind_shuffle_mode === 'balanced'
+                    ? 'WIND_SHUFFLE_MODE_BALANCED'
+                    : rec.wind_shuffle_mode === 'random'
+                      ? 'WIND_SHUFFLE_MODE_RANDOM'
+                      : rec.wind_shuffle_mode === 'prescripted'
+                        ? 'WIND_SHUFFLE_MODE_PRESCRIPTED'
                         : null,
-                  allow_view_other_tables: rec.allow_view_other_tables,
-                  allow_manual_add_replay: rec.manual_add_replay,
-                  wind_shuffle_mode:
-                    rec.wind_shuffle_mode === 'balanced'
-                      ? 'WIND_SHUFFLE_MODE_BALANCED'
-                      : rec.wind_shuffle_mode === 'random'
-                        ? 'WIND_SHUFFLE_MODE_RANDOM'
-                        : rec.wind_shuffle_mode === 'prescripted'
-                          ? 'WIND_SHUFFLE_MODE_PRESCRIPTED'
-                          : null,
-                };
-              })
-            )
-        );
+              };
+            })
+          )
+          .execute();
         return lastId;
       }
     );
@@ -343,19 +342,18 @@ export async function migrateFromMimir1() {
         ).rows;
       },
       async (rows, lastId) => {
-        await em.getConnection().execute(
-          em
-            .getKnex()
-            .into('event_prescript')
-            .insert(
-              rows.map((rec) => {
-                if (rec.id > lastId) {
-                  lastId = rec.id;
-                }
-                return rec;
-              })
-            )
-        );
+        await em
+          .getKysely<any>()
+          .insertInto('event_prescript')
+          .values(
+            rows.map((rec) => {
+              if (rec.id > lastId) {
+                lastId = rec.id;
+              }
+              return rec;
+            })
+          )
+          .execute();
         return lastId;
       }
     );
@@ -373,23 +371,22 @@ export async function migrateFromMimir1() {
         ).rows;
       },
       async (rows, lastId) => {
-        await em.getConnection().execute(
-          em
-            .getKnex()
-            .into('event_registered_players')
-            .insert(
-              rows.map((rec) => {
-                if (rec.local_id && uniqSet.has(rec.event_id + '_' + rec.local_id)) {
-                  rec.local_id = null;
-                }
-                uniqSet.add(rec.event_id + '_' + rec.local_id);
-                if (rec.id > lastId) {
-                  lastId = rec.id;
-                }
-                return rec;
-              })
-            )
-        );
+        await em
+          .getKysely<any>()
+          .insertInto('event_registered_players')
+          .values(
+            rows.map((rec) => {
+              if (rec.local_id && uniqSet.has(rec.event_id + '_' + rec.local_id)) {
+                rec.local_id = null;
+              }
+              uniqSet.add(rec.event_id + '_' + rec.local_id);
+              if (rec.id > lastId) {
+                lastId = rec.id;
+              }
+              return rec;
+            })
+          )
+          .execute();
         return lastId;
       }
     );
@@ -405,19 +402,18 @@ export async function migrateFromMimir1() {
         ).rows;
       },
       async (rows, lastId) => {
-        await em.getConnection().execute(
-          em
-            .getKnex()
-            .into('jobs_queue')
-            .insert(
-              rows.map((rec) => {
-                if (rec.id > lastId) {
-                  lastId = rec.id;
-                }
-                return rec;
-              })
-            )
-        );
+        await em
+          .getKysely<any>()
+          .insertInto('jobs_queue')
+          .values(
+            rows.map((rec) => {
+              if (rec.id > lastId) {
+                lastId = rec.id;
+              }
+              return rec;
+            })
+          )
+          .execute();
         return lastId;
       }
     );
@@ -433,19 +429,18 @@ export async function migrateFromMimir1() {
         ).rows;
       },
       async (rows, lastId) => {
-        await em.getConnection().execute(
-          em
-            .getKnex()
-            .into('player_history')
-            .insert(
-              rows.map((rec) => {
-                if (rec.id > lastId) {
-                  lastId = rec.id;
-                }
-                return rec;
-              })
-            )
-        );
+        await em
+          .getKysely<any>()
+          .insertInto('player_history')
+          .values(
+            rows.map((rec) => {
+              if (rec.id > lastId) {
+                lastId = rec.id;
+              }
+              return rec;
+            })
+          )
+          .execute();
         return lastId;
       }
     );
@@ -461,21 +456,20 @@ export async function migrateFromMimir1() {
         ).rows;
       },
       async (rows, lastId) => {
-        await em.getConnection().execute(
-          em
-            .getKnex()
-            .into('player_stats')
-            .insert(
-              rows.map((rec) => {
-                if (rec.id > lastId) {
-                  lastId = rec.id;
-                }
-                const data = JSON.parse(rec.data);
-                rec.data = JSON.stringify(camelCaseKeys(data));
-                return rec;
-              })
-            )
-        );
+        await em
+          .getKysely<any>()
+          .insertInto('player_stats')
+          .values(
+            rows.map((rec) => {
+              if (rec.id > lastId) {
+                lastId = rec.id;
+              }
+              const data = JSON.parse(rec.data);
+              rec.data = JSON.stringify(camelCaseKeys(data));
+              return rec;
+            })
+          )
+          .execute();
         return lastId;
       }
     );
@@ -489,42 +483,41 @@ export async function migrateFromMimir1() {
         ).rows;
       },
       async (rows, lastId) => {
-        await em.getConnection().execute(
-          em
-            .getKnex()
-            .into('session')
-            .insert(
-              rows.map((rec) => {
-                delete rec.okr_ignore;
-                if (rec.status === 'finished') {
-                  rec.status = SessionStatus.SESSION_STATUS_FINISHED;
-                } else if (rec.status === 'prefinished') {
-                  rec.status = SessionStatus.SESSION_STATUS_PREFINISHED;
-                } else if (rec.status === 'inprogress') {
-                  rec.status = SessionStatus.SESSION_STATUS_INPROGRESS;
-                } else if (rec.status === 'planned') {
-                  rec.status = SessionStatus.SESSION_STATUS_PLANNED;
-                } else if (rec.status === 'cancelled') {
-                  rec.status = SessionStatus.SESSION_STATUS_CANCELLED;
-                } else {
-                  rec.status = SessionStatus.SESSION_STATUS_UNSPECIFIED;
-                }
-                // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
-                if (!rec.intermediate_results) {
-                  rec.intermediate_results = '{}';
-                } else {
-                  rec.intermediate_results = rewriteIntermediateResults(
-                    rec.intermediate_results,
-                    rec.id
-                  );
-                }
-                if (rec.id > lastId) {
-                  lastId = rec.id;
-                }
-                return rec;
-              })
-            )
-        );
+        await em
+          .getKysely<any>()
+          .insertInto('session')
+          .values(
+            rows.map((rec) => {
+              delete rec.okr_ignore;
+              if (rec.status === 'finished') {
+                rec.status = SessionStatus.SESSION_STATUS_FINISHED;
+              } else if (rec.status === 'prefinished') {
+                rec.status = SessionStatus.SESSION_STATUS_PREFINISHED;
+              } else if (rec.status === 'inprogress') {
+                rec.status = SessionStatus.SESSION_STATUS_INPROGRESS;
+              } else if (rec.status === 'planned') {
+                rec.status = SessionStatus.SESSION_STATUS_PLANNED;
+              } else if (rec.status === 'cancelled') {
+                rec.status = SessionStatus.SESSION_STATUS_CANCELLED;
+              } else {
+                rec.status = SessionStatus.SESSION_STATUS_UNSPECIFIED;
+              }
+              // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+              if (!rec.intermediate_results) {
+                rec.intermediate_results = '{}';
+              } else {
+                rec.intermediate_results = rewriteIntermediateResults(
+                  rec.intermediate_results,
+                  rec.id
+                );
+              }
+              if (rec.id > lastId) {
+                lastId = rec.id;
+              }
+              return rec;
+            })
+          )
+          .execute();
 
         return lastId;
       }
@@ -539,19 +532,18 @@ export async function migrateFromMimir1() {
         ).rows;
       },
       async (rows, lastId) => {
-        await em.getConnection().execute(
-          em
-            .getKnex()
-            .into('penalty')
-            .insert(
-              rows.map((rec) => {
-                if (rec.id > lastId) {
-                  lastId = rec.id;
-                }
-                return rec;
-              })
-            )
-        );
+        await em
+          .getKysely<any>()
+          .insertInto('penalty')
+          .values(
+            rows.map((rec) => {
+              if (rec.id > lastId) {
+                lastId = rec.id;
+              }
+              return rec;
+            })
+          )
+          .execute();
         return lastId;
       }
     );
@@ -567,19 +559,18 @@ export async function migrateFromMimir1() {
         ).rows;
       },
       async (rows, lastId) => {
-        await em.getConnection().execute(
-          em
-            .getKnex()
-            .into('session_players')
-            .insert(
-              rows.map((rec) => {
-                if (rec.id > lastId) {
-                  lastId = rec.id;
-                }
-                return rec;
-              })
-            )
-        );
+        await em
+          .getKysely<any>()
+          .insertInto('session_players')
+          .values(
+            rows.map((rec) => {
+              if (rec.id > lastId) {
+                lastId = rec.id;
+              }
+              return rec;
+            })
+          )
+          .execute();
         return lastId;
       }
     );
@@ -595,19 +586,18 @@ export async function migrateFromMimir1() {
         ).rows;
       },
       async (rows, lastId) => {
-        await em.getConnection().execute(
-          em
-            .getKnex()
-            .into('session_results')
-            .insert(
-              rows.map((rec) => {
-                if (rec.id > lastId) {
-                  lastId = rec.id;
-                }
-                return rec;
-              })
-            )
-        );
+        await em
+          .getKysely<any>()
+          .insertInto('session_results')
+          .values(
+            rows.map((rec) => {
+              if (rec.id > lastId) {
+                lastId = rec.id;
+              }
+              return rec;
+            })
+          )
+          .execute();
         return lastId;
       }
     );

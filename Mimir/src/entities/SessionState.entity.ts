@@ -1,4 +1,4 @@
-import { Embeddable, Property } from '@mikro-orm/postgresql';
+import { Embeddable, Property } from '@mikro-orm/decorators/legacy';
 
 @Embeddable()
 export class SessionStateEntity {

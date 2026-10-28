@@ -186,28 +186,31 @@ export class PlayerInSessionModel extends Model {
     return { rounds: results.reverse() };
   }
 
-  async getPlayersSeatingInEvent(eventId: number, limit?: number) {
+  async getPlayersSeatingInEvent(
+    eventId: number,
+    limit?: number
+  ): Promise<
+    {
+      player_id: number;
+      order: number;
+      session_id: number;
+      table_index: number;
+    }[]
+  > {
     const query = this.repo.em
-      .getKnex()
-      .from('session_players')
+      .getKysely<any>()
+      .selectFrom('session_players')
       .leftJoin('session', 'session.id', 'session_players.session_id')
-      .select(
+      .select([
         'session_players.player_id',
         'session_players.order',
         'session_players.session_id',
-        'session.table_index'
-      )
+        'session.table_index',
+      ])
       .where('session.event_id', '=', eventId)
       .orderBy('session.id', 'desc')
       .orderBy('session_players.order', 'asc');
 
-    return this.repo.em.execute<
-      {
-        player_id: number;
-        order: number;
-        session_id: number;
-        table_index: number;
-      }[]
-    >(limit ? query.limit(limit) : query);
+    return (limit ? query.limit(limit) : query).execute();
   }
 }

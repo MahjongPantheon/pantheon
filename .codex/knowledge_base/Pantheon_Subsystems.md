@@ -38,6 +38,7 @@ Pantheon is a set of services, not one application. `Mimir` owns game, event, to
 
 ### Tyr specifics
 
+- Tyr targets mobile browsers only (phones and tablets), not desktop/PC browsers. Design and validate touch interactions at mobile viewport sizes and orientations. Do not introduce desktop keyboard shortcuts, Escape-key dismissal, or keyboard-driven navigation. Keep touch controls usable while overlays are open, including the bottom bar when selecting a round outcome.
 - Use redux machinery to reflect behavioral changes
 - Use embedded UI framework based on plain React modules and PostCSS conventions to make new components.
 - Do not use any server-side rendering and keep the subsystem client-only.

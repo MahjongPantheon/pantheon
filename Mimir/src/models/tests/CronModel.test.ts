@@ -32,7 +32,7 @@ const stats = Model.getModel(repo, PlayerStatsModel);
 const registrations = Model.getModel(repo, EventRegistrationModel);
 
 describe('Explicit model transactions', () => {
-  beforeAll(() => orm.schema.createSchema());
+  beforeAll(() => orm.schema.create());
   beforeEach(async () => {
     afterFlush.mockReset();
     repo.em.clear();

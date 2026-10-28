@@ -1,8 +1,8 @@
 import { Meta } from '../components/Meta'
 import { IconQuestionMark } from '@tabler/icons-react';
-import { Alert, SimpleGrid, Table } from '@mantine/core';
+import { Alert, Table } from '@mantine/core';
 import { Tile, TileValue } from '../components/Tile';
-import { ClosedPart, Hand, OpenPart, TileSet } from '../components/Hand';
+import { ClosedPart, Hand, OpenPart, TileSet, TileGrid } from '../components/Hand';
 import { Link } from 'wouter';
 
 <Meta title='Как играть в риичи-маджонг'
@@ -35,14 +35,7 @@ import { Link } from 'wouter';
 Для игры используются 136 игровых фишек/костей, называемых **тайлами**. Тайлы можно поделить на виды согласно таблице:
 
 **Тайлы мастей:**
-<SimpleGrid
-  cols={2}
-  spacing="0"
-  breakpoints={[
-    { maxWidth: '60rem', cols: 2 },
-    { maxWidth: '42rem', cols: 1 },
-  ]}
->
+<TileGrid>
   <div style={{ display: 'flex', alignItems: 'center'}}>Ман (символы) от 1 до 9:</div>
   <Hand><OpenPart>
     <Tile value={TileValue.Man1} />
@@ -79,16 +72,9 @@ import { Link } from 'wouter';
     <Tile value={TileValue.Sou8} />
     <Tile value={TileValue.Sou9} />
   </OpenPart></Hand>
-</SimpleGrid>
+</TileGrid>
 **Благородные тайлы:**
-<SimpleGrid
-  cols={2}
-  spacing="0"
-  breakpoints={[
-    { maxWidth: '60rem', cols: 2 },
-    { maxWidth: '42rem', cols: 1 },
-  ]}
->
+<TileGrid>
   <div style={{ display: 'flex', alignItems: 'center'}}>Ветра (В-Ю-З-С):</div>
   <Hand><OpenPart>
     <Tile value={TileValue.Ton} />
@@ -102,7 +88,7 @@ import { Link } from 'wouter';
     <Tile value={TileValue.Haku} />
     <Tile value={TileValue.Hatsu} />
   </OpenPart></Hand>
-</SimpleGrid>
+</TileGrid>
 
 Единицы и девятки тайлов мастей называются **терминальными тайлами**. Тайлы мастей от 2 до 8 включительно
 называются **простыми тайлами**. Каждого тайла в игре **ровно 4 штуки**. Всего видов тайлов - 34. Полный

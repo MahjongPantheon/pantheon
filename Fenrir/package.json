@@ -5,19 +5,19 @@
   "type": "module",
   "scripts": {},
   "dependencies": {
-    "@types/uuid": "^9.0.8",
-    "cross-env": "^7.0.3",
-    "dotenv": "^16.4.4",
+    "@types/uuid": "^11.0.0",
+    "cross-env": "^10.1.0",
+    "dotenv": "^18.0.9",
     "ts-node": "^10.9.2",
-    "uuid": "^9.0.1"
+    "uuid": "^14.0.3"
   },
   "devDependencies": {
-    "@playwright/test": "^1.43.0",
-    "@types/node": "^20.12.5",
-    "eslint-plugin-unused-imports": "^4.1.4",
-    "oxfmt": "0.60.0",
-    "oxlint": "1.75.0",
-    "oxlint-tsgolint": "^7.0.2001",
+    "@playwright/test": "^1.64.1",
+    "@types/node": "^26.6.6",
+    "eslint-plugin-unused-imports": "^4.4.1",
+    "oxfmt": "0.75.0",
+    "oxlint": "1.90.0",
+    "oxlint-tsgolint": "^7.0.2005",
     "typescript": "7.0.2"
   },
   "module": "index.ts"

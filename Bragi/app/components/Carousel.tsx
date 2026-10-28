@@ -1,5 +1,4 @@
 import { Carousel } from '@mantine/carousel';
-import { rem } from '@mantine/core';
 import { CarouselCard } from './CarouselCard';
 import { useStorage } from '../hooks/storage';
 
@@ -46,12 +45,9 @@ export function CardsCarousel() {
 
   return (
     <Carousel
-      slideSize='50%'
-      breakpoints={[{ maxWidth: 'sm', slideSize: '100%', slideGap: rem(2) }]}
-      slideGap='xl'
-      align='start'
-      slidesToScroll={1}
-      loop
+      slideSize={{ base: '100%', sm: '50%' }}
+      slideGap={{ base: 2, sm: 'xl' }}
+      emblaOptions={{ align: 'start', slidesToScroll: 1, loop: true }}
     >
       {slides}
     </Carousel>

@@ -7,7 +7,7 @@ root_log_dir=${ROOT_LOG_DIR:-tmp}
 make_command=${MAKE_COMMAND:-make}
 coverage_root=${COVERAGE_ROOT_DIR:-.}
 services=(Bragi Forseti Frey Gullveig Hermod Hugin Meili Mimir Sigrun Skirnir Tyr)
-test_services=(Tyr Frey Mimir Gullveig Meili Hermod Hugin Forseti Sigrun)
+test_services=(Tyr Frey Mimir Gullveig Meili Hermod Hugin Forseti Sigrun Bragi)
 mkdir -p "$report_dir"
 failed=0
 
@@ -69,13 +69,13 @@ for service in "${test_services[@]}"; do run_check "$service" test; done
   for service in "${services[@]}"; do
     printf '| %s ' "$service"
     for check in oxlint oxfmt typecheck test; do
-      if [[ $check == test && ( $service == Bragi || $service == Skirnir ) ]]; then
+      if [[ $check == test && $service == Skirnir ]]; then
         printf '| No test suite '
       else
         printf '| %s ' "$(cat "$report_dir/${service,,}_$check.status")"
       fi
     done
-    if [[ $service == Bragi || $service == Skirnir ]]; then
+    if [[ $service == Skirnir ]]; then
       printf '| — '
     else
       printf '| %s ' "$(cat "$report_dir/${service,,}_coverage.status")"

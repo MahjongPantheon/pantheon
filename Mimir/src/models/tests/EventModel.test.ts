@@ -47,7 +47,7 @@ const eventData = {
 };
 
 describe('Event creation', () => {
-  beforeAll(() => orm.schema.createSchema());
+  beforeAll(() => orm.schema.create());
   afterAll(() => repo.destroy());
   afterEach(() => {
     vi.restoreAllMocks();

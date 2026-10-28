@@ -1,4 +1,5 @@
-import { Entity, Index, ManyToOne, PrimaryKey, Property } from '@mikro-orm/core';
+import { Entity, Index, ManyToOne, PrimaryKey, Property } from '@mikro-orm/decorators/legacy';
+
 import { EventEntity } from './Event.entity.js';
 
 @Entity({ tableName: 'player_history' })

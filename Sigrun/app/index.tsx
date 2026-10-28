@@ -22,7 +22,7 @@ import { App } from './App';
 import { Router } from 'wouter';
 import { StorageStrategyClient } from '../../Common/storageStrategyClient';
 import { Isomorphic } from './hooks/isomorphic';
-import useLocation from 'wouter/use-location';
+import { useBrowserLocation as useLocation } from 'wouter/use-browser-location';
 import { Layout } from './Layout';
 import { storage } from './hooks/storage';
 import { i18n } from './hooks/i18n';

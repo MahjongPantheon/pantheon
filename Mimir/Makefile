@@ -23,7 +23,7 @@ shell: get_container_id
 
 .PHONY: migrate
 migrate:
-	pnpm exec mikro-orm-esm migration:up
+	pnpm exec mikro-orm migration:up
 
 .PHONY: container_migrate
 container_migrate: get_container_id
@@ -38,8 +38,8 @@ container_migrate_mimir1: get_container_id
 	@if [ "$(RUNNING_CONTAINER_ID)" = "" ]; then \
 		echo "${RED}Mimir container is not running, can't run migrations.${NC}"; \
 	else \
-	  $(CONTAINER_COMMAND) exec $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Mimir && HOME=/home/user su-exec user pnpm exec mikro-orm-esm schema:drop --run --drop-migrations-table'; \
-		$(CONTAINER_COMMAND) exec $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Mimir && HOME=/home/user su-exec user pnpm exec mikro-orm-esm migration:up'; \
+	  $(CONTAINER_COMMAND) exec $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Mimir && HOME=/home/user su-exec user pnpm exec mikro-orm schema:drop --run --drop-migrations-table'; \
+		$(CONTAINER_COMMAND) exec $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Mimir && HOME=/home/user su-exec user pnpm exec mikro-orm migration:up'; \
 		$(CONTAINER_COMMAND) exec $(RUNNING_CONTAINER_ID) sh -c 'cd /var/www/html/Mimir && HOME=/home/user su-exec user time pnpm exec tsx src/migrate_from_mimir1.ts'; \
 	fi
 
@@ -204,8 +204,8 @@ container_dev: get_container_id
 
 .PHONY: init_test_db
 init_test_db:
-	DB_MIMIR_NAME=mimir2_unit pnpm exec mikro-orm-esm schema:drop --run --drop-migrations-table
-	DB_MIMIR_NAME=mimir2_unit pnpm exec mikro-orm-esm migration:up
+	DB_MIMIR_NAME=mimir2_unit pnpm exec mikro-orm schema:drop --run --drop-migrations-table
+	DB_MIMIR_NAME=mimir2_unit pnpm exec mikro-orm migration:up
 
 .PHONY: container_init_test_db
 container_init_test_db: get_container_id
@@ -230,7 +230,7 @@ container_bootstrap_admin: get_container_id container_migrate
 .PHONY: seed_test_db
 seed_test_db: export TEST=true
 seed_test_db: clean_test_db migrate
-	pnpm exec mikro-orm-esm seeder:run --class=TestSeeder
+	pnpm exec mikro-orm seeder:run --class=TestSeeder
 
 .PHONY: container_seed_test_db
 container_seed_test_db: get_container_id
@@ -243,7 +243,7 @@ container_seed_test_db: get_container_id
 .PHONY: clean_test_db
 clean_test_db: export TEST=true
 clean_test_db:
-	pnpm exec mikro-orm-esm schema:drop --run --drop-migrations-table
+	pnpm exec mikro-orm schema:drop --run --drop-migrations-table
 
 .PHONY: container_clean_test_db
 container_clean_test_db: get_container_id

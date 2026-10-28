@@ -1,16 +1,43 @@
 import { useDialog } from '../../hooks/useDialog';
 import { i18n } from '../../i18n';
-import { PropsWithChildren, useContext } from 'react';
+import { PropsWithChildren, useContext, useLayoutEffect } from 'react';
 import styles from './PopupMenu.module.css';
-import clsx from 'classnames';
 
 export const PopupMenu = ({
   children,
   isOpen,
   onClose,
-}: { isOpen: boolean; onClose: () => void } & PropsWithChildren) => {
+  withinParent = false,
+}: { isOpen: boolean; onClose: () => void; withinParent?: boolean } & PropsWithChildren) => {
   const loc = useContext(i18n);
-  const dialogRef = useDialog(isOpen);
+  const dialogRef = useDialog(isOpen, !withinParent);
+  useLayoutEffect(() => {
+    const dialog = dialogRef.current;
+    const parent = dialog?.parentElement;
+    if (!withinParent) dialog?.removeAttribute('style');
+    if (!withinParent || !isOpen || !dialog || !parent) return;
+    // Fixed dialogs use viewport coordinates. Match the table area so the
+    // bottom bar stays clear and interactive.
+    const updateBounds = () => {
+      const { top, left, width, height } = parent.getBoundingClientRect();
+      Object.assign(dialog.style, {
+        top: `${top}px`,
+        left: `${left}px`,
+        width: `${width}px`,
+        height: `${height}px`,
+      });
+    };
+    updateBounds();
+    const observer = new ResizeObserver(updateBounds);
+    observer.observe(parent);
+    window.addEventListener('resize', updateBounds);
+    window.addEventListener('scroll', updateBounds, true);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('resize', updateBounds);
+      window.removeEventListener('scroll', updateBounds, true);
+    };
+  }, [withinParent, isOpen, dialogRef]);
   return (
     <dialog
       ref={dialogRef}
@@ -21,8 +48,8 @@ export const PopupMenu = ({
         onClose();
       }}
     >
-      <div className={clsx(styles.overlay, isOpen ? null : styles.overlayHidden)} onClick={onClose}>
-        <div className={clsx(styles.menuWrapper, isOpen ? styles.menuOpen : null)}>{children}</div>
+      <div className={styles.overlay} onClick={onClose}>
+        <div className={styles.menuWrapper}>{children}</div>
       </div>
     </dialog>
   );

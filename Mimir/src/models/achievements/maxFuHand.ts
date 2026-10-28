@@ -35,7 +35,8 @@ export async function getMaxFuHand(eventId: number, repo: Repository) {
       }
       if (hand.fu === maxFu) {
         playerIds.add(hand.winnerId);
-        const hashes = (gamesByPlayer[hand.winnerId] ??= []);
+        gamesByPlayer[hand.winnerId] ??= [];
+        const hashes = gamesByPlayer[hand.winnerId];
         const hash = round.session.representationalHash;
         if (hash && !hashes.includes(hash)) {
           hashes.push(hash);

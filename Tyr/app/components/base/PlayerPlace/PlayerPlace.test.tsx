@@ -7,7 +7,7 @@ vi.mock('../Player/Player', () => ({
 }));
 vi.mock('../PlayerPoints/PlayerPoints', () => ({ PlayerPoints: () => <span>25000</span> }));
 const view = componentHarness();
-it('separates keyboard-activatable player details from the player action buttons', () => {
+it('separates tappable player details from the player action buttons', () => {
   const details = vi.fn(),
     win = vi.fn();
   view.render(

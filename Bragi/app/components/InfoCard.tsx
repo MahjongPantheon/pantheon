@@ -1,9 +1,10 @@
-import { createStyles, Avatar, Text, Group } from '@mantine/core';
+import { createStyles } from '@mantine/emotion';
+import { Avatar, Text, Group, useMantineColorScheme } from '@mantine/core';
 import { IconAt, IconBrandGithub } from '@tabler/icons-react';
 
-const useStyles = createStyles((theme) => ({
+const useStyles = createStyles((theme, { dark }: { dark: boolean }) => ({
   icon: {
-    color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[8],
+    color: dark ? theme.colors.dark[1] : theme.colors.gray[8],
   },
 
   name: {
@@ -20,10 +21,10 @@ interface UserInfoIconsProps {
 }
 
 export function InfoCard({ avatar, name, title, github, email }: UserInfoIconsProps) {
-  const { classes } = useStyles();
+  const { classes } = useStyles({ dark: useMantineColorScheme().colorScheme === 'dark' });
   return (
     <div>
-      <Group noWrap>
+      <Group wrap='nowrap'>
         <Avatar src={avatar} size={94} radius='md' />
         <div>
           <Text fz='xs' tt='uppercase' fw={700} c='dimmed'>
@@ -34,9 +35,9 @@ export function InfoCard({ avatar, name, title, github, email }: UserInfoIconsPr
             {name}
           </Text>
 
-          <Group spacing={6}>
+          <Group gap={6}>
             {email && (
-              <Group noWrap spacing={10} mt={3}>
+              <Group wrap='nowrap' gap={10} mt={3}>
                 <a href={`mailto:${email}`} target='_blank'>
                   <Text fz='xs' c='dimmed'>
                     <IconAt stroke={1.5} size='1rem' className={classes.icon} />
@@ -46,7 +47,7 @@ export function InfoCard({ avatar, name, title, github, email }: UserInfoIconsPr
             )}
 
             {github && (
-              <Group noWrap spacing={10} mt={5}>
+              <Group wrap='nowrap' gap={10} mt={5}>
                 <Text fz='xs' c='dimmed'>
                   <a href={github} target='_blank'>
                     <IconBrandGithub stroke={1.5} size='1rem' className={classes.icon} />

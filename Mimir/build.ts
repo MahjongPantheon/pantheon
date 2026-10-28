@@ -1,15 +1,13 @@
 import { build } from 'esbuild';
 import { nodeExternalsPlugin } from 'esbuild-node-externals';
-import { FileCacheAdapter, MikroORM } from '@mikro-orm/core';
+import { MikroORM } from '@mikro-orm/postgresql';
 import { createConfig } from './src/mikro-orm.config.js';
 
 // Reflect source entities once during the build, without connecting to the database.
 const orm = await MikroORM.init({
   ...createConfig(false),
-  connect: false,
   metadataCache: {
     enabled: true,
-    adapter: FileCacheAdapter,
     options: { cacheDir: './dist', combined: 'metadata.json' },
   },
 });

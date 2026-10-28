@@ -8,7 +8,7 @@
     "build": "esbuild proto/*.ts --outdir=proto/"
   },
   "dependencies": {
-    "esbuild": "^0.28.1",
+    "esbuild": "^0.28.2",
     "twirpscript": "^0.0.72",
     "protoscript": "^0.0.23"
   }

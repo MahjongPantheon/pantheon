@@ -23,6 +23,8 @@ export default mergeConfig(
   viteConfig,
   defineConfig({
     test: {
+      // Bound jsdom worker startup and DOM rendering contention in the development containers.
+      maxWorkers: 4,
       coverage: {
         enabled: true,
         reportOnFailure: true,

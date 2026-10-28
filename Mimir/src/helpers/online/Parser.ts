@@ -109,9 +109,7 @@ export class OnlineParser {
 
       // Handle other elements
       if (data.name === 'UN') {
-        this._parser.pause();
         await this._tokenUN(data.attributes, this._session!, this._sessionState!);
-        this._parser.resume();
       } else if (data.name === 'AGARI') {
         this._tokenAGARI(data.attributes, this._sessionState!);
       } else if (data.name === 'INIT') {

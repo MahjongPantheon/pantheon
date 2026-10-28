@@ -1,4 +1,5 @@
-import { ThemeIcon, Text, Container, SimpleGrid, createStyles, Group } from '@mantine/core';
+import { createStyles } from '@mantine/emotion';
+import { ThemeIcon, Text, Container, SimpleGrid, Group } from '@mantine/core';
 import {
   IconChartDots,
   IconCrown,
@@ -77,7 +78,7 @@ export function Feature({ icon: Icon, title, description }: FeatureProps) {
           {title}
         </Text>
       </Group>
-      <Text size='sm' color='dimmed' sx={{ lineHeight: 1.6 }}>
+      <Text size='sm' c='dimmed' style={{ lineHeight: 1.6 }}>
         {description}
       </Text>
     </div>
@@ -85,6 +86,15 @@ export function Feature({ icon: Icon, title, description }: FeatureProps) {
 }
 
 const useStyles = createStyles((theme) => ({
+  grid: {
+    gridTemplateColumns: 'repeat(3, minmax(0, 1fr))',
+    gap: 50,
+    '@media (max-width: 980px)': {
+      gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
+      gap: theme.spacing.xl,
+    },
+    '@media (max-width: 755px)': { gridTemplateColumns: '1fr' },
+  },
   wrapper: {
     paddingBottom: `calc(${theme.spacing.xl} * 2)`,
   },
@@ -105,15 +115,7 @@ export function FeaturesGrid() {
 
   return (
     <Container className={classes.wrapper}>
-      <SimpleGrid
-        mt={60}
-        cols={3}
-        spacing={50}
-        breakpoints={[
-          { maxWidth: 980, cols: 2, spacing: 'xl' },
-          { maxWidth: 755, cols: 1, spacing: 'xl' },
-        ]}
-      >
+      <SimpleGrid mt={60} className={classes.grid}>
         {features}
       </SimpleGrid>
     </Container>

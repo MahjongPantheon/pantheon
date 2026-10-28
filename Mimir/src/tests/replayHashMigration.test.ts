@@ -14,7 +14,7 @@ it('allows replay hashes across events while rejecting duplicates within an even
     password: dbConfig.password,
     database: 'mimir2_unit',
   });
-  const orm = await MikroORM.init({ ...config(), connect: false });
+  const orm = await MikroORM.init({ ...config() });
   await db.connect();
   const apply = async (migration: Migration, direction: 'up' | 'down') => {
     await migration[direction]();

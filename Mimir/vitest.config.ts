@@ -27,7 +27,6 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'node',
-    setupFiles: ['./src/tests/vitestSetup.ts'],
     include: ['src/**/*.test.ts', 'cron/**/*.test.ts'],
     fileParallelism: false,
     server: { deps: { inline: ['tsclients'] } },

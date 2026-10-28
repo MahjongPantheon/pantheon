@@ -24,19 +24,11 @@ export async function sendStats(repo: Repository) {
       () => em.count(EventEntity),
       () =>
         em.execute(
-          em
-            .getKnex()
-            .raw(
-              `SELECT COUNT(DISTINCT event.id) as cnt from event LEFT JOIN session ON session.event_id = event.id WHERE session.id IS NULL`
-            )
+          `SELECT COUNT(DISTINCT event.id) as cnt from event LEFT JOIN session ON session.event_id = event.id WHERE session.id IS NULL`
         ),
       () =>
         em.execute(
-          em
-            .getKnex()
-            .raw(
-              `SELECT COUNT(DISTINCT achievements.id) as cnt from achievements JOIN session ON session.event_id = achievements.event_id`
-            )
+          `SELECT COUNT(DISTINCT achievements.id) as cnt from achievements JOIN session ON session.event_id = achievements.event_id`
         ),
     ]);
 

@@ -1,7 +1,13 @@
+import { createStyles } from '@mantine/emotion';
+import { SimpleGrid } from '@mantine/core';
 import { PropsWithChildren } from 'react';
-import { createStyles } from '@mantine/core';
 
 const useStyles = createStyles(() => ({
+  tileGrid: {
+    gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
+    gap: 0,
+    '@media (max-width: 42em)': { gridTemplateColumns: '1fr' },
+  },
   hand: {
     display: 'flex',
     alignItems: 'flex-end',
@@ -20,6 +26,11 @@ const useStyles = createStyles(() => ({
     margin: 0,
   },
 }));
+
+export const TileGrid = ({ children }: PropsWithChildren) => {
+  const { classes } = useStyles();
+  return <SimpleGrid className={classes.tileGrid}>{children}</SimpleGrid>;
+};
 
 export const Hand = ({ children }: PropsWithChildren) => {
   const { classes } = useStyles();

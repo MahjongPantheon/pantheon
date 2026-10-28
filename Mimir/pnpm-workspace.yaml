@@ -4,3 +4,5 @@ allowBuilds:
   esbuild: false
   node-expat: true
   sqlite3: true
+minimumReleaseAgeExclude:
+  - '@types/node@26.6.6'

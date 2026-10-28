@@ -13,7 +13,7 @@ it('migrates integer averages to floats and queues scoring for every event', asy
     password: dbConfig.password,
     database: 'mimir2_unit',
   });
-  const orm = await MikroORM.init({ ...config(), connect: false });
+  const orm = await MikroORM.init({ ...config() });
   await db.connect();
   try {
     // Shadow the real tables so the migration test cannot touch seeded event data.

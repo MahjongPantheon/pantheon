@@ -84,8 +84,8 @@ if (fs.existsSync('./node_modules')) {
 
       app.use(express.json());
 
-      app.use('*', async (req, res) => {
-        const { to, message }: { to: string[]; message: string } = req.body;
+      app.use(async (req, res) => {
+        const { to, message }: { to: string[]; message: string } = req.body ?? {};
         if (to && message) {
           sendQueued(to, message, bot);
           res.status(200).end();

@@ -22,7 +22,7 @@ export const MenuItemLink = ({
         navigate(href);
         e.preventDefault();
       }}
-      icon={icon}
+      leftSection={icon}
       title={title ?? text}
     >
       {text}

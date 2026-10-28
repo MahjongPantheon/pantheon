@@ -63,7 +63,8 @@ export const RecentGames: React.FC<{
     'RecentGames_games_' + eventId + '_' + page,
     () =>
       api.getRecentGames(parseInt(eventId, 10), PERPAGE, (parseInt(page ?? '1', 10) - 1) * PERPAGE),
-    [eventId, page]
+    [eventId, page],
+    { retainDataFor: 'RecentGames_' + eventId }
   );
 
   if (!games || !events) {
@@ -95,7 +96,7 @@ export const RecentGames: React.FC<{
         <Space h='md' />
         <Divider size='xs' />
         <Space h='md' />
-        <Box pos='relative'>
+        <Box pos='relative' mih={100} aria-busy={gamesLoading}>
           <LoadingOverlay visible={gamesLoading} overlayProps={{ blur: 2 }} />
           <Stack gap={0}>
             {games?.games?.map((game, idx) => (

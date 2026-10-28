@@ -10,5 +10,12 @@
   "bracketSpacing": true,
   "arrowParens": "always",
   "sortPackageJson": false,
-  "ignorePatterns": ["build", "coverage", "node_modules", "dist", "pnpm-lock.yaml"]
+  "ignorePatterns": [
+    "build",
+    "coverage",
+    "node_modules",
+    "dist",
+    "pnpm-lock.yaml",
+    "src/migrations/.snapshot-mimir2_unit.json"
+  ]
 }

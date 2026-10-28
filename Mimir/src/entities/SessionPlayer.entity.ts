@@ -1,4 +1,5 @@
-import { Entity, Index, ManyToOne, PrimaryKey, Property } from '@mikro-orm/core';
+import { Entity, Index, ManyToOne, PrimaryKey, Property } from '@mikro-orm/decorators/legacy';
+
 import type { SessionEntity } from './Session.entity.js';
 
 @Entity({ tableName: 'session_players' })

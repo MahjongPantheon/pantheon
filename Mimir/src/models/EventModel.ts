@@ -110,18 +110,19 @@ export class EventModel extends Model {
   }
 
   protected async _getSessionCounts(eventIds: number[]): Promise<Record<number, number>> {
-    const sessions = await this.repo.em.execute(
-      this.repo.em
-        .getKnex()
-        .from('session')
-        .select('event_id')
-        .where('event_id', 'in', eventIds)
-        .count('id as session_count')
-        .groupBy('event_id')
-    );
+    if (eventIds.length === 0) {
+      return {};
+    }
+    const sessions = await this.repo.em
+      .getKysely<any>()
+      .selectFrom('session')
+      .select(['event_id', (eb) => eb.fn.count('id').as('session_count')])
+      .where('event_id', 'in', eventIds)
+      .groupBy('event_id')
+      .execute();
 
-    return sessions.reduce((acc, session) => {
-      acc[session.event_id] = session.session_count;
+    return sessions.reduce<Record<number, number>>((acc, session) => {
+      acc[session.event_id] = Number(session.session_count);
       return acc;
     }, {});
   }
@@ -392,29 +393,33 @@ export class EventModel extends Model {
   async getRecentPublicGames(): Promise<EventsGetRecentPublicGamesResponse> {
     return this.repo.em.transactional(
       async () => {
-        const knex = this.repo.em.getKnex();
-        const rankedGames = knex
-          .from('session as s')
-          .join('event as e', 'e.id', 's.event_id')
-          .where({
-            's.status': SessionStatus.SESSION_STATUS_FINISHED,
-            'e.is_listed': 1,
-            'e.hide_results': 0,
-          })
-          .whereNotNull('s.end_date')
-          .select('s.id', 's.end_date')
-          .rowNumber('event_rank', function () {
-            this.partitionBy('s.event_id').orderBy('s.end_date', 'desc').orderBy('s.id', 'desc');
-          });
-        const latestGames: { id: number }[] = await this.repo.em.execute(
-          knex
-            .from(rankedGames.as('ranked_games'))
-            .select('id')
-            .where('event_rank', 1)
-            .orderBy('end_date', 'desc')
-            .orderBy('id', 'desc')
-            .limit(5)
-        );
+        const db = this.repo.em.getKysely<any>();
+        const rankedGames = db
+          .selectFrom('session as s')
+          .innerJoin('event as e', 'e.id', 's.event_id')
+          .where('s.status', '=', SessionStatus.SESSION_STATUS_FINISHED)
+          .where('e.is_listed', '=', 1)
+          .where('e.hide_results', '=', 0)
+          .where('s.end_date', 'is not', null)
+          .select([
+            's.id',
+            's.end_date',
+            (eb) =>
+              eb.fn
+                .agg<number>('row_number', [])
+                .over((ob) =>
+                  ob.partitionBy('s.event_id').orderBy('s.end_date', 'desc').orderBy('s.id', 'desc')
+                )
+                .as('event_rank'),
+          ]);
+        const latestGames = await db
+          .selectFrom(rankedGames.as('ranked_games'))
+          .select('id')
+          .where('event_rank', '=', 1)
+          .orderBy('end_date', 'desc')
+          .orderBy('id', 'desc')
+          .limit(5)
+          .execute();
         if (latestGames.length === 0) {
           return { games: [] };
         }

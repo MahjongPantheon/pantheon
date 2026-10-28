@@ -28,6 +28,8 @@ import {
   useMantineColorScheme,
   useMantineTheme,
   ActionIcon,
+  LoadingOverlay,
+  Box,
 } from '@mantine/core';
 import { useLocation } from 'wouter';
 import { useI18n } from '../hooks/i18n';
@@ -69,11 +71,12 @@ export const EventList: React.FC<{ params: { page?: string; filter?: string } }>
   const isDark = useMantineColorScheme().colorScheme === 'dark';
   const [, navigate] = useLocation();
   useEvent(null); // this resets global state
-  const [events] = useIsomorphicState(
+  const [events, , eventsLoading] = useIsomorphicState(
     [],
     `EventList_events_${page}_${filter}`,
     () => api.getEvents(PERPAGE, (parseInt(page ?? '1', 10) - 1) * PERPAGE, filter ?? '', true),
-    [page, filter]
+    [page, filter],
+    { retainDataFor: 'EventList' }
   );
 
   return (
@@ -92,71 +95,78 @@ export const EventList: React.FC<{ params: { page?: string; filter?: string } }>
       />
       <Space h='md' />
       <Divider size='xs' />
-      <Stack justify='flex-start' gap='0'>
-        {(events?.events ?? []).map((e, idx) => {
-          const desc = renderMarkdown(e.description, {
-            remarkPlugins: [strip as any],
-          }) as React.JSX.Element;
-          const renderedDesc = stripHtml(renderToString(desc)).slice(0, 300);
-          return (
-            <Group
-              data-testid={`sigrun-event-row-${e.id}`}
-              key={e.id}
-              style={{
-                padding: '10px',
-                backgroundColor:
-                  idx % 2 ? (isDark ? theme.colors.dark[7] : theme.colors.gray[1]) : 'transparent',
-              }}
-            >
-              <EventTypeIcon event={e} />
-              <a
-                data-testid={`sigrun-event-rating-link-${e.id}`}
-                href={`/event/${e.id}/order/rating`}
-                onClick={(ev) => {
-                  navigate(`/event/${e.id}/order/rating`);
-                  ev.preventDefault();
+      <Box pos='relative' mih={100} aria-busy={eventsLoading}>
+        <LoadingOverlay visible={eventsLoading} overlayProps={{ blur: 2 }} />
+        <Stack justify='flex-start' gap='0'>
+          {(events?.events ?? []).map((e, idx) => {
+            const desc = renderMarkdown(e.description, {
+              remarkPlugins: [strip as any],
+            }) as React.JSX.Element;
+            const renderedDesc = stripHtml(renderToString(desc)).slice(0, 300);
+            return (
+              <Group
+                data-testid={`sigrun-event-row-${e.id}`}
+                key={e.id}
+                style={{
+                  padding: '10px',
+                  backgroundColor:
+                    idx % 2
+                      ? isDark
+                        ? theme.colors.dark[7]
+                        : theme.colors.gray[1]
+                      : 'transparent',
                 }}
               >
-                <ActionIcon color='grape' variant='filled' title={i18n._t('Rating table')}>
-                  <PodiumIco size='1.1rem' />
-                </ActionIcon>
-              </a>
-              <Stack
-                gap={0}
-                style={{ flex: 1, maxWidth: largeScreen ? 'calc(100% - 150px)' : '100%' }}
-              >
+                <EventTypeIcon event={e} />
                 <a
-                  data-testid={`sigrun-event-info-link-${e.id}`}
-                  style={{
-                    overflow: 'hidden',
-                    whiteSpace: 'nowrap',
-                    textOverflow: 'ellipsis',
-                    flex: 1,
-                  }}
-                  href={`/event/${e.id}/info`}
+                  data-testid={`sigrun-event-rating-link-${e.id}`}
+                  href={`/event/${e.id}/order/rating`}
                   onClick={(ev) => {
-                    navigate(`/event/${e.id}/info`);
+                    navigate(`/event/${e.id}/order/rating`);
                     ev.preventDefault();
                   }}
                 >
-                  {e.title}
+                  <ActionIcon color='grape' variant='filled' title={i18n._t('Rating table')}>
+                    <PodiumIco size='1.1rem' />
+                  </ActionIcon>
                 </a>
-                <Text
-                  c='dimmed'
-                  style={{
-                    overflow: 'hidden',
-                    whiteSpace: 'nowrap',
-                    textOverflow: 'ellipsis',
-                    flex: 1,
-                  }}
+                <Stack
+                  gap={0}
+                  style={{ flex: 1, maxWidth: largeScreen ? 'calc(100% - 150px)' : '100%' }}
                 >
-                  {renderedDesc}
-                </Text>
-              </Stack>
-            </Group>
-          );
-        })}
-      </Stack>
+                  <a
+                    data-testid={`sigrun-event-info-link-${e.id}`}
+                    style={{
+                      overflow: 'hidden',
+                      whiteSpace: 'nowrap',
+                      textOverflow: 'ellipsis',
+                      flex: 1,
+                    }}
+                    href={`/event/${e.id}/info`}
+                    onClick={(ev) => {
+                      navigate(`/event/${e.id}/info`);
+                      ev.preventDefault();
+                    }}
+                  >
+                    {e.title}
+                  </a>
+                  <Text
+                    c='dimmed'
+                    style={{
+                      overflow: 'hidden',
+                      whiteSpace: 'nowrap',
+                      textOverflow: 'ellipsis',
+                      flex: 1,
+                    }}
+                  >
+                    {renderedDesc}
+                  </Text>
+                </Stack>
+              </Group>
+            );
+          })}
+        </Stack>
+      </Box>
       <Divider size='xs' />
       <Space h='md' />
       <Center>

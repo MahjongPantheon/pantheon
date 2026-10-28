@@ -31,15 +31,18 @@ export const useIsomorphicState = <I, R, E extends Error>(
   initial: I,
   key: string,
   effect: () => Promise<R>,
-  dependencies?: DependencyList
+  dependencies?: DependencyList,
+  options?: { retainDataFor: string }
 ) => {
   const context = useContext(Isomorphic) as Record<string, any> & {
     requests: any[];
     __running: number;
   };
+  const retainDataFor = options?.retainDataFor;
   const hasData = Object.prototype.hasOwnProperty.call(context, key);
   const [state, setState] = useState(() => ({
     key,
+    retainDataFor,
     data: hasData ? context[key] : initial,
     error: context[key + '__err'] ?? null,
     loading: false,
@@ -54,10 +57,19 @@ export const useIsomorphicState = <I, R, E extends Error>(
   useEffect(() => {
     let cancelled = false;
     if (Object.prototype.hasOwnProperty.call(context, key)) {
-      setState({ key, data: context[key], error: null, loading: false });
+      setState({ key, retainDataFor, data: context[key], error: null, loading: false });
       return;
     }
-    setState({ key, data: initial, error: null, loading: true });
+    setState((previous) => ({
+      key,
+      retainDataFor,
+      data:
+        retainDataFor !== undefined && previous.retainDataFor === retainDataFor
+          ? previous.data
+          : initial,
+      error: null,
+      loading: true,
+    }));
     context.__running = (context.__running ?? 0) + 1;
     if (context.__running === 1) {
       nprogress.reset();
@@ -72,10 +84,10 @@ export const useIsomorphicState = <I, R, E extends Error>(
     };
     effect()
       .then((data) => {
-        if (!cancelled) setState({ key, data, error: null, loading: false });
+        if (!cancelled) setState({ key, retainDataFor, data, error: null, loading: false });
       })
       .catch((error: E) => {
-        if (!cancelled) setState({ key, data: initial, error, loading: false });
+        if (!cancelled) setState({ key, retainDataFor, data: initial, error, loading: false });
       })
       .finally(finish);
     return () => {
@@ -83,11 +95,13 @@ export const useIsomorphicState = <I, R, E extends Error>(
       finish();
     };
   }, dependencies);
-  // A route can change keys before its effect runs. Never expose the old
-  // route's data in that render or to effects consuming this hook.
+  // Keep pagination content mounted during loading, but never carry data across
+  // unrelated routes (for example, games belonging to a different event).
+  const pendingData =
+    retainDataFor !== undefined && state.retainDataFor === retainDataFor ? state.data : initial;
   return (
     state.key === key
       ? [state.data, state.error, state.loading]
-      : [hasData ? context[key] : initial, context[key + '__err'] ?? null, false]
+      : [hasData ? context[key] : pendingData, context[key + '__err'] ?? null, !hasData]
   ) as [R | undefined, E | null, boolean];
 };

@@ -18,7 +18,6 @@ export async function init() {
     password: undefined,
     host: undefined,
     port: undefined,
-    connect: false,
     preferTs: true,
   });
 }

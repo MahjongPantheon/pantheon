@@ -67,7 +67,7 @@ describe('Sigrun navigation', () => {
     expect(screen.getAllByRole('link')).toHaveLength(2);
     expect(screen.getByRole('link', { name: 'Assistant' }).getAttribute('target')).toBe('_blank');
     expect(fireEvent.click(screen.getByRole('link', { name: 'Event' }))).toBe(false);
-    expect(navigate).toHaveBeenCalledWith('/event/42/info');
+    expect(navigate).toHaveBeenCalledWith('/event/42/info', undefined);
     expect(closeMenu).toHaveBeenCalledOnce();
     expect(errors).not.toHaveBeenCalled();
   });

@@ -6,7 +6,8 @@ import {
   OneToMany,
   PrimaryKey,
   Property,
-} from '@mikro-orm/core';
+} from '@mikro-orm/decorators/legacy';
+
 import { SessionEntity } from './Session.entity.js';
 import { EventEntity } from './Event.entity.js';
 import { HandEntity } from './Hand.entity.js';

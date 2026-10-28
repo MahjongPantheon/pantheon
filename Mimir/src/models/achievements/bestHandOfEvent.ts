@@ -29,7 +29,8 @@ export async function getBestHandOfEvent(event: EventEntity, repo: Repository) {
           }
           if (hand.han! === maxHan) {
             ids.add(hand.winnerId!);
-            const hashes = (gamesByPlayer[hand.winnerId!] ??= []);
+            gamesByPlayer[hand.winnerId!] ??= [];
+            const hashes = gamesByPlayer[hand.winnerId!];
             if (session.representationalHash && !hashes.includes(session.representationalHash)) {
               hashes.push(session.representationalHash);
             }

@@ -15,17 +15,15 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Redirect, Route, Router, Switch, useRouter } from 'wouter';
+import { Redirect, Route, Router, Switch } from 'wouter';
 import './App.css';
 import { components } from './Nav';
 import { supportedLanguages } from './services/i18n';
 import { useStorage } from './hooks/storage';
 
 const makeLangRoutes = (lang: string) => () => {
-  const router = useRouter();
-
   return (
-    <Router base={`/${lang}`} parent={router}>
+    <Router base={`/${lang}`}>
       <Switch>
         {Object.keys(components).map((url) => (
           <Route

@@ -20,7 +20,6 @@ import { App } from './App';
 import { Router } from 'wouter';
 import { StorageStrategyServer } from '../../Common/storageStrategyServer';
 import { Isomorphic } from './hooks/isomorphic';
-import staticLocationHook from 'wouter/static-location';
 import { Layout } from './Layout';
 import { HelmetProvider } from 'react-helmet-async';
 import { JSDOM } from 'jsdom';
@@ -45,14 +44,13 @@ export async function SSRRender(url: string, cookies: Record<string, string>) {
   );
 
   const isomorphicCtxValue: Record<string, any> & { requests?: any[] } = { requests: [] };
-  const locHook = staticLocationHook(url);
   (global as any).JSDOM = JSDOM;
 
   // First pass to collect effects
   ReactDOMServer.renderToString(
     <Isomorphic.Provider value={isomorphicCtxValue}>
       <HelmetProvider>
-        <Router hook={locHook}>
+        <Router ssrPath={url}>
           <Layout emotionCache={emotionCache}>
             <App />
           </Layout>
@@ -69,7 +67,7 @@ export async function SSRRender(url: string, cookies: Record<string, string>) {
   const { appHtml, head } = renderDocument(
     <Isomorphic.Provider value={isomorphicCtxValue}>
       <HelmetProvider>
-        <Router hook={locHook}>
+        <Router ssrPath={url}>
           <Layout emotionCache={emotionCache}>
             <App />
           </Layout>

@@ -515,7 +515,7 @@ lint:
 			exit $$LINT_RESULT ;\
 		}
 
-SERVICE_TEST_TARGETS := tyr_test frey_test mimir_test gullveig_test meili_test hermod_test hugin_test forseti_test sigrun_test
+SERVICE_TEST_TARGETS := tyr_test frey_test mimir_test gullveig_test meili_test hermod_test hugin_test forseti_test sigrun_test bragi_test
 
 .PHONY: $(SERVICE_TEST_TARGETS) $(addsuffix _verbose,$(SERVICE_TEST_TARGETS))
 tyr_test tyr_test_verbose:
@@ -544,6 +544,9 @@ forseti_test forseti_test_verbose:
 
 sigrun_test sigrun_test_verbose:
 	cd Sigrun && ${MAKE} container_test
+
+bragi_test bragi_test_verbose:
+	cd Bragi && ${MAKE} container_test
 
 .PHONY: test
 test:

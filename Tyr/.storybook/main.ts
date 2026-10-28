@@ -5,17 +5,22 @@ const config: StorybookConfig = {
   addons: [
     '@storybook/addon-onboarding',
     '@storybook/addon-links',
-    '@storybook/addon-essentials',
+    '@storybook/addon-docs',
     '@chromatic-com/storybook',
-    '@storybook/addon-interactions',
   ],
   framework: {
     name: '@storybook/react-vite',
     options: {},
   },
-  docs: {
-    autodocs: 'tag',
-  },
+  viteFinal: (viteConfig) => ({
+    ...viteConfig,
+    // Storybook has no offline app lifecycle; do not precache its manager and previews.
+    plugins: viteConfig.plugins
+      ?.flat()
+      .filter(
+        (plugin) => !plugin || !('name' in plugin) || !plugin.name.startsWith('vite-plugin-pwa')
+      ),
+  }),
   core: {
     disableTelemetry: true,
   },

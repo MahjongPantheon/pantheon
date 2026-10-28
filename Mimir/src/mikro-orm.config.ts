@@ -1,10 +1,10 @@
-import { defineConfig, GeneratedCacheAdapter } from '@mikro-orm/core';
+import { GeneratedCacheAdapter } from '@mikro-orm/core';
 import { readFileSync } from 'node:fs';
 import { TsMorphMetadataProvider } from '@mikro-orm/reflection';
 import { ConfigService } from './services/Config.js';
 import { SeedManager } from '@mikro-orm/seeder';
 import { Migrator } from '@mikro-orm/migrations';
-import { PostgreSqlDriver } from '@mikro-orm/postgresql';
+import { defineConfig, PostgreSqlDriver } from '@mikro-orm/postgresql';
 import { AchievementsEntity } from './entities/Achievements.entity.js';
 import { EventEntity } from './entities/Event.entity.js';
 import { EventPrescriptEntity } from './entities/EventPrescript.entity.js';
@@ -25,7 +25,7 @@ import { SessionStateEntity } from './entities/SessionState.entity.js';
 const config = new ConfigService();
 
 export const createConfig = (useGeneratedCache: boolean) =>
-  defineConfig({
+  ({
     driver: PostgreSqlDriver,
     dbName: config.test ? 'mimir2_unit' : config.db.dbname,
     user: config.db.username,
@@ -67,6 +67,7 @@ export const createConfig = (useGeneratedCache: boolean) =>
       : undefined,
     // enable debug mode to log SQL queries and discovery information
     debug: false,
+    dynamicImportProvider: (id: string) => import(id),
     extensions: [SeedManager, Migrator],
     seeder: config.test
       ? {
@@ -78,7 +79,7 @@ export const createConfig = (useGeneratedCache: boolean) =>
           fileName: (className: string) => className,
         }
       : undefined,
-  });
+  }) satisfies Parameters<typeof defineConfig>[0];
 
 // CLI commands run from TypeScript sources; the deployed bundle is JavaScript.
 export default () => createConfig(import.meta.url.endsWith('.js'));

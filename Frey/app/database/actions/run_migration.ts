@@ -1,4 +1,5 @@
-import { FileMigrationProvider, Kysely, Migrator, PostgresDialect } from 'kysely';
+import { FileMigrationProvider, Migrator } from 'kysely/migration';
+import { Kysely, PostgresDialect } from 'kysely';
 import { Database } from '../schema';
 import { Pool } from 'pg';
 import { env } from '../../helpers/env';

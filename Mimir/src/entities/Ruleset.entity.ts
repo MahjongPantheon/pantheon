@@ -1,4 +1,5 @@
-import { Embeddable, Property } from '@mikro-orm/postgresql';
+import { Embeddable, Property } from '@mikro-orm/decorators/legacy';
+
 import { Yaku, yakuListExcept } from '../../src/helpers/yaku.js';
 import { ComplexUma, EndingPolicy, RulesetConfig, Uma, UmaType } from 'tsclients/proto/atoms.pb.js';
 

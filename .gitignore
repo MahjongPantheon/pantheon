@@ -92,6 +92,7 @@ Mimir/node_modules/*
 Mimir/dist/*
 Mimir/temp/*
 Mimir/coverage/*
+Mimir/src/migrations/.snapshot-mimir2_unit.json
 Mimir-dist/.env.production
 Mimir-dist/metadata.json
 Mimir-dist/node_modules/*
@@ -103,6 +104,7 @@ Sigrun-dist/*
 !Sigrun-dist/server.js
 !Sigrun-dist/package.json
 
+Bragi/coverage/
 Bragi-dist/*
 !Bragi-dist/.well-known
 !Bragi-dist/.keep

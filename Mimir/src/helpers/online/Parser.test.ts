@@ -63,7 +63,7 @@ const makeRegs = (em: EntityManager, event: EventEntity) => {
 
 const makeRepo = async () => {
   const orm = await init();
-  await orm.schema.createSchema();
+  await orm.schema.create();
   const repo = Repository.instance({}, orm);
   await repo.cache.connect();
   repo.mockFrey();

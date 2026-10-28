@@ -1,4 +1,5 @@
-import { Embedded, Entity, Index, PrimaryKey, Property } from '@mikro-orm/postgresql';
+import { Embedded, Entity, Index, PrimaryKey, Property } from '@mikro-orm/decorators/legacy';
+
 import { RulesetEntity } from './Ruleset.entity.js';
 import { PlatformType, TournamentGamesStatus, WindShuffleMode } from 'tsclients/proto/atoms.pb.js';
 

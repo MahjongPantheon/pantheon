@@ -120,20 +120,20 @@ export class SessionModel extends Model {
       .createQueryBuilder(SessionEntity)
       .leftJoin('players', 'sp')
       .where({
-        'sp.player_id': playerId,
-        event_id: eventId,
+        'sp.playerId': playerId,
+        event: eventId,
         ...(withStatus !== '*' ? { status: withStatus } : {}),
         ...(dateFrom
           ? {
-              start_date: {
-                gte: moment(dateFrom).utc().format('YYYY-MM-DD HH:mm:ss'),
+              startDate: {
+                $gte: moment(dateFrom).utc().format('YYYY-MM-DD HH:mm:ss'),
               },
             }
           : {}),
         ...(dateTo
           ? {
-              end_date: {
-                lt: moment(dateTo).utc().format('YYYY-MM-DD HH:mm:ss'),
+              endDate: {
+                $lt: moment(dateTo).utc().format('YYYY-MM-DD HH:mm:ss'),
               },
             }
           : {}),
@@ -153,8 +153,8 @@ export class SessionModel extends Model {
       .leftJoin('players', 'sp')
       .where({
         ...(withStatus !== '*' ? { status: withStatus } : {}),
-        'sp.player_id': playerId,
-        event_id: eventId,
+        'sp.playerId': playerId,
+        event: eventId,
       })
       .orderBy({ id: -1 })
       .limit(1)
@@ -1095,20 +1095,21 @@ export class SessionModel extends Model {
    * Exclude cancelled games, as they're not counted
    */
   async isLastForPlayers(session: SessionEntity) {
-    const query = this.repo.em
-      .getKnex()
-      .select('*')
-      .from('session_players')
-      .join('session', (qb) =>
-        qb
-          .on('session_players.session_id', 'session.id')
-          .andOnIn('session.event_id', [session.event.id])
-          .andOnNotIn('session.status', [SessionStatus.SESSION_STATUS_CANCELLED])
-      )
-      .whereIn('session_players.player_id', session.intermediateResults?.playerIds ?? [])
+    const playerIds = session.intermediateResults?.playerIds ?? [];
+    if (playerIds.length === 0) {
+      return true;
+    }
+    const lastSessions = await this.repo.em
+      .getKysely<any>()
+      .selectFrom('session_players')
+      .innerJoin('session', 'session_players.session_id', 'session.id')
+      .selectAll()
+      .where('session.event_id', '=', session.event.id)
+      .where('session.status', '!=', SessionStatus.SESSION_STATUS_CANCELLED)
+      .where('session_players.player_id', 'in', playerIds)
       .orderBy('session_players.id', 'desc')
-      .limit(4);
-    const lastSessions = await this.repo.em.execute(query);
+      .limit(4)
+      .execute();
     for (const lastSession of lastSessions) {
       if (lastSession.id !== session.id) {
         return false;

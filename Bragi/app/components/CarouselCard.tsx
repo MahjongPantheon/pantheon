@@ -1,4 +1,5 @@
-import { createStyles, Paper, Title, rem, useMantineTheme } from '@mantine/core';
+import { createStyles } from '@mantine/emotion';
+import { Paper, Title, rem, useMantineTheme, useMantineColorScheme } from '@mantine/core';
 
 const useStyles = createStyles((theme) => ({
   card: {
@@ -41,13 +42,14 @@ interface CardProps {
 export function CarouselCard({ image, title, locale }: CardProps) {
   const { classes } = useStyles();
   const theme = useMantineTheme();
+  const { colorScheme } = useMantineColorScheme();
 
   return (
     <Paper
       shadow='md'
       p='xl'
       radius='md'
-      sx={{
+      style={{
         backgroundImage: `url(${image})`,
         backgroundSize: 'contain',
         backgroundPosition: 'center',
@@ -60,9 +62,8 @@ export function CarouselCard({ image, title, locale }: CardProps) {
         order={3}
         className={classes.title}
         style={{
-          color: theme.colorScheme === 'dark' ? theme.colors.gray[4] : theme.colors.gray[8],
-          backgroundColor:
-            theme.colorScheme === 'dark' ? theme.colors.gray[8] : theme.colors.gray[2],
+          color: colorScheme === 'dark' ? theme.colors.gray[4] : theme.colors.gray[8],
+          backgroundColor: colorScheme === 'dark' ? theme.colors.gray[8] : theme.colors.gray[2],
         }}
       >
         {title[locale]}

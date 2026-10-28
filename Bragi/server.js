@@ -29,8 +29,8 @@ if (fs.existsSync('./node_modules')) {
 
     const app = express.default();
     const PORT = out?.PORT ?? process.env.PORT ?? 4108;
-    createServer(app, out).then((app) =>
-      app.listen(PORT, () => {
+    createServer(app, out).then((serverApp) =>
+      serverApp.listen(PORT, () => {
         console.log('http://localhost:' + PORT);
       })
     );
@@ -110,26 +110,28 @@ export async function createServer(app, env) {
     });
   });
 
-  app.use('*', async (req, res) => {
-    const url = req.baseUrl;
+  app.use(async (req, res) => {
+    const url = req.originalUrl;
 
     const template = fs.readFileSync(resolve('dist/client/index.html'), 'utf-8');
     const render = (await import('./dist/server/server.js')).SSRRender;
 
-    render(url, req.cookies).then(({ cookies, helmet, appHtml, serverData }) => {
+    render(url, req.cookies).then(({ cookies, helmet, styles, appHtml, serverData }) => {
       const html = template
         .replace(`<!--app-head-->`, helmet)
+        // Custom Emotion rules must follow the bundled Mantine stylesheets.
+        .replace('</head>', `${styles}</head>`)
         .replace(`<!--app-html-->`, appHtml)
         .replace(`<!--app-server-data-->`, serverData);
       res.status(200);
       res.set({ 'Content-Type': 'text/html' });
-      for (let name in cookies.add) {
+      for (const name in cookies.add) {
         res.cookie(name, cookies.add[name], {
           domain: env.VITE_COOKIE_DOMAIN,
           expires: new Date(Date.now() + 365 * 24 * 3600 * 1000),
         });
       }
-      for (let name of cookies.remove) {
+      for (const name of cookies.remove) {
         res.clearCookie(name, {
           domain: env.VITE_COOKIE_DOMAIN,
           expires: new Date(Date.now() + 365 * 24 * 3600 * 1000),

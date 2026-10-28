@@ -1,4 +1,4 @@
-import { Migrator } from 'kysely';
+import { Migrator } from 'kysely/migration';
 import type { Database } from './schema.js';
 import { up } from './migrations/20261022_node_baseline.js';
 

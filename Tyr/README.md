@@ -5,6 +5,8 @@
 **Tyr** is a tool for online game recording in japanese (riichi) mahjong sessions. Tyr uses [Frey](https://github.com/MahjongPantheon/pantheon/tree/master/Frey)\
 (user data storage) and [Mimir](https://github.com/MahjongPantheon/pantheon/tree/master/Mimir) (games data storage) as backend.
 
+Tyr targets mobile browsers only. Design and validate interactions for touch; do not add desktop keyboard shortcuts or keyboard-driven navigation.
+
 Features:
 
 - Preview of current game state: players' points, riichi bets on table, renchan/honba count, current round.

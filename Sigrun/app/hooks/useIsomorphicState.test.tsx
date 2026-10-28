@@ -106,3 +106,31 @@ it('waits for every active request before completing shared progress', async () 
   expect(result.current.map(([data]) => data)).toEqual(['First', 'Second']);
   expect(progress.complete).toHaveBeenCalledOnce();
 });
+
+it('retains pagination data only within the requested group and ignores obsolete responses', async () => {
+  context['club-1-page-1'] = 'First page';
+  const second = deferred<string>();
+  const third = deferred<string>();
+  const other = deferred<string>();
+  const { result, rerender } = renderHook(
+    ({ club, page }) =>
+      useIsomorphicState(
+        null,
+        `${club}-page-${page}`,
+        () => (club !== 'club-1' ? other.promise : page === 2 ? second.promise : third.promise),
+        [club, page],
+        { retainDataFor: club }
+      ),
+    { initialProps: { club: 'club-1', page: 1 }, wrapper: Wrapper }
+  );
+  rerender({ club: 'club-1', page: 2 });
+  expect(result.current).toEqual(['First page', null, true]);
+  rerender({ club: 'club-1', page: 3 });
+  await act(async () => third.resolve('Third page'));
+  await act(async () => second.resolve('Obsolete second page'));
+  expect(result.current).toEqual(['Third page', null, false]);
+  rerender({ club: 'club-2', page: 1 });
+  expect(result.current).toEqual([null, null, true]);
+  await act(async () => other.resolve('Other club'));
+  expect(result.current).toEqual(['Other club', null, false]);
+});

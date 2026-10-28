@@ -134,8 +134,8 @@ export async function createServer(app, env) {
     res.redirect(301, `${env.EXTERNAL_SIGRUN_URL}/event/${req.params.eventId}/achievements`);
   });
 
-  app.use('*', async (req, res) => {
-    const url = req.baseUrl;
+  app.use(async (req, res) => {
+    const url = req.originalUrl;
 
     const template = fs.readFileSync(resolve('dist/client/index.html'), 'utf-8');
     const render = (await import('./dist/server/server.js')).SSRRender;

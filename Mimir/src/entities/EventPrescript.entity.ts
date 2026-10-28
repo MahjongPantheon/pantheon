@@ -1,4 +1,5 @@
-import { Entity, Index, OneToOne, PrimaryKey, Property } from '@mikro-orm/core';
+import { Entity, Index, OneToOne, PrimaryKey, Property } from '@mikro-orm/decorators/legacy';
+
 import { EventEntity } from './Event.entity.js';
 
 @Entity({ tableName: 'event_prescript' })

@@ -15,14 +15,11 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {
-  AppShell,
-  ColorScheme,
-  ColorSchemeProvider,
-  Container,
-  MantineProvider,
-  Space,
-} from '@mantine/core';
+import { AppShell, Container, MantineProvider, Space } from '@mantine/core';
+import { MantineEmotionProvider, emotionTransform } from '@mantine/emotion';
+import '@mantine/core/styles.css';
+import '@mantine/nprogress/styles.css';
+import '@mantine/carousel/styles.css';
 import { AppFooter } from './AppFooter';
 import { AnalyticsProvider, useAnalytics } from '../hooks/analytics';
 import { StorageProvider, useStorage } from '../hooks/storage';
@@ -37,13 +34,13 @@ import { Hero } from './Hero';
 import { useLocation } from 'wouter';
 
 // See also Tyr/app/services/themes.ts - we use names from there to sync themes
-const themeToLocal: (theme?: string | null) => ColorScheme = (theme) => {
+const themeToLocal: (theme?: string | null) => 'light' | 'dark' = (theme) => {
   return ({
     day: 'light',
     night: 'dark',
-  }[theme ?? 'day'] ?? 'light') as ColorScheme;
+  }[theme ?? 'day'] ?? 'light') as 'light' | 'dark';
 };
-const themeFromLocal: (theme?: ColorScheme | null) => string = (theme) => {
+const themeFromLocal: (theme?: ('light' | 'dark') | null) => string = (theme) => {
   return (
     {
       light: 'day',
@@ -61,7 +58,9 @@ export function Layout({ children, cache }: { children: ReactNode; cache: Emotio
   const storage = useStorage();
   const i18n = useI18n();
   const [location, navigate] = useLocation();
-  const [colorScheme, setColorScheme] = useState<ColorScheme>(themeToLocal(storage.getTheme()));
+  const [colorScheme, setColorScheme] = useState<'light' | 'dark'>(
+    themeToLocal(storage.getTheme())
+  );
   const analytics = useAnalytics();
   useEffect(() => {
     const track = (e: any) => {
@@ -72,7 +71,7 @@ export function Layout({ children, cache }: { children: ReactNode; cache: Emotio
     window.addEventListener('replaceState', track);
   }, []);
 
-  const toggleColorScheme = (value?: ColorScheme) => {
+  const toggleColorScheme = (value?: 'light' | 'dark') => {
     const newValue = value ?? (colorScheme === 'dark' ? 'light' : 'dark');
     setColorScheme(newValue);
     storage.setTheme(themeFromLocal(newValue));
@@ -92,13 +91,11 @@ export function Layout({ children, cache }: { children: ReactNode; cache: Emotio
 
   return (
     <MantineProvider
-      withGlobalStyles
-      withNormalizeCSS
+      forceColorScheme={colorScheme}
+      stylesTransform={emotionTransform}
       theme={{
-        colorScheme,
         fontFamily: 'IBM Plex Sans, Noto Sans Wind, Sans, serif',
       }}
-      emotionCache={cache}
     >
       <style>{`
       abbr {
@@ -106,7 +103,7 @@ export function Layout({ children, cache }: { children: ReactNode; cache: Emotio
         text-decoration: revert !important;
       }
       `}</style>
-      <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
+      <MantineEmotionProvider cache={cache}>
         <AnalyticsProvider>
           <StorageProvider>
             <I18nProvider>
@@ -129,31 +126,33 @@ export function Layout({ children, cache }: { children: ReactNode; cache: Emotio
                   },
                 }}
               >
-                <Container
-                  style={{
-                    position: 'relative',
-                    minHeight: '100%',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'space-between',
-                  }}
-                >
-                  <div>
-                    <Hero />
-                    <Space h='xl' />
-                    {children}
-                  </div>
-                  <AppFooter
-                    dark={dark}
-                    toggleColorScheme={toggleColorScheme}
-                    saveLang={saveLang}
-                  />
-                </Container>
+                <AppShell.Main>
+                  <Container
+                    style={{
+                      position: 'relative',
+                      minHeight: '100%',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'space-between',
+                    }}
+                  >
+                    <div>
+                      <Hero />
+                      <Space h='xl' />
+                      {children}
+                    </div>
+                    <AppFooter
+                      dark={dark}
+                      toggleColorScheme={toggleColorScheme}
+                      saveLang={saveLang}
+                    />
+                  </Container>
+                </AppShell.Main>
               </AppShell>
             </I18nProvider>
           </StorageProvider>
         </AnalyticsProvider>
-      </ColorSchemeProvider>
+      </MantineEmotionProvider>
     </MantineProvider>
   );
 }

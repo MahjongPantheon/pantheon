@@ -14,7 +14,7 @@ it('migrates existing events to aggregated yakuhai while new events default to s
     password: settings.password,
     database: 'mimir2_unit',
   });
-  const orm = await MikroORM.init({ ...config(), connect: false });
+  const orm = await MikroORM.init({ ...config() });
   await db.connect();
   try {
     // A temporary table shadows the real event table only on this connection.
