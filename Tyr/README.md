@@ -22,6 +22,12 @@ screen/action name for a single control (for example, `tyr-home-new-game`) and
 append a stable event, player, or table ID for repeated items. Keep each new
 value unique across the frontend services.
 
+### Unit tests
+
+Unit test coverage (`make tyr_test` from the repository root) must reach
+at least 85% for lines, statements, functions, and branches. Reports are written
+to `Tyr/coverage/`.
+
 ### Legend
 
 **Týr** (/ˈtɪər/) is norse one-handed god, associated with law, warriors and glory. See wikipedia for details :)

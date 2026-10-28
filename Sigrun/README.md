@@ -17,6 +17,10 @@ Sigrun provides a convenient view of games and player statistics for japanese (r
 
 ### Developer information
 
+Unit test coverage (`make sigrun_test` from the repository root) must reach
+at least 85% for lines, statements, functions, and branches. Reports are written
+to `Sigrun/coverage/`.
+
 Sigrun uses Mantine 9 with React 19.2 or later. Keep all `@mantine/*` packages
 on the same version. `app/ThemeProvider.tsx` retains the previous radius,
 light-variant colors, and shared day/night cookie mapping. Emotion remains the

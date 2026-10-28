@@ -185,7 +185,7 @@ export class RedisClientMock implements IRedisClient {
     }
     const newVal = parseInt(this._data[key], 10) - 1;
     this._data[key] = (newVal < 0 ? 0 : newVal).toString();
-    return Promise.resolve(newVal);
+    return Promise.resolve(Math.max(0, newVal));
   }
 
   public async publish<T>(channel: string, data: T): Promise<number> {
@@ -206,12 +206,15 @@ export class RedisClientMock implements IRedisClient {
     if (!this._channelListeners[channel]) {
       this._channelListeners[channel] = [];
     }
-    this._channelListeners[channel].push((data) => {
+    const listener = (data: T) => {
       onData(data);
       return Promise.resolve();
-    });
+    };
+    this._channelListeners[channel].push(listener);
     return Promise.resolve(() => {
-      this._channelListeners[channel] = this._channelListeners[channel].filter((l) => l !== onData);
+      this._channelListeners[channel] = this._channelListeners[channel].filter(
+        (l) => l !== listener
+      );
       return Promise.resolve();
     });
   }
@@ -339,10 +342,6 @@ export class RedisClientMock implements IRedisClient {
   public async lPos<T>(key: string, value: T): Promise<number | null> {
     this._queues[key] ??= [];
     const idx = this._queues[key].indexOf(JSON.stringify(value));
-    if (idx !== -1) {
-      return Promise.resolve(null);
-    } else {
-      return Promise.resolve(idx);
-    }
+    return Promise.resolve(idx === -1 ? null : idx);
   }
 }

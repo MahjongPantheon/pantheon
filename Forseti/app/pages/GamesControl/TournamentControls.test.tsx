@@ -4,6 +4,7 @@ import { createRoot, Root } from 'react-dom/client';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import {
   GameConfig,
+  RegisteredPlayer,
   SessionStatus,
   TableState,
   TournamentGamesStatus,
@@ -19,7 +20,7 @@ vi.mock('../../hooks/i18n', () => ({
 
 function fixture() {
   return {
-    players: [],
+    players: [] as RegisteredPlayer[],
     tablesState: [TableState.initialize({ status: SessionStatus.SESSION_STATUS_FINISHED })],
     eventConfig: GameConfig.initialize({ isPrescripted: true, syncEnd: true }),
     prescriptedConfig: {
@@ -75,9 +76,10 @@ describe('prescripted tournament controls', () => {
     act(() => root.unmount());
     container.remove();
     vi.unstubAllGlobals();
+    vi.unstubAllEnvs();
   });
 
-  function render(props = fixture()) {
+  function render(props: React.ComponentProps<typeof TournamentControls> = fixture()) {
     act(() =>
       root.render(
         <MantineProvider env='test'>
@@ -163,4 +165,85 @@ describe('prescripted tournament controls', () => {
     expect(control('forseti-tournament-random-seating-open')).not.toBeNull();
     expect(control('forseti-tournament-prescripted-exhausted')).toBeNull();
   });
+  it.each(['random', 'interval', 'swiss'] as const)(
+    'confirms regular %s seating with the selected wind policy',
+    (kind) => {
+      const props = fixture();
+      props.eventConfig.isPrescripted = false;
+      props.eventConfig.windShuffleMode = WindShuffleMode.WIND_SHUFFLE_MODE_BALANCED;
+      render(props);
+      act(() => control(`forseti-tournament-${kind}-seating-open`)!.click());
+      act(() => control(`forseti-tournament-${kind}-seating-confirm`)!.click());
+      if (kind === 'random')
+        expect(props.makeRandomSeating).toHaveBeenCalledWith(
+          WindShuffleMode.WIND_SHUFFLE_MODE_BALANCED
+        );
+      if (kind === 'interval')
+        expect(props.makeIntervalSeating).toHaveBeenCalledWith(
+          1,
+          WindShuffleMode.WIND_SHUFFLE_MODE_BALANCED
+        );
+      if (kind === 'swiss')
+        expect(props.makeSwissSeating).toHaveBeenCalledWith(
+          WindShuffleMode.WIND_SHUFFLE_MODE_BALANCED
+        );
+    }
+  );
+
+  it('disables history-based seating in the first session and shows incomplete-player status', () => {
+    const props = fixture();
+    props.eventConfig.isPrescripted = false;
+    props.tablesState = [];
+    render(props);
+    expect(control('forseti-tournament-interval-seating-open')!.disabled).toBe(true);
+    expect(control('forseti-tournament-swiss-seating-open')!.disabled).toBe(true);
+    props.players = [RegisteredPlayer.initialize({ id: 1 })];
+    render(props);
+    expect(container.textContent).toContain('not divisible by 4');
+    props.seatingLoading = true;
+    render(props);
+    expect(container.textContent).toContain('Please wait');
+  });
+
+  it.each([false, true])(
+    'confirms timer and reset actions and respects bot configuration=%s',
+    (bot) => {
+      vi.stubEnv('VITE_BOT_NICKNAME', bot ? 'test_bot' : '');
+      const props = fixture();
+      props.eventConfig.isPrescripted = false;
+      props.players = [1, 2, 3, 4].map((id) => RegisteredPlayer.initialize({ id }));
+      props.eventConfig.gamesStatus = TournamentGamesStatus.TOURNAMENT_GAMES_STATUS_SEATING_READY;
+      props.tablesState[0].status = SessionStatus.SESSION_STATUS_PLANNED;
+      render(props);
+      for (const name of ['reset-seating', 'start-timer', ...(bot ? ['notify-players'] : [])]) {
+        act(() => control(`forseti-tournament-${name}-open`)!.click());
+        act(() => control(`forseti-tournament-${name}-confirm`)!.click());
+      }
+      expect(props.resetSeating).toHaveBeenCalledOnce();
+      expect(props.startTimer).toHaveBeenCalledOnce();
+      expect(props.notifyPlayers.mock.calls).toHaveLength(bot ? 1 : 0);
+    }
+  );
+
+  it.each([false, true])(
+    'confirms active-session actions and result visibility hidden=%s',
+    (hidden) => {
+      const props = fixture();
+      props.eventConfig.hideResults = hidden;
+      props.tablesState[0].status = SessionStatus.SESSION_STATUS_INPROGRESS;
+      render(props);
+      act(() => control('forseti-tournament-add-extra-time-open')!.click());
+      act(() => control('forseti-tournament-add-extra-time-confirm')!.click());
+      expect(props.addExtraTime).toHaveBeenCalledWith(60);
+      act(() => control('forseti-tournament-toggle-results-running')!.click());
+      expect(props.toggleResults).toHaveBeenCalledOnce();
+      props.tablesState[0].status = SessionStatus.SESSION_STATUS_PREFINISHED;
+      render(props);
+      act(() => control('forseti-tournament-approve-sessions-open')!.click());
+      act(() => control('forseti-tournament-approve-sessions-confirm')!.click());
+      expect(props.approveResults).toHaveBeenCalledOnce();
+      act(() => control('forseti-tournament-toggle-results-before-approval')!.click());
+      expect(props.toggleResults).toHaveBeenCalledTimes(2);
+    }
+  );
 });

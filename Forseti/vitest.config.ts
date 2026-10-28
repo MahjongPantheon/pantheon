@@ -25,6 +25,8 @@ export default mergeConfig(
     test: {
       coverage: {
         enabled: true,
+        reportOnFailure: true,
+        thresholds: { lines: 85, statements: 85, functions: 85, branches: 85 },
         provider: 'istanbul',
         reporter: ['text', 'html', 'clover', 'json', 'json-summary'],
       },

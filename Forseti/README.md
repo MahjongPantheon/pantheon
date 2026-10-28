@@ -22,6 +22,12 @@ Features:
 - Settings tabs use `keepMountedMode="display-none"` so validation can find and focus invalid fields across tabs.
 - Theme preferences retain the shared `day`/`night` cookies and separate dimmed palette.
 
+### Unit tests
+
+Unit test coverage (`make forseti_test` from the repository root) must reach
+at least 85% for lines, statements, functions, and branches. Reports are written
+to `Forseti/coverage/`.
+
 ### Legend
 
 **Forseti** is the god of justice and reconciliation in Norse mythology. See wikipedia for details :)
