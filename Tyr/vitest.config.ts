@@ -28,6 +28,7 @@ export default mergeConfig(
         provider: 'istanbul',
         reporter: ['text', 'html', 'clover', 'json', 'json-summary'],
       },
+      setupFiles: ['./app/tests/setup.ts'],
       globals: true,
       environment: 'jsdom',
     },

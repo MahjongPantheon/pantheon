@@ -25,7 +25,7 @@ export const Donate = (props: IComponentProps) => {
   };
 
   const onDonateClick = () => {
-    window.open('https://pay.cloudtips.ru/p/c9fd6eee');
+    window.open('https://pay.cloudtips.ru/p/c9fd6eee', '_blank', 'noopener');
   };
 
   return <DonatePage onBackClick={onBackClick} onDonateClick={onDonateClick} />;

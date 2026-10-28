@@ -45,7 +45,7 @@ import {
   IconNumber,
   IconUserX,
 } from '@tabler/icons-react';
-import { createRef, useCallback, useEffect, useState } from 'react';
+import { useRef, useCallback, useEffect, useState } from 'react';
 import { useApi } from '../hooks/api';
 import { usePageTitle } from '../hooks/pageTitle';
 import { useStorage } from '../hooks/storage';
@@ -63,7 +63,7 @@ export const ProfileManage: React.FC = () => {
   api.setEventId(0);
   const storage = useStorage();
   const personId = storage.getPersonId()!;
-  const formRef: React.RefObject<HTMLFormElement | null> = createRef();
+  const formRef = useRef<HTMLFormElement>(null);
   const [countries, setCountries] = useState<Array<{ value: string; label: string }>>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);

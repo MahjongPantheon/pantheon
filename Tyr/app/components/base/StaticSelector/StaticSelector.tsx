@@ -1,3 +1,4 @@
+import { ActionButton } from '../ActionButton/ActionButton';
 /* Tyr - Japanese mahjong assistant application
  * Copyright (C) 2016 Oleg Klimenko aka ctizen
  *
@@ -35,13 +36,13 @@ export const StaticSelector = ({
   return (
     <div className={styles.dropdown}>
       <div className={styles.wind}>{wind}</div>
-      <div className={styles.player} onClick={onPlayerClick} data-testid={testId}>
+      <ActionButton className={styles.player} onClick={onPlayerClick} data-testid={testId}>
         {playerName ? (
           <div className={styles.playerName}>{playerName}</div>
         ) : (
           <div className={styles.placeholder}>{placeholder}</div>
         )}
-      </div>
+      </ActionButton>
     </div>
   );
 };

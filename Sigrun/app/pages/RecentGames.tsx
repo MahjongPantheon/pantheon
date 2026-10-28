@@ -86,8 +86,8 @@ export const RecentGames: React.FC<{
             [events?.[0].title, page]
           )}
         />
-        {events?.map((event, eid) => (
-          <h2 style={{ display: 'flex', gap: '20px' }} key={`ev_${eid}`}>
+        {events?.map((event) => (
+          <h2 style={{ display: 'flex', gap: '20px' }} key={event.id}>
             {events && <EventTypeIcon event={event} />}
             {event?.title} - {i18n._t('Last games')}
           </h2>
@@ -99,7 +99,7 @@ export const RecentGames: React.FC<{
           <LoadingOverlay visible={gamesLoading} overlayProps={{ blur: 2 }} />
           <Stack gap={0}>
             {games?.games?.map((game, idx) => (
-              <Fragment key={`gm_${idx}`}>
+              <Fragment key={game.sessionHash}>
                 <GameListing
                   showShareLink={true}
                   isOnline={events?.[0]?.type === EventType.EVENT_TYPE_ONLINE}

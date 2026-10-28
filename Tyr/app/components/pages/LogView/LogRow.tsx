@@ -1,3 +1,4 @@
+import { ActionButton } from '../../base/ActionButton/ActionButton';
 import { ReactNode, useCallback } from 'react';
 
 import { LogCell } from './LogCell';
@@ -19,22 +20,22 @@ export const LogRow = (props: LogRowProps) => {
   }, [index, selectRound]);
 
   return (
-    <div
+    <ActionButton
       className={styles.logRowContainer}
       onClick={onRoundClick}
       data-testid={`tyr-game-log-round-${index}`}
     >
       <div className={styles.logRow}>
         <div className={styles.roundCell}>{round}</div>
-        {players.map((player, idx) => (
+        {players.map((player) => (
           <LogCell
-            key={`plc_${idx}`}
+            key={player.id}
             delta={scoresDelta.find((r) => r.playerId === player.id)?.score ?? 0}
             score={scores.find((r) => r.playerId === player.id)?.score ?? 0}
           />
         ))}
       </div>
       {children}
-    </div>
+    </ActionButton>
   );
 };

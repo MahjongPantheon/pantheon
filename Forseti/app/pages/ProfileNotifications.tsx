@@ -4,7 +4,7 @@ import { IconCircleCheck, IconDeviceFloppy, IconUserCode } from '@tabler/icons-r
 import { Redirect } from 'wouter';
 import { useApi } from '../hooks/api';
 import { useI18n } from '../hooks/i18n';
-import { createRef, useCallback, useEffect, useState } from 'react';
+import { useRef, useCallback, useEffect, useState } from 'react';
 import { usePageTitle } from '../hooks/pageTitle';
 import { useForm } from '@mantine/form';
 import { useStorage } from '../hooks/storage';
@@ -16,7 +16,7 @@ export const ProfileNotifications: React.FC<{ params: { id?: string } }> = ({ pa
   api.setEventId(0);
   const i18n = useI18n();
   const personId = storage.getPersonId();
-  const formRef: React.RefObject<HTMLFormElement | null> = createRef();
+  const formRef = useRef<HTMLFormElement>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [isSaved, setIsSaved] = useState(false);

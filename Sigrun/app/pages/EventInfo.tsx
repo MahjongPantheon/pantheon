@@ -18,7 +18,7 @@
 import * as React from 'react';
 import { Anchor, Container, Divider, Group, Space, Text } from '@mantine/core';
 import { EventTypeIcon } from '../components/EventTypeIcon';
-import { useRemarkSync } from 'react-remark';
+import { useRemarkSync as renderMarkdown } from 'react-remark';
 import { useEvent } from '../hooks/useEvent';
 import { useIsomorphicState } from '../hooks/useIsomorphicState';
 import { useApi } from '../hooks/api';
@@ -65,16 +65,16 @@ export const EventInfo: React.FC<{ params: { eventId: string } }> = ({ params: {
         ])}
       />
       <Helmet>{}</Helmet>
-      {events?.map((event, eid) => {
+      {events?.map((event) => {
         return (
-          <Fragment key={`ev_${eid}`}>
+          <Fragment key={event.id}>
             <h2 style={{ display: 'flex', gap: '20px' }}>
               {event && <EventTypeIcon event={event} />}
               {event?.title}
             </h2>
             <Divider size='xs' />
             <Space h='md' />
-            {useRemarkSync(event?.description)}
+            {renderMarkdown(event?.description)}
             <Space h='md' />
             <Divider size='xs' />
             <Space h='md' />
@@ -87,8 +87,8 @@ export const EventInfo: React.FC<{ params: { eventId: string } }> = ({ params: {
             <Text c='dimmed' fz='13'>
               {i18n._t('Event administrators: ')}
             </Text>
-            {admins?.map((admin, idx) => (
-              <Group key={`adm_${idx}`}>
+            {admins?.map((admin) => (
+              <Group key={admin.personId}>
                 <PlayerAvatar
                   size='xs'
                   p={{
@@ -117,8 +117,8 @@ export const EventInfo: React.FC<{ params: { eventId: string } }> = ({ params: {
               <Text c='dimmed' fz='13'>
                 {i18n._t('Event referees: ')}
               </Text>
-              {referees?.map((referee, idx) => (
-                <Group key={`ref_${idx}`}>
+              {referees?.map((referee) => (
+                <Group key={referee.personId}>
                   <PlayerAvatar
                     size='xs'
                     p={{

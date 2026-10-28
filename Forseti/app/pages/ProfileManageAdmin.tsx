@@ -41,7 +41,7 @@ import {
   IconUserPlus,
 } from '@tabler/icons-react';
 import { Redirect } from 'wouter';
-import { createRef, useCallback, useContext, useEffect, useState } from 'react';
+import { useRef, useCallback, useContext, useEffect, useState } from 'react';
 import { useApi } from '../hooks/api';
 import { usePageTitle } from '../hooks/pageTitle';
 import { notifications } from '@mantine/notifications';
@@ -54,11 +54,7 @@ import { authCtx, PrivilegesLevel } from '../hooks/auth';
 export const ProfileManageAdmin: React.FC<{ params: { id?: string } }> = ({ params: { id } }) => {
   const { privilegesLevel, isLoggedIn } = useContext(authCtx);
   const i18n = useI18n();
-  if (id) {
-    usePageTitle(i18n._t('Update player account'));
-  } else {
-    usePageTitle(i18n._t('Register new account'));
-  }
+  usePageTitle(id ? i18n._t('Update player account') : i18n._t('Register new account'));
   const api = useApi();
   api.setEventId(0);
   const storage = useStorage();
@@ -66,7 +62,7 @@ export const ProfileManageAdmin: React.FC<{ params: { id?: string } }> = ({ para
   const [isLoading, setIsLoading] = useState(true);
   const [isSaved, setIsSaved] = useState(false);
   const [countries, setCountries] = useState<Array<{ value: string; label: string }>>([]);
-  const formRef: React.RefObject<HTMLFormElement | null> = createRef();
+  const formRef = useRef<HTMLFormElement>(null);
   const personId = storage.getPersonId();
   const [avatarData, setAvatarData] = useState<string | null | undefined>();
   const [playerEditId, setPlayerEditId] = useState(0);

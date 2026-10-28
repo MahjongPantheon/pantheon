@@ -1,3 +1,4 @@
+import { ActionButton } from '../ActionButton/ActionButton';
 import styles from './PopupMenuItem.module.css';
 import { ReactElement } from 'react';
 import clsx from 'classnames';
@@ -19,7 +20,7 @@ export const PopupMenuItem = ({
 }) => {
   variant ??= 'normal';
   return (
-    <div
+    <ActionButton
       data-testid={testId}
       className={clsx(styles.menuItem, variant === 'primary' && styles.menuItemPrimary)}
       onClick={onClick}
@@ -27,6 +28,6 @@ export const PopupMenuItem = ({
       {icon && <div className={styles.menuItemIcon}>{icon}</div>}
       {label}
       {rightIcon && <div className={styles.menuItemRightIcon}>{rightIcon}</div>}
-    </div>
+    </ActionButton>
   );
 };

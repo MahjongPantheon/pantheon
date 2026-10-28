@@ -43,6 +43,7 @@ export class Store {
   private onUpdate: ((state: IAppState) => void) | undefined;
   private readonly store: ReduxStore<IAppState>;
   private readonly timerSt: TimerStorage;
+  private readonly boundDispatch: ReduxStore<IAppState>['dispatch'];
 
   constructor(i18n: I18nService, storage: IStorage) {
     this.timerSt = {
@@ -82,6 +83,7 @@ export class Store {
       reducer as Reducer<IAppState, AppActionTypes>,
       composeEnhancers(middleware)
     );
+    this.boundDispatch = this.store.dispatch.bind(this.store);
   }
 
   public subscribe(onUpdate: (state: IAppState) => void) {
@@ -90,7 +92,7 @@ export class Store {
   }
 
   get dispatch() {
-    return this.store.dispatch.bind(this.store);
+    return this.boundDispatch;
   }
 
   public get redux(): ReduxStore<IAppState> {

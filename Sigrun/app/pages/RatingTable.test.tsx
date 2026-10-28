@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { renderToString } from 'react-dom/server';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { cleanup, fireEvent, render, screen } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { MantineProvider } from '@mantine/core';
 import { RatingTable } from './RatingTable';
 import { RatingOrderBy } from '../helpers/ratingPlaces';
@@ -34,6 +34,7 @@ vi.mock('../components/EventTypeIcon', () => ({ EventTypeIcon: () => null }));
 vi.mock('../components/TeamTable', () => ({ TeamTable: () => null }));
 
 beforeEach(() => {
+  fixture.players.sort((a, b) => a.id - b.id);
   vi.stubGlobal('matchMedia', () => ({
     matches: true,
     addEventListener: vi.fn(),
@@ -49,6 +50,25 @@ afterEach(() => {
 });
 
 describe('rating table places and CSV export', () => {
+  it('keeps player row identity when the rating order changes', () => {
+    const tree = (
+      <MantineProvider>
+        <RatingTable params={{ eventId: '1' }} />
+      </MantineProvider>
+    );
+    const view = render(tree);
+    const first = screen.getByTestId('sigrun-rating-player-row-1');
+    fixture.players.reverse();
+    view.rerender(
+      <MantineProvider>
+        <RatingTable params={{ eventId: '1' }} />
+      </MantineProvider>
+    );
+    expect(screen.getByTestId('sigrun-rating-player-row-1')).toBe(first);
+    expect(screen.getAllByTestId(/sigrun-rating-player-row-/)[0].dataset.testid).toBe(
+      'sigrun-rating-player-row-4'
+    );
+  });
   it('includes shared place labels in server-rendered markup', () => {
     const markup = renderToString(
       <MantineProvider>
@@ -71,7 +91,8 @@ describe('rating table places and CSV export', () => {
     ['avg_place', ['1', '2', '3', '4']],
   ])('uses the same places in the %s view and downloaded CSV', async (orderBy, expected) => {
     const createObjectURL = vi.fn((_blob: Blob) => 'blob:test-rating');
-    vi.stubGlobal('URL', Object.assign(class extends URL {}, { createObjectURL }));
+    const revokeObjectURL = vi.fn();
+    vi.stubGlobal('URL', Object.assign(class extends URL {}, { createObjectURL, revokeObjectURL }));
     render(
       <MantineProvider>
         <RatingTable params={{ eventId: '1', orderBy }} />
@@ -99,5 +120,8 @@ describe('rating table places and CSV export', () => {
       .map((line) => line.split(','));
     expect(rows.map((row) => row[0])).toEqual(expected);
     expect(rows.map((row) => row[2])).toEqual(fixture.players.map((player) => player.title));
+    await waitFor(() =>
+      expect(revokeObjectURL).toHaveBeenCalledExactlyOnceWith('blob:test-rating')
+    );
   });
 });

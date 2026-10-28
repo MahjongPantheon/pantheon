@@ -34,6 +34,7 @@ export const Hand = ({
         testIdPrefix='tyr-hand-player-tab'
         onTabChange={(index) => onPlayerChange?.(hands[index].id!)}
         tabs={hands.map((hand) => ({
+          id: hand.playerId,
           title: (
             <Player
               id={hand.id}

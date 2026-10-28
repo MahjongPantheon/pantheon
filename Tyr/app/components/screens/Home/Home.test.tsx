@@ -88,7 +88,11 @@ describe('Home admin panel shortcut', () => {
     );
     expect(button?.textContent).toBe('Go to admin panel');
     act(() => button?.click());
-    expect(open).toHaveBeenCalledWith('https://admin.example.test/event/17/games');
+    expect(open).toHaveBeenCalledWith(
+      'https://admin.example.test/event/17/games',
+      '_blank',
+      'noopener'
+    );
     act(home.render);
     expect(home.api.canAccessAdminPanel).toHaveBeenCalledTimes(1);
   });
@@ -116,7 +120,11 @@ describe('Home admin panel shortcut', () => {
     act(() =>
       container.querySelector<HTMLButtonElement>('[data-testid="tyr-home-admin-panel"]')?.click()
     );
-    expect(open).toHaveBeenCalledWith('https://admin.example.test/event/18/games');
+    expect(open).toHaveBeenCalledWith(
+      'https://admin.example.test/event/18/games',
+      '_blank',
+      'noopener'
+    );
   });
 
   it('rechecks access when the current account changes', async () => {

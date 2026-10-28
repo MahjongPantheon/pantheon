@@ -142,15 +142,15 @@ export const App = (props: IProps) => {
     });
 
     // goto game screen if there is one
-    props.dispatch({ type: UPDATE_CURRENT_GAMES_INIT });
-  }, []);
+    dispatch({ type: UPDATE_CURRENT_GAMES_INIT });
+  }, [dispatch, storage, i18nService]);
 
   useEffect(() => {
     if (state.currentSessionHash && firstStart) {
-      props.dispatch({ type: GO_TO_CURRENT_GAME });
+      dispatch({ type: GO_TO_CURRENT_GAME });
       setFirstStart(false);
     }
-  }, [state.currentSessionHash, firstStart]);
+  }, [state.currentSessionHash, firstStart, dispatch]);
 
   const curDate = new Date();
   const haveNySpecs =

@@ -20,16 +20,19 @@ export const Default = {
     onBackClick: () => {},
     penaltiesList: [
       {
+        id: 1,
         amount: 3000,
         reason: 'Bad behavior',
         isCancelled: false,
       },
       {
+        id: 2,
         amount: 5000,
         reason: 'Too much noise',
         isCancelled: false,
       },
       {
+        id: 3,
         amount: 10000,
         reason: 'Cheating',
         isCancelled: true,

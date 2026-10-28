@@ -15,16 +15,19 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useMemo } from 'react';
 import { globalsCtx } from './globals';
 import { useIsomorphicState } from './useIsomorphicState';
 import { useApi } from './api';
 import { PlatformType } from 'tsclients/proto/atoms.pb';
 
 export const useEvent = (eventIdListStr: string | null) => {
-  const globals = useContext(globalsCtx);
+  const { setData } = useContext(globalsCtx);
   const api = useApi();
-  const eventsId = eventIdListStr?.split('.').map((id) => parseInt(id, 10));
+  const eventsId = useMemo(
+    () => eventIdListStr?.split('.').map((id) => parseInt(id, 10)),
+    [eventIdListStr]
+  );
   const [events] = useIsomorphicState(
     null,
     'EventInfo_event_' + (eventIdListStr ?? 'null'),
@@ -38,14 +41,14 @@ export const useEvent = (eventIdListStr: string | null) => {
   );
   useEffect(() => {
     if (eventsId) {
-      globals.setData({ eventId: eventsId });
+      setData({ eventId: eventsId });
     }
-  }, [eventIdListStr]);
+  }, [eventsId, setData]);
 
   useEffect(() => {
     if (!eventIdListStr) {
       // we don't need event data
-      globals.setData({
+      setData({
         eventId: null,
         type: null,
         isPrescripted: false,
@@ -62,7 +65,7 @@ export const useEvent = (eventIdListStr: string | null) => {
     } else {
       if (events) {
         // we have the data; use first event to fill global data, other events should follow the first rules
-        globals.setData({
+        setData({
           isTeam: events[0]?.isTeam,
           isPrescripted: events[0]?.isPrescripted,
           type: events[0]?.type,
@@ -77,7 +80,7 @@ export const useEvent = (eventIdListStr: string | null) => {
         });
       } else {
         // data is requested but still loading
-        globals.setData({
+        setData({
           type: null,
           isPrescripted: false,
           isTeam: false,
@@ -92,7 +95,7 @@ export const useEvent = (eventIdListStr: string | null) => {
         });
       }
     }
-  }, [eventIdListStr, events]);
+  }, [eventIdListStr, events, setData]);
 
   return events ?? null;
 };

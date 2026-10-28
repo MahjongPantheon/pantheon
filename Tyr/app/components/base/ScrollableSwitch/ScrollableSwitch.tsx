@@ -1,10 +1,13 @@
 import styles from './ScrollableSwitch.module.css';
-import { MouseEvent, ReactElement, useCallback, useEffect } from 'react';
+import { MouseEvent, ReactElement, useEffect, useRef } from 'react';
+import { ActionButton } from '../ActionButton/ActionButton';
 import clsx from 'classnames';
 
 type IProps = {
   options: Array<{
+    id: string;
     label: string | ReactElement;
+    ariaLabel?: string;
     selected?: boolean;
     onSelect: () => void;
     testId?: string;
@@ -12,43 +15,32 @@ type IProps = {
 };
 
 export const ScrollableSwitch = ({ options }: IProps) => {
-  let startX = 0;
-  let scrollLeft = 0;
-  let isDown = false;
-  let movedTo = 0;
+  const selectedRef = useRef<HTMLButtonElement>(null);
+  const selectedId = options.find((option) => option.selected)?.id;
+  const drag = useRef({ startX: 0, scrollLeft: 0, isDown: false, moved: false });
 
   useEffect(() => {
-    document.getElementsByClassName(styles.optionSelected)[0].scrollIntoView();
-  }, []);
+    selectedRef.current?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+  }, [selectedId]);
 
   function mouseIsDown(e: MouseEvent<HTMLDivElement>) {
-    isDown = true;
-    startX = e.pageX - e.currentTarget.offsetLeft;
-    scrollLeft = e.currentTarget.scrollLeft;
+    drag.current = {
+      isDown: true,
+      moved: false,
+      startX: e.pageX,
+      scrollLeft: e.currentTarget.scrollLeft,
+    };
   }
   function mouseLeave() {
-    setTimeout(() => {
-      movedTo = 0;
-    }, 0);
-    isDown = false;
+    drag.current.isDown = false;
   }
   function mouseMove(e: MouseEvent<HTMLDivElement>) {
-    if (isDown) {
-      const x = e.pageX - e.currentTarget.offsetLeft;
-      const walkX = x - startX;
-      movedTo = scrollLeft - walkX;
-      e.currentTarget.scrollLeft = movedTo;
+    if (drag.current.isDown) {
+      const distance = e.pageX - drag.current.startX;
+      if (Math.abs(distance) > 10) drag.current.moved = true;
+      e.currentTarget.scrollLeft = drag.current.scrollLeft - distance;
     }
   }
-  const onElementClick = useCallback(
-    (handler: () => void) => () => {
-      if (movedTo > 10) {
-        return;
-      }
-      handler();
-    },
-    [movedTo]
-  );
 
   return (
     <div className={styles.wrapper}>
@@ -59,19 +51,21 @@ export const ScrollableSwitch = ({ options }: IProps) => {
         onMouseLeave={mouseLeave}
         onMouseMove={mouseMove}
       >
-        {options.map(({ label, onSelect, selected, testId }, idx) => {
-          return (
-            <div
-              key={`label_${idx}`}
-              className={clsx(styles.option, selected && styles.optionSelected)}
-              onClick={onElementClick(onSelect)}
-              data-testid={testId}
-              onMouseUp={(e) => e.preventDefault()}
-            >
-              {label}
-            </div>
-          );
-        })}
+        {options.map(({ id, label, ariaLabel, onSelect, selected, testId }) => (
+          <ActionButton
+            key={id}
+            ref={selected ? selectedRef : undefined}
+            className={clsx(styles.option, selected && styles.optionSelected)}
+            aria-label={ariaLabel}
+            aria-pressed={!!selected}
+            onClick={(event) => {
+              if (event.detail === 0 || !drag.current.moved) onSelect();
+            }}
+            data-testid={testId}
+          >
+            {label}
+          </ActionButton>
+        ))}
       </div>
     </div>
   );

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-26 21:08+0100\n"
+"POT-Creation-Date: 2026-10-28 00:29+0100\n"
 "PO-Revision-Date: 2024-05-09 22:07+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -20,16 +20,16 @@ msgid "%1 deal left"
 msgid_plural "%1 deals left"
 msgstr[0] "残り %1 局 "
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:191:28
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:193:28
 msgid "%1 fu"
 msgstr "%1 符"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:230:17
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:232:17
 #: app/store/selectors/round.ts:36:15
 msgid "%1 han"
 msgstr "%1 番"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:229:17
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:231:17
 #: app/store/selectors/round.ts:39:12
 msgid "%1 han %2 fu"
 msgstr "%1 番 %2 符"
@@ -38,12 +38,12 @@ msgstr "%1 番 %2 符"
 msgid "%1 ← %2"
 msgstr "%1 ← %2"
 
-#: app/store/selectors/table.ts:414:14
+#: app/store/selectors/table.ts:419:14
 msgid "Abort"
 msgstr "途中流局"
 
-#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:107:24
-#: app/store/selectors/round.ts:178:14 app/store/selectors/table.ts:133:25
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:91:24
+#: app/store/selectors/round.ts:178:14 app/store/selectors/table.ts:136:25
 msgid "Abortive draw"
 msgstr "途中流局"
 
@@ -85,11 +85,15 @@ msgid "Chinroutou"
 msgstr "清老頭"
 
 #: app/components/base/Player/Player.tsx:59:58
-#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:113:22
-#: app/store/selectors/round.ts:191:14 app/store/selectors/table.ts:136:25
-#: app/store/selectors/table.ts:416:14
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:97:22
+#: app/store/selectors/round.ts:191:14 app/store/selectors/table.ts:139:25
+#: app/store/selectors/table.ts:421:14
 msgid "Chombo"
 msgstr "チョンボ"
+
+#: app/components/base/PopupMenu/PopupMenu.tsx:18:19
+msgid "Choose an option"
+msgstr ""
 
 #: app/helpers/yaku.ts:323:34 app/helpers/yaku.ts:324:39
 msgid "Chuuren poutou"
@@ -123,11 +127,15 @@ msgstr "大三元"
 msgid "Daisuushii"
 msgstr "大四喜"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:216:22
+#: app/components/base/NumberSelect/NumberSelect.tsx:67:23
+msgid "Decrease"
+msgstr ""
+
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:218:22
 msgid "Dora %1"
 msgstr "ドラ %1"
 
-#: app/store/selectors/table.ts:412:14
+#: app/store/selectors/table.ts:417:14
 msgid "Draw"
 msgstr "流局"
 
@@ -151,16 +159,16 @@ msgstr "自風：東"
 msgid "Email"
 msgstr "メール"
 
-#: app/components/screens/Home/Home.tsx:111:60
+#: app/components/screens/Home/Home.tsx:118:60
 msgid "Event title"
 msgstr "イベント"
 
-#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:101:22
-#: app/store/selectors/round.ts:166:14 app/store/selectors/table.ts:139:25
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:85:22
+#: app/store/selectors/round.ts:166:14 app/store/selectors/table.ts:142:25
 msgid "Exhaustive draw"
 msgstr "流局"
 
-#: app/components/pages/Penalties/Penalties.tsx:43:12
+#: app/components/pages/Penalties/Penalties.tsx:44:12
 msgid "Failed to load penalties. Connection issues?"
 msgstr "ペナルティを読み込めませんでした。接続を確認してください。"
 
@@ -222,6 +230,10 @@ msgstr "ご不明な点がございましたら、管理者にお問い合わせ
 msgid "Iipeikou"
 msgstr "一盃口"
 
+#: app/components/base/NumberSelect/NumberSelect.tsx:86:23
+msgid "Increase"
+msgstr ""
+
 #: app/helpers/yaku.ts:371:34 app/helpers/yaku.ts:372:39
 msgid "Ippatsu"
 msgstr "一発"
@@ -272,12 +284,12 @@ msgstr "門前清自摸和"
 msgid "Multiron, from %1"
 msgstr "%1 放銃 マルチロン"
 
-#: app/store/selectors/table.ts:418:14
+#: app/store/selectors/table.ts:423:14
 msgid "Nagashi"
 msgstr "流し"
 
-#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:119:24
-#: app/store/selectors/round.ts:204:14 app/store/selectors/table.ts:148:25
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:103:24
+#: app/store/selectors/round.ts:204:14 app/store/selectors/table.ts:151:25
 msgid "Nagashi mangan"
 msgstr "流し満貫"
 
@@ -285,11 +297,15 @@ msgstr "流し満貫"
 msgid "New game"
 msgstr "対局開始"
 
+#: app/components/base/TabbedView/TabbedView.tsx:95:23
+msgid "Next tab"
+msgstr ""
+
 #: app/components/pages/GameResult/GameResult.tsx:84:14
 msgid "No games found"
 msgstr "対局が見つかりません"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:237:18
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:239:18
 msgid "No pao"
 msgstr "パオなし"
 
@@ -297,11 +313,11 @@ msgstr "パオなし"
 msgid "No results found"
 msgstr "結果が見つかりません"
 
-#: app/components/pages/OtherTablesList/OtherTablesList.tsx:49:14
+#: app/components/pages/OtherTablesList/OtherTablesList.tsx:50:14
 msgid "No tables are playing right now"
 msgstr "現在、テーブルでのゲームはありません"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:173:30
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:175:30
 msgid "Nobody selected"
 msgstr "誰も選択しませんでした"
 
@@ -317,7 +333,8 @@ msgstr "場風：北"
 msgid "North seat wind"
 msgstr "自風：北"
 
-#: app/components/pages/Penalties/Penalties.tsx:68:51
+#: app/components/base/ModalDialog/ModalDialog.tsx:47:19
+#: app/components/pages/Penalties/Penalties.tsx:69:51
 msgid "Notice"
 msgstr "お知らせ"
 
@@ -343,7 +360,7 @@ msgstr "他のプレイヤーの対局"
 msgid "Pantheon"
 msgstr "Pantheon"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:166:19
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:167:19
 msgid "Pao"
 msgstr "パオ"
 
@@ -373,6 +390,11 @@ msgstr "役：立直 を選択/解除する場合は、立直プレーヤーの�
 
 #: app/components/pages/Home/Home.tsx:131:14
 msgid "Previous game"
+msgstr "前の対局"
+
+#: app/components/base/TabbedView/TabbedView.tsx:74:23
+#, fuzzy
+msgid "Previous tab"
 msgstr "前の対局"
 
 #: app/helpers/yaku.ts:479:34 app/helpers/yaku.ts:480:39
@@ -411,8 +433,8 @@ msgstr "嶺上"
 msgid "Rinshan kaihou"
 msgstr "嶺上開花"
 
-#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:91:22
-#: app/store/selectors/table.ts:145:25 app/store/selectors/table.ts:408:14
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:75:22
+#: app/store/selectors/table.ts:148:25 app/store/selectors/table.ts:413:14
 msgid "Ron"
 msgstr "ロン"
 
@@ -472,7 +494,7 @@ msgstr "プレイヤーをシャッフル"
 msgid "Sign up"
 msgstr "登録"
 
-#: app/components/pages/Settings/Settings.tsx:152:16
+#: app/components/pages/Settings/Settings.tsx:154:16
 msgid "Single device mode"
 msgstr "シングルデバイスモード"
 
@@ -524,7 +546,7 @@ msgstr "聴牌: %1"
 msgid "Tenhou"
 msgstr "天和"
 
-#: app/components/base/ThemeSelector/ThemeSelector.tsx:18:45
+#: app/components/base/ThemeSelector/ThemeSelector.tsx:19:45
 msgid "Theme"
 msgstr "テーマ"
 
@@ -543,10 +565,11 @@ msgstr "対々和"
 #: app/components/base/YakuAdviceDialog/YakuAdviceDialog.tsx:29:11
 msgid ""
 "Toitoi in a closed hand won by tsumo is Suuankou. Select Suuankou instead?"
-msgstr "門前の手でツモ和了した対々和は四暗刻です。代わりに四暗刻を選択しますか？"
+msgstr ""
+"門前の手でツモ和了した対々和は四暗刻です。代わりに四暗刻を選択しますか？"
 
-#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:96:22
-#: app/store/selectors/table.ts:142:25 app/store/selectors/table.ts:410:14
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:80:22
+#: app/store/selectors/table.ts:145:25 app/store/selectors/table.ts:415:14
 msgid "Tsumo"
 msgstr "ツモ"
 
@@ -558,7 +581,7 @@ msgstr "ツモ, %1"
 msgid "Tsuuiisou"
 msgstr "字一色"
 
-#: app/components/pages/Settings/Settings.tsx:153:22
+#: app/components/pages/Settings/Settings.tsx:155:22
 msgid "Turn on if you use a single device for all players"
 msgstr "全てのプレイヤーで一つのデバイスを使用する場合は有効にしてください"
 
@@ -582,7 +605,7 @@ msgstr "自風：西"
 msgid "White dragon"
 msgstr "白"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:136:25
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:137:25
 #: app/helpers/yaku.ts:234:39
 msgid "Yakuhai"
 msgstr "役牌"
@@ -603,16 +626,16 @@ msgstr "役牌 x3"
 msgid "Yakuhai x4"
 msgstr "役牌 x4"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:226:20
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:227:17
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:228:20
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:229:17
 msgid "Yakuman"
 msgstr "役満"
 
-#: app/components/pages/Penalties/Penalties.tsx:78:14
+#: app/components/pages/Penalties/Penalties.tsx:79:14
 msgid "You don't have any penalties in this event 🎉"
 msgstr "このイベントでのペナルティはありません 🎉"
 
-#: app/components/pages/Penalties/Penalties.tsx:58:40
+#: app/components/pages/Penalties/Penalties.tsx:59:40
 msgid "Your penalties in current event"
 msgstr "現在のイベントでのペナルティ"
 

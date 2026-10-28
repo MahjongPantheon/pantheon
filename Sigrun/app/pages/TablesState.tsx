@@ -53,18 +53,28 @@ export const TablesState: React.FC<{ params: { eventId: string } }> = ({ params:
   );
   const [tableState, setTableState] = useState<EventsGetTablesStateResponse | null>(null);
 
-  // Initial fetch of tables state
   useEffect(() => {
-    api.getTablesState(parseInt(eventId, 10)).then(setTableState);
-  }, []);
-
-  // Update state once in 30s
-  useEffect(() => {
-    const timer = setInterval(() => {
-      api.getTablesState(parseInt(eventId, 10)).then(setTableState);
-    }, 30000);
-    return () => clearInterval(timer);
-  }, []);
+    let cancelled = false;
+    let request = 0;
+    setTableState(null);
+    const load = () => {
+      const current = ++request;
+      api
+        .getTablesState(parseInt(eventId, 10))
+        .then((state) => {
+          if (!cancelled && current === request) setTableState(state);
+        })
+        .catch(() => {
+          // Keep the last successful view and retry on the next poll.
+        });
+    };
+    load();
+    const timer = setInterval(load, 30000);
+    return () => {
+      cancelled = true;
+      clearInterval(timer);
+    };
+  }, [api, eventId]);
 
   if (!events || !tableState) {
     return <Meta />;
@@ -80,7 +90,6 @@ export const TablesState: React.FC<{ params: { eventId: string } }> = ({ params:
   }
 
   const tables = new Map<number, TableState>();
-  const tablesTotal = tables.size;
   let tablesPlaying = 0;
   let tablesFinished = 0;
 
@@ -100,6 +109,7 @@ export const TablesState: React.FC<{ params: { eventId: string } }> = ({ params:
     }
   }
 
+  const tablesTotal = tables.size;
   const tablesIterable = [...tables.entries()]
     .map(([index, table]) => ({ index, table }))
     .sort((a, b) => a.index - b.index);
@@ -129,9 +139,9 @@ export const TablesState: React.FC<{ params: { eventId: string } }> = ({ params:
       <Space h='md' />
 
       <Group style={{ alignItems: 'flex-start' }}>
-        {tablesIterable.map((table, tidx) => (
+        {tablesIterable.map((table) => (
           <Table
-            key={`tbl_${tidx}`}
+            key={table.index}
             table={table.table}
             basePoints={ruleset?.rulesetConfig.startPoints ?? 0}
             index={table.index}
@@ -198,7 +208,7 @@ function Table({
       </Stack>
       <Stack gap={0}>
         {table.players.map((seat, idx) => (
-          <Group key={`st_${idx}`} justify='space-between' style={{ alignItems: 'flex-start' }}>
+          <Group key={seat.id} justify='space-between' style={{ alignItems: 'flex-start' }}>
             <Badge size='xl' radius='sm' p={5} color={colors[idx]}>
               {winds[idx]}
             </Badge>

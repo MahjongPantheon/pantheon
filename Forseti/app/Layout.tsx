@@ -114,7 +114,12 @@ export const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
     window.addEventListener('popstate', track);
     window.addEventListener('pushState', track);
     window.addEventListener('replaceState', track);
-  }, []);
+    return () => {
+      window.removeEventListener('popstate', track);
+      window.removeEventListener('pushState', track);
+      window.removeEventListener('replaceState', track);
+    };
+  }, [analytics]);
 
   useEffect(() => {
     api.quickAuthorize().then((resp) => {

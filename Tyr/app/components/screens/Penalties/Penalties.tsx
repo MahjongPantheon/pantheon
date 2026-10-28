@@ -27,7 +27,7 @@ export const Penalties = (props: IComponentProps) => {
 
   useEffect(() => {
     props.dispatch({ type: GET_PENALTIES_INIT });
-  }, []);
+  }, [props.dispatch, props.state.currentEventId]);
 
   return (
     <PenaltiesPage

@@ -29,8 +29,8 @@ if (fs.existsSync('./node_modules')) {
 
     const app = express.default();
     const PORT = out?.PORT ?? process.env.PORT ?? 4102;
-    createServer(app, out).then((app) =>
-      app.listen(PORT, () => {
+    createServer(app, out).then((server) =>
+      server.listen(PORT, () => {
         console.log('http://localhost:' + PORT);
       })
     );
@@ -149,13 +149,13 @@ export async function createServer(app, env) {
         .replace(`<!--app-server-data-->`, serverData);
       res.status(200);
       res.set({ 'Content-Type': 'text/html' });
-      for (let name in cookies.add) {
+      for (const name in cookies.add) {
         res.cookie(name, cookies.add[name], {
           domain: env.VITE_COOKIE_DOMAIN,
           expires: new Date(Date.now() + 365 * 24 * 3600 * 1000),
         });
       }
-      for (let name of cookies.remove) {
+      for (const name of cookies.remove) {
         res.clearCookie(name, {
           domain: env.VITE_COOKIE_DOMAIN,
           expires: new Date(Date.now() + 365 * 24 * 3600 * 1000),

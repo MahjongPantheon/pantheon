@@ -1,3 +1,4 @@
+import { ActionButton } from '../../base/ActionButton/ActionButton';
 import { useContext } from 'react';
 import { i18n } from '../../i18n';
 import { Button } from '../../base/Button/Button';
@@ -50,7 +51,7 @@ export const OtherTablesList = ({ onTableClick, onBackClick, tables }: IProps) =
           </div>
         )}
         {tables.map((table) => (
-          <div
+          <ActionButton
             key={table.sessionHash}
             data-testid={`tyr-other-tables-table-${table.sessionHash}`}
             className={styles.table}
@@ -68,7 +69,7 @@ export const OtherTablesList = ({ onTableClick, onBackClick, tables }: IProps) =
                 </div>
               ))}
             </div>
-          </div>
+          </ActionButton>
         ))}
       </div>
     </div>

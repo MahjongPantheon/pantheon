@@ -1,3 +1,4 @@
+import { ActionButton } from '../ActionButton/ActionButton';
 import { NumberSelect } from '../NumberSelect/NumberSelect';
 import { UIEvent, useContext, useState } from 'react';
 import { i18n } from '../../i18n';
@@ -164,14 +165,15 @@ export const HandOfPlayer = (props: IProps) => {
             )}
           >
             <div>{loc._t('Pao')}</div>
-            <div
+            <ActionButton
               className={styles.playerSelector}
+              disabled={!props.paoSelectRequired}
               onClick={() => setPaoMenuOpen(true)}
               data-testid={`tyr-hand-player-${props.playerId}-pao-open`}
             >
               {props.pao && <Player {...props.paoPlayers.find((p) => p.id === props.pao)} />}
               {!props.pao && loc._t('Nobody selected')}
-            </div>
+            </ActionButton>
           </div>
         </div>
 
@@ -237,9 +239,9 @@ export const HandOfPlayer = (props: IProps) => {
           label={loc._t('No pao')}
           onClick={() => props.onPaoSelected?.(undefined, props.playerId)}
         />
-        {props.paoPlayers?.map((player, idx) => (
+        {props.paoPlayers?.map((player) => (
           <PopupMenuItem
-            key={`ppl_${idx}`}
+            key={player.id}
             testId={`tyr-hand-player-${props.playerId}-pao-${player.id}`}
             label={<Player {...player} />}
             onClick={() => props.onPaoSelected?.(player.id, props.playerId)}

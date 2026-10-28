@@ -20,11 +20,11 @@ import { Meta } from '@storybook/react-vite';
 import { PageDecorator } from '../../../../.storybook/PageDecorator';
 
 const tabs = [
-  { title: 'Tab 1 content', content: <div>Tab 1 testing content</div> },
-  { title: 'Tab 2 content', content: <div>Tab 2 testing content</div> },
-  { title: 'Tab 3 content', content: <div>Tab 3 testing content</div> },
-  { title: 'Tab 4 content', content: <div>Tab 4 testing content</div> },
-  { title: 'Tab 5 content', content: <div>Tab 5 testing content</div> },
+  { id: 1, title: 'Tab 1 content', content: <div>Tab 1 testing content</div> },
+  { id: 2, title: 'Tab 2 content', content: <div>Tab 2 testing content</div> },
+  { id: 3, title: 'Tab 3 content', content: <div>Tab 3 testing content</div> },
+  { id: 4, title: 'Tab 4 content', content: <div>Tab 4 testing content</div> },
+  { id: 5, title: 'Tab 5 content', content: <div>Tab 5 testing content</div> },
 ];
 
 export default {

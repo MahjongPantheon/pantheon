@@ -243,7 +243,7 @@ export const PlayerStats: React.FC<{
           <Space h='md' />
           <Stack gap={0}>
             {selectedGame.tables.map((seat, idx) => (
-              <Group grow key={`pl_${idx}`}>
+              <Group grow key={seat.playerId}>
                 <DataCmp
                   gap='xs'
                   style={{

@@ -16,7 +16,7 @@
  */
 
 import * as React from 'react';
-import { useCallback, useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { authCtx } from '../../hooks/auth';
 import { useApi } from '../../hooks/api';
 import { useI18n } from '../../hooks/i18n';
@@ -50,6 +50,8 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
   const i18n = useI18n();
   const storage = useStorage();
   const eventId = parseInt(id ?? '0', 10);
+  const reloadGeneration = useRef(0);
+  const activeEventId = useRef<number | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [seatingLoading, setSeatingLoading] = useState(false);
   const [eventConfig, setEventConfig] = useState<null | GameConfig>(null);
@@ -67,6 +69,9 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
     if (!isLoggedIn || !id) {
       return;
     }
+    let cancelled = false;
+    activeEventId.current = eventId;
+    setSecsUntilReload(DEFAULT_SECS_UNTIL_RELOAD);
     nprogress.reset();
     nprogress.start();
     setIsLoading(true);
@@ -78,6 +83,7 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
       api.getTimerState(eventId),
     ])
       .then(([config, prescriptConfig, tables, regs, tState]) => {
+        if (cancelled) return;
         setEventConfig(config);
         setPrescriptedConfig(prescriptConfig);
         setTablesState(tables);
@@ -85,6 +91,7 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
         setTimerState(tState);
       })
       .catch((err: Error) => {
+        if (cancelled) return;
         notifications.show({
           title: i18n._t('Error has occurred'),
           message: err.message,
@@ -92,42 +99,60 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
         });
       })
       .finally(() => {
+        if (cancelled) return;
         nprogress.complete();
         setIsLoading(false);
       });
-  }, [isLoggedIn]);
+    return () => {
+      cancelled = true;
+      activeEventId.current = null;
+      reloadGeneration.current += 1;
+    };
+  }, [isLoggedIn, id, api, eventId, i18n]);
 
-  const errHandler = useCallback((err: Error) => {
-    notifications.show({
-      title: i18n._t('Error has occurred'),
-      message: err.message,
-      color: 'red',
-    });
-  }, []);
+  const errHandler = useCallback(
+    (err: Error) => {
+      notifications.show({
+        title: i18n._t('Error has occurred'),
+        message: err.message,
+        color: 'red',
+      });
+    },
+    [i18n]
+  );
 
   const doReloadConfigAndTables = useCallback(() => {
+    if (activeEventId.current !== eventId) return Promise.resolve();
+    const generation = reloadGeneration.current;
     return Promise.all([
       api.getGameConfig(eventId),
       api.getTablesState(eventId),
       api.getTimerState(eventId),
     ]).then(([cfg, tables, tState]) => {
+      if (generation !== reloadGeneration.current) return;
       setEventConfig(cfg);
       setTablesState(tables);
       setTimerState(tState);
     });
-  }, []);
+  }, [api, eventId]);
 
   const doReloadConfigOnly = useCallback(() => {
+    if (activeEventId.current !== eventId) return Promise.resolve();
+    const generation = reloadGeneration.current;
     return api.getGameConfig(eventId).then((cfg) => {
+      if (generation !== reloadGeneration.current) return;
       setEventConfig(cfg);
     });
-  }, []);
+  }, [api, eventId]);
 
   const doReloadTablesOnly = useCallback(() => {
+    if (activeEventId.current !== eventId) return Promise.resolve();
+    const generation = reloadGeneration.current;
     return api.getTablesState(eventId).then((tables) => {
+      if (generation !== reloadGeneration.current) return;
       setTablesState(tables);
     });
-  }, []);
+  }, [api, eventId]);
 
   const onCancelRound = useCallback(
     (sessionHash: string, intermediateResults: IntermediateResultOfSession[]) => {
@@ -140,30 +165,36 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
         .then(doReloadTablesOnly)
         .catch(errHandler);
     },
-    []
+    [id, api, i18n, doReloadTablesOnly, errHandler]
   );
 
-  const onDefinalize = useCallback((sessionHash: string) => {
-    if (!id) return;
-    api
-      .definalizeGame(sessionHash)
-      .then((r) => {
-        if (!r) throw new Error(i18n._t('Failed to definalize game'));
-      })
-      .then(doReloadTablesOnly)
-      .catch(errHandler);
-  }, []);
+  const onDefinalize = useCallback(
+    (sessionHash: string) => {
+      if (!id) return;
+      api
+        .definalizeGame(sessionHash)
+        .then((r) => {
+          if (!r) throw new Error(i18n._t('Failed to definalize game'));
+        })
+        .then(doReloadTablesOnly)
+        .catch(errHandler);
+    },
+    [id, api, i18n, doReloadTablesOnly, errHandler]
+  );
 
-  const onRemoveGame = useCallback((sessionHash: string) => {
-    if (!id) return;
-    api
-      .cancelGame(sessionHash)
-      .then((r) => {
-        if (!r) throw new Error(i18n._t('Failed to cancel game'));
-      })
-      .then(doReloadTablesOnly)
-      .catch(errHandler);
-  }, []);
+  const onRemoveGame = useCallback(
+    (sessionHash: string) => {
+      if (!id) return;
+      api
+        .cancelGame(sessionHash)
+        .then((r) => {
+          if (!r) throw new Error(i18n._t('Failed to cancel game'));
+        })
+        .then(doReloadTablesOnly)
+        .catch(errHandler);
+    },
+    [id, api, i18n, doReloadTablesOnly, errHandler]
+  );
 
   const onStartTimer = useCallback(() => {
     api
@@ -175,7 +206,7 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
       })
       .then(doReloadConfigAndTables)
       .catch(errHandler);
-  }, []);
+  }, [api, eventId, i18n, doReloadConfigAndTables, errHandler]);
 
   const onAddExtraTime = useCallback(
     (extraTime: number) => {
@@ -192,20 +223,23 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
         .then(doReloadConfigAndTables)
         .catch(errHandler);
     },
-    [tablesState]
+    [api, tablesState, i18n, doReloadConfigAndTables, errHandler]
   );
 
-  const onAddExtraTimeForTable = useCallback((hash: string, extraTime: number) => {
-    api
-      .addExtraTime([hash], extraTime)
-      .then((r) => {
-        if (!r) {
-          throw new Error(i18n._t('Failed to add extra time'));
-        }
-      })
-      .then(doReloadConfigAndTables)
-      .catch(errHandler);
-  }, []);
+  const onAddExtraTimeForTable = useCallback(
+    (hash: string, extraTime: number) => {
+      api
+        .addExtraTime([hash], extraTime)
+        .then((r) => {
+          if (!r) {
+            throw new Error(i18n._t('Failed to add extra time'));
+          }
+        })
+        .then(doReloadConfigAndTables)
+        .catch(errHandler);
+    },
+    [api, i18n, doReloadConfigAndTables, errHandler]
+  );
 
   const notifyPlayers = useCallback(() => {
     api
@@ -216,7 +250,7 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
         }
       })
       .catch(errHandler);
-  }, []);
+  }, [api, eventId, i18n, errHandler]);
 
   const onToggleResults = useCallback(() => {
     api
@@ -228,7 +262,7 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
       })
       .then(doReloadConfigOnly)
       .catch(errHandler);
-  }, []);
+  }, [api, eventId, i18n, doReloadConfigOnly, errHandler]);
 
   const onApproveResults = useCallback(() => {
     api
@@ -240,7 +274,7 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
       })
       .then(doReloadConfigAndTables)
       .catch(errHandler);
-  }, []);
+  }, [api, eventId, i18n, doReloadConfigAndTables, errHandler]);
 
   const onMakeIntervalSeating = useCallback(
     (interval: number, windShuffleMode: WindShuffleMode) => {
@@ -258,56 +292,65 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
           setSeatingLoading(false);
         });
     },
-    []
+    [api, eventId, i18n, doReloadConfigAndTables, errHandler]
   );
 
-  const onMakeRandomSeating = useCallback((windShuffleMode: WindShuffleMode) => {
-    setSeatingLoading(true);
-    api
-      .makeShuffledSeating(eventId, windShuffleMode)
-      .then((r) => {
-        if (!r) {
-          throw new Error(i18n._t('Failed to generate random seating'));
-        }
-      })
-      .then(doReloadConfigAndTables)
-      .catch(errHandler)
-      .finally(() => {
-        setSeatingLoading(false);
-      });
-  }, []);
+  const onMakeRandomSeating = useCallback(
+    (windShuffleMode: WindShuffleMode) => {
+      setSeatingLoading(true);
+      api
+        .makeShuffledSeating(eventId, windShuffleMode)
+        .then((r) => {
+          if (!r) {
+            throw new Error(i18n._t('Failed to generate random seating'));
+          }
+        })
+        .then(doReloadConfigAndTables)
+        .catch(errHandler)
+        .finally(() => {
+          setSeatingLoading(false);
+        });
+    },
+    [api, eventId, i18n, doReloadConfigAndTables, errHandler]
+  );
 
-  const onMakeSwissSeating = useCallback((windShuffleMode: WindShuffleMode) => {
-    setSeatingLoading(true);
-    api
-      .makeSwissSeating(eventId, windShuffleMode)
-      .then((r) => {
-        if (!r) {
-          throw new Error(i18n._t('Failed to generate swiss seating'));
-        }
-      })
-      .then(doReloadConfigAndTables)
-      .catch(errHandler)
-      .finally(() => {
-        setSeatingLoading(false);
-      });
-  }, []);
+  const onMakeSwissSeating = useCallback(
+    (windShuffleMode: WindShuffleMode) => {
+      setSeatingLoading(true);
+      api
+        .makeSwissSeating(eventId, windShuffleMode)
+        .then((r) => {
+          if (!r) {
+            throw new Error(i18n._t('Failed to generate swiss seating'));
+          }
+        })
+        .then(doReloadConfigAndTables)
+        .catch(errHandler)
+        .finally(() => {
+          setSeatingLoading(false);
+        });
+    },
+    [api, eventId, i18n, doReloadConfigAndTables, errHandler]
+  );
 
-  const onMakePrescriptedSeating = useCallback((windShuffleMode: WindShuffleMode) => {
-    setSeatingLoading(true);
-    api
-      .makePrescriptedSeating(eventId, windShuffleMode)
-      .then((r) => {
-        if (!r) {
-          throw new Error(i18n._t('Failed to generate prescripted seating'));
-        }
-      })
-      .then(doReloadConfigAndTables)
-      .catch(errHandler)
-      .finally(() => {
-        setSeatingLoading(false);
-      });
-  }, []);
+  const onMakePrescriptedSeating = useCallback(
+    (windShuffleMode: WindShuffleMode) => {
+      setSeatingLoading(true);
+      api
+        .makePrescriptedSeating(eventId, windShuffleMode)
+        .then((r) => {
+          if (!r) {
+            throw new Error(i18n._t('Failed to generate prescripted seating'));
+          }
+        })
+        .then(doReloadConfigAndTables)
+        .catch(errHandler)
+        .finally(() => {
+          setSeatingLoading(false);
+        });
+    },
+    [api, eventId, i18n, doReloadConfigAndTables, errHandler]
+  );
 
   const onResetSeating = useCallback(() => {
     api
@@ -319,43 +362,45 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
       })
       .then(doReloadConfigAndTables)
       .catch(errHandler);
-  }, []);
+  }, [api, eventId, i18n, doReloadConfigAndTables, errHandler]);
 
-  const onForceFinish = useCallback((sessionHash: string) => {
-    api
-      .forceFinish(sessionHash)
-      .then((r) => {
-        if (!r) {
-          throw new Error(i18n._t('Failed to finish the game'));
-        }
-      })
-      .then(doReloadTablesOnly)
-      .catch(errHandler);
-  }, []);
-
-  let timer: ReturnType<typeof setInterval> | null = null;
-  const reloader = useCallback(() => {
-    setSecsUntilReload((secs) => {
-      if (secs <= 0) {
-        if (timer) {
-          clearInterval(timer);
-          timer = null;
-        }
-        doReloadConfigAndTables().then(() => {
-          setSecsUntilReload(DEFAULT_SECS_UNTIL_RELOAD);
-          timer = setInterval(reloader, 1000);
-        });
-      }
-      return secs - 1;
-    });
-  }, [secsUntilReload]);
+  const onForceFinish = useCallback(
+    (sessionHash: string) => {
+      api
+        .forceFinish(sessionHash)
+        .then((r) => {
+          if (!r) {
+            throw new Error(i18n._t('Failed to finish the game'));
+          }
+        })
+        .then(doReloadTablesOnly)
+        .catch(errHandler);
+    },
+    [api, i18n, doReloadTablesOnly, errHandler]
+  );
 
   useEffect(() => {
-    timer ??= setInterval(reloader, 1000);
+    if (!isLoggedIn || !id) return;
+    const timer = setInterval(() => {
+      setSecsUntilReload((secs) => Math.max(0, secs - 1));
+    }, 1000);
+    return () => clearInterval(timer);
+  }, [isLoggedIn, id]);
+
+  useEffect(() => {
+    if (!isLoggedIn || !id || secsUntilReload > 0) return;
+    let cancelled = false;
+    doReloadConfigAndTables()
+      .catch((err: Error) => {
+        if (!cancelled) errHandler(err);
+      })
+      .finally(() => {
+        if (!cancelled) setSecsUntilReload(DEFAULT_SECS_UNTIL_RELOAD);
+      });
     return () => {
-      if (timer) clearInterval(timer);
+      cancelled = true;
     };
-  }, [timer]);
+  }, [isLoggedIn, id, secsUntilReload, doReloadConfigAndTables, errHandler]);
 
   if (!storage.getPersonId()) {
     return <Redirect to='/profile/login' />;
@@ -400,9 +445,11 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
         loading={false}
         icon={<IconRefresh />}
         onClick={() => {
-          doReloadConfigAndTables().then(() => {
-            setSecsUntilReload(DEFAULT_SECS_UNTIL_RELOAD);
-          });
+          doReloadConfigAndTables()
+            .then(() => {
+              setSecsUntilReload(DEFAULT_SECS_UNTIL_RELOAD);
+            })
+            .catch(errHandler);
         }}
       />
     </Container>

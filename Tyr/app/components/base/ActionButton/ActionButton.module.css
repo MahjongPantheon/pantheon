@@ -1,0 +1,11 @@
+:where(.button) {
+  appearance: none;
+  display: block;
+  margin: 0;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: inherit;
+}

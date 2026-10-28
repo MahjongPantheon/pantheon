@@ -16,6 +16,7 @@ export const Penalties = ({
   onBackClick: () => void;
   // should be compatible with Penalty item from proto
   penaltiesList?: Array<{
+    id: number;
     amount: number;
     reason?: string | null | undefined;
     isCancelled: boolean;
@@ -61,7 +62,7 @@ export const Penalties = ({
         {(penaltiesList?.length ?? 0) > 0 ? (
           penaltiesList?.map((p, idx) => (
             <div
-              key={`pen_${idx}`}
+              key={p.id}
               data-testid={`tyr-penalties-item-${idx}`}
               className={clsx(styles.item, p.isCancelled ? styles.itemCancelled : null)}
             >

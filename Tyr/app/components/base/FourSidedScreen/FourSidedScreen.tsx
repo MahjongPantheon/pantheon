@@ -1,4 +1,4 @@
-import { ReactElement, createRef, useEffect, useState } from 'react';
+import { ReactElement, useEffect, useRef } from 'react';
 import styles from './FourSidedScreen.module.css';
 
 type IProps = {
@@ -18,23 +18,24 @@ export const FourSidedScreen = ({
   center,
   onDimensionChange,
 }: IProps) => {
-  const [innerHeight, setInnerHeight] = useState(0);
-  const [innerWidth, setInnerWidth] = useState(0);
-  const refCenter = createRef<HTMLDivElement>();
+  const refCenter = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handler = () => {
-      setInnerHeight(window.innerHeight);
-      setInnerWidth(window.innerWidth);
+    const element = refCenter.current;
+    if (!element) return;
+    const measure = () => {
+      const { width, height } = element.getBoundingClientRect();
+      onDimensionChange?.({ width, height });
     };
-    window.addEventListener('resize', handler);
-    return () => window.removeEventListener('resize', handler);
-  }, []);
-
-  useEffect(() => {
-    const { left, right, top, bottom } = refCenter.current!.getBoundingClientRect();
-    onDimensionChange?.({ height: bottom - top, width: right - left });
-  }, [innerHeight, innerWidth]);
+    measure();
+    window.addEventListener('resize', measure);
+    const observer = typeof ResizeObserver === 'undefined' ? null : new ResizeObserver(measure);
+    observer?.observe(element);
+    return () => {
+      window.removeEventListener('resize', measure);
+      observer?.disconnect();
+    };
+  }, [onDimensionChange]);
 
   return (
     <svg width='100%' height='100%' xmlns='http://www.w3.org/2000/svg'>

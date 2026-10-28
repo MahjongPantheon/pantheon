@@ -37,9 +37,13 @@ export const useIsomorphicState = <I, R, E extends Error>(
     requests: any[];
     __running: number;
   };
-  const [data, setData] = useState(context[key] ?? initial);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(context[key + '__err'] ?? null);
+  const hasData = Object.prototype.hasOwnProperty.call(context, key);
+  const [state, setState] = useState(() => ({
+    key,
+    data: hasData ? context[key] : initial,
+    error: context[key + '__err'] ?? null,
+    loading: false,
+  }));
   if (context.requests) {
     context.requests.push(
       effect()
@@ -48,30 +52,42 @@ export const useIsomorphicState = <I, R, E extends Error>(
     );
   }
   useEffect(() => {
-    if (context[key]) {
-      setData(context[key]);
-    } else {
-      setLoading(true);
-      if (context.__running !== undefined && context.__running === 0) {
-        nprogress.reset();
-        nprogress.start();
-      }
-      context.__running++;
-      effect()
-        .then((res) => {
-          setData(res);
-        })
-        .catch((err) => {
-          setError(err);
-        })
-        .finally(() => {
-          context.__running--;
-          if (context.__running === 0) {
-            nprogress.complete();
-          }
-          setLoading(false);
-        });
+    let cancelled = false;
+    if (Object.prototype.hasOwnProperty.call(context, key)) {
+      setState({ key, data: context[key], error: null, loading: false });
+      return;
     }
+    setState({ key, data: initial, error: null, loading: true });
+    context.__running = (context.__running ?? 0) + 1;
+    if (context.__running === 1) {
+      nprogress.reset();
+      nprogress.start();
+    }
+    let finished = false;
+    const finish = () => {
+      if (finished) return;
+      finished = true;
+      context.__running--;
+      if (context.__running === 0) nprogress.complete();
+    };
+    effect()
+      .then((data) => {
+        if (!cancelled) setState({ key, data, error: null, loading: false });
+      })
+      .catch((error: E) => {
+        if (!cancelled) setState({ key, data: initial, error, loading: false });
+      })
+      .finally(finish);
+    return () => {
+      cancelled = true;
+      finish();
+    };
   }, dependencies);
-  return [data, error, loading] as [R | undefined, E | null, boolean];
+  // A route can change keys before its effect runs. Never expose the old
+  // route's data in that render or to effects consuming this hook.
+  return (
+    state.key === key
+      ? [state.data, state.error, state.loading]
+      : [hasData ? context[key] : initial, context[key + '__err'] ?? null, false]
+  ) as [R | undefined, E | null, boolean];
 };

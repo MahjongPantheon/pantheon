@@ -74,11 +74,7 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string; copyId?: string 
   const [isSaving, setIsSaving] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
 
-  if (id) {
-    usePageTitle(i18n._t('Edit event :: %1', [eventName]));
-  } else {
-    usePageTitle(i18n._t('New event'));
-  }
+  usePageTitle(id ? i18n._t('Edit event :: %1', [eventName]) : i18n._t('New event'));
 
   const form = useForm<FormFields>({
     initialValues: {

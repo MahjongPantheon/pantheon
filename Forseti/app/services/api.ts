@@ -236,7 +236,12 @@ export class ApiService {
     return fetch(env.urls.meili, {
       method: 'post',
       body: JSON.stringify({ ip: '', action: 'get_countries' }),
-    }).then((res) => res.json());
+    }).then((res) => {
+      if (!res.ok) {
+        throw new Error(`Meili request failed: HTTP ${res.status}`);
+      }
+      return res.json();
+    });
   }
 
   getPersonalInfo(personId: number) {
@@ -390,7 +395,12 @@ export class ApiService {
     return fetch(env.urls.meili, {
       method: 'post',
       body: JSON.stringify({ ip: '', action: 'get_timezones' }),
-    }).then((res) => res.json());
+    }).then((res) => {
+      if (!res.ok) {
+        throw new Error(`Meili request failed: HTTP ${res.status}`);
+      }
+      return res.json();
+    });
   }
 
   getGameConfig(eventId: number) {

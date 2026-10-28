@@ -31,7 +31,7 @@ export const EventSelect = (props: IComponentProps) => {
   const loc = useContext(i18n);
   useEffect(() => {
     props.dispatch({ type: EVENTS_GET_LIST_INIT });
-  }, []);
+  }, [props.dispatch]);
 
   const onBackClick = () => {
     props.dispatch({ type: GOTO_PREV_SCREEN });

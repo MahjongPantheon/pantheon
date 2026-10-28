@@ -1,3 +1,4 @@
+import { ActionButton } from '../ActionButton/ActionButton';
 /* Tyr - Japanese mahjong assistant application
  * Copyright (C) 2016 Oleg Klimenko aka ctizen
  *
@@ -16,7 +17,7 @@
  */
 
 import styles from './Switch.module.css';
-import { useCallback } from 'react';
+import { useCallback, useId } from 'react';
 import clsx from 'classnames';
 
 type SwitchProps = {
@@ -30,19 +31,30 @@ type SwitchProps = {
 export const Switch = (props: SwitchProps) => {
   const { onChange, value, label, description, testId } = props;
 
+  const descriptionId = useId();
   const onClick = useCallback(() => {
     onChange(!value);
   }, [value, onChange]);
 
   return (
     <div className={styles.wrapper}>
-      <div className={styles.switch} onClick={onClick} data-testid={testId}>
+      <ActionButton
+        role='switch'
+        aria-checked={value}
+        aria-label={label}
+        aria-describedby={descriptionId}
+        className={styles.switch}
+        onClick={onClick}
+        data-testid={testId}
+      >
         <div className={clsx(styles.switchBox, value ? styles.switchBoxOn : null)} />
         <div className={clsx(styles.switchButton, value ? styles.switchButtonOn : null)} />
-      </div>
+      </ActionButton>
       <div className={styles.info}>
         <div className={styles.label}>{label}</div>
-        <div className={styles.description}>{description}</div>
+        <div id={descriptionId} className={styles.description}>
+          {description}
+        </div>
       </div>
     </div>
   );
