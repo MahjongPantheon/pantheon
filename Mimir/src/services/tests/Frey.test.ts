@@ -333,6 +333,15 @@ describe('Frey transport', () => {
     expect(headers.get('X-Current-Event-Id')).toBe('');
   });
 
+  it('preserves authentication errors for the caller instead of consuming their response body', async () => {
+    vi.spyOn(globalThis, 'fetch').mockResolvedValue(
+      Response.json({ code: 'invalid_argument', msg: 'Password check failed' }, { status: 400 })
+    );
+    await expect(
+      new FreyService(config, meta).QuickAuthorize({ personId: 12, authToken: 'wrong' })
+    ).rejects.toMatchObject({ code: 'invalid_argument' });
+  });
+
   it('reports internal errors to Hugin and exposes their cause', async () => {
     const transport = vi
       .spyOn(globalThis, 'fetch')

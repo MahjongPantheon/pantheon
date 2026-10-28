@@ -94,7 +94,7 @@ export class FreyService {
       });
 
       if (!resp.ok) {
-        const err = await resp.json();
+        const err = await resp.clone().json();
         // Twirp server error handling
         if (err.code && err.code === 'internal' && err.meta && err.meta.cause) {
           fetch(config.huginUrl, {

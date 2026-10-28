@@ -1,3 +1,4 @@
+import { timingSafeEqual } from 'node:crypto';
 import { createServer, type IncomingMessage } from 'node:http';
 import { InvalidAvatar, uploadAvatar } from './avatars.js';
 
@@ -22,10 +23,25 @@ async function readPayload(request: IncomingMessage): Promise<unknown> {
   }
 }
 
-export function createApp(storagePath = '/var/storage') {
+export function createApp(
+  storagePath = '/var/storage',
+  uploadSecret = process.env.INTERNAL_QUERY_SECRET ?? ''
+) {
   return createServer(async (request, response) => {
     if (request.method !== 'POST') {
       response.writeHead(405, { Allow: 'POST' }).end();
+      return;
+    }
+    const supplied = request.headers['x-internal-query-secret'];
+    if (
+      !uploadSecret ||
+      typeof supplied !== 'string' ||
+      Buffer.byteLength(supplied) !== Buffer.byteLength(uploadSecret) ||
+      !timingSafeEqual(Buffer.from(supplied), Buffer.from(uploadSecret))
+    ) {
+      request.resume();
+      response.writeHead(403, { 'Content-Type': 'application/json' });
+      response.end(JSON.stringify({ error: 'Upload authorization required' }));
       return;
     }
     try {

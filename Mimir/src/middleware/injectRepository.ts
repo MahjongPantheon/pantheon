@@ -1,4 +1,5 @@
-import { Middleware } from 'twirpscript';
+import { TwirpError, type Middleware } from 'twirpscript';
+import { authenticateCaller } from '../helpers/authentication.js';
 import { Context } from '../context.js';
 import { IncomingMessage } from 'http';
 import { Repository } from '../services/Repository.js';
@@ -11,6 +12,13 @@ export function injectRepository(orm: MikroORM): Middleware<Context, IncomingMes
       ctx.repository.mockCache();
       ctx.repository.mockFrey();
       ctx.repository.mockSkirnir();
+    }
+    // Authenticate any claimed identity before models can use it, including player-only actions.
+    if (
+      (ctx.repository.meta.personId || ctx.repository.meta.authToken) &&
+      !(await authenticateCaller(ctx.repository))
+    ) {
+      throw new TwirpError({ code: 'unauthenticated', msg: 'Authentication required' });
     }
     await ctx.repository.cache.connect();
     return next();

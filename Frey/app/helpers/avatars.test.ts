@@ -27,7 +27,7 @@ describe('avatar storage configuration', () => {
 describe('avatar uploads', () => {
   it('keeps the existing image when no replacement was selected', async () => {
     const fetch = vi.spyOn(globalThis, 'fetch');
-    await uploadAvatar('http://storage', 42, '');
+    await uploadAvatar('http://storage', 42, '', 'upload-secret');
     expect(fetch).not.toHaveBeenCalled();
   });
 
@@ -40,7 +40,7 @@ describe('avatar uploads', () => {
         })
     );
     let completed = false;
-    const pending = uploadAvatar('http://storage', 42, 'image-data').then(() => {
+    const pending = uploadAvatar('http://storage', 42, 'image-data', 'upload-secret').then(() => {
       completed = true;
     });
     await Promise.resolve();
@@ -51,6 +51,7 @@ describe('avatar uploads', () => {
     expect(fetch).toHaveBeenCalledWith(
       'http://storage',
       expect.objectContaining({
+        headers: { 'Content-Type': 'application/json', 'X-Internal-Query-Secret': 'upload-secret' },
         body: JSON.stringify({ userId: 42, avatar: 'image-data' }),
       })
     );
@@ -60,11 +61,15 @@ describe('avatar uploads', () => {
     vi.spyOn(globalThis, 'fetch').mockResolvedValue(
       Response.json({ error: 'Invalid image' }, { status })
     );
-    await expect(uploadAvatar('http://storage', 42, 'bad')).rejects.toThrow('Avatar upload failed');
+    await expect(uploadAvatar('http://storage', 42, 'bad', 'upload-secret')).rejects.toThrow(
+      'Avatar upload failed'
+    );
   });
 
   it('rejects legacy error responses even with HTTP 200', async () => {
     vi.spyOn(globalThis, 'fetch').mockResolvedValue(Response.json({ error: 'Failed' }));
-    await expect(uploadAvatar('http://storage', 42, 'bad')).rejects.toThrow('Avatar upload failed');
+    await expect(uploadAvatar('http://storage', 42, 'bad', 'upload-secret')).rejects.toThrow(
+      'Avatar upload failed'
+    );
   });
 });

@@ -31,6 +31,18 @@ and preserves Vitest's failing exit status while still reporting coverage.
 The debug flows (`make test_verbose` and `make test_noserver`) continue to run
 Vitest directly without collecting server coverage.
 
+#### Password recovery and avatar authorization
+
+Password recovery links expire after one hour and are single-use. Requesting a new
+link, changing a password, or a superadmin updating the account email invalidates
+previous links. Reset tokens are random and only their SHA-256 hashes are stored.
+The `20261028-expire-password-reset` migration adds the expiry field and retires
+all previously issued reset links. Apply Frey migrations before deploying this code.
+
+Frey sends `INTERNAL_QUERY_SECRET` to Gullveig for avatar uploads. Configure the
+same nonempty secret in both services and deploy their updates together; public
+clients upload through Frey's authenticated profile API.
+
 #### E2E test data RPCs
 
 The Frey Twirp API at `/v2/common.Frey/` includes `E2eCreateAccounts`,

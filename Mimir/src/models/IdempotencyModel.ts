@@ -1,3 +1,4 @@
+import { authenticateCaller } from '../helpers/authentication.js';
 import { createHash } from 'node:crypto';
 import { TwirpError } from 'twirpscript';
 import { TransactionPropagation } from '@mikro-orm/core';
@@ -26,14 +27,7 @@ function digest(value: unknown): string {
 export class IdempotencyModel extends Model {
   // Validate credentials before looking up a caller's saved response.
   async authenticate() {
-    if (this.repo.meta.isInternalQuery) return;
-    const personId = this.repo.meta.personId;
-    const authToken = this.repo.meta.authToken;
-    if (
-      !personId ||
-      !authToken ||
-      !(await this.repo.frey.QuickAuthorize({ personId, authToken })).authSuccess
-    ) {
+    if (!(await authenticateCaller(this.repo))) {
       throw new TwirpError({ code: 'unauthenticated', msg: 'Authentication required' });
     }
   }

@@ -12,7 +12,7 @@ let url: string;
 
 beforeAll(async () => {
   storage = await mkdtemp(join(tmpdir(), 'gullveig-'));
-  server = createApp(storage);
+  server = createApp(storage, 'upload-secret');
   await new Promise<void>((resolve) => {
     server.listen(0, '127.0.0.1', resolve);
   });
@@ -38,7 +38,7 @@ afterEach(async () => {
 async function upload(payload: unknown) {
   return fetch(url, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json', 'X-Internal-Query-Secret': 'upload-secret' },
     body: JSON.stringify(payload),
   });
 }
@@ -52,6 +52,46 @@ async function fixture(format: 'jpeg' | 'png' | 'gif') {
 }
 
 describe('avatar HTTP uploads', () => {
+  it.each([undefined, '', 'wrong'])(
+    'rejects unauthenticated replacement with secret %s',
+    async (secret) => {
+      await upload({ userId: 42, avatar: await fixture('png') });
+      const path = join(storage, 'files/avatars/user_42.jpg');
+      const before = await readFile(path);
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(secret === undefined ? {} : { 'X-Internal-Query-Secret': secret }),
+        },
+        body: JSON.stringify({ userId: 42, avatar: await fixture('jpeg') }),
+      });
+      expect(response.status).toBe(403);
+      expect(await readFile(path)).toEqual(before);
+    }
+  );
+
+  it('rejects uploads when the shared secret is unconfigured', async () => {
+    const unconfigured = createApp(storage, '');
+    await new Promise<void>((resolve) => {
+      unconfigured.listen(0, '127.0.0.1', resolve);
+    });
+    try {
+      const address = unconfigured.address();
+      if (!address || typeof address === 'string') throw new Error('Missing server address');
+      const response = await fetch(`http://127.0.0.1:${address.port}`, {
+        method: 'POST',
+        headers: { 'X-Internal-Query-Secret': '' },
+        body: '{}',
+      });
+      expect(response.status).toBe(403);
+    } finally {
+      await new Promise<void>((resolve) => {
+        unconfigured.close(() => resolve());
+      });
+    }
+  });
+
   it.each(['jpeg', 'png', 'gif'] as const)('converts %s to a 128px JPEG', async (format) => {
     const response = await upload({ userId: 42, avatar: await fixture(format) });
     expect(response.status).toBe(200);
@@ -125,13 +165,21 @@ describe('avatar HTTP uploads', () => {
   });
 
   it('rejects malformed JSON', async () => {
-    const response = await fetch(url, { method: 'POST', body: '{' });
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: { 'X-Internal-Query-Secret': 'upload-secret' },
+      body: '{',
+    });
     expect(response.status).toBe(400);
     expect(await response.json()).toEqual({ error: 'Invalid JSON' });
   });
 
   it('rejects requests larger than 1MB', async () => {
-    const response = await fetch(url, { method: 'POST', body: 'x'.repeat(1024 * 1024 + 1) });
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: { 'X-Internal-Query-Secret': 'upload-secret' },
+      body: 'x'.repeat(1024 * 1024 + 1),
+    });
     expect(response.status).toBe(400);
   });
 

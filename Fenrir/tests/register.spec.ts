@@ -29,7 +29,7 @@ test('AUTH-001: Visitor can sign up, confirm their email, and log in', async ({ 
   let confirmationPath: string | undefined;
   const captureConfirmation = async (dialog: Dialog) => {
     // Frey returns a code instead of sending email in development.
-    confirmationPath = dialog.message().match(/\/profile\/confirm\/[a-f0-9]{40}\b/)?.[0];
+    confirmationPath = dialog.message().match(/\/profile\/confirm\/[a-f0-9]{64}\b/)?.[0];
     await dialog.accept();
   };
 
@@ -58,7 +58,7 @@ test('AUTH-001: Visitor can sign up, confirm their email, and log in', async ({ 
     });
   } else {
     const message = await getLastMail();
-    confirmationPath = message.match(/\/profile\/confirm\/[a-f0-9]{40}\b/)?.[0];
+    confirmationPath = message.match(/\/profile\/confirm\/[a-f0-9]{64}\b/)?.[0];
   }
   expect(confirmationPath).toBeTruthy();
 

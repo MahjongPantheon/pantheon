@@ -63,6 +63,11 @@ export async function createAccount(
     throw new ActionNotAllowedError('This action is not allowed');
   }
 
+  if (!context.isInternalQuery) {
+    const [caller] = await getCachedPersonalData(db, redisClient, context.personId!);
+    await verifyHash(context.authToken ?? '', caller?.auth_hash ?? '');
+  }
+
   const duplicates = await db
     .selectFrom('person')
     .where('email', '=', personsCreateAccountPayload.email)
@@ -190,6 +195,7 @@ export async function depersonalizeAccount(
         auth_hash: '',
         auth_salt: '',
         auth_reset_token: '',
+        auth_reset_expires_at: null,
       })
       .where('id', '=', context.personId)
       .execute()
@@ -240,7 +246,9 @@ export async function findByMajsoulAccountId(
   let withPrivateData = false;
   if (
     currentPerson[0]?.is_superadmin ||
-    rights.filter((e) => e.acl_name === Rights.GET_PERSONAL_INFO_WITH_PRIVATE_DATA).length > 0
+    rights.filter(
+      (e) => e.acl_name === Rights.GET_PERSONAL_INFO_WITH_PRIVATE_DATA && e.acl_value === 1
+    ).length > 0
   ) {
     await verifyHash(context.authToken ?? '', currentPerson[0]?.auth_hash);
     withPrivateData = true;
@@ -290,7 +298,9 @@ export async function findByTenhouIds(
   let withPrivateData = false;
   if (
     currentPerson[0]?.is_superadmin ||
-    rights.filter((e) => e.acl_name === Rights.GET_PERSONAL_INFO_WITH_PRIVATE_DATA).length > 0
+    rights.filter(
+      (e) => e.acl_name === Rights.GET_PERSONAL_INFO_WITH_PRIVATE_DATA && e.acl_value === 1
+    ).length > 0
   ) {
     await verifyHash(context.authToken ?? '', currentPerson[0]?.auth_hash);
     withPrivateData = true;
@@ -424,14 +434,14 @@ export async function getPersonalInfo(
     db.selectFrom('person_access').where('person_id', '=', context.personId).selectAll().execute(),
   ]);
 
-  let withPrivateData = false;
-  if (
-    currentPersonData[0]?.is_superadmin ||
-    context.personId === payload.ids[0] ||
-    rights.filter((e) => e.acl_name === Rights.GET_PERSONAL_INFO_WITH_PRIVATE_DATA).length > 0
-  ) {
-    await verifyHash(context.authToken ?? '', currentPersonData[0]?.auth_hash);
-    withPrivateData = true;
+  const canReadAllPrivateData =
+    !!currentPersonData[0]?.is_superadmin ||
+    rights.some(
+      (e) => e.acl_name === Rights.GET_PERSONAL_INFO_WITH_PRIVATE_DATA && e.acl_value === 1
+    );
+  const includesSelf = context.personId !== null && payload.ids.includes(context.personId);
+  if (canReadAllPrivateData || includesSelf) {
+    await verifyHash(context.authToken ?? '', currentPersonData[0]?.auth_hash ?? '');
   }
 
   return {
@@ -441,8 +451,8 @@ export async function getPersonalInfo(
       tenhouId: r.tenhou_id ?? '',
       title: r.title,
       country: r.country,
-      email: withPrivateData ? r.email : '',
-      phone: withPrivateData ? (r.phone ?? '') : '',
+      email: canReadAllPrivateData || r.id === context.personId ? r.email : '',
+      phone: canReadAllPrivateData || r.id === context.personId ? (r.phone ?? '') : '',
       hasAvatar: r.has_avatar === 1,
       lastUpdate: (r.last_update ? new Date(r.last_update) : new Date()).toISOString(),
       msNickname: r.nickname ?? '',
@@ -518,7 +528,7 @@ export async function updatePersonalInfo(
     throw new DataMalformedError('Some of required field are empty');
   }
   // Do not persist a successful profile update until storage has accepted the image.
-  await uploadAvatar(env.gullveigUrl, payload.id, payload.avatarData);
+  await uploadAvatar(env.gullveigUrl, payload.id, payload.avatarData, env.internalQuerySecret);
 
   const promises = [];
   if (env.userinfoHook) {
@@ -556,6 +566,8 @@ export async function updatePersonalInfo(
   if (isSuperadmin) {
     // allow superadmin to change emails of users
     value.email = payload.email;
+    value.auth_reset_token = null;
+    value.auth_reset_expires_at = null;
   }
 
   promises.push(db.updateTable('person').set(value).where('id', '=', payload.id).execute());

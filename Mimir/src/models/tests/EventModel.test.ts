@@ -19,7 +19,10 @@ import { Repository } from '../../services/Repository.js';
 import { init } from '../../tests/initOrm.js';
 
 const orm = await init();
-const repo = Repository.instance({ 'x-current-person-id': '42' }, orm);
+const repo = Repository.instance(
+  { 'x-current-person-id': '42', 'x-auth-token': 'test-token' },
+  orm
+);
 repo.mockFrey();
 const model = Model.getModel(repo, EventModel);
 const eventData = {
@@ -88,6 +91,35 @@ describe('Event creation', () => {
       }
     );
   });
+
+  it.each([true, false])(
+    'restricts platform changes to superadmins, isAdmin: %s',
+    async (isAdmin) => {
+      const { eventId } = await model.createEvent({
+        ...eventData,
+        type: EventType.EVENT_TYPE_ONLINE,
+        platformId: PlatformType.PLATFORM_TYPE_TENHOUNET,
+      });
+      await repo.em.flush();
+      vi.spyOn(repo.frey, 'GetSuperadminFlag').mockResolvedValue({ isAdmin });
+      vi.spyOn(repo.frey, 'GetEventAdmins').mockResolvedValue({
+        admins: [
+          { personId: 42, ruleId: 1, personName: 'Admin', hasAvatar: false, lastUpdate: '' },
+        ],
+      });
+      const { event } = await model.getEventForEdit({ id: eventId });
+      await model.updateEvent({
+        id: eventId,
+        event: { ...event, platformId: PlatformType.PLATFORM_TYPE_MAHJONGSOUL },
+      });
+      await repo.em.flush();
+      repo.em.clear();
+      const saved = await repo.em.findOneOrFail(EventEntity, { id: eventId });
+      expect(saved.onlinePlatform).toBe(
+        isAdmin ? PlatformType.PLATFORM_TYPE_MAHJONGSOUL : PlatformType.PLATFORM_TYPE_TENHOUNET
+      );
+    }
+  );
 
   it('returns only requested event states, including finished and unlisted events', async () => {
     const first = await model.createEvent({ ...eventData, isListed: false });

@@ -1,3 +1,4 @@
+import { authenticateCaller } from '../helpers/authentication.js';
 import { TransactionPropagation } from '@mikro-orm/core';
 import { PersonEx, Player } from 'tsclients/proto/atoms.pb.js';
 import { Model } from './Model.js';
@@ -174,7 +175,7 @@ export class PlayerModel extends Model {
     return this.repo.em.transactional(
       async () => {
         const personId = this.repo.meta.personId;
-        if (!personId) return false;
+        if (!personId || !(await authenticateCaller(this.repo))) return false;
         const isSuperadmin = await this.repo.frey.GetSuperadminFlag({ personId });
         if (isSuperadmin.isAdmin) return true;
         const data = await this.repo.frey.GetEventAdmins({ eventId });
@@ -186,7 +187,7 @@ export class PlayerModel extends Model {
 
   async isEventReferee(eventId: number) {
     const personId = this.repo.meta.personId;
-    if (!personId) return false;
+    if (!personId || !(await authenticateCaller(this.repo))) return false;
     const data = await this.repo.frey.GetEventReferees({ eventId });
     return data.referees.some((referee) => referee.personId === personId);
   }

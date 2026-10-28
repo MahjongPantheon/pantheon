@@ -91,3 +91,13 @@ describe('Request metadata', () => {
     expect(new MetaService({}, config).isInternalQuery).toBe(false);
   });
 });
+
+it('does not trust an empty internal secret when the service is unconfigured', () => {
+  const config = new ConfigService();
+  const secret = vi.spyOn(config, 'internalQuerySecret', 'get').mockReturnValue('');
+  try {
+    expect(new MetaService({ 'x-internal-query-secret': '' }, config).isInternalQuery).toBe(false);
+  } finally {
+    secret.mockRestore();
+  }
+});

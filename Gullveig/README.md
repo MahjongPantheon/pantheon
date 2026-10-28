@@ -12,6 +12,11 @@ Gullveig uses TypeScript on Node.js. nginx serves `/files/` from the existing
 `gullveigstorage01` volume and `/static/` from `www/static`, including the shared fonts.
 No storage migration is needed.
 
+Uploads require the `X-Internal-Query-Secret` header matching the nonempty
+`INTERNAL_QUERY_SECRET` shared with Frey; missing configuration or credentials return
+HTTP 403. Clients upload through Frey after its user permission checks. Public reads
+of `/files/` and `/static/` continue through nginx.
+
 POST JSON to `/` with `{ "userId": 42, "avatar": "data:image/png;base64,..." }`.
 JPEG, PNG and GIF inputs up to 512 KB are cropped to the center and saved as
 128×128 JPEGs at `/files/avatars/user_42.jpg` (quality 85). Transparent pixels

@@ -52,8 +52,9 @@ export class MetaService {
 
   get isInternalQuery() {
     return (
+      !!this.config.internalQuerySecret &&
       this.headers['X-Internal-Query-Secret'.toLowerCase()]?.toString() ===
-      this.config.internalQuerySecret
+        this.config.internalQuerySecret
     );
   }
 

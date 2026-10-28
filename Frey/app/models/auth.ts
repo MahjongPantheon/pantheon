@@ -1,3 +1,4 @@
+import { randomBytes, createHash } from 'node:crypto';
 import {
   AuthApproveRegistrationPayload,
   AuthApproveRegistrationResponse,
@@ -18,7 +19,7 @@ import {
 import { makeClientHash, makeHashes, verifyHash } from '../helpers/auth';
 import { Database } from '../database/db';
 import { emailRe } from '../helpers/email';
-import { calcPasswordStrength, sha1 } from '../helpers/crypto';
+import { calcPasswordStrength } from '../helpers/crypto';
 import { sendAlreadyRegisteredMail, sendPasswordRecovery, sendSignupMail } from '../helpers/mailer';
 import { Context } from '../context';
 import { getCachedPersonalData } from '../helpers/cache/personalData';
@@ -117,28 +118,36 @@ export async function approveResetPassword(
     throw new NotFoundError('Email is not known to the system');
   }
 
-  if (payload.resetToken === '' || regData[0].auth_reset_token !== payload.resetToken) {
+  const tokenHash = createHash('sha256').update(payload.resetToken).digest('hex');
+  if (
+    !payload.resetToken ||
+    regData[0].auth_reset_token !== tokenHash ||
+    !regData[0].auth_reset_expires_at ||
+    new Date(regData[0].auth_reset_expires_at).getTime() <= Date.now()
+  ) {
     throw new InvalidInputError('Password reset approval code is incorrect.');
   }
 
-  const newPassword = sha1(payload.email + Date.now().toString()).slice(0, 8);
+  const newPassword = randomBytes(18).toString('base64url');
   const tokens = await makeHashes(newPassword);
 
-  const promises = [];
-  promises.push(
-    db
-      .updateTable('person')
-      .set({
-        email: regData[0].email,
-        auth_salt: tokens.salt,
-        auth_hash: tokens.hash,
-      })
-      .where('id', '=', regData[0].id)
-      .execute()
-  );
-  promises.push(redisClient.remove(getPersonalInfoCacheKey(regData[0].id)));
-
-  await Promise.all(promises);
+  // Consume the token with the password update so concurrent redemptions cannot both succeed.
+  const updated = await db
+    .updateTable('person')
+    .set({
+      auth_salt: tokens.salt,
+      auth_hash: tokens.hash,
+      auth_reset_token: null,
+      auth_reset_expires_at: null,
+    })
+    .where('id', '=', regData[0].id)
+    .where('auth_reset_token', '=', tokenHash)
+    .where('auth_reset_expires_at', '>', new Date().toISOString())
+    .executeTakeFirst();
+  if (updated.numUpdatedRows !== 1n) {
+    throw new InvalidInputError('Password reset approval code is incorrect.');
+  }
+  await redisClient.remove(getPersonalInfoCacheKey(regData[0].id));
 
   return { newTmpPassword: newPassword };
 }
@@ -166,21 +175,21 @@ export async function changePassword(
 
   const tokens = await makeHashes(payload.newPassword);
 
-  const promises = [];
-  promises.push(
-    db
-      .updateTable('person')
-      .set({
-        email: regData[0].email,
-        auth_salt: tokens.salt,
-        auth_hash: tokens.hash,
-      })
-      .where('id', '=', regData[0].id)
-      .execute()
-  );
-  promises.push(redisClient.remove(getPersonalInfoCacheKey(regData[0].id)));
-
-  await Promise.all(promises);
+  const updated = await db
+    .updateTable('person')
+    .set({
+      auth_salt: tokens.salt,
+      auth_hash: tokens.hash,
+      auth_reset_token: null,
+      auth_reset_expires_at: null,
+    })
+    .where('id', '=', regData[0].id)
+    .where('auth_hash', '=', regData[0].auth_hash)
+    .executeTakeFirst();
+  if (updated.numUpdatedRows !== 1n) {
+    throw new InvalidInputError('Password check failed');
+  }
+  await redisClient.remove(getPersonalInfoCacheKey(regData[0].id));
   return { authToken: tokens.clientHash };
 }
 
@@ -267,7 +276,7 @@ export async function requestRegistration(
   }
 
   const tokens = await makeHashes(payload.password);
-  const approvalCode = sha1(payload.email + Date.now().toString());
+  const approvalCode = randomBytes(32).toString('hex');
   await db
     .insertInto('registrant')
     .values({
@@ -302,13 +311,17 @@ export async function requestResetPassword(
     throw new NotFoundError('Email in not known to auth system');
   }
 
-  const token = sha1(payload.email + Date.now().toString());
+  const token = randomBytes(32).toString('hex');
+  const tokenHash = createHash('sha256').update(token).digest('hex');
 
   const promises = [];
   promises.push(
     db
       .updateTable('person')
-      .set({ auth_reset_token: token })
+      .set({
+        auth_reset_token: tokenHash,
+        auth_reset_expires_at: new Date(Date.now() + 60 * 60 * 1000).toISOString(),
+      })
       .where('id', '=', result[0].id)
       .execute()
   );

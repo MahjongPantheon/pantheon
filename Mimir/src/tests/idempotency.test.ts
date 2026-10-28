@@ -60,7 +60,10 @@ it('replays concurrent event creation with the original event ID', async () => {
 });
 
 it('keeps an event after a failed permission grant and resumes without recreating it', async () => {
-  const repo = Repository.instance({ 'x-current-person-id': '42' }, orm);
+  const repo = Repository.instance(
+    { 'x-current-person-id': '42', 'x-auth-token': 'test-token' },
+    orm
+  );
   repo.mockFrey();
   const model = Model.getModel(repo, EventModel);
   const request = EventData.initialize({

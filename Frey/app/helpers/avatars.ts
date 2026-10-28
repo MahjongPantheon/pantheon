@@ -16,12 +16,17 @@ export function getGullveigUrl(
   );
 }
 
-export async function uploadAvatar(url: string, personId: number, avatarData: string) {
+export async function uploadAvatar(
+  url: string,
+  personId: number,
+  avatarData: string,
+  uploadSecret: string
+) {
   // An ordinary profile edit keeps the previously uploaded file.
   if (!avatarData) return;
   const response = await fetch(url, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json', 'X-Internal-Query-Secret': uploadSecret },
     body: JSON.stringify({ userId: personId, avatar: avatarData }),
     signal: AbortSignal.timeout(10_000),
   });

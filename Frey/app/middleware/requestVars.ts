@@ -32,6 +32,7 @@ export function fillRequestVars(): Middleware<Context, IncomingMessage> {
       null;
 
     ctx.isInternalQuery =
+      !!env.internalQuerySecret &&
       req.headers['X-Internal-Query-Secret'.toLowerCase()]?.toString() === env.internalQuerySecret;
 
     return next();

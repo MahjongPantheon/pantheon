@@ -373,6 +373,8 @@ describe('Session previews and finalization', () => {
 
 describe('Event role cancellation permissions', () => {
   beforeEach(() => {
+    vi.spyOn(repo.meta, 'authToken', 'get').mockReturnValue('test-token');
+    vi.spyOn(repo.frey, 'QuickAuthorize').mockResolvedValue({ authSuccess: true });
     vi.spyOn(repo.em, 'transactional').mockImplementation(async (callback) => callback(repo.em));
     vi.spyOn(repo.em, 'persist').mockReturnValue(repo.em);
     vi.spyOn(repo.em, 'remove').mockReturnValue(repo.em);

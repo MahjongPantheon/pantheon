@@ -21,10 +21,12 @@ Use a stable ID and one Markdown file per case, named `<lowercase-id>-<scenario>
 | [UI-003](ui-003-forseti-drawer-swipe.md)               | Dismiss the narrow-screen drawer with a deliberate left swipe                           | `UI-003: Visitor can dismiss the narrow-screen drawer with a left swipe` in `tests/forseti-layout.spec.ts`                                        |
 | [UI-004](ui-004-sigrun-display-preferences.md)         | Retain Sigrun display preferences and navigate desktop, tablet, and mobile menus        | `UI-004: Visitor can navigate Sigrun and retain display preferences on desktop/tablet/mobile` in `tests/sigrun-ui.spec.ts`                        |
 | [UI-005](ui-005-sigrun-drawer-swipe.md)                | Dismiss Sigrun navigation with a deliberate left swipe and matching close-button target | `UI-005: Visitor can dismiss Sigrun navigation with a left swipe at 375px/900px` in `tests/sigrun-ui.spec.ts`                                     |
+| [AUTH-004](auth-004-password-recovery.md) | Complete recovery, log in, and reject reuse of a consumed link | `AUTH-004: Account owner can reset a password once and log in with the new password` in `tests/recovery.spec.ts` |
+| [AUTH-005](auth-005-avatar-authorization.md) | Upload an avatar through Frey and deny direct anonymous replacement | `AUTH-005: Account owner can upload an avatar through Frey while direct replacement is denied` in `tests/avatars.spec.ts` |
 
 SMOKE-005 and SMOKE-006 share the [complete yaku hand catalogue](smoke-hand-catalogue.md) and explicit per-game score fixtures. Each event covers all 46 yaku, compatible combinations, and varied fu/dora; their per-attempt budgets are 30 and 60 minutes respectively.
 
-These descriptions cover all existing tests; improvements and coverage limits are identified separately. AUTH-003 covers navigation to password recovery, not the password-reset journey.
+These descriptions cover all existing tests; improvements and coverage limits are identified separately. AUTH-003 covers navigation to password recovery; AUTH-004 covers the password-reset journey.
 
 For implementation, follow the Fenrir guidance in [AGENTS.md](../../AGENTS.md). Assert every documented expected result and keep the description aligned with the implementation. Use setup helpers for unrelated prerequisites so cases remain independent.
 

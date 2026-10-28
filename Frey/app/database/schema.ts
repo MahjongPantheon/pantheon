@@ -21,6 +21,7 @@ export interface Person {
    * This field stores temporary secure token if user requests changing his password
    */
   auth_reset_token: string | null;
+  auth_reset_expires_at: string | null;
   /**
    * App-level salt to make client-side permanent token
    */

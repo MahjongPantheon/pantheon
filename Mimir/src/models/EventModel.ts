@@ -992,9 +992,11 @@ export class EventModel extends Model {
 
         if (
           this.repo.meta.personId &&
-          (await this.repo.frey.GetSuperadminFlag({
-            personId: this.repo.meta.personId,
-          }))
+          (
+            await this.repo.frey.GetSuperadminFlag({
+              personId: this.repo.meta.personId,
+            })
+          ).isAdmin
         ) {
           event.onlinePlatform = eventData.event.platformId;
         } else {
