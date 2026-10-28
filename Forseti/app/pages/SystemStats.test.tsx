@@ -13,7 +13,7 @@ const storage = { getPersonId: () => 1 };
 vi.mock('../hooks/api', () => ({ useApi: () => api }));
 vi.mock('../hooks/i18n', () => ({ useI18n: () => i18n }));
 vi.mock('../hooks/storage', () => ({ useStorage: () => storage }));
-vi.mock('../components/LineGraph', () => ({ default: () => <div>Chart</div> }));
+vi.mock('@mantine/charts', () => ({ AreaChart: () => <div>Chart</div> }));
 vi.mock('@mantine/notifications', () => ({ notifications: { show } }));
 vi.mock('wouter', () => ({
   Redirect: () => <div>Redirected</div>,
@@ -74,4 +74,16 @@ it('reports request failures and allows loading a different period', async () =>
   await render(PrivilegesLevel.SUPERADMIN, false, 'lastmonth');
   expect(api.getLastMonthStats).toHaveBeenCalledOnce();
   expect(container.textContent).toContain('Chart');
+});
+
+it('shows totals matching the aggregated chart data', async () => {
+  api.getLastDayStats.mockResolvedValue([
+    { datetime: '01', siteId: 'Tyr', uniqCount: 2 },
+    { datetime: '01', siteId: 'Forseti', uniqCount: 3 },
+    { datetime: '02', siteId: 'Tyr', uniqCount: 4 },
+  ]);
+  await render(PrivilegesLevel.SUPERADMIN);
+  expect(container.textContent).toContain('Total by uniqCount: 9');
+  const row = container.querySelector('tbody tr');
+  expect(row?.textContent).toBe('uniqCount9');
 });

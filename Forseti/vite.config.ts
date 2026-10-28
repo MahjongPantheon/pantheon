@@ -67,13 +67,7 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: function manualChunks(id) {
-          if (
-            id.includes('BarGraph') ||
-            id.includes('LineGraph') ||
-            id.includes('chartjs-plugin-zoom') ||
-            id.includes('react-chartjs-2') ||
-            id.includes('chart.js')
-          ) {
+          if (id.includes('@mantine/charts') || id.includes('recharts')) {
             return 'graphs';
           }
           if (id.includes('node_modules')) {
