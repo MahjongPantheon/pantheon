@@ -462,6 +462,8 @@ export async function setNotificationsSettings(
   if (!context.personId || !context.authToken) {
     throw new ActionNotAllowedError('Should be logged in to use this function');
   }
+  const [caller] = await getCachedPersonalData(db, redisClient, context.personId);
+  await verifyHash(context.authToken, caller?.auth_hash ?? '');
 
   const data = await getCachedPersonalData(db, redisClient, payload.personId);
 
@@ -474,12 +476,6 @@ export async function setNotificationsSettings(
 
   if (payload.personId !== context.personId && !isSuperadmin) {
     throw new ActionNotAllowedError('You can only update your own settings');
-  }
-
-  const [personData] = data;
-
-  if (!isSuperadmin) {
-    await verifyHash(context.authToken, personData.auth_hash);
   }
 
   await Promise.all([
@@ -506,9 +502,14 @@ export async function updatePersonalInfo(
     throw new DataMalformedError('Some of required field are empty');
   }
 
-  const isSuperadmin = (
-    await getSuperadminFlag(db, redisClient, { personId: context.personId ?? -1 })
-  ).isAdmin;
+  if (!context.personId || !context.authToken) {
+    throw new ActionNotAllowedError('Should be logged in to use this function');
+  }
+  const [caller] = await getCachedPersonalData(db, redisClient, context.personId);
+  await verifyHash(context.authToken, caller?.auth_hash ?? '');
+
+  const isSuperadmin = (await getSuperadminFlag(db, redisClient, { personId: context.personId }))
+    .isAdmin;
   if (context.personId !== payload.id && !isSuperadmin) {
     throw new ActionNotAllowedError('This action is not allowed');
   }

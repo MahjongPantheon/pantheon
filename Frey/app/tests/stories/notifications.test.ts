@@ -1,5 +1,5 @@
 import { createUser, getAdminCreds, makeFreyClient, makeUniqueEmail } from '../helpers';
-import { ActionNotAllowedError, NotFoundError } from '../../helpers/errors';
+import { ActionNotAllowedError, InvalidInputError, NotFoundError } from '../../helpers/errors';
 
 describe('Notifications', () => {
   const frey = makeFreyClient();
@@ -50,6 +50,25 @@ describe('Notifications', () => {
         }
       )
     ).resolves.toMatchObject({ success: true });
+  });
+
+  it('should not update notifications settings with a spoofed superadmin id and invalid token', async () => {
+    const adminCreds = await getAdminCreds();
+    const victim = await createUser(frey, makeUniqueEmail());
+    await expect(
+      frey.SetNotificationsSettings(
+        { personId: victim.personId, notifications: 'hijacked', telegramId: 'attacker_id' },
+        {
+          headers: {
+            'x-current-person-id': adminCreds.id.toString(),
+            'x-auth-token': 'wrong',
+          },
+        }
+      )
+    ).rejects.toEqual(new InvalidInputError('Password check failed'));
+    await expect(
+      frey.GetNotificationsSettings({ personId: victim.personId })
+    ).resolves.toMatchObject({ notifications: '', telegramId: '' });
   });
 
   it('should not update notifications settings without authorization', async () => {
