@@ -170,9 +170,9 @@ export const ManagementTab: React.FC<{
                 excludePlayers={players.map((p) => p.id)}
                 placeholder={i18n._t('Find and add player by name...')}
                 onPlayerSelect={(newPlayer) => {
-                  api.registerPlayer(newPlayer.id, eventId).then((success) => {
+                  api.registerPlayer(newPlayer.id, eventId).then(async (success) => {
                     if (success) {
-                      setPlayers([newPlayer, ...players]);
+                      setPlayers(await api.getAllPlayers(eventId));
                     }
                   });
                 }}

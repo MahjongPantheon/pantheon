@@ -1,4 +1,4 @@
-import { TransactionPropagation } from '@mikro-orm/core';
+import { LockMode, TransactionPropagation } from '@mikro-orm/core';
 import { EventRegisteredPlayersEntity } from '../entities/EventRegisteredPlayers.entity.js';
 import { Model } from './Model.js';
 import { EventEntity } from '../entities/Event.entity.js';
@@ -65,16 +65,56 @@ export class EventRegistrationModel extends Model {
   }
 
   async updateLocalIds(eventId: number, idMap: LocalIdMapping[]) {
-    return this.repo.em.upsertMany(
-      EventRegisteredPlayersEntity,
-      idMap.map(({ playerId, localId }) => ({
-        playerId,
-        event: this.repo.em.getReference(EventEntity, eventId),
-        localId,
-        ignoreSeating: 0,
-      })),
-      { onConflictFields: ['event', 'localId'] }
+    const registrations = await this.findByEventId([eventId]);
+    const byPlayerId = new Map(
+      registrations.map((registration) => [registration.playerId, registration])
     );
+    if (byPlayerId.size !== registrations.length) {
+      throw new Error(
+        `Event ${eventId} has duplicate registrations; repair them before assigning local IDs`
+      );
+    }
+
+    const playerIds = new Set<number>();
+    const localIds = new Set<number>();
+    for (const { playerId, localId } of idMap) {
+      if (!byPlayerId.has(playerId)) {
+        throw new Error(`Player ${playerId} is not registered for event ${eventId}`);
+      }
+      if (playerIds.has(playerId)) {
+        throw new Error(`Player ${playerId} occurs more than once in the local ID mapping`);
+      }
+      if (!Number.isInteger(localId) || localId <= 0 || localId > 2147483647) {
+        throw new Error('Local IDs must be positive 32-bit integers');
+      }
+      if (localIds.has(localId)) {
+        throw new Error(`Local ID ${localId} is assigned more than once`);
+      }
+      playerIds.add(playerId);
+      localIds.add(localId);
+    }
+    for (const registration of registrations) {
+      if (
+        !playerIds.has(registration.playerId) &&
+        registration.localId != null &&
+        localIds.has(registration.localId)
+      ) {
+        throw new Error(
+          `Local ID ${registration.localId} belongs to a player outside the submitted mapping`
+        );
+      }
+    }
+
+    // Free only the submitted players' IDs before assigning them, so swaps work
+    // with the immediate unique constraint on (event_id, local_id).
+    for (const { playerId } of idMap) {
+      byPlayerId.get(playerId)!.localId = null;
+    }
+    await this.repo.em.flush();
+    for (const { playerId, localId } of idMap) {
+      byPlayerId.get(playerId)!.localId = localId;
+    }
+    await this.repo.em.flush();
   }
 
   async updateTeamNames(eventId: number, teamMap: TeamMapping[]) {
@@ -82,12 +122,23 @@ export class EventRegistrationModel extends Model {
     const byPlayerId = new Map(
       registrations.map((registration) => [registration.playerId, registration])
     );
-    for (const { playerId, teamName } of teamMap) {
-      const registration = byPlayerId.get(playerId);
-      if (!registration) {
+    if (byPlayerId.size !== registrations.length) {
+      throw new Error(
+        `Event ${eventId} has duplicate registrations; repair them before assigning teams`
+      );
+    }
+    const playerIds = new Set<number>();
+    for (const { playerId } of teamMap) {
+      if (!byPlayerId.has(playerId)) {
         throw new Error(`Player ${playerId} is not registered for event ${eventId}`);
       }
-      registration.teamName = teamName;
+      if (playerIds.has(playerId)) {
+        throw new Error(`Player ${playerId} occurs more than once in the team mapping`);
+      }
+      playerIds.add(playerId);
+    }
+    for (const { playerId, teamName } of teamMap) {
+      byPlayerId.get(playerId)!.teamName = teamName;
     }
   }
 
@@ -310,6 +361,10 @@ export class EventRegistrationModel extends Model {
           throw new Error("You don't have the necessary permissions to update players' local IDs");
         }
 
+        // Serialize local-ID forms for this event, including their temporary clears.
+        await this.repo.em.findOneOrFail(EventEntity, eventId, {
+          lockMode: LockMode.PESSIMISTIC_WRITE,
+        });
         await this.updateLocalIds(eventId, idsToLocalIds);
 
         return { success: true };

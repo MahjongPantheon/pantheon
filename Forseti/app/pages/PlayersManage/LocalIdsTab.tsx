@@ -39,7 +39,8 @@ import { PlayerAvatar } from '../../components/PlayerAvatar';
 export const LocalIdsTab: React.FC<{
   eventId: number;
   players: RegisteredPlayer[];
-}> = ({ eventId, players }) => {
+  setPlayers: (players: RegisteredPlayer[]) => void;
+}> = ({ eventId, players, setPlayers }) => {
   const api = useApi();
   const i18n = useI18n();
   const theme = useMantineTheme();
@@ -61,8 +62,9 @@ export const LocalIdsTab: React.FC<{
     setIsSaved(false);
     api
       .updateLocalIds(eventId, localIds)
-      .then((success) => {
+      .then(async (success) => {
         if (success) {
+          setPlayers(await api.getAllPlayers(eventId));
           setIsSaved(true);
           setTimeout(() => setIsSaved(false), 5000);
         }
@@ -75,7 +77,7 @@ export const LocalIdsTab: React.FC<{
         });
       })
       .finally(() => setIsSaving(false));
-  }, [players, eventId, localIds]);
+  }, [api, i18n, setPlayers, eventId, localIds]);
 
   return (
     <>

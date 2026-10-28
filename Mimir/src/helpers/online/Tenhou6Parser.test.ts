@@ -569,11 +569,7 @@ describe('Tenhou6ParserTest', () => {
       }
     );
 
-    const reg = new EventRegisteredPlayersEntity();
-    reg.playerId = 5;
-    reg.event = event;
-    reg.ignoreSeating = 0;
-    await repo.em.persist(reg).flush();
+    // Player 5 is already registered by prepareTestEntities.
 
     const [sessionEntity, results, rounds] = await new Tenhou6OnlineParser(repo).parseToSession(
       event,

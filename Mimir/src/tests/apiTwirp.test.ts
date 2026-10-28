@@ -2284,6 +2284,88 @@ describe('Mimir Twirp API', () => {
     await mimirClient.RegisterPlayer(eventId, 948);
     await mimirClient.RegisterPlayer(eventId, 2597);
 
+    // Changing identifiers must never insert registrations or move player identity.
+    const dbConfig = new ConfigService().db;
+    const db = new Client({
+      host: dbConfig.host,
+      port: dbConfig.port,
+      user: dbConfig.username,
+      password: dbConfig.password,
+      database: 'mimir2_unit',
+    });
+    await db.connect();
+    try {
+      await db.query(
+        'update event_registered_players set ignore_seating = 1, replacement_id = 999, team_name = $1 where event_id = $2 and player_id = 2517',
+        ['Regression team', eventId]
+      );
+      const snapshot = async () =>
+        (
+          await db.query('select * from event_registered_players where event_id = $1 order by id', [
+            eventId,
+          ])
+        ).rows;
+      const before = await snapshot();
+      const save = (idsToLocalIds: { playerId: number; localId: number }[]) =>
+        mimirClient.UpdatePlayersLocalIds({ eventId, idsToLocalIds });
+      await save([
+        { playerId: 2517, localId: 9 },
+        { playerId: 743, localId: 10 },
+      ]);
+      expect(await snapshot()).toEqual(
+        before.map((row) => ({
+          ...row,
+          local_id: row.player_id === 2517 ? 9 : row.player_id === 743 ? 10 : row.local_id,
+        }))
+      );
+      await save([
+        { playerId: 2517, localId: 10 },
+        { playerId: 743, localId: 9 },
+      ]);
+      const afterSwap = await snapshot();
+      expect(afterSwap).toEqual(
+        before.map((row) => ({
+          ...row,
+          local_id: row.player_id === 2517 ? 10 : row.player_id === 743 ? 9 : row.local_id,
+        }))
+      );
+      for (const invalid of [
+        [{ playerId: 2517, localId: 3 }], // Owned by an omitted player.
+        [{ playerId: 999999, localId: 11 }],
+        [{ playerId: 2517, localId: 0 }],
+        [
+          { playerId: 2517, localId: 11 },
+          { playerId: 743, localId: 11 },
+        ],
+        [
+          { playerId: 2517, localId: 11 },
+          { playerId: 2517, localId: 12 },
+        ],
+      ]) {
+        await expect(save(invalid)).rejects.toThrow();
+        expect(await snapshot()).toEqual(afterSwap);
+      }
+      // Both database invariants must protect writes outside this form too.
+      await expect(
+        db.query(
+          'insert into event_registered_players (event_id, player_id, local_id, ignore_seating) values ($1, 2517, 11, 0)',
+          [eventId]
+        )
+      ).rejects.toThrow('event_registered_players_event_id_player_id_unique');
+      await expect(
+        db.query(
+          'insert into event_registered_players (event_id, player_id, local_id, ignore_seating) values ($1, 999999, 10, 0)',
+          [eventId]
+        )
+      ).rejects.toThrow('event_registered_players_event_id_local_id_unique');
+      await db.query(
+        'update event_registered_players set ignore_seating = 0, replacement_id = null, team_name = null where event_id = $1 and player_id = 2517',
+        [eventId]
+      );
+    } finally {
+      await db.end();
+    }
+
     await mimirClient.UpdatePlayersLocalIds({
       eventId,
       idsToLocalIds: [
@@ -2800,23 +2882,69 @@ describe('Mimir Twirp API', () => {
     expect(tablesState.tables).toHaveLength(1);
     expect(tablesState.tables[0].currentRoundIndex).toBe(1);
 
-    const idsToTeamNames = [
-      { playerId: 2517, teamName: 'East' },
-      { playerId: 743, teamName: 'East' },
-      { playerId: 338, teamName: 'West' },
-      { playerId: 1834, teamName: 'West' },
-    ];
-    const result = await mimirClient.UpdatePlayersTeams({ eventId, idsToTeamNames });
-    expect(result.success).toBe(true);
-
-    const { players } = await mimirClient.GetAllRegisteredPlayers([eventId]);
-    expect(players).toHaveLength(gameFlowPlayerIds.length);
-    expect(Object.fromEntries(players.map((player) => [player.id, player.teamName]))).toEqual({
-      2517: 'East',
-      743: 'East',
-      338: 'West',
-      1834: 'West',
+    const dbConfig = new ConfigService().db;
+    const db = new Client({
+      host: dbConfig.host,
+      port: dbConfig.port,
+      user: dbConfig.username,
+      password: dbConfig.password,
+      database: 'mimir2_unit',
     });
+    await db.connect();
+    try {
+      const snapshot = async () =>
+        (
+          await db.query('select * from event_registered_players where event_id = $1 order by id', [
+            eventId,
+          ])
+        ).rows;
+      const before = await snapshot();
+      const idsToTeamNames = [
+        { playerId: 2517, teamName: 'East' },
+        { playerId: 743, teamName: 'East' },
+        { playerId: 338, teamName: 'West' },
+        { playerId: 1834, teamName: 'West' },
+      ];
+      const result = await mimirClient.UpdatePlayersTeams({ eventId, idsToTeamNames });
+      expect(result.success).toBe(true);
+
+      const { players } = await mimirClient.GetAllRegisteredPlayers([eventId]);
+      expect(players).toHaveLength(gameFlowPlayerIds.length);
+      expect(Object.fromEntries(players.map((player) => [player.id, player.teamName]))).toEqual({
+        2517: 'East',
+        743: 'East',
+        338: 'West',
+        1834: 'West',
+      });
+
+      const names = new Map(idsToTeamNames.map(({ playerId, teamName }) => [playerId, teamName]));
+      const after = await snapshot();
+      expect(after).toEqual(before.map((row) => ({ ...row, team_name: names.get(row.player_id) })));
+      for (const invalid of [
+        [
+          { playerId: 2517, teamName: 'Changed' },
+          { playerId: 999999, teamName: 'Unknown' },
+        ],
+        [
+          { playerId: 2517, teamName: 'Changed' },
+          { playerId: 2517, teamName: 'Duplicate' },
+        ],
+      ]) {
+        await expect(
+          mimirClient.UpdatePlayersTeams({ eventId, idsToTeamNames: invalid })
+        ).rejects.toThrow();
+        expect(await snapshot()).toEqual(after);
+      }
+      await mimirClient.UpdatePlayersTeams({
+        eventId,
+        idsToTeamNames: [{ playerId: 2517, teamName: '' }],
+      });
+      expect(await snapshot()).toEqual(
+        after.map((row) => (row.player_id === 2517 ? { ...row, team_name: '' } : row))
+      );
+    } finally {
+      await db.end();
+    }
   });
 
   test('ClearStatCache schedules a rebuild for a registered player', async () => {

@@ -1,9 +1,17 @@
-import { Entity, Index, ManyToOne, PrimaryKey, Property } from '@mikro-orm/decorators/legacy';
+import {
+  Entity,
+  Index,
+  ManyToOne,
+  PrimaryKey,
+  Property,
+  Unique,
+} from '@mikro-orm/decorators/legacy';
 
 import { EventEntity } from './Event.entity.js';
 
 @Entity({ tableName: 'event_registered_players' })
-@Index({ properties: ['event', 'playerId'] })
+@Unique({ properties: ['event', 'playerId'] })
+@Unique({ properties: ['event', 'localId'] })
 @Index({ properties: ['ignoreSeating'] })
 export class EventRegisteredPlayersEntity {
   @PrimaryKey()
@@ -15,8 +23,8 @@ export class EventRegisteredPlayersEntity {
   @Property({ fieldName: 'player_id' })
   playerId!: number;
 
-  @Property({ fieldName: 'local_id', nullable: true })
-  localId?: number;
+  @Property({ fieldName: 'local_id', type: 'integer', nullable: true })
+  localId?: number | null;
 
   @Property({ fieldName: 'replacement_id', nullable: true })
   replacementId?: number;

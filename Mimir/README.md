@@ -160,3 +160,22 @@ Apply `Migration20261027000000` before deploying the updated server and clients.
 It renames the stored `withButtobi` rule to `withTobi`, preserving each event's
 setting. The protobuf field keeps number 14; JSON clients must use `withTobi`.
 With tobi enabled, riichi requires at least 1,000 points before the round's payments.
+
+### Registration local IDs
+
+Apply `Migration20261029000000` before deploying the local-ID registration fix.
+It enforces one registration per `(event_id, player_id)`. Before adding the unique
+constraint, it automatically deletes duplicate registrations, keeping the row with
+the highest registration ID for each pair. That row's local ID, replacement,
+seating flag, and team name are preserved together. Deleted rows cannot be restored
+by rolling the migration down. The cleanup and constraint creation run under a
+table lock in the migration transaction.
+
+Local-ID saves now update existing registrations in one transaction, support swaps, and reject unknown players,
+duplicate mappings, invalid IDs, and IDs owned by omitted players. They preserve
+registration IDs and other registration fields.
+
+Team-name saves also preserve registration identity and all other fields. They
+reject unknown or repeated players and existing duplicate registrations. Both
+forms refresh registration data after saving, so switching tabs retains the saved
+values.

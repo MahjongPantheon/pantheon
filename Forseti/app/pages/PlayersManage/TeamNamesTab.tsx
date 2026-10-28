@@ -39,7 +39,8 @@ import { PlayerAvatar } from '../../components/PlayerAvatar';
 export const TeamNamesTab: React.FC<{
   eventId: number;
   players: RegisteredPlayer[];
-}> = ({ eventId, players }) => {
+  setPlayers: (players: RegisteredPlayer[]) => void;
+}> = ({ eventId, players, setPlayers }) => {
   const api = useApi();
   const i18n = useI18n();
   const theme = useMantineTheme();
@@ -56,13 +57,14 @@ export const TeamNamesTab: React.FC<{
     )
   );
 
-  const updateLocalIds = useCallback(() => {
+  const updateTeamNames = useCallback(() => {
     setIsSaving(true);
     setIsSaved(false);
     api
       .updateTeamNames(eventId, teamNames)
-      .then((success) => {
+      .then(async (success) => {
         if (success) {
+          setPlayers(await api.getAllPlayers(eventId));
           setIsSaved(true);
           setTimeout(() => setIsSaved(false), 5000);
         }
@@ -75,7 +77,7 @@ export const TeamNamesTab: React.FC<{
         });
       })
       .finally(() => setIsSaving(false));
-  }, [players, eventId, teamNames]);
+  }, [api, i18n, setPlayers, eventId, teamNames]);
 
   return (
     <>
@@ -114,7 +116,7 @@ export const TeamNamesTab: React.FC<{
           title={isSaved ? i18n._t('Changes saved!') : i18n._t('Save changes')}
           loading={isSaving || isSaved}
           icon={isSaved ? <IconCircleCheck /> : <IconDeviceFloppy />}
-          onClick={updateLocalIds}
+          onClick={updateTeamNames}
         />
       </Box>
     </>

@@ -51,7 +51,6 @@ export const PlayersManage: React.FC<{ params: { id: string } }> = ({ params: { 
   const storage = useStorage();
   const { isLoggedIn } = useContext(authCtx);
   const [isLoading, setIsLoading] = useState(true);
-  const [localIdsWarn, setLocalIdsWarn] = useState(false);
   const [players, setPlayers] = useState<RegisteredPlayer[]>([]); // user_id -> rule_id; zero means no access rights.
   const [config, setConfig] = useState<GameConfig>();
   const [event, setEvent] = useState<Event>();
@@ -83,7 +82,6 @@ export const PlayersManage: React.FC<{ params: { id: string } }> = ({ params: { 
         setEvent(eventData);
         setConfig(conf);
         setPlayers(playersList.sort((a, b) => a.title.localeCompare(b.title)));
-        setLocalIdsWarn(playersList.some((p) => !p.localId));
       })
       .catch((err: Error) => {
         if (cancelled) return;
@@ -133,7 +131,7 @@ export const PlayersManage: React.FC<{ params: { id: string } }> = ({ params: { 
             )}
             leftSection={<IconScript size='0.8rem' />}
             rightSection={
-              config?.isPrescripted && localIdsWarn ? (
+              config?.isPrescripted && players.some((p) => !p.localId) ? (
                 <IconAlertTriangleFilled size='1.2rem' style={{ color: 'red' }} />
               ) : null
             }
@@ -163,11 +161,11 @@ export const PlayersManage: React.FC<{ params: { id: string } }> = ({ params: { 
         </Tabs.Panel>
 
         <Tabs.Panel value='prescripted' pt='xs'>
-          <LocalIdsTab players={players} eventId={eventId} />
+          <LocalIdsTab players={players} setPlayers={setPlayers} eventId={eventId} />
         </Tabs.Panel>
 
         <Tabs.Panel value='teams' pt='xs'>
-          <TeamNamesTab players={players} eventId={eventId} />
+          <TeamNamesTab players={players} setPlayers={setPlayers} eventId={eventId} />
         </Tabs.Panel>
       </Tabs>
     </Container>
