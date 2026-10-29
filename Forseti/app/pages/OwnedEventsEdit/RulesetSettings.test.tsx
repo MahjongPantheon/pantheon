@@ -104,3 +104,13 @@ it('switches uma editors without losing edited scores', () => {
   act(() => input('uma-simple')!.click());
   expect(input('uma-select-ruleset-uma-place1')!.value).toBe('17000');
 });
+
+it('explains why sanma chombo payments are disabled and enables them with extra payments', () => {
+  act(() => form.setFieldValue('ruleset.withSanma', true));
+  const paymentInput = () => input('ruleset-settings-ruleset-sanma-chombo-payments')!;
+  expect(paymentInput().disabled).toBe(true);
+  expect(container.textContent).toContain('Requires extra chombo payments to be enabled.');
+  act(() => input('ruleset-settings-ruleset-extra-chombo-payments')!.click());
+  expect(paymentInput().disabled).toBe(false);
+  expect(container.textContent).not.toContain('Requires extra chombo payments to be enabled.');
+});

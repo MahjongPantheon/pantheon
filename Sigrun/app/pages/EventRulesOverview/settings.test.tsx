@@ -144,3 +144,32 @@ it('hides conditional settings and renders on the server', () => {
     expect(screen.queryByLabelText(label)).toBeNull();
   expect(renderToString(tree())).toContain('Max arbitrary penalty score');
 });
+
+it.each([false, true])(
+  'shows sanma chombo payments only when used (extra payments: %s)',
+  (extraChomboPayments) => {
+    render(
+      <MantineProvider env='test'>
+        <RulesetSettings
+          config={{
+            ...config,
+            rulesetConfig: {
+              ...config.rulesetConfig,
+              withSanma: true,
+              extraChomboPayments,
+              sanmaChomboPayments: 4000,
+            },
+          }}
+          i18n={i18n}
+        />
+      </MantineProvider>
+    );
+    const paymentInput = screen.queryByLabelText<HTMLInputElement>('Chombo payments (sanma)');
+    if (extraChomboPayments) {
+      expect(paymentInput?.value).toBe('4000');
+      expect(paymentInput?.readOnly).toBe(true);
+    } else {
+      expect(paymentInput).toBeNull();
+    }
+  }
+);

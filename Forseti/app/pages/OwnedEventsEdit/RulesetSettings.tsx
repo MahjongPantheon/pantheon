@@ -86,9 +86,14 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ form, i18n }) 
           <NumberInput
             leftSection={<IconHandStop size='1rem' />}
             label={i18n._t('Chombo payments (sanma)')}
-            description={i18n._t(
-              'Amount of points paid by the offending player to each of the other players on a chombo'
-            )}
+            data-testid='forseti-event-settings-ruleset-settings-ruleset-sanma-chombo-payments'
+            description={
+              extraChomboPayments
+                ? i18n._t(
+                    'Amount of points paid by the offending player to each of the other players on a chombo'
+                  )
+                : i18n._t('Requires extra chombo payments to be enabled.')
+            }
             min={0}
             key={form.key('ruleset.sanmaChomboPayments')}
             disabled={!extraChomboPayments}

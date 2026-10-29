@@ -74,16 +74,18 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ config, i18n }
             value={config.rulesetConfig.sanmaDrawPayments}
             readOnly
           />
-          <NumberInput
-            hideControls
-            leftSection={<IconHandStop size='1rem' />}
-            label={i18n._t('Chombo payments (sanma)')}
-            description={i18n._t(
-              'Amount of points paid by the offending player to each of the other players on a chombo'
-            )}
-            value={config.rulesetConfig.sanmaChomboPayments}
-            readOnly
-          />
+          {config.rulesetConfig.extraChomboPayments && (
+            <NumberInput
+              hideControls
+              leftSection={<IconHandStop size='1rem' />}
+              label={i18n._t('Chombo payments (sanma)')}
+              description={i18n._t(
+                'Amount of points paid by the offending player to each of the other players on a chombo'
+              )}
+              value={config.rulesetConfig.sanmaChomboPayments}
+              readOnly
+            />
+          )}
         </>
       )}
       <Title order={4}>{i18n._t('Game duration')}</Title>

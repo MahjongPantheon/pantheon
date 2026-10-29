@@ -1312,9 +1312,8 @@ export class EventModel extends Model {
           throw new Error(`Viewing other tables is not allowed for this event`);
         }
 
-        const registeredPlayers = (
-          await eventRegistrationModel.findByEventId([events[0].id])
-        ).filter((reg) => {
+        const registeredPlayers = await eventRegistrationModel.findByEventId([events[0].id]);
+        const seatingPlayers = registeredPlayers.filter((reg) => {
           if (reg.ignoreSeating) {
             return false;
           }
@@ -1325,7 +1324,7 @@ export class EventModel extends Model {
         });
 
         const tablesCount = events[0].syncStart
-          ? Math.floor(registeredPlayers.length / events[0].ruleset.playerCount)
+          ? Math.max(1, Math.floor(seatingPlayers.length / events[0].ruleset.playerCount))
           : 10;
 
         const lastGames = await sessionModel.findByEventAndStatus(

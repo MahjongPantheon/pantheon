@@ -544,6 +544,8 @@ export class SeatingModel extends Model {
       {} as Record<number, { amount: number; count: number }>
     );
 
+    // Retain ignored real players in history: the engine requires complete tables to
+    // preserve historical seat winds. _getPlayersMap excludes them from the new roster.
     const tablesBySession = new Map<number, number[]>();
     for (const seat of previousSeatings) {
       if (seat.player_id === GHOST_PLAYER_ID) continue;
