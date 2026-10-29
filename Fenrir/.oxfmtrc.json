@@ -17,6 +17,16 @@
     "node_modules",
     "dist",
     "pnpm-lock.yaml",
-    "*.mdx"
+    "*.mdx",
+    "vendor",
+    ".pnpm-store",
+    "dev-dist",
+    "tmp",
+    "temp",
+    "test-results",
+    "playwright-report",
+    "blob-report",
+    "*.log",
+    "*.tsbuildinfo"
   ]
 }

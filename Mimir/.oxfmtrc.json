@@ -16,6 +16,16 @@
     "node_modules",
     "dist",
     "pnpm-lock.yaml",
-    "src/migrations/.snapshot-mimir2_unit.json"
+    "src/migrations/.snapshot-mimir2_unit.json",
+    "vendor",
+    ".pnpm-store",
+    "dev-dist",
+    "tmp",
+    "temp",
+    "test-results",
+    "playwright-report",
+    "blob-report",
+    "*.log",
+    "*.tsbuildinfo"
   ]
 }

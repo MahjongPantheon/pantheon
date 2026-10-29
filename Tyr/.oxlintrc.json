@@ -25,7 +25,18 @@
     "dist/",
     "dev-dist/",
     "vite.config.ts",
-    "vitest.config.ts"
+    "vitest.config.ts",
+    "vendor",
+    ".pnpm-store",
+    "build",
+    "tmp",
+    "temp",
+    "test-results",
+    "playwright-report",
+    "blob-report",
+    "*.log",
+    "*.tsbuildinfo",
+    "pnpm-lock.yaml"
   ],
   "rules": {
     "no-unexpected-multiline": ["error"],

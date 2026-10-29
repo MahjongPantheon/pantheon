@@ -56,7 +56,13 @@ export default defineConfig({
     }),
   ],
   server: {
-    watch: { ignored: ['**/coverage/**'] },
+    watch: {
+      ignored: [
+        '**/{coverage,dist,build,dev-dist,vendor,.pnpm-store,tmp,temp,test-results,playwright-report,blob-report}/**',
+        '**/*.log',
+        '**/*.tsbuildinfo',
+      ],
+    },
     port: 4003,
     allowedHosts: ['tyr.pantheon.local'],
   },

@@ -10,5 +10,23 @@
   "bracketSpacing": true,
   "arrowParens": "always",
   "sortPackageJson": false,
-  "ignorePatterns": ["coverage", "dev-dist/", "app/i18n/*.json", "app/index.html"]
+  "ignorePatterns": [
+    "coverage",
+    "dev-dist/",
+    "app/i18n/*.json",
+    "app/index.html",
+    "node_modules",
+    "vendor",
+    ".pnpm-store",
+    "dist",
+    "build",
+    "tmp",
+    "temp",
+    "test-results",
+    "playwright-report",
+    "blob-report",
+    "*.log",
+    "*.tsbuildinfo",
+    "pnpm-lock.yaml"
+  ]
 }

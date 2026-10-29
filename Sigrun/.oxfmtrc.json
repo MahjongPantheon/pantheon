@@ -17,6 +17,15 @@
     "node_modules",
     "dist",
     "dev-dist/**",
-    "pnpm-lock.yaml"
+    "pnpm-lock.yaml",
+    "vendor",
+    ".pnpm-store",
+    "tmp",
+    "temp",
+    "test-results",
+    "playwright-report",
+    "blob-report",
+    "*.log",
+    "*.tsbuildinfo"
   ]
 }

@@ -22,7 +22,17 @@
     "server.js",
     "eslint.config.mjs",
     "proto.config.mjs",
-    "vitest.config.ts"
+    "vitest.config.ts",
+    "vendor",
+    ".pnpm-store",
+    "tmp",
+    "temp",
+    "test-results",
+    "playwright-report",
+    "blob-report",
+    "*.log",
+    "*.tsbuildinfo",
+    "pnpm-lock.yaml"
   ],
   "rules": {
     "no-unexpected-multiline": ["error"],

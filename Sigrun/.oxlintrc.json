@@ -23,7 +23,16 @@
     "eslint.config.mjs",
     "proto.config.mjs",
     "vite.config.ts",
-    "vitest.config.ts"
+    "vitest.config.ts",
+    "vendor",
+    ".pnpm-store",
+    "tmp",
+    "temp",
+    "test-results",
+    "playwright-report",
+    "blob-report",
+    "*.log",
+    "*.tsbuildinfo"
   ],
   "rules": {
     "no-unexpected-multiline": ["error"],

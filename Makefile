@@ -496,9 +496,12 @@ fenrir_oxfmt:
 fenrir_typecheck:
 	cd Fenrir && ${MAKE} container_typecheck > ../tmp/fenrir_typecheck.log 2>&1
 
+# Each lint/format process also uses worker threads; keep local runs bounded.
+LINT_JOBS ?= 2
+
 .PHONY: lint
 lint:
-	${MAKE} -j16 bragi_oxlint bragi_oxfmt bragi_typecheck \
+	${MAKE} -j$(LINT_JOBS) bragi_oxlint bragi_oxfmt bragi_typecheck \
 	forseti_oxlint forseti_oxfmt forseti_typecheck \
 	frey_oxlint frey_oxfmt frey_typecheck \
 		gullveig_oxlint gullveig_oxfmt gullveig_typecheck \

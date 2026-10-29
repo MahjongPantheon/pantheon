@@ -18,6 +18,14 @@
     "pnpm-lock.yaml",
     "vendor",
     ".pnpm-store",
-    "dashboards"
+    "dashboards",
+    "dev-dist",
+    "tmp",
+    "temp",
+    "test-results",
+    "playwright-report",
+    "blob-report",
+    "*.log",
+    "*.tsbuildinfo"
   ]
 }

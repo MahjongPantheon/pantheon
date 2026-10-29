@@ -168,6 +168,14 @@ the base image, rebuild dependent service images and recreate their containers.
 
 Development dependency installation (`make dev_deps` from the root or inside a service) reuses existing `node_modules` and the shared pnpm store. Local `file:` packages such as `Common/tsclients` are refreshed on each run, including added and removed files. The install uses `--no-frozen-lockfile` so local package manifest changes are also resolved, even when `CI` is set. To reinstall a service from scratch, remove its `node_modules` and run `make dev_deps` again. Production builds and CI prepare source-project dependencies with `make deps` and `--frozen-lockfile`, which fails if manifests and lockfiles differ. Existing `prod_deps` targets continue to prepare runtime dependencies in the built output folders.
 
+Development Vite watchers and lint/format tools exclude generated build, coverage,
+cache, temporary, and Playwright report directories. Backend `tsx watch` commands
+watch loaded dependencies and ignore dependency/vendor directories; generated
+translations and shared API clients remain available for normal source updates.
+Root `make lint` defaults to two concurrent checks because each tool can also
+use worker threads. Set `LINT_JOBS=1` on slower machines or increase it for CI,
+for example `make lint LINT_JOBS=4`.
+
 Please note: if you're using podman, trying to stop a single service container will result in also stopping all containers it depends on. Docker has no such issue.
 
 To create an event and fill it with some data, run `make seed`, `make seed_bigevent` or `make seed_tournament` (with `sudo` if required). Note that users are
