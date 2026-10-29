@@ -60,6 +60,7 @@ export default defineConfig({
     },
   },
   server: {
+    watch: { ignored: ['**/coverage/**'] },
     port: 4007,
     allowedHosts: ['forseti.pantheon.local'],
   },

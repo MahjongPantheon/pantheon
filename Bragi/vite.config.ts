@@ -33,6 +33,7 @@ export default defineConfig({
     },
   },
   server: {
+    watch: { ignored: ['**/coverage/**'] },
     port: 4008,
     allowedHosts: ['bragi.pantheon.local'],
   },

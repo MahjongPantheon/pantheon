@@ -75,6 +75,7 @@ export default defineConfig({
     },
   },
   server: {
+    watch: { ignored: ['**/coverage/**'] },
     port: 4002,
     allowedHosts: ['sigrun.pantheon.local'],
   },

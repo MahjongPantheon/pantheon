@@ -13,6 +13,7 @@
     "es2020": true
   },
   "ignorePatterns": [
+    "coverage",
     "eslint.config.mjs",
     "proto.config.mjs",
     "dev-dist/",
