@@ -1896,3 +1896,11 @@ msgstr "역만!"
 
 #~ msgid "Game link"
 #~ msgstr "대국 링크"
+
+#: app/components/RatingGraph.tsx:167:29
+msgid "First displayed game"
+msgstr "표시할 첫 게임"
+
+#: app/components/RatingGraph.tsx:168:27
+msgid "Last displayed game"
+msgstr "표시할 마지막 게임"

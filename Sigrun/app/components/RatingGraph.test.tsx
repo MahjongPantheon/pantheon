@@ -2,7 +2,7 @@ import * as React from 'react';
 import type { Chart, ChartEvent, ActiveElement, ScriptableContext } from 'chart.js';
 import type { ChartProps } from 'react-chartjs-2';
 import { MantineProvider } from '@mantine/core';
-import { cleanup, fireEvent, render, screen } from '@testing-library/react';
+import { act, cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { PlayersGetPlayerStatsResponse } from 'tsclients/proto/mimir.pb';
 import { RatingGraph } from './RatingGraph';
@@ -89,6 +89,52 @@ function select(index?: number) {
 }
 
 describe('rating history selection', () => {
+  it('zooms with the range slider while keeping original game indices and restores the full range', async () => {
+    const { props } = await setup();
+    const data = chartProps.data;
+    act(() => screen.getByRole('slider', { name: 'First displayed game' }).focus());
+    fireEvent.keyDown(screen.getByRole('slider', { name: 'First displayed game' }), {
+      key: 'ArrowRight',
+    });
+    act(() => screen.getByRole('slider', { name: 'Last displayed game' }).focus());
+    fireEvent.keyDown(screen.getByRole('slider', { name: 'Last displayed game' }), {
+      key: 'ArrowLeft',
+    });
+    expect(chartProps.options?.scales?.x).toMatchObject({ min: 1, max: 2 });
+    expect(chartProps.data).toBe(data);
+    select(2);
+    expect(props.onSelectGame).toHaveBeenLastCalledWith(stats.scoreHistory[1]);
+    act(() => screen.getByRole('slider', { name: 'First displayed game' }).focus());
+    fireEvent.keyDown(screen.getByRole('slider', { name: 'First displayed game' }), {
+      key: 'ArrowLeft',
+    });
+    act(() => screen.getByRole('slider', { name: 'Last displayed game' }).focus());
+    fireEvent.keyDown(screen.getByRole('slider', { name: 'Last displayed game' }), {
+      key: 'ArrowRight',
+    });
+    expect(chartProps.options?.scales?.x).toMatchObject({ min: 0, max: 3 });
+  });
+
+  it('resets the visible range when the player or rating history changes', async () => {
+    const { props, tree, rerender } = await setup();
+    const narrow = () => {
+      act(() => screen.getByRole('slider', { name: 'First displayed game' }).focus());
+      fireEvent.keyDown(screen.getByRole('slider', { name: 'First displayed game' }), {
+        key: 'ArrowRight',
+      });
+      expect(chartProps.options?.scales?.x).toMatchObject({ min: 1, max: 3 });
+    };
+    narrow();
+    rerender(tree({ ...props, playerId: 2 }));
+    expect(chartProps.options?.scales?.x).toMatchObject({ min: 0, max: 3 });
+    narrow();
+    rerender(
+      tree({ ...props, playerId: 2, playerStats: { ...stats, ratingHistory: [1500, 1530] } })
+    );
+    expect(chartProps.options?.scales?.x).toMatchObject({ min: 0, max: 1 });
+    expect(screen.queryByRole('slider')).toBeNull();
+  });
+
   it('allows native touch scrolling across the chart', async () => {
     await setup();
     // Expose native touch-action support, which jsdom does not implement, before Hammer loads.

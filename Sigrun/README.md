@@ -28,7 +28,8 @@ styling integration; SSR creates a cache per request and emits extracted styles
 after the bundled stylesheets so custom component styles take precedence.
 Statistics charts use `react-chartjs-2` and Chart.js. Rating history allows native
 touch and mouse-wheel page scrolling; tapping a point selects its game immediately. The preview controls
-keep the selected point highlighted. Winning-game stars, live language changes,
+keep the selected point highlighted. A range slider below the rating graph controls
+the visible games without capturing page scroll gestures. Winning-game stars, live language changes,
 and the dimmed palette are preserved. The zoom plugin loads only in the browser
 so server rendering does not depend on Hammer.js browser globals.
 Page metadata is emitted once per page using React 19's document-head handling,

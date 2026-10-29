@@ -1855,3 +1855,11 @@ msgstr ""
 #: app/pages/Timer.tsx:80:22
 msgid "Timer page for the event \"%1\" provided by Mahjong Pantheon"
 msgstr ""
+
+#: app/components/RatingGraph.tsx:167:29
+msgid "First displayed game"
+msgstr ""
+
+#: app/components/RatingGraph.tsx:168:27
+msgid "Last displayed game"
+msgstr ""

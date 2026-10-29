@@ -1954,3 +1954,11 @@ msgstr "якуман!"
 
 #~ msgid "Game link"
 #~ msgstr "Ссылка на игру"
+
+#: app/components/RatingGraph.tsx:167:29
+msgid "First displayed game"
+msgstr "Первая отображаемая игра"
+
+#: app/components/RatingGraph.tsx:168:27
+msgid "Last displayed game"
+msgstr "Последняя отображаемая игра"

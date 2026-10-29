@@ -1855,3 +1855,11 @@ msgstr "役满 (%1)"
 #: app/helpers/gameLog.ts:156:12
 msgid "yakuman!"
 msgstr "役满！"
+
+#: app/components/RatingGraph.tsx:167:29
+msgid "First displayed game"
+msgstr "显示的首局"
+
+#: app/components/RatingGraph.tsx:168:27
+msgid "Last displayed game"
+msgstr "显示的末局"

@@ -1925,3 +1925,11 @@ msgstr "якуман (%1)"
 #: app/helpers/gameLog.ts:156:12
 msgid "yakuman!"
 msgstr "якуман!"
+
+#: app/components/RatingGraph.tsx:167:29
+msgid "First displayed game"
+msgstr "Першая паказаная гульня"
+
+#: app/components/RatingGraph.tsx:168:27
+msgid "Last displayed game"
+msgstr "Апошняя паказаная гульня"

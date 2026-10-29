@@ -19,7 +19,7 @@ import { useEffect, useMemo, useState } from 'react';
 import * as React from 'react';
 import type { ChartOptions } from 'chart.js';
 import { useI18n } from '../hooks/i18n';
-import { useMantineColorScheme, useMantineTheme } from '@mantine/core';
+import { RangeSlider, useMantineColorScheme, useMantineTheme } from '@mantine/core';
 import starSvg from '../../assets/img/star.svg';
 import { PlayersGetPlayerStatsResponse } from 'tsclients/proto/mimir.pb';
 import { SessionHistoryResultTable } from 'tsclients/proto/atoms.pb';
@@ -58,6 +58,16 @@ export const RatingGraph = ({
     [playerStats?.ratingHistory]
   );
   const [stars, setStars] = useState<HTMLImageElement[] | null>(null);
+  const maxIndex = Math.max(0, data.labels.length - 1);
+  const [rangeSelection, setRangeSelection] = useState<{
+    playerId: number;
+    history: PlayersGetPlayerStatsResponse['ratingHistory'] | undefined;
+    value: [number, number];
+  } | null>(null);
+  const range: [number, number] =
+    rangeSelection?.playerId === playerId && rangeSelection.history === playerStats?.ratingHistory
+      ? rangeSelection.value
+      : [0, maxIndex];
 
   useEffect(() => {
     let cancelled = false;
@@ -124,6 +134,8 @@ export const RatingGraph = ({
     },
     scales: {
       x: {
+        min: range[0],
+        max: range[1],
         grid: { color: gridColor },
         ticks: { color: textColor, maxRotation: 0 },
         title: { display: true, text: i18n._t('Games played'), color: textColor },
@@ -137,8 +149,33 @@ export const RatingGraph = ({
   };
 
   return (
-    <div style={{ position: 'relative', height: 400 }}>
-      <LineGraph key={playerId} data={data} options={options} />
+    <div>
+      <div style={{ position: 'relative', height: 400 }}>
+        <LineGraph key={playerId} data={data} options={options} />
+      </div>
+      {maxIndex > 1 && (
+        <div style={{ padding: '0 8px 8px' }}>
+          <RangeSlider
+            min={0}
+            max={maxIndex}
+            step={1}
+            minRange={1}
+            pushOnOverlap={false}
+            size='xs'
+            thumbSize={14}
+            value={range}
+            thumbFromLabel={i18n._t('First displayed game')}
+            thumbToLabel={i18n._t('Last displayed game')}
+            onChange={(value) =>
+              setRangeSelection({
+                playerId,
+                history: playerStats?.ratingHistory,
+                value,
+              })
+            }
+          />
+        </div>
+      )}
     </div>
   );
 };

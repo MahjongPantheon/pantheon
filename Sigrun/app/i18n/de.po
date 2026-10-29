@@ -1925,3 +1925,11 @@ msgstr "yakuman!"
 
 #~ msgid "Game link"
 #~ msgstr "Link zum Spiel"
+
+#: app/components/RatingGraph.tsx:167:29
+msgid "First displayed game"
+msgstr "Erstes angezeigtes Spiel"
+
+#: app/components/RatingGraph.tsx:168:27
+msgid "Last displayed game"
+msgstr "Letztes angezeigtes Spiel"
