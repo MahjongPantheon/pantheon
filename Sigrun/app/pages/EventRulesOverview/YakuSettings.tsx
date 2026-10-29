@@ -15,11 +15,18 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import { I18nService } from '../../services/i18n';
 import * as React from 'react';
 import { Checkbox, SimpleGrid, Stack, Title } from '@mantine/core';
+import {
+  yakuList,
+  yakuWithPao,
+  doubleYakuman,
+  aggregatedYakuhai,
+  separateYakuhai,
+  windYaku,
+} from '../../helpers/yaku';
 import { GameConfig } from 'tsclients/proto/atoms.pb';
-import { I18nService } from '../../services/i18n';
-import { doubleYakuman, yakuList, yakuWithPao } from '../../helpers/yaku';
 
 type YakuSettingsProps = {
   config: GameConfig;
@@ -27,6 +34,7 @@ type YakuSettingsProps = {
 };
 
 export const YakuSettings: React.FC<YakuSettingsProps> = ({ config, i18n }) => {
+  const allowedYaku = new Set(config.rulesetConfig.allowedYaku);
   return (
     <Stack>
       <Checkbox
@@ -35,44 +43,73 @@ export const YakuSettings: React.FC<YakuSettingsProps> = ({ config, i18n }) => {
           'Tanyao costs 1 han on open hand. If not checked, tanyao does not work on open hand.'
         )}
         checked={config.rulesetConfig.withKuitan}
-        onChange={() => {}}
+        readOnly
       />
       <Checkbox
         label={i18n._t('Multiple yakumans')}
         description={i18n._t('Allow combination of yakumans, e.g. tsuuisou + daisangen')}
         checked={config.rulesetConfig.withMultiYakumans}
-        onChange={() => {}}
+        readOnly
+      />
+      <Checkbox
+        label={i18n._t('Enable aggregated yakuhai')}
+        description={i18n._t(
+          'When disabled, use separate yakuhai names like "East" and "White dragon" instead of aggregated names like "Yakuhai x3".'
+        )}
+        checked={config.rulesetConfig.useAggregatedYakuhai}
+        readOnly
       />
       <Title order={4}>{i18n._t('Yaku allowed')}</Title>
-      <SimpleGrid spacing='lg' cols={{ base: 3, '48rem': 2, '36rem': 1 }}>
-        {yakuList.map((y) => (
-          <Checkbox
-            key={y.id}
-            label={y.name(i18n)}
-            checked={config.rulesetConfig.allowedYaku.includes(y.id)}
-            onChange={() => {}}
-          />
-        ))}
+      <SimpleGrid spacing='lg' cols={{ base: 1, xs: 2, sm: 3 }}>
+        {yakuList
+          .filter(({ id }) =>
+            config.rulesetConfig.useAggregatedYakuhai
+              ? !separateYakuhai.includes(id)
+              : !aggregatedYakuhai.includes(id)
+          )
+          .filter(({ id }) => !windYaku.some((wind) => wind.round === id))
+          .map((y) => {
+            const wind = windYaku.find((candidate) => candidate.seat === y.id);
+            if (wind) {
+              const seatEnabled = allowedYaku.has(wind.seat);
+              const roundEnabled = allowedYaku.has(wind.round);
+              return (
+                <Checkbox
+                  key={wind.seat}
+                  label={wind.name(i18n)}
+                  checked={seatEnabled && roundEnabled}
+                  indeterminate={seatEnabled !== roundEnabled}
+                  aria-checked={
+                    seatEnabled !== roundEnabled ? 'mixed' : seatEnabled && roundEnabled
+                  }
+                  readOnly
+                />
+              );
+            }
+            return (
+              <Checkbox key={y.id} label={y.name(i18n)} checked={allowedYaku.has(y.id)} readOnly />
+            );
+          })}
       </SimpleGrid>
       <Title order={4}>{i18n._t('Pao rule enabled for:')}</Title>
-      <SimpleGrid spacing='lg' cols={{ base: 3, '48rem': 2, '36rem': 1 }}>
+      <SimpleGrid spacing='lg' cols={{ base: 1, xs: 2, sm: 3 }}>
         {yakuWithPao.map((y) => (
           <Checkbox
             key={y.id}
             label={y.name(i18n)}
             checked={config.rulesetConfig.yakuWithPao.includes(y.id)}
-            onChange={() => {}}
+            readOnly
           />
         ))}
       </SimpleGrid>
-      <Title order={4}>{i18n._t('Double Yakuman:')}</Title>
-      <SimpleGrid spacing='lg' cols={{ base: 3, '48rem': 2, '36rem': 1 }}>
+      <Title order={4}>{i18n._t('Double yakuman:')}</Title>
+      <SimpleGrid spacing='lg' cols={{ base: 1, xs: 2, sm: 3 }}>
         {doubleYakuman.map((y) => (
           <Checkbox
             key={y.id}
             label={y.name(i18n)}
             checked={config.rulesetConfig.doubleYakuman.includes(y.id)}
-            onChange={() => {}}
+            readOnly
           />
         ))}
       </SimpleGrid>

@@ -16,9 +16,9 @@
  */
 
 import * as React from 'react';
-import { Checkbox, NumberInput, Radio, Space, Stack } from '@mantine/core';
+import { Checkbox, Group, NumberInput, Radio, Space, Stack } from '@mantine/core';
 import { IconClockPlay, IconUserX } from '@tabler/icons-react';
-import { EndingPolicy, GameConfig } from 'tsclients/proto/atoms.pb';
+import { EndingPolicy, GameConfig, WindShuffleMode } from 'tsclients/proto/atoms.pb';
 import { I18nService } from '../../services/i18n';
 
 type TournamentSettingsProps = {
@@ -30,6 +30,7 @@ export const TournamentSettings: React.FC<TournamentSettingsProps> = ({ config, 
   return (
     <>
       <NumberInput
+        readOnly
         hideControls
         leftSection={<IconClockPlay size='1rem' />}
         label={i18n._t('Session duration in minutes')}
@@ -37,25 +38,27 @@ export const TournamentSettings: React.FC<TournamentSettingsProps> = ({ config, 
           'Timer starting value. After time runs out, session ending policy is applied (see below).'
         )}
         value={config.gameDuration}
-        onChange={() => {}}
       />
       <Radio.Group
         label={i18n._t('Session ending policy')}
         description={i18n._t('How game sessions should end during the tournament')}
         value={config.rulesetConfig.endingPolicy}
-        onChange={() => {}}
+        readOnly
       >
         <Space h='md' />
         <Stack gap='xs'>
           <Radio
+            readOnly
             value={EndingPolicy.ENDING_POLICY_EP_UNSPECIFIED}
             label={i18n._t('Do not interrupt session until it ends')}
           />
           <Radio
+            readOnly
             value={EndingPolicy.ENDING_POLICY_EP_END_AFTER_HAND}
             label={i18n._t('When time is out, finish current hand and interrupt the session')}
           />
           <Radio
+            readOnly
             value={EndingPolicy.ENDING_POLICY_EP_ONE_MORE_HAND}
             label={i18n._t(
               'When time is out, finish current hand, play one more, and then interrup the session'
@@ -70,18 +73,48 @@ export const TournamentSettings: React.FC<TournamentSettingsProps> = ({ config, 
           'If this is set, chombo will not allow players to play one more hand if time is out and it is final hand of the game'
         )}
         checked={config.rulesetConfig.chomboEndsGame}
-        onChange={() => {}}
+        readOnly
       />
-      <Checkbox label={i18n._t('Team tournament')} checked={config.isTeam} onChange={() => {}} />
+      <Checkbox label={i18n._t('Team tournament')} checked={config.isTeam} readOnly />
       <Checkbox
         label={i18n._t('Seating is defined in advance')}
         description={i18n._t(
           'You should prepare the tournament script yourself. No automated seating functionality is available when this flag is set.'
         )}
         checked={config.isPrescripted}
-        onChange={() => {}}
+        readOnly
       />
+      <Radio.Group
+        readOnly
+        label={i18n._t('Wind shuffle mode')}
+        description={i18n._t('How players on the same table are shuffled')}
+        value={config.windShuffleMode ?? WindShuffleMode.WIND_SHUFFLE_MODE_RANDOM}
+      >
+        <Group mt='xs'>
+          <Radio
+            readOnly
+            value={WindShuffleMode.WIND_SHUFFLE_MODE_RANDOM}
+            label={i18n._t('Random wind shuffle')}
+            description={i18n._t('Shuffle players on the same table randomly')}
+          />
+          <Radio
+            readOnly
+            value={WindShuffleMode.WIND_SHUFFLE_MODE_BALANCED}
+            label={i18n._t('Balanced wind shuffle')}
+            description={i18n._t('Try to place players on winds they previously played less')}
+          />
+          {config.isPrescripted && (
+            <Radio
+              readOnly
+              value={WindShuffleMode.WIND_SHUFFLE_MODE_PRESCRIPTED}
+              label={i18n._t('Prescripted wind shuffle')}
+              description={i18n._t('Only for prescripted events, just follow the script')}
+            />
+          )}
+        </Group>
+      </Radio.Group>
       <NumberInput
+        readOnly
         hideControls
         leftSection={<IconUserX size='1rem' />}
         label={i18n._t('Fixed score applied to replacement player')}
@@ -89,9 +122,9 @@ export const TournamentSettings: React.FC<TournamentSettingsProps> = ({ config, 
           'Fixed amount of result score applied for each replacement player regardless of session results.'
         )}
         value={config.rulesetConfig.replacementPlayerFixedPoints}
-        onChange={() => {}}
       />
       <NumberInput
+        readOnly
         hideControls
         leftSection={<IconUserX size='1rem' />}
         label={i18n._t('Fixed uma for replacement player')}
@@ -99,7 +132,6 @@ export const TournamentSettings: React.FC<TournamentSettingsProps> = ({ config, 
           'Fixed amount of rank penalty applied for each replacement player regardless of session results.'
         )}
         value={config.rulesetConfig.replacementPlayerOverrideUma}
-        onChange={() => {}}
       />
     </>
   );

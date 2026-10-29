@@ -38,14 +38,15 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ config, i18n }
   return (
     <Stack>
       <NumberInput
+        readOnly
         hideControls
         leftSection={<IconArrowBadgeDownFilled size='1rem' />}
         label={i18n._t('Initial rating')}
         description={i18n._t('Score given to all players in the beginning of the rating')}
         value={config.rulesetConfig.startRating}
-        onChange={() => {}}
       />
       <NumberInput
+        readOnly
         hideControls
         leftSection={<IconCash size='1rem' />}
         label={i18n._t('Initial points')}
@@ -53,14 +54,13 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ config, i18n }
           'Amount of points given to every player in the beginning of every session'
         )}
         value={config.rulesetConfig.startPoints}
-        onChange={() => {}}
       />
       <Title order={4}>{i18n._t('Game duration')}</Title>
       <Checkbox
         label={i18n._t('Tonpuusen')}
         description={i18n._t('Play only east rounds')}
         checked={config.rulesetConfig.tonpuusen}
-        onChange={() => {}}
+        readOnly
       />
       <Checkbox
         label={i18n._t('Agariyame')}
@@ -68,7 +68,7 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ config, i18n }
           'If the dealer holds the 1st place after last hand in session, the game ends regardless of his winning hand or tempai.'
         )}
         checked={config.rulesetConfig.withLeadingDealerGameOver}
-        onChange={() => {}}
+        readOnly
       />
       <Checkbox
         label={i18n._t('Disable renchans')}
@@ -76,13 +76,13 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ config, i18n }
           'When dealer wins, or stays tempai after draw, seat winds will be changed. Honba is added only after draw.'
         )}
         checked={config.rulesetConfig.withWinningDealerHonbaSkipped}
-        onChange={() => {}}
+        readOnly
       />
       <Checkbox
         label={i18n._t('Allow bankruptcy')}
         description={i18n._t('When a player runs out of score points, the game immediately ends')}
         checked={config.rulesetConfig.withTobi}
-        onChange={() => {}}
+        readOnly
       />
       <Checkbox
         label={i18n._t('Play additional rounds')}
@@ -90,16 +90,16 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ config, i18n }
           'If nobody reaches the goal score at the last hand, the game continues to west rounds (in hanchan) or to south rounds (in tonpuusen), until someone reaches the goal'
         )}
         checked={config.rulesetConfig.playAdditionalRounds}
-        onChange={() => {}}
+        readOnly
       />
       {config.rulesetConfig.playAdditionalRounds && (
         <NumberInput
+          readOnly
           hideControls
           leftSection={<IconTargetArrow size='1rem' />}
           label={i18n._t('Goal score')}
           description={i18n._t('Amount of score player should get to end the game.')}
           value={config.rulesetConfig.goalPoints}
-          onChange={() => {}}
         />
       )}
       <Title order={4}>{i18n._t('Round outcomes')}</Title>
@@ -109,7 +109,7 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ config, i18n }
           'Only first player by the order of the move from the loser would be considered a winner. If not checked, all players declaring Ron are considered winners.'
         )}
         checked={config.rulesetConfig.withAtamahane}
-        onChange={() => {}}
+        readOnly
       />
       <Checkbox
         label={i18n._t('Allow abortive draws')}
@@ -117,13 +117,13 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ config, i18n }
           'There will be a separate "Abortive draw" outcome to record draws due to four riichi, four kans, suufon renda, kyuushu kyuuhai, etc.'
         )}
         checked={config.rulesetConfig.withAbortives}
-        onChange={() => {}}
+        readOnly
       />
       <Checkbox
         label={i18n._t('Nagashi mangan')}
         description={i18n._t('Enable "Nagashi" outcome to record this special draw')}
         checked={config.rulesetConfig.withNagashiMangan}
-        onChange={() => {}}
+        readOnly
       />
       <Title order={4}>{i18n._t('Riichi and honba')}</Title>
       <Checkbox
@@ -132,7 +132,7 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ config, i18n }
           'Riichi left on table in case of draw in the end of the session will be given to session winner'
         )}
         checked={config.rulesetConfig.riichiGoesToWinner}
-        onChange={() => {}}
+        readOnly
       />
       <Checkbox
         label={i18n._t('Pay for honba by atamahane')}
@@ -140,7 +140,7 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ config, i18n }
           'Honba payments will be given only to the first winner. If not checked, payment will be given to all winners.'
         )}
         checked={config.rulesetConfig.doubleronHonbaAtamahane}
-        onChange={() => {}}
+        readOnly
       />
       <Checkbox
         label={i18n._t('Collect riichi bets by atamahane')}
@@ -148,36 +148,36 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ config, i18n }
           'All riichi bets on the table will be given to the first winner. If not checked, winning riichi bets will always be given back, lost bets would be given to the first winner.'
         )}
         checked={config.rulesetConfig.doubleronRiichiAtamahane}
-        onChange={() => {}}
+        readOnly
       />
       <Title order={4}>{i18n._t('Payments and scores')}</Title>
       <Checkbox
         label={i18n._t('Kazoe yakuman')}
         description={i18n._t('13+ han hands are considered yakuman, not sanbaiman.')}
         checked={config.rulesetConfig.withKazoe}
-        onChange={() => {}}
+        readOnly
       />
       <Checkbox
         label={i18n._t('Kiriage mangan')}
         description={i18n._t('Hands valued as 4/30 and 3/60 are rounded to mangan.')}
         checked={config.rulesetConfig.withKiriageMangan}
-        onChange={() => {}}
+        readOnly
       />
       <NumberInput
+        readOnly
         hideControls
         leftSection={<IconMountain size='1rem' />}
         label={i18n._t('Oka bonus')}
         description={i18n._t('Amount of points given to player at 1st place')}
         value={config.rulesetConfig.oka}
-        onChange={() => {}}
       />
       <NumberInput
+        readOnly
         hideControls
         leftSection={<IconBrandStackoverflow size='1rem' />}
         label={i18n._t('Honba Value')}
         description={i18n._t('Value of one honba stick')}
         value={config.rulesetConfig.honbaValue}
-        onChange={() => {}}
       />
       <UmaSelect config={config} i18n={i18n} />
       <Checkbox
@@ -186,19 +186,38 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ config, i18n }
           'If checked, players with equivalent score receive equivalent uma bonus. Otherwise, uma is assigned according to move order.'
         )}
         checked={config.rulesetConfig.equalizeUma}
-        onChange={() => {}}
+        readOnly
       />
       <Title order={4}>{i18n._t('Penalties')}</Title>
+      <NumberInput
+        readOnly
+        hideControls
+        label={i18n._t('Max arbitrary penalty score')}
+        value={config.rulesetConfig.maxPenalty}
+      />
+      <NumberInput
+        readOnly
+        hideControls
+        label={i18n._t('Min arbitrary penalty score')}
+        value={config.rulesetConfig.minPenalty}
+      />
+      <NumberInput
+        readOnly
+        hideControls
+        label={i18n._t('Step of arbitrary penalty scores')}
+        value={config.rulesetConfig.penaltyStep}
+      />
       <Checkbox
         label={i18n._t('Pay chombo as reverse mangan')}
         description={i18n._t(
           'Pay chombo right on occasion. If not checked, chombo is subtracted from player score after uma is applied.'
         )}
         checked={config.rulesetConfig.extraChomboPayments}
-        onChange={() => {}}
+        readOnly
       />
       {!config.rulesetConfig.extraChomboPayments && (
         <NumberInput
+          readOnly
           hideControls
           leftSection={<IconHandStop size='1rem' />}
           label={i18n._t('Amount of chombo penalty')}
@@ -206,22 +225,22 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ config, i18n }
             'Amount of penalty applied in the end of the session after uma bonus.'
           )}
           value={config.rulesetConfig.chomboAmount}
-          onChange={() => {}}
         />
       )}
       <Checkbox
         label={i18n._t('Yakitori')}
         description={i18n._t('Use yakitori rule')}
         checked={config.rulesetConfig.withYakitori}
-        onChange={() => {}}
+        readOnly
       />
       {config.rulesetConfig.withYakitori && (
         <NumberInput
+          readOnly
+          hideControls
           leftSection={<IconHandStop size='1rem' />}
           label={i18n._t('Yakitori penalty')}
           description={i18n._t("Amount of penalty applied to those who didn't win once in game.")}
           value={config.rulesetConfig.yakitoriPenalty}
-          onChange={() => {}}
         />
       )}
     </Stack>

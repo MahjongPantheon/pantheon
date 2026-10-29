@@ -16,7 +16,7 @@
  */
 
 import * as React from 'react';
-import { NumberInput, TextInput } from '@mantine/core';
+import { Checkbox, NumberInput, Text, TextInput } from '@mantine/core';
 import {
   IconChartHistogram,
   IconCoins,
@@ -25,54 +25,82 @@ import {
   IconUsers,
   IconUserX,
 } from '@tabler/icons-react';
-import { GameConfig } from 'tsclients/proto/atoms.pb';
+import { Event, GameConfig, PlatformType } from 'tsclients/proto/atoms.pb';
 import { I18nService } from '../../services/i18n';
 
 type OnlineSettingsProps = {
   config: GameConfig;
+  event: Event;
   i18n: I18nService;
 };
 
-export const OnlineSettings: React.FC<OnlineSettingsProps> = ({ config, i18n }) => {
+export const OnlineSettings: React.FC<OnlineSettingsProps> = ({ config, event, i18n }) => {
   return (
     <>
+      <Text>
+        {i18n._t(
+          'Please note: you should set up the rating accordingly to tournament settings in game platform, otherwise expect errors on replay submit!'
+        )}
+      </Text>
+      <TextInput
+        readOnly
+        label={i18n._t('Event platform')}
+        description={i18n._t('External gaming platform for the tournament')}
+        value={
+          event.platformId === PlatformType.PLATFORM_TYPE_TENHOUNET
+            ? 'Tenhou.net'
+            : event.platformId === PlatformType.PLATFORM_TYPE_MAHJONGSOUL
+              ? 'MahjongSoul'
+              : i18n._t('Not selected')
+        }
+      />
+      <Checkbox readOnly label={i18n._t('Team tournament')} checked={config.isTeam} />
+      <Checkbox
+        readOnly
+        label={i18n._t('Allow adding of replays manually')}
+        description={i18n._t(
+          'If checked, any player participating in event will be able to add new replays through user interface. Disable this if you have any external tool which adds replays automatically.'
+        )}
+        checked={event.allowManualAddReplay}
+      />
       <TextInput
         leftSection={<IconUsers size='1rem' />}
-        label={i18n._t(
-          'Tenhou Lobby ID. Please contact event administrator for proper link to lobby.'
-        )}
+        label={i18n._t('Lobby ID')}
         value={config.lobbyId}
-        onChange={() => {}}
+        readOnly
       />
       <NumberInput
+        readOnly
         hideControls
         leftSection={<IconHourglass size='1rem' />}
         label={i18n._t('Game expiration time (in hours)')}
         description={i18n._t(
-          'Interval of time when played online game is still considered valid and can be added to the rating.'
+          'Interval of time when played online game is still considered valid and can be added to the rating. Set to 0 to disable expiration.'
         )}
         value={config.rulesetConfig.gameExpirationTime}
-        onChange={() => {}}
       />
       <NumberInput
+        readOnly
         hideControls
         leftSection={<IconCoins size='1rem' />}
         label={i18n._t('Chips value')}
         description={i18n._t(
-          'Amount of points given for each chip. Chips should be set up in tournament settings in Tenhou.net.'
+          'Amount of points given for each chip. Chips should be set up in tournament settings in Tenhou.net. Set to 0 to disable chips.'
         )}
         value={config.rulesetConfig.chipsValue}
-        onChange={() => {}}
       />
       <NumberInput
+        readOnly
         hideControls
         leftSection={<IconChartHistogram size='1rem' />}
         label={i18n._t('Series length')}
-        description={i18n._t('Count of session in game series.')}
+        description={i18n._t(
+          'Count of session in game series. Set to 0 to disable series functionality.'
+        )}
         value={config.seriesLength}
-        onChange={() => {}}
       />
       <NumberInput
+        readOnly
         hideControls
         leftSection={<IconNumbers size='1rem' />}
         label={i18n._t('Minimal games count')}
@@ -80,9 +108,9 @@ export const OnlineSettings: React.FC<OnlineSettingsProps> = ({ config, i18n }) 
           'Minimal count of games the player should play to get into the rating table.'
         )}
         value={config.minGamesCount}
-        onChange={() => {}}
       />
       <NumberInput
+        readOnly
         hideControls
         leftSection={<IconUserX size='1rem' />}
         label={i18n._t('Fixed score applied to replacement player')}
@@ -90,9 +118,9 @@ export const OnlineSettings: React.FC<OnlineSettingsProps> = ({ config, i18n }) 
           'Fixed amount of result score applied for each replacement player regardless of session results.'
         )}
         value={config.rulesetConfig.replacementPlayerFixedPoints}
-        onChange={() => {}}
       />
       <NumberInput
+        readOnly
         hideControls
         leftSection={<IconUserX size='1rem' />}
         label={i18n._t('Fixed uma for replacement player')}
@@ -100,7 +128,6 @@ export const OnlineSettings: React.FC<OnlineSettingsProps> = ({ config, i18n }) 
           'Fixed amount of rank penalty applied for each replacement player regardless of session results.'
         )}
         value={config.rulesetConfig.replacementPlayerOverrideUma}
-        onChange={() => {}}
       />
     </>
   );

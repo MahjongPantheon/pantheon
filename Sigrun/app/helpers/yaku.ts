@@ -361,3 +361,47 @@ export const doubleYakuman = [
     name: (i18n: I18nService) => i18n._t('Kokushi musou 13-side'),
   },
 ];
+
+export const aggregatedYakuhai = [
+  YakuId.YAKUHAI1,
+  YakuId.YAKUHAI2,
+  YakuId.YAKUHAI3,
+  YakuId.YAKUHAI4,
+];
+
+export const windYaku = [
+  {
+    seat: YakuId.EAST_SEAT_WIND,
+    round: YakuId.EAST_ROUND_WIND,
+    name: (i18n: I18nService) => i18n._t('East wind'),
+  },
+  {
+    seat: YakuId.SOUTH_SEAT_WIND,
+    round: YakuId.SOUTH_ROUND_WIND,
+    name: (i18n: I18nService) => i18n._t('South wind'),
+  },
+  {
+    seat: YakuId.WEST_SEAT_WIND,
+    round: YakuId.WEST_ROUND_WIND,
+    name: (i18n: I18nService) => i18n._t('West wind'),
+  },
+  {
+    seat: YakuId.NORTH_SEAT_WIND,
+    round: YakuId.NORTH_ROUND_WIND,
+    name: (i18n: I18nService) => i18n._t('North wind'),
+  },
+];
+
+export const separateYakuhai = [
+  YakuId.EAST_SEAT_WIND,
+  YakuId.EAST_ROUND_WIND,
+  YakuId.SOUTH_SEAT_WIND,
+  YakuId.SOUTH_ROUND_WIND,
+  YakuId.WEST_SEAT_WIND,
+  YakuId.WEST_ROUND_WIND,
+  YakuId.NORTH_SEAT_WIND,
+  YakuId.NORTH_ROUND_WIND,
+  YakuId.RED_DRAGON,
+  YakuId.GREEN_DRAGON,
+  YakuId.WHITE_DRAGON,
+];

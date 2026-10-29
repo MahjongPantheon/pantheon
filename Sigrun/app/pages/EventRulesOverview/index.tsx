@@ -85,7 +85,7 @@ export const EventRulesOverview: React.FC<{ params: { eventId: string } }> = ({
           <Tabs.Panel value={event.type ?? EventType.EVENT_TYPE_LOCAL} pt='xs'>
             <Stack>
               {event.type === EventType.EVENT_TYPE_ONLINE && (
-                <OnlineSettings config={ruleset} i18n={i18n} />
+                <OnlineSettings event={event} config={ruleset} i18n={i18n} />
               )}
               {event.type === EventType.EVENT_TYPE_LOCAL && (
                 <LocalSettings config={ruleset} i18n={i18n} />

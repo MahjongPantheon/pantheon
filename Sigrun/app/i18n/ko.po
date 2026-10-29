@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-27 23:49+0100\n"
+"POT-Creation-Date: 2026-10-29 22:26+0100\n"
 "PO-Revision-Date: 2026-10-06 23:43+0300\n"
 "Last-Translator: Geunmo Kim <kimgeunmo@gmail.com>\n"
 "Language-Team: \n"
@@ -170,7 +170,7 @@ msgctxt "Tsumo item partial"
 msgid "(tsumo, pao: <b>%1</b>)"
 msgstr "(쯔모, 책임지불(파오): <b>%1</b>)"
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:113:22
+#: app/pages/EventRulesOverview/UmaSelect.tsx:121:22
 msgid "1 player with score less than starting"
 msgstr "1명의 작사가 시작 점수보다 낮은 점수를 기록함"
 
@@ -178,7 +178,7 @@ msgstr "1명의 작사가 시작 점수보다 낮은 점수를 기록함"
 msgid "13+ han hands are considered yakuman, not sanbaiman."
 msgstr "13판 이상의 화료는 삼배만이 아닌 역만으로 취급됨"
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:74:16
+#: app/pages/EventRulesOverview/UmaSelect.tsx:82:16
 msgid "1st"
 msgstr "1위"
 
@@ -186,7 +186,7 @@ msgstr "1위"
 msgid "1st place: "
 msgstr "1위: "
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:77:16
+#: app/pages/EventRulesOverview/UmaSelect.tsx:85:16
 msgid "2nd"
 msgstr "2위"
 
@@ -194,11 +194,11 @@ msgstr "2위"
 msgid "2nd place: "
 msgstr "2위: "
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:88:22
+#: app/pages/EventRulesOverview/UmaSelect.tsx:96:22
 msgid "3 players with score less than starting"
 msgstr "3명의 작사가 시작 점수보다 낮은 점수를 기록함"
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:80:16
+#: app/pages/EventRulesOverview/UmaSelect.tsx:88:16
 msgid "3rd"
 msgstr "3위"
 
@@ -206,7 +206,7 @@ msgstr "3위"
 msgid "3rd place: "
 msgstr "3위: "
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:83:16
+#: app/pages/EventRulesOverview/UmaSelect.tsx:91:16
 msgid "4th"
 msgstr "4위"
 
@@ -269,7 +269,7 @@ msgid "Agariyame"
 msgstr "아가리야메"
 
 #: app/pages/EventInfo.tsx:60:20 app/pages/RatingTable.tsx:187:51
-#: app/pages/RecentGames.tsx:81:49
+#: app/pages/RecentGames.tsx:82:49
 msgid "Aggregated event"
 msgstr "통합 이벤트"
 
@@ -291,42 +291,48 @@ msgstr ""
 msgid "Allow abortive draws"
 msgstr "도중유국 허용"
 
+#: app/pages/EventRulesOverview/OnlineSettings.tsx:60:16
+msgid "Allow adding of replays manually"
+msgstr "수동 패보 추가 허용"
+
 #: app/pages/EventRulesOverview/RulesetSettings.tsx:82:16
 msgid "Allow bankruptcy"
 msgstr "들통 허용"
 
-#: app/pages/EventRulesOverview/YakuSettings.tsx:42:22
+#: app/pages/EventRulesOverview/YakuSettings.tsx:50:22
 msgid "Allow combination of yakumans, e.g. tsuuisou + daisangen"
 msgstr "역만 중첩을 허용, 예시: 자일색 + 대삼원"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:204:18
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:223:18
 msgid "Amount of chombo penalty"
 msgstr "촌보 벌부값"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:205:24
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:224:24
 msgid "Amount of penalty applied in the end of the session after uma bonus."
 msgstr "대국 종료 및 우마 적용 후에 적용될 촌보 벌부값"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:222:24
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:242:24
 msgid "Amount of penalty applied to those who didn't win once in game."
 msgstr "한번도 화료하지 못한 작사에게 적용될 야키토리 벌부값"
 
-#: app/pages/EventRulesOverview/OnlineSettings.tsx:61:22
+#: app/pages/EventRulesOverview/OnlineSettings.tsx:87:22
 msgid ""
 "Amount of points given for each chip. Chips should be set up in tournament "
-"settings in Tenhou.net."
-msgstr "칩 당 주어지는 점수 설정. 칩은 천봉의 대회 설정에서 설정해야 함"
+"settings in Tenhou.net. Set to 0 to disable chips."
+msgstr ""
+"칩 당 주어지는 점수 설정. 칩은 천봉의 대회 설정에서 설정해야 함. 칩을 비활성"
+"화하려면 0으로 설정하시오"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:52:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:53:22
 msgid ""
 "Amount of points given to every player in the beginning of every session"
 msgstr "대국 시작 시 주어지는 시작 점수"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:170:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:171:22
 msgid "Amount of points given to player at 1st place"
 msgstr "대국 1위 작사에게 주어지는 오카 점수"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:100:24
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:101:24
 msgid "Amount of score player should get to end the game."
 msgstr "대국 종료를 위해 도달해야 하는 점수"
 
@@ -377,6 +383,10 @@ msgstr "평균 순위:"
 #: app/components/AppFooter.tsx:40:20
 msgid "Back to top"
 msgstr "맨 위로 이동"
+
+#: app/pages/EventRulesOverview/TournamentSettings.tsx:103:20
+msgid "Balanced wind shuffle"
+msgstr "균등한 바람 배정"
 
 #: app/components/PlayerStatsListing.tsx:220:20
 msgid "Because of riichi: "
@@ -443,11 +453,11 @@ msgstr "청노두"
 msgid "Chips"
 msgstr "칩"
 
-#: app/pages/EventRulesOverview/OnlineSettings.tsx:60:16
+#: app/pages/EventRulesOverview/OnlineSettings.tsx:86:16
 msgid "Chips value"
 msgstr "칩 가치"
 
-#: app/pages/EventRulesOverview/TournamentSettings.tsx:68:16
+#: app/pages/EventRulesOverview/TournamentSettings.tsx:71:16
 msgid "Chombo in last round ends game"
 msgstr "마지막 국의 촌보로 대국 종료"
 
@@ -467,7 +477,7 @@ msgstr "구련보등"
 msgid "Chuuren poutou 9-side"
 msgstr "구련보등"
 
-#: app/pages/PlayerStats.tsx:230:24
+#: app/pages/PlayerStats.tsx:295:20
 msgid "Close game preview"
 msgstr "대국 미리보기 닫기"
 
@@ -483,7 +493,7 @@ msgstr "일반 동작"
 msgid "Common stats"
 msgstr "일반 통계"
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:38:62
+#: app/pages/EventRulesOverview/UmaSelect.tsx:45:20
 msgid "Complex position-based"
 msgstr "복잡한 위치 기반"
 
@@ -501,10 +511,11 @@ msgstr "복잡한 위치 기반"
 msgid "Couldn't get nomination details"
 msgstr "후보 정보를 불러올 수 없습니다"
 
-#: app/pages/EventRulesOverview/LocalSettings.tsx:36:22
-#: app/pages/EventRulesOverview/OnlineSettings.tsx:71:22
-msgid "Count of session in game series."
-msgstr "시리즈에 표시되는 대국 수"
+#: app/pages/EventRulesOverview/LocalSettings.tsx:37:22
+#: app/pages/EventRulesOverview/OnlineSettings.tsx:97:22
+msgid ""
+"Count of session in game series. Set to 0 to disable series functionality."
+msgstr "시리즈에 표시되는 대국 수. 시리즈를 비활성화하려면 0으로 설정하시오"
 
 #: app/components/MainMenu.tsx:64:37
 msgid "Current event"
@@ -552,7 +563,7 @@ msgstr "그건 제 잔상입니다만"
 msgid "Disable renchans"
 msgstr "연장 비활성화"
 
-#: app/pages/EventRulesOverview/TournamentSettings.tsx:52:20
+#: app/pages/EventRulesOverview/TournamentSettings.tsx:53:20
 msgid "Do not interrupt session until it ends"
 msgstr "오라스에 인한 대국 종료시 종료"
 
@@ -564,9 +575,9 @@ msgstr "전체 도라 수: "
 msgid "Dora lord"
 msgstr "도라 대마왕"
 
-#: app/pages/EventRulesOverview/YakuSettings.tsx:68:25
-msgid "Double Yakuman:"
-msgstr "헤아림 역만"
+#: app/pages/EventRulesOverview/YakuSettings.tsx:105:25
+msgid "Double yakuman:"
+msgstr "더블 역만:"
 
 #: app/components/GameListing.tsx:227:14
 msgid "Draw: %1"
@@ -584,6 +595,10 @@ msgstr "장풍: 동"
 msgid "East seat wind"
 msgstr "자풍: 동"
 
+#: app/helpers/yaku.ts:376:34
+msgid "East wind"
+msgstr "동풍"
+
 #: app/components/MainMenu.tsx:195:34 app/components/MainMenu.tsx:196:22
 msgid "Edit my profile"
 msgstr "내 프로필 수정"
@@ -591,6 +606,10 @@ msgstr "내 프로필 수정"
 #: app/pages/EventRulesOverview/RulesetSettings.tsx:124:22
 msgid "Enable \"Nagashi\" outcome to record this special draw"
 msgstr "특별 유국인 \"유국만관\" 결과가 활성화됨"
+
+#: app/pages/EventRulesOverview/YakuSettings.tsx:55:16
+msgid "Enable aggregated yakuhai"
+msgstr "집계된 역패 사용"
 
 #: app/pages/EventRulesOverview/RulesetSettings.tsx:184:16
 msgid "Equalize uma"
@@ -604,13 +623,21 @@ msgstr "관리자 패널에서 이벤트 편집"
 msgid "Event administrators: "
 msgstr "관리자: "
 
-#: app/pages/EventList.tsx:82:19 app/services/i18n.test.ts:35:12
+#: app/pages/EventList.tsx:85:19 app/services/i18n.test.ts:35:12
 msgid "Event list"
 msgstr "이벤트 목록"
+
+#: app/pages/EventRulesOverview/OnlineSettings.tsx:47:16
+msgid "Event platform"
+msgstr "이벤트 플랫폼"
 
 #: app/pages/EventInfo.tsx:118:18
 msgid "Event referees: "
 msgstr "심판: "
+
+#: app/pages/EventRulesOverview/OnlineSettings.tsx:48:22
+msgid "External gaming platform for the tournament"
+msgstr "대회에 사용할 외부 게임 플랫폼"
 
 #: app/components/TextFilter.tsx:51:10
 msgid "Filter"
@@ -624,27 +651,27 @@ msgstr "이벤트 검색"
 msgid "Final game score"
 msgstr "최종 점수"
 
-#: app/pages/EventRulesOverview/OnlineSettings.tsx:99:22
-#: app/pages/EventRulesOverview/TournamentSettings.tsx:98:22
+#: app/pages/EventRulesOverview/OnlineSettings.tsx:127:22
+#: app/pages/EventRulesOverview/TournamentSettings.tsx:131:22
 msgid ""
 "Fixed amount of rank penalty applied for each replacement player regardless "
 "of session results."
 msgstr "대국 결과에 관계없이 교체 작사에게 적용되는 고정 우마값"
 
-#: app/pages/EventRulesOverview/OnlineSettings.tsx:89:22
-#: app/pages/EventRulesOverview/TournamentSettings.tsx:88:22
+#: app/pages/EventRulesOverview/OnlineSettings.tsx:117:22
+#: app/pages/EventRulesOverview/TournamentSettings.tsx:121:22
 msgid ""
 "Fixed amount of result score applied for each replacement player regardless "
 "of session results."
 msgstr "대국 결과에 관계없이 교체 작사에게 적용되는 고정 결과 점수"
 
-#: app/pages/EventRulesOverview/OnlineSettings.tsx:88:16
-#: app/pages/EventRulesOverview/TournamentSettings.tsx:87:16
+#: app/pages/EventRulesOverview/OnlineSettings.tsx:116:16
+#: app/pages/EventRulesOverview/TournamentSettings.tsx:120:16
 msgid "Fixed score applied to replacement player"
 msgstr "교체 작사에게 고정 점수 적용"
 
-#: app/pages/EventRulesOverview/OnlineSettings.tsx:98:16
-#: app/pages/EventRulesOverview/TournamentSettings.tsx:97:16
+#: app/pages/EventRulesOverview/OnlineSettings.tsx:126:16
+#: app/pages/EventRulesOverview/TournamentSettings.tsx:130:16
 msgid "Fixed uma for replacement player"
 msgstr "교체 작사에게 고정 우마 적용"
 
@@ -652,7 +679,7 @@ msgstr "교체 작사에게 고정 우마 적용"
 msgid "Game duration"
 msgstr "대국 시간"
 
-#: app/pages/EventRulesOverview/OnlineSettings.tsx:50:16
+#: app/pages/EventRulesOverview/OnlineSettings.tsx:76:16
 msgid "Game expiration time (in hours)"
 msgstr "대국 만료 기간 (시간)"
 
@@ -775,7 +802,7 @@ msgstr "가장 많은 다마텐 화료를 기록한 작사."
 msgid "Given for winning the largest number riichi nomi hands."
 msgstr "가장 많은 리치 노미 화료를 기록한 작사."
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:99:18
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:100:18
 msgid "Goal score"
 msgstr "목표 점수"
 
@@ -807,7 +834,7 @@ msgstr "판수"
 msgid "Hands valued as 4/30 and 3/60 are rounded to mangan."
 msgstr "4판30부와 3부60부는 만관으로 취급됨"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:177:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:178:16
 msgid "Honba Value"
 msgstr "판수"
 
@@ -839,9 +866,22 @@ msgstr "하저로어"
 msgid "How game sessions should end during the tournament"
 msgstr "대회 중 대국이 종료되는 방법"
 
+#: app/pages/EventRulesOverview/TournamentSettings.tsx:90:22
+msgid "How players on the same table are shuffled"
+msgstr "같은 테이블의 작사에게 바람을 배정하는 방법"
+
 #: app/pages/Achievements.tsx:223:14
 msgid "I saw them dancing"
 msgstr "혼자서도 잘 해요"
+
+#: app/pages/EventRulesOverview/OnlineSettings.tsx:61:22
+msgid ""
+"If checked, any player participating in event will be able to add new "
+"replays through user interface. Disable this if you have any external tool "
+"which adds replays automatically."
+msgstr ""
+"활성화 시 이벤트 참가 작사 누구나 사용자 화면에서 새 패보를 추가할 수 있음. "
+"외부 도구로 패보를 자동 추가하는 경우에는 비활성화하시오"
 
 #: app/pages/EventRulesOverview/RulesetSettings.tsx:185:22
 msgid ""
@@ -867,7 +907,7 @@ msgid ""
 msgstr ""
 "오라스 종료 시 친이 1위라면 친의 화료 또는 텐파이와 무관하게 대국이 종료됨"
 
-#: app/pages/EventRulesOverview/TournamentSettings.tsx:69:22
+#: app/pages/EventRulesOverview/TournamentSettings.tsx:72:22
 msgid ""
 "If this is set, chombo will not allow players to play one more hand if time "
 "is out and it is final hand of the game"
@@ -879,19 +919,21 @@ msgstr ""
 msgid "Iipeikou"
 msgstr "이페코"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:51:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:52:16
 msgid "Initial points"
 msgstr "대국 시작 점수"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:43:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:44:16
 msgid "Initial rating"
 msgstr "이벤트 시작 점수"
 
-#: app/pages/EventRulesOverview/OnlineSettings.tsx:51:22
+#: app/pages/EventRulesOverview/OnlineSettings.tsx:77:22
 msgid ""
 "Interval of time when played online game is still considered valid and can "
-"be added to the rating."
-msgstr "온라인 대국이 유효하며 레이팅에 추가될 수 있는 기간"
+"be added to the rating. Set to 0 to disable expiration."
+msgstr ""
+"온라인 대국이 유효하며 레이팅에 추가될 수 있는 기간. 만료 기간을 부여하지 않"
+"으려면 0으로 설정하시오"
 
 #: app/helpers/yaku.ts:97:34
 msgid "Ippatsu"
@@ -930,21 +972,21 @@ msgstr "국사무쌍"
 msgid "Kokushi musou 13-side"
 msgstr "국사무쌍"
 
-#: app/pages/EventRulesOverview/YakuSettings.tsx:33:16
+#: app/pages/EventRulesOverview/YakuSettings.tsx:41:16
 msgid "Kuitan"
 msgstr "쿠이탕"
 
 #: app/components/MainMenu.tsx:243:33 app/components/MainMenu.tsx:244:20
-#: app/services/i18n.be.test.ts:35:12
+#: app/services/i18n.be.test.ts:35:12 app/services/i18n.selection.test.ts:23:10
 msgid "Language"
 msgstr "언어"
 
-#: app/components/RecentPublicGames.tsx:26:12 app/pages/RecentGames.tsx:79:20
-#: app/pages/RecentGames.tsx:81:22 app/pages/RecentGames.tsx:92:31
+#: app/components/RecentPublicGames.tsx:26:12 app/pages/RecentGames.tsx:80:20
+#: app/pages/RecentGames.tsx:82:22 app/pages/RecentGames.tsx:93:31
 msgid "Last games"
 msgstr "최근 대국"
 
-#: app/pages/RecentGames.tsx:84:24
+#: app/pages/RecentGames.tsx:85:24
 msgid "Last games of the event \"%1\", page %2, provided by Mahjong Pantheon"
 msgstr "Mahjong Pantheon에서 제공되는 이벤트 \"%1\"의 최근 대국, 페이지 %2"
 
@@ -952,13 +994,17 @@ msgstr "Mahjong Pantheon에서 제공되는 이벤트 \"%1\"의 최근 대국, �
 msgid "Last series"
 msgstr "최근 시리즈"
 
-#: app/pages/Achievements.tsx:852:18 app/pages/PlayerStats.tsx:134:18
+#: app/pages/Achievements.tsx:852:18 app/pages/PlayerStats.tsx:434:18
 msgid "Last update: %1"
 msgstr "마지막 업데이트: %1"
 
-#: app/pages/EventList.tsx:83:22
+#: app/pages/EventList.tsx:86:22
 msgid "List of all events registered with Mahjong Pantheon"
 msgstr "Mahjong Pantheon에 등록된 모든 이벤트 목록"
+
+#: app/pages/EventRulesOverview/OnlineSettings.tsx:68:16
+msgid "Lobby ID"
+msgstr "로비 ID"
 
 #: app/pages/EventRulesOverview/TabsList.tsx:51:12
 msgid "Local event settings"
@@ -972,6 +1018,10 @@ msgstr "로컬 이벤트"
 msgid "Loss stats"
 msgstr "패배 통계"
 
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:195:16
+msgid "Max arbitrary penalty score"
+msgstr "최대 임의 벌부 점수"
+
 #: app/components/PlayerStatsListing.tsx:94:16
 msgid "Maximum: "
 msgstr "최대: "
@@ -984,14 +1034,18 @@ msgstr "메뉴"
 msgid "Menzentsumo"
 msgstr "멘젠쯔모"
 
-#: app/pages/EventRulesOverview/LocalSettings.tsx:44:22
-#: app/pages/EventRulesOverview/OnlineSettings.tsx:79:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:201:16
+msgid "Min arbitrary penalty score"
+msgstr "최소 임의 벌부 점수"
+
+#: app/pages/EventRulesOverview/LocalSettings.tsx:47:22
+#: app/pages/EventRulesOverview/OnlineSettings.tsx:107:22
 msgid ""
 "Minimal count of games the player should play to get into the rating table."
 msgstr "순위표에 입성하기 위해 치뤄야 하는 최소 대국 수"
 
-#: app/pages/EventRulesOverview/LocalSettings.tsx:43:16
-#: app/pages/EventRulesOverview/OnlineSettings.tsx:78:16
+#: app/pages/EventRulesOverview/LocalSettings.tsx:46:16
+#: app/pages/EventRulesOverview/OnlineSettings.tsx:106:16
 msgid "Minimal games count"
 msgstr "최소 대국 수"
 
@@ -1003,7 +1057,7 @@ msgstr "최소: "
 msgid "Misc stats"
 msgstr "기타 통계"
 
-#: app/pages/EventRulesOverview/YakuSettings.tsx:41:16
+#: app/pages/EventRulesOverview/YakuSettings.tsx:49:16
 msgid "Multiple yakumans"
 msgstr "역만 중첩"
 
@@ -1015,7 +1069,7 @@ msgstr "유국만관"
 msgid "Nagashi: %1"
 msgstr "유국만관: %1"
 
-#: app/pages/PlayerStats.tsx:207:24
+#: app/pages/PlayerStats.tsx:272:20
 msgid "Next game"
 msgstr "다음 대국"
 
@@ -1035,7 +1089,15 @@ msgstr "장풍: 북"
 msgid "North seat wind"
 msgstr "자풍: 북"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:169:16
+#: app/helpers/yaku.ts:391:34
+msgid "North wind"
+msgstr "북풍"
+
+#: app/pages/EventRulesOverview/OnlineSettings.tsx:54:17
+msgid "Not selected"
+msgstr "선택되지 않음"
+
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:170:16
 msgid "Oka bonus"
 msgstr "오카 보너스"
 
@@ -1056,6 +1118,10 @@ msgstr ""
 "다가화 상황 발생 시 좌석 순서에 따라 첫번째 작사만 론 화료가 가능함. 비활성 "
 "시 론을 선언한 모든 작사가 화료하게 됨"
 
+#: app/pages/EventRulesOverview/TournamentSettings.tsx:111:28
+msgid "Only for prescripted events, just follow the script"
+msgstr "사전 정의된 이벤트 전용으로, 이벤트 스크립트를 따름"
+
 #: app/components/MainMenu.tsx:227:32 app/components/MainMenu.tsx:228:20
 msgid "Open assistant"
 msgstr "Pantheon으로 이동"
@@ -1068,7 +1134,7 @@ msgstr "메뉴 열기"
 msgid "Open riichi"
 msgstr "오픈 리치"
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:137:20
+#: app/pages/EventRulesOverview/UmaSelect.tsx:145:20
 msgid "Otherwise"
 msgstr "기타"
 
@@ -1076,15 +1142,15 @@ msgstr "기타"
 msgid "Over 9000 fu"
 msgstr "호오! 부수력이 올라갔군요"
 
-#: app/pages/EventRulesOverview/YakuSettings.tsx:57:25
+#: app/pages/EventRulesOverview/YakuSettings.tsx:94:25
 msgid "Pao rule enabled for:"
 msgstr "책임지불(파오) 해당 역:"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:193:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:211:16
 msgid "Pay chombo as reverse mangan"
 msgstr "촌보 시 역 만관으로 지급"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:194:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:212:22
 msgid ""
 "Pay chombo right on occasion. If not checked, chombo is subtracted from "
 "player score after uma is applied."
@@ -1116,7 +1182,7 @@ msgstr "핑후"
 msgid "Place"
 msgstr "순위"
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:72:22
+#: app/pages/EventRulesOverview/UmaSelect.tsx:80:22
 msgid "Place / Session result"
 msgstr "대국 결과"
 
@@ -1140,12 +1206,12 @@ msgstr "작사 ID"
 msgid "Player name"
 msgstr "작사 이름"
 
-#: app/pages/PlayerStats.tsx:117:22
+#: app/pages/PlayerStats.tsx:408:22
 msgid ""
 "Player statistics for %1 in the event \"%2\" provided by Mahjong Pantheon"
 msgstr "Mahjong Pantheon에서 제공되는 이벤트 \"%2\"의 작사 %1의 통계"
 
-#: app/pages/PlayerStats.tsx:116:37
+#: app/pages/PlayerStats.tsx:407:46
 msgid "Player stats"
 msgstr "작사 통계"
 
@@ -1158,9 +1224,25 @@ msgctxt "Event menu"
 msgid "Players registered to event"
 msgstr "이벤트 등록 작사 목록"
 
-#: app/pages/PlayerStats.tsx:188:24
+#: app/pages/EventRulesOverview/OnlineSettings.tsx:41:10
+msgid ""
+"Please note: you should set up the rating accordingly to tournament settings "
+"in game platform, otherwise expect errors on replay submit!"
+msgstr ""
+"주의: 게임 플랫폼의 대회 설정과 동일하게 점수를 설정해야 합니다. 그렇지 않으"
+"면 패보 등록 시 오류가 발생할 수 있습니다!"
+
+#: app/pages/EventRulesOverview/TournamentSettings.tsx:110:22
+msgid "Prescripted wind shuffle"
+msgstr "사전 정의된 바람 배정"
+
+#: app/pages/PlayerStats.tsx:253:20
 msgid "Previous game"
 msgstr "이전 대국"
+
+#: app/pages/EventRulesOverview/TournamentSettings.tsx:97:20
+msgid "Random wind shuffle"
+msgstr "무작위 바람 배정"
 
 #: app/components/RatingGraph.tsx:125:41 app/components/RatingGraph.tsx:130:19
 #: app/pages/RatingTable.tsx:275:20
@@ -1172,7 +1254,7 @@ msgid "Rating points"
 msgstr "점수"
 
 #: app/components/AppFooter.tsx:84:20 app/pages/Achievements.tsx:816:35
-#: app/pages/EventList.tsx:120:67 app/pages/RatingTable.tsx:143:35
+#: app/pages/EventList.tsx:129:69 app/pages/RatingTable.tsx:143:35
 #: app/pages/RatingTable.tsx:185:20 app/pages/RatingTable.tsx:187:22
 #: app/pages/RatingTable.tsx:198:33
 msgid "Rating table"
@@ -1253,7 +1335,7 @@ msgstr ""
 "오라스의 유국으로 대국이 종료될 경우 1위 작사가 해당 국에 공탁된 리치봉을 습"
 "득함"
 
-#: app/pages/EventList.tsx:86:12
+#: app/pages/EventList.tsx:89:12
 msgid "Riichi mahjong events list"
 msgstr "리치 마작 이벤트 목록"
 
@@ -1328,7 +1410,7 @@ msgstr "삼색동각"
 msgid "Save as CSV"
 msgstr "CSV로 저장"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:44:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:45:22
 msgid "Score given to all players in the beginning of the rating"
 msgstr "이벤트 참가 시 주어지는 시작 점수"
 
@@ -1336,12 +1418,16 @@ msgstr "이벤트 참가 시 주어지는 시작 점수"
 msgid "Score:"
 msgstr "점수:"
 
-#: app/pages/EventRulesOverview/TournamentSettings.tsx:77:16
+#: app/pages/EventRulesOverview/TournamentSettings.tsx:80:16
 msgid "Seating is defined in advance"
 msgstr "사전 설정 좌석"
 
-#: app/pages/EventRulesOverview/LocalSettings.tsx:35:16
-#: app/pages/EventRulesOverview/OnlineSettings.tsx:70:16
+#: app/pages/EventRulesOverview/UmaSelect.tsx:32:16
+msgid "Select uma bonus type"
+msgstr "우마 보너스 종류 선택"
+
+#: app/pages/EventRulesOverview/LocalSettings.tsx:36:16
+#: app/pages/EventRulesOverview/OnlineSettings.tsx:96:16
 msgid "Series length"
 msgstr "시리즈 길이"
 
@@ -1363,7 +1449,7 @@ msgstr "Mahjong Pantheon에서 제공되는 이벤트 \"%1\"의 시리즈 순위
 msgid "Series rating is not available for aggregated events"
 msgstr "통합 이벤트에서는 시리즈 순위을 사용 할 수 없습니다"
 
-#: app/pages/EventRulesOverview/TournamentSettings.tsx:35:16
+#: app/pages/EventRulesOverview/TournamentSettings.tsx:36:16
 msgid "Session duration in minutes"
 msgstr "대국 시간 (분)"
 
@@ -1378,6 +1464,10 @@ msgstr "소삼원"
 #: app/helpers/yaku.ts:217:34
 msgid "Shousuushii"
 msgstr "소사희"
+
+#: app/pages/EventRulesOverview/TournamentSettings.tsx:98:26
+msgid "Shuffle players on the same table randomly"
+msgstr "같은 테이블의 작사에게 바람을 무작위로 배정"
 
 #: app/components/MainMenu.tsx:206:34 app/components/MainMenu.tsx:207:22
 msgid "Sign in"
@@ -1401,7 +1491,7 @@ msgstr ""
 msgid "Sigrun: riichi mahjong ratings and statistics"
 msgstr "Sigrun: 리치 마작 점수 및 통계"
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:37:61
+#: app/pages/EventRulesOverview/UmaSelect.tsx:40:20
 msgid "Simple rank-based"
 msgstr "단순 순위 기반"
 
@@ -1416,6 +1506,14 @@ msgstr "장풍: 남"
 #: app/helpers/yaku.ts:277:34
 msgid "South seat wind"
 msgstr "자풍: 남"
+
+#: app/helpers/yaku.ts:381:34
+msgid "South wind"
+msgstr "남풍"
+
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:207:16
+msgid "Step of arbitrary penalty scores"
+msgstr "임의 벌부 점수 단계"
 
 #: app/helpers/yaku.ts:209:34
 msgid "Suuankou"
@@ -1446,7 +1544,7 @@ msgstr "통합 이벤트에서는 타이머를 사용 할 수 없습니다"
 msgid "Tanyao"
 msgstr "탕야오"
 
-#: app/pages/EventRulesOverview/YakuSettings.tsx:34:22
+#: app/pages/EventRulesOverview/YakuSettings.tsx:42:22
 msgid ""
 "Tanyao costs 1 han on open hand. If not checked, tanyao does not work on "
 "open hand."
@@ -1458,18 +1556,14 @@ msgstr ""
 msgid "Team"
 msgstr "팀"
 
-#: app/pages/EventRulesOverview/TournamentSettings.tsx:75:24
+#: app/pages/EventRulesOverview/OnlineSettings.tsx:57:33
+#: app/pages/EventRulesOverview/TournamentSettings.tsx:78:24
 msgid "Team tournament"
 msgstr "팀 대회"
 
 #: app/helpers/yaku.ts:249:34
 msgid "Tenhou"
 msgstr "천화"
-
-#: app/pages/EventRulesOverview/OnlineSettings.tsx:41:16
-msgid ""
-"Tenhou Lobby ID. Please contact event administrator for proper link to lobby."
-msgstr "천봉 로비 ID. 정확한 로비 링크는 관리자에게 문의하세요."
 
 #: app/pages/Achievements.tsx:352:14
 msgid "The 1k Flash"
@@ -1524,7 +1618,7 @@ msgstr "통합 이벤트에서는 타이머를 사용 할 수 없습니다"
 msgid "Timer page for the event \"%1\" provided by Mahjong Pantheon"
 msgstr "Mahjong Pantheon에서 제공되는 이벤트 \"%1\"의 타이머 페이지"
 
-#: app/pages/EventRulesOverview/TournamentSettings.tsx:36:22
+#: app/pages/EventRulesOverview/TournamentSettings.tsx:37:22
 msgid ""
 "Timer starting value. After time runs out, session ending policy is applied "
 "(see below)."
@@ -1583,6 +1677,10 @@ msgstr "대회"
 msgid "Tournament settings"
 msgstr "대회 설정"
 
+#: app/pages/EventRulesOverview/TournamentSettings.tsx:104:26
+msgid "Try to place players on winds they previously played less"
+msgstr "이전에 적게 배정받은 바람을 우선 배정"
+
 #: app/components/PlayerStatsListing.tsx:280:16
 msgid "Tsumo payments: "
 msgstr "쯔모 지불: "
@@ -1595,31 +1693,27 @@ msgstr "쯔모: %1"
 msgid "Tsuuiisou"
 msgstr "자일색"
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:45:20
+#: app/pages/EventRulesOverview/UmaSelect.tsx:54:20
 msgid "Uma bonus for 1st place"
 msgstr "1위 우마 보너스"
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:51:20
+#: app/pages/EventRulesOverview/UmaSelect.tsx:60:20
 msgid "Uma bonus for 2nd place"
 msgstr "2위 우마 보너스"
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:32:16
-msgid "Uma bonus type"
-msgstr "우마 보너스 종류"
-
-#: app/pages/EventRulesOverview/UmaSelect.tsx:57:20
+#: app/pages/EventRulesOverview/UmaSelect.tsx:66:20
 msgid "Uma penalty for 3rd place"
 msgstr "3위 우마 벌부"
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:63:20
+#: app/pages/EventRulesOverview/UmaSelect.tsx:72:20
 msgid "Uma penalty for 4th place"
 msgstr "4위 우마 벌부"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:214:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:232:22
 msgid "Use yakitori rule"
 msgstr "야키토리 규칙 사용"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:178:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:179:22
 msgid "Value of one honba stick"
 msgstr "본장당 점수"
 
@@ -1631,7 +1725,7 @@ msgstr "본장당 점수"
 msgid "View game"
 msgstr "대국 보기"
 
-#: app/pages/PlayerStats.tsx:180:16
+#: app/pages/PlayerStats.tsx:245:12
 msgid "View selected game details"
 msgstr "해당 대국 세부내용 보기"
 
@@ -1644,9 +1738,12 @@ msgid "West round wind"
 msgstr "장풍: 서"
 
 #: app/helpers/yaku.ts:285:34
-#, fuzzy
 msgid "West seat wind"
 msgstr "베스트 화료"
+
+#: app/helpers/yaku.ts:386:34
+msgid "West wind"
+msgstr "서풍"
 
 #: app/pages/EventRulesOverview/RulesetSettings.tsx:83:22
 msgid "When a player runs out of score points, the game immediately ends"
@@ -1660,11 +1757,19 @@ msgstr ""
 "친의 화료 또는 유국 시 텐파이에도 국이 연장되지 않음. 본장은 유국 시에만 추가"
 "됨"
 
-#: app/pages/EventRulesOverview/TournamentSettings.tsx:56:20
+#: app/pages/EventRulesOverview/YakuSettings.tsx:56:22
+msgid ""
+"When disabled, use separate yakuhai names like \"East\" and \"White dragon\" "
+"instead of aggregated names like \"Yakuhai x3\"."
+msgstr ""
+"사용하지 않으면 \"역패 x3\"처럼 집계된 이름 대신 \"동\"과 \"백\" 같은 개별 역"
+"패 이름을 사용합니다."
+
+#: app/pages/EventRulesOverview/TournamentSettings.tsx:58:20
 msgid "When time is out, finish current hand and interrupt the session"
 msgstr "타이머 종료 시점에서 진행중인 국까지 진행하고 대국 종료"
 
-#: app/pages/EventRulesOverview/TournamentSettings.tsx:60:20
+#: app/pages/EventRulesOverview/TournamentSettings.tsx:63:20
 msgid ""
 "When time is out, finish current hand, play one more, and then interrup the "
 "session"
@@ -1677,6 +1782,10 @@ msgstr "백"
 #: app/components/PlayerStatsListing.tsx:165:15
 msgid "Win stats"
 msgstr "승리 통계"
+
+#: app/pages/EventRulesOverview/TournamentSettings.tsx:89:16
+msgid "Wind shuffle mode"
+msgstr "바람 배정 방식"
 
 #: app/components/PlayerStatsListing.tsx:192:20
 msgid "With damaten: "
@@ -1703,15 +1812,15 @@ msgid "Without declared riichi: "
 msgstr "비리치상태: "
 
 #: app/components/YakitoriIndicator.tsx:38:32
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:213:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:231:16
 msgid "Yakitori"
 msgstr "야키토리"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:221:18
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:241:18
 msgid "Yakitori penalty"
 msgstr "야키토리 벌부"
 
-#: app/pages/EventRulesOverview/YakuSettings.tsx:46:25
+#: app/pages/EventRulesOverview/YakuSettings.tsx:62:25
 msgid "Yaku allowed"
 msgstr "허용 역"
 
@@ -1747,7 +1856,7 @@ msgstr "역패: 총합"
 msgid "Yakumans"
 msgstr "역만"
 
-#: app/pages/EventRulesOverview/TournamentSettings.tsx:78:22
+#: app/pages/EventRulesOverview/TournamentSettings.tsx:81:22
 msgid ""
 "You should prepare the tournament script yourself. No automated seating "
 "functionality is available when this flag is set."

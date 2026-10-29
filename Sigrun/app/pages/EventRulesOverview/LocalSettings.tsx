@@ -30,14 +30,17 @@ export const LocalSettings: React.FC<LocalSettingsProps> = ({ config, i18n }) =>
   return (
     <>
       <NumberInput
+        readOnly
         hideControls
         leftSection={<IconChartHistogram size='1rem' />}
         label={i18n._t('Series length')}
-        description={i18n._t('Count of session in game series.')}
+        description={i18n._t(
+          'Count of session in game series. Set to 0 to disable series functionality.'
+        )}
         value={config.seriesLength}
-        onChange={() => {}}
       />
       <NumberInput
+        readOnly
         hideControls
         leftSection={<IconNumbers size='1rem' />}
         label={i18n._t('Minimal games count')}
@@ -45,7 +48,6 @@ export const LocalSettings: React.FC<LocalSettingsProps> = ({ config, i18n }) =>
           'Minimal count of games the player should play to get into the rating table.'
         )}
         value={config.minGamesCount}
-        onChange={() => {}}
       />
     </>
   );
