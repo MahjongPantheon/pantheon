@@ -6,6 +6,10 @@ Goals:
 - performance testing
 - try to set things on fire as much as possible
 
+CI retries failed tests twice to collect diagnostics, but a test that passes only
+on retry still fails the run (`failOnFlakyTests`). The workflow and results table
+therefore report flaky tests as failures.
+
 Fenrir uses Playwright as testing framework.
 
 #### Debugging with Playwright UI

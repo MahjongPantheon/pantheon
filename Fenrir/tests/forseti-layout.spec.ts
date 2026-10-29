@@ -83,10 +83,15 @@ test('UI-001: Visitor can navigate Forseti at mobile, tablet and desktop widths'
       }
       await expect(page.getByTestId('forseti-signup-email')).toBeVisible();
       await expect(page).toHaveURL(/\/profile\/signup$/);
-      const bounds = await page.getByTestId('forseti-signup-email').boundingBox();
-      expect(bounds!.y).toBeGreaterThanOrEqual(44);
-      expect(bounds!.x).toBeGreaterThanOrEqual(width >= 1024 ? 350 : 0);
-      expect(bounds!.x + bounds!.width).toBeLessThanOrEqual(width);
+      // AppShell animates its main padding when crossing the desktop breakpoint.
+      // Read fresh bounds on each attempt instead of capturing an intermediate frame.
+      await expect(async () => {
+        const bounds = await page.getByTestId('forseti-signup-email').boundingBox();
+        expect(bounds).not.toBeNull();
+        expect(bounds!.y).toBeGreaterThanOrEqual(44);
+        expect(bounds!.x).toBeGreaterThanOrEqual(width >= 1024 ? 350 : 0);
+        expect(bounds!.x + bounds!.width).toBeLessThanOrEqual(width);
+      }).toPass({ timeout: 5000 });
       await page.getByTestId('forseti-signup-go-to-login').click();
     });
   }

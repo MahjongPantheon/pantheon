@@ -3,14 +3,18 @@
 ## Purpose
 
 Preserve responsive navigation and shell geometry during the Mantine migration.
+Geometry assertions wait for the AppShell padding transition to settle after a
+viewport breakpoint changes, while still requiring the input to remain outside
+the desktop sidebar and inside the viewport.
 
 ## Scope
 
-Forseti browser UI and the real development services used when loading its pages.
+Forseti browser UI and the real services used when loading its development or
+production build.
 
 ## Preconditions
 
-- The development stack is running and FORSETI_URL points to Forseti.
+- The development stack or CI production build is running and FORSETI_URL points to Forseti.
 - A fresh browser context is logged out; no account or event data is required.
 
 ## Test data
