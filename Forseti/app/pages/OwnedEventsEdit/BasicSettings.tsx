@@ -39,6 +39,7 @@ export const BasicSettings: React.FC<BasicSettingsProps> = ({
   i18n,
   setFormValues,
 }) => {
+  const eventType = form.useWatchValue('event.type');
   const typeMap: Record<EventType, string> = {
     [EventType.EVENT_TYPE_UNSPECIFIED]: '',
     [EventType.EVENT_TYPE_LOCAL]: i18n._t('Local rating'),
@@ -48,16 +49,13 @@ export const BasicSettings: React.FC<BasicSettingsProps> = ({
   return (
     <>
       <Stack>
-        {!newEvent && (
-          <Text>
-            Type: {typeMap[form.getTransformedValues().event.type ?? EventType.EVENT_TYPE_LOCAL]}
-          </Text>
-        )}
+        {!newEvent && <Text>Type: {typeMap[eventType ?? EventType.EVENT_TYPE_LOCAL]}</Text>}
         {newEvent && (
           <>
             <Radio.Group
               data-testid='forseti-event-settings-basic-settings-event-type'
               label={i18n._t('Select event type')}
+              key={form.key('event.type')}
               {...form.getInputProps('event.type')}
               onChange={(value) => {
                 form.setFieldValue('event.type', value as EventType);
@@ -90,6 +88,7 @@ export const BasicSettings: React.FC<BasicSettingsProps> = ({
             'Please include a "TEST" word if you make a test tournament. Events that have "TEST" in title do not send any notifications to players.'
           )}
           data-testid='forseti-event-settings-basic-settings-event-title'
+          key={form.key('event.title')}
           {...form.getInputProps('event.title')}
         />
         {newEvent && (
@@ -101,6 +100,7 @@ export const BasicSettings: React.FC<BasicSettingsProps> = ({
             )}
             data={rulesets}
             data-testid='forseti-event-settings-basic-settings-event-ruleset'
+            key={form.key('event.ruleset')}
             {...form.getInputProps('event.ruleset')}
             onChange={(v) => {
               if (v) {
@@ -109,7 +109,7 @@ export const BasicSettings: React.FC<BasicSettingsProps> = ({
                 if (rules) {
                   setFormValues(form.getTransformedValues().event, {
                     ...rules,
-                    useAggregatedYakuhai: form.values.ruleset.useAggregatedYakuhai,
+                    useAggregatedYakuhai: form.getValues().ruleset.useAggregatedYakuhai,
                   });
                 }
               }
@@ -125,14 +125,17 @@ export const BasicSettings: React.FC<BasicSettingsProps> = ({
           searchable
           nothingFoundMessage={i18n._t('Nothing found')}
           maxDropdownHeight={280}
+          limit={50}
           data={timezones}
           data-testid='forseti-event-settings-basic-settings-event-timezone'
+          key={form.key('event.timezone')}
           {...form.getInputProps('event.timezone')}
         />
         <Textarea
           label={i18n._t('Brief description')}
           description={i18n._t('Multiline. Markdown syntax supported.')}
           data-testid='forseti-event-settings-basic-settings-event-description'
+          key={form.key('event.description')}
           {...form.getInputProps('event.description')}
           autosize
         />
@@ -142,6 +145,7 @@ export const BasicSettings: React.FC<BasicSettingsProps> = ({
             'If checked, the event will be publicly visible on main page of ratings subsystem. If unchecked, event will not be visible in the list, but still will be accessible via particular link'
           )}
           data-testid='forseti-event-settings-basic-settings-event-is-listed'
+          key={form.key('event.isListed')}
           {...form.getInputProps('event.isListed', { type: 'checkbox' })}
         />
         <Checkbox
@@ -150,6 +154,7 @@ export const BasicSettings: React.FC<BasicSettingsProps> = ({
             'If checked, the rating table will be shown for everyone, otherwise only for event administrators'
           )}
           data-testid='forseti-event-settings-basic-settings-event-is-rating-shown'
+          key={form.key('event.isRatingShown')}
           {...form.getInputProps('event.isRatingShown', { type: 'checkbox' })}
         />
         <Checkbox
@@ -158,6 +163,7 @@ export const BasicSettings: React.FC<BasicSettingsProps> = ({
             'If checked, achievements will be shown for everyone, otherwise only for event administrators'
           )}
           data-testid='forseti-event-settings-basic-settings-event-achievements-shown'
+          key={form.key('event.achievementsShown')}
           {...form.getInputProps('event.achievementsShown', { type: 'checkbox' })}
         />
         <Checkbox
@@ -166,6 +172,7 @@ export const BasicSettings: React.FC<BasicSettingsProps> = ({
             'If checked, players will be able to see other tables state even if they are currently in game. It is strongly recommended to keep this checkbox disabled for all tournament events.'
           )}
           data-testid='forseti-event-settings-basic-settings-event-allow-view-other-tables'
+          key={form.key('event.allowViewOtherTables')}
           {...form.getInputProps('event.allowViewOtherTables', { type: 'checkbox' })}
         />
       </Stack>

@@ -29,17 +29,19 @@ type TournamentSettingsProps = {
 };
 
 export const TournamentSettings: React.FC<TournamentSettingsProps> = ({ form, i18n }) => {
+  const eventType = form.useWatchValue('event.type');
+  const isPrescripted = form.useWatchValue('event.isPrescripted');
   return (
     <>
       <NumberInput
         leftSection={<IconClockPlay size='1rem' />}
         data-testid='forseti-event-settings-tournament-settings-event-duration'
+        key={form.key('event.duration')}
         {...form.getInputProps('event.duration')}
         label={i18n._t('Session duration in minutes')}
         description={i18n._t(
           'Timer starting value. After time runs out, session ending policy is applied (see below).'
         )}
-        defaultValue={75}
         step={5}
         min={0}
       />
@@ -47,6 +49,7 @@ export const TournamentSettings: React.FC<TournamentSettingsProps> = ({ form, i1
         label={i18n._t('Session ending policy')}
         description={i18n._t('How game sessions should end during the tournament')}
         data-testid='forseti-event-settings-tournament-settings-ruleset-ending-policy'
+        key={form.key('ruleset.endingPolicy')}
         {...form.getInputProps('ruleset.endingPolicy')}
       >
         <Space h='md' />
@@ -77,11 +80,13 @@ export const TournamentSettings: React.FC<TournamentSettingsProps> = ({ form, i1
           'If this is set, chombo will not allow players to play one more hand if time is out and it is final hand of the game'
         )}
         data-testid='forseti-event-settings-tournament-settings-ruleset-chombo-ends-game'
+        key={form.key('ruleset.chomboEndsGame')}
         {...form.getInputProps('ruleset.chomboEndsGame', { type: 'checkbox' })}
       />
       <Checkbox
         label={i18n._t('Team tournament')}
         data-testid='forseti-event-settings-tournament-settings-event-is-team'
+        key={form.key('event.isTeam')}
         {...form.getInputProps('event.isTeam', { type: 'checkbox' })}
       />
       <Checkbox
@@ -90,14 +95,16 @@ export const TournamentSettings: React.FC<TournamentSettingsProps> = ({ form, i1
           'You should prepare the tournament script yourself. No automated seating functionality is available when this flag is set.'
         )}
         data-testid='forseti-event-settings-tournament-settings-event-is-prescripted'
+        key={form.key('event.isPrescripted')}
         {...form.getInputProps('event.isPrescripted', { type: 'checkbox' })}
       />
-      {form.getTransformedValues().event.type === EventType.EVENT_TYPE_TOURNAMENT && (
+      {eventType === EventType.EVENT_TYPE_TOURNAMENT && (
         <Radio.Group
           label={i18n._t('Wind shuffle mode')}
           description={i18n._t('How players on the same table are shuffled')}
           withAsterisk
           data-testid='forseti-event-settings-basic-settings-event-wind-shuffle-mode'
+          key={form.key('event.windShuffleMode')}
           {...form.getInputProps('event.windShuffleMode')}
         >
           <Group mt='xs'>
@@ -113,7 +120,7 @@ export const TournamentSettings: React.FC<TournamentSettingsProps> = ({ form, i1
               label={i18n._t('Balanced wind shuffle')}
               description={i18n._t('Try to place players on winds they previously played less')}
             />
-            {form.getTransformedValues().event.isPrescripted && (
+            {isPrescripted && (
               <Radio
                 data-testid='forseti-event-settings-wind-shuffle-prescripted'
                 value={WindShuffleMode.WIND_SHUFFLE_MODE_PRESCRIPTED}
@@ -127,23 +134,23 @@ export const TournamentSettings: React.FC<TournamentSettingsProps> = ({ form, i1
       <NumberInput
         leftSection={<IconUserX size='1rem' />}
         data-testid='forseti-event-settings-tournament-settings-ruleset-replacement-player-fixed-points'
+        key={form.key('ruleset.replacementPlayerFixedPoints')}
         {...form.getInputProps('ruleset.replacementPlayerFixedPoints')}
         label={i18n._t('Fixed score applied to replacement player')}
         description={i18n._t(
           'Fixed amount of result score applied for each replacement player regardless of session results.'
         )}
-        defaultValue={-15000}
         max={0}
       />
       <NumberInput
         leftSection={<IconUserX size='1rem' />}
         data-testid='forseti-event-settings-tournament-settings-ruleset-replacement-player-override-uma'
+        key={form.key('ruleset.replacementPlayerOverrideUma')}
         {...form.getInputProps('ruleset.replacementPlayerOverrideUma')}
         label={i18n._t('Fixed uma for replacement player')}
         description={i18n._t(
           'Fixed amount of rank penalty applied for each replacement player regardless of session results.'
         )}
-        defaultValue={-15000}
         max={0}
       />
     </>

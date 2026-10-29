@@ -32,25 +32,25 @@ export const LocalSettings: React.FC<LocalSettingsProps> = ({ form, i18n }) => {
     <>
       <NumberInput
         data-testid='forseti-event-settings-local-settings-event-series-length'
+        key={form.key('event.seriesLength')}
         {...form.getInputProps('event.seriesLength')}
         leftSection={<IconChartHistogram size='1rem' />}
         label={i18n._t('Series length')}
         description={i18n._t(
           'Count of session in game series. Set to 0 to disable series functionality.'
         )}
-        defaultValue={0}
         step={5}
         min={0}
       />
       <NumberInput
         data-testid='forseti-event-settings-local-settings-event-min-games'
+        key={form.key('event.minGames')}
         {...form.getInputProps('event.minGames')}
         leftSection={<IconNumbers size='1rem' />}
         label={i18n._t('Minimal games count')}
         description={i18n._t(
           'Minimal count of games the player should play to get into the rating table.'
         )}
-        defaultValue={0}
         step={5}
         min={0}
       />

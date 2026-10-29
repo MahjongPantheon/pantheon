@@ -67,6 +67,7 @@ export const OnlineSettings: React.FC<OnlineSettingsProps> = ({ form, i18n }) =>
             },
           ]}
           data-testid='forseti-event-settings-online-settings-event-platform-id'
+          key={form.key('event.platformId')}
           {...form.getInputProps('event.platformId')}
         />
       )}
@@ -75,11 +76,13 @@ export const OnlineSettings: React.FC<OnlineSettingsProps> = ({ form, i18n }) =>
         leftSection={<IconUsers size='1rem' />}
         label={i18n._t('Lobby ID')}
         data-testid='forseti-event-settings-online-settings-event-lobby-id'
+        key={form.key('event.lobbyId')}
         {...form.getInputProps('event.lobbyId')}
       />
       <Checkbox
         label={i18n._t('Team tournament')}
         data-testid='forseti-event-settings-online-settings-event-is-team'
+        key={form.key('event.isTeam')}
         {...form.getInputProps('event.isTeam', { type: 'checkbox' })}
       />
       <Checkbox
@@ -88,75 +91,76 @@ export const OnlineSettings: React.FC<OnlineSettingsProps> = ({ form, i18n }) =>
           'If checked, any player participating in event will be able to add new replays through user interface. Disable this if you have any external tool which adds replays automatically.'
         )}
         data-testid='forseti-event-settings-online-settings-event-allow-manual-add-replay'
+        key={form.key('event.allowManualAddReplay')}
         {...form.getInputProps('event.allowManualAddReplay', { type: 'checkbox' })}
       />
       <NumberInput
         data-testid='forseti-event-settings-online-settings-ruleset-game-expiration-time'
+        key={form.key('ruleset.gameExpirationTime')}
         {...form.getInputProps('ruleset.gameExpirationTime')}
         leftSection={<IconHourglass size='1rem' />}
         label={i18n._t('Game expiration time (in hours)')}
         description={i18n._t(
           'Interval of time when played online game is still considered valid and can be added to the rating. Set to 0 to disable expiration.'
         )}
-        defaultValue={24}
         min={0}
       />
       <NumberInput
         data-testid='forseti-event-settings-online-settings-ruleset-chips-value'
+        key={form.key('ruleset.chipsValue')}
         {...form.getInputProps('ruleset.chipsValue')}
         leftSection={<IconCoins size='1rem' />}
         label={i18n._t('Chips value')}
         description={i18n._t(
           'Amount of points given for each chip. Chips should be set up in tournament settings in Tenhou.net. Set to 0 to disable chips.'
         )}
-        defaultValue={2000}
         step={100}
         min={0}
       />
       <NumberInput
         data-testid='forseti-event-settings-online-settings-event-series-length'
+        key={form.key('event.seriesLength')}
         {...form.getInputProps('event.seriesLength')}
         leftSection={<IconChartHistogram size='1rem' />}
         label={i18n._t('Series length')}
         description={i18n._t(
           'Count of session in game series. Set to 0 to disable series functionality.'
         )}
-        defaultValue={0}
         step={5}
         min={0}
       />
       <NumberInput
         data-testid='forseti-event-settings-online-settings-event-min-games'
+        key={form.key('event.minGames')}
         {...form.getInputProps('event.minGames')}
         leftSection={<IconNumbers size='1rem' />}
         label={i18n._t('Minimal games count')}
         description={i18n._t(
           'Minimal count of games the player should play to get into the rating table.'
         )}
-        defaultValue={0}
         step={5}
         min={0}
       />
       <NumberInput
         leftSection={<IconUserX size='1rem' />}
         data-testid='forseti-event-settings-online-settings-ruleset-replacement-player-fixed-points'
+        key={form.key('ruleset.replacementPlayerFixedPoints')}
         {...form.getInputProps('ruleset.replacementPlayerFixedPoints')}
         label={i18n._t('Fixed score applied to replacement player')}
         description={i18n._t(
           'Fixed amount of result score applied for each replacement player regardless of session results.'
         )}
-        defaultValue={-15000}
         max={0}
       />
       <NumberInput
         leftSection={<IconUserX size='1rem' />}
         data-testid='forseti-event-settings-online-settings-ruleset-replacement-player-override-uma'
+        key={form.key('ruleset.replacementPlayerOverrideUma')}
         {...form.getInputProps('ruleset.replacementPlayerOverrideUma')}
         label={i18n._t('Fixed uma for replacement player')}
         description={i18n._t(
           'Fixed amount of rank penalty applied for each replacement player regardless of session results.'
         )}
-        defaultValue={-15000}
         max={0}
       />
     </>

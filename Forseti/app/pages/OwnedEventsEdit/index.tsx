@@ -76,7 +76,10 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string; copyId?: string 
 
   usePageTitle(id ? i18n._t('Edit event :: %1', [eventName]) : i18n._t('New event'));
 
+  // Keep keystrokes local to each input; only dependent controls subscribe to values.
   const form = useForm<FormFields>({
+    mode: 'uncontrolled',
+    cascadeUpdates: true,
     initialValues: {
       event: {
         isListed: true,
@@ -162,6 +165,8 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string; copyId?: string 
       },
     },
   });
+
+  const eventType = form.useWatchValue('event.type') ?? EventType.EVENT_TYPE_LOCAL;
 
   useEffect(() => {
     if (!validationAttempt) {
@@ -275,7 +280,7 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string; copyId?: string 
   }, [isLoggedIn, privilegesLevel, id, copyId]);
 
   const submitForm = (vals: FormFields) => {
-    if (isLoading || isSaving || (copyId && !copyLoaded)) {
+    if (isLoading || isSaving || isSaved || (copyId && !copyLoaded)) {
       return;
     }
     setIsSaving(true);
@@ -348,21 +353,15 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string; copyId?: string 
                 setFormValues={setFormValues}
               />
             </Tabs.Panel>
-            <Tabs.Panel
-              value={form.getTransformedValues().event.type ?? EventType.EVENT_TYPE_LOCAL}
-              data-settings-tab={
-                form.getTransformedValues().event.type ?? EventType.EVENT_TYPE_LOCAL
-              }
-              pt='xs'
-            >
+            <Tabs.Panel value={eventType} data-settings-tab={eventType} pt='xs'>
               <Stack>
-                {form.getTransformedValues().event.type === EventType.EVENT_TYPE_ONLINE && (
+                {eventType === EventType.EVENT_TYPE_ONLINE && (
                   <OnlineSettings form={form} i18n={i18n} />
                 )}
-                {form.getTransformedValues().event.type === EventType.EVENT_TYPE_LOCAL && (
+                {eventType === EventType.EVENT_TYPE_LOCAL && (
                   <LocalSettings form={form} i18n={i18n} />
                 )}
-                {form.getTransformedValues().event.type === EventType.EVENT_TYPE_TOURNAMENT && (
+                {eventType === EventType.EVENT_TYPE_TOURNAMENT && (
                   <TournamentSettings i18n={i18n} form={form} />
                 )}
               </Stack>
@@ -378,7 +377,8 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string; copyId?: string 
             <TopActionButton
               testId='forseti-event-settings-save'
               title={isSaved ? i18n._t('Changes saved!') : i18n._t('Save changes')}
-              loading={isSaving || isLoading || isSaved}
+              loading={isSaving || isLoading}
+              disabled={isSaved}
               icon={isSaved ? <IconCircleCheck /> : <IconDeviceFloppy />}
               onClick={() => {
                 formRef.current?.requestSubmit();

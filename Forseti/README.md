@@ -19,6 +19,7 @@ Features:
 - Written in TypeScript and React 19.
 - Uses Mantine UI v9 with package stylesheets and CSS Modules.
 - `app/components/NumberInput.tsx` preserves numeric form values and integer precision while allowing intermediate editing states.
+- Event settings use uncontrolled form inputs with field subscriptions so typing does not rerender hidden tabs. Programmatic updates use keyed inputs, and the timezone search limits rendered results.
 - Settings tabs use `keepMountedMode="display-none"` so validation can find and focus invalid fields across tabs.
 - Theme preferences retain the shared `day`/`night` cookies and separate dimmed palette.
 

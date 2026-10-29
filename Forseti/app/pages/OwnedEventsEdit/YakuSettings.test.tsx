@@ -12,6 +12,8 @@ const i18n = { _t: (text: string) => text } as I18nService;
 
 function Fixture({ aggregated = false, allowedYaku = {} as Record<string, boolean> }) {
   const form = useForm<FormFields>({
+    mode: 'uncontrolled',
+    cascadeUpdates: true,
     initialValues: {
       event: EventData.initialize(),
       ruleset: {
@@ -25,12 +27,11 @@ function Fixture({ aggregated = false, allowedYaku = {} as Record<string, boolea
       },
     },
   });
+  const allowedYakuValues = form.useWatchValue('ruleset.allowedYaku');
   return (
     <MantineProvider env='test'>
       <YakuSettings form={form} i18n={i18n} />
-      <output data-testid='allowed-yaku-values'>
-        {JSON.stringify(form.values.ruleset.allowedYaku)}
-      </output>
+      <output data-testid='allowed-yaku-values'>{JSON.stringify(allowedYakuValues)}</output>
     </MantineProvider>
   );
 }

@@ -35,6 +35,7 @@ type TabsProps = {
 };
 
 export const TabsList: React.FC<TabsProps> = ({ form, i18n }) => {
+  const eventType = form.useWatchValue('event.type');
   return (
     <>
       <Tabs.Tab
@@ -44,7 +45,7 @@ export const TabsList: React.FC<TabsProps> = ({ form, i18n }) => {
       >
         {i18n._t('Basic settings')}
       </Tabs.Tab>
-      {form.getTransformedValues().event.type === EventType.EVENT_TYPE_LOCAL && (
+      {eventType === EventType.EVENT_TYPE_LOCAL && (
         <Tabs.Tab
           data-testid='forseti-event-settings-tab-local'
           value={EventType.EVENT_TYPE_LOCAL}
@@ -53,7 +54,7 @@ export const TabsList: React.FC<TabsProps> = ({ form, i18n }) => {
           {i18n._t('Local event settings')}
         </Tabs.Tab>
       )}
-      {form.getTransformedValues().event.type === EventType.EVENT_TYPE_TOURNAMENT && (
+      {eventType === EventType.EVENT_TYPE_TOURNAMENT && (
         <Tabs.Tab
           data-testid='forseti-event-settings-tab-tournament'
           value={EventType.EVENT_TYPE_TOURNAMENT}
@@ -62,7 +63,7 @@ export const TabsList: React.FC<TabsProps> = ({ form, i18n }) => {
           {i18n._t('Tournament settings')}
         </Tabs.Tab>
       )}
-      {form.getTransformedValues().event.type === EventType.EVENT_TYPE_ONLINE && (
+      {eventType === EventType.EVENT_TYPE_ONLINE && (
         <Tabs.Tab
           data-testid='forseti-event-settings-tab-online'
           value={EventType.EVENT_TYPE_ONLINE}

@@ -86,7 +86,10 @@ test('Create and edit event navigate to the first invalid field', async ({
   ).toHaveValue(eventTitle);
   await checkValidationNavigation(settingsPage, eventTitle);
   await settingsPage.getByTestId('forseti-event-settings-save').click();
-  await expect(settingsPage.getByTestId('forseti-event-settings-save')).toContainText(
-    'Changes saved!'
-  );
+  const save = settingsPage.getByTestId('forseti-event-settings-save');
+  await expect(save).toContainText('Changes saved!');
+  await expect(save).toBeDisabled();
+  await expect(save).not.toHaveAttribute('data-loading');
+  await expect(save).toContainText('Save changes', { timeout: 10_000 });
+  await expect(save).toBeEnabled();
 });

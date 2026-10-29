@@ -28,11 +28,13 @@ type UmaSelectProps = {
 };
 
 export const UmaSelect: React.FC<UmaSelectProps> = ({ form, i18n }) => {
+  const umaType = form.useWatchValue('ruleset.umaType');
   return (
     <>
       <Radio.Group
         label={i18n._t('Select uma bonus type')}
         data-testid='forseti-event-settings-uma-select-ruleset-uma-type'
+        key={form.key('ruleset.umaType')}
         {...form.getInputProps('ruleset.umaType')}
       >
         <Group mt='xs'>
@@ -48,39 +50,39 @@ export const UmaSelect: React.FC<UmaSelectProps> = ({ form, i18n }) => {
           />
         </Group>
       </Radio.Group>
-      {form.getTransformedValues().ruleset.umaType === UmaType.UMA_TYPE_UMA_SIMPLE && (
+      {umaType === UmaType.UMA_TYPE_UMA_SIMPLE && (
         <SimpleGrid cols={2}>
           <NumberInput
             hideControls
             label={i18n._t('Uma bonus for 1st place')}
-            defaultValue={15000}
             data-testid='forseti-event-settings-uma-select-ruleset-uma-place1'
+            key={form.key('ruleset.uma.place1')}
             {...form.getInputProps('ruleset.uma.place1')}
           />
           <NumberInput
             hideControls
             label={i18n._t('Uma bonus for 2nd place')}
-            defaultValue={5000}
             data-testid='forseti-event-settings-uma-select-ruleset-uma-place2'
+            key={form.key('ruleset.uma.place2')}
             {...form.getInputProps('ruleset.uma.place2')}
           />
           <NumberInput
             hideControls
             label={i18n._t('Uma penalty for 3rd place')}
-            defaultValue={-5000}
             data-testid='forseti-event-settings-uma-select-ruleset-uma-place3'
+            key={form.key('ruleset.uma.place3')}
             {...form.getInputProps('ruleset.uma.place3')}
           />
           <NumberInput
             hideControls
             label={i18n._t('Uma penalty for 4th place')}
-            defaultValue={-15000}
             data-testid='forseti-event-settings-uma-select-ruleset-uma-place4'
+            key={form.key('ruleset.uma.place4')}
             {...form.getInputProps('ruleset.uma.place4')}
           />
         </SimpleGrid>
       )}
-      {form.getTransformedValues().ruleset.umaType === UmaType.UMA_TYPE_UMA_COMPLEX && (
+      {umaType === UmaType.UMA_TYPE_UMA_COMPLEX && (
         <Group align='flex-end'>
           <Stack w='20%'>
             <Center>{i18n._t('Place / Session result')}</Center>
@@ -103,26 +105,26 @@ export const UmaSelect: React.FC<UmaSelectProps> = ({ form, i18n }) => {
             </Center>
             <NumberInput
               hideControls
-              defaultValue={12000}
               data-testid='forseti-event-settings-uma-select-ruleset-complex-uma-neg3-place1'
+              key={form.key('ruleset.complexUma.neg3.place1')}
               {...form.getInputProps('ruleset.complexUma.neg3.place1')}
             />
             <NumberInput
               hideControls
-              defaultValue={8000}
               data-testid='forseti-event-settings-uma-select-ruleset-complex-uma-neg3-place2'
+              key={form.key('ruleset.complexUma.neg3.place2')}
               {...form.getInputProps('ruleset.complexUma.neg3.place2')}
             />
             <NumberInput
               hideControls
-              defaultValue={8000}
               data-testid='forseti-event-settings-uma-select-ruleset-complex-uma-neg3-place3'
+              key={form.key('ruleset.complexUma.neg3.place3')}
               {...form.getInputProps('ruleset.complexUma.neg3.place3')}
             />
             <NumberInput
               hideControls
-              defaultValue={8000}
               data-testid='forseti-event-settings-uma-select-ruleset-complex-uma-neg3-place4'
+              key={form.key('ruleset.complexUma.neg3.place4')}
               {...form.getInputProps('ruleset.complexUma.neg3.place4')}
             />
           </Stack>
@@ -132,26 +134,26 @@ export const UmaSelect: React.FC<UmaSelectProps> = ({ form, i18n }) => {
             </Center>
             <NumberInput
               hideControls
-              defaultValue={12000}
               data-testid='forseti-event-settings-uma-select-ruleset-complex-uma-neg1-place1'
+              key={form.key('ruleset.complexUma.neg1.place1')}
               {...form.getInputProps('ruleset.complexUma.neg1.place1')}
             />
             <NumberInput
               hideControls
-              defaultValue={8000}
               data-testid='forseti-event-settings-uma-select-ruleset-complex-uma-neg1-place2'
+              key={form.key('ruleset.complexUma.neg1.place2')}
               {...form.getInputProps('ruleset.complexUma.neg1.place2')}
             />
             <NumberInput
               hideControls
-              defaultValue={8000}
               data-testid='forseti-event-settings-uma-select-ruleset-complex-uma-neg1-place3'
+              key={form.key('ruleset.complexUma.neg1.place3')}
               {...form.getInputProps('ruleset.complexUma.neg1.place3')}
             />
             <NumberInput
               hideControls
-              defaultValue={8000}
               data-testid='forseti-event-settings-uma-select-ruleset-complex-uma-neg1-place4'
+              key={form.key('ruleset.complexUma.neg1.place4')}
               {...form.getInputProps('ruleset.complexUma.neg1.place4')}
             />
           </Stack>
@@ -159,26 +161,26 @@ export const UmaSelect: React.FC<UmaSelectProps> = ({ form, i18n }) => {
             <Text>{i18n._t('Otherwise')}</Text>
             <NumberInput
               hideControls
-              defaultValue={12000}
               data-testid='forseti-event-settings-uma-select-ruleset-complex-uma-otherwise-place1'
+              key={form.key('ruleset.complexUma.otherwise.place1')}
               {...form.getInputProps('ruleset.complexUma.otherwise.place1')}
             />
             <NumberInput
               hideControls
-              defaultValue={8000}
               data-testid='forseti-event-settings-uma-select-ruleset-complex-uma-otherwise-place2'
+              key={form.key('ruleset.complexUma.otherwise.place2')}
               {...form.getInputProps('ruleset.complexUma.otherwise.place2')}
             />
             <NumberInput
               hideControls
-              defaultValue={8000}
               data-testid='forseti-event-settings-uma-select-ruleset-complex-uma-otherwise-place3'
+              key={form.key('ruleset.complexUma.otherwise.place3')}
               {...form.getInputProps('ruleset.complexUma.otherwise.place3')}
             />
             <NumberInput
               hideControls
-              defaultValue={8000}
               data-testid='forseti-event-settings-uma-select-ruleset-complex-uma-otherwise-place4'
+              key={form.key('ruleset.complexUma.otherwise.place4')}
               {...form.getInputProps('ruleset.complexUma.otherwise.place4')}
             />
           </Stack>
