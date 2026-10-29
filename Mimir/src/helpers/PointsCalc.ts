@@ -398,7 +398,7 @@ export class PointsCalc {
     }
 
     if (nagashiIds.length >= Object.keys(scores).length) {
-      throw new Error('Too many players have nagashi');
+      throw new Error(`More than ${Object.keys(scores).length - 1} players have nagashi`);
     }
 
     for (const nagashiOwnerId of nagashiIds) {

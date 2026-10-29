@@ -1107,7 +1107,7 @@ export class SessionModel extends Model {
    */
   async isLastForPlayers(session: SessionEntity) {
     const playerIds =
-      session.intermediateResults?.playerIds.filter((id) => id !== GHOST_PLAYER_ID) ?? [];
+      session.intermediateResults?.playerIds?.filter((id) => id !== GHOST_PLAYER_ID) ?? [];
     if (playerIds.length === 0) {
       return true;
     }

@@ -125,3 +125,9 @@ describe('Sanma scoring and session state', () => {
     expect([1, 2, 3].map((place) => rules.getOka(place))).toEqual([10000, -5000, -5000]);
   });
 });
+
+it('rejects three simultaneous nagashi winners in sanma', () => {
+  expect(() =>
+    new PointsCalc().nagashi({ 1: 35000, 2: 35000, 3: 35000 }, 1, [], [1, 2, 3])
+  ).toThrow('More than 2');
+});

@@ -67,8 +67,8 @@ const cases: Case[] = [
     ['hash'],
     'GetSessionOverview',
     { sessionHash: 'hash' },
-    { tableIndex: 2 },
-    { tableIndex: 2 },
+    { tableIndex: 2, players: [{ id: 1 }, { id: 2 }, { id: 3 }, { id: -1 }] },
+    { tableIndex: 2, players: [{ id: 1 }, { id: 2 }, { id: 3 }] },
   ],
   [
     'getCurrentState',
