@@ -1,6 +1,7 @@
 import { lazy } from 'react';
+import type { ChartProps } from 'react-chartjs-2';
 
-const BarGraph = lazy(async () => {
+const LazyBarGraph = lazy(async () => {
   const [
     { Chart, BarController, BarElement, CategoryScale, Tooltip, LinearScale, Title },
     { Bar },
@@ -11,4 +12,6 @@ const BarGraph = lazy(async () => {
   return { default: Bar };
 });
 
-export default BarGraph;
+export default function BarGraph(props: Omit<ChartProps<'bar', unknown[]>, 'type'>) {
+  return <LazyBarGraph {...props} />;
+}

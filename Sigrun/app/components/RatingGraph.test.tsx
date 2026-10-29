@@ -89,6 +89,38 @@ function select(index?: number) {
 }
 
 describe('rating history selection', () => {
+  it('allows native touch scrolling across the chart', async () => {
+    await setup();
+    // Expose native touch-action support, which jsdom does not implement, before Hammer loads.
+    const descriptor = Object.getOwnPropertyDescriptor(
+      CSSStyleDeclaration.prototype,
+      'touchAction'
+    );
+    Object.defineProperty(CSSStyleDeclaration.prototype, 'touchAction', {
+      value: 'auto',
+      writable: true,
+      configurable: true,
+    });
+    const { default: zoomPlugin } = await import('chartjs-plugin-zoom');
+    const canvas = document.createElement('canvas');
+    document.body.append(canvas);
+    const chart = { canvas } as Chart<'line'>;
+    const options = {
+      pan: { enabled: false },
+      zoom: chartProps.options?.plugins?.zoom?.zoom,
+    };
+    try {
+      zoomPlugin.start?.(chart, {}, options);
+      expect(canvas.style.touchAction).toBe('auto');
+    } finally {
+      zoomPlugin.stop?.(chart, {}, options);
+      canvas.remove();
+      if (descriptor)
+        Object.defineProperty(CSSStyleDeclaration.prototype, 'touchAction', descriptor);
+      else Reflect.deleteProperty(CSSStyleDeclaration.prototype, 'touchAction');
+    }
+  });
+
   it('handles unavailable statistics in dark mode without selecting an invalid game', async () => {
     const { props } = await setup({ playerStats: undefined, lastSelectionHash: 'missing' }, 'dark');
     expect(chartProps.data.datasets[0].data).toEqual([]);
@@ -96,11 +128,11 @@ describe('rating history selection', () => {
     select(1);
     expect(props.onSelectGame).not.toHaveBeenCalled();
   });
-  it('selects every tapped game immediately from the current hit, including after zoom', async () => {
+  it('selects every tapped game immediately without capturing scroll gestures', async () => {
     const { props } = await setup();
     expect(chartProps.options?.interaction).toEqual({ mode: 'nearest', intersect: false });
-    expect(chartProps.options?.plugins?.zoom?.zoom?.pinch?.enabled).toBe(true);
-    expect(chartProps.options?.plugins?.zoom?.zoom?.wheel?.enabled).toBe(true);
+    expect(chartProps.options?.plugins?.zoom?.zoom?.pinch?.enabled).toBe(false);
+    expect(chartProps.options?.plugins?.zoom?.zoom?.wheel?.enabled).toBe(false);
     for (const index of [1, 3, 2]) {
       select(index);
       expect(props.onSelectGame).toHaveBeenLastCalledWith(stats.scoreHistory[index - 1]);

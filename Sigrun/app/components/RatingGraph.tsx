@@ -104,7 +104,8 @@ export const RatingGraph = ({
     plugins: {
       legend: { display: false },
       tooltip: { enabled: false },
-      zoom: { zoom: { wheel: { enabled: true }, pinch: { enabled: true }, mode: 'x' } },
+      // Pinch recognition sets touch-action:none, which also blocks one-finger page scrolling.
+      zoom: { zoom: { wheel: { enabled: false }, pinch: { enabled: false }, mode: 'x' } },
     },
     elements: {
       point: {
