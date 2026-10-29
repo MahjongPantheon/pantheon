@@ -159,13 +159,15 @@ export class OnlineSessionModel extends Model {
     this.repo.em.persist([session, ...rounds]);
 
     const sessionResultsModel = this.getModel(SessionResultsModel);
-    const sessionResults = sessionResultsModel.calc(
+    const sessionState = new SessionState(event.ruleset, playerIds, session.intermediateResults);
+    const sessionResults = sessionResultsModel.getUnfinishedSessionResults(
       event.ruleset,
-      new SessionState(event.ruleset, playerIds, session.intermediateResults),
-      playerIds,
       event.id,
-      session.id
+      session.id,
+      sessionState,
+      playerIds
     );
+    session.intermediateResults = sessionState.state;
     const playerHistoryModel = this.getModel(PlayerHistoryModel);
     const lastResults = (await playerHistoryModel.findAllLastByEventAndPlayer(event.id))
       .filter((histItem) => playerIds.includes(histItem.playerId))

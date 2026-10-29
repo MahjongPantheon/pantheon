@@ -131,6 +131,37 @@ describe('Online replay import', () => {
     }
   );
 
+  it.each([
+    [true, 41000],
+    [false, 40000],
+  ])(
+    'gives riichi bets left at the end to the winner when riichiGoesToWinner is %s',
+    async (riichiGoesToWinner, winnerScore) => {
+      const { event, session, rounds } = fixture();
+      event.ruleset.rules.riichiGoesToWinner = riichiGoesToWinner;
+      session.intermediateResults.scores[4] = 19000;
+      session.intermediateResults.riichiBets = 1;
+      vi.spyOn(OnlineParser.prototype, 'parseToSession').mockResolvedValue([
+        session,
+        {},
+        rounds,
+        [],
+      ]);
+      vi.spyOn(playerHistory, 'findAllLastByEventAndPlayer').mockResolvedValue([]);
+      vi.spyOn(playersModel, 'findById').mockResolvedValue(ids.map(makePlayer));
+      vi.spyOn(cron, 'scheduleRecalcAchievements').mockResolvedValue();
+      vi.spyOn(cron, 'scheduleRecalcStats').mockResolvedValue();
+
+      const result = await model.addGameContent(event, 'replay-hash', 'replay-content', link);
+
+      expect(result.game.finalResults.find((r) => r.place === 1)).toMatchObject({
+        playerId: 1,
+        score: winnerScore,
+      });
+      expect(session.intermediateResults?.scores[1]).toBe(winnerScore);
+    }
+  );
+
   it('downloads a validated replay and passes its content to the importer', async () => {
     const { event } = fixture();
     event.isOnline = 1;
