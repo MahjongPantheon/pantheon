@@ -15,9 +15,9 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import * as React from 'react';
-import type { LineChartProps } from '@mantine/charts';
+import type { ChartOptions } from 'chart.js';
 import { useI18n } from '../hooks/i18n';
 import { useMantineColorScheme, useMantineTheme } from '@mantine/core';
 import starSvg from '../../assets/img/star.svg';
@@ -47,104 +47,98 @@ export const RatingGraph = ({
   const theme = useMantineTheme();
   const isDark = useMantineColorScheme().colorScheme === 'dark';
   const color = isDark ? theme.colors.blue[8] : theme.colors.blue[3];
+  const gridColor = isDark ? theme.colors.gray[8] : theme.colors.gray[3];
+  const textColor = isDark ? theme.colors.gray[2] : theme.colors.dark[7];
   const games = playerStats?.scoreHistory;
-  const points = useMemo(
-    () =>
-      (playerStats?.ratingHistory ?? []).map((item, idx) => ({
-        x: idx,
-        rating: Math.floor(item),
-        winning:
-          idx > 0 &&
-          !!games?.[idx - 1]?.tables.length &&
-          games[idx - 1].tables.every((v) => v.playerId === playerId || v.ratingDelta < 0),
-      })),
-    [playerStats?.ratingHistory, games, playerId]
+  const data = useMemo(
+    () => ({
+      labels: (playerStats?.ratingHistory ?? []).map((_, index) => index),
+      datasets: [{ data: (playerStats?.ratingHistory ?? []).map(Math.floor) }],
+    }),
+    [playerStats?.ratingHistory]
   );
+  const [stars, setStars] = useState<HTMLImageElement[] | null>(null);
 
   useEffect(() => {
-    const idx = lastSelectionHash
-      ? (games?.findIndex((v) => v.tables[0]?.sessionHash === lastSelectionHash) ?? -1)
+    let cancelled = false;
+    const icons = [20, 32].map((size) => {
+      const icon = new Image(size, size);
+      return icon;
+    });
+    let loaded = 0;
+    icons.forEach((icon) => {
+      icon.onload = () => {
+        loaded++;
+        if (loaded === icons.length && !cancelled) setStars(icons);
+      };
+      icon.src = starSvg;
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    const index = lastSelectionHash
+      ? (games?.findIndex((game) => game.tables[0]?.sessionHash === lastSelectionHash) ?? -1)
       : -1;
-    setLastSelectionX(idx >= 0 ? idx + 1 : null);
+    setLastSelectionX(index >= 0 ? index + 1 : null);
   }, [playerId, games, lastSelectionHash, setLastSelectionX]);
 
-  const handleClick: NonNullable<LineChartProps['lineChartProps']>['onClick'] = (data, event) => {
-    if (event.target instanceof Element && event.target.closest('.recharts-brush')) return;
-    // The category is the original game index even when the brush slices the data.
-    const index = Number(data.activeLabel);
-    if (data.activeLabel === undefined || !Number.isInteger(index) || index < 1) return;
-    const game = games?.[index - 1];
-    if (!game?.tables[0]) return;
-    setLastSelectionX(index);
-    setLastSelectionHash(game.tables[0].sessionHash);
-    onSelectGame(game);
-  };
-
-  const renderDot = (
-    {
-      cx,
-      cy,
-      payload,
-    }: {
-      cx?: number;
-      cy?: number;
-      payload?: { x: number; winning: boolean };
+  const options: ChartOptions<'line'> = {
+    responsive: true,
+    maintainAspectRatio: false,
+    interaction: { mode: 'nearest', intersect: false },
+    backgroundColor: color,
+    borderColor: color,
+    color: textColor,
+    onClick: (_, elements) => {
+      const index = elements[0]?.index;
+      if (index === undefined || index < 1) return;
+      const game = games?.[index - 1];
+      if (!game?.tables[0]) return;
+      setLastSelectionX(index);
+      setLastSelectionHash(game.tables[0].sessionHash);
+      onSelectGame(game);
     },
-    active = false
-  ) => {
-    if (cx === undefined || cy === undefined || !payload) return <g />;
-    const selected = payload.x === lastSelectionX;
-    const size = selected || active ? 32 : 20;
-    return payload.winning ? (
-      <image
-        key={payload.x}
-        href={starSvg}
-        x={cx - size / 2}
-        y={cy - size / 2}
-        width={size}
-        height={size}
-      />
-    ) : (
-      <circle
-        key={payload.x}
-        cx={cx}
-        cy={cy}
-        r={selected || active ? 8 : 3}
-        fill={color}
-        stroke={color}
-      />
-    );
+    plugins: {
+      legend: { display: false },
+      tooltip: { enabled: false },
+      zoom: { zoom: { wheel: { enabled: true }, pinch: { enabled: true }, mode: 'x' } },
+    },
+    elements: {
+      point: {
+        radius: (context) => (context.dataIndex === lastSelectionX ? 8 : 3),
+        hoverRadius: 8,
+        hoverBorderWidth: 1,
+        pointStyle: (context) => {
+          const game = games?.[context.dataIndex - 1];
+          const winning =
+            !!game?.tables.length &&
+            game.tables.every((seat) => seat.playerId === playerId || seat.ratingDelta < 0);
+          return winning && stars ? stars[context.dataIndex === lastSelectionX ? 1 : 0] : 'circle';
+        },
+      },
+      line: { tension: 0.3 },
+    },
+    scales: {
+      x: {
+        grid: { color: gridColor },
+        ticks: { color: textColor, maxRotation: 0 },
+        title: { display: true, text: i18n._t('Games played'), color: textColor },
+      },
+      y: {
+        grid: { color: gridColor },
+        ticks: { color: textColor, precision: 0 },
+        title: { display: true, text: i18n._t('Rating'), color: textColor },
+      },
+    },
   };
 
   return (
-    <LineGraph
-      key={playerId}
-      h={400}
-      data={points}
-      dataKey='x'
-      series={[{ name: 'rating', label: i18n._t('Rating'), color: isDark ? 'blue.8' : 'blue.3' }]}
-      gridAxis='xy'
-      textColor={isDark ? theme.colors.gray[2] : theme.colors.dark[7]}
-      tooltipProps={{ labelFormatter: () => null }}
-      styles={{ tooltipBody: { paddingTop: 'var(--mantine-spacing-sm)' } }}
-      yAxisLabel={i18n._t('Rating')}
-      xAxisProps={{
-        allowDecimals: false,
-        height: 55,
-        label: {
-          value: i18n._t('Games played'),
-          position: 'insideBottom',
-          offset: 0,
-          fill: 'currentColor',
-          fontSize: 12,
-        },
-      }}
-      yAxisProps={{ allowDecimals: false, width: 65, domain: ['auto', 'auto'] }}
-      lineChartProps={{ onClick: handleClick, margin: { top: 16, left: 16, right: 16, bottom: 8 } }}
-      lineProps={{ dot: (props) => renderDot(props), activeDot: (props) => renderDot(props, true) }}
-      withBrush={points.length > 1}
-      brushProps={{ height: 30, travellerWidth: 10 }}
-    />
+    <div style={{ position: 'relative', height: 400 }}>
+      <LineGraph key={playerId} data={data} options={options} />
+    </div>
   );
 };
 

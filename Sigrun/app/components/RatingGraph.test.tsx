@@ -1,20 +1,29 @@
 import * as React from 'react';
-import type { LineChartProps } from '@mantine/charts';
+import type { Chart, ChartEvent, ActiveElement, ScriptableContext } from 'chart.js';
+import type { ChartProps } from 'react-chartjs-2';
 import { MantineProvider } from '@mantine/core';
-import { cleanup, render, screen } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { PlayersGetPlayerStatsResponse } from 'tsclients/proto/mimir.pb';
 import { RatingGraph } from './RatingGraph';
 
-let chartProps: LineChartProps;
+let chartProps: Omit<ChartProps<'line'>, 'type'>;
+let icons: HTMLImageElement[];
 vi.mock('./LineGraph', () => ({
-  default: (props: LineChartProps) => {
+  default: (props: typeof chartProps) => {
     chartProps = props;
     return <div data-testid='rating-chart' />;
   },
 }));
-
 beforeEach(() => {
+  icons = [];
+  vi.stubGlobal('Image', function (width: number, height: number) {
+    const icon = document.createElement('img');
+    icon.width = width;
+    icon.height = height;
+    icons.push(icon);
+    return icon;
+  });
   vi.stubGlobal('matchMedia', () => ({
     matches: false,
     addEventListener: vi.fn(),
@@ -45,7 +54,10 @@ const stats: PlayersGetPlayerStatsResponse = {
   scoreHistory: [history('first', -10), history('second', 5), history('third', 5)],
 };
 
-async function setup(overrides: Partial<React.ComponentProps<typeof RatingGraph>> = {}) {
+async function setup(
+  overrides: Partial<React.ComponentProps<typeof RatingGraph>> = {},
+  colorScheme: 'light' | 'dark' = 'light'
+) {
   const props = {
     playerId: 1,
     playerStats: stats,
@@ -57,7 +69,7 @@ async function setup(overrides: Partial<React.ComponentProps<typeof RatingGraph>
     ...overrides,
   };
   const tree = (next = props) => (
-    <MantineProvider>
+    <MantineProvider forceColorScheme={colorScheme}>
       <React.Suspense fallback={null}>
         <RatingGraph {...next} />
       </React.Suspense>
@@ -68,40 +80,39 @@ async function setup(overrides: Partial<React.ComponentProps<typeof RatingGraph>
   return { props, ...view, tree };
 }
 
-function clickCategory(label: number | string | undefined, visibleIndex = 0) {
-  chartProps.lineChartProps?.onClick?.(
-    {
-      activeLabel: label,
-      activeTooltipIndex: visibleIndex,
-      activeIndex: visibleIndex,
-      isTooltipActive: true,
-      activeDataKey: 'rating',
-      activeCoordinate: undefined,
-    },
-    {} as React.MouseEvent<SVGGraphicsElement>
+function select(index?: number) {
+  chartProps.options?.onClick?.(
+    { type: 'click' } as ChartEvent,
+    index === undefined ? [] : [{ index, datasetIndex: 0 } as ActiveElement],
+    {} as Chart<'line'>
   );
 }
 
 describe('rating history selection', () => {
-  it('selects the original game after brushing and ignores the initial rating and missing points', async () => {
+  it('handles unavailable statistics in dark mode without selecting an invalid game', async () => {
+    const { props } = await setup({ playerStats: undefined, lastSelectionHash: 'missing' }, 'dark');
+    expect(chartProps.data.datasets[0].data).toEqual([]);
+    expect(props.setLastSelectionX).toHaveBeenLastCalledWith(null);
+    select(1);
+    expect(props.onSelectGame).not.toHaveBeenCalled();
+  });
+  it('selects every tapped game immediately from the current hit, including after zoom', async () => {
     const { props } = await setup();
-    expect(chartProps.withBrush).toBe(true);
-    clickCategory('3', 0);
-    expect(props.onSelectGame).toHaveBeenCalledWith(stats.scoreHistory[2]);
-    expect(props.setLastSelectionX).toHaveBeenLastCalledWith(3);
-    expect(props.setLastSelectionHash).toHaveBeenLastCalledWith('third');
-    clickCategory(0);
-    clickCategory(undefined);
-    clickCategory(99);
-    const brush = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-    brush.setAttribute('class', 'recharts-brush');
-    chartProps.lineChartProps?.onClick?.(
-      { activeLabel: 2 } as Parameters<
-        NonNullable<NonNullable<LineChartProps['lineChartProps']>['onClick']>
-      >[0],
-      { target: brush } as unknown as React.MouseEvent<SVGGraphicsElement>
-    );
-    expect(props.onSelectGame).toHaveBeenCalledTimes(1);
+    expect(chartProps.options?.interaction).toEqual({ mode: 'nearest', intersect: false });
+    expect(chartProps.options?.plugins?.zoom?.zoom?.pinch?.enabled).toBe(true);
+    expect(chartProps.options?.plugins?.zoom?.zoom?.wheel?.enabled).toBe(true);
+    for (const index of [1, 3, 2]) {
+      select(index);
+      expect(props.onSelectGame).toHaveBeenLastCalledWith(stats.scoreHistory[index - 1]);
+      expect(props.setLastSelectionX).toHaveBeenLastCalledWith(index);
+      expect(props.setLastSelectionHash).toHaveBeenLastCalledWith(
+        stats.scoreHistory[index - 1].tables[0].sessionHash
+      );
+    }
+    select(0);
+    select();
+    select(99);
+    expect(props.onSelectGame).toHaveBeenCalledTimes(3);
   });
 
   it('restores valid selections and clears a missing game when the player changes', async () => {
@@ -111,36 +122,25 @@ describe('rating history selection', () => {
     expect(props.setLastSelectionX).toHaveBeenLastCalledWith(null);
   });
 
-  it('renders winning stars and enlarges the selection made by external controls', async () => {
+  it('renders winning stars and enlarges selections made by the preview controls', async () => {
     const { props, rerender, tree } = await setup({ lastSelectionX: 1 });
-    const dots = () => {
-      const line = chartProps.lineProps;
-      if (!line || typeof line === 'function' || typeof line.dot !== 'function')
-        throw new Error('Missing custom dots');
-      const dot = line.dot;
-      return (
-        <svg>
-          {chartProps.data.map((payload) =>
-            dot({
-              cx: payload.x * 10,
-              cy: 10,
-              payload,
-              points: [],
-              index: payload.x,
-              dataKey: 'rating',
-              value: payload.rating,
-            })
-          )}
-        </svg>
-      );
+    const point = (property: 'pointStyle' | 'radius', index: number) => {
+      const value = chartProps.options?.elements?.point?.[property];
+      if (typeof value !== 'function') throw new Error('Missing point callback');
+      return value({ dataIndex: index } as ScriptableContext<'line'>, {});
     };
-    const chartData = chartProps.data;
-    const dotView = render(dots());
-    expect(dotView.container.querySelector('image')?.getAttribute('width')).toBe('32');
+    expect(point('pointStyle', 1)).toBe('circle');
+    fireEvent.load(icons[0]);
+    fireEvent.load(icons[1]);
+    expect(point('pointStyle', 0)).toBe('circle');
+    expect(point('pointStyle', 1)).toBe(icons[1]);
+    expect(point('radius', 1)).toBe(8);
+    const data = chartProps.data;
     rerender(tree({ ...props, lastSelectionX: 2 }));
-    expect(chartProps.data).toBe(chartData);
-    dotView.rerender(dots());
-    expect(dotView.container.querySelector('image')?.getAttribute('width')).toBe('20');
-    expect(dotView.container.querySelectorAll('circle')[1].getAttribute('r')).toBe('8');
+    expect(chartProps.data).toBe(data);
+    expect(point('pointStyle', 1)).toBe(icons[0]);
+    expect(point('pointStyle', 2)).toBe('circle');
+    expect(point('radius', 1)).toBe(3);
+    expect(point('radius', 2)).toBe(8);
   });
 });

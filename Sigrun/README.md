@@ -26,10 +26,11 @@ on the same version. `app/ThemeProvider.tsx` retains the previous radius,
 light-variant colors, and shared day/night cookie mapping. Emotion remains the
 styling integration; SSR creates a cache per request and emits extracted styles
 after the bundled stylesheets so custom component styles take precedence.
-Statistics charts use `@mantine/charts` on the same version as Mantine core, with
-Recharts 3. Rating history uses the range brush to zoom and pan; selecting a point
-opens its game, and the preview controls keep the selected point highlighted.
-Winning-game stars, live language changes, and the dimmed palette are preserved.
+Statistics charts use `react-chartjs-2` and Chart.js. Rating history supports wheel
+and pinch zoom; tapping a point selects its game immediately. The preview controls
+keep the selected point highlighted. Winning-game stars, live language changes,
+and the dimmed palette are preserved. The zoom plugin loads only in the browser
+so server rendering does not depend on Hammer.js browser globals.
 Page metadata is emitted once per page using React 19's document-head handling,
 including fallback metadata for loading and unavailable views.
 

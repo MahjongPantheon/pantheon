@@ -8,7 +8,6 @@ import { colorSchemeManager } from './helpers/colorSchemeManager';
 import { getThemeOptions } from './helpers/theme';
 import '@mantine/core/styles.css';
 import '@mantine/nprogress/styles.css';
-import '@mantine/charts/styles.css';
 
 export function ThemeProvider({
   children,

@@ -67,7 +67,7 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: function manualChunks(id) {
-          if (id.includes('@mantine/charts') || id.includes('recharts')) {
+          if (id.includes('react-chartjs-2') || id.includes('chart.js')) {
             return 'graphs';
           }
           if (id.includes('node_modules')) {

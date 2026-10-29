@@ -1,5 +1,6 @@
 import * as React from 'react';
-import type { BarChartProps } from '@mantine/charts';
+import type { ChartProps } from 'react-chartjs-2';
+type BarChartProps = Omit<ChartProps<'bar', { x: string; y: number }[]>, 'type'>;
 import { MantineProvider } from '@mantine/core';
 import { cleanup, render, screen } from '@testing-library/react';
 import { afterEach, beforeEach, expect, it, vi } from 'vitest';
@@ -24,26 +25,30 @@ afterEach(() => {
   vi.unstubAllGlobals();
 });
 
-it('keeps empty han buckets and combines single and multiple yakuman', async () => {
-  render(
-    <MantineProvider>
-      <React.Suspense fallback={null}>
-        <HandsGraph
-          handValueStat={[
-            { hanCount: 1, count: 5 },
-            { hanCount: 4, count: 2 },
-            { hanCount: -1, count: 3 },
-            { hanCount: -2, count: 1 },
-          ]}
-        />
-      </React.Suspense>
-    </MantineProvider>
-  );
-  await screen.findByTestId('hands-chart');
-  expect(chartProps.data).toHaveLength(13);
-  expect(chartProps.data[0]).toEqual({ x: '1', count: 5 });
-  expect(chartProps.data[1]).toEqual({ x: '2', count: 0 });
-  expect(chartProps.data[3]).toEqual({ x: '4', count: 2 });
-  expect(chartProps.data[12]).toEqual({ x: '★', count: 4 });
-  expect(chartProps.yAxisProps?.allowDecimals).toBe(false);
-});
+it.each(['light', 'dark'] as const)(
+  'keeps han buckets and combines yakuman in %s mode',
+  async (colorScheme) => {
+    render(
+      <MantineProvider forceColorScheme={colorScheme}>
+        <React.Suspense fallback={null}>
+          <HandsGraph
+            handValueStat={[
+              { hanCount: 1, count: 5 },
+              { hanCount: 4, count: 2 },
+              { hanCount: -1, count: 3 },
+              { hanCount: -2, count: 1 },
+            ]}
+          />
+        </React.Suspense>
+      </MantineProvider>
+    );
+    await screen.findByTestId('hands-chart');
+    const points = chartProps.data.datasets[0].data;
+    expect(points).toHaveLength(13);
+    expect(points[0]).toEqual({ x: '1', y: 5 });
+    expect(points[1]).toEqual({ x: '2', y: 0 });
+    expect(points[3]).toEqual({ x: '4', y: 2 });
+    expect(points[12]).toEqual({ x: '★', y: 4 });
+    expect(chartProps.options?.scales?.y?.ticks).toEqual(expect.objectContaining({ precision: 0 }));
+  }
+);

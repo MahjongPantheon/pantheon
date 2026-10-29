@@ -1,4 +1,3 @@
-import type { AreaChartSeries } from '@mantine/charts';
 import type { HuginData } from 'tsclients/proto/hugin.pb';
 
 export type HuginKeys = Exclude<keyof HuginData, 'eventCount'>;
@@ -6,7 +5,7 @@ export type Subsystems = 'all' | 'Forseti' | 'Tyr' | 'Sigrun' | 'Bragi';
 type Period = 'lastday' | 'lastmonth' | 'lastyear';
 export type Stats = {
   data: Record<string, string | number>[];
-  series: AreaChartSeries[];
+  series: { name: string; label: string; color: string }[];
 };
 
 const colors = [
@@ -39,7 +38,6 @@ export function makeStat(
         : (JSON.parse(item[field].toString()) as Record<string, string | number>),
   }));
   const labels = Array.from(new Set(entries.flatMap((item) => Object.keys(item.values))));
-  // Category labels can contain dots or brackets, which Recharts treats as property paths.
   const series = labels.map((label, index) => ({
     name: `series${index}`,
     label,

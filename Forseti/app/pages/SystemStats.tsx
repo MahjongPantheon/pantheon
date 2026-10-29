@@ -29,13 +29,15 @@ import {
   Select,
   Space,
   Table,
+  useMantineColorScheme,
+  useMantineTheme,
 } from '@mantine/core';
 
 import { notifications } from '@mantine/notifications';
 import { useStorage } from '../hooks/storage';
 import { HuginData } from 'tsclients/proto/hugin.pb';
 import { Link, Redirect } from 'wouter';
-import { AreaChart } from '@mantine/charts';
+import LineGraph from '../components/LineGraph';
 import { makeStat, type HuginKeys, type Stats, type Subsystems } from '../helpers/systemStats';
 import { authCtx, PrivilegesLevel } from '../hooks/auth';
 
@@ -88,6 +90,10 @@ export const SystemStats: React.FC<{ params: { period?: string } }> = ({ params:
   period = period ?? 'lastday';
   const { privilegesLevel, privilegesLoading } = useContext(authCtx);
   const api = useApi();
+  const theme = useMantineTheme();
+  const isDark = useMantineColorScheme().colorScheme === 'dark';
+  const textColor = isDark ? theme.colors.gray[2] : theme.colors.dark[7];
+  const gridColor = isDark ? theme.colors.gray[8] : theme.colors.gray[3];
   const i18n = useI18n();
   const storage = useStorage();
   const personId = storage.getPersonId();
@@ -183,16 +189,36 @@ export const SystemStats: React.FC<{ params: { period?: string } }> = ({ params:
       {selectedStats && (
         <>
           <h3>{selectedSubsystem}</h3>
-          <AreaChart
-            h={400}
-            data={selectedStats.data}
-            dataKey='date'
-            series={selectedStats.series}
-            type='stacked'
-            withLegend
-            gridAxis='xy'
-            yAxisProps={{ allowDecimals: false, width: 65 }}
-          />
+          <div style={{ position: 'relative', height: 400 }}>
+            <LineGraph
+              data={{
+                labels: selectedStats.data.map((row) => String(row.date)),
+                datasets: selectedStats.series.map((series) => ({
+                  label: series.label,
+                  data: selectedStats.data.map((row) => Number(row[series.name])),
+                  backgroundColor: theme.colors[series.color][isDark ? 7 : 3],
+                  borderColor: theme.colors[series.color][isDark ? 7 : 3],
+                  fill: true,
+                  tension: 0.3,
+                })),
+              }}
+              options={{
+                responsive: true,
+                maintainAspectRatio: false,
+                color: textColor,
+                interaction: { mode: 'index', intersect: false },
+                plugins: { legend: { display: true, labels: { color: textColor } } },
+                scales: {
+                  x: { grid: { color: gridColor }, ticks: { color: textColor } },
+                  y: {
+                    stacked: true,
+                    grid: { color: gridColor },
+                    ticks: { color: textColor, precision: 0 },
+                  },
+                },
+              }}
+            />
+          </div>
           <Space h='xl' />
           <Divider my='sm' />
           <Space h='xl' />

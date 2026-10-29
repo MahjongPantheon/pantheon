@@ -13,7 +13,7 @@ const storage = { getPersonId: () => 1 };
 vi.mock('../hooks/api', () => ({ useApi: () => api }));
 vi.mock('../hooks/i18n', () => ({ useI18n: () => i18n }));
 vi.mock('../hooks/storage', () => ({ useStorage: () => storage }));
-vi.mock('@mantine/charts', () => ({ AreaChart: () => <div>Chart</div> }));
+vi.mock('../components/LineGraph', () => ({ default: () => <div>Chart</div> }));
 vi.mock('@mantine/notifications', () => ({ notifications: { show } }));
 vi.mock('wouter', () => ({
   Redirect: () => <div>Redirected</div>,
