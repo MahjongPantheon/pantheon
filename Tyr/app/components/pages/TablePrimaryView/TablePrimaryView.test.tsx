@@ -44,3 +44,33 @@ it('updates non-score player details immediately without waiting for points to c
   );
   expect(self).toMatchObject({ playerName: 'After', showInlineRiichi: true, points: '25000' });
 });
+
+it('captures the timer when opening the outcome menu and captures again on reopening', () => {
+  vi.stubGlobal(
+    'ResizeObserver',
+    class {
+      observe() {}
+      disconnect() {}
+    }
+  );
+  const player = { id: 1, playerName: 'Alice', points: '25000' };
+  const onAddMenuOpen = vi.fn();
+  const props = {
+    self: player,
+    shimocha: player,
+    kamicha: player,
+    toimen: player,
+    tableStatus: {},
+    rulesetConfig: {},
+    onRefresh: vi.fn(),
+    onAddNewGame: vi.fn(),
+    onAddMenuOpen,
+  } as IProps;
+  view.render(<TablePrimaryView {...props} />);
+  view.click('[data-testid="tyr-table-add-round"]');
+  expect(onAddMenuOpen).toHaveBeenCalledTimes(1);
+  view.click('[data-testid="tyr-table-add-round"]');
+  expect(onAddMenuOpen).toHaveBeenCalledTimes(1);
+  view.click('[data-testid="tyr-table-add-round"]');
+  expect(onAddMenuOpen).toHaveBeenCalledTimes(2);
+});

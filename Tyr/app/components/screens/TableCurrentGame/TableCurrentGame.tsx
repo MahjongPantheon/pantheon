@@ -25,6 +25,7 @@ import {
   GOTO_NEXT_SCREEN,
   GOTO_PREV_SCREEN,
   INIT_BLANK_OUTCOME,
+  SET_HAND_END_TIMER,
   SHOW_GAME_LOG,
   TOGGLE_OVERVIEW_DIFFBY,
   UPDATE_CURRENT_GAMES_INIT,
@@ -99,6 +100,9 @@ export const TableCurrentGame = ({ state, dispatch }: IComponentProps) => {
         }}
         onGoHome={() => dispatch({ type: GOTO_PREV_SCREEN })}
         onRefresh={() => dispatch({ type: UPDATE_CURRENT_GAMES_INIT })}
+        onAddMenuOpen={() =>
+          dispatch({ type: SET_HAND_END_TIMER, payload: state.timer?.secondsRemaining })
+        }
         onAddNewGame={
           showActionButtons
             ? (selectedOutcome) => {

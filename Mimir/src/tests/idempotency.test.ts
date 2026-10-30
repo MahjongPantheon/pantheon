@@ -300,3 +300,77 @@ it.each([false, true])(
     });
   }
 );
+
+it('replays outcome timer submissions and rejects changing the captured reading for a used token', async () => {
+  const { sessionHash } = await client.StartGame(19, players);
+  const overview = await client.GetSessionOverview(sessionHash);
+  const request = {
+    sessionHash,
+    roundToken: overview.nextRoundToken,
+    outcomeTimerSecondsRemaining: 5,
+    roundData: {
+      draw: {
+        roundIndex: overview.state.roundIndex,
+        honba: overview.state.honbaCount,
+        tempai: [],
+        riichiBets: [],
+      },
+    },
+  };
+  const first = await client.AddRound(request);
+  expect(await client.AddRound(request)).toEqual(first);
+  await expect(client.AddRound({ ...request, outcomeTimerSecondsRemaining: 0 })).rejects.toThrow(
+    'different parameters'
+  );
+  expect(await roundCount(sessionHash)).toBe(1);
+});
+
+it('preserves the remaining timed hands when score entry crosses the buzzer through Twirp', async () => {
+  const { eventId } = await client.CreateEvent(
+    EventData.initialize({
+      type: EventType.EVENT_TYPE_LOCAL,
+      title: `Outcome timing ${randomUUID()}`,
+      timezone: 'UTC',
+      rulesetConfig: RulesetEntity.createRuleset('ema2025').rules,
+    })
+  );
+  for (const playerId of players) await client.RegisterPlayer(eventId, playerId);
+  const { sessionHash } = await client.StartGame(eventId, players);
+  await orm.em.fork().nativeUpdate(EventEntity, eventId, {
+    useTimer: 1,
+    gameDuration: 60,
+    lastTimer: Math.floor(Date.now() / 1000) - 3630,
+  });
+  const overview = await client.GetSessionOverview(sessionHash);
+  const first = await client.AddRound({
+    sessionHash,
+    roundToken: overview.nextRoundToken,
+    outcomeTimerSecondsRemaining: 5,
+    roundData: {
+      draw: {
+        roundIndex: overview.state.roundIndex,
+        honba: overview.state.honbaCount,
+        tempai: [],
+        riichiBets: [],
+      },
+    },
+  });
+  expect(first.lastHandStarted).toBe(false);
+  expect(first.isFinished).toBe(false);
+  const second = await client.AddRound({
+    sessionHash,
+    roundToken: first.nextRoundToken,
+    outcomeTimerSecondsRemaining: 0,
+    roundData: { chombo: { roundIndex: first.round, honba: first.honba, loserIds: [2, 10] } },
+  });
+  expect(second.lastHandStarted).toBe(true);
+  expect(second.isFinished).toBe(false);
+  const third = await client.AddRound({
+    sessionHash,
+    roundToken: second.nextRoundToken,
+    outcomeTimerSecondsRemaining: 0,
+    roundData: { chombo: { roundIndex: second.round, honba: second.honba, loserIds: [2, 10] } },
+  });
+  expect(third.isFinished).toBe(true);
+  expect(await roundCount(sessionHash)).toBe(3);
+});

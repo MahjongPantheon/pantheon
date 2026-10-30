@@ -277,3 +277,73 @@ it.each([false, true])(
     expect(f.model.prefinish).toHaveBeenCalledTimes(last ? 1 : 0);
   }
 );
+
+const outcomeTimerCases = [
+  { reading: 5, overrun: 30, expired: false },
+  { reading: 0, overrun: 30, expired: true },
+  { reading: -5, overrun: 30, expired: true },
+  { reading: undefined, overrun: 30, expired: true },
+  { reading: 0, overrun: -600, expired: false },
+  { reading: 300, overrun: 1000, expired: true },
+  { reading: 5, overrun: 240, expired: false },
+  { reading: 5, overrun: 241, expired: true },
+  { reading: 0, overrun: 0, expired: false },
+];
+
+it.each(
+  [
+    EndingPolicy.ENDING_POLICY_EP_ONE_MORE_HAND,
+    EndingPolicy.ENDING_POLICY_EP_END_AFTER_HAND,
+  ].flatMap((policy) => outcomeTimerCases.map((test) => ({ ...test, policy })))
+)(
+  'classifies outcome timer $reading with server overrun $overrun under policy $policy',
+  async ({ reading, overrun, expired, policy }) => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date('2026-10-31T12:00:00Z'));
+    const f = fixture();
+    f.event.ruleset.rules.endingPolicy = policy;
+    f.event.useTimer = 1;
+    f.event.lastTimer = Date.now() / 1000 - 3600 - overrun;
+    f.event.gameDuration = 60;
+    const state = new SessionState(f.event.ruleset, [1, 2, 3, 4]);
+    const round = RoundEntity.fromMessage(f.session, f.event, {
+      draw: { roundIndex: 1, honba: 0, tempai: [], riichiBets: [] },
+    });
+    vi.spyOn(f.model, 'prefinish').mockResolvedValue();
+    await f.model.updateSessionState(f.event, f.session, state, round, true, reading);
+    expect(!!state.lastHandStarted()).toBe(
+      expired && policy === EndingPolicy.ENDING_POLICY_EP_ONE_MORE_HAND
+    );
+    expect(state.isFinished()).toBe(
+      expired && policy === EndingPolicy.ENDING_POLICY_EP_END_AFTER_HAND
+    );
+  }
+);
+
+it.each([false, true])(
+  'keeps grouped chombo timing consistent when countsAsHand=%s',
+  async (countsAsHand) => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date('2026-10-31T12:00:00Z'));
+    const f = fixture();
+    f.event.ruleset = RulesetEntity.createRuleset('ema2025');
+    f.event.ruleset.rules.chomboCountsAsHand = countsAsHand;
+    f.event.useTimer = 1;
+    f.event.lastTimer = Date.now() / 1000 - 3630;
+    f.event.gameDuration = 60;
+    const state = new SessionState(f.event.ruleset, [1, 2, 3, 4]);
+    const round = RoundEntity.fromMessage(f.session, f.event, {
+      chombo: { roundIndex: 1, honba: 0, loserIds: [1, 2] },
+    });
+    vi.spyOn(f.model, 'prefinish').mockResolvedValue();
+    await f.model.updateSessionState(f.event, f.session, state, round, false, 5);
+    expect(!!state.lastHandStarted()).toBe(false);
+    await f.model.updateSessionState(f.event, f.session, state, round, false, 0);
+    expect(!!state.lastHandStarted()).toBe(countsAsHand);
+    expect(state.isFinished()).toBe(false);
+    await f.model.updateSessionState(f.event, f.session, state, round, false, 0);
+    expect(state.isFinished()).toBe(countsAsHand);
+    expect(state.getChombo()[1]).toBe(-60000);
+    expect(state.getChombo()[2]).toBe(-60000);
+  }
+);
