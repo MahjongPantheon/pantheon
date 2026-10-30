@@ -19,7 +19,6 @@ postfix_restrict_message_size       # Restrict the size of messages (or set them
 postfix_reject_invalid_helos        # Reject invalid HELOs
 postfix_set_hostname                # Set up host name
 postfix_set_relay_tls_level         # Set TLS level security for relays
-postfix_setup_relayhost             # Setup a relay host, if defined
 postfix_setup_networks              # Set MYNETWORKS
 postfix_setup_debugging             # Enable debugging, if defined
 postfix_setup_sender_domains        # Configure allowed sender domains
@@ -30,6 +29,7 @@ postfix_custom_commands             # Apply custom postfix settings
 opendkim_custom_commands            # Apply custom OpenDKIM settings
 postfix_open_submission_port        # Enable the submission port
 execute_post_init_scripts           # Execute any scripts found in /docker-init.db/
+postfix_setup_relayhost             # Setup a relay host, if defined
 
 chown -R opendkim:opendkim /etc/opendkim/keys
 chown -R postfix:postfix /var/spool/postfix/*
