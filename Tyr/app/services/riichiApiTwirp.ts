@@ -209,7 +209,11 @@ export class RiichiApiTwirpService implements IRiichiApi {
     if (!sessionHash || !roundData) {
       return Promise.reject();
     }
-    const request = { sessionHash, roundData };
+    const request = {
+      sessionHash,
+      roundData,
+      outcomeTimerSecondsRemaining: state.currentHandEndTimerRemaining,
+    };
     return pendingRpc(
       `AddRound:${this._personId}:${sessionHash}`,
       request,

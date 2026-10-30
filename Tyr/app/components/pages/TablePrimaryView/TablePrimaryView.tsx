@@ -28,6 +28,7 @@ export type IProps = {
   onGoBack?: () => void;
   onRefresh: () => void;
   onAddNewGame?: (outcome: 'ron' | 'tsumo' | 'draw' | 'abort' | 'chombo' | 'nagashi') => void;
+  onAddMenuOpen?: () => void;
   onGotoGameLog?: () => void;
   topRowUpsideDown?: boolean;
 
@@ -138,7 +139,10 @@ export const TablePrimaryView = (props: IProps) => {
             variant='light'
             icon={<AddNewIcon />}
             size='lg'
-            onClick={() => setNewGameOpen(!newGameOpen)}
+            onClick={() => {
+              if (!newGameOpen) props.onAddMenuOpen?.();
+              setNewGameOpen(!newGameOpen);
+            }}
             testId='tyr-table-add-round'
           />
         )}

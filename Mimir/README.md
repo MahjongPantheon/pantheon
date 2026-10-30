@@ -202,6 +202,13 @@ The engine and wrapper repositories also contain three-player seating tests.
 
 ### Chombo after timeout
 
+Tyr captures the match timer when the outcome menu opens. AddRound accepts that
+reading as `outcomeTimerSecondsRemaining`: a positive reading allows score entry
+up to 240 seconds past the server's deadline without consuming a timed hand.
+At zero, with no reading, or beyond that grace period, the server clock decides.
+Extra time and timer restarts remain authoritative on the server. Retries must
+keep the same captured reading and round token. No database migration is needed.
+
 `chomboCountsAsHand` is the only timed chombo setting. With it enabled, a chombo
 counts as one played hand for both timed ending policies. Under one-more-hand,
 the current hand consumes the first allowance and the following hand ends the

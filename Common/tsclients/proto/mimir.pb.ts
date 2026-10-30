@@ -191,6 +191,11 @@ export interface GamesAddRoundPayload {
   sessionHash: string;
   roundData: protoAtoms.Round;
   roundToken?: string | null | undefined;
+  /**
+   * Timer reading when the outcome menu opened, before score entry.
+   * Absent for untimed events and clients using server submission time.
+   */
+  outcomeTimerSecondsRemaining?: number | null | undefined;
 }
 
 export interface GamesAddRoundResponse {
@@ -6092,6 +6097,7 @@ export const GamesAddRoundPayload = {
       sessionHash: "",
       roundData: protoAtoms.Round.initialize(),
       roundToken: undefined,
+      outcomeTimerSecondsRemaining: undefined,
       ...msg,
     };
   },
@@ -6111,6 +6117,9 @@ export const GamesAddRoundPayload = {
     }
     if (msg.roundToken != undefined) {
       writer.writeString(3, msg.roundToken);
+    }
+    if (msg.outcomeTimerSecondsRemaining != undefined) {
+      writer.writeInt32(4, msg.outcomeTimerSecondsRemaining);
     }
     return writer;
   },
@@ -6135,6 +6144,10 @@ export const GamesAddRoundPayload = {
         }
         case 3: {
           msg.roundToken = reader.readString();
+          break;
+        }
+        case 4: {
+          msg.outcomeTimerSecondsRemaining = reader.readInt32();
           break;
         }
         default: {
@@ -12511,6 +12524,7 @@ export const GamesAddRoundPayloadJSON = {
       sessionHash: "",
       roundData: protoAtoms.RoundJSON.initialize(),
       roundToken: undefined,
+      outcomeTimerSecondsRemaining: undefined,
       ...msg,
     };
   },
@@ -12534,6 +12548,9 @@ export const GamesAddRoundPayloadJSON = {
     if (msg.roundToken != undefined) {
       json["roundToken"] = msg.roundToken;
     }
+    if (msg.outcomeTimerSecondsRemaining != undefined) {
+      json["outcomeTimerSecondsRemaining"] = msg.outcomeTimerSecondsRemaining;
+    }
     return json;
   },
 
@@ -12555,6 +12572,14 @@ export const GamesAddRoundPayloadJSON = {
     const _roundToken_ = json["roundToken"] ?? json["round_token"];
     if (_roundToken_) {
       msg.roundToken = _roundToken_;
+    }
+    const _outcomeTimerSecondsRemaining_ =
+      json["outcomeTimerSecondsRemaining"] ??
+      json["outcome_timer_seconds_remaining"];
+    if (_outcomeTimerSecondsRemaining_) {
+      msg.outcomeTimerSecondsRemaining = protoscript.parseNumber(
+        _outcomeTimerSecondsRemaining_,
+      );
     }
     return msg;
   },

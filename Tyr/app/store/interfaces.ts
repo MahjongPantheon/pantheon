@@ -82,6 +82,8 @@ export interface IAppState {
   currentSessionHash?: string;
   nextRoundToken?: string;
   currentOutcome?: AppOutcome;
+  // Timer reading captured when the outcome menu opens, before score entry.
+  currentHandEndTimerRemaining?: number;
   currentPlayerDisplayName?: string;
   currentPlayerHasAvatar?: boolean;
   currentPlayerLastUpdate: string;

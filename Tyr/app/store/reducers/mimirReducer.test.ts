@@ -250,3 +250,20 @@ it('keeps rotation offsets for the table selectors and selects events without ch
   expect(reduce(a.HISTORY_INIT).historyInitialized).toBe(true);
   expect(reduce('unknown')).toBe(initialState);
 });
+
+it('keeps the captured outcome timer through submission failure and clears it on success', () => {
+  const captured = reduce(a.SET_HAND_END_TIMER, 5);
+  expect(captured.currentHandEndTimerRemaining).toBe(5);
+  const failed = reduce(a.ADD_ROUND_FAIL, error, captured);
+  expect(failed.currentHandEndTimerRemaining).toBe(5);
+  expect(
+    reduce(a.ADD_ROUND_SUCCESS, { isFinished: false }, failed).currentHandEndTimerRemaining
+  ).toBeUndefined();
+  expect(
+    reduce(a.ADD_ROUND_SUCCESS, { isFinished: true }, failed).currentHandEndTimerRemaining
+  ).toBeUndefined();
+  expect(reduce(a.SET_HAND_END_TIMER, 0, captured).currentHandEndTimerRemaining).toBe(0);
+  expect(
+    reduce(a.SET_HAND_END_TIMER, undefined, captured).currentHandEndTimerRemaining
+  ).toBeUndefined();
+});
