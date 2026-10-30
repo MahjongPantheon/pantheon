@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-26 20:19+0100\n"
+"POT-Creation-Date: 2026-10-30 00:53+0100\n"
 "PO-Revision-Date: 2026-10-20 00:34+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -14,69 +14,80 @@ msgstr ""
 "Generated-By: i18n-json2po\n"
 "X-Generator: Poedit 3.4.2\n"
 
-#: app/helpers/lastRound.ts:58:13
+#: app/helpers/lastRound.ts:78:13
 msgid "%1 han"
 msgstr "%1 番"
 
-#: app/helpers/lastRound.ts:59:13
+#: app/helpers/lastRound.ts:79:13
 msgid "%1 han, %2 fu"
 msgstr "%1 番，%2 符"
 
-#: app/pages/GamesControl/GamesList.tsx:215:53
-#: app/pages/GamesControl/TournamentControls.tsx:306:45
+#: app/services/i18n.selection.test.ts:39:10
+msgid "%1 item"
+msgid_plural "%1 items"
+msgstr[0] ""
+
+#: app/services/i18n.selection.test.ts:40:10
+msgctxt "context"
+msgid "%1 item"
+msgid_plural "%1 items"
+msgstr[0] ""
+
+#: app/pages/GamesControl/GamesList.tsx:219:53
+#: app/pages/GamesControl/TournamentControls.tsx:314:45
 msgid "1 minute"
 msgstr "1 分钟"
 
-#: app/pages/OwnedEventsEdit/UmaSelect.tsx:130:22
+#: app/pages/OwnedEventsEdit/UmaSelect.tsx:140:22
 msgid "1 player with score less than starting"
 msgstr "1 名玩家低于起始点数"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:162:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:216:22
 msgid "13+ han hands are considered yakuman, not sanbaiman."
 msgstr "13 番及以上的手牌按役满计算，而非三倍满。"
 
-#: app/pages/OwnedEventsEdit/UmaSelect.tsx:87:16
+#: app/pages/OwnedEventsEdit/UmaSelect.tsx:93:16
 msgid "1st"
 msgstr "第 1 名"
 
-#: app/pages/GamesControl/GamesList.tsx:216:54
-#: app/pages/GamesControl/TournamentControls.tsx:307:46
+#: app/pages/GamesControl/GamesList.tsx:220:54
+#: app/pages/GamesControl/TournamentControls.tsx:315:46
 msgid "2 minutes"
 msgstr "2 分钟"
 
-#: app/pages/OwnedEventsEdit/UmaSelect.tsx:90:16
+#: app/pages/OwnedEventsEdit/UmaSelect.tsx:96:16
 msgid "2nd"
 msgstr "第 2 名"
 
-#: app/pages/GamesControl/GamesList.tsx:217:54
-#: app/pages/GamesControl/TournamentControls.tsx:308:46
+#: app/pages/GamesControl/GamesList.tsx:221:54
+#: app/pages/GamesControl/TournamentControls.tsx:316:46
 msgid "3 minutes"
 msgstr "3 分钟"
 
-#: app/pages/OwnedEventsEdit/UmaSelect.tsx:101:22
+#: app/pages/OwnedEventsEdit/UmaSelect.tsx:109:22
 msgid "3 players with score less than starting"
 msgstr "3 名玩家低于起始点数"
 
-#: app/pages/OwnedEventsEdit/UmaSelect.tsx:93:16
+#: app/pages/OwnedEventsEdit/UmaSelect.tsx:99:16
 msgid "3rd"
 msgstr "第 3 名"
 
-#: app/pages/GamesControl/GamesList.tsx:218:54
-#: app/pages/GamesControl/TournamentControls.tsx:309:46
+#: app/pages/GamesControl/GamesList.tsx:222:54
+#: app/pages/GamesControl/TournamentControls.tsx:317:46
 msgid "4 minutes"
 msgstr "4 分钟"
 
-#: app/pages/OwnedEventsEdit/UmaSelect.tsx:96:16
+#: app/pages/OwnedEventsEdit/UmaSelect.tsx:103:18
 msgid "4th"
 msgstr "第 4 名"
 
-#: app/pages/GamesControl/GamesList.tsx:219:54
-#: app/pages/GamesControl/TournamentControls.tsx:310:46
+#: app/pages/GamesControl/GamesList.tsx:223:54
+#: app/pages/GamesControl/TournamentControls.tsx:318:46
 msgid "5 minutes"
 msgstr "5 分钟"
 
-#: app/pages/GamesControl/GamesList.tsx:220:54
-#: app/pages/GamesControl/TournamentControls.tsx:311:46
+#: app/pages/GamesControl/GamesList.tsx:224:54
+#: app/pages/GamesControl/TournamentControls.tsx:319:46
 msgid "7 minutes"
 msgstr "7 分钟"
 
@@ -86,15 +97,15 @@ msgid ""
 "Please check your mailbox and follow the link in the message."
 msgstr "密码恢复确认链接已发送至所提供的邮箱。请查收邮件并点击邮件中的链接。"
 
-#: app/pages/Penalties/PenaltyForm.tsx:67:38
+#: app/pages/Penalties/PenaltyForm.tsx:69:38
 msgid "A reason for penalty is mandatory"
 msgstr "必须填写处罚原因"
 
-#: app/helpers/lastRound.ts:124:9
+#: app/helpers/lastRound.ts:129:13
 msgid "Abortive draw, riichi: %1"
 msgstr "中途流局，立直：%1"
 
-#: app/pages/OwnedEvents.tsx:530:26
+#: app/pages/OwnedEvents.tsx:540:26
 msgid "Achievements visible"
 msgstr "显示成就"
 
@@ -102,29 +113,29 @@ msgstr "显示成就"
 msgid "Action required"
 msgstr "需要操作"
 
-#: app/pages/OwnedEvents.tsx:392:26
+#: app/pages/OwnedEvents.tsx:397:26
 msgid "Actions"
 msgstr "操作"
 
-#: app/pages/Penalties/PenaltyForm.tsx:108:45
+#: app/pages/Penalties/PenaltyForm.tsx:110:45
 msgid "Add a penalty"
 msgstr "添加处罚"
 
-#: app/pages/GamesControl/GamesList.tsx:206:29
-#: app/pages/GamesControl/TournamentControls.tsx:296:22
-#: app/pages/GamesControl/TournamentControls.tsx:297:21
+#: app/pages/GamesControl/GamesList.tsx:210:29
+#: app/pages/GamesControl/TournamentControls.tsx:304:22
+#: app/pages/GamesControl/TournamentControls.tsx:305:21
 msgid "Add extra time"
 msgstr "追加时间"
 
-#: app/pages/GamesControl/GamesList.tsx:205:30
+#: app/pages/GamesControl/GamesList.tsx:209:30
 msgid "Add extra time for this table"
 msgstr "为本桌追加时间"
 
-#: app/pages/GamesControl/TournamentControls.tsx:315:26
+#: app/pages/GamesControl/TournamentControls.tsx:323:26
 msgid "Add selected amount of extra time for all tables?"
 msgstr "为所有桌追加所选时长？"
 
-#: app/pages/GamesControl/GamesList.tsx:225:30
+#: app/pages/GamesControl/GamesList.tsx:229:30
 msgid "Add selected amount of extra time for this table?"
 msgstr "为本桌追加所选时长？"
 
@@ -132,7 +143,7 @@ msgstr "为本桌追加所选时长？"
 msgid "Administrator privileges include everything a referee can do plus:"
 msgstr "管理员拥有裁判的全部权限，以及："
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:69:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:113:16
 msgid "Agariyame"
 msgstr "和牌终局"
 
@@ -145,7 +156,7 @@ msgstr "所有日期和时间均按所选时区显示。"
 msgid "All events"
 msgstr "所有活动"
 
-#: app/pages/OwnedEvents.tsx:302:14
+#: app/pages/OwnedEvents.tsx:307:14
 msgid "All my events"
 msgstr "我的所有活动"
 
@@ -153,7 +164,7 @@ msgstr "我的所有活动"
 msgid "All player stats and achievements"
 msgstr "所有玩家统计和成就"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:153:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:206:22
 msgid ""
 "All riichi bets on the table will be given to the first winner. If not "
 "checked, winning riichi bets will always be given back, lost bets would be "
@@ -171,23 +182,23 @@ msgstr "你的所有个人信息，包括邮箱、天凤 ID、姓名"
 msgid "All your played games and events"
 msgstr "你参加过的所有对局和活动"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:121:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:170:16
 msgid "Allow abortive draws"
 msgstr "允许中途流局"
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:85:16
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:89:16
 msgid "Allow adding of replays manually"
 msgstr "允许手动添加牌谱"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:87:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:133:16
 msgid "Allow bankruptcy"
 msgstr "允许击飞"
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:49:22
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:51:22
 msgid "Allow combination of yakumans, e.g. tsuuisou + daisangen"
 msgstr "允许役满复合，例如字一色 + 大三元"
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:164:18
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:170:18
 msgid "Allow viewing of other tables during ongoing game"
 msgstr "允许对局中查看其他桌"
 
@@ -195,34 +206,40 @@ msgstr "允许对局中查看其他桌"
 msgid "Already registered?"
 msgstr "已有账号？"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:241:18
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:299:18
 msgid "Amount of chombo penalty"
 msgstr "犯规罚分"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:242:24
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:300:24
 msgid "Amount of penalty applied in the end of the session after uma bonus."
 msgstr "对局结束后，在顺位分结算后扣除的罚分。"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:261:24
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:320:24
 msgid "Amount of penalty applied to those who didn't win once in game."
 msgstr "对整场对局中未和牌玩家扣除的罚分。"
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:108:22
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:114:22
 msgid ""
 "Amount of points given for each chip. Chips should be set up in tournament "
 "settings in Tenhou.net. Set to 0 to disable chips."
 msgstr "每枚筹码的点数。筹码应在天凤赛事设置中配置。设为 0 可禁用筹码。"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:55:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:62:22
 msgid ""
 "Amount of points given to every player in the beginning of every session"
 msgstr "每场对局开始时发给每位玩家的点数"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:175:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:231:22
 msgid "Amount of points given to player at 1st place"
 msgstr "第 1 名获得的额外点数"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:104:24
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:92:19
+msgid ""
+"Amount of points paid by the offending player to each of the other players "
+"on a chombo"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:152:24
 msgid "Amount of score player should get to end the game."
 msgstr "结束对局所需的目标点数。"
 
@@ -234,20 +251,20 @@ msgstr "提示后再次违反规则"
 msgid "Applied chombo penalties"
 msgstr "已执行的犯规处罚"
 
-#: app/pages/Penalties/PenaltyForm.tsx:158:58
-#: app/pages/Penalties/PenaltyForm.tsx:162:52
+#: app/pages/Penalties/PenaltyForm.tsx:160:58
+#: app/pages/Penalties/PenaltyForm.tsx:164:52
 msgid "Apply penalty"
 msgstr "执行处罚"
 
-#: app/pages/GamesControl/TournamentControls.tsx:232:28
+#: app/pages/GamesControl/TournamentControls.tsx:240:28
 msgid "Apply seating for next session?"
 msgstr "应用下一场对局的座位表？"
 
-#: app/pages/GamesControl/TournamentControls.tsx:339:22
+#: app/pages/GamesControl/TournamentControls.tsx:347:22
 msgid "Approve session results and go on to next session"
 msgstr "确认对局结果并进入下一场对局"
 
-#: app/pages/GamesControl/TournamentControls.tsx:340:21
+#: app/pages/GamesControl/TournamentControls.tsx:348:21
 msgid "Approve sessions"
 msgstr "确认对局结果"
 
@@ -259,11 +276,11 @@ msgstr "与裁判争执"
 msgid "Assigned by:"
 msgstr "处罚执行人："
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:113:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:161:16
 msgid "Atamahane"
 msgstr "头跳"
 
-#: app/pages/ProfileManage.tsx:293:20 app/pages/ProfileManageAdmin.tsx:319:18
+#: app/pages/ProfileManage.tsx:293:20 app/pages/ProfileManageAdmin.tsx:315:18
 msgid ""
 "Avatar should be an image file. It's recommended to upload a square-sized "
 "image, otherwise it will be cropped to center square. File size should not "
@@ -272,15 +289,15 @@ msgstr ""
 "头像必须是图片文件。建议上传正方形图片，否则会从中心裁剪为正方形。文件大小不"
 "得超过 256 KB。"
 
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:112:22
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:120:22
 msgid "Balanced wind shuffle"
 msgstr "均衡分配座风"
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:98:20
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:97:20
 msgid "Basic ruleset"
 msgstr "基础规则"
 
-#: app/pages/OwnedEventsEdit/TabsList.tsx:45:10
+#: app/pages/OwnedEventsEdit/TabsList.tsx:46:10
 msgid "Basic settings"
 msgstr "基本设置"
 
@@ -288,22 +305,27 @@ msgstr "基本设置"
 msgid "Being late for a session"
 msgstr "对局迟到"
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:133:18
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:135:18
 msgid "Brief description"
 msgstr "简要说明"
 
-#: app/pages/GamesControl/TournamentControls.tsx:117:14
+#: app/pages/GamesControl/TournamentControls.tsx:119:17
+msgid ""
+"Can't generate seating: count of registered players is not divisible by 3"
+msgstr ""
+
+#: app/pages/GamesControl/TournamentControls.tsx:120:17
 msgid ""
 "Can't generate seating: count of registered players is not divisible by 4"
 msgstr "无法生成座位表：已注册玩家人数不是 4 的倍数"
 
 #: app/components/RecalcAchievementsModal.tsx:54:12
 #: app/components/RecalcPlayerStatsModal.tsx:54:12
-#: app/components/StopEventModal.tsx:41:12 app/pages/OwnedEvents.tsx:254:14
+#: app/components/StopEventModal.tsx:41:12 app/pages/OwnedEvents.tsx:259:14
 msgid "Cancel"
 msgstr "取消"
 
-#: app/pages/GamesControl/GamesList.tsx:245:30
+#: app/pages/GamesControl/GamesList.tsx:249:30
 msgid "Cancel last played round"
 msgstr "取消最后一局"
 
@@ -311,11 +333,11 @@ msgstr "取消最后一局"
 msgid "Cancel penalty"
 msgstr "取消处罚"
 
-#: app/pages/GamesControl/GamesList.tsx:296:29
+#: app/pages/GamesControl/GamesList.tsx:300:29
 msgid "Cancel results"
 msgstr "取消结果"
 
-#: app/pages/GamesControl/GamesList.tsx:246:29
+#: app/pages/GamesControl/GamesList.tsx:250:29
 msgid "Cancel round"
 msgstr "取消本局"
 
@@ -323,10 +345,10 @@ msgstr "取消本局"
 msgid "Cancelled: "
 msgstr "已取消： "
 
-#: app/pages/OwnedEventsEdit/index.tsx:378:32
-#: app/pages/PlayersManage/LocalIdsTab.tsx:113:28
-#: app/pages/PlayersManage/TeamNamesTab.tsx:114:28
-#: app/pages/ProfileManage.tsx:311:32 app/pages/ProfileManageAdmin.tsx:330:21
+#: app/pages/OwnedEventsEdit/index.tsx:382:32
+#: app/pages/PlayersManage/LocalIdsTab.tsx:115:28
+#: app/pages/PlayersManage/TeamNamesTab.tsx:116:28
+#: app/pages/ProfileManage.tsx:311:32 app/pages/ProfileManageAdmin.tsx:326:21
 msgid "Changes saved!"
 msgstr "更改已保存！"
 
@@ -354,13 +376,17 @@ msgstr "清一色"
 msgid "Chinroutou"
 msgstr "清老头"
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:107:16
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:113:16
 msgid "Chips value"
 msgstr "筹码点数"
 
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:74:16
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:78:16
 msgid "Chombo in last round ends game"
 msgstr "最后一局犯规时结束对局"
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:88:20
+msgid "Chombo payments (sanma)"
+msgstr ""
 
 #: app/pages/Penalties/PenaltiesList.tsx:159:10
 msgid ""
@@ -368,7 +394,7 @@ msgid ""
 "page if game is not finished yet."
 msgstr "若对局尚未结束，可在对局管理页面取消相应局来取消犯规处罚。"
 
-#: app/helpers/lastRound.ts:107:43
+#: app/helpers/lastRound.ts:118:13
 msgid "Chombo, %1"
 msgstr "犯规，%1"
 
@@ -384,7 +410,7 @@ msgstr "纯正九莲宝灯"
 msgid "City"
 msgstr "城市"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:152:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:205:16
 msgid "Collect riichi bets by atamahane"
 msgstr "按头跳规则分配立直棒"
 
@@ -392,15 +418,15 @@ msgstr "按头跳规则分配立直棒"
 msgid "Common actions"
 msgstr "常用操作"
 
-#: app/pages/Penalties/PenaltyForm.tsx:146:18
+#: app/pages/Penalties/PenaltyForm.tsx:148:18
 msgid "Common reasons for penalties"
 msgstr "常见处罚原因"
 
-#: app/pages/Penalties/CommonReasons.tsx:63:14
+#: app/pages/Penalties/CommonReasons.tsx:69:28
 msgid "Common reasons for the penalty"
 msgstr "常见处罚原因"
 
-#: app/pages/OwnedEventsEdit/UmaSelect.tsx:46:20
+#: app/pages/OwnedEventsEdit/UmaSelect.tsx:50:20
 msgid "Complex position-based"
 msgstr "按顺位设置复杂顺位分"
 
@@ -417,17 +443,17 @@ msgstr "确认取消"
 msgid "Confirm your email"
 msgstr "验证你的邮箱"
 
-#: app/pages/OwnedEvents.tsx:401:31
+#: app/pages/OwnedEvents.tsx:406:31
 msgid "Copy event"
 msgstr "复制活动"
 
-#: app/pages/OwnedEventsEdit/LocalSettings.tsx:37:22
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:120:22
+#: app/pages/OwnedEventsEdit/LocalSettings.tsx:39:22
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:126:22
 msgid ""
 "Count of session in game series. Set to 0 to disable series functionality."
 msgstr "系列中的对局场数。设为 0 可禁用系列功能。"
 
-#: app/pages/ProfileManage.tsx:232:22 app/pages/ProfileManageAdmin.tsx:258:20
+#: app/pages/ProfileManage.tsx:232:22 app/pages/ProfileManageAdmin.tsx:254:20
 msgid "Country"
 msgstr "国家"
 
@@ -439,11 +465,11 @@ msgstr "创建新活动"
 msgid "Current penalties"
 msgstr "当前处罚"
 
-#: app/pages/GamesControl/GamesList.tsx:135:30
+#: app/pages/GamesControl/GamesList.tsx:136:30
 msgid "Current round"
 msgstr "当前局"
 
-#: app/pages/GamesControl/TournamentControls.tsx:99:28
+#: app/pages/GamesControl/TournamentControls.tsx:100:24
 msgid "Current status"
 msgstr "当前状态"
 
@@ -460,28 +486,32 @@ msgstr "大三元"
 msgid "Daisuushii"
 msgstr "大四喜"
 
-#: app/components/MainMenu.tsx:156:24 app/pages/OwnedEvents.tsx:456:44
+#: app/components/MainMenu.tsx:156:24 app/pages/OwnedEvents.tsx:461:44
 #: app/pages/ProfileManage.tsx:300:29
 msgid "Danger zone"
 msgstr "危险操作区"
 
-#: app/pages/SystemStats.tsx:228:18
+#: app/pages/SystemStats.tsx:175:18
 msgid "Data slice"
 msgstr "统计范围"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:77:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:122:16
 msgid "Disable renchans"
 msgstr "禁用连庄"
 
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:56:20
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:60:20
 msgid "Do not interrupt session until it ends"
 msgstr "对局自然结束前不终止"
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:131:25
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:98:25
 msgid "Double yakuman:"
 msgstr "双倍役满："
 
-#: app/helpers/lastRound.ts:113:9
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:80:20
+msgid "Draw payments (sanma)"
+msgstr ""
+
+#: app/helpers/lastRound.ts:122:7
 msgid "Draw, tempai: %1, riichi: %2"
 msgstr "流局，听牌：%1，立直：%2"
 
@@ -497,11 +527,11 @@ msgstr "自风：东"
 msgid "East wind"
 msgstr "东风"
 
-#: app/pages/OwnedEventsEdit/index.tsx:78:18
+#: app/pages/OwnedEventsEdit/index.tsx:77:21
 msgid "Edit event :: %1"
 msgstr "编辑活动 :: %1"
 
-#: app/pages/OwnedEvents.tsx:409:38
+#: app/pages/OwnedEvents.tsx:414:38
 msgid "Edit event settings"
 msgstr "编辑活动设置"
 
@@ -521,11 +551,11 @@ msgstr "邮箱已验证"
 msgid "Email has been sent"
 msgstr "邮件已发送"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:130:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:180:22
 msgid "Enable \"Nagashi\" outcome to record this special draw"
 msgstr "启用“流局满贯”结果以记录这种特殊流局"
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:54:16
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:57:16
 msgid "Enable aggregated yakuhai"
 msgstr "启用聚合役牌"
 
@@ -533,7 +563,7 @@ msgstr "启用聚合役牌"
 msgid "Enter a reason for cancellation and confirm it."
 msgstr "请输入取消原因并确认。"
 
-#: app/pages/ProfileManageAdmin.tsx:268:26
+#: app/pages/ProfileManageAdmin.tsx:264:26
 msgid "Enter city of the player"
 msgstr "输入玩家所在城市"
 
@@ -541,15 +571,15 @@ msgstr "输入玩家所在城市"
 msgid "Enter new strong password"
 msgstr "输入新的高强度密码"
 
-#: app/pages/ProfileManageAdmin.tsx:229:26
+#: app/pages/ProfileManageAdmin.tsx:225:26
 msgid "Enter player's e-mail address"
 msgstr "输入玩家的电子邮箱"
 
-#: app/pages/ProfileManageAdmin.tsx:275:26
+#: app/pages/ProfileManageAdmin.tsx:271:26
 msgid "Enter player's phone"
 msgstr "输入玩家的电话号码"
 
-#: app/pages/ProfileManageAdmin.tsx:248:30 app/pages/ProfileSignup.tsx:141:26
+#: app/pages/ProfileManageAdmin.tsx:244:30 app/pages/ProfileSignup.tsx:141:26
 msgid "Enter strong password"
 msgstr "输入高强度密码"
 
@@ -557,25 +587,26 @@ msgstr "输入高强度密码"
 msgid "Enter your e-mail address"
 msgstr "输入你的电子邮箱"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:192:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:248:16
 msgid "Equalize uma"
 msgstr "同分时平分顺位分"
 
-#: app/pages/EventPrescript.tsx:76:18 app/pages/EventPrescript.tsx:111:18
-#: app/pages/GamesControl/index.tsx:89:18
-#: app/pages/GamesControl/index.tsx:102:14 app/pages/OwnedEvents.tsx:95:14
-#: app/pages/OwnedEventsEdit/index.tsx:265:18
-#: app/pages/OwnedEventsEdit/index.tsx:304:18 app/pages/Penalties.tsx:102:18
-#: app/pages/Penalties/PenaltyForm.tsx:91:18
-#: app/pages/PlayersManage/index.tsx:86:18
-#: app/pages/PlayersManage/LocalIdsTab.tsx:72:18
+#: app/pages/EventPrescript.tsx:84:18 app/pages/EventPrescript.tsx:124:18
+#: app/pages/GamesControl/index.tsx:96:18
+#: app/pages/GamesControl/index.tsx:116:16 app/pages/OwnedEvents.tsx:96:16
+#: app/pages/OwnedEventsEdit/index.tsx:269:18
+#: app/pages/OwnedEventsEdit/index.tsx:308:18 app/pages/Penalties.tsx:102:18
+#: app/pages/Penalties/PenaltyForm.tsx:93:18
+#: app/pages/PlayersManage/index.tsx:89:18
+#: app/pages/PlayersManage/LocalIdsTab.tsx:74:18
 #: app/pages/PlayersManage/ManagementTab.tsx:85:18
-#: app/pages/PlayersManage/TeamNamesTab.tsx:72:18
+#: app/pages/PlayersManage/TeamNamesTab.tsx:74:18
 #: app/pages/PrivilegesManage/index.tsx:60:18
 #: app/pages/PrivilegesManage/ManagementTab.tsx:65:18
 #: app/pages/PrivilegesManage/ManagementTab.tsx:82:18
 #: app/pages/PrivilegesManage/ManagementTab.tsx:120:28
 #: app/pages/PrivilegesManage/ManagementTab.tsx:196:28
+#: app/pages/SystemStats.tsx:128:18
 msgid "Error has occurred"
 msgstr "发生错误"
 
@@ -583,15 +614,15 @@ msgstr "发生错误"
 msgid "Event administrators list"
 msgstr "活动管理员列表"
 
-#: app/pages/OwnedEvents.tsx:386:24
+#: app/pages/OwnedEvents.tsx:391:24
 msgid "Event finished"
 msgstr "活动已结束"
 
-#: app/pages/OwnedEvents.tsx:396:36
+#: app/pages/OwnedEvents.tsx:401:36
 msgid "Event management"
 msgstr "活动管理"
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:52:18
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:53:18
 msgid "Event platform"
 msgstr "活动平台"
 
@@ -599,19 +630,19 @@ msgstr "活动平台"
 msgid "Event referees list"
 msgstr "活动裁判列表"
 
-#: app/pages/EventPrescript.tsx:164:36
+#: app/pages/EventPrescript.tsx:181:32
 msgid "Event script"
 msgstr "活动脚本"
 
-#: app/pages/EventPrescript.tsx:132:37
+#: app/pages/EventPrescript.tsx:145:33
 msgid "Event script filling instruction"
 msgstr "活动脚本填写说明"
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:88:18
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:86:18
 msgid "Event title"
 msgstr "活动名称"
 
-#: app/pages/OwnedEvents.tsx:513:28
+#: app/pages/OwnedEvents.tsx:519:28
 msgid "Event visible in global list"
 msgstr "在全局列表中显示活动"
 
@@ -619,24 +650,24 @@ msgstr "在全局列表中显示活动"
 msgid "Event: %1"
 msgstr "活动：%1"
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:53:24
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:54:24
 msgid "External gaming platform for the tournament"
 msgstr "赛事使用的外部游戏平台"
 
-#: app/pages/GamesControl/GamesList.tsx:187:24
+#: app/pages/GamesControl/GamesList.tsx:191:24
 msgid "Extra minutes: %1"
 msgstr "追加分钟数：%1"
 
-#: app/pages/GamesControl/index.tsx:189:29
-#: app/pages/GamesControl/index.tsx:203:27
+#: app/pages/GamesControl/index.tsx:220:29
+#: app/pages/GamesControl/index.tsx:235:29
 msgid "Failed to add extra time"
 msgstr "追加时间失败"
 
-#: app/pages/Penalties/PenaltyForm.tsx:86:27
+#: app/pages/Penalties/PenaltyForm.tsx:88:27
 msgid "Failed to apply penalty: server error or network unreachable"
 msgstr "执行处罚失败：服务器错误或网络不可达"
 
-#: app/pages/GamesControl/index.tsx:238:27
+#: app/pages/GamesControl/index.tsx:272:27
 msgid "Failed to approve session results"
 msgstr "确认对局结果失败"
 
@@ -644,11 +675,11 @@ msgstr "确认对局结果失败"
 msgid "Failed to authorize. Please check your email and password."
 msgstr "认证失败，请检查邮箱和密码。"
 
-#: app/pages/GamesControl/index.tsx:162:33
+#: app/pages/GamesControl/index.tsx:191:35
 msgid "Failed to cancel game"
 msgstr "取消对局失败"
 
-#: app/pages/GamesControl/index.tsx:138:35
+#: app/pages/GamesControl/index.tsx:163:35
 msgid "Failed to cancel round"
 msgstr "取消本局失败"
 
@@ -662,36 +693,36 @@ msgid ""
 "expired or already used. Please try registering again."
 msgstr "验证邮箱失败。链接可能已过期或已使用，请重新注册。"
 
-#: app/pages/GamesControl/index.tsx:151:33
+#: app/pages/GamesControl/index.tsx:177:35
 msgid "Failed to definalize game"
 msgstr "撤销对局结束状态失败"
 
-#: app/pages/OwnedEventsEdit/index.tsx:246:29
-#: app/pages/OwnedEventsEdit/index.tsx:257:29
+#: app/pages/OwnedEventsEdit/index.tsx:250:29
+#: app/pages/OwnedEventsEdit/index.tsx:261:29
 msgid "Failed to fetch event data"
 msgstr "获取活动数据失败"
 
-#: app/pages/GamesControl/index.tsx:329:27
+#: app/pages/GamesControl/index.tsx:373:29
 msgid "Failed to finish the game"
 msgstr "结束对局失败"
 
-#: app/pages/GamesControl/index.tsx:252:29
+#: app/pages/GamesControl/index.tsx:286:29
 msgid "Failed to generate interval seating"
 msgstr "生成间隔座位表失败"
 
-#: app/pages/GamesControl/index.tsx:302:27
+#: app/pages/GamesControl/index.tsx:343:29
 msgid "Failed to generate prescripted seating"
 msgstr "生成预设座位表失败"
 
-#: app/pages/GamesControl/index.tsx:270:27
+#: app/pages/GamesControl/index.tsx:305:29
 msgid "Failed to generate random seating"
 msgstr "生成随机座位表失败"
 
-#: app/pages/GamesControl/index.tsx:286:27
+#: app/pages/GamesControl/index.tsx:324:29
 msgid "Failed to generate swiss seating"
 msgstr "生成瑞士制座位表失败"
 
-#: app/pages/GamesControl/index.tsx:215:27
+#: app/pages/GamesControl/index.tsx:249:27
 msgid "Failed to notify players"
 msgstr "通知玩家失败"
 
@@ -701,7 +732,7 @@ msgid ""
 "expired or already used. Please try again."
 msgstr "恢复密码失败。链接可能已过期或已使用，请重试。"
 
-#: app/pages/ProfileManageAdmin.tsx:134:15
+#: app/pages/ProfileManageAdmin.tsx:130:15
 msgid "Failed to register player. Is your connection stable?"
 msgstr "注册玩家失败，请检查网络连接。"
 
@@ -713,15 +744,15 @@ msgstr "请求重置密码失败，请检查邮箱。"
 msgid "Failed to request registration. Is your connection stable?"
 msgstr "提交注册请求失败，请检查网络连接。"
 
-#: app/pages/GamesControl/index.tsx:317:27
+#: app/pages/GamesControl/index.tsx:360:27
 msgid "Failed to reset seating"
 msgstr "重置座位表失败"
 
-#: app/pages/EventPrescript.tsx:105:13
+#: app/pages/EventPrescript.tsx:118:13
 msgid "Failed to save event script: server error or network unreachable"
 msgstr "保存活动脚本失败：服务器错误或网络不可达"
 
-#: app/pages/OwnedEventsEdit/index.tsx:299:27
+#: app/pages/OwnedEventsEdit/index.tsx:303:27
 msgid "Failed to save event: server error or network unreachable"
 msgstr "保存活动失败：服务器错误或网络不可达"
 
@@ -729,19 +760,19 @@ msgstr "保存活动失败：服务器错误或网络不可达"
 msgid "Failed to set notifications settings."
 msgstr "保存通知设置失败。"
 
-#: app/pages/GamesControl/index.tsx:173:27
+#: app/pages/GamesControl/index.tsx:204:27
 msgid "Failed to start timer"
 msgstr "启动计时器失败"
 
-#: app/pages/OwnedEvents.tsx:207:27
+#: app/pages/OwnedEvents.tsx:213:27
 msgid "Failed to toggle achievements visibility"
 msgstr "切换成就显示状态失败"
 
-#: app/pages/GamesControl/index.tsx:226:27 app/pages/OwnedEvents.tsx:186:27
+#: app/pages/GamesControl/index.tsx:260:27 app/pages/OwnedEvents.tsx:193:27
 msgid "Failed to toggle results visibility"
 msgstr "切换结果显示状态失败"
 
-#: app/pages/ProfileManageAdmin.tsx:173:15
+#: app/pages/ProfileManageAdmin.tsx:169:15
 msgid "Failed to update player details. Is your connection stable?"
 msgstr "更新玩家资料失败，请检查网络连接。"
 
@@ -769,8 +800,8 @@ msgstr "按姓名查找并添加裁判..."
 msgid "Find replacement player by name..."
 msgstr "查找替补玩家..."
 
-#: app/components/MainMenu.tsx:207:24 app/pages/OwnedEvents.tsx:470:40
-#: app/pages/OwnedEvents.tsx:478:34
+#: app/components/MainMenu.tsx:207:24 app/pages/OwnedEvents.tsx:476:40
+#: app/pages/OwnedEvents.tsx:484:34
 msgid "Finish event"
 msgstr "结束活动"
 
@@ -778,35 +809,35 @@ msgstr "结束活动"
 msgid "Finish event."
 msgstr "结束活动。"
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:155:22
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:142:22
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:161:22
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:151:22
 msgid ""
 "Fixed amount of rank penalty applied for each replacement player regardless "
 "of session results."
 msgstr "不论对局结果如何，对每位替补玩家应用的固定顺位罚分。"
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:144:22
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:131:22
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:150:22
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:140:22
 msgid ""
 "Fixed amount of result score applied for each replacement player regardless "
 "of session results."
 msgstr "不论对局结果如何，对每位替补玩家应用的固定结果点数。"
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:143:16
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:130:16
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:149:16
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:139:16
 msgid "Fixed score applied to replacement player"
 msgstr "替补玩家的固定得分"
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:154:16
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:141:16
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:160:16
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:150:16
 msgid "Fixed uma for replacement player"
 msgstr "替补玩家的固定顺位分"
 
-#: app/pages/GamesControl/GamesList.tsx:280:29
+#: app/pages/GamesControl/GamesList.tsx:284:29
 msgid "Force finish game"
 msgstr "强制结束对局"
 
-#: app/pages/GamesControl/GamesList.tsx:279:30
+#: app/pages/GamesControl/GamesList.tsx:283:30
 msgid "Forcefully finish the game"
 msgstr "强制结束对局"
 
@@ -814,29 +845,29 @@ msgstr "强制结束对局"
 msgid "Forgot your password?"
 msgstr "忘记密码了吗？"
 
-#: app/pages/EventPrescript.tsx:182:15 app/services/i18n.be.test.ts:52:12
+#: app/pages/EventPrescript.tsx:199:15 app/services/i18n.be.test.ts:52:12
 #: app/services/i18n.test.ts:37:14
 msgid "Found %1 error"
 msgid_plural "Found %1 errors"
 msgstr[0] "发现 %1 个错误"
 
-#: app/Layout.tsx:375:27
+#: app/Layout.tsx:380:25
 msgid "Game & profile management - Forseti"
 msgstr "对局与个人资料管理 - Forseti"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:61:25
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:104:25
 msgid "Game duration"
 msgstr "对局时长"
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:96:16
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:102:16
 msgid "Game expiration time (in hours)"
 msgstr "对局有效期（小时）"
 
-#: app/pages/GamesControl/index.tsx:64:16
+#: app/pages/GamesControl/index.tsx:66:16
 msgid "Games management"
 msgstr "对局管理"
 
-#: app/pages/GamesControl/TournamentControls.tsx:228:24
+#: app/pages/GamesControl/TournamentControls.tsx:236:24
 msgid "Generate seating for next session"
 msgstr "生成下一场对局的座位表"
 
@@ -849,12 +880,12 @@ msgstr "前往登录页面"
 msgid "Go to Signup page"
 msgstr "前往注册页面"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:103:18
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:151:18
 #: app/services/i18n.test.ts:35:12
 msgid "Goal score"
 msgstr "目标点数"
 
-#: app/pages/OwnedEventsEdit/index.tsx:165:15
+#: app/pages/OwnedEventsEdit/index.tsx:167:15
 msgid "Goal score must be at least the initial points"
 msgstr "目标点数不得低于起始点数"
 
@@ -866,25 +897,34 @@ msgstr "发财"
 msgid "Haitei"
 msgstr "海底摸月"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:168:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:223:22
 msgid "Hands valued as 4/30 and 3/60 are rounded to mangan."
 msgstr "4 番 30 符和 3 番 60 符按满贯计算。"
 
-#: app/pages/GamesControl/TournamentControls.tsx:214:19
-#: app/pages/GamesControl/TournamentControls.tsx:329:19
-#: app/pages/GamesControl/TournamentControls.tsx:355:19
+#: app/services/i18n.selection.test.ts:37:10
+msgid "Hello %1"
+msgstr ""
+
+#: app/services/i18n.selection.test.ts:38:10
+msgctxt "context"
+msgid "Hello %1"
+msgstr ""
+
+#: app/pages/GamesControl/TournamentControls.tsx:222:19
+#: app/pages/GamesControl/TournamentControls.tsx:337:19
+#: app/pages/GamesControl/TournamentControls.tsx:363:19
 msgid "Hide results table"
 msgstr "隐藏结果表"
 
-#: app/pages/GamesControl/TournamentControls.tsx:129:19
+#: app/pages/GamesControl/TournamentControls.tsx:134:19
 msgid "Hide results table and achievements"
 msgstr "隐藏结果表和成就"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:183:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:239:16
 msgid "Honba Value"
 msgstr "本场点数"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:145:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:197:22
 msgid ""
 "Honba payments will be given only to the first winner. If not checked, "
 "payment will be given to all winners."
@@ -902,11 +942,11 @@ msgstr "混老头"
 msgid "Houtei raoyui"
 msgstr "河底捞鱼"
 
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:47:22
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:50:22
 msgid "How game sessions should end during the tournament"
 msgstr "赛事中对局的结束方式"
 
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:97:24
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:104:24
 msgid "How players on the same table are shuffled"
 msgstr "同桌玩家座风的分配方式"
 
@@ -914,13 +954,13 @@ msgstr "同桌玩家座风的分配方式"
 msgid "I've read the privacy policy listed below and accept its terms"
 msgstr "我已阅读以下隐私政策并接受其条款"
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:157:24
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:162:24
 msgid ""
 "If checked, achievements will be shown for everyone, otherwise only for "
 "event administrators"
 msgstr "若勾选，所有人均可查看成就；否则仅活动管理员可查看"
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:86:22
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:90:22
 msgid ""
 "If checked, any player participating in event will be able to add new "
 "replays through user interface. Disable this if you have any external tool "
@@ -929,20 +969,20 @@ msgstr ""
 "若勾选，所有活动参与者均可通过界面添加新牌谱。若使用外部工具自动添加牌谱，请"
 "关闭此选项。"
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:165:24
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:171:24
 msgid ""
 "If checked, players will be able to see other tables state even if they are "
 "currently in game. It is strongly recommended to keep this checkbox disabled "
 "for all tournament events."
 msgstr "若勾选，玩家在对局中也能查看其他桌况。强烈建议所有赛事活动关闭此选项。"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:193:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:249:22
 msgid ""
 "If checked, players with equivalent score receive equivalent uma bonus. "
 "Otherwise, uma is assigned according to move order."
 msgstr "若勾选，同分玩家平分顺位分；否则按摸牌顺序决定顺位分。"
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:141:24
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:144:24
 msgid ""
 "If checked, the event will be publicly visible on main page of ratings "
 "subsystem. If unchecked, event will not be visible in the list, but still "
@@ -951,13 +991,13 @@ msgstr ""
 "若勾选，活动将在排名系统首页公开显示；否则不在列表中显示，但仍可通过专用链接"
 "访问"
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:149:24
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:153:24
 msgid ""
 "If checked, the rating table will be shown for everyone, otherwise only for "
 "event administrators"
 msgstr "若勾选，所有人均可查看排名表；否则仅活动管理员可查看"
 
-#: app/pages/ProfileManage.tsx:264:28 app/pages/ProfileManageAdmin.tsx:290:26
+#: app/pages/ProfileManage.tsx:264:28 app/pages/ProfileManageAdmin.tsx:286:26
 msgid ""
 "If checked, uploaded avatar will be shown instead of default circle with "
 "initials. If no avatar is uploaded, the default circle will be shown."
@@ -965,7 +1005,7 @@ msgstr ""
 "若勾选，将显示上传的头像，代替默认的姓名首字母圆圈。未上传头像时，仍显示默认"
 "圆圈。"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:94:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:141:22
 msgid ""
 "If nobody reaches the goal score at the last hand, the game continues to "
 "west rounds (in hanchan) or to south rounds (in tonpuusen), until someone "
@@ -974,7 +1014,7 @@ msgstr ""
 "若最后一局结束时无人达到目标点数，半庄战进入西场，东风战进入南场，直到有人达"
 "到目标点数"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:70:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:114:22
 msgid ""
 "If the dealer holds the 1st place after last hand in session, the game ends "
 "regardless of his winning hand or tempai."
@@ -986,7 +1026,7 @@ msgid ""
 "widest privileges are applied, so the person will have administrator rights."
 msgstr "若同一人同时被列为裁判和管理员，则采用更高权限，即管理员权限。"
 
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:75:22
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:79:22
 msgid ""
 "If this is set, chombo will not allow players to play one more hand if time "
 "is out and it is final hand of the game"
@@ -996,7 +1036,14 @@ msgstr "若启用，在时间已到且为对局最后一局时，犯规后不会
 msgid "Iipeikou"
 msgstr "一杯口"
 
-#: app/pages/EventPrescript.tsx:143:10
+#: app/pages/EventPrescript.tsx:157:13
+msgid ""
+"In this example, two tables play two games with 3 players each (1-2-3). "
+"Numbers in seating are called \"Local IDs\". They persist between games and "
+"are defined at Manage players page of the event."
+msgstr ""
+
+#: app/pages/EventPrescript.tsx:160:13
 msgid ""
 "In this example, two tables play two games. Numbers in seating are called "
 "\"Local IDs\". They persist between games and are defined at Manage players "
@@ -1005,38 +1052,38 @@ msgstr ""
 "此例中，两桌进行两场对局。座位表中的数字称为“本地 ID”。这些 ID 在各场对局之间"
 "保持不变，在活动的玩家管理页面设置。"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:54:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:61:16
 msgid "Initial points"
 msgstr "起始点数"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:45:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:52:16
 msgid "Initial rating"
 msgstr "初始排名分"
 
-#: app/pages/EventPrescript.tsx:170:18
+#: app/pages/EventPrescript.tsx:187:18
 msgid "Instructions"
 msgstr "说明"
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:97:22
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:103:22
 msgid ""
 "Interval of time when played online game is still considered valid and can "
 "be added to the rating. Set to 0 to disable expiration."
 msgstr "在线对局仍有效且可计入排名的期限。设为 0 可禁用期限。"
 
-#: app/pages/GamesControl/TournamentControls.tsx:154:21
+#: app/pages/GamesControl/TournamentControls.tsx:159:21
 msgid "Interval seating"
 msgstr "间隔排座"
 
-#: app/pages/GamesControl/TournamentControls.tsx:151:21
+#: app/pages/GamesControl/TournamentControls.tsx:156:21
 msgid "Interval seating can't be used for first session in tournament"
 msgstr "赛事首场对局不能使用间隔排座"
 
-#: app/pages/ProfileLogin.tsx:46:63 app/pages/ProfileManageAdmin.tsx:88:63
+#: app/pages/ProfileLogin.tsx:46:63 app/pages/ProfileManageAdmin.tsx:84:63
 #: app/pages/ProfileResetPassword.tsx:42:63 app/pages/ProfileSignup.tsx:58:63
 msgid "Invalid email"
 msgstr "电子邮箱无效"
 
-#: app/pages/ProfileManage.tsx:91:70 app/pages/ProfileManageAdmin.tsx:89:70
+#: app/pages/ProfileManage.tsx:91:70 app/pages/ProfileManageAdmin.tsx:85:70
 #: app/pages/ProfileSignup.tsx:59:70
 msgid "Invalid title"
 msgstr "名称无效"
@@ -1053,11 +1100,11 @@ msgstr "一气通贯"
 msgid "Junchan"
 msgstr "纯全带幺九"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:161:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:215:16
 msgid "Kazoe yakuman"
 msgstr "累计役满"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:167:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:222:16
 msgid "Kiriage mangan"
 msgstr "切上满贯"
 
@@ -1069,44 +1116,45 @@ msgstr "国士无双"
 msgid "Kokushi musou 13-side"
 msgstr "国士无双十三面听"
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:40:16
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:41:16
 msgid "Kuitan"
 msgstr "食断"
 
 #: app/components/MainMenu.tsx:332:18 app/services/i18n.be.test.ts:35:12
+#: app/services/i18n.selection.test.ts:23:10
 msgid "Language"
 msgstr "语言"
 
-#: app/pages/SystemStats.tsx:222:16
+#: app/pages/SystemStats.tsx:169:16
 msgid "Last 12mon"
 msgstr "最近 12 个月"
 
-#: app/pages/SystemStats.tsx:212:16
+#: app/pages/SystemStats.tsx:159:16
 msgid "Last 24h"
 msgstr "最近 24 小时"
 
-#: app/pages/SystemStats.tsx:217:16
+#: app/pages/SystemStats.tsx:164:16
 msgid "Last 30d"
 msgstr "最近 30 天"
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:75:16
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:77:16
 msgid "Lobby ID"
 msgstr "大厅 ID"
 
-#: app/pages/PlayersManage/LocalIdsTab.tsx:100:24
+#: app/pages/PlayersManage/LocalIdsTab.tsx:102:24
 msgid "Local ID"
 msgstr "本地 ID"
 
-#: app/pages/PlayersManage/index.tsx:132:14
+#: app/pages/PlayersManage/index.tsx:139:14
 msgid "Local IDs"
 msgstr "本地 ID"
 
-#: app/pages/OwnedEventsEdit/TabsList.tsx:53:12
+#: app/pages/OwnedEventsEdit/TabsList.tsx:54:12
 msgid "Local event settings"
 msgstr "本地活动设置"
 
-#: app/pages/OwnedEvents.tsx:328:30
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:44:35
+#: app/pages/OwnedEvents.tsx:333:30
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:45:35
 msgid "Local rating"
 msgstr "本地排名"
 
@@ -1118,7 +1166,7 @@ msgstr "登录你的账号"
 msgid "Logout"
 msgstr "退出登录"
 
-#: app/pages/OwnedEvents.tsx:418:38
+#: app/pages/OwnedEvents.tsx:423:38
 msgid "Manage administrators and referees in event"
 msgstr "管理活动的管理员和裁判"
 
@@ -1131,7 +1179,7 @@ msgstr ""
 "管理额外处罚：添加或取消处罚。裁判还会收到手机助手中“呼叫裁判”按钮发出的所有"
 "通知。"
 
-#: app/pages/OwnedEvents.tsx:440:36
+#: app/pages/OwnedEvents.tsx:445:36
 msgid "Manage current games"
 msgstr "管理进行中的对局"
 
@@ -1139,7 +1187,7 @@ msgstr "管理进行中的对局"
 msgid "Manage event settings: rename event, change yaku settings, etc."
 msgstr "管理活动设置：重命名活动、修改役设置等。"
 
-#: app/components/MainMenu.tsx:135:29 app/pages/OwnedEvents.tsx:442:35
+#: app/components/MainMenu.tsx:135:29 app/pages/OwnedEvents.tsx:447:35
 msgid "Manage games"
 msgstr "管理对局"
 
@@ -1153,16 +1201,16 @@ msgstr "管理对局：启动和重置赛事计时器、取消局和对局、管
 msgid "Manage my events"
 msgstr "管理我的活动"
 
-#: app/pages/OwnedEvents.tsx:433:36 app/pages/Penalties.tsx:47:16
+#: app/pages/OwnedEvents.tsx:438:36 app/pages/Penalties.tsx:47:16
 msgid "Manage penalties"
 msgstr "管理处罚"
 
-#: app/components/MainMenu.tsx:118:27 app/pages/OwnedEvents.tsx:426:36
-#: app/pages/OwnedEvents.tsx:428:35
+#: app/components/MainMenu.tsx:118:27 app/pages/OwnedEvents.tsx:431:36
+#: app/pages/OwnedEvents.tsx:433:35
 msgid "Manage players"
 msgstr "管理玩家"
 
-#: app/pages/PlayersManage/index.tsx:60:16
+#: app/pages/PlayersManage/index.tsx:59:16
 msgid "Manage players in event"
 msgstr "管理活动玩家"
 
@@ -1170,11 +1218,11 @@ msgstr "管理活动玩家"
 msgid "Manage players in event: add, remove and exclude for seating."
 msgstr "管理活动玩家：添加、移除及从排座中排除。"
 
-#: app/pages/OwnedEvents.tsx:448:38
+#: app/pages/OwnedEvents.tsx:453:38
 msgid "Manage predefined seating"
 msgstr "管理预设座位表"
 
-#: app/components/MainMenu.tsx:109:27 app/pages/OwnedEvents.tsx:420:37
+#: app/components/MainMenu.tsx:109:27 app/pages/OwnedEvents.tsx:425:37
 msgid "Manage privileges"
 msgstr "管理权限"
 
@@ -1190,11 +1238,11 @@ msgstr "管理权限：指定裁判和其他管理员。"
 msgid "Manage your account"
 msgstr "管理你的账号"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:201:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:258:16
 msgid "Max arbitrary penalty score"
 msgstr "额外处罚的最高罚分"
 
-#: app/components/AppHeader.tsx:123:18
+#: app/components/AppHeader.tsx:96:18
 msgid "Menu"
 msgstr "菜单"
 
@@ -1202,26 +1250,26 @@ msgstr "菜单"
 msgid "Menzentsumo"
 msgstr "门前清自摸和"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:208:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:265:16
 msgid "Min arbitrary penalty score"
 msgstr "额外处罚的最低罚分"
 
-#: app/pages/OwnedEventsEdit/LocalSettings.tsx:49:22
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:132:22
+#: app/pages/OwnedEventsEdit/LocalSettings.tsx:51:22
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:138:22
 msgid ""
 "Minimal count of games the player should play to get into the rating table."
 msgstr "玩家进入排名表所需的最少对局场数。"
 
-#: app/pages/OwnedEventsEdit/LocalSettings.tsx:48:16
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:131:16
+#: app/pages/OwnedEventsEdit/LocalSettings.tsx:50:16
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:137:16
 msgid "Minimal games count"
 msgstr "最少对局场数"
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:134:24
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:136:24
 msgid "Multiline. Markdown syntax supported."
 msgstr "支持多行文本及 Markdown 语法。"
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:48:16
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:50:16
 msgid "Multiple yakumans"
 msgstr "多倍役满"
 
@@ -1229,23 +1277,23 @@ msgstr "多倍役满"
 msgid "My events"
 msgstr "我的活动"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:129:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:179:16
 msgid "Nagashi mangan"
 msgstr "流局满贯"
 
-#: app/helpers/lastRound.ts:132:9
+#: app/helpers/lastRound.ts:133:7
 msgid "Nagashi mangan, nagashi: %1, tempai: %2, riichi: %3"
 msgstr "流局满贯，流局满贯玩家：%1，听牌：%2，立直：%3"
 
-#: app/pages/OwnedEventsEdit/index.tsx:80:18
+#: app/pages/OwnedEventsEdit/index.tsx:77:64
 msgid "New event"
 msgstr "新活动"
 
-#: app/pages/GamesControl/TournamentControls.tsx:229:23
+#: app/pages/GamesControl/TournamentControls.tsx:237:23
 msgid "Next seating"
 msgstr "下次排座"
 
-#: app/pages/EventPrescript.tsx:150:16
+#: app/pages/EventPrescript.tsx:167:16
 msgid "Next session index"
 msgstr "下一场对局编号"
 
@@ -1253,11 +1301,11 @@ msgstr "下一场对局编号"
 msgid "No chombo penalties assigned yet"
 msgstr "尚未执行犯规处罚"
 
-#: app/pages/EventPrescript.tsx:183:37
+#: app/pages/EventPrescript.tsx:200:37
 msgid "No errors found"
 msgstr "未发现错误"
 
-#: app/pages/GamesControl/TournamentControls.tsx:222:18
+#: app/pages/GamesControl/TournamentControls.tsx:230:18
 msgid "No more prescripted sessions available"
 msgstr "没有更多预设对局可用"
 
@@ -1277,15 +1325,15 @@ msgstr "自风：北"
 msgid "North wind"
 msgstr "北风"
 
-#: app/pages/GamesControl/TournamentControls.tsx:107:22
+#: app/pages/GamesControl/TournamentControls.tsx:108:22
 msgid "Not ready"
 msgstr "未就绪"
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:57:22
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:58:22
 msgid "Not selected"
 msgstr "未选择"
 
-#: app/pages/GamesControl/TournamentControls.tsx:108:22
+#: app/pages/GamesControl/TournamentControls.tsx:109:22
 msgid "Not started"
 msgstr "未开始"
 
@@ -1293,8 +1341,8 @@ msgstr "未开始"
 msgid "Notes on privileges"
 msgstr "权限说明"
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:126:25
-#: app/pages/ProfileManage.tsx:234:29 app/pages/ProfileManageAdmin.tsx:260:27
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:126:32
+#: app/pages/ProfileManage.tsx:234:36 app/pages/ProfileManageAdmin.tsx:256:34
 msgid "Nothing found"
 msgstr "未找到结果"
 
@@ -1324,17 +1372,17 @@ msgstr "Pantheon 通过 Telegram 发送通知。请通过以下链接注册 Tele
 msgid "Notifications settings"
 msgstr "通知设置"
 
-#: app/pages/GamesControl/TournamentControls.tsx:269:26
+#: app/pages/GamesControl/TournamentControls.tsx:277:26
 msgid ""
 "Notify all subscribed players to come to their tables? This will send a "
 "message through notification service."
 msgstr "通知所有已订阅玩家前往各自牌桌？此操作将通过通知服务发送消息。"
 
-#: app/pages/GamesControl/TournamentControls.tsx:268:23
+#: app/pages/GamesControl/TournamentControls.tsx:276:23
 msgid "Notify players"
 msgstr "通知玩家"
 
-#: app/pages/GamesControl/TournamentControls.tsx:267:24
+#: app/pages/GamesControl/TournamentControls.tsx:275:24
 msgid "Notify players to come to their tables"
 msgstr "通知玩家前往牌桌"
 
@@ -1372,20 +1420,20 @@ msgstr "你被呼叫担任裁判时通知"
 msgid "Numerical identifier of your user profile."
 msgstr "你的用户资料的数字标识符。"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:174:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:230:16
 msgid "Oka bonus"
 msgstr "头名奖励"
 
-#: app/pages/OwnedEvents.tsx:354:30
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:45:36
+#: app/pages/OwnedEvents.tsx:359:30
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:46:36
 msgid "Online event"
 msgstr "在线活动"
 
-#: app/pages/OwnedEventsEdit/TabsList.tsx:71:12
+#: app/pages/OwnedEventsEdit/TabsList.tsx:72:12
 msgid "Online event settings"
 msgstr "在线活动设置"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:114:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:162:22
 msgid ""
 "Only first player by the order of the move from the loser would be "
 "considered a winner. If not checked, all players declaring Ron are "
@@ -1393,11 +1441,11 @@ msgid ""
 msgstr ""
 "仅按摸牌顺序距放铳者最近的玩家可和牌。若未勾选，所有宣告荣和的玩家均可和牌。"
 
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:120:30
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:128:30
 msgid "Only for prescripted events, just follow the script"
 msgstr "仅适用于预设活动，按照活动脚本执行"
 
-#: app/pages/OwnedEvents.tsx:288:14
+#: app/pages/OwnedEvents.tsx:293:14
 msgid "Only ongoing events"
 msgstr "仅进行中的活动"
 
@@ -1413,11 +1461,11 @@ msgstr "打开助手"
 msgid "Open event page"
 msgstr "打开活动页面"
 
-#: app/pages/OwnedEvents.tsx:373:30
+#: app/pages/OwnedEvents.tsx:378:30
 msgid "Open event page in new tab"
 msgstr "在新标签页中打开活动页面"
 
-#: app/components/AppHeader.tsx:115:24 app/components/AppHeader.tsx:128:24
+#: app/components/AppHeader.tsx:88:24 app/components/AppHeader.tsx:101:24
 msgid "Open menu"
 msgstr "打开菜单"
 
@@ -1425,11 +1473,11 @@ msgstr "打开菜单"
 msgid "Open riichi"
 msgstr "开立直"
 
-#: app/pages/OwnedEventsEdit/UmaSelect.tsx:158:20
+#: app/pages/OwnedEventsEdit/UmaSelect.tsx:170:20
 msgid "Otherwise"
 msgstr "其他情况"
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:113:25
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:87:25
 msgid "Pao rule enabled for:"
 msgstr "以下役种启用包牌规则："
 
@@ -1441,30 +1489,30 @@ msgstr "密码恢复失败"
 msgid "Password successfully updated"
 msgstr "密码已更新"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:222:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:279:16
 msgid "Pay chombo as reverse mangan"
 msgstr "犯规时按反向满贯支付"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:223:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:280:22
 msgid ""
 "Pay chombo right on occasion. If not checked, chombo is subtracted from "
 "player score after uma is applied."
 msgstr "犯规时立即支付罚分。若未勾选，则在对局结束并结算顺位分后扣除罚分。"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:144:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:196:16
 msgid "Pay for honba by atamahane"
 msgstr "按头跳规则分配本场点数"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:159:25
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:213:25
 msgid "Payments and scores"
 msgstr "支付与点数"
 
-#: app/components/MainMenu.tsx:128:29 app/pages/OwnedEvents.tsx:435:35
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:199:25
+#: app/components/MainMenu.tsx:128:29 app/pages/OwnedEvents.tsx:440:35
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:256:25
 msgid "Penalties"
 msgstr "处罚"
 
-#: app/pages/Penalties/PenaltyForm.tsx:124:16
+#: app/pages/Penalties/PenaltyForm.tsx:126:16
 msgid "Penalty amount"
 msgstr "罚分"
 
@@ -1472,8 +1520,8 @@ msgstr "罚分"
 msgid "Penalty applied by mistake"
 msgstr "处罚执行有误"
 
-#: app/pages/Penalties/PenaltyForm.tsx:158:28
-#: app/pages/Penalties/PenaltyForm.tsx:162:22
+#: app/pages/Penalties/PenaltyForm.tsx:160:28
+#: app/pages/Penalties/PenaltyForm.tsx:164:22
 msgid "Penalty applied!"
 msgstr "处罚已执行！"
 
@@ -1481,7 +1529,7 @@ msgstr "处罚已执行！"
 msgid "Penalty not approved by lead referee"
 msgstr "处罚未经主裁判批准"
 
-#: app/pages/Penalties/PenaltyForm.tsx:140:18
+#: app/pages/Penalties/PenaltyForm.tsx:142:18
 msgid "Penalty reason"
 msgstr "处罚原因"
 
@@ -1493,23 +1541,29 @@ msgstr "电话号码"
 msgid "Pinfu"
 msgstr "平和"
 
-#: app/pages/OwnedEventsEdit/UmaSelect.tsx:85:22
+#: app/pages/OwnedEventsEdit/UmaSelect.tsx:91:22
 msgid "Place / Session result"
 msgstr "顺位 / 对局结果"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:93:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:140:16
 msgid "Play additional rounds"
 msgstr "允许延长对局"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:64:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:107:22
 msgid "Play only east rounds"
 msgstr "仅进行东风战"
 
-#: app/helpers/lastRound.ts:35:56
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:70:22
+msgid ""
+"Play with 3 players instead of 4. The North seat is removed; uma and seating "
+"are adjusted accordingly."
+msgstr ""
+
+#: app/helpers/lastRound.ts:32:37
 msgid "Player #%1"
 msgstr "玩家 #%1"
 
-#: app/pages/ProfileManageAdmin.tsx:159:26
+#: app/pages/ProfileManageAdmin.tsx:155:26
 msgid "Player details were successfully saved"
 msgstr "玩家资料已保存"
 
@@ -1525,11 +1579,11 @@ msgstr "玩家已加入下次排座，点击排除"
 msgid "Player title"
 msgstr "玩家名"
 
-#: app/pages/ProfileManageAdmin.tsx:122:26
+#: app/pages/ProfileManageAdmin.tsx:118:26
 msgid "Player was successfully registered"
 msgstr "玩家注册成功"
 
-#: app/pages/PlayersManage/index.tsx:116:14
+#: app/pages/PlayersManage/index.tsx:123:14
 msgid "Players"
 msgstr "玩家"
 
@@ -1541,7 +1595,7 @@ msgstr "请查收邮箱中的验证邮件。"
 msgid "Please confirm account removal"
 msgstr "请确认删除账号"
 
-#: app/pages/EventPrescript.tsx:161:24
+#: app/pages/EventPrescript.tsx:178:24
 msgid "Please enter event script here"
 msgstr "请在此输入活动脚本"
 
@@ -1553,7 +1607,7 @@ msgstr "请输入密码"
 msgid "Please enter you telegram ID"
 msgstr "请输入你的 Telegram ID"
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:89:24
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:87:24
 msgid ""
 "Please include a \"TEST\" word if you make a test tournament. Events that "
 "have \"TEST\" in title do not send any notifications to players."
@@ -1565,7 +1619,7 @@ msgstr ""
 msgid "Please note"
 msgstr "请注意"
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:45:10
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:46:10
 msgid ""
 "Please note: you should set up the rating accordingly to tournament settings "
 "in game platform, otherwise expect errors on replay submit!"
@@ -1576,7 +1630,7 @@ msgstr ""
 msgid "Please press the button below to proceed with password recovery"
 msgstr "请点击下方按钮继续恢复密码"
 
-#: app/pages/Penalties/PenaltyForm.tsx:65:54
+#: app/pages/Penalties/PenaltyForm.tsx:67:36
 msgid "Please select player"
 msgstr "请选择玩家"
 
@@ -1584,25 +1638,25 @@ msgstr "请选择玩家"
 msgid "Please type in your title to proceed with removal"
 msgstr "请输入你的玩家名以继续删除"
 
-#: app/pages/GamesControl/TournamentControls.tsx:247:17
+#: app/pages/GamesControl/TournamentControls.tsx:255:17
 msgid "Please wait unit seating is ready"
 msgstr "请等待座位表准备完成"
 
-#: app/components/MainMenu.tsx:145:27 app/pages/OwnedEvents.tsx:450:37
+#: app/components/MainMenu.tsx:145:27 app/pages/OwnedEvents.tsx:455:37
 msgid "Predefined seating"
 msgstr "预设座位表"
 
-#: app/pages/EventPrescript.tsx:64:16
+#: app/pages/EventPrescript.tsx:72:16
 msgid "Predefined seating configuration"
 msgstr "预设座位表设置"
 
-#: app/pages/EventPrescript.tsx:135:10
+#: app/pages/EventPrescript.tsx:148:10
 msgid ""
 "Predefined seating is entered as list of tables, one table per row. New game "
 "session should be indicated as an empty line. Example:"
 msgstr "预设座位表以牌桌列表输入，每行一桌。新一场对局以空行分隔。示例："
 
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:119:24
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:127:24
 msgid "Prescripted wind shuffle"
 msgstr "预设座风分配"
 
@@ -1622,24 +1676,24 @@ msgstr ""
 msgid "Proceed with sign in"
 msgstr "继续登录"
 
-#: app/pages/GamesControl/TournamentControls.tsx:135:21
+#: app/pages/GamesControl/TournamentControls.tsx:140:21
 msgid "Random seating"
 msgstr "随机排座"
 
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:106:22
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:114:22
 msgid "Random wind shuffle"
 msgstr "随机分配座风"
 
-#: app/pages/OwnedEvents.tsx:522:26
+#: app/pages/OwnedEvents.tsx:530:26
 msgid "Rating table visible"
 msgstr "显示排名表"
 
-#: app/pages/GamesControl/TournamentControls.tsx:112:22
+#: app/pages/GamesControl/TournamentControls.tsx:113:22
 msgid "Ready to approve"
 msgstr "待确认"
 
-#: app/components/MainMenu.tsx:163:24 app/pages/OwnedEvents.tsx:460:42
-#: app/pages/OwnedEvents.tsx:464:36
+#: app/components/MainMenu.tsx:163:24 app/pages/OwnedEvents.tsx:465:42
+#: app/pages/OwnedEvents.tsx:470:36
 msgid "Rebuild scoring"
 msgstr "重新计算得分"
 
@@ -1706,20 +1760,20 @@ msgstr "红中"
 msgid "Referee privileges include:"
 msgstr "裁判权限包括："
 
-#: app/pages/GamesControl/index.tsx:399:16
+#: app/pages/GamesControl/index.tsx:444:16
 msgid "Refresh data [%1]"
 msgstr "刷新数据 [%1]"
 
-#: app/pages/ProfileManageAdmin.tsx:60:18 app/pages/ProfileSignup.tsx:43:16
+#: app/pages/ProfileManageAdmin.tsx:57:56 app/pages/ProfileSignup.tsx:43:16
 #: app/pages/ProfileSignup.tsx:159:16
 msgid "Register new account"
 msgstr "注册新账号"
 
-#: app/components/MainMenu.tsx:278:19 app/pages/ProfileManageAdmin.tsx:334:21
+#: app/components/MainMenu.tsx:278:19 app/pages/ProfileManageAdmin.tsx:330:21
 msgid "Register player"
 msgstr "注册玩家"
 
-#: app/pages/ProfileManageAdmin.tsx:331:21
+#: app/pages/ProfileManageAdmin.tsx:327:21
 msgid "Registration done!"
 msgstr "注册完成！"
 
@@ -1727,11 +1781,11 @@ msgstr "注册完成！"
 msgid "Remove administrator from event"
 msgstr "移除活动管理员"
 
-#: app/pages/GamesControl/GamesList.tsx:262:29
+#: app/pages/GamesControl/GamesList.tsx:266:29
 msgid "Remove game"
 msgstr "删除对局"
 
-#: app/pages/GamesControl/GamesList.tsx:295:30
+#: app/pages/GamesControl/GamesList.tsx:299:30
 msgid "Remove game results"
 msgstr "删除对局结果"
 
@@ -1752,7 +1806,7 @@ msgstr "移除活动裁判"
 msgid "Remove replacement"
 msgstr "取消替补"
 
-#: app/pages/GamesControl/GamesList.tsx:261:30
+#: app/pages/GamesControl/GamesList.tsx:265:30
 msgid "Remove the game as it never existed"
 msgstr "彻底删除对局记录"
 
@@ -1772,7 +1826,11 @@ msgstr "由 %1 替补"
 msgid "Request password reset"
 msgstr "请求重置密码"
 
-#: app/pages/GamesControl/TournamentControls.tsx:255:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:95:19
+msgid "Requires extra chombo payments to be enabled."
+msgstr ""
+
+#: app/pages/GamesControl/TournamentControls.tsx:263:22
 msgid "Reset generated seating"
 msgstr "重置已生成的座位表"
 
@@ -1780,7 +1838,7 @@ msgstr "重置已生成的座位表"
 msgid "Reset my password"
 msgstr "重置我的密码"
 
-#: app/pages/GamesControl/TournamentControls.tsx:256:21
+#: app/pages/GamesControl/TournamentControls.tsx:264:21
 msgid "Reset seating"
 msgstr "重置座位表"
 
@@ -1792,15 +1850,15 @@ msgstr "重置你的密码"
 msgid "Riichi"
 msgstr "立直"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:134:25
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:185:25
 msgid "Riichi and honba"
 msgstr "立直与本场"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:136:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:187:16
 msgid "Riichi goes to winner"
 msgstr "剩余立直棒归第一名"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:137:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:188:22
 msgid ""
 "Riichi left on table in case of draw in the end of the session will be given "
 "to session winner"
@@ -1810,15 +1868,15 @@ msgstr "对局最后一局流局时，桌上剩余立直棒归对局第一名"
 msgid "Rinshan kaihou"
 msgstr "岭上开花"
 
-#: app/helpers/lastRound.ts:70:9 app/helpers/lastRound.ts:84:9
+#: app/helpers/lastRound.ts:88:7 app/helpers/lastRound.ts:99:7
 msgid "Ron, %1 from %2 (%3), riichi: %4"
 msgstr "荣和：%1，放铳者：%2 (%3)，立直：%4"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:111:25
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:159:25
 msgid "Round outcomes"
 msgstr "局结果"
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:99:26
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:98:26
 msgid ""
 "Ruleset to be used as a template for the event. Fine tuning is available in "
 "adjacent tabs. Please note that all ruleset settings will be reset when you "
@@ -1827,7 +1885,7 @@ msgstr ""
 "用作活动模板的规则。可在相邻标签页中进行微调。请注意，在此选择其他规则将重置"
 "所有规则设置。"
 
-#: app/pages/OwnedEventsEdit/TabsList.tsx:79:10
+#: app/pages/OwnedEventsEdit/TabsList.tsx:80:10
 msgid "Ruleset tuning"
 msgstr "规则微调"
 
@@ -1855,30 +1913,30 @@ msgstr "三色同顺"
 msgid "Sanshoku doukou"
 msgstr "三色同刻"
 
-#: app/pages/OwnedEventsEdit/index.tsx:378:60
-#: app/pages/PlayersManage/LocalIdsTab.tsx:113:56
-#: app/pages/PlayersManage/TeamNamesTab.tsx:114:56
+#: app/pages/OwnedEventsEdit/index.tsx:382:60
+#: app/pages/PlayersManage/LocalIdsTab.tsx:115:56
+#: app/pages/PlayersManage/TeamNamesTab.tsx:116:56
 #: app/pages/ProfileManage.tsx:311:60
 msgid "Save changes"
 msgstr "保存更改"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:46:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:53:22
 msgid "Score given to all players in the beginning of the rating"
 msgstr "排名开始时每位玩家获得的点数"
 
-#: app/pages/EventPrescript.tsx:196:26
+#: app/pages/EventPrescript.tsx:213:26
 msgid "Script updated!"
 msgstr "活动脚本已更新！"
 
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:87:16
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:93:16
 msgid "Seating is defined in advance"
 msgstr "座位表已预先指定"
 
-#: app/pages/GamesControl/TournamentControls.tsx:110:22
+#: app/pages/GamesControl/TournamentControls.tsx:111:22
 msgid "Seating ready"
 msgstr "座位表已就绪"
 
-#: app/pages/GamesControl/TournamentControls.tsx:109:22
+#: app/pages/GamesControl/TournamentControls.tsx:110:22
 msgid "Seating..."
 msgstr "排座中..."
 
@@ -1886,20 +1944,20 @@ msgstr "排座中..."
 msgid "Select an avatar"
 msgstr "选择头像"
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:60:22
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:57:22
 msgid "Select event type"
 msgstr "选择活动类型"
 
-#: app/pages/GamesControl/GamesList.tsx:211:36
-#: app/pages/GamesControl/TournamentControls.tsx:302:28
+#: app/pages/GamesControl/GamesList.tsx:215:36
+#: app/pages/GamesControl/TournamentControls.tsx:310:28
 msgid "Select extra time"
 msgstr "选择追加时间"
 
-#: app/pages/GamesControl/TournamentControls.tsx:159:28
+#: app/pages/GamesControl/TournamentControls.tsx:164:28
 msgid "Select interval"
 msgstr "选择时间范围"
 
-#: app/pages/Penalties/PenaltyForm.tsx:113:16
+#: app/pages/Penalties/PenaltyForm.tsx:115:16
 msgid "Select player"
 msgstr "选择玩家"
 
@@ -1907,7 +1965,7 @@ msgstr "选择玩家"
 msgid "Select replacement player for %1"
 msgstr "选择 %1 的替补玩家"
 
-#: app/pages/OwnedEventsEdit/UmaSelect.tsx:33:16
+#: app/pages/OwnedEventsEdit/UmaSelect.tsx:36:16
 msgid "Select uma bonus type"
 msgstr "选择顺位分类型"
 
@@ -1915,8 +1973,8 @@ msgstr "选择顺位分类型"
 msgid "Selected file is too big. Please select a file not bigger than 256KB"
 msgstr "所选文件过大，请选择不超过 256 KB 的文件"
 
-#: app/pages/OwnedEventsEdit/LocalSettings.tsx:36:16
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:119:16
+#: app/pages/OwnedEventsEdit/LocalSettings.tsx:38:16
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:125:16
 msgid "Series length"
 msgstr "系列长度"
 
@@ -1926,43 +1984,43 @@ msgid ""
 "removed account."
 msgstr "服务器管理员也无法恢复你对已删除账号的访问权限。"
 
-#: app/pages/GamesControl/GamesList.tsx:379:18
+#: app/pages/GamesControl/GamesList.tsx:383:18
 msgid "Session cancelled"
 msgstr "对局已取消"
 
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:37:16
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:41:16
 msgid "Session duration in minutes"
 msgstr "对局时长（分钟）"
 
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:46:16
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:49:16
 msgid "Session ending policy"
 msgstr "对局结束规则"
 
-#: app/pages/GamesControl/GamesList.tsx:367:18
+#: app/pages/GamesControl/GamesList.tsx:371:18
 msgid "Session finished"
 msgstr "对局已结束"
 
-#: app/pages/GamesControl/GamesList.tsx:355:18
+#: app/pages/GamesControl/GamesList.tsx:359:18
 msgid "Session finished, but not confirmed"
 msgstr "对局已结束，尚未确认"
 
-#: app/pages/GamesControl/GamesList.tsx:342:20
+#: app/pages/GamesControl/GamesList.tsx:346:20
 msgid "Session in progress"
 msgstr "对局进行中"
 
-#: app/pages/GamesControl/GamesList.tsx:330:20
+#: app/pages/GamesControl/GamesList.tsx:334:20
 msgid "Session is ready to start"
 msgstr "对局已准备开始"
 
-#: app/pages/GamesControl/GamesList.tsx:391:18
+#: app/pages/GamesControl/GamesList.tsx:395:18
 msgid "Session is scheduled"
 msgstr "对局已安排"
 
-#: app/pages/GamesControl/TournamentControls.tsx:111:22
+#: app/pages/GamesControl/TournamentControls.tsx:112:22
 msgid "Session started"
 msgstr "对局已开始"
 
-#: app/components/MainMenu.tsx:98:23 app/pages/OwnedEvents.tsx:411:37
+#: app/components/MainMenu.tsx:98:23 app/pages/OwnedEvents.tsx:416:37
 msgid "Settings"
 msgstr "设置"
 
@@ -1970,12 +2028,12 @@ msgstr "设置"
 msgid "Settings saved!"
 msgstr "设置已保存！"
 
-#: app/pages/PlayersManage/index.tsx:122:20
+#: app/pages/PlayersManage/index.tsx:129:20
 msgid ""
 "Setup local identifiers of players to be used in predefined event script"
 msgstr "设置预设活动脚本中使用的玩家本地 ID"
 
-#: app/pages/PlayersManage/index.tsx:137:20
+#: app/pages/PlayersManage/index.tsx:144:20
 msgid "Setup team name for each player (for team events)"
 msgstr "为每位玩家设置队名（团队活动）"
 
@@ -1987,33 +2045,33 @@ msgstr "小三元"
 msgid "Shousuushii"
 msgstr "小四喜"
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:156:18
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:161:18
 msgid "Show achievements for everyone"
 msgstr "向所有人显示成就"
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:140:18
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:143:18
 msgid "Show in ratings global list"
 msgstr "在全局排名列表中显示"
 
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:148:18
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:152:18
 msgid "Show rating table for everyone"
 msgstr "向所有人显示排名表"
 
-#: app/pages/GamesControl/TournamentControls.tsx:213:19
-#: app/pages/GamesControl/TournamentControls.tsx:328:19
-#: app/pages/GamesControl/TournamentControls.tsx:354:19
+#: app/pages/GamesControl/TournamentControls.tsx:221:19
+#: app/pages/GamesControl/TournamentControls.tsx:336:19
+#: app/pages/GamesControl/TournamentControls.tsx:362:19
 msgid "Show results table"
 msgstr "显示结果表"
 
-#: app/pages/GamesControl/TournamentControls.tsx:128:19
+#: app/pages/GamesControl/TournamentControls.tsx:133:19
 msgid "Show results table and achievements"
 msgstr "显示结果表和成就"
 
-#: app/pages/ProfileManage.tsx:263:22 app/pages/ProfileManageAdmin.tsx:289:20
+#: app/pages/ProfileManage.tsx:263:22 app/pages/ProfileManageAdmin.tsx:285:20
 msgid "Show user avatar"
 msgstr "显示用户头像"
 
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:107:28
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:115:28
 msgid "Shuffle players on the same table randomly"
 msgstr "随机打乱同桌玩家的座风"
 
@@ -2029,7 +2087,7 @@ msgstr "退出登录"
 msgid "Sign up"
 msgstr "注册"
 
-#: app/pages/OwnedEventsEdit/UmaSelect.tsx:41:20
+#: app/pages/OwnedEventsEdit/UmaSelect.tsx:45:20
 msgid "Simple rank-based"
 msgstr "按顺位设置简单顺位分"
 
@@ -2050,38 +2108,42 @@ msgstr "自风：南"
 msgid "South wind"
 msgstr "南风"
 
-#: app/pages/GamesControl/TournamentControls.tsx:282:21
+#: app/pages/GamesControl/TournamentControls.tsx:290:21
 msgid "Start timer"
 msgstr "启动计时器"
 
-#: app/pages/GamesControl/TournamentControls.tsx:283:24
+#: app/pages/GamesControl/TournamentControls.tsx:291:24
 msgid "Start timer and game sessions?"
 msgstr "启动计时器并开始对局？"
 
-#: app/pages/GamesControl/TournamentControls.tsx:281:22
+#: app/pages/GamesControl/TournamentControls.tsx:289:22
 msgid "Start timer and sessions"
 msgstr "启动计时器和对局"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:215:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:272:16
 msgid "Step of arbitrary penalty scores"
 msgstr "额外罚分步长"
 
-#: app/components/StopEventModal.tsx:52:12 app/pages/OwnedEvents.tsx:265:14
+#: app/components/StopEventModal.tsx:52:12 app/pages/OwnedEvents.tsx:270:14
 msgid "Stop event"
 msgstr "结束活动"
 
-#: app/components/StopEventModal.tsx:30:10 app/pages/OwnedEvents.tsx:243:12
+#: app/components/StopEventModal.tsx:30:10 app/pages/OwnedEvents.tsx:248:12
 msgid "Stop event \"%1\" (id #%2)? This action can't be undone!"
 msgstr "结束活动“%1”（ID #%2）？此操作无法撤销！"
 
-#: app/pages/SystemStats.tsx:235:18
+#: app/pages/SystemStats.tsx:182:18
 msgid "Subsystem"
 msgstr "子系统"
 
-#: app/pages/ProfileManageAdmin.tsx:121:24
-#: app/pages/ProfileManageAdmin.tsx:158:24 app/pages/ProfileSignup.tsx:109:20
+#: app/pages/ProfileManageAdmin.tsx:117:24
+#: app/pages/ProfileManageAdmin.tsx:154:24 app/pages/ProfileSignup.tsx:109:20
 msgid "Success"
 msgstr "成功"
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:81:26
+msgid "Sum of points paid by players in noten to players in tenpai"
+msgstr ""
 
 #: app/helpers/yaku.ts:209:34
 msgid "Suuankou"
@@ -2095,11 +2157,11 @@ msgstr "四暗刻単騎"
 msgid "Suukantsu"
 msgstr "四杠子"
 
-#: app/pages/GamesControl/TournamentControls.tsx:193:21
+#: app/pages/GamesControl/TournamentControls.tsx:201:21
 msgid "Swiss seating"
 msgstr "瑞士制排座"
 
-#: app/pages/GamesControl/TournamentControls.tsx:190:21
+#: app/pages/GamesControl/TournamentControls.tsx:198:21
 msgid "Swiss seating can't be used for first session in tournament"
 msgstr "赛事首场对局不能使用瑞士制排座"
 
@@ -2107,11 +2169,11 @@ msgstr "赛事首场对局不能使用瑞士制排座"
 msgid "System ID"
 msgstr "系统 ID"
 
-#: app/components/MainMenu.tsx:287:19 app/pages/SystemStats.tsx:165:16
+#: app/components/MainMenu.tsx:287:19 app/pages/SystemStats.tsx:104:16
 msgid "System stats"
 msgstr "系统统计"
 
-#: app/pages/GamesControl/GamesList.tsx:119:30
+#: app/pages/GamesControl/GamesList.tsx:120:30
 msgid "Table # %1"
 msgstr "第 # %1 桌"
 
@@ -2119,22 +2181,22 @@ msgstr "第 # %1 桌"
 msgid "Tanyao"
 msgstr "断幺九"
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:41:22
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:42:22
 msgid ""
 "Tanyao costs 1 han on open hand. If not checked, tanyao does not work on "
 "open hand."
 msgstr "副露时断幺九计 1 番。若未勾选，则副露时断幺九不成立。"
 
-#: app/pages/PlayersManage/index.tsx:141:14
+#: app/pages/PlayersManage/index.tsx:148:14
 msgid "Team names"
 msgstr "队名"
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:80:16
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:82:16
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:83:16
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:87:16
 msgid "Team tournament"
 msgstr "团队赛"
 
-#: app/pages/PlayersManage/TeamNamesTab.tsx:100:24
+#: app/pages/PlayersManage/TeamNamesTab.tsx:102:24
 msgid "Team:"
 msgstr "队伍："
 
@@ -2142,7 +2204,7 @@ msgstr "队伍："
 msgid "Tenhou"
 msgstr "天和"
 
-#: app/pages/ProfileManage.tsx:257:22 app/pages/ProfileManageAdmin.tsx:283:26
+#: app/pages/ProfileManage.tsx:257:22 app/pages/ProfileManageAdmin.tsx:279:26
 msgid "Tenhou nickname"
 msgstr "天凤昵称"
 
@@ -2159,7 +2221,7 @@ msgstr ""
 msgid "Texting or speaking by phone during the game"
 msgstr "对局中发消息或打电话"
 
-#: app/pages/Penalties/PenaltyForm.tsx:125:22
+#: app/pages/Penalties/PenaltyForm.tsx:127:22
 msgid ""
 "The penalty applies to the rating table in this event by subtracting the "
 "suggested amount of points from player rating. If the amount is zero, the "
@@ -2173,7 +2235,7 @@ msgid ""
 "The player name will be replaced with [Deleted account ####] everywhere."
 msgstr "所有地方的玩家名都将替换为 [Deleted account ####]。"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:122:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:171:22
 msgid ""
 "There will be a separate \"Abortive draw\" outcome to record draws due to "
 "four riichi, four kans, suufon renda, kyuushu kyuuhai, etc."
@@ -2181,12 +2243,12 @@ msgstr ""
 "启用单独的“中途流局”结果，以记录四家立直、四杠散了、四风连打、九种九牌等流"
 "局。"
 
-#: app/pages/GamesControl/GamesList.tsx:247:32
-#: app/pages/GamesControl/GamesList.tsx:263:32
+#: app/pages/GamesControl/GamesList.tsx:251:32
+#: app/pages/GamesControl/GamesList.tsx:267:32
 msgid "This action can't be undone. Continue?"
 msgstr "此操作无法撤销，是否继续？"
 
-#: app/pages/Penalties/PenaltyForm.tsx:115:22
+#: app/pages/Penalties/PenaltyForm.tsx:117:22
 msgid "This is a player to be penalized"
 msgstr "将受处罚的玩家"
 
@@ -2200,30 +2262,35 @@ msgstr ""
 "此名称将显示在排名表和手机助手中。活动管理员也通过此名称查找你并将你加入活"
 "动。请勿只使用名字，以免重名；可使用完整姓名。"
 
-#: app/pages/ProfileManageAdmin.tsx:237:26
+#: app/pages/ProfileManageAdmin.tsx:233:26
 msgid ""
 "This is a title that will be shown in rating table and in mobile assistant. "
 "Please select some unique title, like nickname or name+surname."
 msgstr ""
 "此名称将显示在排名表和手机助手中。请选择容易区分的名称，例如昵称或完整姓名。"
 
-#: app/pages/EventPrescript.tsx:151:22
+#: app/pages/EventPrescript.tsx:168:22
 msgid ""
 "This is the index of next session script (starting from 1). Each time new "
 "session starts, this value is increased automatically."
 msgstr "下一场对局脚本的编号（从 1 开始）。每开始一场新对局，此值自动递增。"
 
-#: app/pages/GamesControl/GamesList.tsx:297:32
+#: app/pages/GamesControl/GamesList.tsx:301:32
 msgid ""
 "This will only remove the game results, but you will need to cancel last "
 "round separately. Continue?"
 msgstr "此操作仅删除对局结果，最后一局需另行取消。是否继续？"
 
-#: app/pages/GamesControl/TournamentControls.tsx:257:24
+#: app/pages/GamesControl/TournamentControls.tsx:265:24
 msgid "This will remove generated seating. Continue?"
 msgstr "此操作将删除已生成的座位表，是否继续？"
 
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:38:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:67:25
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:69:16
+msgid "Three-player game (sanma)"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:42:22
 msgid ""
 "Timer starting value. After time runs out, session ending policy is applied "
 "(see below)."
@@ -2237,15 +2304,15 @@ msgstr "切换配色方案"
 msgid "Toggle dimmed colors"
 msgstr "切换柔和配色"
 
-#: app/pages/OwnedEvents.tsx:509:34
+#: app/pages/OwnedEvents.tsx:515:34
 msgid "Toggle visibility in ratings global list"
 msgstr "切换在全局排名列表中的显示状态"
 
-#: app/pages/OwnedEvents.tsx:526:32
+#: app/pages/OwnedEvents.tsx:534:32
 msgid "Toggle visibility of achievements"
 msgstr "切换成就显示状态"
 
-#: app/pages/OwnedEvents.tsx:518:32
+#: app/pages/OwnedEvents.tsx:524:32
 msgid "Toggle visibility of rating table"
 msgstr "切换排名表显示状态"
 
@@ -2253,7 +2320,7 @@ msgstr "切换排名表显示状态"
 msgid "Toitoi"
 msgstr "对对和"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:63:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:106:16
 msgid "Tonpuusen"
 msgstr "东风战"
 
@@ -2261,20 +2328,20 @@ msgstr "东风战"
 msgid "Too much noise during the game"
 msgstr "对局中过于吵闹"
 
-#: app/pages/OwnedEvents.tsx:341:30
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:46:40
+#: app/pages/OwnedEvents.tsx:346:30
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:47:40
 msgid "Tournament"
 msgstr "赛事"
 
-#: app/pages/OwnedEventsEdit/TabsList.tsx:62:12
+#: app/pages/OwnedEventsEdit/TabsList.tsx:63:12
 msgid "Tournament settings"
 msgstr "赛事设置"
 
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:113:28
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:121:28
 msgid "Try to place players on winds they previously played less"
 msgstr "优先将玩家分配到此前较少使用的座风"
 
-#: app/helpers/lastRound.ts:98:9
+#: app/helpers/lastRound.ts:110:7
 msgid "Tsumo, %1 (%2), riichi: %3"
 msgstr "自摸，%1 (%2)，立直：%3"
 
@@ -2282,19 +2349,19 @@ msgstr "自摸，%1 (%2)，立直：%3"
 msgid "Tsuuiisou"
 msgstr "字一色"
 
-#: app/pages/OwnedEventsEdit/UmaSelect.tsx:54:20
+#: app/pages/OwnedEventsEdit/UmaSelect.tsx:58:20
 msgid "Uma bonus for 1st place"
 msgstr "第 1 名顺位分奖励"
 
-#: app/pages/OwnedEventsEdit/UmaSelect.tsx:61:20
+#: app/pages/OwnedEventsEdit/UmaSelect.tsx:65:20
 msgid "Uma bonus for 2nd place"
 msgstr "第 2 名顺位分奖励"
 
-#: app/pages/OwnedEventsEdit/UmaSelect.tsx:68:20
+#: app/pages/OwnedEventsEdit/UmaSelect.tsx:72:20
 msgid "Uma penalty for 3rd place"
 msgstr "第 3 名顺位分罚分"
 
-#: app/pages/OwnedEventsEdit/UmaSelect.tsx:75:20
+#: app/pages/OwnedEventsEdit/UmaSelect.tsx:80:22
 msgid "Uma penalty for 4th place"
 msgstr "第 4 名顺位分罚分"
 
@@ -2302,15 +2369,15 @@ msgstr "第 4 名顺位分罚分"
 msgid "Update password"
 msgstr "更新密码"
 
-#: app/pages/ProfileManageAdmin.tsx:333:21
+#: app/pages/ProfileManageAdmin.tsx:329:21
 msgid "Update player"
 msgstr "更新玩家资料"
 
-#: app/pages/ProfileManageAdmin.tsx:58:18
+#: app/pages/ProfileManageAdmin.tsx:57:21
 msgid "Update player account"
 msgstr "更新玩家账号"
 
-#: app/pages/EventPrescript.tsx:196:55
+#: app/pages/EventPrescript.tsx:213:55
 msgid "Update script"
 msgstr "更新活动脚本"
 
@@ -2318,43 +2385,43 @@ msgstr "更新活动脚本"
 msgid "Update settings"
 msgstr "更新设置"
 
-#: app/pages/GamesControl/TournamentControls.tsx:152:21
+#: app/pages/GamesControl/TournamentControls.tsx:157:21
 msgid "Use interval seating for next session"
 msgstr "下一场对局使用间隔排座"
 
-#: app/pages/GamesControl/TournamentControls.tsx:172:26
+#: app/pages/GamesControl/TournamentControls.tsx:180:26
 msgid "Use interval seating for next session?"
 msgstr "下一场对局使用间隔排座？"
 
-#: app/pages/GamesControl/TournamentControls.tsx:134:22
+#: app/pages/GamesControl/TournamentControls.tsx:139:22
 msgid "Use random seating for next session"
 msgstr "下一场对局使用随机排座"
 
-#: app/pages/GamesControl/TournamentControls.tsx:136:24
+#: app/pages/GamesControl/TournamentControls.tsx:141:24
 msgid "Use random seating for next session?"
 msgstr "下一场对局使用随机排座？"
 
-#: app/pages/GamesControl/TournamentControls.tsx:191:21
+#: app/pages/GamesControl/TournamentControls.tsx:199:21
 msgid "Use swiss seating for next session"
 msgstr "下一场对局使用瑞士制排座"
 
-#: app/pages/GamesControl/TournamentControls.tsx:194:24
+#: app/pages/GamesControl/TournamentControls.tsx:202:24
 msgid "Use swiss seating for next session?"
 msgstr "下一场对局使用瑞士制排座？"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:253:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:311:22
 msgid "Use yakitori rule"
 msgstr "启用烧鸡规则"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:184:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:240:22
 msgid "Value of one honba stick"
 msgstr "每根本场棒的点数"
 
-#: app/pages/OwnedEvents.tsx:491:32
+#: app/pages/OwnedEvents.tsx:497:32
 msgid "Visibility"
 msgstr "可见性"
 
-#: app/pages/OwnedEvents.tsx:505:36
+#: app/pages/OwnedEvents.tsx:511:36
 msgid "Visibility management"
 msgstr "可见性管理"
 
@@ -2378,27 +2445,27 @@ msgstr "以下内容不会被删除："
 msgid "What will be deleted:"
 msgstr "以下内容将被删除："
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:88:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:134:22
 msgid "When a player runs out of score points, the game immediately ends"
 msgstr "当玩家点数低于零时立即结束对局"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:78:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:123:22
 msgid ""
 "When dealer wins, or stays tempai after draw, seat winds will be changed. "
 "Honba is added only after draw."
 msgstr "庄家和牌或流局听牌后仍轮换座风。本场仅在流局后增加。"
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:55:22
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:58:22
 msgid ""
 "When disabled, use separate yakuhai names like \"East\" and \"White dragon\" "
 "instead of aggregated names like \"Yakuhai x3\"."
 msgstr "禁用时，使用“东”和“白板”等单独的役牌名称，而不是“役牌 x3”等聚合名称。"
 
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:61:20
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:65:20
 msgid "When time is out, finish current hand and interrupt the session"
 msgstr "时间到后，完成当前局并结束对局"
 
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:66:20
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:70:20
 msgid ""
 "When time is out, finish current hand, play one more, and then interrup the "
 "session"
@@ -2408,23 +2475,23 @@ msgstr "时间到后，完成当前局，再进行一局，然后结束对局"
 msgid "White dragon"
 msgstr "白板"
 
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:96:18
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:103:18
 msgid "Wind shuffle mode"
 msgstr "座风分配方式"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:252:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:310:16
 msgid "Yakitori"
 msgstr "烧鸡"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:260:18
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:319:18
 msgid "Yakitori penalty"
 msgstr "烧鸡罚分"
 
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:61:25
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:65:25
 msgid "Yaku allowed"
 msgstr "允许的役种"
 
-#: app/pages/OwnedEventsEdit/TabsList.tsx:87:10
+#: app/pages/OwnedEventsEdit/TabsList.tsx:88:10
 msgid "Yaku settings"
 msgstr "役设置"
 
@@ -2450,11 +2517,11 @@ msgid ""
 "the action. You can close the window to cancel."
 msgstr "你将从系统中删除账号数据，请确认。可关闭窗口取消操作。"
 
-#: app/pages/GamesControl/GamesList.tsx:281:32
+#: app/pages/GamesControl/GamesList.tsx:285:32
 msgid "You are going to forcefully finish this game. Continue?"
 msgstr "你将强制结束此对局，是否继续？"
 
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:88:22
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:94:22
 msgid ""
 "You should prepare the tournament script yourself. No automated seating "
 "functionality is available when this flag is set."
@@ -2464,7 +2531,7 @@ msgstr "请自行准备赛事脚本。启用此选项后，将无法使用自动
 msgid "You should read and accept the Privacy Policy"
 msgstr "请阅读并接受隐私政策"
 
-#: app/pages/GamesControl/TournamentControls.tsx:341:24
+#: app/pages/GamesControl/TournamentControls.tsx:349:24
 msgid ""
 "You won't be able to cancel last round after the results are approved. "
 "Approve session results?"
@@ -2517,19 +2584,19 @@ msgstr "密码强度不足，请输入更安全的密码。"
 msgid "Your telegram ID"
 msgstr "你的 Telegram ID"
 
-#: app/helpers/lastRound.ts:38:67
+#: app/helpers/lastRound.ts:59:67
 msgid "all noten"
 msgstr "全员未听牌"
 
-#: app/helpers/lastRound.ts:38:24
+#: app/helpers/lastRound.ts:59:24
 msgid "all tenpai"
 msgstr "全员听牌"
 
-#: app/helpers/lastRound.ts:53:32
+#: app/helpers/lastRound.ts:73:32
 msgid "dora %1"
 msgstr "宝牌 %1"
 
-#: app/helpers/lastRound.ts:61:39
+#: app/helpers/lastRound.ts:81:39
 msgid "pao: %1"
 msgstr ""
 
@@ -2537,7 +2604,7 @@ msgstr ""
 msgid "show / hide"
 msgstr "显示 / 隐藏"
 
-#: app/helpers/lastRound.ts:56:11
+#: app/helpers/lastRound.ts:76:11
 msgid "yakuman!"
 msgstr "役满！"
 

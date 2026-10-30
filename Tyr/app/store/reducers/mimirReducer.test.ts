@@ -233,19 +233,19 @@ it('randomizes seats without losing or mutating the selected registrations', () 
   ).toEqual([]);
 });
 
-it('wraps table rotations and selects events without changing unrelated state', () => {
+it('keeps rotation offsets for the table selectors and selects events without changing unrelated state', () => {
   expect(
     reduce(a.TABLE_ROTATE_CLOCKWISE, undefined, { ...initialState, overviewViewShift: 3 })
       .overviewViewShift
-  ).toBe(0);
+  ).toBe(4);
   expect(
     reduce(a.TABLE_ROTATE_COUNTERCLOCKWISE, undefined, { ...initialState, overviewViewShift: 0 })
       .overviewViewShift
-  ).toBe(3);
+  ).toBe(-1);
   for (const type of [a.TABLE_ROTATE_CLOCKWISE, a.TABLE_ROTATE_COUNTERCLOCKWISE])
     expect(
       reduce(type, undefined, { ...initialState, overviewViewShift: undefined }).overviewViewShift
-    ).toBe(type === a.TABLE_ROTATE_CLOCKWISE ? 1 : 3);
+    ).toBe(type === a.TABLE_ROTATE_CLOCKWISE ? 1 : -1);
   expect(reduce(a.SELECT_EVENT, 7)).toMatchObject({ currentEventId: 7, currentScreen: 'overview' });
   expect(reduce(a.HISTORY_INIT).historyInitialized).toBe(true);
   expect(reduce('unknown')).toBe(initialState);

@@ -1,3 +1,4 @@
+import { GHOST_PLAYER_ID } from '../../../Common/constants.js';
 import moment from 'moment-timezone';
 import { TransactionPropagation } from '@mikro-orm/core';
 import { EventEntity } from '../entities/Event.entity.js';
@@ -66,6 +67,22 @@ import { filterPersonalDataSingle } from '../helpers/filterPersonalData.js';
 const ID_PLACEHOLDER = '##ID##';
 
 export class EventModel extends Model {
+  private validateSanmaSettings(rules: RulesetEntity['rules'], type?: EventType | null): void {
+    if (!rules.withSanma) return;
+    if (type === EventType.EVENT_TYPE_ONLINE) {
+      throw new Error('Sanma online replay imports are not supported');
+    }
+    if ((rules.oka ?? 0) % 3 !== 0) {
+      throw new Error('Sanma oka must be divisible by 3');
+    }
+    if ((rules.sanmaDrawPayments ?? 0) < 0 || (rules.sanmaDrawPayments ?? 0) % 200 !== 0) {
+      throw new Error('Sanma draw payments must be a nonnegative multiple of 200');
+    }
+    if ((rules.sanmaChomboPayments ?? 0) < 0 || (rules.sanmaChomboPayments ?? 0) % 100 !== 0) {
+      throw new Error('Sanma chombo payment must be a nonnegative multiple of 100');
+    }
+  }
+
   async findById(id: number[]) {
     return this.repo.em.transactional(
       async () => {
@@ -855,6 +872,7 @@ export class EventModel extends Model {
           event.hideAchievements = eventData.achievementsShown ? 0 : 1;
           event.seriesLength = eventData.seriesLength;
           event.minGamesCount = eventData.minGames;
+          this.validateSanmaSettings(eventData.rulesetConfig, eventData.type);
           event.ruleset = new RulesetEntity('custom', 'custom', eventData.rulesetConfig);
           event.allowViewOtherTables = eventData.allowViewOtherTables ? 1 : 0;
           event.allowManualAddReplay = eventData.allowManualAddReplay ? 1 : 0;
@@ -989,6 +1007,16 @@ export class EventModel extends Model {
         event.hideAchievements = eventData.event.achievementsShown ? 0 : 1;
         event.seriesLength = eventData.event.seriesLength;
         event.minGamesCount = eventData.event.minGames;
+        this.validateSanmaSettings(
+          eventData.event.rulesetConfig,
+          event.isOnline ? EventType.EVENT_TYPE_ONLINE : undefined
+        );
+        if (
+          !!event.ruleset.rules.withSanma !== !!eventData.event.rulesetConfig.withSanma &&
+          (await this.repo.em.count(SessionEntity, { event: event.id })) > 0
+        ) {
+          throw new Error('Cannot change player count after sessions have been created');
+        }
         event.ruleset = new RulesetEntity('custom', 'custom', eventData.event.rulesetConfig);
         event.allowViewOtherTables = eventData.event.allowViewOtherTables ? 1 : 0;
         event.allowManualAddReplay = eventData.event.allowManualAddReplay ? 1 : 0;
@@ -1284,9 +1312,8 @@ export class EventModel extends Model {
           throw new Error(`Viewing other tables is not allowed for this event`);
         }
 
-        const registeredPlayers = (
-          await eventRegistrationModel.findByEventId([events[0].id])
-        ).filter((reg) => {
+        const registeredPlayers = await eventRegistrationModel.findByEventId([events[0].id]);
+        const seatingPlayers = registeredPlayers.filter((reg) => {
           if (reg.ignoreSeating) {
             return false;
           }
@@ -1296,7 +1323,9 @@ export class EventModel extends Model {
           return true;
         });
 
-        const tablesCount = events[0].syncStart ? Math.floor(registeredPlayers.length / 4) : 10;
+        const tablesCount = events[0].syncStart
+          ? Math.max(1, Math.floor(seatingPlayers.length / events[0].ruleset.playerCount))
+          : 10;
 
         const lastGames = await sessionModel.findByEventAndStatus(
           [events[0].id],
@@ -1392,6 +1421,7 @@ export class EventModel extends Model {
         const currentScores = sessionStates[gIndex].getScores();
         const chombo = sessionStates[gIndex].getChombo();
         const scores = [...game.players]
+          .filter((p) => p.playerId !== GHOST_PLAYER_ID)
           .sort((a, b) => a.order - b.order)
           .map((p) => ({
             playerId: p.playerId,
@@ -1421,6 +1451,7 @@ export class EventModel extends Model {
           currentRoundIndex: sessionStates[gIndex].getRound(),
           scores,
           players: [...game.players]
+            .filter((p) => p.playerId !== GHOST_PLAYER_ID)
             .sort((a, b) => a.order - b.order)
             .map((p) => {
               const reg = registeredPlayers.find((r) => r.playerId === p.playerId)!;

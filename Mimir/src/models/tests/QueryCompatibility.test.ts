@@ -207,7 +207,7 @@ describe('ORM query compatibility', () => {
     expect(await sessions.isLastForPlayers(empty)).toBe(true);
     Reflect.deleteProperty(empty.intermediateResults, 'playerIds');
     expect(await sessions.isLastForPlayers(empty)).toBe(true);
-    empty.intermediateResults = new SessionState(event.ruleset, [99]).state;
+    empty.intermediateResults = new SessionState(event.ruleset, [96, 97, 98, 99]).state;
     expect(await sessions.isLastForPlayers(empty)).toBe(true);
   });
 

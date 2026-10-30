@@ -217,9 +217,9 @@ export class PointsCalc {
       if (playerId === winnerId) {
         continue;
       }
-      scores[playerId] -= Math.floor((honbaValue / 3) * honba);
+      scores[playerId] -= Math.floor((honbaValue / (Object.keys(scores).length - 1)) * honba);
       this._lastPaymentsInfo.honba[`${winnerId}<-${playerId}`] = Math.floor(
-        (honbaValue / 3) * honba
+        (honbaValue / (Object.keys(scores).length - 1)) * honba
       );
     }
 
@@ -232,7 +232,8 @@ export class PointsCalc {
   public draw(
     currentScores: Record<number, number>,
     tempaiIds: number[],
-    riichiIds: number[]
+    riichiIds: number[],
+    rules: RulesetConfig
   ): Record<number, number> {
     this.resetPaymentsInfo();
     const riichiIdsArray = riichiIds || [];
@@ -241,6 +242,24 @@ export class PointsCalc {
     for (const playerId of riichiIdsArray) {
       scores[playerId] -= 1000;
       this._lastPaymentsInfo.riichi[`<-${playerId}`] = 1000;
+    }
+
+    if (rules.withSanma) {
+      if (tempaiIds.length > 3) throw new Error('More than 3 players tempai');
+      if (tempaiIds.length === 0 || tempaiIds.length === 3) return scores;
+      const total = rules.sanmaDrawPayments || 3000;
+      const notenIds = Object.keys(scores)
+        .map(Number)
+        .filter((id) => !tempaiIds.includes(id));
+      for (const id of tempaiIds) scores[id] += total / tempaiIds.length;
+      for (const id of notenIds) {
+        scores[id] -= total / notenIds.length;
+        for (const winner of tempaiIds) {
+          this._lastPaymentsInfo.direct[`${winner}<-${id}`] =
+            total / notenIds.length / tempaiIds.length;
+        }
+      }
+      return scores;
     }
 
     if (tempaiIds.length === 0 || tempaiIds.length === 4) {
@@ -321,6 +340,17 @@ export class PointsCalc {
 
     const scores = { ...currentScores };
 
+    if (rules.extraChomboPayments && rules.withSanma) {
+      const payment = rules.sanmaChomboPayments || 6000;
+      for (const playerId of Object.keys(scores).map(Number)) {
+        if (playerId === loserId) continue;
+        scores[playerId] += payment;
+        scores[loserId] -= payment;
+        this._lastPaymentsInfo.direct[`${playerId}<-${loserId}`] = payment;
+      }
+      return scores;
+    }
+
     if (rules.extraChomboPayments) {
       if (currentDealer === loserId) {
         for (const playerId of Object.keys(scores).map(Number)) {
@@ -367,17 +397,17 @@ export class PointsCalc {
       this._lastPaymentsInfo.riichi[`<-${playerId}`] = 1000;
     }
 
-    if (nagashiIds.length > 3) {
-      throw new Error('More than 3 players have nagashi');
+    if (nagashiIds.length >= Object.keys(scores).length) {
+      throw new Error(`More than ${Object.keys(scores).length - 1} players have nagashi`);
     }
 
     for (const nagashiOwnerId of nagashiIds) {
       for (const playerId of Object.keys(scores).map(Number)) {
         if (playerId === nagashiOwnerId) {
           if (currentDealer == playerId) {
-            scores[playerId] += 12000;
+            scores[playerId] += Object.keys(scores).length === 3 ? 8000 : 12000;
           } else {
-            scores[playerId] += 8000;
+            scores[playerId] += Object.keys(scores).length === 3 ? 6000 : 8000;
           }
         } else {
           if (currentDealer == nagashiOwnerId || currentDealer == playerId) {
@@ -453,7 +483,9 @@ export class PointsCalc {
 
     if (tsumo) {
       return {
-        winner: dealer ? Math.floor(3 * doubleRounded) : Math.floor(doubleRounded + 2 * rounded),
+        winner: dealer
+          ? (rules.withSanma ? 2 : 3) * doubleRounded
+          : doubleRounded + (rules.withSanma ? 1 : 2) * rounded,
         dealer: -doubleRounded,
         player: -rounded,
       };

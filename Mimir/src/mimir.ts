@@ -105,6 +105,7 @@ export const mimirServer: Mimir<Context> = {
       RulesetEntity.createRuleset('wrc'),
       RulesetEntity.createRuleset('tenhounet'),
       RulesetEntity.createRuleset('rrc'),
+      RulesetEntity.createRuleset('sanma'),
     ].reduce(
       (acc, r) => {
         acc.rulesets.push(r.rules);

@@ -111,6 +111,9 @@ export class TestSeeder extends Seeder {
       minPenalty: 1000,
       oka: 0,
       doubleYakuman: [],
+      withSanma: false,
+      sanmaDrawPayments: 0,
+      sanmaChomboPayments: 0,
       startRating: 0,
       yakitoriPenalty: 0,
     });

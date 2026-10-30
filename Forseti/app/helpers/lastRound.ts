@@ -2,28 +2,10 @@ import { Player, Round } from 'tsclients/proto/atoms.pb';
 import { I18nService } from '../services/i18n';
 import { yakuList } from './yaku';
 
-const winds = [
-  '?',
-  '東1',
-  '東2',
-  '東3',
-  '東4',
-  '南1',
-  '南2',
-  '南3',
-  '南4',
-  '西1',
-  '西2',
-  '西3',
-  '西4',
-  '北1',
-  '北2',
-  '北3',
-  '北4',
-];
-
-export function formatRoundIndex(roundIndex: number) {
-  return winds[roundIndex] ?? '?';
+export function formatRoundIndex(roundIndex: number, playersCount: 3 | 4 = 4) {
+  if (roundIndex < 1 || roundIndex > 4 * playersCount) return '?';
+  const wind = ['東', '南', '西', '北'][Math.floor((roundIndex - 1) / playersCount)];
+  return `${wind}${((roundIndex - 1) % playersCount) + 1}`;
 }
 
 export type LastRoundPart = { text: string; playerId?: number };

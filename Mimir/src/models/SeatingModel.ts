@@ -1,3 +1,4 @@
+import { GHOST_PLAYER_ID } from '../../../Common/constants.js';
 import { TransactionPropagation } from '@mikro-orm/core';
 import { EventRegisteredPlayersEntity } from '../entities/EventRegisteredPlayers.entity.js';
 import { Model } from './Model.js';
@@ -71,7 +72,10 @@ export class SeatingModel extends Model {
             )
           ),
           historyModel.findLastByEvent([eventId]),
-          playerInSessionModel.getPlayersSeatingInEvent(eventId, playerIds.length),
+          playerInSessionModel.getPlayersSeatingInEvent(
+            eventId,
+            Math.ceil(playerIds.length / event.ruleset.playerCount) * 4
+          ),
         ]);
 
         const ratings: Record<number, number> = {};
@@ -104,7 +108,7 @@ export class SeatingModel extends Model {
               hasAvatar: playerById[seat.player_id]?.hasAvatar ?? false,
               lastUpdate: playerById[seat.player_id]?.lastUpdate,
             }))
-            .filter((s) => !!s.tableIndex),
+            .filter((s) => !!s.tableIndex && s.playerId !== GHOST_PLAYER_ID),
         };
       },
       { propagation: TransactionPropagation.REQUIRED }
@@ -118,6 +122,7 @@ export class SeatingModel extends Model {
       async () => {
         const { eventId, groupsCount, seed, windShuffleMode } = payload;
 
+        const event = await this.repo.em.findOneOrFail(EventEntity, eventId);
         const seatingGetter = (
           playersMap: Array<[number, number]>,
           _seed: number,
@@ -125,6 +130,7 @@ export class SeatingModel extends Model {
           _windShuffleMode?: WindShuffleMode
         ) =>
           make_seating_shuffled({
+            tableSize: event.ruleset.playerCount,
             playersMap,
             groupsCount,
             randFactor: _seed,
@@ -147,6 +153,7 @@ export class SeatingModel extends Model {
     return this.repo.em.transactional(
       async () => {
         const { eventId, windShuffleMode } = payload;
+        const event = await this.repo.em.findOneOrFail(EventEntity, eventId);
         const seed = randomInt(999999);
         const seatingGetter = (
           playersMap: Array<[number, number]>,
@@ -155,6 +162,7 @@ export class SeatingModel extends Model {
           _windShuffleMode?: WindShuffleMode
         ) =>
           make_seating_swiss({
+            tableSize: event.ruleset.playerCount,
             playersMap,
             randFactor: _seed,
             windShuffle: this._getWindShuffleMode(_windShuffleMode),
@@ -177,6 +185,7 @@ export class SeatingModel extends Model {
     return this.repo.em.transactional(
       async () => {
         const { eventId, step, windShuffleMode } = payload;
+        const event = await this.repo.em.findOneOrFail(EventEntity, eventId);
         const seed = randomInt(999999);
         const seatingGetter = (
           playersMap: Array<[number, number]>,
@@ -185,6 +194,7 @@ export class SeatingModel extends Model {
           _windShuffleMode?: WindShuffleMode
         ) =>
           make_seating_interval({
+            tableSize: event.ruleset.playerCount,
             playersMap,
             randFactor: seed,
             step,
@@ -225,6 +235,7 @@ export class SeatingModel extends Model {
           throw new Error('Next session is not defined in script');
         }
 
+        const event = await this.repo.em.findOneOrFail(EventEntity, eventId);
         const seatingGetter = (
           _playersMap: Array<[number, number]>, // ignored in this case
           _seed: number,
@@ -232,6 +243,7 @@ export class SeatingModel extends Model {
           _windShuffleMode?: WindShuffleMode
         ) => {
           return update_wind_placing_only({
+            tableSize: event.ruleset.playerCount,
             playersMap: seating.map((id) => [id, 0]), // zero rating as it does not really matter in case of prescripted seating
             previousSeatings,
             randFactor: _seed,
@@ -300,6 +312,7 @@ export class SeatingModel extends Model {
           windShuffleMode?: WindShuffleMode
         ) =>
           make_seating_swiss({
+            tableSize: event.ruleset.playerCount,
             playersMap,
             randFactor: seed,
             windShuffle: this._getWindShuffleMode(windShuffleMode),
@@ -371,8 +384,9 @@ export class SeatingModel extends Model {
     }
 
     const chunks = [];
-    for (let i = 0; i < seating.length; i += 4) {
-      chunks.push(seating.slice(i, i + 4).map((p) => p[0]));
+    const tableSize = event.ruleset.playerCount;
+    for (let i = 0; i < seating.length; i += tableSize) {
+      chunks.push(seating.slice(i, i + tableSize).map((p) => p[0]));
     }
 
     const replacements: Record<number, number> = {};
@@ -429,11 +443,20 @@ export class SeatingModel extends Model {
     script: string,
     nextGameIndex: number
   ): Promise<number[]> {
-    const seating = (unpackScript(script)[nextGameIndex] ?? []).flat(2);
+    const tables = unpackScript(script)[nextGameIndex] ?? [];
+    const event = await this.repo.em.findOneOrFail(EventEntity, eventId);
+    if (tables.some((table) => table.length !== event.ruleset.playerCount)) {
+      throw new Error(`Prescripted tables require ${event.ruleset.playerCount} players`);
+    }
+    const seating = tables.flat(2);
     // replace local ids with real ids
     const regModel = this.getModel(EventRegistrationModel);
     const localIdMap = await regModel.findLocalIdsMapByEvent(eventId, true);
-    return seating.map((localId) => localIdMap.get(localId)!);
+    return seating.map((localId) => {
+      const id = localIdMap.get(localId);
+      if (!id) throw new Error(`Unknown local player #${localId}`);
+      return id;
+    });
   }
 
   private async _ensureActionAllowed(eventId: number): Promise<void> {
@@ -521,13 +544,16 @@ export class SeatingModel extends Model {
       {} as Record<number, { amount: number; count: number }>
     );
 
-    const tables = previousSeatings
-      .map((s) => s.player_id)
-      .filter((id) => !ignoredPlayerIds.includes(id));
-    const seatingChunks: number[][] = [];
-    for (let i = 0; i < tables.length; i += 4) {
-      seatingChunks.push(tables.slice(i, i + 4));
+    // Retain ignored real players in history: the engine requires complete tables to
+    // preserve historical seat winds. _getPlayersMap excludes them from the new roster.
+    const tablesBySession = new Map<number, number[]>();
+    for (const seat of previousSeatings) {
+      if (seat.player_id === GHOST_PLAYER_ID) continue;
+      const table = tablesBySession.get(seat.session_id) ?? [];
+      table.push(seat.player_id);
+      tablesBySession.set(seat.session_id, table);
     }
+    const seatingChunks = [...tablesBySession.values()];
 
     return [
       await this._getPlayersMap(event, regs, history, ignoredPlayerIds, penaltyByPlayer),

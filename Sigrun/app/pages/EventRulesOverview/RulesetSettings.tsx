@@ -55,6 +55,39 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ config, i18n }
         )}
         value={config.rulesetConfig.startPoints}
       />
+      {!!config.rulesetConfig.withSanma && (
+        <>
+          <Title order={4}>{i18n._t('Three-player game (sanma)')}</Title>
+          <Checkbox
+            label={i18n._t('Three-player game (sanma)')}
+            description={i18n._t(
+              'Play with 3 players instead of 4. The North seat is removed; uma and seating are adjusted accordingly.'
+            )}
+            checked={config.rulesetConfig.withSanma}
+            readOnly
+          />
+          <NumberInput
+            hideControls
+            leftSection={<IconCash size='1rem' />}
+            label={i18n._t('Ryuukyoku payments (sanma)')}
+            description={i18n._t('Sum of points paid by players in noten to players in tenpai')}
+            value={config.rulesetConfig.sanmaDrawPayments}
+            readOnly
+          />
+          {config.rulesetConfig.extraChomboPayments && (
+            <NumberInput
+              hideControls
+              leftSection={<IconHandStop size='1rem' />}
+              label={i18n._t('Chombo payments (sanma)')}
+              description={i18n._t(
+                'Amount of points paid by the offending player to each of the other players on a chombo'
+              )}
+              value={config.rulesetConfig.sanmaChomboPayments}
+              readOnly
+            />
+          )}
+        </>
+      )}
       <Title order={4}>{i18n._t('Game duration')}</Title>
       <Checkbox
         label={i18n._t('Tonpuusen')}

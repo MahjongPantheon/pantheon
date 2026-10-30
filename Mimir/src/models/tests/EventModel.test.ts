@@ -47,6 +47,54 @@ const eventData = {
 };
 
 describe('Event creation', () => {
+  it('creates a sanma event with three-player rules', async () => {
+    const { eventId } = await model.createEvent({
+      ...eventData,
+      rulesetConfig: RulesetEntity.createRuleset('sanma').rules,
+    });
+    const [event] = await model.findById([eventId]);
+    expect(event.ruleset.playerCount).toBe(3);
+    expect(event.ruleset.rules.startPoints).toBe(35000);
+  });
+
+  it('rejects sanma online events before unsupported replay imports can be configured', async () => {
+    await expect(
+      model.createEvent({
+        ...eventData,
+        type: EventType.EVENT_TYPE_ONLINE,
+        rulesetConfig: RulesetEntity.createRuleset('sanma').rules,
+      })
+    ).rejects.toThrow('Sanma online');
+  });
+
+  it('rejects sanma when editing a stored online event even if the payload says local', async () => {
+    const { eventId } = await model.createEvent({
+      ...eventData,
+      type: EventType.EVENT_TYPE_ONLINE,
+    });
+    await expect(
+      model.updateEvent({
+        id: eventId,
+        event: { ...eventData, rulesetConfig: RulesetEntity.createRuleset('sanma').rules },
+      })
+    ).rejects.toThrow('Sanma online');
+  });
+
+  it.each([
+    { oka: 10000 },
+    { sanmaDrawPayments: -200 },
+    { sanmaDrawPayments: 3100 },
+    { sanmaChomboPayments: -100 },
+    { sanmaChomboPayments: 6050 },
+  ])('rejects unsupported sanma settings %j', async (overrides) => {
+    await expect(
+      model.createEvent({
+        ...eventData,
+        rulesetConfig: { ...RulesetEntity.createRuleset('sanma').rules, ...overrides },
+      })
+    ).rejects.toThrow('Sanma');
+  });
+
   beforeAll(() => orm.schema.create());
   afterAll(() => repo.destroy());
   afterEach(() => {

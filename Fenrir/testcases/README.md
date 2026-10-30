@@ -24,6 +24,9 @@ Use a stable ID and one Markdown file per case, named `<lowercase-id>-<scenario>
 | [AUTH-004](auth-004-password-recovery.md)              | Complete recovery, log in, and reject reuse of a consumed link                          | `AUTH-004: Account owner can reset a password once and log in with the new password` in `tests/recovery.spec.ts`                                  |
 | [AUTH-005](auth-005-avatar-authorization.md)           | Upload an avatar through Frey and deny direct anonymous replacement                     | `AUTH-005: Account owner can upload an avatar through Frey while direct replacement is denied` in `tests/avatars.spec.ts`                         |
 
+[SMOKE-007](smoke-007-three-player-session.md) covers creating and completing a
+three-player session through Forseti and Tyr in `tests/sanma.spec.ts`.
+
 SMOKE-005 and SMOKE-006 share the [complete yaku hand catalogue](smoke-hand-catalogue.md) and explicit per-game score fixtures. Each event covers all 46 yaku, compatible combinations, and varied fu/dora; their per-attempt budgets are 30 and 60 minutes respectively.
 
 These descriptions cover all existing tests; improvements and coverage limits are identified separately. AUTH-003 covers navigation to password recovery; AUTH-004 covers the password-reset journey.

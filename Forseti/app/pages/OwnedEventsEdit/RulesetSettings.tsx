@@ -37,6 +37,7 @@ type RulesetSettingsProps = {
 
 let lastChomboPaymentValue = 0;
 export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ form, i18n }) => {
+  const isSanma = !!form.useWatchValue('ruleset.withSanma');
   const playAdditionalRounds = form.useWatchValue('ruleset.playAdditionalRounds');
   const startPoints = form.useWatchValue('ruleset.startPoints');
   const extraChomboPayments = form.useWatchValue('ruleset.extraChomboPayments');
@@ -63,6 +64,43 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ form, i18n }) 
         )}
         min={0}
       />
+      <Title order={4}>{i18n._t('Three-player game (sanma)')}</Title>
+      <Checkbox
+        label={i18n._t('Three-player game (sanma)')}
+        description={i18n._t(
+          'Play with 3 players instead of 4. The North seat is removed; uma and seating are adjusted accordingly.'
+        )}
+        key={form.key('ruleset.withSanma')}
+        {...form.getInputProps('ruleset.withSanma', { type: 'checkbox' })}
+      />
+      {isSanma && (
+        <>
+          <NumberInput
+            leftSection={<IconCash size='1rem' />}
+            label={i18n._t('Draw payments (sanma)')}
+            description={i18n._t('Sum of points paid by players in noten to players in tenpai')}
+            min={0}
+            key={form.key('ruleset.sanmaDrawPayments')}
+            {...form.getInputProps('ruleset.sanmaDrawPayments')}
+          />
+          <NumberInput
+            leftSection={<IconHandStop size='1rem' />}
+            label={i18n._t('Chombo payments (sanma)')}
+            data-testid='forseti-event-settings-ruleset-settings-ruleset-sanma-chombo-payments'
+            description={
+              extraChomboPayments
+                ? i18n._t(
+                    'Amount of points paid by the offending player to each of the other players on a chombo'
+                  )
+                : i18n._t('Requires extra chombo payments to be enabled.')
+            }
+            min={0}
+            key={form.key('ruleset.sanmaChomboPayments')}
+            disabled={!extraChomboPayments}
+            {...form.getInputProps('ruleset.sanmaChomboPayments')}
+          />
+        </>
+      )}
       <Title order={4}>{i18n._t('Game duration')}</Title>
       <Checkbox
         label={i18n._t('Tonpuusen')}

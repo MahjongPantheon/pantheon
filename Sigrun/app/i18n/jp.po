@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-27 23:49+0100\n"
+"POT-Creation-Date: 2026-10-30 00:32+0100\n"
 "PO-Revision-Date: 2026-10-20 00:34+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -42,7 +42,7 @@ msgctxt "Achievements badge"
 msgid "%1 fu"
 msgstr "%1 符"
 
-#: app/components/HandsGraph.tsx:77:49 app/helpers/gameLog.ts:159:12
+#: app/components/HandsGraph.tsx:81:21 app/helpers/gameLog.ts:157:12
 msgid "%1 han"
 msgstr "%1 番"
 
@@ -56,7 +56,7 @@ msgctxt "Achievements badge"
 msgid "%1 han (%2)"
 msgstr "%1 番 (%2)"
 
-#: app/helpers/gameLog.ts:161:10
+#: app/helpers/gameLog.ts:159:10
 msgid "%1 han, %2 fu"
 msgstr "%1 番、%2 符"
 
@@ -70,6 +70,17 @@ msgctxt "Achievements badge"
 msgid "%1 ippatsu"
 msgid_plural "%1 ippatsu"
 msgstr[0] "一発 %1 回"
+
+#: app/services/i18n.selection.test.ts:39:10
+msgid "%1 item"
+msgid_plural "%1 items"
+msgstr[0] ""
+
+#: app/services/i18n.selection.test.ts:40:10
+msgctxt "context"
+msgid "%1 item"
+msgid_plural "%1 items"
+msgstr[0] ""
 
 #: app/pages/Achievements.tsx:540:20 app/pages/Achievements.tsx:622:20
 #: app/pages/Achievements.tsx:739:22
@@ -119,60 +130,60 @@ msgid "%1 yakuhai"
 msgid_plural "%1 yakuhais"
 msgstr[0] "役牌 %1 回"
 
-#: app/helpers/gameLog.ts:49:14
+#: app/helpers/gameLog.ts:54:14
 msgctxt "Tsumo log item"
 msgid "%1: <b>%2</b> - %3 %4, %5. Riichi bets: %6"
 msgstr "%1: <b>%2</b> - %3 %4、%5。立直棒：%6"
 
-#: app/helpers/gameLog.ts:33:14
+#: app/helpers/gameLog.ts:38:14
 msgctxt "Ron log item"
 msgid "%1: <b>%2</b> - %3 (%4), %5. Riichi bets: %6"
 msgstr "%1: <b>%2</b> - %3 (%4)、%5。立直棒：%6"
 
-#: app/helpers/gameLog.ts:70:14
+#: app/helpers/gameLog.ts:75:14
 msgctxt "Abortive draw log item"
 msgid "%1: Abortive draw. Riichi bets: %2"
 msgstr "%1: 途中流局。立直棒：%2"
 
-#: app/helpers/gameLog.ts:77:14
+#: app/helpers/gameLog.ts:82:14
 msgctxt "Chombo log item"
 msgid "%1: Chombo (<b>%2</b>)"
 msgstr "%1: チョンボ (<b>%2</b>)"
 
-#: app/helpers/gameLog.ts:60:14
+#: app/helpers/gameLog.ts:65:14
 msgctxt "Draw log item"
 msgid "%1: Exhaustive draw (tenpai: %2). Riichi bets: %3"
 msgstr "%1: 流局（聴牌：%2）。立直棒：%3"
 
-#: app/helpers/gameLog.ts:84:14
+#: app/helpers/gameLog.ts:89:14
 msgctxt "Nagashi log item"
 msgid "%1: Nagashi mangan (<b>%2</b>). Riichi bets: %3"
 msgstr "%1: 流し満貫 (<b>%2</b>)。立直棒：%3"
 
-#: app/helpers/gameLog.ts:111:9
+#: app/helpers/gameLog.ts:116:9
 msgctxt "Multiron outer log item"
 msgid "%1: Ron (<b>%2</b>). Riichi bets: %3"
 msgstr "%1: ロン (<b>%2</b>)。立直棒：%3"
 
-#: app/helpers/gameLog.ts:48:11
+#: app/helpers/gameLog.ts:53:11
 msgctxt "Tsumo log item partial"
 msgid "(tsumo)"
 msgstr "（ツモ）"
 
-#: app/helpers/gameLog.ts:45:11
+#: app/helpers/gameLog.ts:50:11
 msgctxt "Tsumo item partial"
 msgid "(tsumo, pao: <b>%1</b>)"
 msgstr "（ツモ、包（パオ）：<b>%1</b>）"
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:121:22
+#: app/pages/EventRulesOverview/UmaSelect.tsx:128:22
 msgid "1 player with score less than starting"
 msgstr "開始点未満のプレイヤーが 1 人"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:156:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:187:22
 msgid "13+ han hands are considered yakuman, not sanbaiman."
 msgstr "13 番以上の手は三倍満ではなく役満として扱います。"
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:82:16
+#: app/pages/EventRulesOverview/UmaSelect.tsx:85:16
 msgid "1st"
 msgstr "1 位"
 
@@ -180,7 +191,7 @@ msgstr "1 位"
 msgid "1st place: "
 msgstr "1 位： "
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:85:16
+#: app/pages/EventRulesOverview/UmaSelect.tsx:88:16
 msgid "2nd"
 msgstr "2 位"
 
@@ -188,11 +199,11 @@ msgstr "2 位"
 msgid "2nd place: "
 msgstr "2 位： "
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:96:22
+#: app/pages/EventRulesOverview/UmaSelect.tsx:101:22
 msgid "3 players with score less than starting"
 msgstr "開始点未満のプレイヤーが 3 人"
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:88:16
+#: app/pages/EventRulesOverview/UmaSelect.tsx:91:16
 msgid "3rd"
 msgstr "3 位"
 
@@ -200,7 +211,7 @@ msgstr "3 位"
 msgid "3rd place: "
 msgstr "3 位： "
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:91:16
+#: app/pages/EventRulesOverview/UmaSelect.tsx:95:18
 msgid "4th"
 msgstr "4 位"
 
@@ -208,17 +219,17 @@ msgstr "4 位"
 msgid "4th place: "
 msgstr "4 位： "
 
-#: app/helpers/gameLog.ts:97:17
+#: app/helpers/gameLog.ts:102:17
 msgctxt "Multiron item partial"
 msgid "<b>%1</b> (pao: <b>%2</b>)"
 msgstr "<b>%1</b>（包（パオ）：<b>%2</b>）"
 
-#: app/helpers/gameLog.ts:28:11
+#: app/helpers/gameLog.ts:33:11
 msgctxt "Ron log item partial"
 msgid "<b>%1</b>, pao: <b>%2</b>"
 msgstr "<b>%1</b>、包（パオ）：<b>%2</b>"
 
-#: app/helpers/gameLog.ts:102:20
+#: app/helpers/gameLog.ts:107:20
 msgctxt "Multiron inner log item"
 msgid "<li>%1 - %2, %3</li>"
 msgstr "<li>%1 - %2、%3</li>"
@@ -258,7 +269,7 @@ msgstr "オンライン対局を追加"
 msgid "Add replay"
 msgstr "牌譜を追加"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:66:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:97:16
 msgid "Agariyame"
 msgstr "アガリやめ"
 
@@ -271,7 +282,7 @@ msgstr "集計イベント"
 msgid "All players"
 msgstr "すべてのプレイヤー"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:147:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:178:22
 msgid ""
 "All riichi bets on the table will be given to the first winner. If not "
 "checked, winning riichi bets will always be given back, lost bets would be "
@@ -280,7 +291,7 @@ msgstr ""
 "場の立直棒をすべて頭ハネの順で最初の和了者に渡します。無効の場合、和了者は自"
 "分の立直棒を回収し、残りは最初の和了者に渡します。"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:115:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:146:16
 msgid "Allow abortive draws"
 msgstr "途中流局を有効にする"
 
@@ -288,7 +299,7 @@ msgstr "途中流局を有効にする"
 msgid "Allow adding of replays manually"
 msgstr "牌譜の手動追加を許可"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:82:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:113:16
 msgid "Allow bankruptcy"
 msgstr "トビを有効にする"
 
@@ -296,15 +307,15 @@ msgstr "トビを有効にする"
 msgid "Allow combination of yakumans, e.g. tsuuisou + daisangen"
 msgstr "字一色＋大三元などの複合役満を認める"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:223:18
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:254:18
 msgid "Amount of chombo penalty"
 msgstr "チョンボのペナルティ点"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:224:24
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:255:24
 msgid "Amount of penalty applied in the end of the session after uma bonus."
 msgstr "対局終了後、ウマを加算してから差し引くペナルティ点。"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:242:24
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:273:24
 msgid "Amount of penalty applied to those who didn't win once in game."
 msgstr "対局中に一度も和了しなかったプレイヤーへのペナルティ点。"
 
@@ -321,11 +332,17 @@ msgid ""
 "Amount of points given to every player in the beginning of every session"
 msgstr "各対局の開始時に各プレイヤーに与える点数"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:171:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:202:22
 msgid "Amount of points given to player at 1st place"
 msgstr "1 位のプレイヤーに与える点数"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:101:24
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:81:26
+msgid ""
+"Amount of points paid by the offending player to each of the other players "
+"on a chombo"
+msgstr ""
+
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:132:24
 msgid "Amount of score player should get to end the game."
 msgstr "対局終了に必要な目標点。"
 
@@ -333,7 +350,7 @@ msgstr "対局終了に必要な目標点。"
 msgid "And your riichi bet, please"
 msgstr "立直棒、いただきます"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:107:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:138:16
 msgid "Atamahane"
 msgstr "頭ハネ"
 
@@ -454,11 +471,15 @@ msgstr "チップの点数"
 msgid "Chombo in last round ends game"
 msgstr "最終局のチョンボで対局を終了"
 
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:80:20
+msgid "Chombo payments (sanma)"
+msgstr ""
+
 #: app/components/PlayerStatsListing.tsx:126:16
 msgid "Chombo penalties: "
 msgstr "チョンボのペナルティ： "
 
-#: app/components/GameListing.tsx:231:16
+#: app/components/GameListing.tsx:235:16
 msgid "Chombo: %1"
 msgstr "チョンボ：%1"
 
@@ -470,11 +491,11 @@ msgstr "九蓮宝燈"
 msgid "Chuuren poutou 9-side"
 msgstr "純正九蓮宝燈"
 
-#: app/pages/PlayerStats.tsx:295:20
+#: app/pages/PlayerStats.tsx:296:20
 msgid "Close game preview"
 msgstr "対局プレビューを閉じる"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:146:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:177:16
 msgid "Collect riichi bets by atamahane"
 msgstr "立直棒を頭ハネで配分"
 
@@ -486,7 +507,7 @@ msgstr "よく使う操作"
 msgid "Common stats"
 msgstr "総合統計"
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:45:20
+#: app/pages/EventRulesOverview/UmaSelect.tsx:46:20
 msgid "Complex position-based"
 msgstr "順位別の詳細設定"
 
@@ -552,7 +573,7 @@ msgstr "Mahjong Pantheon によるイベント「%1」の説明"
 msgid "Die Hard"
 msgstr "不屈の闘志"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:74:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:105:16
 msgid "Disable renchans"
 msgstr "連荘を無効にする"
 
@@ -572,7 +593,7 @@ msgstr "ドラの王"
 msgid "Double yakuman:"
 msgstr "ダブル役満："
 
-#: app/components/GameListing.tsx:227:14
+#: app/components/GameListing.tsx:231:14
 msgid "Draw: %1"
 msgstr "流局：%1"
 
@@ -596,7 +617,7 @@ msgstr "東風"
 msgid "Edit my profile"
 msgstr "自分のプロフィールを編集"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:124:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:155:22
 msgid "Enable \"Nagashi\" outcome to record this special draw"
 msgstr "特殊な流局を記録するため「流し満貫」の結果を有効にする"
 
@@ -604,7 +625,7 @@ msgstr "特殊な流局を記録するため「流し満貫」の結果を有効
 msgid "Enable aggregated yakuhai"
 msgstr "役牌の集約を有効にする"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:184:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:215:16
 msgid "Equalize uma"
 msgstr "同点時にウマを均等にする"
 
@@ -644,6 +665,10 @@ msgstr "イベントを絞り込み..."
 msgid "Final game score"
 msgstr "対局の最終得点"
 
+#: app/components/RatingGraph.tsx:167:29
+msgid "First displayed game"
+msgstr "表示する最初の対局"
+
 #: app/pages/EventRulesOverview/OnlineSettings.tsx:127:22
 #: app/pages/EventRulesOverview/TournamentSettings.tsx:131:22
 msgid ""
@@ -669,7 +694,7 @@ msgstr "代打プレイヤーの固定得点"
 msgid "Fixed uma for replacement player"
 msgstr "代打プレイヤーの固定ウマ"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:58:25
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:89:25
 msgid "Game duration"
 msgstr "対局時間"
 
@@ -681,7 +706,7 @@ msgstr "対局の有効期間（時間）"
 msgid "Game preview"
 msgstr "対局プレビュー"
 
-#: app/components/RatingGraph.tsx:135:18 app/pages/RatingTable.tsx:545:32
+#: app/components/RatingGraph.tsx:141:39 app/pages/RatingTable.tsx:545:32
 #: app/pages/RatingTable.tsx:614:7
 msgid "Games played"
 msgstr "対局数"
@@ -797,7 +822,7 @@ msgstr "ダマテンでの和了回数が最も多いプレイヤーに授与し
 msgid "Given for winning the largest number riichi nomi hands."
 msgstr "立直のみの和了回数が最も多いプレイヤーに授与します。"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:100:18
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:131:18
 msgid "Goal score"
 msgstr "目標点"
 
@@ -817,23 +842,32 @@ msgstr "字牌のお客様"
 msgid "Haitei"
 msgstr "海底摸月"
 
-#: app/components/HandsGraph.tsx:68:33
+#: app/components/HandsGraph.tsx:66:29
 msgid "Hands count"
 msgstr "和了回数"
 
-#: app/components/HandsGraph.tsx:72:19
+#: app/components/HandsGraph.tsx:96:21
 msgid "Hands value"
 msgstr "手の価値"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:162:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:193:22
 msgid "Hands valued as 4/30 and 3/60 are rounded to mangan."
 msgstr "4 番 30 符と 3 番 60 符を満貫に切り上げます。"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:178:16
+#: app/services/i18n.selection.test.ts:37:10
+msgid "Hello %1"
+msgstr ""
+
+#: app/services/i18n.selection.test.ts:38:10
+msgctxt "context"
+msgid "Hello %1"
+msgstr ""
+
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:209:16
 msgid "Honba Value"
 msgstr "本場の点数"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:139:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:170:22
 msgid ""
 "Honba payments will be given only to the first winner. If not checked, "
 "payment will be given to all winners."
@@ -878,7 +912,7 @@ msgstr ""
 "有効の場合、イベント参加者は誰でも画面から新しい牌譜を追加できます。外部ツー"
 "ルで牌譜を自動追加する場合は無効にしてください。"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:185:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:216:22
 msgid ""
 "If checked, players with equivalent score receive equivalent uma bonus. "
 "Otherwise, uma is assigned according to move order."
@@ -886,7 +920,7 @@ msgstr ""
 "有効の場合、同点のプレイヤーにウマを均等に配分します。無効の場合、ウマは手番"
 "順に決まります。"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:89:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:120:22
 msgid ""
 "If nobody reaches the goal score at the last hand, the game continues to "
 "west rounds (in hanchan) or to south rounds (in tonpuusen), until someone "
@@ -895,7 +929,7 @@ msgstr ""
 "最終局で目標点に達した人がいなければ、半荘は西入、東風戦は南入し、誰かが目標"
 "点に達するまで続行します"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:67:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:98:22
 msgid ""
 "If the dealer holds the 1st place after last hand in session, the game ends "
 "regardless of his winning hand or tempai."
@@ -950,11 +984,11 @@ msgid "Just as planned"
 msgstr "計画通り"
 
 #: app/pages/Achievements.tsx:405:36
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:155:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:186:16
 msgid "Kazoe yakuman"
 msgstr "数え役満"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:161:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:192:16
 msgid "Kiriage mangan"
 msgstr "切り上げ満貫"
 
@@ -975,6 +1009,10 @@ msgstr "喰いタン"
 msgid "Language"
 msgstr "言語"
 
+#: app/components/RatingGraph.tsx:168:27
+msgid "Last displayed game"
+msgstr "表示する最後の対局"
+
 #: app/components/RecentPublicGames.tsx:26:12 app/pages/RecentGames.tsx:80:20
 #: app/pages/RecentGames.tsx:82:22 app/pages/RecentGames.tsx:93:31
 msgid "Last games"
@@ -988,7 +1026,7 @@ msgstr "Mahjong Pantheon によるイベント「%1」の最近の対局、%2 �
 msgid "Last series"
 msgstr "最近のシリーズ"
 
-#: app/pages/Achievements.tsx:852:18 app/pages/PlayerStats.tsx:434:18
+#: app/pages/Achievements.tsx:852:18 app/pages/PlayerStats.tsx:441:18
 msgid "Last update: %1"
 msgstr "最終更新：%1"
 
@@ -1012,7 +1050,7 @@ msgstr "ローカルランキング"
 msgid "Loss stats"
 msgstr "失点統計"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:195:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:226:16
 msgid "Max arbitrary penalty score"
 msgstr "個別ペナルティの上限点"
 
@@ -1028,7 +1066,7 @@ msgstr "メニュー"
 msgid "Menzentsumo"
 msgstr "門前清自摸和"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:201:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:232:16
 msgid "Min arbitrary penalty score"
 msgstr "個別ペナルティの下限点"
 
@@ -1055,15 +1093,15 @@ msgstr "その他の統計"
 msgid "Multiple yakumans"
 msgstr "複合役満"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:123:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:154:16
 msgid "Nagashi mangan"
 msgstr "流し満貫"
 
-#: app/components/GameListing.tsx:236:16
+#: app/components/GameListing.tsx:240:16
 msgid "Nagashi: %1"
 msgstr "流し満貫：%1"
 
-#: app/pages/PlayerStats.tsx:272:20
+#: app/pages/PlayerStats.tsx:273:20
 msgid "Next game"
 msgstr "次の対局"
 
@@ -1091,7 +1129,7 @@ msgstr "北風"
 msgid "Not selected"
 msgstr "未選択"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:170:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:201:16
 msgid "Oka bonus"
 msgstr "オカ"
 
@@ -1103,7 +1141,7 @@ msgstr "オンラインイベント"
 msgid "Online event settings"
 msgstr "オンラインイベント設定"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:108:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:139:22
 msgid ""
 "Only first player by the order of the move from the loser would be "
 "considered a winner. If not checked, all players declaring Ron are "
@@ -1128,7 +1166,7 @@ msgstr "メニューを開く"
 msgid "Open riichi"
 msgstr "オープン立直"
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:145:20
+#: app/pages/EventRulesOverview/UmaSelect.tsx:154:20
 msgid "Otherwise"
 msgstr "それ以外"
 
@@ -1140,11 +1178,11 @@ msgstr "9000 符を超えた！"
 msgid "Pao rule enabled for:"
 msgstr "パオを適用する役："
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:211:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:242:16
 msgid "Pay chombo as reverse mangan"
 msgstr "チョンボを逆満貫で精算"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:212:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:243:22
 msgid ""
 "Pay chombo right on occasion. If not checked, chombo is subtracted from "
 "player score after uma is applied."
@@ -1152,15 +1190,15 @@ msgstr ""
 "チョンボ発生時に即時精算します。無効の場合、ウマを加算してからチョンボの点数"
 "を差し引きます。"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:138:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:169:16
 msgid "Pay for honba by atamahane"
 msgstr "本場の点数を頭ハネで配分"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:153:25
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:184:25
 msgid "Payments and scores"
 msgstr "支払いと点数"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:191:25
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:222:25
 msgid "Penalties"
 msgstr "ペナルティ"
 
@@ -1176,7 +1214,7 @@ msgstr "平和"
 msgid "Place"
 msgstr "順位"
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:80:22
+#: app/pages/EventRulesOverview/UmaSelect.tsx:83:22
 msgid "Place / Session result"
 msgstr "順位 / 対局結果"
 
@@ -1184,13 +1222,19 @@ msgstr "順位 / 対局結果"
 msgid "Places stats"
 msgstr "順位統計"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:88:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:119:16
 msgid "Play additional rounds"
 msgstr "延長戦を行う"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:61:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:92:22
 msgid "Play only east rounds"
 msgstr "東風戦のみ"
+
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:63:26
+msgid ""
+"Play with 3 players instead of 4. The North seat is removed; uma and seating "
+"are adjusted accordingly."
+msgstr ""
 
 #: app/pages/RatingTable.tsx:607:7
 msgid "Player ID"
@@ -1200,12 +1244,12 @@ msgstr "プレイヤー ID"
 msgid "Player name"
 msgstr "玩家名"
 
-#: app/pages/PlayerStats.tsx:408:22
+#: app/pages/PlayerStats.tsx:415:22
 msgid ""
 "Player statistics for %1 in the event \"%2\" provided by Mahjong Pantheon"
 msgstr "Mahjong Pantheon によるイベント「%2」のプレイヤー %1 の統計"
 
-#: app/pages/PlayerStats.tsx:407:46
+#: app/pages/PlayerStats.tsx:414:46
 msgid "Player stats"
 msgstr "プレイヤー統計"
 
@@ -1230,7 +1274,7 @@ msgstr ""
 msgid "Prescripted wind shuffle"
 msgstr "進行表に従って座風を割り当てる"
 
-#: app/pages/PlayerStats.tsx:253:20
+#: app/pages/PlayerStats.tsx:254:20
 msgid "Previous game"
 msgstr "前の対局"
 
@@ -1238,8 +1282,7 @@ msgstr "前の対局"
 msgid "Random wind shuffle"
 msgstr "座風をランダムに割り当てる"
 
-#: app/components/RatingGraph.tsx:125:41 app/components/RatingGraph.tsx:130:19
-#: app/pages/RatingTable.tsx:275:20
+#: app/components/RatingGraph.tsx:146:39 app/pages/RatingTable.tsx:275:20
 msgid "Rating"
 msgstr "ランキング点"
 
@@ -1309,7 +1352,7 @@ msgstr "立直"
 msgid "Riichi Nomi"
 msgstr "立直のみ"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:128:25
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:159:25
 msgid "Riichi and honba"
 msgstr "立直と本場"
 
@@ -1317,11 +1360,11 @@ msgstr "立直と本場"
 msgid "Riichi bets: "
 msgstr "立直棒： "
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:130:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:161:16
 msgid "Riichi goes to winner"
 msgstr "残った立直棒を 1 位に渡す"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:131:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:162:22
 msgid ""
 "Riichi left on table in case of draw in the end of the session will be given "
 "to session winner"
@@ -1335,11 +1378,11 @@ msgstr "立直麻雀のイベント一覧"
 msgid "Rinshan kaihou"
 msgstr "嶺上開花"
 
-#: app/components/GameListing.tsx:221:14
+#: app/components/GameListing.tsx:225:14
 msgid "Ron: %1"
 msgstr "ロン：%1"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:105:25
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:136:25
 msgid "Round outcomes"
 msgstr "局の結果"
 
@@ -1382,6 +1425,10 @@ msgstr "二盃口"
 msgid "Ryuuiisou"
 msgstr "緑一色"
 
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:72:20
+msgid "Ryuukyoku payments (sanma)"
+msgstr ""
+
 #: app/helpers/yaku.ts:173:34
 msgid "Sanankou"
 msgstr "三暗刻"
@@ -1414,7 +1461,7 @@ msgstr "点数："
 msgid "Seating is defined in advance"
 msgstr "座席表は事前に指定されています"
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:32:16
+#: app/pages/EventRulesOverview/UmaSelect.tsx:33:16
 msgid "Select uma bonus type"
 msgstr "ウマの種類を選択"
 
@@ -1483,7 +1530,7 @@ msgstr ""
 msgid "Sigrun: riichi mahjong ratings and statistics"
 msgstr "Sigrun：立直麻雀のランキングと統計"
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:40:20
+#: app/pages/EventRulesOverview/UmaSelect.tsx:41:20
 msgid "Simple rank-based"
 msgstr "順位別の簡易設定"
 
@@ -1503,9 +1550,13 @@ msgstr "自風：南"
 msgid "South wind"
 msgstr "南風"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:207:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:238:16
 msgid "Step of arbitrary penalty scores"
 msgstr "個別ペナルティ点の刻み幅"
+
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:73:26
+msgid "Sum of points paid by players in noten to players in tenpai"
+msgstr ""
 
 #: app/helpers/yaku.ts:209:34
 msgid "Suuankou"
@@ -1577,7 +1628,7 @@ msgstr "土田の愛弟子"
 msgid "The great dealer"
 msgstr "偉大なる親"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:116:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:147:22
 msgid ""
 "There will be a separate \"Abortive draw\" outcome to record draws due to "
 "four riichi, four kans, suufon renda, kyuushu kyuuhai, etc."
@@ -1588,6 +1639,11 @@ msgstr ""
 #: app/pages/Achievements.tsx:425:14
 msgid "This can't be your wait"
 msgstr "その待ちは読めない"
+
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:60:29
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:62:20
+msgid "Three-player game (sanma)"
+msgstr ""
 
 #: app/pages/Timer.tsx:79:19
 msgid "Timer"
@@ -1645,7 +1701,7 @@ msgstr "落ち着いた配色に切り替える"
 msgid "Toitoi"
 msgstr "対々和"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:60:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:91:16
 msgid "Tonpuusen"
 msgstr "東風戦"
 
@@ -1678,7 +1734,7 @@ msgstr "過去に担当した回数が少ない座風を優先して割り当て
 msgid "Tsumo payments: "
 msgstr "ツモの支払い： "
 
-#: app/components/GameListing.tsx:224:14
+#: app/components/GameListing.tsx:228:14
 msgid "Tsumo: %1"
 msgstr "ツモ：%1"
 
@@ -1686,27 +1742,27 @@ msgstr "ツモ：%1"
 msgid "Tsuuiisou"
 msgstr "字一色"
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:54:20
+#: app/pages/EventRulesOverview/UmaSelect.tsx:55:20
 msgid "Uma bonus for 1st place"
 msgstr "1 位のウマ"
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:60:20
+#: app/pages/EventRulesOverview/UmaSelect.tsx:61:20
 msgid "Uma bonus for 2nd place"
 msgstr "2 位のウマ"
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:66:20
+#: app/pages/EventRulesOverview/UmaSelect.tsx:67:20
 msgid "Uma penalty for 3rd place"
 msgstr "3 位のウマ減点"
 
-#: app/pages/EventRulesOverview/UmaSelect.tsx:72:20
+#: app/pages/EventRulesOverview/UmaSelect.tsx:74:22
 msgid "Uma penalty for 4th place"
 msgstr "4 位のウマ減点"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:232:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:263:22
 msgid "Use yakitori rule"
 msgstr "焼き鳥ルールを有効にする"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:179:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:210:22
 msgid "Value of one honba stick"
 msgstr "本場 1 本の点数"
 
@@ -1718,7 +1774,7 @@ msgstr "本場 1 本の点数"
 msgid "View game"
 msgstr "対局を見る"
 
-#: app/pages/PlayerStats.tsx:245:12
+#: app/pages/PlayerStats.tsx:246:12
 msgid "View selected game details"
 msgstr "選択した対局の詳細を見る"
 
@@ -1738,11 +1794,11 @@ msgstr "最高の手"
 msgid "West wind"
 msgstr "西風"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:83:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:114:22
 msgid "When a player runs out of score points, the game immediately ends"
 msgstr "プレイヤーの点数が 0 点未満になったら直ちに対局を終了"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:75:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:106:22
 msgid ""
 "When dealer wins, or stays tempai after draw, seat winds will be changed. "
 "Honba is added only after draw."
@@ -1805,11 +1861,11 @@ msgid "Without declared riichi: "
 msgstr "立直宣言なし： "
 
 #: app/components/YakitoriIndicator.tsx:38:32
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:231:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:262:16
 msgid "Yakitori"
 msgstr "焼き鳥"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:241:18
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:272:18
 msgid "Yakitori penalty"
 msgstr "焼き鳥のペナルティ"
 
@@ -1817,7 +1873,7 @@ msgstr "焼き鳥のペナルティ"
 msgid "Yaku allowed"
 msgstr "有効な役"
 
-#: app/components/YakuGraph.tsx:94:21
+#: app/components/YakuGraph.tsx:111:23
 msgid "Yaku collected over all time"
 msgstr "これまでに和了した役"
 
@@ -1841,11 +1897,11 @@ msgstr "役牌 x3"
 msgid "Yakuhai x4"
 msgstr "役牌 x4"
 
-#: app/components/YakuGraph.tsx:80:49
+#: app/components/YakuGraph.tsx:80:42
 msgid "Yakuhai: total"
 msgstr "役牌：合計"
 
-#: app/components/HandsGraph.tsx:77:27
+#: app/components/HandsGraph.tsx:80:21
 msgid "Yakumans"
 msgstr "役満"
 
@@ -1857,19 +1913,19 @@ msgstr ""
 "大会の進行表を自分で用意してください。有効の場合、座席表の自動生成は使用でき"
 "ません。"
 
-#: app/helpers/gameLog.ts:64:59
+#: app/helpers/gameLog.ts:69:59
 msgid "all noten"
 msgstr "全員ノーテン"
 
-#: app/helpers/gameLog.ts:63:13
+#: app/helpers/gameLog.ts:68:13
 msgid "all tenpai"
 msgstr "全員聴牌"
 
-#: app/helpers/gameLog.ts:149:19
+#: app/helpers/gameLog.ts:147:19
 msgid "dora %1"
 msgstr "ドラ %1"
 
-#: app/helpers/gameLog.ts:23:20
+#: app/helpers/gameLog.ts:28:20
 msgctxt "Riichi bets count"
 msgid "none"
 msgstr "なし"
@@ -1879,14 +1935,32 @@ msgctxt "Achievements badge"
 msgid "yakuman (%1)"
 msgstr "役満 (%1)"
 
-#: app/helpers/gameLog.ts:156:12
+#: app/helpers/gameLog.ts:154:12
 msgid "yakuman!"
 msgstr "役満！"
 
-#: app/components/RatingGraph.tsx:167:29
-msgid "First displayed game"
-msgstr "表示する最初の対局"
+#~ msgid ""
+#~ "Amount of points given for each chip. Chips should be set up in "
+#~ "tournament settings in Tenhou.net."
+#~ msgstr "チップ 1 枚の点数。天鳳の大会設定でチップを設定してください。"
 
-#: app/components/RatingGraph.tsx:168:27
-msgid "Last displayed game"
-msgstr "表示する最後の対局"
+#~ msgid "Count of session in game series."
+#~ msgstr "シリーズ内の対局数。"
+
+#~ msgid "Double Yakuman:"
+#~ msgstr "ダブル役満："
+
+#~ msgid ""
+#~ "Interval of time when played online game is still considered valid and "
+#~ "can be added to the rating."
+#~ msgstr "オンライン対局が有効で、ランキングに追加できる期間。"
+
+#~ msgid ""
+#~ "Tenhou Lobby ID. Please contact event administrator for proper link to "
+#~ "lobby."
+#~ msgstr ""
+#~ "天鳳のロビー ID。正しいロビーリンクについてはイベント管理者にお問い合わせ"
+#~ "ください。"
+
+#~ msgid "Uma bonus type"
+#~ msgstr "ウマの種類"

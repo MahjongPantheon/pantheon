@@ -135,7 +135,10 @@ export function GamesList({
                       size='lg'
                       title={i18n._t('Current round')}
                     >
-                      {formatRoundIndex(t.currentRoundIndex)}
+                      {formatRoundIndex(
+                        t.currentRoundIndex,
+                        eventConfig?.rulesetConfig.withSanma ? 3 : 4
+                      )}
                     </ActionIcon>
                   )}
                 </Stack>

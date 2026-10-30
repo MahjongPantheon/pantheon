@@ -15,16 +15,19 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-export function roundToString(value: string | number): string {
+export function roundToString(value: string | number, playersCount = 4): string {
   const v = parseInt(value.toString(), 10);
-  if (v > 12) {
-    return `北${v - 12}`;
+  if (v < 1) {
+    return '?';
   }
-  if (v > 8) {
-    return `西${v - 8}`;
+  if (v > 3 * playersCount) {
+    return `北${v - 3 * playersCount}`;
   }
-  if (v > 4) {
-    return `南${v - 4}`;
+  if (v > 2 * playersCount) {
+    return `西${v - 2 * playersCount}`;
+  }
+  if (v > playersCount) {
+    return `南${v - playersCount}`;
   }
   return `東${v}`;
 }

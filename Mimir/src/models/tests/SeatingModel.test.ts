@@ -59,6 +59,7 @@ describe('seating creation', () => {
   beforeEach(() => {
     event = Object.assign(new EventEntity(), {
       id: eventId,
+      ruleset: RulesetEntity.createRuleset('ema'),
       useTimer: 1,
       gamesStatus: TournamentGamesStatus.TOURNAMENT_GAMES_STATUS_STARTED,
     });
@@ -141,6 +142,49 @@ describe('seating creation', () => {
         );
       }
     });
+  });
+
+  describe.each(['ema', 'sanma'] as const)('historical tables (%s)', (preset) => {
+    it.each(generatedSeatings)(
+      'retains complete history and excludes ignored players from new $name seating',
+      async ({ run, preview }) => {
+        event.ruleset = RulesetEntity.createRuleset(preset);
+        const ids = playerIds.slice(0, event.ruleset.playerCount);
+        regs = regs.filter((reg) => ids.includes(reg.playerId));
+        ignoredPlayerIds = [999];
+        regs.push(
+          Object.assign(new EventRegisteredPlayersEntity(), {
+            event,
+            playerId: 999,
+            ignoreSeating: 1,
+          })
+        );
+        vi.mocked(
+          Model.getModel(repo, PlayerInSessionModel).getPlayersSeatingInEvent
+        ).mockResolvedValue(
+          [999, ...ids.slice(1), ...(preset === 'sanma' ? [-1] : [])].map((player_id, index) => ({
+            session_id: 1,
+            table_index: 1,
+            player_id,
+            order: index + 1,
+          }))
+        );
+        const result = await run();
+        if (preview && 'tables' in result) {
+          expect(
+            result.tables
+              .flatMap((table) => table.players.map((p) => p.playerId))
+              .sort((a, b) => a - b)
+          ).toEqual(ids);
+        } else {
+          expect(sessions.startSession).toHaveBeenCalledWith(event, expect.arrayContaining(ids), 1);
+          const newIds = vi.mocked(sessions.startSession).mock.calls[0][1];
+          expect(newIds).toHaveLength(event.ruleset.playerCount);
+          expect(newIds).not.toContain(999);
+          expect(newIds).not.toContain(-1);
+        }
+      }
+    );
   });
 
   it('preserves an explicit prescript roster when all players are excluded from generated seating', async () => {

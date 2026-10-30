@@ -1,3 +1,4 @@
+import { GHOST_PLAYER_ID } from '../../../../Common/constants.js';
 import { Repository } from '../../services/Repository';
 import { EventEntity } from '../../entities/Event.entity';
 import { getRoundsOfSessions } from './helpers/getRoundsOfSessions';
@@ -15,6 +16,7 @@ export async function getDieHard(event: EventEntity, repo: Repository) {
 
   for (const session of sessions) {
     for (const p of session.players) {
+      if (p.playerId === GHOST_PLAYER_ID) continue;
       if (!throwCounts.has(p.playerId)) {
         throwCounts.set(p.playerId, 0);
       }

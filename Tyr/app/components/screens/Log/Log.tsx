@@ -41,11 +41,12 @@ export const Log = (props: IComponentProps) => {
   const rounds: IRoundOverviewInfo[] = [];
 
   const playersList = state.currentOtherTable ? state.currentOtherTablePlayers : state.players;
+  const playersCount = state.gameConfig?.rulesetConfig.withSanma ? 3 : 4;
 
   if (!state.allRoundsOverviewErrorCode && state.allRoundsOverview && playersList) {
     state.allRoundsOverview.forEach((roundOverview) => {
       results.push({
-        round: roundToString(roundOverview.roundIndex),
+        round: roundToString(roundOverview.roundIndex, playersCount),
         scores: roundOverview.scores,
         scoresDelta: roundOverview.scoresDelta,
       });

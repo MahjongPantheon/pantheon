@@ -15,7 +15,7 @@ function render(extra: Partial<Props> = {}) {
     width: 200,
     height: 200,
     tableIndex: 2,
-    tableStatus: { roundIndex: 1, riichiCount: 0, honbaCount: 0 },
+    tableStatus: { playersCount: 4, roundIndex: 1, riichiCount: 0, honbaCount: 0 },
     timerState: {},
     ...extra,
   };
@@ -27,7 +27,7 @@ function render(extra: Partial<Props> = {}) {
 }
 
 it('displays round, table number and accumulated sticks', () => {
-  render({ tableStatus: { roundIndex: 5, riichiCount: 2, honbaCount: 3 } });
+  render({ tableStatus: { playersCount: 4, roundIndex: 5, riichiCount: 2, honbaCount: 3 } });
   expect(view.container.textContent).toContain('Table #2');
   expect(view.container.querySelector('[data-testid="tyr-table-round"]')?.textContent).toBe('南1');
   expect(
@@ -65,7 +65,13 @@ it.each([
     render({
       timerState: { useTimer: true, secondsRemaining },
       endingPolicy,
-      tableStatus: { roundIndex: 1, riichiCount: 0, honbaCount: 0, lastHandStarted },
+      tableStatus: {
+        playersCount: 4,
+        roundIndex: 1,
+        riichiCount: 0,
+        honbaCount: 0,
+        lastHandStarted,
+      },
     });
     if (expected) expect(view.container.textContent).toContain(expected);
     else
@@ -96,3 +102,8 @@ it.each([false, true])(
       expect(callback.mock.calls.length).toBe(handlers ? 1 : 0);
   }
 );
+
+it('shows South 1 after three hands in sanma', () => {
+  render({ tableStatus: { playersCount: 3, roundIndex: 4, riichiCount: 0, honbaCount: 0 } });
+  expect(view.container.querySelector('[data-testid="tyr-table-round"]')?.textContent).toBe('南1');
+});
