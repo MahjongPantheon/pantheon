@@ -43,6 +43,13 @@ describe('Mimir Twirp API', () => {
     expect(rulesets.rulesets).toBeDefined();
     expect(rulesets.rulesetIds).toBeDefined();
     expect(rulesets.rulesetTitles).toBeDefined();
+    const ema2025Index = rulesets.rulesetIds.indexOf('ema2025');
+    expect(ema2025Index).toBeGreaterThanOrEqual(0);
+    expect(rulesets.rulesetTitles[ema2025Index]).toBe('European Mahjong Association rules (2025)');
+    expect(rulesets.rulesets[ema2025Index]).toMatchObject({
+      withKiriageMangan: true,
+      chomboCountsAsHand: true,
+    });
   });
 
   test('CreateEvent', async () => {
@@ -839,11 +846,7 @@ describe('Mimir Twirp API', () => {
     const response = await mimirClient.PreviewRound({
       sessionHash: '750cd6015c59aed57ebd9260d03fb80adb3b83f7',
       roundData: {
-        chombo: {
-          roundIndex: 3,
-          honba: 3,
-          loserId: 187,
-        },
+        chombo: { loserIds: [187], roundIndex: 3, honba: 3 },
       },
     });
     expect(response).toBeDefined();
@@ -864,11 +867,7 @@ describe('Mimir Twirp API', () => {
       mimirClient.PreviewRound({
         sessionHash: '750cd6015c59aed57ebd9260d03fb80adb3b83f7',
         roundData: {
-          chombo: {
-            roundIndex: 3,
-            honba: 2,
-            loserId: 187,
-          },
+          chombo: { loserIds: [187], roundIndex: 3, honba: 2 },
         },
       })
     ).rejects.toThrow();
@@ -1143,11 +1142,7 @@ describe('Mimir Twirp API', () => {
     const response = await mimirClient.AddRound({
       sessionHash,
       roundData: {
-        chombo: {
-          roundIndex: 1,
-          honba: 0,
-          loserId: 10,
-        },
+        chombo: { loserIds: [10], roundIndex: 1, honba: 0 },
       },
     });
     expect(response).toBeDefined();
@@ -1168,11 +1163,7 @@ describe('Mimir Twirp API', () => {
       mimirClient.AddRound({
         sessionHash,
         roundData: {
-          chombo: {
-            roundIndex: 1,
-            honba: 1,
-            loserId: 10,
-          },
+          chombo: { loserIds: [10], roundIndex: 1, honba: 1 },
         },
       })
     ).rejects.toThrow();

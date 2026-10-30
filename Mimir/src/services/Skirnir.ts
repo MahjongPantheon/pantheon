@@ -335,7 +335,7 @@ export class SkirnirService implements ISkirnirService {
     } else if (round.abort) {
       diffMsg.push('Abortive draw');
     } else if (round.chombo) {
-      diffMsg.push(`Chombo (${playerMap[round.chombo.loserId]})`);
+      diffMsg.push(`Chombo (${round.chombo.loserIds.map((id) => playerMap[id]).join(', ')})`);
     }
 
     if (diffMsg.length === 0) {

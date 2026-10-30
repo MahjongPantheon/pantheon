@@ -100,7 +100,7 @@ it.each([RoundOutcome.ROUND_OUTCOME_RON, RoundOutcome.ROUND_OUTCOME_TSUMO])(
   }
 );
 
-it.each([RoundOutcome.ROUND_OUTCOME_RON, RoundOutcome.ROUND_OUTCOME_CHOMBO])(
+it.each([RoundOutcome.ROUND_OUTCOME_RON])(
   'selects and removes a loser for %s',
   (outcome: RoundOutcome) => {
     const initial = fixture(outcome);
@@ -186,4 +186,22 @@ it('orders available players and removes already-selected registrations', () => 
   ]);
   expect(getPlayers(initialState)).toEqual([defaultPlayer]);
   expect(state.allPlayers).toEqual([current, zoe, alice]);
+});
+
+it('selects several chombo players independently and requires at least one to proceed', async () => {
+  const { loseDisabled } = await import('../selectors/userItem');
+  const { getLosingUsers } = await import('../selectors/mimir');
+  const { mayGoNextFromPlayersSelect } = await import('../selectors/navbar');
+  let state = fixture(RoundOutcome.ROUND_OUTCOME_CHOMBO);
+  expect(mayGoNextFromPlayersSelect(state)).toBe(false);
+  for (const id of [1, 2, 3, 4]) {
+    expect(loseDisabled(state, state.players![id - 1])).toBe(false);
+    state = change(state, a.TOGGLE_LOSER, id);
+  }
+  expect(getLosingUsers(state).map((player) => player.id)).toEqual([1, 2, 3, 4]);
+  expect(mayGoNextFromPlayersSelect(state)).toBe(true);
+  state = change(state, a.TOGGLE_LOSER, 2);
+  expect(getLosingUsers(state).map((player) => player.id)).toEqual([1, 3, 4]);
+  for (const id of [1, 3, 4]) state = change(state, a.TOGGLE_LOSER, id);
+  expect(mayGoNextFromPlayersSelect(state)).toBe(false);
 });

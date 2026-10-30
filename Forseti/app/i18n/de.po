@@ -2790,3 +2790,13 @@ msgstr "yakuman!"
 #~ msgstr ""
 #~ "Tenhou login string statt Benutzername eingegeben. Bitte niemals den "
 #~ "login string weitergeben!"
+
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:87:16
+msgid "Chombo after time is out counts as hand"
+msgstr "Chombo nach Ablauf der Zeit zählt als gespielte Hand"
+
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:79:22
+msgid ""
+"If set, a chombo after timeout counts as one played hand. All selected "
+"players are penalized together. Applies to both timed ending policies."
+msgstr "Wenn aktiviert, zählt ein Chombo nach Ablauf der Zeit als eine gespielte Hand. Alle ausgewählten Spieler erhalten ihre Strafe gemeinsam. Gilt für beide zeitabhängigen Beendigungsregeln."

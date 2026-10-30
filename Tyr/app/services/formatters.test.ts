@@ -147,9 +147,17 @@ it('serializes abort and chombo results', () => {
   });
   const chombo = state(RoundOutcome.ROUND_OUTCOME_CHOMBO);
   if (chombo.currentOutcome?.selectedOutcome === RoundOutcome.ROUND_OUTCOME_CHOMBO)
-    chombo.currentOutcome.loser = 3;
-  expect(formatRoundToTwirp(chombo)).toEqual({ chombo: { roundIndex: 3, honba: 2, loserId: 3 } });
+    chombo.currentOutcome.losers = [3];
+  expect(formatRoundToTwirp(chombo)).toEqual({
+    chombo: { roundIndex: 3, honba: 2, loserIds: [3] },
+  });
   expect(mayGoNextFromPlayersSelect(chombo)).toBe(true);
+  const grouped = state(RoundOutcome.ROUND_OUTCOME_CHOMBO);
+  if (grouped.currentOutcome?.selectedOutcome === RoundOutcome.ROUND_OUTCOME_CHOMBO)
+    grouped.currentOutcome.losers = [2, 3];
+  expect(formatRoundToTwirp(grouped)).toEqual({
+    chombo: { roundIndex: 3, honba: 2, loserIds: [2, 3] },
+  });
 });
 
 it('returns empty selector values before an outcome has been selected', () => {

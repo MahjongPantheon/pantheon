@@ -130,7 +130,7 @@ export class RoundModel extends Model {
     if (round.chombo) {
       const r = new RoundEntity();
       r.round = round.chombo.roundIndex;
-      r.hands = [HandEntity.fromMessage(round.chombo, r)];
+      r.hands = RoundEntity.chomboHands(round.chombo, r);
 
       r.outcome = RoundOutcome.ROUND_OUTCOME_CHOMBO;
       r.honba = round.chombo.honba;
@@ -139,7 +139,7 @@ export class RoundModel extends Model {
       r.endDate = endDate.toISOString();
       r.lastSessionState = lastSessionState;
 
-      this.repo.em.persist(r.hands[0]);
+      this.repo.em.persist(r.hands);
       this.repo.em.persist(r);
     }
 
@@ -219,10 +219,10 @@ export class RoundModel extends Model {
         return calc.lastPaymentsInfo();
       }
       case RoundOutcome.ROUND_OUTCOME_CHOMBO: {
-        calc.chombo(
+        calc.chomboForPlayers(
           event.ruleset.rules,
           sessionState.getCurrentDealer(),
-          round.hands[0].loserId!,
+          round.hands.map((hand) => hand.loserId!),
           sessionState.getScores()
         );
         return calc.lastPaymentsInfo();

@@ -81,8 +81,9 @@ export function winDisabled(state: IAppState, userData: PlayerInSession) {
   ); // and it should not be current loser
 }
 
-// for ron/chombo - loser is only one
+// Ron has one loser; chombo may penalize several players.
 export function loseDisabled(state: IAppState, userData: PlayerInSession) {
+  if (state.currentOutcome?.selectedOutcome === RoundOutcome.ROUND_OUTCOME_CHOMBO) return false;
   return (
     (getLosingUsers(state).length > 0 && -1 === getLosingUsers(state).indexOf(userData)) ||
     -1 !== getWinningUsers(state).indexOf(userData)

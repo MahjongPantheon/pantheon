@@ -41,3 +41,10 @@ Forseti's yaku settings. When creating an event, Forseti defaults tournaments to
 aggregated yakuhai and local/online events to separate names. The upgrade
 migration preserves aggregated yakuhai for existing events. The mode
 also controls new online imports and does not rewrite recorded hands.
+
+### Chombo selection
+
+Select every player who received chombo before confirming the round. The preview
+shows all penalties and the submission records them together, including after
+the timer expires. A group of penalties consumes one timed hand. Tapping a
+selected player removes only that player; at least one must remain selected.

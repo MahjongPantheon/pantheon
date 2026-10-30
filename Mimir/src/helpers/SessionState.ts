@@ -450,24 +450,22 @@ export class SessionState {
   }
 
   protected _updateAfterChombo(round: RoundEntity): PaymentsInfo {
-    const loserId = round.hands[0].loserId;
-    if (loserId === undefined) {
+    const loserIds = round.hands.map((hand) => hand.loserId!);
+    if (!loserIds.length || loserIds.some((id) => id === undefined)) {
       throw new Error('Loser ID required for chombo');
     }
-
     const calc = new PointsCalc();
-    this._state.scores = calc.chombo(
+    this._state.scores = calc.chomboForPlayers(
       this._ruleset.rules,
       this.getCurrentDealer(),
-      loserId,
+      loserIds,
       this.getScores()
     );
-
     if (this._ruleset.rules.chomboAmount > 0) {
-      if (!(loserId in this._state.chombo)) {
-        this._state.chombo[loserId] = 0;
+      for (const loserId of loserIds) {
+        this._state.chombo[loserId] =
+          (this._state.chombo[loserId] ?? 0) - this._ruleset.rules.chomboAmount;
       }
-      this._state.chombo[loserId] -= this._ruleset.rules.chomboAmount;
     }
     return calc.lastPaymentsInfo();
   }

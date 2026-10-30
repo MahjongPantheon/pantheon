@@ -60,8 +60,11 @@ export const getWinningUsers: typeof _getWinningUsers = memoize(_getWinningUsers
 function _getLosingUsers(state: IAppState): PlayerInSession[] {
   const outcome = state.currentOutcome;
   switch (outcome?.selectedOutcome) {
+    case RoundOutcome.ROUND_OUTCOME_CHOMBO: {
+      const loserIds = new Set(outcome.losers);
+      return state.players?.filter((player) => loserIds.has(player.id)) ?? [];
+    }
     case RoundOutcome.ROUND_OUTCOME_RON:
-    case RoundOutcome.ROUND_OUTCOME_CHOMBO:
       const foundLoser = state.players?.find((val) => val.id === outcome.loser);
       return foundLoser ? [foundLoser] : [];
     default:

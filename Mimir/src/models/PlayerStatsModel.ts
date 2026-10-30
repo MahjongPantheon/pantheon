@@ -539,7 +539,7 @@ export class PlayerStatsModel extends Model {
             break;
           }
           case RoundOutcome.ROUND_OUTCOME_CHOMBO: {
-            if (round.hands[0].loserId === playerId) {
+            if (round.hands.some((hand) => hand.loserId === playerId)) {
               acc.chombo++;
             }
             break;

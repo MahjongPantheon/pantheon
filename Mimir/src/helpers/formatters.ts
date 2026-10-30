@@ -121,7 +121,7 @@ export function formatRound(round: RoundEntity, sessionState: SessionStateEntity
         chombo: {
           roundIndex: round.round,
           honba: sessionState.honba,
-          loserId: round.hands[0].loserId!,
+          loserIds: round.hands.map((hand) => hand.loserId!),
         },
       };
     case RoundOutcome.ROUND_OUTCOME_NAGASHI:

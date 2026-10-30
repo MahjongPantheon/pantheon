@@ -103,7 +103,7 @@ it.each([
   [{ tsumo: { winnerId: 2, han: 5, fu: 0, yaku: [36] } }, 'Mangan'],
   [{ draw: {} }, 'Exhaustive draw'],
   [{ abort: {} }, 'Abortive draw'],
-  [{ chombo: { loserId: 1 } }, 'Chombo (Player 1)'],
+  [{ chombo: { loserIds: [1] } }, 'Chombo (Player 1)'],
   [{}, 'No changes'],
 ])('describes the recorded round %j', async (round, text) => {
   await service.messageHandRecorded([1, 2], [1], 42, {}, round as Round);

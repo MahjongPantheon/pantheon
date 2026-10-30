@@ -101,9 +101,9 @@ it('issues stable round tokens, deduplicates chombo, and accepts a second intent
     roundToken: overview.nextRoundToken,
     roundData: {
       chombo: {
+        loserIds: [10],
         roundIndex: overview.state.roundIndex,
         honba: overview.state.honbaCount,
-        loserId: 10,
       },
     },
   };
@@ -126,7 +126,7 @@ it('issues stable round tokens, deduplicates chombo, and accepts a second intent
   await expect(
     client.AddRound({
       ...request,
-      roundData: { chombo: { ...request.roundData.chombo, loserId: 97 } },
+      roundData: { chombo: { ...request.roundData.chombo, loserIds: [97] } },
     })
   ).rejects.toThrow('different parameters');
   const second = await client.AddRound({ ...request, roundToken: first.nextRoundToken });
@@ -161,7 +161,7 @@ it('rejects competing submissions with the same round token', async () => {
       client.AddRound({
         sessionHash,
         roundToken: overview.nextRoundToken,
-        roundData: { chombo: { roundIndex: 1, honba: 0, loserId } },
+        roundData: { chombo: { loserIds: [loserId], roundIndex: 1, honba: 0 } },
       })
     )
   );
@@ -213,3 +213,90 @@ it('requires creation keys and authenticates before replaying a saved response',
     'Authentication required'
   );
 });
+
+it('previews, atomically records, retries and undoes several chombo penalties in one round', async () => {
+  const { eventId } = await client.CreateEvent(
+    EventData.initialize({
+      requestId: randomUUID(),
+      type: EventType.EVENT_TYPE_LOCAL,
+      title: `Grouped chombo ${randomUUID()}`,
+      timezone: 'UTC',
+      rulesetConfig: RulesetEntity.createRuleset('ema').rules,
+    })
+  );
+  for (const playerId of players) await client.RegisterPlayer(eventId, playerId);
+  const { sessionHash } = await client.StartGame(eventId, players);
+  const before = await client.GetSessionOverview(sessionHash);
+  const roundData = {
+    chombo: {
+      roundIndex: before.state.roundIndex,
+      honba: before.state.honbaCount,
+      loserIds: [10, 97],
+    },
+  };
+  const preview = await client.PreviewRound({ sessionHash, roundData });
+  expect(preview.state?.scores).toEqual(
+    expect.arrayContaining([
+      expect.objectContaining({ playerId: 10, chomboCount: -20000 }),
+      expect.objectContaining({ playerId: 97, chomboCount: -20000 }),
+    ])
+  );
+  expect(await roundCount(sessionHash)).toBe(0);
+  expect((await client.GetSessionOverview(sessionHash)).nextRoundToken).toBe(before.nextRoundToken);
+  const request = { sessionHash, roundData, roundToken: before.nextRoundToken };
+  const result = await client.AddRound(request);
+  expect(await client.AddRound(request)).toEqual(result);
+  expect(await roundCount(sessionHash)).toBe(1);
+  const saved = await orm.em
+    .fork()
+    .findOneOrFail(
+      RoundEntity,
+      { session: { representationalHash: sessionHash } },
+      { populate: ['hands'] }
+    );
+  expect(saved.hands.map((hand) => hand.loserId!).sort((a, b) => a - b)).toEqual([10, 97]);
+  const log = await client.GetAllRounds(sessionHash);
+  expect(log.rounds[0].round?.chombo?.loserIds).toEqual([10, 97]);
+  await client.DropLastRound(sessionHash, result.scores);
+  const after = await client.GetSessionOverview(sessionHash);
+  expect(await roundCount(sessionHash)).toBe(0);
+  expect(after.state.chombo).toEqual(before.state.chombo);
+  expect(after.state.lastHandStarted).toBe(before.state.lastHandStarted);
+  expect(after.nextRoundToken).not.toBe(result.nextRoundToken);
+});
+
+it.each([false, true])(
+  'replays an event-creation receipt containing the retired chombo flag (%s)',
+  async (chomboEndsGame) => {
+    const repo = Repository.instance(
+      { 'x-current-person-id': '42', 'x-auth-token': 'test-token' },
+      orm
+    );
+    repo.mockFrey();
+    const model = Model.getModel(repo, EventModel);
+    const request = EventData.initialize({
+      requestId: randomUUID(),
+      type: EventType.EVENT_TYPE_LOCAL,
+      title: `Legacy chombo receipt ${randomUUID()}`,
+      timezone: 'UTC',
+      rulesetConfig: RulesetEntity.createRuleset('ema').rules,
+    });
+    const created = await model.createEvent({ ...request, requestId: undefined });
+    const { requestId, ...body } = request;
+    await Model.getModel(repo, IdempotencyModel).execute(
+      'person:42',
+      'CreateEvent',
+      requestId,
+      { ...body, rulesetConfig: { ...body.rulesetConfig, chomboEndsGame } },
+      async () => created
+    );
+    expect(await model.createEvent(request)).toEqual(created);
+    expect(await orm.em.fork().count(EventEntity, { title: request.title })).toBe(1);
+    await expect(
+      model.createEvent({ ...request, title: 'Changed parameters' })
+    ).rejects.toMatchObject({
+      code: 'already_exists',
+      msg: expect.stringContaining('different parameters'),
+    });
+  }
+);

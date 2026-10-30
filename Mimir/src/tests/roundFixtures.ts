@@ -42,7 +42,7 @@ export const roundFixtures: Array<[string, Round]> = [
   ],
   ['draw', { draw: { roundIndex: 2, honba: 1, riichiBets: [2], tempai: [1, 2] } }],
   ['abort', { abort: { roundIndex: 2, honba: 1, riichiBets: [2] } }],
-  ['chombo', { chombo: { roundIndex: 2, honba: 1, loserId: 3 } }],
+  ['chombo', { chombo: { loserIds: [3], roundIndex: 2, honba: 1 } }],
   ['nagashi', { nagashi: { roundIndex: 2, honba: 1, riichiBets: [2], tempai: [2], nagashi: [2] } }],
   [
     'multiron',

@@ -157,8 +157,7 @@ export function initBlankOutcome(round: number, outcome: RoundOutcome): AppOutco
       const outcomeChombo: AppOutcomeChombo = {
         selectedOutcome: RoundOutcome.ROUND_OUTCOME_CHOMBO,
         roundIndex: round,
-        loser: undefined,
-        loserIsDealer: false,
+        losers: [],
       };
       out = outcomeChombo;
       break;

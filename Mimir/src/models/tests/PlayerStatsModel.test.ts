@@ -107,6 +107,19 @@ describe('PlayerStatsModel.getPlayerStats', () => {
   });
   afterAll(() => repo.destroy());
 
+  it('counts chombo for every penalized player in a shared round', () => {
+    const round = Object.assign(new RoundEntity(), {
+      outcome: RoundOutcome.ROUND_OUTCOME_CHOMBO,
+      lastSessionState: new SessionState(event.ruleset, playerIds).state,
+      hands: [101, 303].map((loserId) => Object.assign(new HandEntity(), { loserId })),
+    });
+    for (const playerId of playerIds) {
+      expect(stats._getOutcomeSummary(event.ruleset, playerId, [round]).chombo).toBe(
+        [101, 303].includes(playerId) ? 1 : 0
+      );
+    }
+  });
+
   it('averages dora over won hands using the doraLord calculation', () => {
     const doraRounds = [
       [

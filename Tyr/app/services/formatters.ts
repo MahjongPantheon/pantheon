@@ -141,7 +141,7 @@ export function formatRoundToTwirp(state: IAppState): Round | undefined {
         chombo: {
           roundIndex: state.sessionState?.roundIndex,
           honba: state.sessionState?.honbaCount,
-          loserId: getLosingUsers(state)[0].id,
+          loserIds: getLosingUsers(state).map((player) => player.id),
         } as ChomboResult,
       };
     default:

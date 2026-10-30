@@ -12,7 +12,7 @@ describe('pending RPC submissions', () => {
   });
 
   it('uses a persisted server token even if overview now supplies a newer token', async () => {
-    const request = { chombo: { loserId: 10 } };
+    const request = { chombo: { loserIds: [10] } };
     sessionStorage.setItem(`pantheon:pending-rpc:round:${JSON.stringify(request)}`, 'original');
     const send = vi.fn().mockResolvedValue('ok');
     const generate = vi.fn(() => 'new-overview-token');

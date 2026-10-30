@@ -6,7 +6,7 @@ import { ComplexUma, EndingPolicy, RulesetConfig, Uma, UmaType } from 'tsclients
 @Embeddable()
 export class RulesetEntity {
   @Property()
-  baseRuleset!: 'ema' | 'wrc' | 'jpmlA' | 'tenhounet' | 'rrc' | 'sanma' | 'custom';
+  baseRuleset!: 'ema' | 'ema2025' | 'wrc' | 'jpmlA' | 'tenhounet' | 'rrc' | 'sanma' | 'custom';
 
   @Property()
   title!: string;
@@ -15,7 +15,7 @@ export class RulesetEntity {
   rules!: RulesetConfig;
 
   constructor(
-    baseRuleset: 'ema' | 'wrc' | 'jpmlA' | 'tenhounet' | 'rrc' | 'sanma' | 'custom',
+    baseRuleset: 'ema' | 'ema2025' | 'wrc' | 'jpmlA' | 'tenhounet' | 'rrc' | 'sanma' | 'custom',
     title: string,
     rules: RulesetConfig
   ) {
@@ -71,13 +71,21 @@ export class RulesetEntity {
           yakuWithPao: [Yaku.DAISANGEN, Yaku.DAISUUSHII],
           withYakitori: false,
           yakitoriPenalty: 0,
-          chomboEndsGame: false,
+          chomboCountsAsHand: false,
           honbaValue: 300,
           doubleYakuman: [],
           withSanma: false,
           sanmaDrawPayments: 0,
           sanmaChomboPayments: 0,
         });
+      case 'ema2025': {
+        const ruleset = RulesetEntity.createRuleset('ema');
+        return new RulesetEntity(baseRuleset, 'European Mahjong Association rules (2025)', {
+          ...ruleset.rules,
+          withKiriageMangan: true,
+          chomboCountsAsHand: true,
+        });
+      }
       case 'jpmlA':
         return new RulesetEntity(baseRuleset, 'Japanese Professional Mahjong League A rules', {
           complexUma: {
@@ -143,7 +151,7 @@ export class RulesetEntity {
           yakuWithPao: [Yaku.DAISANGEN, Yaku.DAISUUSHII, Yaku.SUUKANTSU],
           withYakitori: false,
           yakitoriPenalty: 0,
-          chomboEndsGame: false,
+          chomboCountsAsHand: false,
           honbaValue: 300,
           doubleYakuman: [],
           withSanma: false,
@@ -195,7 +203,7 @@ export class RulesetEntity {
           yakuWithPao: [Yaku.DAISANGEN, Yaku.DAISUUSHII],
           withYakitori: false,
           yakitoriPenalty: 0,
-          chomboEndsGame: false,
+          chomboCountsAsHand: false,
           honbaValue: 300,
           doubleYakuman: [],
           withSanma: false,
@@ -242,7 +250,7 @@ export class RulesetEntity {
           yakuWithPao: [Yaku.DAISANGEN, Yaku.DAISUUSHII, Yaku.SUUKANTSU],
           withYakitori: false,
           yakitoriPenalty: 0,
-          chomboEndsGame: false,
+          chomboCountsAsHand: false,
           honbaValue: 300,
           doubleYakuman: [],
           withSanma: false,
@@ -294,7 +302,7 @@ export class RulesetEntity {
           yakuWithPao: [Yaku.DAISANGEN, Yaku.DAISUUSHII],
           withYakitori: false,
           yakitoriPenalty: 0,
-          chomboEndsGame: true,
+          chomboCountsAsHand: true,
           honbaValue: 300,
           doubleYakuman: [],
           withSanma: false,

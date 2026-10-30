@@ -68,11 +68,11 @@ export const TournamentSettings: React.FC<TournamentSettingsProps> = ({ config, 
         <Space h='md' />
       </Radio.Group>
       <Checkbox
-        label={i18n._t('Chombo in last round ends game')}
+        label={i18n._t('Chombo after time is out counts as hand')}
         description={i18n._t(
-          'If this is set, chombo will not allow players to play one more hand if time is out and it is final hand of the game'
+          'If set, a chombo after timeout counts as one played hand. All selected players are penalized together. Applies to both timed ending policies.'
         )}
-        checked={config.rulesetConfig.chomboEndsGame}
+        checked={config.rulesetConfig.chomboCountsAsHand}
         readOnly
       />
       <Checkbox label={i18n._t('Team tournament')} checked={config.isTeam} readOnly />

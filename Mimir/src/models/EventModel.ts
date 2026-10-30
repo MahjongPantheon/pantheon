@@ -939,7 +939,14 @@ export class EventModel extends Model {
           'CreateEvent',
           requestId,
           request,
-          create
+          create,
+          // Retries across an upgrade must match saved fingerprints that included chomboEndsGame.
+          // Check both historical values so a completed request returns its original event;
+          // new requests still use the current schema, and other parameter changes are rejected.
+          [false, true].map((chomboEndsGame) => ({
+            ...request,
+            rulesetConfig: { ...request.rulesetConfig, chomboEndsGame },
+          }))
         )
       : await create(); // Internal model callers do not cross a retrying RPC boundary.
     const grant = () =>

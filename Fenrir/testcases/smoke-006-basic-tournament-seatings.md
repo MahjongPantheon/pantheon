@@ -38,15 +38,15 @@ Forseti tournament settings, seating generation, timer, round cancellation, and 
 
 Use **European Mahjong Association rules** and all explicit scoring settings from [SMOKE-005, Event rules](smoke-005-local-session-round-outcomes.md#event-rules), including the public rating table, 30,000 initial points, simple uma +15,000/+5,000/−5,000/−15,000, oka 0, and the separate 20,000 chombo penalty. Change the event type to Tournament and configure its tournament settings as follows:
 
-| Tournament setting             | Value                                                             |
-| ------------------------------ | ----------------------------------------------------------------- |
-| Session duration in minutes    | 60; plenty of time to record the hands without waiting for expiry |
-| Session ending policy          | “Do not interrupt session until it ends”                          |
-| Chombo in last round ends game | Off                                                               |
-| Team tournament                | Off                                                               |
-| Seating is defined in advance  | Off: generate each seating through Forseti                        |
-| Wind shuffle mode              | Random wind shuffle                                               |
-| Results visibility             | Public; keep results visible throughout all three seatings        |
+| Tournament setting                      | Value                                                             |
+| --------------------------------------- | ----------------------------------------------------------------- |
+| Session duration in minutes             | 60; plenty of time to record the hands without waiting for expiry |
+| Session ending policy                   | “Do not interrupt session until it ends”                          |
+| Chombo after time is out counts as hand | Off                                                               |
+| Team tournament                         | Off                                                               |
+| Seating is defined in advance           | Off: generate each seating through Forseti                        |
+| Wind shuffle mode                       | Random wind shuffle                                               |
+| Results visibility                      | Public; keep results visible throughout all three seatings        |
 
 Retain other EMA defaults. Verify settings after reopening the saved event. Tournament type supplies automatic seating, synchronous start/end, and the timer; do not turn this into a local event or manually create games in Tyr. Complete games naturally through South 4, without waiting for timer expiry or using force-finish.
 

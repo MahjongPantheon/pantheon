@@ -139,9 +139,10 @@ export function getPlayerData(
   let showChomboSign = false;
   if (
     state.currentOutcome?.selectedOutcome === RoundOutcome.ROUND_OUTCOME_CHOMBO &&
-    state.currentScreen === 'confirmation'
+    state.currentScreen === 'confirmation' &&
+    !state.gameConfig?.rulesetConfig.extraChomboPayments
   ) {
-    showChomboSign = state.currentOutcome.loser === player.id;
+    showChomboSign = state.currentOutcome.losers.includes(player.id);
   }
 
   return {

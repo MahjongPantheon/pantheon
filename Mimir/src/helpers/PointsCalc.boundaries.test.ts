@@ -38,3 +38,62 @@ it('rejects missing winners, losers and four simultaneous nagashi winners', () =
   expect(() => new PointsCalc().chombo(rules, 1, 0, scores)).toThrow('loser');
   expect(() => new PointsCalc().nagashi(scores, 1, [], [1, 2, 3, 4])).toThrow('More than 3');
 });
+
+it('combines reverse-mangan payments for every chombo player without changing the input', () => {
+  const rules = RulesetEntity.createRuleset('ema').rules;
+  rules.extraChomboPayments = true;
+  const original = { 1: 30000, 2: 30000, 3: 30000, 4: 30000 };
+  const calc = new PointsCalc();
+  expect(calc.chomboForPlayers(rules, 1, [1, 2], original)).toEqual({
+    1: 22000,
+    2: 26000,
+    3: 36000,
+    4: 36000,
+  });
+  expect(calc.lastPaymentsInfo().direct).toEqual({
+    '3<-1': 4000,
+    '4<-1': 4000,
+    '3<-2': 2000,
+    '4<-2': 2000,
+  });
+  expect(original).toEqual({ 1: 30000, 2: 30000, 3: 30000, 4: 30000 });
+  expect(() => calc.chomboForPlayers(rules, 1, [1, 1], original)).toThrow('distinct');
+});
+
+it.each([
+  { losers: [2, 3], direct: { '1<-2': 4000, '4<-2': 2000, '1<-3': 4000, '4<-3': 2000 } },
+  { losers: [1, 2, 3], direct: { '4<-1': 4000, '4<-2': 2000, '4<-3': 2000 } },
+  { losers: [1, 2, 3, 4], direct: {} },
+  { losers: [2], direct: { '1<-2': 4000, '3<-2': 2000, '4<-2': 2000 } },
+])('shows only outstanding chombo transfers for $losers', ({ losers, direct }) => {
+  const rules = RulesetEntity.createRuleset('ema').rules;
+  rules.extraChomboPayments = true;
+  const initial = { 1: 30000, 2: 30000, 3: 30000, 4: 30000 };
+  const calc = new PointsCalc();
+  const final = calc.chomboForPlayers(rules, 1, losers, initial);
+  expect(calc.lastPaymentsInfo().direct).toEqual(direct);
+  // Following the displayed transfers must reproduce the calculated scores.
+  const transferred: Record<number, number> = { ...initial };
+  for (const [key, amount] of Object.entries(calc.lastPaymentsInfo().direct)) {
+    const [recipient, payer] = key.split('<-').map(Number);
+    transferred[recipient] += amount;
+    transferred[payer] -= amount;
+  }
+  expect(transferred).toEqual(final);
+});
+
+it.each([6000, 2500])('cancels simultaneous sanma chombo transfers at %i points', (payment) => {
+  const rules = RulesetEntity.createRuleset('sanma').rules;
+  rules.extraChomboPayments = true;
+  rules.sanmaChomboPayments = payment;
+  const initial = { 1: 35000, 2: 35000, 3: 35000 };
+  const calc = new PointsCalc();
+  expect(calc.chomboForPlayers(rules, 1, [1, 2], initial)).toEqual({
+    1: 35000 - payment,
+    2: 35000 - payment,
+    3: 35000 + 2 * payment,
+  });
+  expect(calc.lastPaymentsInfo().direct).toEqual({ '3<-1': payment, '3<-2': payment });
+  expect(calc.chomboForPlayers(rules, 1, [1, 2, 3], initial)).toEqual(initial);
+  expect(calc.lastPaymentsInfo().direct).toEqual({});
+});

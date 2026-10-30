@@ -45,7 +45,7 @@ function fixture(outcome: RoundOutcome): IAppState {
   }
   if ('tempai' in current) current.tempai = [1];
   if ('deadhands' in current) current.deadhands = [3];
-  if (current.selectedOutcome === RoundOutcome.ROUND_OUTCOME_CHOMBO) current.loser = 2;
+  if (current.selectedOutcome === RoundOutcome.ROUND_OUTCOME_CHOMBO) current.losers = [2];
   if (current.selectedOutcome === RoundOutcome.ROUND_OUTCOME_NAGASHI) current.nagashi = [1, 2, 3];
   const players = [1, 2, 3, 4].map((id) =>
     PlayerInSession.initialize({
@@ -111,6 +111,19 @@ it.each(outcomes)('builds player controls and indicators for %s', (outcome: Roun
     expect(getPlayerButtons('self', state, dispatch)?.loseButton).toBe(PlayerButtonMode.DISABLE);
   }
 });
+
+it.each([false, true])(
+  'shows chombo preview indicators only without direct payments (enabled=%s)',
+  (extraChomboPayments: boolean) => {
+    const state = fixture(RoundOutcome.ROUND_OUTCOME_CHOMBO);
+    state.gameConfig!.rulesetConfig.extraChomboPayments = extraChomboPayments;
+    if (state.currentOutcome?.selectedOutcome === RoundOutcome.ROUND_OUTCOME_CHOMBO)
+      state.currentOutcome.losers = [1, 2];
+    expect(sides.map((side) => getPlayerData(side, state)?.showChomboSign)).toEqual(
+      extraChomboPayments ? [false, false, false, false] : [true, true, false, false]
+    );
+  }
+);
 
 it('limits nagashi selection to three players and maps all seat rotations', () => {
   const state = fixture(RoundOutcome.ROUND_OUTCOME_NAGASHI);

@@ -50,20 +50,24 @@ describe('outcomeReducer / sanma dealer-dependent outcomes', () => {
       type: TOGGLE_LOSER,
       payload: 35,
     });
-    expect(next.currentOutcome?.selectedOutcome).toBe(RoundOutcome.ROUND_OUTCOME_CHOMBO);
-    // @ts-expect-error narrowed at runtime
-    expect(next.currentOutcome?.loser).toBe(35);
-    // @ts-expect-error narrowed at runtime
-    expect(next.currentOutcome?.loserIsDealer).toBe(false);
+    expect(next.currentOutcome).toMatchObject({
+      selectedOutcome: RoundOutcome.ROUND_OUTCOME_CHOMBO,
+      losers: [35],
+    });
   });
 
-  it('marks the rotated dealer as loser-is-dealer in a 3-player game (round 2)', () => {
-    const next = outcomeReducer(makeState(RoundOutcome.ROUND_OUTCOME_CHOMBO), {
+  it('toggles the rotated dealer independently of another chombo player in sanma', () => {
+    const first = outcomeReducer(makeState(RoundOutcome.ROUND_OUTCOME_CHOMBO), {
+      type: TOGGLE_LOSER,
+      payload: 35,
+    });
+    const grouped = outcomeReducer(first, {
       type: TOGGLE_LOSER,
       payload: 36, // round-2 dealer = South
     });
-    // @ts-expect-error narrowed at runtime
-    expect(next.currentOutcome?.loserIsDealer).toBe(true);
+    expect(grouped.currentOutcome).toMatchObject({ losers: [35, 36] });
+    const withoutDealer = outcomeReducer(grouped, { type: TOGGLE_LOSER, payload: 36 });
+    expect(withoutDealer.currentOutcome).toMatchObject({ losers: [35] });
   });
 
   it('keeps the selected winner for a tsumo in a 3-player game (round 2)', () => {

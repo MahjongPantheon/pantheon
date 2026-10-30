@@ -108,3 +108,21 @@ describe('Complex uma', () => {
     expect(complexUma([29500, 29300, 29200, 29000], umaDef, 30000)).toEqual(umaDef.default);
   });
 });
+
+it('preserves the legacy EMA rules and ports the EMA 2025 preset', () => {
+  const legacy = RulesetEntity.createRuleset('ema');
+  const current = RulesetEntity.createRuleset('ema2025');
+  expect(current.baseRuleset).toBe('ema2025');
+  expect(current.rules).toEqual({
+    ...legacy.rules,
+    withKiriageMangan: true,
+    chomboCountsAsHand: true,
+  });
+  expect(legacy.rules).toMatchObject({
+    withKiriageMangan: false,
+    chomboCountsAsHand: false,
+  });
+  // Each preset must own its rule arrays and nested configuration.
+  current.rules.allowedYaku.length = 0;
+  expect(legacy.rules.allowedYaku.length).toBeGreaterThan(0);
+});

@@ -2686,3 +2686,13 @@ msgstr "役満！"
 
 #~ msgid "Yakuhai names"
 #~ msgstr "役牌の表示"
+
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:87:16
+msgid "Chombo after time is out counts as hand"
+msgstr "時間切れ後のチョンボを1局として数える"
+
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:79:22
+msgid ""
+"If set, a chombo after timeout counts as one played hand. All selected "
+"players are penalized together. Applies to both timed ending policies."
+msgstr "有効にすると、時間切れ後のチョンボを1局消化したものとして扱います。選択したすべてのプレイヤーに同時に罰則が適用されます。時間制限による終了方式の両方に適用されます。"

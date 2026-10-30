@@ -149,7 +149,9 @@ export function getRoundOverviewChombo(
   return {
     ...roundBase,
     outcome: RoundOutcome.ROUND_OUTCOME_CHOMBO,
-    penaltyFor: getPlayerName(players, roundOverview.round.chombo?.loserId),
+    penaltyFor: (roundOverview.round.chombo?.loserIds ?? [])
+      .map((id) => getPlayerName(players, id))
+      .join(', '),
   };
 }
 
