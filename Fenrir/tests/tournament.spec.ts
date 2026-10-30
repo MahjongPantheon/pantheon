@@ -162,7 +162,7 @@ test('SMOKE-006: Administrator and players can complete a two-table tournament w
         if (configure) await policy.check();
         await expect(policy).toBeChecked();
         for (const suffix of [
-          'ruleset-chombo-ends-game',
+          'ruleset-chombo-counts-as-hand',
           'event-is-team',
           'event-is-prescripted',
         ]) {

@@ -50,7 +50,7 @@ const rounds: [Round, RoundOutcome, number][] = [
     1,
   ],
   [
-    { chombo: ChomboResult.initialize({ roundIndex: 3, honba: 2, loserId: 2 }) },
+    { chombo: ChomboResult.initialize({ roundIndex: 3, honba: 2, loserIds: [2] }) },
     RoundOutcome.ROUND_OUTCOME_CHOMBO,
     1,
   ],
@@ -152,3 +152,29 @@ it('validates every multiron hand and the advertised winner count', () => {
     })
   ).toThrow('yaku');
 });
+
+it.each([
+  [1, 2],
+  [1, 2, 3, 4],
+])('accepts distinct chombo players %j in one round', (...ids) => {
+  const loserIds = ids as number[];
+  const chombo = ChomboResult.initialize({ loserIds, roundIndex: 1 });
+  expect(() => checkRound(players, players, ruleset, { chombo })).not.toThrow();
+  const session = Object.assign(new SessionEntity(), {
+    event: Object.assign(new EventEntity(), { ruleset }),
+  });
+  const round = validateAndCreateFromOnlineData(players, players, session, { chombo });
+  expect(round.hands.map((hand) => hand.loserId)).toEqual(loserIds);
+  expect(round.hands.every((hand) => hand.round === round)).toBe(true);
+});
+
+it.each([{ loserIds: [] }, { loserIds: [1, 1] }, { loserIds: [1, 99] }, { loserIds: [0] }])(
+  'rejects invalid chombo players %j before creating a round',
+  (data) => {
+    expect(() =>
+      checkRound(players, players, ruleset, {
+        chombo: ChomboResult.initialize(data),
+      })
+    ).toThrow();
+  }
+);

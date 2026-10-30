@@ -275,7 +275,9 @@ message AbortResult {
 message ChomboResult {
   int32 round_index = 1;
   int32 honba = 2;
-  int32 loser_id = 3;
+  reserved 3;
+  reserved "loser_id";
+  repeated int32 loser_ids = 4;
 }
 
 message NagashiResult {
@@ -609,7 +611,8 @@ message RulesetConfig {
   repeated int32 yaku_with_pao = 35;
   bool with_yakitori = 36;
   int32 yakitori_penalty = 37;
-  bool chombo_ends_game = 38;
+  reserved 38;
+  reserved "chombo_ends_game";
   int32 honba_value = 39;
   repeated int32 double_yakuman = 40;
   // False uses separate wind and dragon yaku for new events.
@@ -621,6 +624,9 @@ message RulesetConfig {
   int32 sanma_draw_payments = 43;
   // Points paid to EACH other player on chombo; 0/unset means 6000.
   int32 sanma_chombo_payments = 44;
+  // Count chombo after timeout as one hand under either timed ending policy.
+  // All players penalized together consume a single hand.
+  bool chombo_counts_as_hand = 45;
 }
 
 message MajsoulSearchEx {

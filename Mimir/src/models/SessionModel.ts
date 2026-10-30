@@ -485,6 +485,14 @@ export class SessionModel extends Model {
           session[0].intermediateResults
         );
 
+        // Reopening permits corrections, but does not undo the game's ending condition.
+        if (sessionState.isFinished()) {
+          throw new TwirpError({
+            code: 'failed_precondition',
+            msg: 'Session has already reached its ending condition; drop the last round to correct it',
+          });
+        }
+
         if (
           (roundData.ron && roundData.ron.yaku.length === 0) ||
           (roundData.tsumo && roundData.tsumo.yaku.length === 0) ||
@@ -611,7 +619,11 @@ export class SessionModel extends Model {
 
     switch (event.ruleset.rules.endingPolicy) {
       case EndingPolicy.ENDING_POLICY_EP_ONE_MORE_HAND: {
-        if (noTimeLeft && round.outcome !== RoundOutcome.ROUND_OUTCOME_CHOMBO) {
+        if (
+          noTimeLeft &&
+          (round.outcome !== RoundOutcome.ROUND_OUTCOME_CHOMBO ||
+            event.ruleset.rules.chomboCountsAsHand)
+        ) {
           if (!sessionState.lastHandStarted()) {
             payments = sessionState.update(round);
             sessionState.setLastHandStarted(true);
@@ -622,14 +634,6 @@ export class SessionModel extends Model {
           }
         } else {
           payments = sessionState.update(round);
-          if (
-            noTimeLeft &&
-            sessionState.lastHandStarted() &&
-            round.outcome === RoundOutcome.ROUND_OUTCOME_CHOMBO &&
-            event.ruleset.rules.chomboEndsGame
-          ) {
-            sessionState.forceFinish();
-          }
         }
 
         if (sessionState.isFinished()) {
@@ -647,7 +651,7 @@ export class SessionModel extends Model {
         if (
           noTimeLeft &&
           (round.outcome !== RoundOutcome.ROUND_OUTCOME_CHOMBO ||
-            event.ruleset.rules.chomboEndsGame)
+            event.ruleset.rules.chomboCountsAsHand)
         ) {
           sessionState.forceFinish();
         }
@@ -982,6 +986,14 @@ export class SessionModel extends Model {
           session[0].intermediateResults?.playerIds ?? [], // TODO check if this is populated properly on game start
           session[0].intermediateResults
         );
+
+        // Reopening permits corrections, but does not undo the game's ending condition.
+        if (sessionState.isFinished()) {
+          throw new TwirpError({
+            code: 'failed_precondition',
+            msg: 'Session has already reached its ending condition; drop the last round to correct it',
+          });
+        }
 
         const round =
           roundData.ron ??

@@ -351,8 +351,17 @@ function reduceOutcome(state: IAppState, action: AppActionTypes): IAppState {
       }
     case TOGGLE_LOSER:
       switch (state.currentOutcome?.selectedOutcome) {
-        case RoundOutcome.ROUND_OUTCOME_RON:
         case RoundOutcome.ROUND_OUTCOME_CHOMBO:
+          return {
+            ...state,
+            currentOutcome: {
+              ...state.currentOutcome,
+              losers: state.currentOutcome.losers.includes(action.payload)
+                ? state.currentOutcome.losers.filter((id) => id !== action.payload)
+                : [...state.currentOutcome.losers, action.payload],
+            },
+          };
+        case RoundOutcome.ROUND_OUTCOME_RON:
           return modifyLoseOutcome(state, {
             loser: state.currentOutcome.loser === action.payload ? undefined : action.payload,
             loserIsDealer:

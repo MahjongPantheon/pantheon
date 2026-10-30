@@ -199,3 +199,33 @@ Seating requires `mahjong-seatings-rs-node` 4.0.0 or later; version 3.0.0 ignore
 `tableSize`. The sanma tests cover scoring, dealer rotation, ghost exclusion,
 results, a complete session through the Twirp API, and generated seating modes.
 The engine and wrapper repositories also contain three-player seating tests.
+
+### Chombo after timeout
+
+`chomboCountsAsHand` is the only timed chombo setting. With it enabled, a chombo
+counts as one played hand for both timed ending policies. Under one-more-hand,
+the current hand consumes the first allowance and the following hand ends the
+session. Under end-after-hand, it ends the session immediately after timeout.
+With it disabled, a chombo does not advance either timed ending policy.
+
+Apply `Migration20261031000000` before deploying updated server and clients.
+It removes `chomboEndsGame` from stored event rules and enables
+`chomboCountsAsHand` when either flag was true. In particular, an old event
+with only `chomboEndsGame` enabled now counts chombo in either timed hand.
+Unrelated rules and historical rounds are preserved. EMA 2025 and RRC enable
+the unified setting; other presets default to false. Protobuf field 38 and its
+old name are reserved and cannot be reused.
+
+The `ema2025` preset also enables kiriage mangan; other settings follow EMA.
+
+A chombo submission can contain `loserIds` with one to four distinct session
+players. All selected penalties, optional reverse-mangan payments, statistics,
+and history belong to one atomic round, consuming one timed hand and one round
+token. Undo removes the whole group. Chombo requests and responses use only
+`loserIds`; protobuf field 3 and its old name `loser_id` are reserved.
+Apply `Migration20261031010000` before deploying the server and updated clients.
+It converts historical chombo payloads in saved round/session snapshots and RPC
+responses to arrays, preserving existing array entries and removing `loserId`.
+Ron outcomes and individual hand records retain their scalar loser field.
+Each player's existing chombo payment is applied once. Reciprocal transfers
+between players who received chombo cancel out and are omitted from payment details.

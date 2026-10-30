@@ -158,10 +158,10 @@ it.each([false, true])(
 
 it.each([true, false])(
   'only allows timed chombo to end the game under its configured rule (%s)',
-  async (chomboEndsGame) => {
+  async (chomboCountsAsHand) => {
     const f = fixture();
     f.event.ruleset.rules.endingPolicy = EndingPolicy.ENDING_POLICY_EP_END_AFTER_HAND;
-    f.event.ruleset.rules.chomboEndsGame = chomboEndsGame;
+    f.event.ruleset.rules.chomboCountsAsHand = chomboCountsAsHand;
     f.event.useTimer = 1;
     f.event.lastTimer = 1;
     f.event.gameDuration = 1;
@@ -173,10 +173,107 @@ it.each([true, false])(
     });
     vi.spyOn(state, 'update').mockReturnValue({ direct: {}, riichi: {}, honba: {} });
     vi.spyOn(state, 'forceFinish');
-    vi.spyOn(state, 'isFinished').mockReturnValue(chomboEndsGame);
+    vi.spyOn(state, 'isFinished').mockReturnValue(chomboCountsAsHand);
     vi.spyOn(f.model, 'prefinish').mockResolvedValue();
     await f.model.updateSessionState(f.event, f.session, state, round, true);
-    expect(state.forceFinish).toHaveBeenCalledTimes(chomboEndsGame ? 1 : 0);
-    expect(f.model.prefinish).toHaveBeenCalledTimes(chomboEndsGame ? 1 : 0);
+    expect(state.forceFinish).toHaveBeenCalledTimes(chomboCountsAsHand ? 1 : 0);
+    expect(f.model.prefinish).toHaveBeenCalledTimes(chomboCountsAsHand ? 1 : 0);
+  }
+);
+
+const chomboTimerCases = [false, true].flatMap((countsAsHand) =>
+  [false, true].flatMap((lastHandStarted) =>
+    ['expired', 'running', 'extraTime', 'disabled'].flatMap((timer) =>
+      [
+        EndingPolicy.ENDING_POLICY_EP_ONE_MORE_HAND,
+        EndingPolicy.ENDING_POLICY_EP_END_AFTER_HAND,
+        EndingPolicy.ENDING_POLICY_EP_UNSPECIFIED,
+      ].map((policy) => ({ countsAsHand, lastHandStarted, timer, policy }))
+    )
+  )
+);
+
+it.each(chomboTimerCases)(
+  'handles chombo with countsAsHand=$countsAsHand, lastHandStarted=$lastHandStarted, timer=$timer, policy=$policy',
+  async ({ countsAsHand, lastHandStarted, timer, policy }) => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date('2026-10-31T12:00:00Z'));
+    const f = fixture();
+    f.event.ruleset.rules.endingPolicy = policy;
+    f.event.ruleset.rules.chomboCountsAsHand = countsAsHand;
+    f.event.useTimer = timer === 'disabled' ? 0 : 1;
+    f.event.lastTimer = Date.now() / 1000 - (timer === 'running' ? 30 : 120);
+    f.event.gameDuration = 1;
+    f.session.extraTime = timer === 'extraTime' ? 120 : 0;
+    const state = new SessionState(f.event.ruleset, [1, 2, 3, 4]);
+    state.setLastHandStarted(lastHandStarted);
+    const round = RoundEntity.fromMessage(f.session, f.event, {
+      chombo: { loserIds: [2], roundIndex: state.getRound(), honba: state.getHonba() },
+    });
+    vi.spyOn(f.model, 'prefinish').mockResolvedValue();
+    await f.model.updateSessionState(f.event, f.session, state, round, true);
+
+    const oneMoreHand = policy === EndingPolicy.ENDING_POLICY_EP_ONE_MORE_HAND;
+    const afterHand = policy === EndingPolicy.ENDING_POLICY_EP_END_AFTER_HAND;
+    const expired = timer === 'expired';
+    expect(state.lastHandStarted()).toBe(
+      lastHandStarted || (expired && oneMoreHand && countsAsHand)
+    );
+    const finished =
+      expired && ((oneMoreHand && lastHandStarted && countsAsHand) || (afterHand && countsAsHand));
+    expect(state.isFinished()).toBe(finished);
+    expect(f.model.prefinish).toHaveBeenCalledTimes(finished ? 1 : 0);
+    // Chombo still repeats the round and applies its penalty regardless of timing.
+    expect(state.getRound()).toBe(1);
+    expect(state.getChombo()[2]).toBe(-f.event.ruleset.rules.chomboAmount);
+    expect(f.session.intermediateResults).toBeUndefined();
+  }
+);
+
+it('persists the EMA 2025 extra-hand allowance after a timed chombo and finishes on the next', async () => {
+  const f = fixture();
+  f.event.ruleset = RulesetEntity.createRuleset('ema2025');
+  f.event.useTimer = 1;
+  f.event.lastTimer = 1;
+  f.event.gameDuration = 1;
+  const state = new SessionState(f.event.ruleset, [1, 2, 3, 4]);
+  const round = RoundEntity.fromMessage(f.session, f.event, {
+    chombo: { loserIds: [2], roundIndex: 1, honba: 0 },
+  });
+  vi.spyOn(f.model, 'prefinish').mockResolvedValue();
+  await f.model.updateSessionState(f.event, f.session, state, round);
+  expect(f.session.intermediateResults?.lastHandStarted).toBe(true);
+  expect(state.isFinished()).toBe(false);
+  expect(f.model.prefinish).not.toHaveBeenCalled();
+
+  const restored = new SessionState(f.event.ruleset, [1, 2, 3, 4], f.session.intermediateResults);
+  await f.model.updateSessionState(f.event, f.session, restored, round);
+  expect(restored.isFinished()).toBe(true);
+  expect(f.model.prefinish).toHaveBeenCalledWith(f.event, f.session, restored, false);
+  expect(restored.getChombo()[2]).toBe(-40000);
+});
+
+it.each([false, true])(
+  'counts several simultaneous chombo penalties as one timed hand (last=%s)',
+  async (last) => {
+    const f = fixture();
+    f.event.ruleset = RulesetEntity.createRuleset('ema2025');
+    f.event.useTimer = 1;
+    f.event.lastTimer = 1;
+    f.event.gameDuration = 1;
+    const state = new SessionState(f.event.ruleset, [1, 2, 3, 4]);
+    state.setLastHandStarted(last);
+    const round = RoundEntity.fromMessage(f.session, f.event, {
+      chombo: { roundIndex: 1, honba: 0, loserIds: [1, 2, 3, 4] },
+    });
+    vi.spyOn(f.model, 'prefinish').mockResolvedValue();
+    await f.model.updateSessionState(f.event, f.session, state, round);
+    expect(state.getChombo()).toEqual({ 1: -20000, 2: -20000, 3: -20000, 4: -20000 });
+    expect(state.getRound()).toBe(1);
+    expect(state.getHonba()).toBe(0);
+    expect(state.getRiichiBets()).toBe(0);
+    expect(state.lastHandStarted()).toBe(true);
+    expect(state.isFinished()).toBe(last);
+    expect(f.model.prefinish).toHaveBeenCalledTimes(last ? 1 : 0);
   }
 );

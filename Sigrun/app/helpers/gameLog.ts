@@ -81,7 +81,7 @@ export const makeLog = (
     if (round.chombo) {
       return i18n._pt('Chombo log item', '%1: Chombo (<b>%2</b>)', [
         makeRound(round.chombo.roundIndex, playersCount),
-        players[round.chombo.loserId]?.title,
+        makeCsvPlayers(players, round.chombo.loserIds),
       ]);
     }
 

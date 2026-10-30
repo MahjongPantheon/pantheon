@@ -105,7 +105,7 @@ export class TestSeeder extends Seeder {
       withYakitori: false,
       chipsValue: 0,
       chomboAmount: 0,
-      chomboEndsGame: false,
+      chomboCountsAsHand: false,
       gameExpirationTime: 0,
       goalPoints: 0,
       minPenalty: 1000,

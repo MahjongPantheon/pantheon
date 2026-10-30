@@ -2727,3 +2727,13 @@ msgstr "якуман!"
 
 #~ msgid "Yakuhai names"
 #~ msgstr "Назвы якухай"
+
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:87:16
+msgid "Chombo after time is out counts as hand"
+msgstr "Чомба пасля заканчэння часу лічыцца раздачай"
+
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:79:22
+msgid ""
+"If set, a chombo after timeout counts as one played hand. All selected "
+"players are penalized together. Applies to both timed ending policies."
+msgstr "Калі ўключана, чомба пасля заканчэння часу лічыцца адной згулянай раздачай. Усе выбраныя гульцы штрафуюцца адначасова. Ужываецца для абодвух спосабаў завяршэння гульні па часе."

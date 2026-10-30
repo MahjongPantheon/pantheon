@@ -141,9 +141,9 @@ export function sampleRound(state: SessionState, index: number, variation: numbe
     case 4:
       return {
         chombo: {
+          loserIds: [variation % 2 ? opponents[0] : loserId],
           roundIndex: common.roundIndex,
           honba: common.honba,
-          loserId: variation % 2 ? opponents[0] : loserId,
         },
       };
     case 5:

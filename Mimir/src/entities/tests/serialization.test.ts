@@ -72,7 +72,17 @@ const cases: [Round, RoundOutcome, string][] = [
     'draw',
   ],
   [{ abort: AbortResult.initialize(base) }, RoundOutcome.ROUND_OUTCOME_ABORT, 'abort'],
-  [{ chombo: ChomboResult.initialize(base) }, RoundOutcome.ROUND_OUTCOME_CHOMBO, 'chombo'],
+  [
+    {
+      chombo: ChomboResult.initialize({
+        roundIndex: base.roundIndex,
+        honba: base.honba,
+        loserIds: [2],
+      }),
+    },
+    RoundOutcome.ROUND_OUTCOME_CHOMBO,
+    'chombo',
+  ],
   [
     { nagashi: NagashiResult.initialize({ ...base, tempai: [1], nagashi: [1] }) },
     RoundOutcome.ROUND_OUTCOME_NAGASHI,
@@ -124,4 +134,26 @@ it('handles unknown outcomes without inventing a hand and associates supplied ro
   const round = RoundEntity.fromMessage(new SessionEntity(), new EventEntity(), {});
   expect(round.outcome).toBeUndefined();
   expect(HandEntity.fromMessage(AbortResult.initialize({}), round).round).toBe(round);
+});
+
+it('round-trips all chombo players for single-player and simultaneous penalties', () => {
+  const session = new SessionEntity(),
+    event = new EventEntity();
+  for (const loserIds of [
+    [1, 2],
+    [1, 2, 3, 4],
+  ]) {
+    const entity = RoundEntity.fromMessage(session, event, {
+      chombo: ChomboResult.initialize({ roundIndex: 3, honba: 2, loserIds }),
+    });
+    expect(RoundEntity.toMessage(entity).chombo).toEqual({
+      roundIndex: 3,
+      honba: 2,
+      loserIds,
+    });
+  }
+  const single = RoundEntity.fromMessage(session, event, {
+    chombo: ChomboResult.initialize({ roundIndex: 1, loserIds: [2] }),
+  });
+  expect(single.hands.map((hand) => hand.loserId)).toEqual([2]);
 });

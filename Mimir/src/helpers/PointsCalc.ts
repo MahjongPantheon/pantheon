@@ -327,6 +327,33 @@ export class PointsCalc {
   /**
    * Calculate points for chombo (penalty)
    */
+  public chomboForPlayers(
+    rules: RulesetConfig,
+    currentDealer: number,
+    loserIds: number[],
+    currentScores: Record<number, number>
+  ): Record<number, number> {
+    if (
+      !loserIds.length ||
+      new Set(loserIds).size !== loserIds.length ||
+      loserIds.some((id) => !id || !(id in currentScores))
+    ) {
+      throw new Error('Chombo requires distinct players from the session');
+    }
+    let scores = currentScores;
+    const payments: PaymentsInfo = { direct: {}, riichi: {}, honba: {} };
+    for (const loserId of loserIds) {
+      scores = this.chombo(rules, currentDealer, loserId, scores);
+      for (const [key, amount] of Object.entries(this._lastPaymentsInfo.direct)) {
+        // Transfers between penalized players cancel each other; only show amounts still owed.
+        if (loserIds.includes(Number(key.split('<-')[0]))) continue;
+        payments.direct[key] = (payments.direct[key] ?? 0) + amount;
+      }
+    }
+    this._lastPaymentsInfo = payments;
+    return scores;
+  }
+
   public chombo(
     rules: RulesetConfig,
     currentDealer: number,

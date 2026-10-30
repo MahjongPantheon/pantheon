@@ -2643,7 +2643,7 @@ export const ChomboResult = {
     return {
       roundIndex: 0,
       honba: 0,
-      loserId: 0,
+      loserIds: [],
       ...msg
     };
   },
@@ -2657,8 +2657,8 @@ export const ChomboResult = {
     if (msg.honba) {
       writer.writeInt32(2, msg.honba);
     }
-    if (msg.loserId) {
-      writer.writeInt32(3, msg.loserId);
+    if (msg.loserIds?.length) {
+      writer.writePackedInt32(4, msg.loserIds);
     }
     return writer;
   },
@@ -2677,8 +2677,12 @@ export const ChomboResult = {
           msg.honba = reader.readInt32();
           break;
         }
-        case 3: {
-          msg.loserId = reader.readInt32();
+        case 4: {
+          if (reader.isDelimited()) {
+            msg.loserIds.push(...reader.readPackedInt32());
+          } else {
+            msg.loserIds.push(reader.readInt32());
+          }
           break;
         }
         default: {
@@ -5856,13 +5860,13 @@ export const RulesetConfig = {
       yakuWithPao: [],
       withYakitori: false,
       yakitoriPenalty: 0,
-      chomboEndsGame: false,
       honbaValue: 0,
       doubleYakuman: [],
       useAggregatedYakuhai: false,
       withSanma: false,
       sanmaDrawPayments: 0,
       sanmaChomboPayments: 0,
+      chomboCountsAsHand: false,
       ...msg
     };
   },
@@ -5981,9 +5985,6 @@ export const RulesetConfig = {
     if (msg.yakitoriPenalty) {
       writer.writeInt32(37, msg.yakitoriPenalty);
     }
-    if (msg.chomboEndsGame) {
-      writer.writeBool(38, msg.chomboEndsGame);
-    }
     if (msg.honbaValue) {
       writer.writeInt32(39, msg.honbaValue);
     }
@@ -6001,6 +6002,9 @@ export const RulesetConfig = {
     }
     if (msg.sanmaChomboPayments) {
       writer.writeInt32(44, msg.sanmaChomboPayments);
+    }
+    if (msg.chomboCountsAsHand) {
+      writer.writeBool(45, msg.chomboCountsAsHand);
     }
     return writer;
   },
@@ -6167,10 +6171,6 @@ export const RulesetConfig = {
           msg.yakitoriPenalty = reader.readInt32();
           break;
         }
-        case 38: {
-          msg.chomboEndsGame = reader.readBool();
-          break;
-        }
         case 39: {
           msg.honbaValue = reader.readInt32();
           break;
@@ -6197,6 +6197,10 @@ export const RulesetConfig = {
         }
         case 44: {
           msg.sanmaChomboPayments = reader.readInt32();
+          break;
+        }
+        case 45: {
+          msg.chomboCountsAsHand = reader.readBool();
           break;
         }
         default: {
@@ -8901,7 +8905,7 @@ export const ChomboResultJSON = {
     return {
       roundIndex: 0,
       honba: 0,
-      loserId: 0,
+      loserIds: [],
       ...msg
     };
   },
@@ -8916,8 +8920,8 @@ export const ChomboResultJSON = {
     if (msg.honba) {
       json["honba"] = msg.honba;
     }
-    if (msg.loserId) {
-      json["loserId"] = msg.loserId;
+    if (msg.loserIds?.length) {
+      json["loserIds"] = msg.loserIds;
     }
     return json;
   },
@@ -8933,9 +8937,9 @@ export const ChomboResultJSON = {
     if (_honba_) {
       msg.honba = protoscript.parseNumber(_honba_);
     }
-    const _loserId_ = json["loserId"] ?? json["loser_id"];
-    if (_loserId_) {
-      msg.loserId = protoscript.parseNumber(_loserId_);
+    const _loserIds_ = json["loserIds"] ?? json["loser_ids"];
+    if (_loserIds_) {
+      msg.loserIds = _loserIds_.map(protoscript.parseNumber);
     }
     return msg;
   }
@@ -11738,13 +11742,13 @@ export const RulesetConfigJSON = {
       yakuWithPao: [],
       withYakitori: false,
       yakitoriPenalty: 0,
-      chomboEndsGame: false,
       honbaValue: 0,
       doubleYakuman: [],
       useAggregatedYakuhai: false,
       withSanma: false,
       sanmaDrawPayments: 0,
       sanmaChomboPayments: 0,
+      chomboCountsAsHand: false,
       ...msg
     };
   },
@@ -11870,9 +11874,6 @@ export const RulesetConfigJSON = {
     if (msg.yakitoriPenalty) {
       json["yakitoriPenalty"] = msg.yakitoriPenalty;
     }
-    if (msg.chomboEndsGame) {
-      json["chomboEndsGame"] = msg.chomboEndsGame;
-    }
     if (msg.honbaValue) {
       json["honbaValue"] = msg.honbaValue;
     }
@@ -11890,6 +11891,9 @@ export const RulesetConfigJSON = {
     }
     if (msg.sanmaChomboPayments) {
       json["sanmaChomboPayments"] = msg.sanmaChomboPayments;
+    }
+    if (msg.chomboCountsAsHand) {
+      json["chomboCountsAsHand"] = msg.chomboCountsAsHand;
     }
     return json;
   },
@@ -12049,10 +12053,6 @@ export const RulesetConfigJSON = {
     if (_yakitoriPenalty_) {
       msg.yakitoriPenalty = protoscript.parseNumber(_yakitoriPenalty_);
     }
-    const _chomboEndsGame_ = json["chomboEndsGame"] ?? json["chombo_ends_game"];
-    if (_chomboEndsGame_) {
-      msg.chomboEndsGame = _chomboEndsGame_;
-    }
     const _honbaValue_ = json["honbaValue"] ?? json["honba_value"];
     if (_honbaValue_) {
       msg.honbaValue = protoscript.parseNumber(_honbaValue_);
@@ -12076,6 +12076,10 @@ export const RulesetConfigJSON = {
     const _sanmaChomboPayments_ = json["sanmaChomboPayments"] ?? json["sanma_chombo_payments"];
     if (_sanmaChomboPayments_) {
       msg.sanmaChomboPayments = protoscript.parseNumber(_sanmaChomboPayments_);
+    }
+    const _chomboCountsAsHand_ = json["chomboCountsAsHand"] ?? json["chombo_counts_as_hand"];
+    if (_chomboCountsAsHand_) {
+      msg.chomboCountsAsHand = _chomboCountsAsHand_;
     }
     return msg;
   }

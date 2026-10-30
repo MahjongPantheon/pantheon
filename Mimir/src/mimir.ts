@@ -101,6 +101,7 @@ export const mimirServer: Mimir<Context> = {
   GetRulesets: function (): EventsGetRulesetsResponse {
     return [
       RulesetEntity.createRuleset('ema'),
+      RulesetEntity.createRuleset('ema2025'),
       RulesetEntity.createRuleset('jpmlA'),
       RulesetEntity.createRuleset('wrc'),
       RulesetEntity.createRuleset('tenhounet'),

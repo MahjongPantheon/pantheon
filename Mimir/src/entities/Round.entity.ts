@@ -12,7 +12,7 @@ import { SessionEntity } from './Session.entity.js';
 import { EventEntity } from './Event.entity.js';
 import { HandEntity } from './Hand.entity.js';
 import { SessionStateEntity } from './SessionState.entity.js';
-import { Round, RoundOutcome } from 'tsclients/proto/atoms.pb.js';
+import { ChomboResult, Round, RoundOutcome } from 'tsclients/proto/atoms.pb.js';
 
 @Entity({ tableName: 'round' })
 @Index({ properties: ['event'] })
@@ -66,6 +66,10 @@ export class RoundEntity {
   })
   lastSessionState?: SessionStateEntity;
 
+  static chomboHands(chombo: ChomboResult, round?: RoundEntity): HandEntity[] {
+    return chombo.loserIds.map((loserId) => HandEntity.fromMessage({ ...chombo, loserId }, round));
+  }
+
   static fromMessage(
     sessionRef: SessionEntity,
     eventRef: EventEntity,
@@ -101,7 +105,7 @@ export class RoundEntity {
       entity.riichi = round.abort.riichiBets;
     } else if (round.chombo) {
       entity.outcome = RoundOutcome.ROUND_OUTCOME_CHOMBO;
-      entity.hands = [HandEntity.fromMessage(round.chombo)];
+      entity.hands = RoundEntity.chomboHands(round.chombo);
       entity.round = round.chombo.roundIndex;
       entity.honba = round.chombo.honba;
       entity.riichi = [];
@@ -208,7 +212,7 @@ export class RoundEntity {
         chombo: {
           roundIndex: entity.round,
           honba: entity.honba,
-          loserId: entity.hands[0].loserId!,
+          loserIds: entity.hands.map((hand) => hand.loserId!),
         },
       };
     } else if (entity.outcome === RoundOutcome.ROUND_OUTCOME_NAGASHI) {

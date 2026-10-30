@@ -37,7 +37,8 @@ export class IdempotencyModel extends Model {
     method: string,
     key: string | null | undefined,
     request: unknown,
-    action: () => Promise<T>
+    action: () => Promise<T>,
+    legacyRequests: unknown[] = []
   ): Promise<T> {
     if (!key || key.length > 200)
       throw new TwirpError({
@@ -53,7 +54,10 @@ export class IdempotencyModel extends Model {
         await this.repo.em.execute('select pg_advisory_xact_lock(hashtextextended(?, 0))', [id]);
         const saved = await this.repo.em.findOne(RpcOperationEntity, { id });
         if (saved) {
-          if (saved.requestHash !== requestHash) {
+          if (
+            saved.requestHash !== requestHash &&
+            !legacyRequests.some((legacy) => digest(legacy) === saved.requestHash)
+          ) {
             throw new TwirpError({
               code: 'already_exists',
               msg: 'Idempotency key was already used with different parameters',

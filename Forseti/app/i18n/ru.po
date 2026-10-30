@@ -2823,3 +2823,13 @@ msgstr "якуман!"
 #~ msgstr ""
 #~ "Вы ввели ваш логин для Tenhou.net вместо имени пользователя. Вам не "
 #~ "следует НИКОГДА и никому передавать ваш логин!"
+
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:87:16
+msgid "Chombo after time is out counts as hand"
+msgstr "Чомбо после истечения времени считается раздачей"
+
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:79:22
+msgid ""
+"If set, a chombo after timeout counts as one played hand. All selected "
+"players are penalized together. Applies to both timed ending policies."
+msgstr "Если включено, чомбо после истечения времени считается одной сыгранной раздачей. Все выбранные игроки штрафуются одновременно. Применяется к обоим способам завершения игры по таймеру."

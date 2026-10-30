@@ -147,7 +147,7 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string; copyId?: string 
         replacementPlayerFixedPoints: -15000, // tourn
         withYakitori: false,
         yakitoriPenalty: 0,
-        chomboEndsGame: false,
+        chomboCountsAsHand: false,
         doubleYakuman: {},
         withSanma: false,
         sanmaDrawPayments: 3000,

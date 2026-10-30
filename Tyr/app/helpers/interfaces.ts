@@ -73,8 +73,7 @@ export interface AppOutcomeNagashi extends Outcome {
 
 export interface AppOutcomeChombo extends Outcome {
   selectedOutcome: typeof RoundOutcome.ROUND_OUTCOME_CHOMBO;
-  loser?: number; // id of player
-  loserIsDealer: boolean;
+  losers: number[]; // ids of players penalized in this round
 }
 
 export type AppOutcome =

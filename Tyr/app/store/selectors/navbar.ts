@@ -57,7 +57,7 @@ export function mayGoNextFromPlayersSelect(state: IAppState) {
     case RoundOutcome.ROUND_OUTCOME_RON:
       return getWinningUsers(state).length >= 1 && getLosingUsers(state).length === 1;
     case RoundOutcome.ROUND_OUTCOME_CHOMBO:
-      return getLosingUsers(state).length === 1;
+      return getLosingUsers(state).length >= 1;
     default:
       return undefined;
   }

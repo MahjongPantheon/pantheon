@@ -153,7 +153,13 @@ export function _checkAbortiveDraw(players: number[], roundData: AbortResult): v
 }
 
 export function _checkChombo(players: number[], roundData: ChomboResult): void {
-  _checkOneOf(roundData, 'loserId', players);
+  if (!Array.isArray(roundData.loserIds) || !roundData.loserIds.length) {
+    throw new Error('Chombo requires at least one player');
+  }
+  _checkNumericArray(roundData, 'loserIds', players);
+  if (new Set(roundData.loserIds).size !== roundData.loserIds.length) {
+    throw new Error('Chombo players must be distinct');
+  }
 }
 
 export function _checkPlayers(playersInGame: number[], playersRegisteredInEvent: number[]): void {
@@ -242,7 +248,7 @@ export function validateAndCreateFromOnlineData(
     roundEntity.honba = round.nagashi.honba;
   } else if (round.chombo) {
     roundEntity.outcome = RoundOutcome.ROUND_OUTCOME_CHOMBO;
-    roundEntity.hands = [HandEntity.fromMessage(round.chombo, roundEntity)];
+    roundEntity.hands = RoundEntity.chomboHands(round.chombo, roundEntity);
     roundEntity.round = round.chombo.roundIndex;
     roundEntity.honba = round.chombo.honba;
   } else if (round.multiron) {

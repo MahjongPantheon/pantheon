@@ -135,7 +135,7 @@ describe('last round in games management', () => {
     ).toEqual(['Abortive draw, riichi: Carol']);
     expect(
       formatLastRound(
-        Round.initialize({ chombo: ChomboResult.initialize({ roundIndex: 4, loserId: 2 }) }),
+        Round.initialize({ chombo: ChomboResult.initialize({ roundIndex: 4, loserIds: [2] }) }),
         players,
         i18n
       )
@@ -175,7 +175,7 @@ describe('last round in games management', () => {
 
   it('returns player names as plain text without adding HTML markup', () => {
     const round = Round.initialize({
-      chombo: ChomboResult.initialize({ roundIndex: 1, loserId: 1 }),
+      chombo: ChomboResult.initialize({ roundIndex: 1, loserIds: [1] }),
     });
     expect(formatLastRound(round, { 1: { title: '<b>Alice & Bob</b>' } }, i18n)).toEqual([
       'Chombo, <b>Alice & Bob</b>',
@@ -225,7 +225,7 @@ describe('last round player emphasis', () => {
       ['Alice', 'Bob', 'Carol'],
     ],
     [Round.initialize({ abort: AbortResult.initialize({ riichiBets: [4] }) }), ['Dave']],
-    [Round.initialize({ chombo: ChomboResult.initialize({ loserId: 2 }) }), ['Bob']],
+    [Round.initialize({ chombo: ChomboResult.initialize({ loserIds: [2] }) }), ['Bob']],
     [
       Round.initialize({
         nagashi: NagashiResult.initialize({ nagashi: [1, 2], tempai: [3], riichiBets: [4] }),
@@ -301,7 +301,7 @@ describe('last round player emphasis', () => {
   });
 
   it('bolds fallback player labels but keeps all-tenpai and empty-list labels plain', () => {
-    const round = Round.initialize({ chombo: ChomboResult.initialize({ loserId: 99 }) });
+    const round = Round.initialize({ chombo: ChomboResult.initialize({ loserIds: [99] }) });
     expect(render(round)).toEqual(['Chombo, <strong>Player #99</strong>']);
     expect(
       render(Round.initialize({ draw: DrawResult.initialize({ tempai: [1, 2, 3, 4] }) }))
@@ -316,4 +316,17 @@ it('formats sanma winds after three hands and preserves four-player defaults', (
   expect(formatRoundIndex(7, 3)).toBe('西1');
   expect(formatRoundIndex(13, 3)).toBe('?');
   expect(formatRoundIndex(4)).toBe('東4');
+});
+
+it('shows and links every player in a simultaneous chombo round', () => {
+  const round = Round.initialize({
+    chombo: ChomboResult.initialize({ loserIds: [1, 3] }),
+  });
+  expect(formatLastRound(round, players, i18n)).toEqual(['Chombo, Alice, Carol']);
+  expect(
+    formatLastRoundParts(round, players, i18n)
+      .flat()
+      .filter((part) => part.playerId !== undefined)
+      .map((part) => part.playerId)
+  ).toEqual([1, 3]);
 });

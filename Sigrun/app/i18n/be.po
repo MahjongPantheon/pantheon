@@ -2015,3 +2015,13 @@ msgstr "якуман!"
 
 #~ msgid "Uma bonus type"
 #~ msgstr "Тып бонусу ума"
+
+#: app/pages/EventRulesOverview/TournamentSettings.tsx:79:16
+msgid "Chombo after time is out counts as hand"
+msgstr "Чомба пасля заканчэння часу лічыцца раздачай"
+
+#: app/pages/EventRulesOverview/TournamentSettings.tsx:72:22
+msgid ""
+"If set, a chombo after timeout counts as one played hand. All selected "
+"players are penalized together. Applies to both timed ending policies."
+msgstr "Калі ўключана, чомба пасля заканчэння часу лічыцца адной згулянай раздачай. Усе выбраныя гульцы штрафуюцца адначасова. Ужываецца для абодвух спосабаў завяршэння гульні па часе."

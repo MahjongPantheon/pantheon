@@ -2475,3 +2475,11 @@ msgid "%1 item"
 msgid_plural "%1 items"
 msgstr[0] ""
 msgstr[1] ""
+
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:87:16
+msgid "Chombo after time is out counts as hand"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:79:22
+msgid "If set, a chombo after timeout counts as one played hand. All selected players are penalized together. Applies to both timed ending policies."
+msgstr ""

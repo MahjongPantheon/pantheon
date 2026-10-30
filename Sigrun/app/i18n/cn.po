@@ -1935,3 +1935,13 @@ msgstr "役满！"
 
 #~ msgid "Uma bonus type"
 #~ msgstr "顺位分类型"
+
+#: app/pages/EventRulesOverview/TournamentSettings.tsx:79:16
+msgid "Chombo after time is out counts as hand"
+msgstr "超时后的犯规计为一局"
+
+#: app/pages/EventRulesOverview/TournamentSettings.tsx:72:22
+msgid ""
+"If set, a chombo after timeout counts as one played hand. All selected "
+"players are penalized together. Applies to both timed ending policies."
+msgstr "启用后，超时发生的犯规计为已进行一局。所有选中的玩家将同时受到处罚。适用于两种计时结束方式。"

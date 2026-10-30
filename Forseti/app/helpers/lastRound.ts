@@ -115,7 +115,7 @@ function formatWithPlayerTokens(
     ];
   }
   if (round.chombo) {
-    return [i18n._t('Chombo, %1', [player(round.chombo.loserId)])];
+    return [i18n._t('Chombo, %1', [names(round.chombo.loserIds)])];
   }
   if (round.draw) {
     return [
