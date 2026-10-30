@@ -1,6 +1,7 @@
 import {
   EventType,
   PlatformType,
+  RoundOutcome,
   SessionStatus,
   WindShuffleMode,
 } from 'tsclients/proto/atoms.pb.js';
@@ -18,6 +19,10 @@ import { PlayerHistoryEntity } from '../../entities/PlayerHistory.entity.js';
 import { RulesetEntity } from '../../entities/Ruleset.entity.js';
 import { SessionState } from '../../helpers/SessionState.js';
 import { init } from '../../tests/initOrm.js';
+import { RoundEntity } from '../../entities/Round.entity.js';
+import { HandEntity } from '../../entities/Hand.entity.js';
+import { RoundModel } from '../RoundModel.js';
+import { getMaxFuHand } from '../achievements/maxFuHand.js';
 
 const orm = await init();
 const repo = Repository.instance(
@@ -100,6 +105,47 @@ beforeAll(async () => {
 afterAll(() => repo.destroy());
 
 describe('ORM query compatibility', () => {
+  it('keeps partial best-fu hands out of subsequent achievement calculations', async () => {
+    await expect(
+      repo.em.transactional(async (em) => {
+        const round = Object.assign(new RoundEntity(), {
+          event,
+          session: oldSession,
+          outcome: RoundOutcome.ROUND_OUTCOME_RON,
+          round: 1,
+          honba: 0,
+          riichi: [1],
+          lastSessionState: new SessionState(event.ruleset, players).state,
+        });
+        em.persist(round);
+        em.persist(
+          Object.assign(new HandEntity(), {
+            round,
+            winnerId: 1,
+            loserId: 2,
+            han: 1,
+            fu: 40,
+            yaku: [1],
+          })
+        );
+        await em.flush();
+        em.clear();
+
+        expect(await getMaxFuHand(event.id, repo)).toMatchObject({ fu: 40, playerIds: [1] });
+        const rounds = await Model.getModel(repo, RoundModel).findBySessionIds([oldSession.id]);
+        expect(rounds[0].hands[0]).toMatchObject({
+          winnerId: 1,
+          loserId: 2,
+          han: 1,
+          fu: 40,
+          yaku: [1],
+        });
+        expect(rounds[0].lastSessionState?.playerIds).toEqual(players);
+        throw new Error('rollback achievement fixture');
+      })
+    ).rejects.toThrow('rollback achievement fixture');
+  });
+
   it.each([
     [undefined, undefined, [3, 1]],
     ['2026-01-02', undefined, [3]],

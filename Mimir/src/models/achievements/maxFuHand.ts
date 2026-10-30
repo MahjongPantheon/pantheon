@@ -4,6 +4,8 @@ import { Repository } from '../../services/Repository';
 
 export async function getMaxFuHand(eventId: number, repo: Repository) {
   const rounds = await repo.em.findAll(RoundEntity, {
+    // Partial hands must not enter the identity map shared by the other achievements.
+    disableIdentityMap: true,
     fields: ['hands.fu', 'hands.winnerId', 'session.representationalHash'],
     populate: ['hands', 'session'],
     where: {
