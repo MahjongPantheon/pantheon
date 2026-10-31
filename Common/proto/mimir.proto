@@ -266,6 +266,9 @@ message GamesAddRoundPayload {
   string session_hash = 1;
   Round round_data = 2;
   optional string round_token = 3;
+  // Timer reading when the outcome menu opened, before score entry.
+  // Absent for untimed events and clients using server submission time.
+  optional int32 outcome_timer_seconds_remaining = 4;
 }
 
 message GamesAddRoundResponse {

@@ -214,3 +214,41 @@ it.each([200, 400, 500])(
     if (status === 500) expect(fetch).toHaveBeenCalledTimes(2);
   }
 );
+
+it.each([5, 0, undefined])(
+  'submits captured outcome timer %s unchanged on retry',
+  async (reading: number | undefined) => {
+    vi.mocked(formatRoundToTwirp).mockReturnValue({ draw: {} });
+    const state = {
+      ...initialState,
+      currentSessionHash: `timed-${reading}`,
+      nextRoundToken: 'original',
+      currentHandEndTimerRemaining: reading,
+    };
+    vi.mocked(mimir.AddRound)
+      .mockRejectedValueOnce(new Error('Connection lost'))
+      .mockResolvedValueOnce({ isFinished: false });
+    await expect(api.addRound(state)).rejects.toThrow('Connection lost');
+    await api.addRound({ ...state, nextRoundToken: 'refreshed' });
+    expect(mimir.AddRound).toHaveBeenNthCalledWith(
+      1,
+      {
+        sessionHash: state.currentSessionHash,
+        roundData: { draw: {} },
+        roundToken: 'original',
+        outcomeTimerSecondsRemaining: reading,
+      },
+      expect.anything()
+    );
+    expect(mimir.AddRound).toHaveBeenNthCalledWith(
+      2,
+      {
+        sessionHash: state.currentSessionHash,
+        roundData: { draw: {} },
+        roundToken: 'original',
+        outcomeTimerSecondsRemaining: reading,
+      },
+      expect.anything()
+    );
+  }
+);

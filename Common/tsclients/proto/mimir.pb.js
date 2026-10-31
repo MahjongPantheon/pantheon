@@ -4269,6 +4269,7 @@ export const GamesAddRoundPayload = {
       sessionHash: "",
       roundData: protoAtoms.Round.initialize(),
       roundToken: void 0,
+      outcomeTimerSecondsRemaining: void 0,
       ...msg
     };
   },
@@ -4284,6 +4285,9 @@ export const GamesAddRoundPayload = {
     }
     if (msg.roundToken != void 0) {
       writer.writeString(3, msg.roundToken);
+    }
+    if (msg.outcomeTimerSecondsRemaining != void 0) {
+      writer.writeInt32(4, msg.outcomeTimerSecondsRemaining);
     }
     return writer;
   },
@@ -4304,6 +4308,10 @@ export const GamesAddRoundPayload = {
         }
         case 3: {
           msg.roundToken = reader.readString();
+          break;
+        }
+        case 4: {
+          msg.outcomeTimerSecondsRemaining = reader.readInt32();
           break;
         }
         default: {
@@ -9639,6 +9647,7 @@ export const GamesAddRoundPayloadJSON = {
       sessionHash: "",
       roundData: protoAtoms.RoundJSON.initialize(),
       roundToken: void 0,
+      outcomeTimerSecondsRemaining: void 0,
       ...msg
     };
   },
@@ -9659,6 +9668,9 @@ export const GamesAddRoundPayloadJSON = {
     if (msg.roundToken != void 0) {
       json["roundToken"] = msg.roundToken;
     }
+    if (msg.outcomeTimerSecondsRemaining != void 0) {
+      json["outcomeTimerSecondsRemaining"] = msg.outcomeTimerSecondsRemaining;
+    }
     return json;
   },
   /**
@@ -9676,6 +9688,12 @@ export const GamesAddRoundPayloadJSON = {
     const _roundToken_ = json["roundToken"] ?? json["round_token"];
     if (_roundToken_) {
       msg.roundToken = _roundToken_;
+    }
+    const _outcomeTimerSecondsRemaining_ = json["outcomeTimerSecondsRemaining"] ?? json["outcome_timer_seconds_remaining"];
+    if (_outcomeTimerSecondsRemaining_) {
+      msg.outcomeTimerSecondsRemaining = protoscript.parseNumber(
+        _outcomeTimerSecondsRemaining_
+      );
     }
     return msg;
   }

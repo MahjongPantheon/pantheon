@@ -50,6 +50,8 @@ import { AchievementsModel } from './AchievementsModel.js';
 import { NotFoundError } from '../helpers/errors.js';
 
 export class SessionModel extends Model {
+  static readonly SCORING_GAP_GRACE_TIME = 240;
+
   async findById(id: number) {
     return this.repo.em.findOne(SessionEntity, { id });
   }
@@ -446,21 +448,25 @@ export class SessionModel extends Model {
   async addRound(
     gameHash: string,
     roundData: Round,
-    roundToken?: string | null
+    roundToken?: string | null,
+    outcomeTimerSecondsRemaining?: number
   ): Promise<GamesAddRoundResponse> {
     return this.getModel(IdempotencyModel).execute(
       `session:${gameHash}`,
       'AddRound',
       roundToken,
-      roundData,
-      () => this.recordRound(gameHash, roundData, roundToken!)
+      outcomeTimerSecondsRemaining === undefined
+        ? roundData
+        : { roundData, outcomeTimerSecondsRemaining },
+      () => this.recordRound(gameHash, roundData, roundToken!, outcomeTimerSecondsRemaining)
     );
   }
 
   private async recordRound(
     gameHash: string,
     roundData: Round,
-    roundToken: string
+    roundToken: string,
+    outcomeTimerSecondsRemaining?: number
   ): Promise<GamesAddRoundResponse> {
     return this.repo.em.transactional(
       async () => {
@@ -527,7 +533,14 @@ export class SessionModel extends Model {
         this.repo.em.persist(roundEntity);
         session[0].nextRoundToken = randomUUID();
         const lastScores = { ...sessionState.getScores() };
-        await this.updateSessionState(event, session[0], sessionState, roundEntity);
+        await this.updateSessionState(
+          event,
+          session[0],
+          sessionState,
+          roundEntity,
+          false,
+          outcomeTimerSecondsRemaining
+        );
         this.repo.em.persist(session[0]);
         const currentScores = sessionState.getScores();
 
@@ -601,7 +614,8 @@ export class SessionModel extends Model {
     session: SessionEntity,
     sessionState: SessionState,
     round: RoundEntity,
-    preventSaving = false
+    preventSaving = false,
+    outcomeTimerSecondsRemaining?: number
   ) {
     checkRiichiPoints(event.ruleset, sessionState.getScores(), round);
 
@@ -611,11 +625,18 @@ export class SessionModel extends Model {
       honba: {},
     };
     const lastTimer = event.lastTimer;
-    const noTimeLeft =
-      event.useTimer &&
-      lastTimer &&
-      lastTimer + (event.gameDuration ?? 0) * 60 + (session.extraTime ?? 0) <
-        Math.floor(new Date().getTime() / 1000);
+    const timerRuns = !!(event.useTimer && lastTimer);
+    const overrun = timerRuns
+      ? Math.floor(Date.now() / 1000) -
+        (lastTimer + (event.gameDuration ?? 0) * 60 + (session.extraTime ?? 0))
+      : 0;
+    // The client can withhold expiry during score entry, but cannot assert it:
+    // the server clock includes extra time and timer restarts the client may not know about.
+    const endedBeforeBuzzer =
+      outcomeTimerSecondsRemaining !== undefined &&
+      outcomeTimerSecondsRemaining > 0 &&
+      overrun <= SessionModel.SCORING_GAP_GRACE_TIME;
+    const noTimeLeft = timerRuns && overrun > 0 && !endedBeforeBuzzer;
 
     switch (event.ruleset.rules.endingPolicy) {
       case EndingPolicy.ENDING_POLICY_EP_ONE_MORE_HAND: {

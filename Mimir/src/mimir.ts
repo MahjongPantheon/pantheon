@@ -251,7 +251,8 @@ export const mimirServer: Mimir<Context> = {
     return sessionModel.addRound(
       gamesAddRoundPayload.sessionHash,
       gamesAddRoundPayload.roundData,
-      gamesAddRoundPayload.roundToken
+      gamesAddRoundPayload.roundToken,
+      gamesAddRoundPayload.outcomeTimerSecondsRemaining ?? undefined
     );
   },
   PreviewRound: function (
