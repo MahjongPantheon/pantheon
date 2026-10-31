@@ -1,4 +1,5 @@
 import * as process from 'node:process';
+import { randomUUID } from 'node:crypto';
 import { Pool } from 'pg';
 import { Repository } from './services/Repository.js';
 import { MikroORM } from '@mikro-orm/postgresql';
@@ -12,6 +13,10 @@ import { RoundOutcome, SessionStatus, TournamentGamesStatus } from 'tsclients/pr
 import { camelCaseKeys } from './helpers/toCamelCase.js';
 import { groupLegacyRounds } from './helpers/groupLegacyRounds.js';
 import { getLegacyPlayerIds } from './helpers/legacySessionState.js';
+import {
+  getLegacyDataMigrationQueries,
+  legacyRegistrationsQuery,
+} from './helpers/legacyDataMigrations.js';
 
 process.env.NODE_ENV = 'development';
 
@@ -364,11 +369,7 @@ export async function migrateFromMimir1() {
       'event_registered_players',
       em,
       async (limit, offset) => {
-        return (
-          await oldDb.query(
-            `select * from event_registered_players order by id asc limit ${limit} offset ${offset}`
-          )
-        ).rows;
+        return (await oldDb.query(legacyRegistrationsQuery, [limit, offset])).rows;
       },
       async (rows, lastId) => {
         await em
@@ -489,6 +490,8 @@ export async function migrateFromMimir1() {
           .values(
             rows.map((rec) => {
               delete rec.okr_ignore;
+              // Raw inserts bypass the SessionEntity initializer (the DB has no default).
+              rec.next_round_token = randomUUID();
               if (rec.status === 'finished') {
                 rec.status = SessionStatus.SESSION_STATUS_FINISHED;
               } else if (rec.status === 'prefinished') {
@@ -604,6 +607,12 @@ export async function migrateFromMimir1() {
   });
 
   await migrateRounds(orm.em);
+
+  await orm.em.transactional(async (em) => {
+    for (const query of await getLegacyDataMigrationQueries(orm)) {
+      await em.execute(query);
+    }
+  });
 }
 
 migrateFromMimir1()

@@ -141,6 +141,16 @@ that `make bootstrap_admin` has already been run from the root. These commands
 are for disposable development databases only. A failed run can leave partial
 sample data in Frey; rerun the command to reset Mimir and create fresh samples.
 
+### Mimir v1 import
+
+The Mimir v1 importer targets the fully migrated schema. It generates a fresh
+round token for each imported session and keeps the newest registration row per
+event/player, including that row's metadata. After importing rounds, it reapplies
+the data-only migrations listed in `src/helpers/legacyDataMigrations.ts` and queues
+scoring rebuilds for every event to replace integer-rounded average places.
+When adding a data migration, update this list or the relevant import conversion;
+schema migrations run before the import and cannot transform rows inserted later.
+
 ### Individual yakuhai
 
 Apply `Migration20261024000000` before deploying individual wind and dragon yaku.
