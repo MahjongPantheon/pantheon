@@ -11,6 +11,7 @@
 }
 
 .logRowContainer {
+  box-sizing: border-box;
   width: 100%;
   display: flex;
   padding: 0 20px;
