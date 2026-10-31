@@ -16,6 +16,8 @@ type IProps = {
   }>;
   onTableClick: (hash: string) => void;
   onBackClick: () => void;
+  error?: string;
+  onRetryClick?: () => void;
 };
 
 const roundsMap: { [key: number]: string } = {
@@ -33,7 +35,13 @@ const roundsMap: { [key: number]: string } = {
   12: '西4',
 };
 
-export const OtherTablesList = ({ onTableClick, onBackClick, tables }: IProps) => {
+export const OtherTablesList = ({
+  onTableClick,
+  onBackClick,
+  tables,
+  error,
+  onRetryClick,
+}: IProps) => {
   const loc = useContext(i18n);
   return (
     <div className={styles.wrapper} data-testid='tyr-other-tables'>
@@ -45,32 +53,41 @@ export const OtherTablesList = ({ onTableClick, onBackClick, tables }: IProps) =
         testId='tyr-other-tables-back'
       />
       <div className={styles.list}>
-        {tables.length === 0 && (
+        {error && (
+          <div className={styles.empty} role='alert' data-testid='tyr-other-tables-error'>
+            <div>{error}</div>
+            <Button onClick={onRetryClick} testId='tyr-other-tables-retry'>
+              {loc._t('Retry')}
+            </Button>
+          </div>
+        )}
+        {!error && tables.length === 0 && (
           <div className={styles.empty} data-testid='tyr-other-tables-empty'>
             {loc._t('No tables are playing right now')}
           </div>
         )}
-        {tables.map((table) => (
-          <ActionButton
-            key={table.sessionHash}
-            data-testid={`tyr-other-tables-table-${table.sessionHash}`}
-            className={styles.table}
-            onClick={() => onTableClick(table.sessionHash)}
-          >
-            <div className={styles.wind}>{roundsMap[table.currentRoundIndex]}</div>
-            <div className={styles.playersList}>
-              {table.players.map((player, idx) => (
-                <div key={player.id} className={styles.listItem}>
-                  <Player
-                    {...player}
-                    playerName={`${player.playerName ?? player.title}: ${table.scores[idx].score}`}
-                    size='md'
-                  />
-                </div>
-              ))}
-            </div>
-          </ActionButton>
-        ))}
+        {!error &&
+          tables.map((table) => (
+            <ActionButton
+              key={table.sessionHash}
+              data-testid={`tyr-other-tables-table-${table.sessionHash}`}
+              className={styles.table}
+              onClick={() => onTableClick(table.sessionHash)}
+            >
+              <div className={styles.wind}>{roundsMap[table.currentRoundIndex]}</div>
+              <div className={styles.playersList}>
+                {table.players.map((player, idx) => (
+                  <div key={player.id} className={styles.listItem}>
+                    <Player
+                      {...player}
+                      playerName={`${player.playerName ?? player.title}: ${table.scores[idx].score}`}
+                      size='md'
+                    />
+                  </div>
+                ))}
+              </div>
+            </ActionButton>
+          ))}
       </div>
     </div>
   );
