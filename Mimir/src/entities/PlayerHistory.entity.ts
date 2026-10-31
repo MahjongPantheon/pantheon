@@ -26,7 +26,7 @@ export class PlayerHistoryEntity {
   @Property({ fieldName: 'games_played' })
   gamesPlayed!: number;
 
-  @Property({ fieldName: 'rating' })
+  @Property({ fieldName: 'rating', type: 'double' })
   rating!: number;
 
   // Calculated fields not saved to DB

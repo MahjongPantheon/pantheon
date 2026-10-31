@@ -49,9 +49,12 @@ function sendQueued(ids: string[], message: string, bot: Bot) {
 if (fs.existsSync('./node_modules')) {
   Promise.all([import('express'), import('dotenv'), import('grammy')]).then(
     ([express, dotenv, grammy]) => {
-      const out = dotenv.default.config({
-        path: process.env.NODE_ENV === 'production' ? '.env.production' : '.env.development',
-      })?.parsed;
+      const out = {
+        ...dotenv.default.config({
+          path: process.env.NODE_ENV === 'production' ? '.env.production' : '.env.development',
+        })?.parsed,
+        ...process.env,
+      };
 
       TRACKER_URL = out?.TRACKER_URL;
       const TOKEN = out?.BOT_TOKEN ?? '';

@@ -29,6 +29,7 @@ export class SessionResultsEntity {
 
   @Property({
     fieldName: 'rating_delta',
+    type: 'double',
     comment: 'resulting score after uma/oka and starting points subtraction',
   })
   ratingDelta!: number;

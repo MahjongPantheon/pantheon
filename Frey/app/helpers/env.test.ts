@@ -10,6 +10,17 @@ beforeEach(() => {
     'DB_FREY_NAME',
     'DB_FREY_USER',
     'DB_FREY_PASSWORD',
+    'DB_FREY_PORT',
+    'DB_FREY_REDIS_HOST',
+    'DB_FREY_REDIS_PORT',
+    'DB_FREY_REDIS_USER',
+    'DB_FREY_REDIS_PASSWORD',
+    'HERMOD_URL_INTERNAL',
+    'MAIL_ACTION_KEY',
+    'ALLOWED_SENDER_DOMAINS',
+    'COOKIE_DOMAIN',
+    'USERINFO_HOOK',
+    'USERINFO_HOOK_API_KEY',
     'MIMIR_URL_INTERNAL',
     'HUGIN_URL_INTERNAL',
     'FORSETI_URL',
@@ -133,4 +144,19 @@ it('gives process overrides precedence over the environment file', async () => {
     forsetiUrl: 'process-profile',
     internalQuerySecret: 'process-secret',
   });
+});
+
+it('loads container-only settings without a dotenv file', async () => {
+  config.parsed = undefined;
+  vi.stubEnv('NODE_ENV', 'production');
+  vi.stubEnv('DB_FREY_PORT', '5544');
+  vi.stubEnv('DB_FREY_REDIS_PASSWORD', 'redis-secret');
+  vi.stubEnv('MAIL_ACTION_KEY', 'mail-secret');
+  vi.stubEnv('COOKIE_DOMAIN', 'container.test');
+  const { env } = await import('./env');
+  expect(env.development).toBe(false);
+  expect(env.db.port).toBe(5544);
+  expect(env.redis.password).toBe('redis-secret');
+  expect(env.mailer.remoteActionKey).toBe('mail-secret');
+  expect(env.cookieDomain).toBe('container.test');
 });

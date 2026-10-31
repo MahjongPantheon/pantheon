@@ -16,6 +16,15 @@ COMPOSE_COMMAND := $(shell if [ -f "`which docker`" ]; \
   else echo 'podman-compose --no-ansi --podman-run-args="--replace" -f docker-compose-${CONTAINER_ARCH}.yml'; \
 fi)
 
+PROD_COMPOSE_COMMAND = $(subst docker-compose-${CONTAINER_ARCH}.yml,docker-compose-production.yml,${COMPOSE_COMMAND})
+
+
+# Local production testing uses its own image tag and the committed test environment.
+PROD_LOCAL_TAG ?= local-production
+PROD_LOCAL_ENV ?= .env.e2e
+PROD_LOCAL_SERVICES := Tyr Forseti Sigrun Bragi Frey Mimir Hugin Gullveig Meili Hermod Skirnir
+PROD_LOCAL_COMPOSE_COMMAND = ENV_FILENAME="$(PROD_LOCAL_ENV)" IMAGE_TAG="$(PROD_LOCAL_TAG)" ${PROD_COMPOSE_COMMAND} --env-file "Env/$(PROD_LOCAL_ENV)"
+
 # some coloring
 RED = $(shell echo -e '\033[1;31m')
 GREEN = $(shell echo -e '\033[1;32m')
@@ -88,7 +97,7 @@ kill:
 build_reverse_proxy: export COMPOSE_DOCKER_CLI_BUILD=1
 build_reverse_proxy: export DOCKER_BUILDKIT=1
 build_reverse_proxy:
-	cd Common/ReverseProxy && ${CONTAINER_COMMAND} buildx build -t pantheon-reverse-proxy .
+	cd Common/ReverseProxy && ${CONTAINER_COMMAND} buildx build --load -t pantheon-reverse-proxy .
 
 .PHONY: container_base
 container_base:
@@ -591,6 +600,41 @@ db_export:
 db_import:
 	cd Database && ${MAKE} db_import
 
+# Local production-image testing. Recursive calls keep build/stop/start ordered under make -j.
+.PHONY: prod_local_build prod_local_start prod_local dev_local
+prod_local_build:
+	${MAKE} container_base
+	@set -e; for service in $(PROD_LOCAL_SERVICES); do \
+	  image_service=$$(printf '%s' "$$service" | tr '[:upper:]' '[:lower:]'); \
+	  ${CONTAINER_COMMAND} build --build-arg CONTAINER_ARCH="$(CONTAINER_ARCH)" \
+	    -f "$$service/Dockerfile" \
+	    -t "ghcr.io/mahjongpantheon/pantheon-$$image_service-$(CONTAINER_ARCH):$(PROD_LOCAL_TAG)" .; \
+	done
+	${CONTAINER_COMMAND} build -t "ghcr.io/mahjongpantheon/pantheon-database-$(CONTAINER_ARCH):$(PROD_LOCAL_TAG)" Database
+	${CONTAINER_COMMAND} build -t "ghcr.io/mahjongpantheon/pantheon-redis-$(CONTAINER_ARCH):$(PROD_LOCAL_TAG)" Redis
+
+prod_local_start:
+	${PROD_LOCAL_COMPOSE_COMMAND} config --quiet
+	@set -e; for service in $(PROD_LOCAL_SERVICES) Database Redis; do \
+	  image_service=$$(printf '%s' "$$service" | tr '[:upper:]' '[:lower:]'); \
+	  ${CONTAINER_COMMAND} image inspect "ghcr.io/mahjongpantheon/pantheon-$$image_service-$(CONTAINER_ARCH):$(PROD_LOCAL_TAG)" >/dev/null || { \
+	    echo "Local production image missing; run make prod_local_build first." >&2; exit 1; \
+	  }; \
+	done
+	${MAKE} build_reverse_proxy
+	${MAKE} pantheon_stop
+	${PROD_LOCAL_COMPOSE_COMMAND} up -d --no-build
+	${MAKE} reverse_proxy_start
+
+prod_local:
+	${MAKE} prod_local_build
+	${MAKE} prod_local_start
+
+dev_local: export PANTHEON_PRODUCTION_WORKERS=false
+dev_local:
+	${MAKE} pantheon_stop
+	${MAKE} dev
+
 # Prod related tasks & shortcuts
 
 .PHONY: prod_deps
@@ -690,34 +734,36 @@ prod_compile:
 .PHONY: prod_start
 prod_start: export ENV_FILENAME=.env.production
 prod_start:
-	ALLOWED_SENDER_DOMAINS=`cat Env/.env.production | grep ALLOWED_SENDER_DOMAINS= | awk -F'=' '{print $$2}'` ${COMPOSE_COMMAND} up -d
+	${PROD_COMPOSE_COMMAND} --env-file Env/.env.production up -d --no-build
 
 .PHONY: prod_stop_all
 prod_stop_all: export ENV_FILENAME=.env.production
 prod_stop_all:
 	cd Database && make stop 2>/dev/null || true # gracefully stop the db
-	@${COMPOSE_COMMAND} down
+	${PROD_COMPOSE_COMMAND} --env-file Env/.env.production down
 
 .PHONY: prod_stop
 prod_stop: export ENV_FILENAME=.env.production
 prod_stop:
-	@${COMPOSE_COMMAND} down forseti.pantheon.internal frey.pantheon.internal hermod.pantheon.internal \
-    hugin.pantheon.internal mimir.pantheon.internal sigrun.pantheon.internal tyr.pantheon.internal \
-    gullveig.pantheon.internal bragi.pantheon.internal skirnir.pantheon.internal meili.pantheon.internal
+	${PROD_COMPOSE_COMMAND} --env-file Env/.env.production stop forseti.pantheon.internal frey.pantheon.internal hermod.pantheon.internal \
+	  hugin.pantheon.internal mimir.pantheon.internal sigrun.pantheon.internal tyr.pantheon.internal \
+	  gullveig.pantheon.internal bragi.pantheon.internal skirnir.pantheon.internal meili.pantheon.internal
 
 .PHONY: prod_restart
+prod_restart: export ENV_FILENAME=.env.production
 prod_restart:
-	${MAKE} prod_stop
-	${MAKE} prod_start
+	${PROD_COMPOSE_COMMAND} --env-file Env/.env.production up -d --no-build --no-deps --force-recreate forseti.pantheon.internal frey.pantheon.internal hermod.pantheon.internal \
+	  hugin.pantheon.internal mimir.pantheon.internal sigrun.pantheon.internal tyr.pantheon.internal \
+	  gullveig.pantheon.internal bragi.pantheon.internal skirnir.pantheon.internal meili.pantheon.internal
+
+.PHONY: prod_pull
+prod_pull: export ENV_FILENAME=.env.production
+prod_pull:
+	${PROD_COMPOSE_COMMAND} --env-file Env/.env.production pull
 
 .PHONY: prod_update
-prod_update:
-	git status --short | grep -v 'Sigrun-dist/server.js' | awk '{print $2}' | xargs git checkout --
-	git fetch
-	git checkout origin/master
-	${MAKE} pull
+prod_update: prod_pull
 	${MAKE} prod_restart
-	${MAKE} prod_compile
 
 .PHONY: pull
 pull:
@@ -858,6 +904,7 @@ e2e_compile:
 	${MAKE} e2e_build_skirnir && cd Skirnir && ${MAKE} container_reload
 
 .PHONY: e2e_run
+e2e_run: export PANTHEON_PRODUCTION_WORKERS=true
 e2e_run: export ENV_FILENAME=.env.e2e
 e2e_run:
 	${CONTAINER_COMMAND} pull ghcr.io/mahjongpantheon/pantheon-fenrir-${CONTAINER_ARCH}:latest

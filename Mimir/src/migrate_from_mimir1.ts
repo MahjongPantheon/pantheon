@@ -12,6 +12,7 @@ import { SessionStateEntity } from './entities/SessionState.entity.js';
 import { RoundOutcome, SessionStatus, TournamentGamesStatus } from 'tsclients/proto/atoms.pb.js';
 import { camelCaseKeys } from './helpers/toCamelCase.js';
 import { groupLegacyRounds } from './helpers/groupLegacyRounds.js';
+import { legacyRoundEndDate } from './helpers/legacyRoundEndDate.js';
 import { getLegacyPlayerIds } from './helpers/legacySessionState.js';
 import {
   getLegacyDataMigrationQueries,
@@ -152,7 +153,7 @@ export async function migrateFromMimir1() {
         r.outcome = toOutcome(group[0].outcome);
         r.round = group[0].round;
         r.riichi = group[0].riichi ? group[0].riichi.split(',').map(Number) : [];
-        r.endDate = group[0].end_date;
+        r.endDate = legacyRoundEndDate(group[0].end_date);
         // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
         const state = JSON.parse(group[0].last_session_state || '{}');
         r.lastSessionState = new SessionStateEntity();

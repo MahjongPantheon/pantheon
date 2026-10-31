@@ -19,16 +19,24 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'url';
 import process from 'node:process';
+// Set before dynamically importing the SSR bundles built by CI.
+globalThis.__PANTHEON_ENV__ = Object.fromEntries(
+  Object.entries(process.env).filter(([key]) => key.startsWith('VITE_'))
+);
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 if (fs.existsSync('./node_modules')) {
   Promise.all([import('express'), import('dotenv')]).then(([express, dotenv]) => {
-    const out = dotenv.default.config({
-      path: process.env.NODE_ENV === 'production' ? '.env.production' : '.env.development',
-    })?.parsed;
+    const out = {
+      ...dotenv.default.config({
+        path: process.env.NODE_ENV === 'production' ? '.env.production' : '.env.development',
+      })?.parsed,
+      ...process.env,
+    };
 
     const app = express.default();
-    const PORT = out?.PORT ?? process.env.PORT ?? 4102;
+    const PORT = process.env.PORT ?? out?.PORT ?? 4102;
     createServer(app, out).then((server) =>
       server.listen(PORT, () => {
         console.log('http://localhost:' + PORT);

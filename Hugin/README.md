@@ -51,7 +51,10 @@ Phinx tables and leaves their data and `phinxlog` history intact. It also applie
 the historic text-column widening when needed. Future migrations belong under
 `src/migrations`; generated PHP protobuf classes are no longer a dependency.
 
-The existing cron schedule now executes the compiled Node jobs as `user`:
+Cron runs as `user` in both development and production. `cron/run.sh` executes
+TypeScript job sources through `tsx` in development and compiled Node jobs from
+`Hugin-dist` in production. Development cron tasks require the normal `make dev`
+dependency and migration setup, without a production build. The schedule is:
 
 - Daily aggregation at 03:15: upsert the previous calendar day's counts, then
   remove older raw events in the same transaction.

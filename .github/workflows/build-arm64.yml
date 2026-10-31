@@ -4,19 +4,28 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - 'Common/ContainerBase/**'
+      - 'Frey/**'
+      - 'Mimir/**'
+      - 'Hugin/**'
+      - 'Gullveig/**'
+      - 'Meili/**'
+      - 'Hermod/**'
+      - 'Skirnir/**'
+      - 'Tyr/**'
+      - 'Forseti/**'
+      - 'Sigrun/**'
+      - 'Bragi/**'
+      - 'Common/**'
       - 'Database/**'
       - 'Redis/**'
-      - 'Hermod/**'
-      - 'Hugin/config/**'
-      - '**/cron/tabs/**'
-      - '.github/workflows/build-arm64.yml'
-      - '**/Dockerfile'
-      - '**/Makefile'
-      - '**/supervisord.conf'
-      - '**/*.nginx.conf'
-      - '**/entrypoint.sh'
-      - 'docker-compose-arm64.yml'
+      - '.github/workflows/build*.yml'
+      - '.dockerignore'
+      - 'docker-compose-production.yml'
+      - 'Makefile'
+
+permissions:
+  contents: read
+  packages: write
 
 jobs:
   buildContainers:
@@ -28,6 +37,11 @@ jobs:
       github.repository == 'MahjongPantheon/pantheon'
     steps:
       - uses: actions/checkout@v2
+
+      - name: Check container runtime configuration
+        run: |
+          node --test Common/ContainerRuntime/*.test.mjs
+          ENV_FILENAME=.env.e2e docker compose -f docker-compose-production.yml --env-file Env/.env.e2e config --quiet
 
       - name: Set up Docker Buildx
         id: buildx
@@ -77,7 +91,8 @@ jobs:
       - name: Build and push [Forseti]
         uses: docker/build-push-action@v6
         with:
-          context: ./Forseti
+          context: .
+          file: Forseti/Dockerfile
           platforms: linux/arm64
           build-args: CONTAINER_ARCH=arm64
           push: ${{ github.event_name != 'pull_request' }}
@@ -88,7 +103,8 @@ jobs:
       - name: Build and push [Frey]
         uses: docker/build-push-action@v6
         with:
-          context: ./Frey
+          context: .
+          file: Frey/Dockerfile
           platforms: linux/arm64
           build-args: CONTAINER_ARCH=arm64
           push: ${{ github.event_name != 'pull_request' }}
@@ -99,7 +115,8 @@ jobs:
       - name: Build and push [Hermod]
         uses: docker/build-push-action@v6
         with:
-          context: ./Hermod
+          context: .
+          file: Hermod/Dockerfile
           platforms: linux/arm64
           build-args: CONTAINER_ARCH=arm64
           push: ${{ github.event_name != 'pull_request' }}
@@ -110,7 +127,8 @@ jobs:
       - name: Build and push [Hugin]
         uses: docker/build-push-action@v6
         with:
-          context: ./Hugin
+          context: .
+          file: Hugin/Dockerfile
           platforms: linux/arm64
           build-args: CONTAINER_ARCH=arm64
           push: ${{ github.event_name != 'pull_request' }}
@@ -121,7 +139,8 @@ jobs:
       - name: Build and push [Gullveig]
         uses: docker/build-push-action@v6
         with:
-          context: ./Gullveig
+          context: .
+          file: Gullveig/Dockerfile
           platforms: linux/arm64
           build-args: CONTAINER_ARCH=arm64
           push: ${{ github.event_name != 'pull_request' }}
@@ -132,7 +151,8 @@ jobs:
       - name: Build and push [Meili]
         uses: docker/build-push-action@v6
         with:
-          context: ./Meili
+          context: .
+          file: Meili/Dockerfile
           platforms: linux/arm64
           build-args: CONTAINER_ARCH=arm64
           push: ${{ github.event_name != 'pull_request' }}
@@ -143,7 +163,8 @@ jobs:
       - name: Build and push [Mimir]
         uses: docker/build-push-action@v6
         with:
-          context: ./Mimir
+          context: .
+          file: Mimir/Dockerfile
           platforms: linux/arm64
           build-args: CONTAINER_ARCH=arm64
           push: ${{ github.event_name != 'pull_request' }}
@@ -154,7 +175,8 @@ jobs:
       - name: Build and push [Sigrun]
         uses: docker/build-push-action@v6
         with:
-          context: ./Sigrun
+          context: .
+          file: Sigrun/Dockerfile
           platforms: linux/arm64
           build-args: CONTAINER_ARCH=arm64
           push: ${{ github.event_name != 'pull_request' }}
@@ -165,7 +187,8 @@ jobs:
       - name: Build and push [Bragi]
         uses: docker/build-push-action@v6
         with:
-          context: ./Bragi
+          context: .
+          file: Bragi/Dockerfile
           platforms: linux/arm64
           build-args: CONTAINER_ARCH=arm64
           push: ${{ github.event_name != 'pull_request' }}
@@ -176,7 +199,8 @@ jobs:
       - name: Build and push [Skirnir]
         uses: docker/build-push-action@v6
         with:
-          context: ./Skirnir
+          context: .
+          file: Skirnir/Dockerfile
           platforms: linux/arm64
           build-args: CONTAINER_ARCH=arm64
           push: ${{ github.event_name != 'pull_request' }}
@@ -187,7 +211,8 @@ jobs:
       - name: Build and push [Tyr]
         uses: docker/build-push-action@v6
         with:
-          context: ./Tyr
+          context: .
+          file: Tyr/Dockerfile
           platforms: linux/arm64
           build-args: CONTAINER_ARCH=arm64
           push: ${{ github.event_name != 'pull_request' }}

@@ -27,38 +27,139 @@ To deploy pantheon on your own VPS or personal environment on production mode:
 2. Create new environment config file `Env/.env.production`. There are examples in `Env` folder. Fill the file with proper settings for your setup.
 3. Fill new environment file with proper values, mostly it's about hosts, where you want the services to be accessible from the outer internet. Please note: setting up Nginx or any other reverse proxy is your responsibility. You may refer to `nginx-reverse-proxy.example.conf` file for basic nginx setup.
 4. Set up your reverse proxy, add SSL certificates (optionally). Please use included `nginx-reverse-proxy.example.conf` as reference of what host to point where. Note that `*.pantheon.internal` hosts are used to distinguish the services inside container network. Optionally, you can also point PgAdmin4 host to port 5632.
-5. Run `make pull` to fetch fresh containers from registry.
-   - As an option, you can run `make container` to build containers from scratch, but it's not recommended for production environment.
-6. Run `make prod_start` to start containers
-7. Run the following command: `make prod_compile`. This will build all static files for Tyr/Forseti/Sigrun and Sigrun server.
-8. If you're making a fresh setup, run `make bootstrap_admin` to bootstrap a super-administrator account (admin@localhost.localdomain with password 123456). Be careful doing this on the database that already has users or admins, as it will potentially create a security breach (e.g. superadmin account with default login and password).
-   - Use `https://{yourhost}/profile/editPlayer/{player_id}` link to edit the email, and then use password reset feature to set the new password.
-   - On fresh setup, `player_id` will be `1`, in general you can find the `player_id` on `https://{yourhost}/profile/manage` page after logging in with default username and password.
-9. Basically, you're done :)
+5. Run `make prod_pull` to fetch CI-built images from the registry.
+6. Run `make prod_start` to start containers. Frey, Mimir, and Hugin wait for their databases and apply migrations before starting application workers. A failed migration stops startup; inspect the service logs before retrying.
+7. For a fresh setup, run `make bootstrap_admin` to create the default administrator (`admin@localhost.localdomain`, password `123456`). Change its email and reset its password immediately through Forseti.
 
-To update code on production server you will need to do the following:
+Production uses the standalone `docker-compose-production.yml`, with the same network,
+HTTP ports and persistent data volumes as the development files. Application code,
+compiled bundles, runtime dependencies, migrations and scheduled jobs are inside the
+images. Only persistent data and ACME challenge directories are mounted; keep `Env/.env.production`
+and Hermod's DKIM keys on the host. Existing database and upload volumes are reused.
 
-**Quick way**
+To update production, run:
 
-Use `make prod_update` to fetch all changes from master branch. Please note that your setup and intentions must meet the following requirements:
+```sh
+make prod_update
+# Equivalent:
+make prod_pull
+make prod_restart
+```
 
-- You use git-based version of code (cloned repository)
-- You want to use code from master branch (please note - master is not always stable!)
-- You don't have any changes is your working copy (except `Sigrun-dist/server.js` - this file is a result of `prod_compile`). If there are any changes, they will be discarded. You can check changes in your working copy using `git status` command. Production environment config is excluded from git, so it's guaranteed to be left untouched.
+`prod_restart` recreates application containers with the pulled images and applies
+pending migrations. A plain container restart reruns migrations but cannot switch
+to a newly pulled image. PostgreSQL and pgAdmin are left running by `prod_restart`.
+Use `make prod_start` to apply changes to infrastructure images/configuration too.
+`prod_update` does not change your Git checkout; update deployment configuration
+files separately when a release changes them.
 
-**Long way**
+Set `IMAGE_TAG=<commit SHA>` when pulling and restarting to deploy a specific CI
+release, for example `make prod_update IMAGE_TAG=abc123...`. Both AMD64 and ARM64
+build workflows publish commit tags and `latest`. Make detects the host architecture;
+standalone Compose users should set `CONTAINER_ARCH=arm64` on ARM hosts.
 
-Basically these are the same commands that are done inside `make prod_update` but performed one-by-one for better control.
+Changing `Env/.env.production`, including public `VITE_*` settings, requires only
+`make prod_restart`. CI builds defer these values to startup: browsers load
+`/runtime-env.js` with caching disabled and SSR reads the container environment.
+All `VITE_*` variables are public; never put secrets in them. Production requires
+no dependency installation or compilation on the server. The old `prod_compile`
+and `prod_build_*` targets remain for local source-build diagnostics; use the
+existing e2e source-build flow for local production-bundle tests.
 
-1. Get new code from the repository (e.g. run `git fetch && git checkout origin/master` in repo folder)
-2. Pull new containers using `make pull`
-3. Restart containers with `make prod_restart` (please use this exact command, otherwise email service will be started with wrong environment settings)
-4. Run `make prod_compile` to build newer versions of the static code.
+Development Compose files continue mounting sources and build outputs. They set
+`PANTHEON_MODE=development` and disable production Supervisor workers by default,
+so `make dev` uses the existing development servers. Cron tasks run in both modes;
+Hugin runs TypeScript job sources in development and compiled jobs in production.
+`make e2e_run` explicitly enables production workers for the local `e2e_compile` flow. Development hostnames continue to proxy the
+watchers; production hostnames require production workers.
 
-If you ever change the environment variables in your current `Env/.env.production` file, you should also restart the containers using `make prod_restart`. After that,
-if `VITE_*` variables have been changed, you should also run `make prod_compile` for changes to take effect.
+#### Testing production images locally
 
-Please note that db and pgadmin containers are not restarted during `make prod_restart`. To stop these containers as well, use `make prod_stop_all`. This is rarely needed, though.
+Run these shortcuts from the repository root:
+
+```sh
+make prod_local        # Build all images, stop development, start production + local proxy
+make prod_local_build  # Build images only; leave running containers alone
+make prod_local_start  # Switch to previously built production images + local proxy
+make dev_local         # Stop the test stack and start normal development servers
+```
+
+`prod_local` builds your working copy into the same images CI publishes, including
+all eleven applications, PostgreSQL, Redis and the shared base. Build failures stop
+the switch before the running stack is stopped. `prod_local_start` validates the
+Compose configuration and local image availability, builds the proxy, stops the
+existing stack and starts
+`docker-compose-production.yml` with startup migrations and cron jobs enabled.
+`dev_local` runs the normal development dependency/migration setup and keeps the
+development watchers in the foreground, just like `make dev`.
+
+The default image tag is `local-production`, so application images tagged `latest`
+are left intact. The default environment is `Env/.env.e2e`, which supplies
+`.pantheon.internal` URLs and local test credentials, including enabled e2e fixture
+APIs. This environment is only for local testing; it is loaded at startup and is
+not copied into the images. Architecture detection and Docker/Podman selection
+follow the existing root Makefile behavior.
+
+Override the local tag and environment filename when needed, using the same values
+for building and starting:
+
+```sh
+make prod_local PROD_LOCAL_TAG=my-test PROD_LOCAL_ENV=.env.e2e
+```
+
+The local production stack shares the `pantheon` project, ports, subnet and named
+volumes with development. Both switching commands stop the existing stack first;
+existing database and upload data are reused and pending migrations are applied.
+Use a disposable local environment if you need fresh data. Neither command deletes
+named volumes. There is no host `make deps` or `make prod_compile` step for the
+production images.
+
+Inspect startup with these commands (adjust the tag/environment if overridden):
+
+```sh
+ENV_FILENAME=.env.e2e IMAGE_TAG=local-production CONTAINER_ARCH="$(bash bin/get_arch.sh)" \
+  docker compose -f docker-compose-production.yml --env-file Env/.env.e2e ps
+ENV_FILENAME=.env.e2e IMAGE_TAG=local-production CONTAINER_ARCH="$(bash bin/get_arch.sh)" \
+  docker compose -f docker-compose-production.yml --env-file Env/.env.e2e logs --tail=100 \
+  frey.pantheon.internal mimir.pantheon.internal hugin.pantheon.internal
+```
+
+Frey, Mimir and Hugin apply migrations before starting workers; check their logs
+for failures. Compose may pull missing third-party infrastructure images. The
+application, PostgreSQL and Redis images come from your local builds. The server
+`prod_*` commands such as `prod_start` still select `Env/.env.production`; use the
+`prod_local*` shortcuts for this local test setup.
+
+The local reverse proxy starts automatically. Add these entries to your host's
+`/etc/hosts` for browser testing:
+
+```text
+127.0.0.1 bragi.pantheon.internal forseti.pantheon.internal sigrun.pantheon.internal tyr.pantheon.internal
+127.0.0.1 frey.pantheon.internal mimir.pantheon.internal hugin.pantheon.internal gullveig.pantheon.internal
+127.0.0.1 hermod.pantheon.internal skirnir.pantheon.internal meili.pantheon.internal
+```
+
+Open <http://bragi.pantheon.internal>, <http://forseti.pantheon.internal>,
+<http://sigrun.pantheon.internal> or <http://tyr.pantheon.internal>.
+Use `.pantheon.internal` hosts: `.pantheon.local` hosts target development servers.
+For a quick check without editing `/etc/hosts`, run:
+
+```sh
+curl --fail --resolve tyr.pantheon.internal:80:127.0.0.1 http://tyr.pantheon.internal/
+curl --fail --resolve tyr.pantheon.internal:80:127.0.0.1 http://tyr.pantheon.internal/runtime-env.js
+```
+
+HTTP supports application and SSR checks; testing browser PWA/service-worker
+behavior requires local HTTPS. On a fresh local database, `make bootstrap_admin`
+creates the default administrator described above.
+
+After changing code, run `make prod_local` again to rebuild the images and restart
+the production stack. A plain container restart reruns startup but does not adopt
+a newly built image. No source or compiled application folders are mounted into
+these containers.
+
+Run `make dev_local` to stop the local production stack and return to development.
+To stop without starting development, use `make pantheon_stop`.
 
 #### Frontend PWA updates
 
@@ -253,7 +354,8 @@ Pantheon services include e2e testing framework based on Playwright. To run it l
 environment is running (`make dev`) and use `make e2e_dev` command in separate terminal window. Note that it will run tests against
 development build, so no SSR is tested locally. This starts only Fenrir with the development environment; it does not rebuild or recreate the application services.
 
-If you want to test full production build locally, you may stop the development environment and use following commands:
+To test the production images and their startup behavior, follow [Testing production images locally](#testing-production-images-locally).
+For the existing source-mounted production-bundle e2e flow, stop development and run:
 
 ```
 make e2e_run

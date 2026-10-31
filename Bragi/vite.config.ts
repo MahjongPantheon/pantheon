@@ -15,6 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import { runtimeEnvironment } from '../Common/ContainerRuntime/vite-runtime-env.mjs';
+
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react-swc';
 import mdx from '@mdx-js/rollup';
@@ -22,6 +24,7 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 
 export default defineConfig({
   plugins: [
+    runtimeEnvironment(),
     { enforce: 'pre', ...mdx(/* jsxImportSource: …, otherOptions… */) },
     react(),
     tsconfigPaths(),

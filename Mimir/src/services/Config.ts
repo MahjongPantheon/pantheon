@@ -36,10 +36,12 @@ export class ConfigService {
   constructor(printEnv?: boolean) {
     this._development = process.env.NODE_ENV !== 'production';
     this._test = Boolean(process.env.TEST);
-    this._envData =
-      dotenv.config({
+    this._envData = {
+      ...dotenv.config({
         path: this._development ? '.env.development' : '.env.production',
-      })?.parsed ?? {};
+      })?.parsed,
+      ...process.env,
+    };
     process.env.TZ = this._envData.TZ ?? 'UTC';
     this._test ||= Boolean(this._envData.TEST);
     if (printEnv) {

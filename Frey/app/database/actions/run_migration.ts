@@ -11,6 +11,7 @@ export async function migrateToLatest(mock?: boolean) {
     dialect: new PostgresDialect({
       pool: new Pool({
         host: env.db.host,
+        port: env.db.port,
         database: mock ? 'frey2_unit' : env.db.dbname,
         user: env.db.username,
         password: env.db.password,

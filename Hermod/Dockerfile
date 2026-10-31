@@ -3,15 +3,14 @@ FROM ghcr.io/mahjongpantheon/pantheon-container-base-v4-${CONTAINER_ARCH}:latest
 
 RUN apk add --no-cache postfix rsyslog opendkim opendkim-utils ca-certificates
 
-COPY       /configs/supervisord.conf     /etc/supervisord.conf
-COPY       /configs/rsyslog*.conf        /etc/
-COPY       /configs/opendkim.conf        /etc/opendkim/opendkim.conf
-COPY       /configs/smtp_header_checks   /etc/postfix/smtp_header_checks
-COPY       /scripts/*.sh                 /
+COPY       Hermod/configs/supervisord.conf     /etc/supervisord.conf
+COPY       Hermod/configs/rsyslog*.conf        /etc/
+COPY       Hermod/configs/opendkim.conf        /etc/opendkim/opendkim.conf
+COPY       Hermod/configs/smtp_header_checks   /etc/postfix/smtp_header_checks
+COPY       Hermod/scripts/*.sh                 /
 
 # copy nginx configs
-COPY hermod-container.nginx.conf /etc/nginx/http.d/hermod.conf
-
+COPY Hermod/hermod-container.nginx.conf /etc/nginx/http.d/hermod.conf
 RUN        chmod +x /run.sh /opendkim.sh
 
 USER       root
@@ -23,3 +22,11 @@ RUN mkdir -p /var/www/html/Hermod /var/www/html/Hermod-dist
 
 EXPOSE     587 25
 CMD        ["/bin/sh", "-c", "/run.sh"]
+
+# Build artifacts in CI; retain source dependencies for migrations and scheduled jobs.
+COPY Common /var/www/html/Common
+COPY Hermod /var/www/html/Hermod
+COPY --chmod=755 Common/ContainerRuntime/prepare.sh /prepare-service.sh
+RUN --mount=type=cache,target=/root/.local/share/pnpm/store /bin/sh /var/www/html/Common/ContainerRuntime/build.sh Hermod
+ENV PANTHEON_MODE=production
+ENV PANTHEON_PRODUCTION_WORKERS=true

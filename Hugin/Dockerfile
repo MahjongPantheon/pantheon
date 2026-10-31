@@ -10,20 +10,24 @@ ENV TZ=UTC
 RUN apk add --no-cache rsyslog
 
 # copy entry point
-COPY --chmod=755 entrypoint.sh /entrypoint.sh
-
+COPY --chmod=755 Hugin/entrypoint.sh /entrypoint.sh
 # copy supervisor config
-COPY supervisord.conf /etc/supervisord.conf
-
+COPY Hugin/supervisord.conf /etc/supervisord.conf
 # copy nginx configs
-COPY hugin-container.nginx.conf /etc/nginx/http.d/hugin.conf
-
+COPY Hugin/hugin-container.nginx.conf /etc/nginx/http.d/hugin.conf
 # Copy cron defs
-COPY cron/tabs/user /var/spool/cron/crontabs/user
-
-COPY config/install_prometheus.sh /install_prometheus.sh
-COPY config/prometheus_partial_config.conf /prometheus_partial_config.conf
+COPY Hugin/cron/tabs/user /var/spool/cron/crontabs/user
+COPY Hugin/config/install_prometheus.sh /install_prometheus.sh
+COPY Hugin/config/prometheus_partial_config.conf /prometheus_partial_config.conf
 RUN bash /install_prometheus.sh
 
 # Folders init
 RUN mkdir -p /var/www/html/Hugin /var/www/html/Hugin-dist
+
+# Build artifacts in CI; retain source dependencies for migrations and scheduled jobs.
+COPY Common /var/www/html/Common
+COPY Hugin /var/www/html/Hugin
+COPY --chmod=755 Common/ContainerRuntime/prepare.sh /prepare-service.sh
+RUN --mount=type=cache,target=/root/.local/share/pnpm/store /bin/sh /var/www/html/Common/ContainerRuntime/build.sh Hugin
+ENV PANTHEON_MODE=production
+ENV PANTHEON_PRODUCTION_WORKERS=true

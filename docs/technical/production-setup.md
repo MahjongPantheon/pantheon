@@ -202,17 +202,20 @@ with updating your nginx configs on host.
 
 ### Environment variables for Pantheon
 
-Run `make pull` to fetch prebuilt pantheon containers from registry. Alternatively, you might want to run `make container`
-to build the containers right on your server (not recommended in general).
+Create `/srv/__pantheon/Env/.env.production` using `Env/.env.example.production`
+as a starting point. Configure service URLs, database credentials and mail settings.
+Then run `make prod_pull` and `make prod_start` from the Pantheon folder.
 
-Create a production environment file for Pantheon called `/srv/__pantheon/Env/.env.production`. You can use
-`.env.example.production` as a starting point. Then call `make prod_start` in pantheon folder as user to fetch and
-start pantheon containers.
+CI images contain production bundles and dependencies. Frey, Mimir and Hugin apply
+pending migrations before starting workers. You do not need `make deps` or
+`make prod_compile` on the server. Inspect container logs if startup fails.
 
-Run `make deps` as user in pantheon folder to install all the project dependencies. Ignore "Fenrir container is not running"
-warning, this service is not intended to be run in production.
-
-Run `make prod_compile` to prepare and run rest of the services.
+For updates, run `make prod_update` (pull images and recreate application containers).
+For environment changes, including `VITE_*`, run `make prod_restart`. Public frontend
+settings are generated at startup; `VITE_*` must never contain secrets. See the
+[root deployment guide](../../README.md#production-build) for commit-tag pinning and
+production Compose details. Keep deployment configuration files in sync with the
+release separately from pulling images.
 
 ### Nginx setup
 

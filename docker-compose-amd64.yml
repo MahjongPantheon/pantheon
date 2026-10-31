@@ -22,7 +22,8 @@ networks:
 services:
   hermod.pantheon.internal:
     build:
-      context: ./Hermod
+      context: .
+      dockerfile: Hermod/Dockerfile
       args:
         CONTAINER_ARCH: amd64
     cgroup: host
@@ -43,6 +44,8 @@ services:
       - pfspool01:/var/spool/postfix
       - pfetc01:/etc/postfix
     environment:
+      PANTHEON_MODE: development
+      PANTHEON_PRODUCTION_WORKERS: ${PANTHEON_PRODUCTION_WORKERS:-false}
       PNPM_HOME: /.pnpm
       npm_config_store_dir: /.pnpm
     networks:
@@ -52,7 +55,8 @@ services:
           - hermod.pantheon.internal
   skirnir.pantheon.internal:
     build:
-      context: ./Skirnir
+      context: .
+      dockerfile: Skirnir/Dockerfile
       args:
         CONTAINER_ARCH: amd64
     cgroup: host
@@ -62,6 +66,8 @@ services:
     env_file:
       - ./Env/${ENV_FILENAME:-.env.production}
     environment:
+      PANTHEON_MODE: development
+      PANTHEON_PRODUCTION_WORKERS: ${PANTHEON_PRODUCTION_WORKERS:-false}
       PNPM_HOME: /.pnpm
       npm_config_store_dir: /.pnpm
     ports:
@@ -110,7 +116,8 @@ services:
           - redis.pantheon.internal
   frey.pantheon.internal:
     build:
-      context: ./Frey
+      context: .
+      dockerfile: Frey/Dockerfile
       args:
         CONTAINER_ARCH: amd64
     cgroup: host
@@ -136,6 +143,8 @@ services:
       - ./Common:/var/www/html/Common
       - pnpmstore01:/.pnpm
     environment:
+      PANTHEON_MODE: development
+      PANTHEON_PRODUCTION_WORKERS: ${PANTHEON_PRODUCTION_WORKERS:-false}
       PNPM_HOME: /.pnpm
       npm_config_store_dir: /.pnpm
       PHINX_DB_FREY_PORT: 5432
@@ -147,7 +156,8 @@ services:
           - frey.pantheon.internal
   mimir.pantheon.internal:
     build:
-      context: ./Mimir
+      context: .
+      dockerfile: Mimir/Dockerfile
       args:
         CONTAINER_ARCH: amd64
     cgroup: host
@@ -176,6 +186,8 @@ services:
       - ./Mimir-dist:/var/www/html/Mimir-dist
       - pnpmstore01:/.pnpm
     environment:
+      PANTHEON_MODE: development
+      PANTHEON_PRODUCTION_WORKERS: ${PANTHEON_PRODUCTION_WORKERS:-false}
       PHINX_DB_PORT: 5432
       PHINX_DB_HOST: db.pantheon.internal
       PNPM_HOME: /.pnpm
@@ -206,7 +218,8 @@ services:
           - pga.pantheon.internal
   tyr.pantheon.internal:
     build:
-      context: ./Tyr
+      context: .
+      dockerfile: Tyr/Dockerfile
       args:
         CONTAINER_ARCH: amd64
     cgroup: host
@@ -216,6 +229,8 @@ services:
     env_file:
       - ./Env/${ENV_FILENAME:-.env.production}
     environment:
+      PANTHEON_MODE: development
+      PANTHEON_PRODUCTION_WORKERS: ${PANTHEON_PRODUCTION_WORKERS:-false}
       PNPM_HOME: /.pnpm
       npm_config_store_dir: /.pnpm
     ports:
@@ -235,7 +250,8 @@ services:
           - tyr.pantheon.internal
   forseti.pantheon.internal:
     build:
-      context: ./Forseti
+      context: .
+      dockerfile: Forseti/Dockerfile
       args:
         CONTAINER_ARCH: amd64
     cgroup: host
@@ -245,6 +261,8 @@ services:
     env_file:
       - ./Env/${ENV_FILENAME:-.env.production}
     environment:
+      PANTHEON_MODE: development
+      PANTHEON_PRODUCTION_WORKERS: ${PANTHEON_PRODUCTION_WORKERS:-false}
       PNPM_HOME: /.pnpm
       npm_config_store_dir: /.pnpm
     ports:
@@ -264,7 +282,8 @@ services:
           - forseti.pantheon.internal
   sigrun.pantheon.internal:
     build:
-      context: ./Sigrun
+      context: .
+      dockerfile: Sigrun/Dockerfile
       args:
         CONTAINER_ARCH: amd64
     cgroup: host
@@ -274,6 +293,8 @@ services:
     env_file:
       - ./Env/${ENV_FILENAME:-.env.production}
     environment:
+      PANTHEON_MODE: development
+      PANTHEON_PRODUCTION_WORKERS: ${PANTHEON_PRODUCTION_WORKERS:-false}
       PNPM_HOME: /.pnpm
       npm_config_store_dir: /.pnpm
     ports:
@@ -293,7 +314,8 @@ services:
           - sigrun.pantheon.internal
   gullveig.pantheon.internal:
     build:
-      context: ./Gullveig
+      context: .
+      dockerfile: Gullveig/Dockerfile
       args:
         CONTAINER_ARCH: amd64
     cgroup: host
@@ -312,6 +334,8 @@ services:
       - gullveigstorage01:/var/storage
       - pnpmstore01:/.pnpm
     environment:
+      PANTHEON_MODE: development
+      PANTHEON_PRODUCTION_WORKERS: ${PANTHEON_PRODUCTION_WORKERS:-false}
       PNPM_HOME: /.pnpm
       npm_config_store_dir: /.pnpm
     networks:
@@ -321,7 +345,8 @@ services:
           - gullveig.pantheon.internal
   meili.pantheon.internal:
     build:
-      context: ./Meili
+      context: .
+      dockerfile: Meili/Dockerfile
       args:
         CONTAINER_ARCH: amd64
     cgroup: host
@@ -339,6 +364,8 @@ services:
       - ./Common:/var/www/html/Common
       - pnpmstore01:/.pnpm
     environment:
+      PANTHEON_MODE: development
+      PANTHEON_PRODUCTION_WORKERS: ${PANTHEON_PRODUCTION_WORKERS:-false}
       PNPM_HOME: /.pnpm
       npm_config_store_dir: /.pnpm
     networks:
@@ -348,7 +375,8 @@ services:
           - meili.pantheon.internal
   bragi.pantheon.internal:
     build:
-      context: ./Bragi
+      context: .
+      dockerfile: Bragi/Dockerfile
       args:
         CONTAINER_ARCH: amd64
     cgroup: host
@@ -358,6 +386,8 @@ services:
     env_file:
       - ./Env/${ENV_FILENAME:-.env.production}
     environment:
+      PANTHEON_MODE: development
+      PANTHEON_PRODUCTION_WORKERS: ${PANTHEON_PRODUCTION_WORKERS:-false}
       PNPM_HOME: /.pnpm
       npm_config_store_dir: /.pnpm
     ports:
@@ -374,7 +404,8 @@ services:
           - bragi.pantheon.internal
   hugin.pantheon.internal:
     build:
-      context: ./Hugin
+      context: .
+      dockerfile: Hugin/Dockerfile
       args:
         CONTAINER_ARCH: amd64
     cgroup: host
@@ -405,6 +436,8 @@ services:
       - ./Common:/var/www/html/Common
       - prometheusdata:/var/lib/prometheus
     environment:
+      PANTHEON_MODE: development
+      PANTHEON_PRODUCTION_WORKERS: ${PANTHEON_PRODUCTION_WORKERS:-false}
       PNPM_HOME: /.pnpm
       npm_config_store_dir: /.pnpm
       PHINX_DB_HUGIN_PORT: 5432

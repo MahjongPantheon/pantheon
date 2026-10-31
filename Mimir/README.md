@@ -151,6 +151,13 @@ scoring rebuilds for every event to replace integer-rounded average places.
 When adding a data migration, update this list or the relevant import conversion;
 schema migrations run before the import and cannot transform rows inserted later.
 
+Apply `Migration20261101000000` before importing v1 data. It changes history ratings
+and session-result rating deltas to `double precision`, supporting v1 fractional
+ratings and preserving the full range of existing integer values. The API already
+uses floating-point fields. Fractional values such as `1545.5` are preserved during
+import; integer casts would discard that precision. Average places were already
+changed to `real` by `Migration20261018000000`.
+
 ### Individual yakuhai
 
 Apply `Migration20261024000000` before deploying individual wind and dragon yaku.

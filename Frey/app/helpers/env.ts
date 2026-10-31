@@ -29,10 +29,12 @@ type EnvVars = {
 };
 
 const development = process.env.NODE_ENV !== 'production';
-const data: Partial<EnvVars> =
-  dotenv.config({
+const data: Partial<EnvVars> = {
+  ...dotenv.config({
     path: development ? '.env.development' : '.env.production',
-  })?.parsed ?? {};
+  })?.parsed,
+  ...process.env,
+};
 
 process.env.TZ = data.TZ ?? 'UTC';
 

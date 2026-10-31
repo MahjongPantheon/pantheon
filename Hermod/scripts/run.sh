@@ -3,6 +3,11 @@ set -e
 
 echo "export PS1=\"|\033[1;31m Hermod container \033[0m~> \$PWD (\\u) \\$ \"" > /etc/profile.d/external.sh
 
+if [ "${PANTHEON_MODE:-development}" = production ]; then
+  export NODE_ENV=production
+fi
+/prepare-service.sh Hermod
+
 . /common.sh
 . /common-run.sh
 

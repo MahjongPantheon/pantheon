@@ -15,6 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import { runtimeEnvironment } from '../Common/ContainerRuntime/vite-runtime-env.mjs';
+
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react-swc';
 import tsconfigPaths from 'vite-tsconfig-paths';
@@ -22,6 +24,7 @@ import { VitePWA } from 'vite-plugin-pwa';
 
 export default defineConfig({
   plugins: [
+    runtimeEnvironment(),
     react(),
     tsconfigPaths(),
     VitePWA({

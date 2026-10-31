@@ -86,4 +86,18 @@ describe('Service configuration', () => {
     expect(config.mailer.remoteActionKey).toBe('mail-key');
     expect(config.mailer.mailerAddr).toBe('noreply@example.com');
   });
+
+  it('loads container-only settings without a dotenv file', () => {
+    process.env.NODE_ENV = 'production';
+    process.env.DB_MIMIR_PORT = '5544';
+    process.env.DB_MIMIR_REDIS_PASSWORD = 'redis-secret';
+    process.env.MAIL_ACTION_KEY = 'mail-secret';
+    process.env.COOKIE_DOMAIN = 'container.test';
+    const config = new ConfigService();
+    expect(config.development).toBe(false);
+    expect(config.db.port).toBe(5544);
+    expect(config.redis.password).toBe('redis-secret');
+    expect(config.mailer.remoteActionKey).toBe('mail-secret');
+    expect(config.cookieDomain).toBe('container.test');
+  });
 });
