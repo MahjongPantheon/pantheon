@@ -5,6 +5,7 @@ import { i18n } from '../../i18n';
 import clsx from 'classnames';
 import RepeatIcon from '../../../img/icons/repeat.svg?react';
 import SaveIcon from '../../../img/icons/check.svg?react';
+import GameLogIcon from '../../../img/icons/log.svg?react';
 import { Player } from '../../base/Player/Player';
 import { Button } from '../../base/Button/Button';
 import styles from './GameResult.module.css';
@@ -14,10 +15,11 @@ type IProps = {
   results?: SessionHistoryResult[];
   onCheckClick: () => void;
   onRepeatClick: () => void;
+  onLogClick?: () => void;
 };
 
 export const GameResult = (props: IProps) => {
-  const { results, showRepeatButton, onCheckClick, onRepeatClick } = props;
+  const { results, showRepeatButton, onCheckClick, onRepeatClick, onLogClick } = props;
   const loc = useContext(i18n);
   return (
     <div className={styles.wrapper} data-testid='tyr-game-result'>
@@ -59,6 +61,15 @@ export const GameResult = (props: IProps) => {
             ))}
           </div>
           <div className={styles.buttons}>
+            {onLogClick && (
+              <Button
+                variant='contained'
+                onClick={onLogClick}
+                size='lg'
+                icon={<GameLogIcon />}
+                testId='tyr-game-result-log'
+              />
+            )}
             {showRepeatButton && (
               <Button
                 variant='contained'

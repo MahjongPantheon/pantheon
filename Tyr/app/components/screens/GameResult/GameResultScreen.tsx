@@ -19,13 +19,17 @@ import React, { useCallback } from 'react';
 import { IComponentProps } from '../../IComponentProps';
 import { Loader } from '../../base/Loader/Loader';
 import { GameResult as GameResultPage } from '../../pages/GameResult/GameResult';
-import { GOTO_NEXT_SCREEN, START_NEW_GAME } from '../../../store/actions/interfaces';
+import { GOTO_NEXT_SCREEN, SHOW_GAME_LOG, START_NEW_GAME } from '../../../store/actions/interfaces';
 
 export const GameResultScreen = (props: IComponentProps) => {
   const { state, dispatch } = props;
 
   const onCheckClick = useCallback(() => {
     dispatch({ type: GOTO_NEXT_SCREEN });
+  }, [dispatch]);
+
+  const onLogClick = useCallback(() => {
+    dispatch({ type: SHOW_GAME_LOG });
   }, [dispatch]);
 
   const onRepeatClick = useCallback(() => {
@@ -57,6 +61,7 @@ export const GameResultScreen = (props: IComponentProps) => {
       showRepeatButton={canStartGame}
       onCheckClick={onCheckClick}
       onRepeatClick={onRepeatClick}
+      onLogClick={state.lastResults?.[0]?.sessionHash ? onLogClick : undefined}
     />
   );
 };

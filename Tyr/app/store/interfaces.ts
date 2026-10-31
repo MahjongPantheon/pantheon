@@ -79,6 +79,7 @@ export interface IAppState {
   canAccessAdminPanel: boolean;
   analyticsSession?: string;
   currentScreen: AppScreen;
+  gameLogOrigin?: AppScreen;
   currentSessionHash?: string;
   nextRoundToken?: string;
   currentOutcome?: AppOutcome;

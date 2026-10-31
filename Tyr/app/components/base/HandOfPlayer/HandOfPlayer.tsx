@@ -68,6 +68,8 @@ export const HandOfPlayer = (props: IProps) => {
     YakuId.GREEN_DRAGON,
     ...aggregatedYakuhai,
   ].filter((y) => props.yaku.includes(y));
+  const firstYakuhai = props.yaku.find((id) => yakuhaiButtons.includes(id));
+  const isAggregatedYakuhai = yakuhaiButtons.every((y) => aggregatedYakuhai.includes(y));
   const renderYakuButton = (y: YakuId) => {
     const isYakuhai = yakuhaiButtons.includes(y);
     const label = windYaku.some((pair) => pair.includes(y))
@@ -76,11 +78,12 @@ export const HandOfPlayer = (props: IProps) => {
     return (
       <Toggle
         style={{
-          flex: 1,
+          flex: isAggregatedYakuhai && isYakuhai && y === yakuhaiButtons[0] ? '0 0 auto' : 1,
           minWidth: isYakuhai ? 0 : undefined,
           position: isYakuhai ? 'relative' : undefined,
           padding: isYakuhai ? '6px 2px' : undefined,
-          fontSize: isYakuhai && !yakuhaiTiles[y] ? 'var(--font-sm)' : undefined,
+          paddingInline:
+            isAggregatedYakuhai && isYakuhai && y === yakuhaiButtons[0] ? 10 : undefined,
           whiteSpace: 'nowrap',
           marginBottom: y === YakuId.__OPENHAND ? '10px' : undefined,
         }}
@@ -109,6 +112,8 @@ export const HandOfPlayer = (props: IProps) => {
               </span>
             )}
           </span>
+        ) : isAggregatedYakuhai && isYakuhai && y !== yakuhaiButtons[0] ? (
+          <span aria-label={label}>x{aggregatedYakuhai.indexOf(y) + 1}</span>
         ) : (
           label
         )}
@@ -129,21 +134,25 @@ export const HandOfPlayer = (props: IProps) => {
     <div className={styles.wrapper} data-testid={`tyr-hand-player-${props.playerId}`}>
       <div className={clsx(styles.beforeYaku, topShadowDisabled ? styles.noShadow : null)}></div>
       <div className={styles.yakuList} onScroll={onScroll}>
-        {props.yaku.filter((y) => y === YakuId.__OPENHAND).map(renderYakuButton)}
-        {yakuhaiButtons.length > 0 && (
-          <div
-            className={styles.yakuhaiGroup}
-            role='group'
-            aria-label={loc._t('Yakuhai')}
-            data-testid={`tyr-hand-player-${props.playerId}-yakuhai`}
-            key='yakuhai'
-          >
-            <div className={styles.yakuhaiRow}>{yakuhaiButtons.map(renderYakuButton)}</div>
-          </div>
-        )}
-        {props.yaku
-          .filter((y) => y !== YakuId.__OPENHAND && !yakuhaiButtons.includes(y))
-          .map(renderYakuButton)}
+        {props.yaku.map((y) => {
+          if (!yakuhaiButtons.includes(y)) return renderYakuButton(y);
+          if (y !== firstYakuhai) return null;
+          return (
+            <div
+              className={styles.yakuhaiGroup}
+              role='group'
+              aria-label={loc._t('Yakuhai')}
+              data-testid={`tyr-hand-player-${props.playerId}-yakuhai`}
+              key='yakuhai'
+            >
+              <div
+                className={clsx(styles.yakuhaiRow, isAggregatedYakuhai && styles.yakuhaiSegments)}
+              >
+                {yakuhaiButtons.map(renderYakuButton)}
+              </div>
+            </div>
+          );
+        })}
       </div>
       <div
         className={clsx(

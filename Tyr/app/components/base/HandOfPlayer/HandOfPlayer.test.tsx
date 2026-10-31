@@ -100,7 +100,7 @@ it.each([
   ],
   [YakuId.YAKUHAI1, YakuId.YAKUHAI2, YakuId.YAKUHAI3, YakuId.YAKUHAI4],
 ])('groups yakuhai separately from the other buttons: %s', (...yaku: YakuId[]) => {
-  renderHand({ yaku: [YakuId.__OPENHAND, YakuId.TANYAO, ...yaku, YakuId.RIICHI] });
+  renderHand({ yaku: [YakuId.__OPENHAND, ...yaku, YakuId.TANYAO, YakuId.RIICHI] });
   const group = container.querySelector('[data-testid="tyr-hand-player-7-yakuhai"]')!;
   expect(group.querySelector('h3')).toBeNull();
   expect(group.getAttribute('role')).toBe('group');
@@ -146,4 +146,37 @@ it.each([false, true])('shows the double-wind badge whether selected=%s', (selec
 it('does not show a multiplier on ordinary wind or dragon buttons', () => {
   renderHand();
   expect(container.querySelector('[data-testid$="-double-wind"]')).toBeNull();
+});
+
+it('joins aggregate labels and preserves each multiplier action and disabled state', () => {
+  const ids = [YakuId.YAKUHAI1, YakuId.YAKUHAI2, YakuId.YAKUHAI3, YakuId.YAKUHAI4];
+  const props = renderHand({ yaku: ids, disabledYaku: [YakuId.YAKUHAI4] });
+  const buttons = Array.from(
+    container.querySelectorAll<HTMLButtonElement>('[data-testid$="-yakuhai"] button')
+  );
+  expect(buttons.map((button) => button.textContent)).toEqual(['Yakuhai x1', 'x2', 'x3', 'x4']);
+  expect(buttons[1].querySelector('span')?.getAttribute('aria-label')).toBe('Yakuhai x2');
+  for (const button of buttons) act(() => button.click());
+  expect(props.onYakuClick).toHaveBeenCalledTimes(3);
+  for (const id of ids.slice(0, 3)) {
+    expect(props.onYakuClick).toHaveBeenCalledWith(id, 7);
+  }
+  expect(buttons[3].disabled).toBe(true);
+});
+
+it('keeps the supplied display order, including the position of the Yakuhai group', () => {
+  renderHand({
+    yaku: [YakuId.__OPENHAND, YakuId.ITTSU, YakuId.YAKUHAI1, YakuId.YAKUHAI2, YakuId.RIICHI],
+  });
+  expect(
+    Array.from(container.querySelectorAll('[data-testid*="-yaku-"]'), (button) =>
+      button.getAttribute('data-testid')
+    )
+  ).toEqual([
+    `tyr-hand-player-7-yaku-${YakuId.__OPENHAND}`,
+    `tyr-hand-player-7-yaku-${YakuId.ITTSU}`,
+    `tyr-hand-player-7-yaku-${YakuId.YAKUHAI1}`,
+    `tyr-hand-player-7-yaku-${YakuId.YAKUHAI2}`,
+    `tyr-hand-player-7-yaku-${YakuId.RIICHI}`,
+  ]);
 });

@@ -119,9 +119,11 @@ export const screenManageMw =
         state = mw.getState();
         next(action);
         const sessionHash =
-          state.currentScreen === 'otherTable'
-            ? state.currentOtherTableHash
-            : state.currentSessionHash;
+          state.currentScreen === 'lastResults'
+            ? state.lastResults?.[0]?.sessionHash
+            : state.currentScreen === 'otherTable'
+              ? state.currentOtherTableHash
+              : state.currentSessionHash;
         if (sessionHash) {
           mw.dispatch({ type: GET_ALL_ROUNDS_INIT, payload: sessionHash });
         }

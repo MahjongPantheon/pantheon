@@ -39,7 +39,6 @@ import { RoundOutcome } from 'tsclients/proto/atoms.pb';
 import { useContext } from 'react';
 import { i18n } from '../../i18n';
 import { Hand, IProps as HandProps } from '../../pages/Hand/Hand';
-import { sortByViewPriority } from '../../../helpers/yaku';
 import { getPlayerWithPao } from '../../../store/selectors/pao';
 import { enableDoubleYakuman } from '../../../helpers/yakuValues';
 
@@ -143,7 +142,7 @@ export const SelectHand = (props: IComponentProps) => {
       playerName: user.title,
       hasAvatar: user.hasAvatar,
       lastUpdate: user.lastUpdate,
-      yaku: sortByViewPriority(yakuList[user.id]).map((y) => y.id),
+      yaku: yakuList[user.id].map((y) => y.id),
       selectedYaku: selectedYaku[user.id],
       disabledYaku: disabledYaku[user.id],
       doubleWindYaku: doubleWindYaku[user.id],

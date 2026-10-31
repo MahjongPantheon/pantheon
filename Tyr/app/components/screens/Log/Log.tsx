@@ -40,7 +40,12 @@ export const Log = (props: IComponentProps) => {
   const results: IRoundResult[] = [];
   const rounds: IRoundOverviewInfo[] = [];
 
-  const playersList = state.currentOtherTable ? state.currentOtherTablePlayers : state.players;
+  const playersList =
+    state.gameLogOrigin === 'lastResults'
+      ? state.lastResults?.map((player) => ({ id: player.playerId, playerName: player.title }))
+      : state.currentOtherTable
+        ? state.currentOtherTablePlayers
+        : state.players;
   const playersCount = state.gameConfig?.rulesetConfig.withSanma ? 3 : 4;
 
   if (!state.allRoundsOverviewErrorCode && state.allRoundsOverview && playersList) {

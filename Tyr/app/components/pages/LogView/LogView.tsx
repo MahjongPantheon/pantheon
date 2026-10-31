@@ -45,7 +45,9 @@ export const LogView = (props: IProps) => {
             <div className={styles.roundCell}>&nbsp;</div>
             {players.map((player) => (
               <div key={player.id} className={styles.headerCell}>
-                {player.playerName ?? player.title}
+                <span className={styles.playerNameContainer}>
+                  <span className={styles.playerName}>{player.playerName ?? player.title}</span>
+                </span>
               </div>
             ))}
           </div>

@@ -1,9 +1,16 @@
 .wrapper {
-  height: calc(100% - 16px);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  > :last-child {
+    flex-shrink: 0;
+  }
 }
 
 .rounds {
-  height: calc(100% - 84px);
+  flex: 1;
+  min-height: 0;
   overflow-y: scroll;
   padding-bottom: 4px;
   scrollbar-width: none;
@@ -23,19 +30,42 @@
 }
 
 .header {
-  display: flex;
+  display: grid;
+  grid-template-columns: 30px repeat(4, minmax(0, 1fr));
   padding: 10px 20px;
   gap: 10px;
-  justify-content: space-between;
+  align-items: end;
+  flex-shrink: 0;
   border-bottom: 1px solid var(--border-color);
 }
 
 .headerCell {
-  width: 23%;
+  display: flex;
+  justify-content: flex-end;
+  min-width: 0;
   font-size: var(--font-sm);
-  white-space: nowrap;
+}
+
+.playerNameContainer {
+  position: relative;
+  width: 2.4em;
+  height: 130px;
+}
+
+.playerName {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 130px;
+  line-height: 1.2;
+  transform: rotate(-90deg);
+  transform-origin: top left;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  white-space: normal;
+  overflow-wrap: anywhere;
   overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .roundCell {
@@ -44,9 +74,10 @@
 
 .logRow {
   flex: 1;
-  display: flex;
+  display: grid;
+  grid-template-columns: 30px repeat(4, minmax(0, 1fr));
+  gap: 10px;
   padding: 8px 0;
-  justify-content: space-between;
 }
 
 .logCell {
@@ -54,7 +85,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   text-align: center;
-  min-width: 75px;
+  min-width: 0;
 }
 
 .logDelta {
@@ -76,7 +107,8 @@
 
 .noResults {
   display: flex;
-  height: calc(100% - 76px);
+  flex: 1;
+  min-height: 0;
   align-items: center;
   justify-content: center;
   padding-bottom: 10%;

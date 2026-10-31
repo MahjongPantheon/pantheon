@@ -182,6 +182,28 @@ it.each(['otherTable', 'currentGame'] as const)(
   }
 );
 
+it.each([undefined, 'awaiting-confirmation'])(
+  'loads the previous-game log using its own hash %s',
+  (sessionHash: string | undefined) => {
+    const f = navigation({
+      currentScreen: 'lastResults',
+      currentSessionHash: 'current-game',
+      currentOtherTableHash: 'other-table',
+      lastResults: [{ sessionHash, playerId: 7 }] as IAppState['lastResults'],
+    });
+    f.send(a.SHOW_GAME_LOG);
+    if (sessionHash) {
+      expect(f.dispatch).toHaveBeenCalledWith({
+        type: a.GET_ALL_ROUNDS_INIT,
+        payload: sessionHash,
+      });
+    } else {
+      expect(f.dispatch).not.toHaveBeenCalled();
+    }
+    expect(f.getState().currentScreen).toBe('gameLog');
+  }
+);
+
 it('loads final results only after a finished session and passes other navigation through', () => {
   const f = navigation({ currentScreen: 'lastResults' });
   f.send(a.ADD_ROUND_SUCCESS, { isFinished: true });

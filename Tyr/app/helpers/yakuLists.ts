@@ -25,23 +25,25 @@ export function filterAllowed(list: Yaku[], allowed: number[]) {
 
 export const yakuCommon = [
   ...yakuList.filter((y: Yaku) => [YakuId.__OPENHAND].includes(y.id)),
+  ...yakuList.filter((y: Yaku) => yakuhai.includes(y.id) || aggregatedYakuhai.includes(y.id)),
   ...yakuList.filter((y: Yaku) =>
     [YakuId.RIICHI, YakuId.IPPATSU, YakuId.MENZENTSUMO].includes(y.id)
   ),
   ...yakuList.filter((y: Yaku) => [YakuId.PINFU, YakuId.TANYAO].includes(y.id)),
-  ...yakuList.filter((y: Yaku) => yakuhai.includes(y.id) || aggregatedYakuhai.includes(y.id)),
-  ...yakuList.filter((y: Yaku) => [YakuId.ITTSU, YakuId.HONITSU, YakuId.CHINITSU].includes(y.id)),
+  ...yakuList.filter((y: Yaku) => [YakuId.HONITSU, YakuId.CHINITSU].includes(y.id)),
   ...yakuList.filter((y: Yaku) => [YakuId.TOITOI, YakuId.CHIITOITSU].includes(y.id)),
+  ...yakuList.filter((y: Yaku) =>
+    [YakuId.SANSHOKUDOUJUN, YakuId.IIPEIKOU, YakuId.ITTSU].includes(y.id)
+  ),
   ...yakuList.filter((y: Yaku) => [YakuId.CHANTA, YakuId.JUNCHAN].includes(y.id)),
-  ...yakuList.filter((y: Yaku) => [YakuId.SANSHOKUDOUJUN, YakuId.IIPEIKOU].includes(y.id)),
 ];
 
 export const yakuRare = [
-  ...yakuList.filter((y: Yaku) => [YakuId.DOUBLERIICHI, YakuId.OPENRIICHI].includes(y.id)),
-  ...yakuList.filter((y: Yaku) => [YakuId.HONROTO, YakuId.SHOSANGEN].includes(y.id)),
   ...yakuList.filter((y: Yaku) =>
     [YakuId.SANANKOU, YakuId.SANSHOKUDOUKOU, YakuId.SANKANTSU].includes(y.id)
   ),
+  ...yakuList.filter((y: Yaku) => [YakuId.HONROTO, YakuId.SHOSANGEN].includes(y.id)),
+  ...yakuList.filter((y: Yaku) => [YakuId.DOUBLERIICHI, YakuId.OPENRIICHI].includes(y.id)),
   ...yakuList.filter((y: Yaku) => [YakuId.RYANPEIKOU].includes(y.id)),
   ...yakuList.filter((y: Yaku) =>
     [YakuId.HAITEI, YakuId.HOUTEI, YakuId.RINSHANKAIHOU].includes(y.id)

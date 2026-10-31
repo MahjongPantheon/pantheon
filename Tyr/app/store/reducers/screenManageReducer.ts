@@ -101,6 +101,7 @@ export function screenManageReducer(state: IAppState, action: AppActionTypes): I
     case SHOW_GAME_LOG:
       return {
         ...state,
+        gameLogOrigin: state.currentScreen,
         currentScreen: 'gameLog',
       };
     case OPEN_SETTINGS:
@@ -199,7 +200,9 @@ export function screenManageReducer(state: IAppState, action: AppActionTypes): I
           prevScreen = 'newGame';
           break;
         case 'gameLog':
-          if (state.currentOtherTableHash) {
+          if (state.gameLogOrigin === 'lastResults') {
+            prevScreen = 'lastResults';
+          } else if (state.currentOtherTableHash) {
             prevScreen = 'otherTable';
           } else {
             prevScreen = 'currentGame';

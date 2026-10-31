@@ -1,7 +1,7 @@
 import { componentHarness } from '../../../tests/componentHarness';
 import { GameResultScreen } from './GameResultScreen';
 import { initialState } from '../../../store/state';
-import { GOTO_NEXT_SCREEN, START_NEW_GAME } from '../../../store/actions/interfaces';
+import { GOTO_NEXT_SCREEN, SHOW_GAME_LOG, START_NEW_GAME } from '../../../store/actions/interfaces';
 import type { IAppState } from '../../../store/interfaces';
 
 vi.mock('../../pages/GameResult/GameResult', () => ({
@@ -9,14 +9,21 @@ vi.mock('../../pages/GameResult/GameResult', () => ({
     results,
     onCheckClick,
     onRepeatClick,
+    onLogClick,
   }: {
     results: { playerId: number }[];
     onCheckClick: () => void;
     onRepeatClick: () => void;
+    onLogClick?: () => void;
   }) => (
     <>
       <output>{results.map((p) => p.playerId).join(',')}</output>
       <button onClick={onCheckClick}>Done</button>
+      {onLogClick && (
+        <button data-testid='log' onClick={onLogClick}>
+          Log
+        </button>
+      )}
       <button onClick={onRepeatClick}>Repeat</button>
     </>
   ),
@@ -57,4 +64,19 @@ it('keeps hook order across loading transitions and dispatches the current resul
   );
   view.render(<GameResultScreen newyear={false} state={ready} dispatch={dispatch} />);
   expect(view.container.querySelector('output')).toBeTruthy();
+});
+
+it('opens the log for a tournament game awaiting confirmation', () => {
+  const dispatch = vi.fn();
+  const state = {
+    ...initialState,
+    currentScreen: 'lastResults',
+    currentSessionHash: 'awaiting-confirmation',
+    gameConfig: { autoSeating: true, isPrescripted: true },
+    loading: {},
+    lastResults: [{ playerId: 7, score: 25000, sessionHash: 'awaiting-confirmation' }],
+  } as IAppState;
+  view.render(<GameResultScreen newyear={false} state={state} dispatch={dispatch} />);
+  view.click('[data-testid="log"]');
+  expect(dispatch).toHaveBeenCalledWith({ type: SHOW_GAME_LOG });
 });

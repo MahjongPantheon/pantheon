@@ -1,7 +1,8 @@
 import { Meta } from '@storybook/react-vite';
 
 import { HandOfPlayer } from './HandOfPlayer';
-import { sortByViewPriority, YakuId, yakuList } from '../../../helpers/yaku';
+import { YakuId } from '../../../helpers/yaku';
+import { yakuCommon, yakuRare, yakumans } from '../../../helpers/yakuLists';
 import { PageDecorator } from '../../../../.storybook/PageDecorator';
 import { useState } from 'react';
 
@@ -28,7 +29,7 @@ export default {
 
 export const Default = {
   args: {
-    yaku: sortByViewPriority(yakuList).map((y) => y.id),
+    yaku: [...yakuCommon, ...yakuRare, ...yakumans].map((y) => y.id),
     selectedYaku: [YakuId.TANYAO, YakuId.PINFU],
     disabledYaku: [YakuId.CHIITOITSU],
     onYakuClick: () => {},
@@ -45,7 +46,7 @@ export const Default = {
 
 export const WithPao = {
   args: {
-    yaku: sortByViewPriority(yakuList).map((y) => y.id),
+    yaku: [...yakuCommon, ...yakuRare, ...yakumans].map((y) => y.id),
     selectedYaku: [YakuId.TANYAO, YakuId.PINFU],
     disabledYaku: [YakuId.CHIITOITSU],
     onYakuClick: () => {},

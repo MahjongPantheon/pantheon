@@ -67,6 +67,16 @@ it.each(['otherTable', 'otherTablesList', 'currentGame'] as const)(
   }
 );
 
+it('returns from the previous-game log to the results even with another table selected', () => {
+  const { result: opened } = navigate('lastResults', actions.SHOW_GAME_LOG, undefined, {
+    currentOtherTableHash: 'other',
+  });
+  expect(opened.gameLogOrigin).toBe('lastResults');
+  expect(screenManageReducer(opened, { type: actions.GOTO_PREV_SCREEN }).currentScreen).toBe(
+    'lastResults'
+  );
+});
+
 const outcomes = [
   RoundOutcome.ROUND_OUTCOME_RON,
   RoundOutcome.ROUND_OUTCOME_TSUMO,

@@ -19,12 +19,42 @@
 .yakuhaiGroup {
   flex-basis: 100%;
   min-width: 0;
-  margin: 6px 0;
+  margin: 6px 0 0;
 }
 
 .yakuhaiRow {
   display: flex;
   gap: 4px;
+}
+
+.yakuhaiSegments {
+  flex-wrap: nowrap;
+  gap: 0;
+
+  & > button {
+    border-radius: 0;
+    white-space: nowrap;
+  }
+
+  & > button > span {
+    font-size: inherit;
+  }
+
+  & > button:first-child {
+    border-radius: 5px 0 0 5px;
+  }
+
+  & > button + button {
+    border-left: 0;
+  }
+
+  & > button:last-child {
+    border-radius: 0 5px 5px 0;
+  }
+
+  & > button:only-child {
+    border-radius: 5px;
+  }
 }
 
 .yakuhaiTile {
