@@ -42,6 +42,7 @@ import { appendFileSync } from 'node:fs';
 const args = process.argv.slice(2);
 appendFileSync(process.env.COMMAND_LOG, JSON.stringify({
   args, directory: process.cwd(), ci: process.env.CI, home: process.env.HOME,
+  cache: process.env.XDG_CACHE_HOME,
 }) + '\\n');
 if (args[0] === 'pnpm' && args[1] === 'install') {
   process.stdout.write('pnpm: resolved 100 packages\\n');
@@ -132,6 +133,7 @@ for (const service of [
       ]);
       assert.equal(install.ci, 'true');
       assert.equal(install.home, '/home/user');
+      assert.equal(install.cache, join(root, 'dependencies/cache'));
     }
     const configure = commands.findIndex(({ args }) => args[1]?.endsWith('/configure.mjs'));
     assert.ok(configure > commands.indexOf(installs.at(-1)));

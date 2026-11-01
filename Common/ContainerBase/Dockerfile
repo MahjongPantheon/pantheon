@@ -31,7 +31,8 @@ RUN apk update && \
     protoc && \
     (rm "/tmp/"* 2>/dev/null || true) && (rm -rf /var/cache/apk/* 2>/dev/null || true)
 
-RUN node --version && npm install -g pnpm@12 i18n-stex i18n-po-json i18n-json-po && pnpm --version && chown -R root:root "$(npm root -g)"
+RUN --mount=type=cache,target=/root/.npm \
+    node --version && npm install -g pnpm@12 i18n-stex i18n-po-json i18n-json-po && pnpm --version && chown -R root:root "$(npm root -g)"
 
 # ------------ Local user init (for make & build tasks) --------
 # Create user (workaround against too big uids)

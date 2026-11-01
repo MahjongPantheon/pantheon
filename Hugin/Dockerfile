@@ -28,6 +28,8 @@ RUN mkdir -p /var/www/html/Hugin /var/www/html/Hugin-dist
 COPY Common /var/www/html/Common
 COPY Hugin /var/www/html/Hugin
 COPY --chmod=755 Common/ContainerRuntime/prepare.sh /prepare-service.sh
-RUN --mount=type=cache,target=/root/.local/share/pnpm/store /bin/sh /var/www/html/Common/ContainerRuntime/build.sh Hugin
+RUN --mount=type=cache,target=/root/.local/share/pnpm/store \
+    --mount=type=cache,target=/root/.cache/pnpm \
+    /bin/sh /var/www/html/Common/ContainerRuntime/build.sh Hugin
 ENV PANTHEON_MODE=production
 ENV PANTHEON_PRODUCTION_WORKERS=true

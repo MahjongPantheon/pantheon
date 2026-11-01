@@ -36,7 +36,8 @@ HTTP ports and persistent data volumes as the development files. Application cod
 compiled bundles, dependency manifests/lockfiles, migrations and scheduled jobs are
 inside the images. Application `node_modules` are excluded from the images.
 Production Node.js containers share one `services_modules` volume mounted at
-`/.pnpm`. Its `store/` directory holds the pnpm cache, and `modules/` holds separate
+`/.pnpm`. Its `store/` directory holds package contents, `cache/pnpm/` holds pnpm
+metadata and verification caches, and `modules/` holds separate
 dependency trees such as `Mimir/`, `Mimir-dist/`, and `Sigrun-dist/`. Each tree is
 mounted at its project's normal `node_modules` path using a volume subdirectory
 mount; main and dist dependencies remain isolated. A `dependencies-init` container
@@ -51,8 +52,10 @@ and upload volumes are reused.
 On every production start, `pnpm install --frozen-lockfile` synchronizes dependencies
 before migrations, cron or workers start. Bundles install production dependencies;
 Frey/Mimir source installs include development tools required by their CLIs. The
-package cache and installed dependencies stay in the same `services_modules`
-volume. `node_modules/.pnpm` holds installed packages inside each project's tree.
+package store, metadata cache and installed dependencies stay in the same
+`services_modules` volume. Production installs set `XDG_CACHE_HOME=/.pnpm/cache`
+so metadata does not accumulate in each container's home directory.
+`node_modules/.pnpm` holds installed packages inside each project's tree.
 Old `.pnpm-store` caches within a tree are removed after a successful install.
 Previous dependency and cache volumes are left untouched when switching to this
 layout; the combined volume is populated from the lockfiles at startup. Development
@@ -60,6 +63,12 @@ Compose continues using `pnpmstore01` for its package cache. Synchronization als
 local `Common/tsclients` packages after image updates. Installations need access to
 the package registries and Git dependency sources when packages are missing from
 the store. Tyr and Forseti serve static bundles and need no runtime install.
+
+Image builds use BuildKit cache mounts for the npm download cache, the pnpm
+package store and pnpm metadata. These caches persist in the builder and are
+excluded from the resulting image layers. Rebuild the shared base and service
+images to remove caches included in older images; runtime volumes cannot remove
+files already baked into an image.
 
 To update production, run:
 

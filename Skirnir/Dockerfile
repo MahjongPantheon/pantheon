@@ -15,6 +15,8 @@ RUN mkdir -p /var/www/html/Skirnir-dist
 COPY Common /var/www/html/Common
 COPY Skirnir /var/www/html/Skirnir
 COPY --chmod=755 Common/ContainerRuntime/prepare.sh /prepare-service.sh
-RUN --mount=type=cache,target=/root/.local/share/pnpm/store /bin/sh /var/www/html/Common/ContainerRuntime/build.sh Skirnir
+RUN --mount=type=cache,target=/root/.local/share/pnpm/store \
+    --mount=type=cache,target=/root/.cache/pnpm \
+    /bin/sh /var/www/html/Common/ContainerRuntime/build.sh Skirnir
 ENV PANTHEON_MODE=production
 ENV PANTHEON_PRODUCTION_WORKERS=true

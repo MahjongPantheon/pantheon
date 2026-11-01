@@ -13,6 +13,8 @@ RUN mkdir -p /var/www/html/Forseti-dist
 COPY Common /var/www/html/Common
 COPY Forseti /var/www/html/Forseti
 COPY --chmod=755 Common/ContainerRuntime/prepare.sh /prepare-service.sh
-RUN --mount=type=cache,target=/root/.local/share/pnpm/store /bin/sh /var/www/html/Common/ContainerRuntime/build.sh Forseti
+RUN --mount=type=cache,target=/root/.local/share/pnpm/store \
+    --mount=type=cache,target=/root/.cache/pnpm \
+    /bin/sh /var/www/html/Common/ContainerRuntime/build.sh Forseti
 ENV PANTHEON_MODE=production
 ENV PANTHEON_PRODUCTION_WORKERS=true

@@ -6,15 +6,16 @@ case "$service" in
   Tyr|Forseti) exit 0 ;; # Static bundles have no Node.js runtime.
 esac
 store=${npm_config_store_dir:-/.pnpm/store}
-mkdir -p "$store"
-chown user: "$store"
+cache="$(dirname "$store")/cache"
+mkdir -p "$store" "$cache/pnpm"
+chown user: "$store" "$cache" "$cache/pnpm"
 
 install_dependencies() {
   cd "$root/$1"
   mkdir -p node_modules
   chown user: node_modules
   echo "$1: installing dependencies"
-  su-exec user env HOME=/home/user CI=true pnpm install --frozen-lockfile \
+  su-exec user env HOME=/home/user CI=true XDG_CACHE_HOME="$cache" pnpm install --frozen-lockfile \
     --reporter=append-only --force --store-dir "$store" "$2"
   # Keep installed packages in .pnpm; only remove legacy caches after success.
   rm -rf node_modules/.pnpm-store

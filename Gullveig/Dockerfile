@@ -10,6 +10,8 @@ RUN mkdir -p /var/www/html/Gullveig /var/www/html/Gullveig-dist
 COPY Common /var/www/html/Common
 COPY Gullveig /var/www/html/Gullveig
 COPY --chmod=755 Common/ContainerRuntime/prepare.sh /prepare-service.sh
-RUN --mount=type=cache,target=/root/.local/share/pnpm/store /bin/sh /var/www/html/Common/ContainerRuntime/build.sh Gullveig
+RUN --mount=type=cache,target=/root/.local/share/pnpm/store \
+    --mount=type=cache,target=/root/.cache/pnpm \
+    /bin/sh /var/www/html/Common/ContainerRuntime/build.sh Gullveig
 ENV PANTHEON_MODE=production
 ENV PANTHEON_PRODUCTION_WORKERS=true

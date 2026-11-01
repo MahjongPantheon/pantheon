@@ -12,5 +12,5 @@
   - grafanastorage01: grafana auxiliary volume
   - pfspool01 and pfetc01: postfix storage configuration volumes for Hermod
   - prometheusdata: monitoring data volume
-  - services_modules: shared production volume containing the pnpm cache in `store/` and isolated main/dist node_modules trees in `modules/<project>/`; mounted at `/.pnpm` with each node_modules tree also mounted through its volume subpath
+  - services_modules: shared production volume containing package contents in `store/`, pnpm metadata in `cache/pnpm/`, and isolated main/dist node_modules trees in `modules/<project>/`; mounted at `/.pnpm` with each node_modules tree also mounted through its volume subpath
 - Containers use shared network named `internal_net` with bridge driver. Subnet to be used is `192.168.34.0/24` with gateway on `192.168.34.1`. Shared network can be attached to new containers without restart.

@@ -12,6 +12,7 @@ test('initialization prepares cache and separate main/dist subdirectories withou
   try {
     assert.equal(spawnSync('/bin/sh', [script, root]).status, 0);
     assert.equal(existsSync(join(root, 'store')), true);
+    assert.equal(existsSync(join(root, 'cache/pnpm')), true);
     for (const name of [
       'Frey',
       'Mimir',
@@ -28,8 +29,10 @@ test('initialization prepares cache and separate main/dist subdirectories withou
       assert.equal(existsSync(join(root, 'modules', name)), true, name);
     }
     writeFileSync(join(root, 'modules/Mimir/keep'), 'existing packages');
+    writeFileSync(join(root, 'cache/pnpm/keep'), 'existing metadata');
     assert.equal(spawnSync('/bin/sh', [script, root]).status, 0);
     assert.equal(readFileSync(join(root, 'modules/Mimir/keep'), 'utf8'), 'existing packages');
+    assert.equal(readFileSync(join(root, 'cache/pnpm/keep'), 'utf8'), 'existing metadata');
   } finally {
     rmSync(root, { recursive: true, force: true });
   }

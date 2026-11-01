@@ -212,7 +212,8 @@ application `node_modules`. On every production start, Node.js services run
 starting any application processes. Frey and Mimir also install source dependencies
 for migration CLIs and cron jobs. Frey, Mimir and Hugin then apply pending migrations
 before starting workers. The volume is mounted at `/.pnpm`: `store/` holds the
-package cache and `modules/<project>/` holds each separate dependency tree, for
+package contents, `cache/pnpm/` holds metadata and verification caches, and
+`modules/<project>/` holds each separate dependency tree, for
 example `modules/Mimir` and `modules/Mimir-dist`. Volume subdirectory mounts expose
 these at each project's usual `node_modules` path. The `dependencies-init` service
 creates directories before use; production Make shortcuts run it automatically.
@@ -225,6 +226,10 @@ The volume survives recreation. Previous dependency/cache volumes are not delete
 the new combined volume is populated from lockfiles. Missing packages require
 access to package registries and Git sources. Development retains its separate
 `pnpmstore01` cache volume.
+Production installation sets `XDG_CACHE_HOME=/.pnpm/cache` to keep metadata in
+the shared volume. Build-time npm and pnpm caches use BuildKit cache mounts and
+are excluded from image layers. Older images need rebuilding to remove their
+previously included caches.
 Tyr and Forseti serve static bundles and need no runtime install. You do not need
 `make deps` or `make prod_compile` on the server. An install or migration failure
 stops startup; inspect container logs before retrying.

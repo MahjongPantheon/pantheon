@@ -16,6 +16,8 @@ RUN mkdir -p /var/www/html/Frey
 COPY Common /var/www/html/Common
 COPY Frey /var/www/html/Frey
 COPY --chmod=755 Common/ContainerRuntime/prepare.sh /prepare-service.sh
-RUN --mount=type=cache,target=/root/.local/share/pnpm/store /bin/sh /var/www/html/Common/ContainerRuntime/build.sh Frey
+RUN --mount=type=cache,target=/root/.local/share/pnpm/store \
+    --mount=type=cache,target=/root/.cache/pnpm \
+    /bin/sh /var/www/html/Common/ContainerRuntime/build.sh Frey
 ENV PANTHEON_MODE=production
 ENV PANTHEON_PRODUCTION_WORKERS=true
