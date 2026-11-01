@@ -16,7 +16,7 @@
     "node_modules",
     "dist",
     "pnpm-lock.yaml",
-    "src/migrations/.snapshot-mimir2_unit.json",
+    "src/migrations/**/*.json",
     "vendor",
     ".pnpm-store",
     "dev-dist",

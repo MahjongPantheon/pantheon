@@ -601,7 +601,7 @@ db_import:
 	cd Database && ${MAKE} db_import
 
 # Local production-image testing. Recursive calls keep build/stop/start ordered under make -j.
-.PHONY: prod_local_build prod_local_start prod_local dev_local
+.PHONY: prod_local_build prod_local_start _prod_local_start prod_local dev_local
 prod_local_build:
 	${MAKE} container_base
 	@set -e; for service in $(PROD_LOCAL_SERVICES); do \
@@ -617,10 +617,22 @@ prod_local_start:
 	${PROD_LOCAL_COMPOSE_COMMAND} config --quiet
 	@set -e; for service in $(PROD_LOCAL_SERVICES) Database Redis; do \
 	  image_service=$$(printf '%s' "$$service" | tr '[:upper:]' '[:lower:]'); \
-	  ${CONTAINER_COMMAND} image inspect "ghcr.io/mahjongpantheon/pantheon-$$image_service-$(CONTAINER_ARCH):$(PROD_LOCAL_TAG)" >/dev/null || { \
-	    echo "Local production image missing; run make prod_local_build first." >&2; exit 1; \
+	  image="ghcr.io/mahjongpantheon/pantheon-$$image_service-$(CONTAINER_ARCH):$(PROD_LOCAL_TAG)"; \
+	  ${CONTAINER_COMMAND} image inspect "$$image" >/dev/null 2>&1 || { \
+	    if [ "$(PROD_LOCAL_TAG)" = local-production ]; then \
+	      echo "Local production images are incomplete; using GHCR images tagged latest."; \
+	      ${MAKE} prod_local_start PROD_LOCAL_TAG=latest; \
+	      exit $$?; \
+	    fi; \
+	    ${CONTAINER_COMMAND} pull "$$image" || { \
+	      echo "Production image unavailable: $$image" >&2; exit 1; \
+	    }; \
 	  }; \
-	done
+	done; \
+	${MAKE} _prod_local_start
+
+# Called only after every image for the selected tag is available.
+_prod_local_start:
 	${MAKE} build_reverse_proxy
 	${PROD_LOCAL_COMPOSE_COMMAND} run --rm --no-deps dependencies-init
 	${MAKE} pantheon_stop

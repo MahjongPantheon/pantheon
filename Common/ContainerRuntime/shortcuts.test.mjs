@@ -19,6 +19,7 @@ function run(
     regression = false,
     state = 'running',
     nestedLogs = false,
+    missingImages = [],
   } = {}
 ) {
   const directory = mkdtempSync(join(tmpdir(), 'pantheon-shortcuts-'));
@@ -28,9 +29,13 @@ function run(
   writeFileSync(
     stub,
     `#!/usr/bin/env node
-import { appendFileSync, existsSync, readFileSync, writeFileSync } from 'node:fs';
-import { spawn } from 'node:child_process';
+import { appendFileSync, existsSync, readFileSync, writeFileSync, writeSync } from 'node:fs';
+import { spawn, spawnSync } from 'node:child_process';
 const args = process.argv.slice(2);
+if (args[0] === 'make' && (args[1] === '_prod_local_start' || args.includes('PROD_LOCAL_TAG=latest'))) {
+  const result = spawnSync('make', args.slice(1), { stdio: 'inherit' });
+  process.exit(result.status ?? 1);
+}
 appendFileSync(process.env.SHORTCUT_LOG, JSON.stringify({
   args,
   env: process.env.ENV_FILENAME,
@@ -38,6 +43,8 @@ appendFileSync(process.env.SHORTCUT_LOG, JSON.stringify({
   workers: process.env.PANTHEON_PRODUCTION_WORKERS,
 }) + '\\n');
 if (process.env.SHORTCUT_FAILURE && args.join(' ').includes(process.env.SHORTCUT_FAILURE)) process.exit(23);
+if (args[0] === 'container' && args[1] === 'image' && args[2] === 'inspect' &&
+    JSON.parse(process.env.SHORTCUT_MISSING_IMAGES).some((image) => args.at(-1).endsWith(image))) process.exit(1);
 if (args[0] === 'log-plugin') {
   // Model a plugin that inherits the terminal and does not handle SIGTERM.
   process.on('SIGTERM', () => {});
@@ -48,8 +55,9 @@ if (args[0] === 'compose' && args.includes('logs')) {
   if (process.env.SHORTCUT_NESTED_LOGS === 'true') {
     spawn(process.execPath, [process.argv[1], 'log-plugin'], { stdio: 'inherit' });
   }
-  process.stdout.write('mimir: pnpm resolved 100 packages\\n');
-  process.stderr.write('mimir: pnpm registry retry\\n');
+  // Flush the mock output before the readiness waiter can stop the follower.
+  writeSync(1, 'mimir: pnpm resolved 100 packages\\n');
+  writeSync(2, 'mimir: pnpm registry retry\\n');
   setInterval(() => {}, 1000);
   process.on('SIGTERM', () => {
     writeFileSync(process.env.SHORTCUT_LOG + '.logs-stopped', 'stopped');
@@ -104,6 +112,7 @@ if (args.includes('/run/pantheon-startup-failed') && process.env.SHORTCUT_STARTU
           SHORTCUT_REGRESSION: String(regression),
           SHORTCUT_STATE: state,
           SHORTCUT_NESTED_LOGS: String(nestedLogs),
+          SHORTCUT_MISSING_IMAGES: JSON.stringify(missingImages),
         },
       }
     );
@@ -204,7 +213,7 @@ test('local startup validates settings before stopping the stack and starts the 
     '--tail=100',
   ]);
   assert.equal(follower.args.length, 17);
-  assert.match(result.stdout, /mimir: pnpm resolved 100 packages/);
+  assert.match(result.stdout, /mimir: pnpm resolved 100 packages/, result.stderr);
   assert.match(result.stderr, /mimir: pnpm registry retry/);
   assert.equal(result.logsStopped, true);
   for (const command of result.commands.filter(({ args }) => args[0] === 'compose')) {
@@ -228,6 +237,56 @@ test('local startup validates settings before stopping the stack and starts the 
   assert.match(notReady.stderr, /dependency installation, migration or supervised service failed/);
   assert.equal(notReady.logsStopped, true);
   assert.ok(!notReady.commands.some(({ args }) => args.includes('reverse_proxy_start')));
+});
+
+test('local startup falls back to a complete latest stack and pulls missing GHCR images', () => {
+  const result = run('prod_local_start', {
+    missingImages: ['mimir-arm64:local-production', 'frey-arm64:latest'],
+  });
+  assert.equal(result.status, 0, result.stderr);
+  assert.match(result.stdout, /using GHCR images tagged latest/);
+  const pulls = result.commands.filter(({ args }) => args[1] === 'pull');
+  assert.deepEqual(pulls.map(({ args }) => args.at(-1)), [
+    'ghcr.io/mahjongpantheon/pantheon-frey-arm64:latest',
+  ]);
+  const latestInspections = result.commands.filter(
+    ({ args }) => args[1] === 'image' && args.at(-1).endsWith(':latest')
+  );
+  assert.equal(latestInspections.length, 13);
+  for (const command of result.commands.filter(
+    ({ args }) => args[0] === 'compose' && !args.includes('config')
+  )) {
+    assert.equal(command.tag, 'latest');
+    assert.equal(command.env, '.env.e2e');
+  }
+  assert.ok(
+    result.commands.indexOf(pulls[0]) <
+      result.commands.findIndex(({ args }) => args.includes('pantheon_stop'))
+  );
+  const failed = run('prod_local_start', {
+    missingImages: ['mimir-arm64:local-production', 'frey-arm64:latest'],
+    failure: 'pull',
+  });
+  assert.notEqual(failed.status, 0);
+  assert.match(failed.stderr, /Production image unavailable/);
+  assert.ok(!failed.commands.some(({ args }) => args[0] === 'make'));
+});
+
+test('explicit registry tags pull missing images without falling back to another tag', () => {
+  for (const tag of ['latest', 'custom-test']) {
+    const result = run('prod_local_start', {
+      overrides: [`PROD_LOCAL_TAG=${tag}`],
+      missingImages: [`redis-arm64:${tag}`],
+    });
+    assert.equal(result.status, 0, result.stderr);
+    assert.deepEqual(
+      result.commands.filter(({ args }) => args[1] === 'pull').map(({ args }) => args.at(-1)),
+      [`ghcr.io/mahjongpantheon/pantheon-redis-arm64:${tag}`]
+    );
+    for (const command of result.commands.filter(({ args }) => args[0] === 'compose')) {
+      assert.equal(command.tag, tag);
+    }
+  }
 });
 
 test('local startup follows container health through a slow install without a startup deadline', () => {

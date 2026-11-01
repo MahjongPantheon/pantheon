@@ -114,14 +114,14 @@ Run these shortcuts from the repository root:
 ```sh
 make prod_local        # Build all images, stop development, start production + local proxy
 make prod_local_build  # Build images only; leave running containers alone
-make prod_local_start  # Switch to previously built production images + local proxy
+make prod_local_start  # Use local builds, or GHCR latest images, with the local proxy
 make dev_local         # Stop the test stack and start normal development servers
 ```
 
 `prod_local` builds your working copy into the same images CI publishes, including
 all eleven applications, PostgreSQL, Redis and the shared base. Build failures stop
 the switch before the running stack is stopped. `prod_local_start` validates the
-Compose configuration and local image availability, builds the proxy, initializes
+Compose configuration and image availability, builds the proxy, initializes
 dependency subdirectories, stops the
 existing stack and starts
 `docker-compose-production.yml` with startup migrations and cron jobs enabled.
@@ -139,12 +139,17 @@ Use Compose `ps` and `logs` below to inspect progress, or Ctrl+C to stop waiting
 Once all applications are healthy and the proxy has started, `prod_local_start`
 stops following logs and returns to the shell, leaving the containers running.
 Use `make prod_local` to rebuild images after startup-script changes;
-`prod_local_start` only starts images that have already been built.
+`prod_local_start` uses existing images and pulls missing registry images without
+building applications.
 `dev_local` runs the normal development dependency/migration setup and keeps the
 development watchers in the foreground, just like `make dev`.
 
-The default image tag is `local-production`, so application images tagged `latest`
-are left intact. The default environment is `Env/.env.e2e`, which supplies
+The preferred image tag is `local-production`. If any of the thirteen local images
+is missing, startup uses `latest` for the entire stack, pulling missing images from
+GHCR before stopping the running stack. Images from different tags are never mixed.
+To select prebuilt images explicitly, run `make prod_local_start PROD_LOCAL_TAG=latest`.
+Cached images are reused; custom tags also pull missing images from GHCR.
+The default environment is `Env/.env.e2e`, which supplies
 `.pantheon.internal` URLs and local test credentials, including enabled e2e fixture
 APIs. This environment is only for local testing; it is loaded at startup and is
 not copied into the images. Architecture detection and Docker/Podman selection

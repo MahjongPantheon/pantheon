@@ -32,7 +32,8 @@
     "blob-report",
     "*.log",
     "*.tsbuildinfo",
-    "pnpm-lock.yaml"
+    "pnpm-lock.yaml",
+    "src/migrations/**/*.json"
   ],
   "rules": {
     "no-unexpected-multiline": ["error"],
