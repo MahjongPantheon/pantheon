@@ -34,17 +34,29 @@ To deploy pantheon on your own VPS or personal environment on production mode:
 Production uses the standalone `docker-compose-production.yml`, with the same network,
 HTTP ports and persistent data volumes as the development files. Application code,
 compiled bundles, dependency manifests/lockfiles, migrations and scheduled jobs are
-inside the images. Application `node_modules` are excluded from the images. Each
-Node.js bundle has a separate named dependency volume; Frey and Mimir also have
-source dependency volumes for their migration CLIs and cron jobs. These volumes
-are separate from development dependencies and reused when containers are recreated.
+inside the images. Application `node_modules` are excluded from the images.
+Production Node.js containers share one `services_modules` volume mounted at
+`/.pnpm`. Its `store/` directory holds the pnpm cache, and `modules/` holds separate
+dependency trees such as `Mimir/`, `Mimir-dist/`, and `Sigrun-dist/`. Each tree is
+mounted at its project's normal `node_modules` path using a volume subdirectory
+mount; main and dist dependencies remain isolated. A `dependencies-init` container
+creates the directories before application containers start. The production Make
+shortcuts run initialization automatically, including updates with `--no-deps`.
+This requires Compose and a container runtime that support
+[volume subdirectory mounts](https://docs.docker.com/engine/storage/volumes/#mount-a-volume-subdirectory).
+The volume is separate from development dependencies and reused on recreation.
 Keep `Env/.env.production` and Hermod's DKIM keys on the host. Existing database
 and upload volumes are reused.
 
 On every production start, `pnpm install --frozen-lockfile` synchronizes dependencies
 before migrations, cron or workers start. Bundles install production dependencies;
 Frey/Mimir source installs include development tools required by their CLIs. The
-package store stays inside each dependency volume. Synchronization also refreshes
+package cache and installed dependencies stay in the same `services_modules`
+volume. `node_modules/.pnpm` holds installed packages inside each project's tree.
+Old `.pnpm-store` caches within a tree are removed after a successful install.
+Previous dependency and cache volumes are left untouched when switching to this
+layout; the combined volume is populated from the lockfiles at startup. Development
+Compose continues using `pnpmstore01` for its package cache. Synchronization also refreshes
 local `Common/tsclients` packages after image updates. Installations need access to
 the package registries and Git dependency sources when packages are missing from
 the store. Tyr and Forseti serve static bundles and need no runtime install.
@@ -100,9 +112,25 @@ make dev_local         # Stop the test stack and start normal development server
 `prod_local` builds your working copy into the same images CI publishes, including
 all eleven applications, PostgreSQL, Redis and the shared base. Build failures stop
 the switch before the running stack is stopped. `prod_local_start` validates the
-Compose configuration and local image availability, builds the proxy, stops the
+Compose configuration and local image availability, builds the proxy, initializes
+dependency subdirectories, stops the
 existing stack and starts
 `docker-compose-production.yml` with startup migrations and cron jobs enabled.
+It streams application logs, including pnpm installation progress and errors, to
+the terminal while waiting for all eleven applications to report healthy before
+starting the local proxy. The entrypoint completes every dependency install and
+migration before launching cron or Supervisor. Healthchecks require every
+Supervisor program (including cron) to be running and Nginx plus every production
+worker to accept connections on IPv4 or IPv6 localhost. The waiter rechecks all
+applications until the whole stack is healthy. Installation or migration
+failures, stopped/restarting containers, and Supervisor `FATAL`/`STOPPED` programs
+fail the Make command. Worker stdout/stderr is included in the streamed logs. There
+is no fixed startup deadline: slow installs keep waiting for actual readiness.
+Use Compose `ps` and `logs` below to inspect progress, or Ctrl+C to stop waiting.
+Once all applications are healthy and the proxy has started, `prod_local_start`
+stops following logs and returns to the shell, leaving the containers running.
+Use `make prod_local` to rebuild images after startup-script changes;
+`prod_local_start` only starts images that have already been built.
 `dev_local` runs the normal development dependency/migration setup and keeps the
 development watchers in the foreground, just like `make dev`.
 
@@ -133,8 +161,11 @@ Inspect startup with these commands (adjust the tag/environment if overridden):
 ENV_FILENAME=.env.e2e IMAGE_TAG=local-production CONTAINER_ARCH="$(bash bin/get_arch.sh)" \
   docker compose -f docker-compose-production.yml --env-file Env/.env.e2e ps
 ENV_FILENAME=.env.e2e IMAGE_TAG=local-production CONTAINER_ARCH="$(bash bin/get_arch.sh)" \
-  docker compose -f docker-compose-production.yml --env-file Env/.env.e2e logs --tail=100 \
+  docker compose -f docker-compose-production.yml --env-file Env/.env.e2e logs --follow --tail=100 \
   frey.pantheon.internal mimir.pantheon.internal hugin.pantheon.internal
+ENV_FILENAME=.env.e2e IMAGE_TAG=local-production CONTAINER_ARCH="$(bash bin/get_arch.sh)" \
+  docker compose -f docker-compose-production.yml --env-file Env/.env.e2e exec \
+  mimir.pantheon.internal supervisorctl status
 ```
 
 Node.js services install dependencies into their production volumes on startup;

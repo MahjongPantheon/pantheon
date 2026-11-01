@@ -2,19 +2,26 @@
 set -eu
 service=$1
 root=${2:-/var/www/html}
+case "$service" in
+  Tyr|Forseti) exit 0 ;; # Static bundles have no Node.js runtime.
+esac
+store=${npm_config_store_dir:-/.pnpm/store}
+mkdir -p "$store"
+chown user: "$store"
 
 install_dependencies() {
   cd "$root/$1"
   mkdir -p node_modules
   chown user: node_modules
-  # Keep the package store in the dependency volume too. Force synchronization
-  # refreshes local file: packages (Common/tsclients) when the image changes.
+  echo "$1: installing dependencies"
   su-exec user env HOME=/home/user CI=true pnpm install --frozen-lockfile \
-    --force --store-dir node_modules/.pnpm-store "$2"
+    --reporter=append-only --force --store-dir "$store" "$2"
+  # Keep installed packages in .pnpm; only remove legacy caches after success.
+  rm -rf node_modules/.pnpm-store
+  echo "$1: dependencies installed"
 }
 
 case "$service" in
-  Tyr|Forseti) exit 0 ;; # Static bundles have no Node.js runtime.
   Frey|Mimir)
     # Source migrations and cron jobs require CLI tools from devDependencies.
     install_dependencies "$service" --prod=false

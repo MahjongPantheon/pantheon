@@ -7,6 +7,10 @@ case "${PANTHEON_MODE:-development}" in
   *) echo 'PANTHEON_MODE must be development or production' >&2; exit 1 ;;
 esac
 
+ready=/run/pantheon-ready
+failed=/run/pantheon-startup-failed
+rm -f "$ready" "$failed"
+trap 'result=$?; if [ "$result" -ne 0 ]; then echo "$result" > "$failed"; fi' EXIT
 /bin/sh /var/www/html/Common/ContainerRuntime/install-dependencies.sh "$service"
 node /var/www/html/Common/ContainerRuntime/configure.mjs "$service"
 case "$service" in
@@ -20,3 +24,5 @@ case "$service" in
     esac
     ;;
 esac
+touch "$ready"
+trap - EXIT

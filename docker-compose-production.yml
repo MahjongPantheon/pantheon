@@ -10,17 +10,7 @@ volumes:
   pfetc01: null
   prometheusdata: null
   pgadmindata: null
-  frey-dist-node-modules: {}
-  mimir-dist-node-modules: {}
-  hugin-dist-node-modules: {}
-  gullveig-dist-node-modules: {}
-  meili-dist-node-modules: {}
-  hermod-dist-node-modules: {}
-  skirnir-dist-node-modules: {}
-  sigrun-dist-node-modules: {}
-  bragi-dist-node-modules: {}
-  frey-node-modules: {}
-  mimir-node-modules: {}
+  services_modules: {}
 networks:
   internal_net:
     driver: bridge
@@ -31,22 +21,36 @@ networks:
           gateway: 192.168.34.1
     attachable: true
 services:
+  dependencies-init:
+    image: ghcr.io/mahjongpantheon/pantheon-tyr-${CONTAINER_ARCH:-amd64}:${IMAGE_TAG:-latest}
+    entrypoint: [/bin/sh, /var/www/html/Common/ContainerRuntime/init-dependencies.sh]
+    network_mode: none
+    volumes:
+      - services_modules:/.pnpm
+    restart: 'no'
   hermod.pantheon.internal:
     cgroup: host
     cap_add:
       - ALL
     image: ghcr.io/mahjongpantheon/pantheon-hermod-${CONTAINER_ARCH:-amd64}:${IMAGE_TAG:-latest}
+    healthcheck:
+      test: [CMD, node, /var/www/html/Common/ContainerRuntime/healthcheck.mjs, Hermod]
+      interval: 5s
+      timeout: 3s
+      retries: 3
     hostname: ${ALLOWED_SENDER_DOMAINS:-pantheon-hermod.local}
     env_file:
       - ./Env/${ENV_FILENAME:-.env.production}
     ports:
       - 127.0.0.1:4007:80
     volumes:
+      - services_modules:/.pnpm
       - type: volume
-        source: hermod-dist-node-modules
+        source: services_modules
         target: /var/www/html/Hermod-dist/node_modules
         volume:
           nocopy: true
+          subpath: modules/Hermod-dist
       - ./Hermod/opendkim_keys:/etc/opendkim/keys
       - pfspool01:/var/spool/postfix
       - pfetc01:/etc/postfix
@@ -54,23 +58,35 @@ services:
       PANTHEON_MODE: production
       PANTHEON_PRODUCTION_WORKERS: 'true'
       NODE_ENV: production
+      PNPM_HOME: /.pnpm
+      npm_config_store_dir: /.pnpm/store
     networks:
       internal_net:
         aliases:
           - hermod.pantheon.local
           - hermod.pantheon.internal
     restart: unless-stopped
+    depends_on:
+      dependencies-init:
+        condition: service_completed_successfully
   skirnir.pantheon.internal:
     cgroup: host
     cap_add:
       - ALL
     image: ghcr.io/mahjongpantheon/pantheon-skirnir-${CONTAINER_ARCH:-amd64}:${IMAGE_TAG:-latest}
+    healthcheck:
+      test: [CMD, node, /var/www/html/Common/ContainerRuntime/healthcheck.mjs, Skirnir]
+      interval: 5s
+      timeout: 3s
+      retries: 3
     env_file:
       - ./Env/${ENV_FILENAME:-.env.production}
     environment:
       PANTHEON_MODE: production
       PANTHEON_PRODUCTION_WORKERS: 'true'
       NODE_ENV: production
+      PNPM_HOME: /.pnpm
+      npm_config_store_dir: /.pnpm/store
     ports:
       - 127.0.0.1:4010:80
     networks:
@@ -80,11 +96,16 @@ services:
           - skirnir.pantheon.internal
     restart: unless-stopped
     volumes:
+      - services_modules:/.pnpm
       - type: volume
-        source: skirnir-dist-node-modules
+        source: services_modules
         target: /var/www/html/Skirnir-dist/node_modules
         volume:
           nocopy: true
+          subpath: modules/Skirnir-dist
+    depends_on:
+      dependencies-init:
+        condition: service_completed_successfully
   db.pantheon.internal:
     cgroup: host
     cap_add:
@@ -126,11 +147,18 @@ services:
     cap_add:
       - ALL
     image: ghcr.io/mahjongpantheon/pantheon-frey-${CONTAINER_ARCH:-amd64}:${IMAGE_TAG:-latest}
+    healthcheck:
+      test: [CMD, node, /var/www/html/Common/ContainerRuntime/healthcheck.mjs, Frey]
+      interval: 5s
+      timeout: 3s
+      retries: 3
     env_file:
       - ./Env/${ENV_FILENAME:-.env.production}
     ports:
       - 127.0.0.1:4004:80
     depends_on:
+      dependencies-init:
+        condition: service_completed_successfully
       db.pantheon.internal:
         condition: service_healthy
       hermod.pantheon.internal:
@@ -141,6 +169,8 @@ services:
       PHINX_DB_FREY_PORT: 5432
       PHINX_DB_FREY_HOST: db.pantheon.internal
       NODE_ENV: production
+      PNPM_HOME: /.pnpm
+      npm_config_store_dir: /.pnpm/store
     networks:
       internal_net:
         aliases:
@@ -148,27 +178,37 @@ services:
           - frey.pantheon.internal
     restart: unless-stopped
     volumes:
+      - services_modules:/.pnpm
       - type: volume
-        source: frey-node-modules
+        source: services_modules
         target: /var/www/html/Frey/node_modules
         volume:
           nocopy: true
+          subpath: modules/Frey
       - type: volume
-        source: frey-dist-node-modules
+        source: services_modules
         target: /var/www/html/Frey-dist/node_modules
         volume:
           nocopy: true
+          subpath: modules/Frey-dist
       - ./Frey-dist/.well-known:/var/www/html/Frey-dist/.well-known
   mimir.pantheon.internal:
     cgroup: host
     cap_add:
       - ALL
     image: ghcr.io/mahjongpantheon/pantheon-mimir-${CONTAINER_ARCH:-amd64}:${IMAGE_TAG:-latest}
+    healthcheck:
+      test: [CMD, node, /var/www/html/Common/ContainerRuntime/healthcheck.mjs, Mimir]
+      interval: 5s
+      timeout: 3s
+      retries: 3
     env_file:
       - ./Env/${ENV_FILENAME:-.env.production}
     ports:
       - 127.0.0.1:4001:80
     depends_on:
+      dependencies-init:
+        condition: service_completed_successfully
       frey.pantheon.internal:
         condition: service_started
       db.pantheon.internal:
@@ -181,6 +221,8 @@ services:
       PHINX_DB_PORT: 5432
       PHINX_DB_HOST: db.pantheon.internal
       NODE_ENV: production
+      PNPM_HOME: /.pnpm
+      npm_config_store_dir: /.pnpm/store
     networks:
       internal_net:
         aliases:
@@ -188,16 +230,19 @@ services:
           - mimir.pantheon.internal
     restart: unless-stopped
     volumes:
+      - services_modules:/.pnpm
       - type: volume
-        source: mimir-node-modules
+        source: services_modules
         target: /var/www/html/Mimir/node_modules
         volume:
           nocopy: true
+          subpath: modules/Mimir
       - type: volume
-        source: mimir-dist-node-modules
+        source: services_modules
         target: /var/www/html/Mimir-dist/node_modules
         volume:
           nocopy: true
+          subpath: modules/Mimir-dist
       - ./Mimir-dist/.well-known:/var/www/html/Mimir-dist/.well-known
   pgadmin.pantheon.internal:
     image: docker.io/dpage/pgadmin4:8.11
@@ -223,6 +268,11 @@ services:
     cap_add:
       - ALL
     image: ghcr.io/mahjongpantheon/pantheon-tyr-${CONTAINER_ARCH:-amd64}:${IMAGE_TAG:-latest}
+    healthcheck:
+      test: [CMD, node, /var/www/html/Common/ContainerRuntime/healthcheck.mjs, Tyr]
+      interval: 5s
+      timeout: 3s
+      retries: 3
     env_file:
       - ./Env/${ENV_FILENAME:-.env.production}
     environment:
@@ -249,6 +299,11 @@ services:
     cap_add:
       - ALL
     image: ghcr.io/mahjongpantheon/pantheon-forseti-${CONTAINER_ARCH:-amd64}:${IMAGE_TAG:-latest}
+    healthcheck:
+      test: [CMD, node, /var/www/html/Common/ContainerRuntime/healthcheck.mjs, Forseti]
+      interval: 5s
+      timeout: 3s
+      retries: 3
     env_file:
       - ./Env/${ENV_FILENAME:-.env.production}
     environment:
@@ -275,15 +330,24 @@ services:
     cap_add:
       - ALL
     image: ghcr.io/mahjongpantheon/pantheon-sigrun-${CONTAINER_ARCH:-amd64}:${IMAGE_TAG:-latest}
+    healthcheck:
+      test: [CMD, node, /var/www/html/Common/ContainerRuntime/healthcheck.mjs, Sigrun]
+      interval: 5s
+      timeout: 3s
+      retries: 3
     env_file:
       - ./Env/${ENV_FILENAME:-.env.production}
     environment:
       PANTHEON_MODE: production
       PANTHEON_PRODUCTION_WORKERS: 'true'
       NODE_ENV: production
+      PNPM_HOME: /.pnpm
+      npm_config_store_dir: /.pnpm/store
     ports:
       - 127.0.0.1:4002:80
     depends_on:
+      dependencies-init:
+        condition: service_completed_successfully
       frey.pantheon.internal:
         condition: service_started
       mimir.pantheon.internal:
@@ -295,43 +359,62 @@ services:
           - sigrun.pantheon.internal
     restart: unless-stopped
     volumes:
+      - services_modules:/.pnpm
       - type: volume
-        source: sigrun-dist-node-modules
+        source: services_modules
         target: /var/www/html/Sigrun-dist/node_modules
         volume:
           nocopy: true
+          subpath: modules/Sigrun-dist
       - ./Sigrun-dist/.well-known:/var/www/html/Sigrun-dist/.well-known
   gullveig.pantheon.internal:
     cgroup: host
     cap_add:
       - ALL
     image: ghcr.io/mahjongpantheon/pantheon-gullveig-${CONTAINER_ARCH:-amd64}:${IMAGE_TAG:-latest}
+    healthcheck:
+      test: [CMD, node, /var/www/html/Common/ContainerRuntime/healthcheck.mjs, Gullveig]
+      interval: 5s
+      timeout: 3s
+      retries: 3
     env_file:
       - ./Env/${ENV_FILENAME:-.env.production}
     ports:
       - 127.0.0.1:4009:80
     volumes:
+      - services_modules:/.pnpm
       - type: volume
-        source: gullveig-dist-node-modules
+        source: services_modules
         target: /var/www/html/Gullveig-dist/node_modules
         volume:
           nocopy: true
+          subpath: modules/Gullveig-dist
       - gullveigstorage01:/var/storage
     environment:
       PANTHEON_MODE: production
       PANTHEON_PRODUCTION_WORKERS: 'true'
       NODE_ENV: production
+      PNPM_HOME: /.pnpm
+      npm_config_store_dir: /.pnpm/store
     networks:
       internal_net:
         aliases:
           - gullveig.pantheon.local
           - gullveig.pantheon.internal
     restart: unless-stopped
+    depends_on:
+      dependencies-init:
+        condition: service_completed_successfully
   meili.pantheon.internal:
     cgroup: host
     cap_add:
       - ALL
     image: ghcr.io/mahjongpantheon/pantheon-meili-${CONTAINER_ARCH:-amd64}:${IMAGE_TAG:-latest}
+    healthcheck:
+      test: [CMD, node, /var/www/html/Common/ContainerRuntime/healthcheck.mjs, Meili]
+      interval: 5s
+      timeout: 3s
+      retries: 3
     env_file:
       - ./Env/${ENV_FILENAME:-.env.production}
     ports:
@@ -340,6 +423,8 @@ services:
       PANTHEON_MODE: production
       PANTHEON_PRODUCTION_WORKERS: 'true'
       NODE_ENV: production
+      PNPM_HOME: /.pnpm
+      npm_config_store_dir: /.pnpm/store
     networks:
       internal_net:
         aliases:
@@ -347,22 +432,34 @@ services:
           - meili.pantheon.internal
     restart: unless-stopped
     volumes:
+      - services_modules:/.pnpm
       - type: volume
-        source: meili-dist-node-modules
+        source: services_modules
         target: /var/www/html/Meili-dist/node_modules
         volume:
           nocopy: true
+          subpath: modules/Meili-dist
+    depends_on:
+      dependencies-init:
+        condition: service_completed_successfully
   bragi.pantheon.internal:
     cgroup: host
     cap_add:
       - ALL
     image: ghcr.io/mahjongpantheon/pantheon-bragi-${CONTAINER_ARCH:-amd64}:${IMAGE_TAG:-latest}
+    healthcheck:
+      test: [CMD, node, /var/www/html/Common/ContainerRuntime/healthcheck.mjs, Bragi]
+      interval: 5s
+      timeout: 3s
+      retries: 3
     env_file:
       - ./Env/${ENV_FILENAME:-.env.production}
     environment:
       PANTHEON_MODE: production
       PANTHEON_PRODUCTION_WORKERS: 'true'
       NODE_ENV: production
+      PNPM_HOME: /.pnpm
+      npm_config_store_dir: /.pnpm/store
     ports:
       - 127.0.0.1:4006:80
     networks:
@@ -372,22 +469,34 @@ services:
           - bragi.pantheon.internal
     restart: unless-stopped
     volumes:
+      - services_modules:/.pnpm
       - type: volume
-        source: bragi-dist-node-modules
+        source: services_modules
         target: /var/www/html/Bragi-dist/node_modules
         volume:
           nocopy: true
+          subpath: modules/Bragi-dist
       - ./Bragi-dist/.well-known:/var/www/html/Bragi-dist/.well-known
+    depends_on:
+      dependencies-init:
+        condition: service_completed_successfully
   hugin.pantheon.internal:
     cgroup: host
     cap_add:
       - ALL
     image: ghcr.io/mahjongpantheon/pantheon-hugin-${CONTAINER_ARCH:-amd64}:${IMAGE_TAG:-latest}
+    healthcheck:
+      test: [CMD, node, /var/www/html/Common/ContainerRuntime/healthcheck.mjs, Hugin]
+      interval: 5s
+      timeout: 3s
+      retries: 3
     env_file:
       - ./Env/${ENV_FILENAME:-.env.production}
     ports:
       - 127.0.0.1:4008:80
     depends_on:
+      dependencies-init:
+        condition: service_completed_successfully
       redis.pantheon.internal:
         condition: service_started
       db.pantheon.internal:
@@ -411,11 +520,13 @@ services:
       skirnir.pantheon.internal:
         condition: service_started
     volumes:
+      - services_modules:/.pnpm
       - type: volume
-        source: hugin-dist-node-modules
+        source: services_modules
         target: /var/www/html/Hugin-dist/node_modules
         volume:
           nocopy: true
+          subpath: modules/Hugin-dist
       - prometheusdata:/var/lib/prometheus
       - ./Hugin/www/.well-known:/var/www/html/Hugin/www/.well-known
     environment:
@@ -424,6 +535,8 @@ services:
       PHINX_DB_HUGIN_PORT: 5432
       PHINX_DB_HUGIN_HOST: db.pantheon.internal
       NODE_ENV: production
+      PNPM_HOME: /.pnpm
+      npm_config_store_dir: /.pnpm/store
     networks:
       internal_net:
         aliases:

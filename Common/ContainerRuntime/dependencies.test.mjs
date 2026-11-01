@@ -1,22 +1,35 @@
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { test } from 'node:test';
 
-function prepare(service, { mode = 'production', failInstall = false } = {}) {
+function prepare(
+  service,
+  { mode = 'production', failInstall = false, failMigration = false } = {}
+) {
   const root = mkdtempSync(join(tmpdir(), 'pantheon-dependencies-'));
   try {
     const runtime = join(root, 'Common/ContainerRuntime');
+    const ready = join(root, 'ready');
+    const failed = join(root, 'failed');
+    writeFileSync(ready, 'previous startup');
     const bin = join(root, 'bin');
     mkdirSync(runtime, { recursive: true });
     mkdirSync(bin);
-    for (const directory of [service, `${service}-dist`]) mkdirSync(join(root, directory));
+    for (const directory of [service, `${service}-dist`]) {
+      mkdirSync(join(root, directory, 'node_modules/.pnpm-store'), { recursive: true });
+      mkdirSync(join(root, directory, 'node_modules/.pnpm'), { recursive: true });
+      writeFileSync(join(root, directory, 'node_modules/.pnpm/retained'), 'package');
+    }
     for (const file of ['prepare.sh', 'install-dependencies.sh']) {
       writeFileSync(
         join(runtime, file),
-        readFileSync(new URL(file, import.meta.url), 'utf8').replaceAll('/var/www/html', root)
+        readFileSync(new URL(file, import.meta.url), 'utf8')
+          .replaceAll('/var/www/html', root)
+          .replaceAll('/run/pantheon-ready', ready)
+          .replaceAll('/run/pantheon-startup-failed', failed)
       );
     }
     const log = join(root, 'commands.jsonl');
@@ -30,7 +43,14 @@ const args = process.argv.slice(2);
 appendFileSync(process.env.COMMAND_LOG, JSON.stringify({
   args, directory: process.cwd(), ci: process.env.CI, home: process.env.HOME,
 }) + '\\n');
-if (args[0] === 'pnpm' && args[1] === 'install' && process.env.FAIL_INSTALL === 'true') process.exit(23);
+if (args[0] === 'pnpm' && args[1] === 'install') {
+  process.stdout.write('pnpm: resolved 100 packages\\n');
+  if (process.env.FAIL_INSTALL === 'true') {
+    process.stderr.write('pnpm: dependency installation failed\\n');
+    process.exit(23);
+  }
+}
+if (process.env.FAIL_MIGRATION === 'true' && args.some(arg => arg === 'migration:up' || arg.endsWith('/migrate.ts') || arg === 'migrate.js')) process.exit(24);
 `
     );
     for (const command of ['chown', 'pnpm', 'node']) {
@@ -49,10 +69,26 @@ if (args[0] === 'pnpm' && args[1] === 'install' && process.env.FAIL_INSTALL === 
         PANTHEON_MODE: mode,
         COMMAND_LOG: log,
         FAIL_INSTALL: String(failInstall),
+        FAIL_MIGRATION: String(failMigration),
+        npm_config_store_dir: join(root, 'dependencies/store'),
       },
     });
     const commands = readFileSync(log, 'utf8').trim().split('\n').filter(Boolean).map(JSON.parse);
-    return { ...result, commands, root };
+    const legacyStores = [service, `${service}-dist`].map((directory) =>
+      existsSync(join(root, directory, 'node_modules/.pnpm-store'))
+    );
+    const virtualStores = [service, `${service}-dist`].map((directory) =>
+      existsSync(join(root, directory, 'node_modules/.pnpm/retained'))
+    );
+    return {
+      ...result,
+      commands,
+      root,
+      legacyStores,
+      virtualStores,
+      ready: existsSync(ready),
+      failed: existsSync(failed),
+    };
   } finally {
     rmSync(root, { recursive: true, force: true });
   }
@@ -70,8 +106,13 @@ for (const service of [
   'Sigrun',
 ]) {
   test(`${service} installs locked dependencies before production startup`, () => {
-    const { status, stderr, commands, root } = prepare(service);
+    const { status, stdout, stderr, commands, root, ready, failed } = prepare(service);
     assert.equal(status, 0, stderr);
+    assert.match(stdout, /pnpm: resolved 100 packages/);
+    assert.ok(stdout.includes(`${service}-dist: installing dependencies`));
+    assert.ok(stdout.includes(`${service}-dist: dependencies installed`));
+    assert.equal(ready, true);
+    assert.equal(failed, false);
     const installs = commands.filter(({ args }) => args[0] === 'pnpm' && args[1] === 'install');
     const source = ['Frey', 'Mimir'].includes(service);
     assert.deepEqual(
@@ -83,9 +124,10 @@ for (const service of [
         'pnpm',
         'install',
         '--frozen-lockfile',
+        '--reporter=append-only',
         '--force',
         '--store-dir',
-        'node_modules/.pnpm-store',
+        join(root, 'dependencies/store'),
         source && index === 0 ? '--prod=false' : '--prod',
       ]);
       assert.equal(install.ci, 'true');
@@ -101,13 +143,36 @@ for (const service of [
 }
 
 test('install failure stops startup before configuration or database migration', () => {
-  const { status, commands } = prepare('Mimir', { failInstall: true });
+  const { status, stdout, stderr, commands, legacyStores, ready, failed } = prepare('Mimir', {
+    failInstall: true,
+  });
   assert.equal(status, 23);
+  assert.match(stderr, /pnpm: dependency installation failed/);
+  assert.ok(!stdout.includes('dependencies installed'));
+  assert.equal(ready, false);
+  assert.equal(failed, true);
+  assert.deepEqual(legacyStores, [true, true]);
   assert.equal(
     commands.some(({ args }) => args[0] === 'node' || args[1] === 'exec'),
     false
   );
 });
+
+test('successful installation removes old package caches while retaining installed packages', () => {
+  const { status, legacyStores, virtualStores } = prepare('Frey');
+  assert.equal(status, 0);
+  assert.deepEqual(legacyStores, [false, false]);
+  assert.deepEqual(virtualStores, [true, true]);
+});
+
+for (const service of ['Frey', 'Mimir', 'Hugin']) {
+  test(`${service} never reports ready after a failed migration`, () => {
+    const { status, ready, failed } = prepare(service, { failMigration: true });
+    assert.equal(status, 24);
+    assert.equal(ready, false);
+    assert.equal(failed, true);
+  });
+}
 
 for (const service of ['Tyr', 'Forseti']) {
   test(`${service} serves static bundles without a dependency install`, () => {

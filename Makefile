@@ -622,9 +622,12 @@ prod_local_start:
 	  }; \
 	done
 	${MAKE} build_reverse_proxy
+	${PROD_LOCAL_COMPOSE_COMMAND} run --rm --no-deps dependencies-init
 	${MAKE} pantheon_stop
 	${PROD_LOCAL_COMPOSE_COMMAND} up -d --no-build
+	/bin/sh Common/ContainerRuntime/wait-ready.sh env ${PROD_LOCAL_COMPOSE_COMMAND}
 	${MAKE} reverse_proxy_start
+	@echo "Local production services are ready; containers remain running in the background."
 
 prod_local:
 	${MAKE} prod_local_build
@@ -734,6 +737,7 @@ prod_compile:
 .PHONY: prod_start
 prod_start: export ENV_FILENAME=.env.production
 prod_start:
+	${PROD_COMPOSE_COMMAND} --env-file Env/.env.production run --rm --no-deps dependencies-init
 	${PROD_COMPOSE_COMMAND} --env-file Env/.env.production up -d --no-build
 
 .PHONY: prod_stop_all
@@ -752,6 +756,7 @@ prod_stop:
 .PHONY: prod_restart
 prod_restart: export ENV_FILENAME=.env.production
 prod_restart:
+	${PROD_COMPOSE_COMMAND} --env-file Env/.env.production run --rm --no-deps dependencies-init
 	${PROD_COMPOSE_COMMAND} --env-file Env/.env.production up -d --no-build --no-deps --force-recreate forseti.pantheon.internal frey.pantheon.internal hermod.pantheon.internal \
 	  hugin.pantheon.internal mimir.pantheon.internal sigrun.pantheon.internal tyr.pantheon.internal \
 	  gullveig.pantheon.internal bragi.pantheon.internal skirnir.pantheon.internal meili.pantheon.internal

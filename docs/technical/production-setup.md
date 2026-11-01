@@ -208,14 +208,35 @@ Then run `make prod_pull` and `make prod_start` from the Pantheon folder.
 
 CI images contain production bundles and dependency manifests/lockfiles, without
 application `node_modules`. On every production start, Node.js services run
-`pnpm install --frozen-lockfile` into separate named dependency volumes before
+`pnpm install --frozen-lockfile` into a shared `services_modules` volume before
 starting any application processes. Frey and Mimir also install source dependencies
 for migration CLIs and cron jobs. Frey, Mimir and Hugin then apply pending migrations
-before starting workers. The volumes and their package stores survive container
-recreation; missing packages require access to package registries and Git sources.
+before starting workers. The volume is mounted at `/.pnpm`: `store/` holds the
+package cache and `modules/<project>/` holds each separate dependency tree, for
+example `modules/Mimir` and `modules/Mimir-dist`. Volume subdirectory mounts expose
+these at each project's usual `node_modules` path. The `dependencies-init` service
+creates directories before use; production Make shortcuts run it automatically.
+Direct Compose users should run `docker compose -f docker-compose-production.yml
+--env-file Env/.env.production run --rm --no-deps dependencies-init` before `up`.
+Compose and the container runtime must support volume subdirectory mounts.
+The `.pnpm` within each tree holds installed packages; old
+`.pnpm-store` caches inside the trees are removed after a successful install.
+The volume survives recreation. Previous dependency/cache volumes are not deleted;
+the new combined volume is populated from lockfiles. Missing packages require
+access to package registries and Git sources. Development retains its separate
+`pnpmstore01` cache volume.
 Tyr and Forseti serve static bundles and need no runtime install. You do not need
 `make deps` or `make prod_compile` on the server. An install or migration failure
 stops startup; inspect container logs before retrying.
+
+Application containers expose healthchecks that remain false until dependency
+installation and migrations succeed, all Supervisor programs (including cron)
+are running, and Nginx plus all production workers accept connections on IPv4 or
+IPv6 localhost. Check the health column in production Compose `ps` output. Local
+`make prod_local_start` follows this health status without a startup deadline and
+reports installation/migration failures, stopped/restarting containers, and
+Supervisor `FATAL`/`STOPPED` programs. It rechecks earlier healthy applications
+until the whole stack is ready. Worker stdout/stderr goes to container logs.
 
 For updates, run `make prod_update` (pull images and recreate application containers).
 For environment changes, including `VITE_*`, run `make prod_restart`. Public frontend
