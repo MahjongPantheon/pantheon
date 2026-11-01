@@ -2,26 +2,6 @@ name: Build project artifacts & containers [arm64]
 
 on:
   workflow_dispatch:
-  push:
-    paths:
-      - 'Frey/**'
-      - 'Mimir/**'
-      - 'Hugin/**'
-      - 'Gullveig/**'
-      - 'Meili/**'
-      - 'Hermod/**'
-      - 'Skirnir/**'
-      - 'Tyr/**'
-      - 'Forseti/**'
-      - 'Sigrun/**'
-      - 'Bragi/**'
-      - 'Common/**'
-      - 'Database/**'
-      - 'Redis/**'
-      - '.github/workflows/build*.yml'
-      - '.dockerignore'
-      - 'docker-compose-production.yml'
-      - 'Makefile'
 
 permissions:
   contents: read
