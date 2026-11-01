@@ -66,8 +66,9 @@ Use `make prod_start` to apply changes to infrastructure images/configuration to
 files separately when a release changes them.
 
 Set `IMAGE_TAG=<commit SHA>` when pulling and restarting to deploy a specific CI
-release, for example `make prod_update IMAGE_TAG=abc123...`. Both AMD64 and ARM64
-build workflows publish commit tags and `latest`. Make detects the host architecture;
+release, for example `make prod_update IMAGE_TAG=abc123...`. The manually triggered
+**Build project artifacts & containers** workflow builds AMD64 and ARM64 in parallel
+and publishes commit tags and `latest`. Make detects the host architecture;
 standalone Compose users should set `CONTAINER_ARCH=arm64` on ARM hosts.
 
 Changing `Env/.env.production`, including public `VITE_*` settings, requires only
@@ -190,7 +191,7 @@ broken installation may still need a manual reload or its site cache cleared onc
 
 The application containers inherit Node.js and npm from Alpine's `nodejs-current` and `npm` packages in `Common/ContainerBase`. Both AMD64 and ARM64 use Alpine's prebuilt packages. pnpm is installed through npm with the `pnpm@12` major-version pin. Service settings and dependency build permissions live in each service's `pnpm-workspace.yaml`; production preparation copies that file alongside `package.json`. Node.js updates follow the selected Alpine branch; update the Alpine base tag when moving to a newer branch. Fenrir has a separate image and runtime.
 
-Run `make container_base` to rebuild the shared base, or `make container` to rebuild it along with the dependent service images and recreate their containers. The AMD64 and ARM64 registry workflows rebuild the shared base and application images when its Dockerfile changes. Existing running containers retain their previous runtime until recreated.
+Run `make container_base` to rebuild the shared base, or `make container` to rebuild it along with the dependent service images and recreate their containers. Run the **Build project artifacts & containers** workflow manually in GitHub Actions to rebuild the shared base and application images for both AMD64 and ARM64. Existing running containers retain their previous runtime until recreated.
 
 #### Email agent
 
