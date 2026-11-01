@@ -12,6 +12,10 @@ therefore report flaky tests as failures.
 
 Fenrir uses Playwright as testing framework.
 
+The **Build container for e2e testing** GitHub Actions workflow builds and publishes
+AMD64 and ARM64 images in parallel, tagged with `latest` and the commit SHA. It runs
+on changes under `Fenrir/` on `master`, or manually through **Run workflow**.
+
 #### Debugging with Playwright UI
 
 With the development stack and Fenrir container running, execute from the repository root:

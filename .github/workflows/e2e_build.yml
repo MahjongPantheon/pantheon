@@ -6,17 +6,25 @@ on:
     paths:
       - 'Fenrir/**'
 
+permissions:
+  contents: read
+  packages: write
+
 jobs:
   e2eBuildContainer:
+    name: Build Fenrir (${{ matrix.arch }})
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        arch: [amd64, arm64]
+    env:
+      CONTAINER_ARCH_OVERRIDE: ${{ matrix.arch }}
     if: |
       github.ref == 'refs/heads/master' &&
       github.repository == 'MahjongPantheon/pantheon'
     steps:
       - uses: actions/checkout@v2
-
-      - name: Log in to container registry
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | podman login -u "${{ github.repository_owner }}" --password-stdin ghcr.io
 
       - name: Set up Docker Buildx
         id: buildx
@@ -37,8 +45,9 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: ./Fenrir
-          platforms: linux/amd64
+          build-args: CONTAINER_ARCH=${{ matrix.arch }}
+          platforms: linux/${{ matrix.arch }}
           push: ${{ github.event_name != 'pull_request' }}
           tags: |
-            ghcr.io/mahjongpantheon/pantheon-fenrir-amd64:latest
-            ghcr.io/mahjongpantheon/pantheon-fenrir-amd64:${{ github.sha }}
+            ghcr.io/mahjongpantheon/pantheon-fenrir-${{ matrix.arch }}:latest
+            ghcr.io/mahjongpantheon/pantheon-fenrir-${{ matrix.arch }}:${{ github.sha }}
