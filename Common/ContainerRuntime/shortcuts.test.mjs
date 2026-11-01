@@ -45,7 +45,7 @@ import { appendFileSync, existsSync, readFileSync, writeFileSync, writeSync } fr
 import { spawn } from 'node:child_process';
 const args = process.argv.slice(2);
 appendFileSync(process.env.TEST_LOG, JSON.stringify({ args, mode: process.env.PANTHEON_STACK_MODE,
-  env: process.env.ENV_FILENAME, tag: process.env.IMAGE_TAG }) + '\\n');
+  env: process.env.ENV_FILENAME, tag: process.env.IMAGE_TAG, menu: process.env.COMPOSE_MENU }) + '\\n');
 if (process.env.TEST_FAIL && args.join(' ').includes(process.env.TEST_FAIL)) process.exit(23);
 if (args[0] === 'runtime' && args[1] === 'image' && args[2] === 'inspect' &&
   JSON.parse(process.env.TEST_MISSING).some(suffix => args.at(-1).endsWith(suffix))) process.exit(1);
@@ -91,6 +91,7 @@ if (args[0] === 'log-child') {
     TEST_PENDING: String(options.pending ?? 0),
     TEST_NESTED: String(options.nested ?? false),
     TEST_ACTUAL_MODE: options.actualMode ?? 'source',
+    COMPOSE_MENU: 'true',
   };
   delete env.MAKEFLAGS;
   delete env.MFLAGS;
@@ -231,6 +232,16 @@ test('development starts watchers through Compose and detached startup waits for
   assert.ok(!has(result.commands, 'killall'));
   assert.ok(!has(result.commands, 'curl --fail'));
   assert.ok(result.commands.some(({ args }) => args.includes('compose.local.yaml')));
+});
+
+test('attached development disables the interactive Compose shortcut menu', () => {
+  const result = run(['dev']);
+  assert.equal(result.status, 0, result.stderr);
+  const startup = result.commands.find(({ args }) =>
+    args.join(' ').includes('up --build --abort-on-container-failure')
+  );
+  assert.ok(startup);
+  assert.equal(startup.menu, 'false');
 });
 
 test('source compilation is rejected against an image stack', () => {

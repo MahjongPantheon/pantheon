@@ -274,7 +274,8 @@ case "$command" in
     else
       # Compose attaches to preparation and worker output, and owns signals for
       # the entire stack. No host-side watcher processes need PID tracking.
-      compose up --build --abort-on-container-failure
+      # Keep Compose's interactive shortcut menu out of the log stream.
+      COMPOSE_MENU=false compose up --build --abort-on-container-failure
     fi
     ;;
   local-prod)
