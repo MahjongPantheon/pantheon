@@ -6,6 +6,12 @@ root=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
 cd "$root"
 
 fail() { echo "pantheon: $*" >&2; exit 1; }
+if [[ ${1:-} == completion ]]; then
+  source "$root/bin/lib/completion.sh"
+  shift
+  completion_command "$@"
+  exit
+fi
 if [[ -n ${CONTAINER_COMMAND:-} ]]; then
   read -r -a runtime <<< "$CONTAINER_COMMAND"
 elif command -v docker >/dev/null; then runtime=(docker)
@@ -364,6 +370,7 @@ Usage: bin/pantheon COMMAND
   task SERVICE TASK [ARGS...]       Run an owning service's Bash task (help lists)
   exec SERVICE COMMAND [ARGS...]     Run a command in a service container
   shell SERVICE                     Open a service shell
+  completion {bash|zsh|install [SHELL]} Generate or install shell completions
   compose [ARGS...]                  Inspect/control the selected configuration
   stop | status | logs               Control the selected stack
 

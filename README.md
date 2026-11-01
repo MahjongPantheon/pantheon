@@ -19,6 +19,25 @@ run inside containers, including the infrastructure regression tests.
 `bin/pantheon help` lists commands; `bin/pantheon task SERVICE help` lists owning
 service tasks. Makefiles and Just are no longer used.
 
+Enable shell completion for `./run` and `bin/pantheon` with:
+
+```sh
+./run completion install bash
+# Or:
+./run completion install zsh
+```
+
+The installer stores a completion script under
+`${XDG_DATA_HOME:-$HOME/.local/share}/pantheon/completions` and adds one source
+line to `~/.bashrc` or `${ZDOTDIR:-$HOME}/.zshrc`. Repeating installation updates
+the script without duplicating that line. Restart your shell or use the source
+command printed by the installer. Rerun installation after moving the checkout.
+For manual setup, `./run completion bash` or `./run completion zsh` prints the
+script. Completion suggests commands, operations, services and owning service
+tasks without contacting containers. An optional final `RC_FILE` argument to
+`completion install SHELL` selects another startup file;
+`PANTHEON_COMPLETION_DIR` overrides the installation directory.
+
 There are three explicit modes:
 
 | Mode | Application files | Processes |
