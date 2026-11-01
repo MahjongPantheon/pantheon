@@ -11,7 +11,7 @@ COPY Bragi/bragi-container.nginx.conf /etc/nginx/http.d/bragi.conf
 RUN mkdir -p /var/www/html/Bragi
 RUN mkdir -p /var/www/html/Bragi-dist
 
-# Build artifacts in CI; retain source dependencies for migrations and scheduled jobs.
+# Build artifacts in CI; install runtime dependencies into volumes at startup.
 COPY Common /var/www/html/Common
 COPY Bragi /var/www/html/Bragi
 COPY --chmod=755 Common/ContainerRuntime/prepare.sh /prepare-service.sh

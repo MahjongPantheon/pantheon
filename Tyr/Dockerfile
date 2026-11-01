@@ -9,7 +9,7 @@ COPY Tyr/tyr-container.nginx.conf /etc/nginx/http.d/tyr.conf
 RUN mkdir -p /var/www/html/Tyr
 RUN mkdir -p /var/www/html/Tyr-dist
 
-# Build artifacts in CI; retain source dependencies for migrations and scheduled jobs.
+# Build artifacts in CI; install runtime dependencies into volumes at startup.
 COPY Common /var/www/html/Common
 COPY Tyr /var/www/html/Tyr
 COPY --chmod=755 Common/ContainerRuntime/prepare.sh /prepare-service.sh

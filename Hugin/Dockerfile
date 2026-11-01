@@ -24,7 +24,7 @@ RUN bash /install_prometheus.sh
 # Folders init
 RUN mkdir -p /var/www/html/Hugin /var/www/html/Hugin-dist
 
-# Build artifacts in CI; retain source dependencies for migrations and scheduled jobs.
+# Build artifacts in CI; install runtime dependencies into volumes at startup.
 COPY Common /var/www/html/Common
 COPY Hugin /var/www/html/Hugin
 COPY --chmod=755 Common/ContainerRuntime/prepare.sh /prepare-service.sh

@@ -11,7 +11,7 @@ COPY Mimir/supervisord.conf /etc/supervisord.conf
 RUN mkdir -p /var/www/html/Mimir
 RUN mkdir -p /var/www/html/Mimir-dist
 
-# Build artifacts in CI; retain source dependencies for migrations and scheduled jobs.
+# Build artifacts in CI; install runtime dependencies into volumes at startup.
 COPY Common /var/www/html/Common
 COPY Mimir /var/www/html/Mimir
 COPY --chmod=755 Common/ContainerRuntime/prepare.sh /prepare-service.sh

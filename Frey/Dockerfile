@@ -12,7 +12,7 @@ COPY Frey/cron/tabs/nobody /var/spool/cron/crontabs/user
 # Folders init
 RUN mkdir -p /var/www/html/Frey
 
-# Build artifacts in CI; retain source dependencies for migrations and scheduled jobs.
+# Build artifacts in CI; install runtime dependencies into volumes at startup.
 COPY Common /var/www/html/Common
 COPY Frey /var/www/html/Frey
 COPY --chmod=755 Common/ContainerRuntime/prepare.sh /prepare-service.sh

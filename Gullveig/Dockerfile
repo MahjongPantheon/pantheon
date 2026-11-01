@@ -6,7 +6,7 @@ COPY Gullveig/supervisord.conf /etc/supervisord.conf
 COPY Gullveig/gullveig-container.nginx.conf /etc/nginx/http.d/gullveig.conf
 RUN mkdir -p /var/www/html/Gullveig /var/www/html/Gullveig-dist
 
-# Build artifacts in CI; retain source dependencies for migrations and scheduled jobs.
+# Build artifacts in CI; install runtime dependencies into volumes at startup.
 COPY Common /var/www/html/Common
 COPY Gullveig /var/www/html/Gullveig
 COPY --chmod=755 Common/ContainerRuntime/prepare.sh /prepare-service.sh

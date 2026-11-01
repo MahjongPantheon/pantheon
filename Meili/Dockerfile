@@ -6,7 +6,7 @@ COPY Meili/supervisord.conf /etc/supervisord.conf
 COPY Meili/meili-container.nginx.conf /etc/nginx/http.d/meili.conf
 RUN mkdir -p /var/www/html/Meili /var/www/html/Meili-dist
 
-# Build artifacts in CI; retain source dependencies for migrations and scheduled jobs.
+# Build artifacts in CI; install runtime dependencies into volumes at startup.
 COPY Common /var/www/html/Common
 COPY Meili /var/www/html/Meili
 COPY --chmod=755 Common/ContainerRuntime/prepare.sh /prepare-service.sh

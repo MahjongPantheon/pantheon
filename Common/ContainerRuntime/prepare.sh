@@ -7,6 +7,7 @@ case "${PANTHEON_MODE:-development}" in
   *) echo 'PANTHEON_MODE must be development or production' >&2; exit 1 ;;
 esac
 
+/bin/sh /var/www/html/Common/ContainerRuntime/install-dependencies.sh "$service"
 node /var/www/html/Common/ContainerRuntime/configure.mjs "$service"
 case "$service" in
   Frey|Mimir|Hugin)

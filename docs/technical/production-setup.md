@@ -206,9 +206,16 @@ Create `/srv/__pantheon/Env/.env.production` using `Env/.env.example.production`
 as a starting point. Configure service URLs, database credentials and mail settings.
 Then run `make prod_pull` and `make prod_start` from the Pantheon folder.
 
-CI images contain production bundles and dependencies. Frey, Mimir and Hugin apply
-pending migrations before starting workers. You do not need `make deps` or
-`make prod_compile` on the server. Inspect container logs if startup fails.
+CI images contain production bundles and dependency manifests/lockfiles, without
+application `node_modules`. On every production start, Node.js services run
+`pnpm install --frozen-lockfile` into separate named dependency volumes before
+starting any application processes. Frey and Mimir also install source dependencies
+for migration CLIs and cron jobs. Frey, Mimir and Hugin then apply pending migrations
+before starting workers. The volumes and their package stores survive container
+recreation; missing packages require access to package registries and Git sources.
+Tyr and Forseti serve static bundles and need no runtime install. You do not need
+`make deps` or `make prod_compile` on the server. An install or migration failure
+stops startup; inspect container logs before retrying.
 
 For updates, run `make prod_update` (pull images and recreate application containers).
 For environment changes, including `VITE_*`, run `make prod_restart`. Public frontend

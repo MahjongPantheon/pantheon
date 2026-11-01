@@ -28,14 +28,26 @@ To deploy pantheon on your own VPS or personal environment on production mode:
 3. Fill new environment file with proper values, mostly it's about hosts, where you want the services to be accessible from the outer internet. Please note: setting up Nginx or any other reverse proxy is your responsibility. You may refer to `nginx-reverse-proxy.example.conf` file for basic nginx setup.
 4. Set up your reverse proxy, add SSL certificates (optionally). Please use included `nginx-reverse-proxy.example.conf` as reference of what host to point where. Note that `*.pantheon.internal` hosts are used to distinguish the services inside container network. Optionally, you can also point PgAdmin4 host to port 5632.
 5. Run `make prod_pull` to fetch CI-built images from the registry.
-6. Run `make prod_start` to start containers. Frey, Mimir, and Hugin wait for their databases and apply migrations before starting application workers. A failed migration stops startup; inspect the service logs before retrying.
+6. Run `make prod_start` to start containers. Each Node.js service installs its locked dependencies into volumes before starting. Frey, Mimir, and Hugin then wait for their databases and apply migrations before starting application workers. A failed install or migration stops startup; inspect the service logs before retrying.
 7. For a fresh setup, run `make bootstrap_admin` to create the default administrator (`admin@localhost.localdomain`, password `123456`). Change its email and reset its password immediately through Forseti.
 
 Production uses the standalone `docker-compose-production.yml`, with the same network,
 HTTP ports and persistent data volumes as the development files. Application code,
-compiled bundles, runtime dependencies, migrations and scheduled jobs are inside the
-images. Only persistent data and ACME challenge directories are mounted; keep `Env/.env.production`
-and Hermod's DKIM keys on the host. Existing database and upload volumes are reused.
+compiled bundles, dependency manifests/lockfiles, migrations and scheduled jobs are
+inside the images. Application `node_modules` are excluded from the images. Each
+Node.js bundle has a separate named dependency volume; Frey and Mimir also have
+source dependency volumes for their migration CLIs and cron jobs. These volumes
+are separate from development dependencies and reused when containers are recreated.
+Keep `Env/.env.production` and Hermod's DKIM keys on the host. Existing database
+and upload volumes are reused.
+
+On every production start, `pnpm install --frozen-lockfile` synchronizes dependencies
+before migrations, cron or workers start. Bundles install production dependencies;
+Frey/Mimir source installs include development tools required by their CLIs. The
+package store stays inside each dependency volume. Synchronization also refreshes
+local `Common/tsclients` packages after image updates. Installations need access to
+the package registries and Git dependency sources when packages are missing from
+the store. Tyr and Forseti serve static bundles and need no runtime install.
 
 To update production, run:
 
@@ -62,8 +74,8 @@ Changing `Env/.env.production`, including public `VITE_*` settings, requires onl
 `make prod_restart`. CI builds defer these values to startup: browsers load
 `/runtime-env.js` with caching disabled and SSR reads the container environment.
 All `VITE_*` variables are public; never put secrets in them. Production requires
-no dependency installation or compilation on the server. The old `prod_compile`
-and `prod_build_*` targets remain for local source-build diagnostics; use the
+no manual dependency installation or application compilation on the server. The
+old `prod_compile` and `prod_build_*` targets remain for local source-build diagnostics; use the
 existing e2e source-build flow for local production-bundle tests.
 
 Development Compose files continue mounting sources and build outputs. They set
@@ -124,9 +136,11 @@ ENV_FILENAME=.env.e2e IMAGE_TAG=local-production CONTAINER_ARCH="$(bash bin/get_
   frey.pantheon.internal mimir.pantheon.internal hugin.pantheon.internal
 ```
 
-Frey, Mimir and Hugin apply migrations before starting workers; check their logs
-for failures. Compose may pull missing third-party infrastructure images. The
-application, PostgreSQL and Redis images come from your local builds. The server
+Node.js services install dependencies into their production volumes on startup;
+Frey, Mimir and Hugin then apply migrations before starting workers. Check their
+logs for install or migration failures. Compose may pull missing third-party
+infrastructure images. The application, PostgreSQL and Redis images come from
+your local builds. The server
 `prod_*` commands such as `prod_start` still select `Env/.env.production`; use the
 `prod_local*` shortcuts for this local test setup.
 

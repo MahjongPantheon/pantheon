@@ -9,7 +9,7 @@ COPY Forseti/forseti-container.nginx.conf /etc/nginx/http.d/forseti.conf
 RUN mkdir -p /var/www/html/Forseti
 RUN mkdir -p /var/www/html/Forseti-dist
 
-# Build artifacts in CI; retain source dependencies for migrations and scheduled jobs.
+# Build artifacts in CI; install runtime dependencies into volumes at startup.
 COPY Common /var/www/html/Common
 COPY Forseti /var/www/html/Forseti
 COPY --chmod=755 Common/ContainerRuntime/prepare.sh /prepare-service.sh

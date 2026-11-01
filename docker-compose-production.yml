@@ -10,6 +10,17 @@ volumes:
   pfetc01: null
   prometheusdata: null
   pgadmindata: null
+  frey-dist-node-modules: {}
+  mimir-dist-node-modules: {}
+  hugin-dist-node-modules: {}
+  gullveig-dist-node-modules: {}
+  meili-dist-node-modules: {}
+  hermod-dist-node-modules: {}
+  skirnir-dist-node-modules: {}
+  sigrun-dist-node-modules: {}
+  bragi-dist-node-modules: {}
+  frey-node-modules: {}
+  mimir-node-modules: {}
 networks:
   internal_net:
     driver: bridge
@@ -31,6 +42,11 @@ services:
     ports:
       - 127.0.0.1:4007:80
     volumes:
+      - type: volume
+        source: hermod-dist-node-modules
+        target: /var/www/html/Hermod-dist/node_modules
+        volume:
+          nocopy: true
       - ./Hermod/opendkim_keys:/etc/opendkim/keys
       - pfspool01:/var/spool/postfix
       - pfetc01:/etc/postfix
@@ -63,6 +79,12 @@ services:
           - skirnir.pantheon.local
           - skirnir.pantheon.internal
     restart: unless-stopped
+    volumes:
+      - type: volume
+        source: skirnir-dist-node-modules
+        target: /var/www/html/Skirnir-dist/node_modules
+        volume:
+          nocopy: true
   db.pantheon.internal:
     cgroup: host
     cap_add:
@@ -126,6 +148,16 @@ services:
           - frey.pantheon.internal
     restart: unless-stopped
     volumes:
+      - type: volume
+        source: frey-node-modules
+        target: /var/www/html/Frey/node_modules
+        volume:
+          nocopy: true
+      - type: volume
+        source: frey-dist-node-modules
+        target: /var/www/html/Frey-dist/node_modules
+        volume:
+          nocopy: true
       - ./Frey-dist/.well-known:/var/www/html/Frey-dist/.well-known
   mimir.pantheon.internal:
     cgroup: host
@@ -156,6 +188,16 @@ services:
           - mimir.pantheon.internal
     restart: unless-stopped
     volumes:
+      - type: volume
+        source: mimir-node-modules
+        target: /var/www/html/Mimir/node_modules
+        volume:
+          nocopy: true
+      - type: volume
+        source: mimir-dist-node-modules
+        target: /var/www/html/Mimir-dist/node_modules
+        volume:
+          nocopy: true
       - ./Mimir-dist/.well-known:/var/www/html/Mimir-dist/.well-known
   pgadmin.pantheon.internal:
     image: docker.io/dpage/pgadmin4:8.11
@@ -253,6 +295,11 @@ services:
           - sigrun.pantheon.internal
     restart: unless-stopped
     volumes:
+      - type: volume
+        source: sigrun-dist-node-modules
+        target: /var/www/html/Sigrun-dist/node_modules
+        volume:
+          nocopy: true
       - ./Sigrun-dist/.well-known:/var/www/html/Sigrun-dist/.well-known
   gullveig.pantheon.internal:
     cgroup: host
@@ -264,6 +311,11 @@ services:
     ports:
       - 127.0.0.1:4009:80
     volumes:
+      - type: volume
+        source: gullveig-dist-node-modules
+        target: /var/www/html/Gullveig-dist/node_modules
+        volume:
+          nocopy: true
       - gullveigstorage01:/var/storage
     environment:
       PANTHEON_MODE: production
@@ -294,6 +346,12 @@ services:
           - meili.pantheon.local
           - meili.pantheon.internal
     restart: unless-stopped
+    volumes:
+      - type: volume
+        source: meili-dist-node-modules
+        target: /var/www/html/Meili-dist/node_modules
+        volume:
+          nocopy: true
   bragi.pantheon.internal:
     cgroup: host
     cap_add:
@@ -314,6 +372,11 @@ services:
           - bragi.pantheon.internal
     restart: unless-stopped
     volumes:
+      - type: volume
+        source: bragi-dist-node-modules
+        target: /var/www/html/Bragi-dist/node_modules
+        volume:
+          nocopy: true
       - ./Bragi-dist/.well-known:/var/www/html/Bragi-dist/.well-known
   hugin.pantheon.internal:
     cgroup: host
@@ -348,6 +411,11 @@ services:
       skirnir.pantheon.internal:
         condition: service_started
     volumes:
+      - type: volume
+        source: hugin-dist-node-modules
+        target: /var/www/html/Hugin-dist/node_modules
+        volume:
+          nocopy: true
       - prometheusdata:/var/lib/prometheus
       - ./Hugin/www/.well-known:/var/www/html/Hugin/www/.well-known
     environment:

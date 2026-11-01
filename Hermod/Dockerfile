@@ -23,7 +23,7 @@ RUN mkdir -p /var/www/html/Hermod /var/www/html/Hermod-dist
 EXPOSE     587 25
 CMD        ["/bin/sh", "-c", "/run.sh"]
 
-# Build artifacts in CI; retain source dependencies for migrations and scheduled jobs.
+# Build artifacts in CI; install runtime dependencies into volumes at startup.
 COPY Common /var/www/html/Common
 COPY Hermod /var/www/html/Hermod
 COPY --chmod=755 Common/ContainerRuntime/prepare.sh /prepare-service.sh

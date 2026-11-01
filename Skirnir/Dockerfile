@@ -11,7 +11,7 @@ COPY Skirnir/skirnir-container.nginx.conf /etc/nginx/http.d/skirnir.conf
 RUN mkdir -p /var/www/html/Skirnir
 RUN mkdir -p /var/www/html/Skirnir-dist
 
-# Build artifacts in CI; retain source dependencies for migrations and scheduled jobs.
+# Build artifacts in CI; install runtime dependencies into volumes at startup.
 COPY Common /var/www/html/Common
 COPY Skirnir /var/www/html/Skirnir
 COPY --chmod=755 Common/ContainerRuntime/prepare.sh /prepare-service.sh

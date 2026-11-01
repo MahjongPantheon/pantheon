@@ -11,7 +11,7 @@ COPY Sigrun/sigrun-container.nginx.conf /etc/nginx/http.d/sigrun.conf
 RUN mkdir -p /var/www/html/Sigrun
 RUN mkdir -p /var/www/html/Sigrun-dist
 
-# Build artifacts in CI; retain source dependencies for migrations and scheduled jobs.
+# Build artifacts in CI; install runtime dependencies into volumes at startup.
 COPY Common /var/www/html/Common
 COPY Sigrun /var/www/html/Sigrun
 COPY --chmod=755 Common/ContainerRuntime/prepare.sh /prepare-service.sh
