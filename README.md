@@ -80,8 +80,10 @@ make prod_restart
 ```
 
 `prod_restart` recreates application containers with the pulled images and applies
-pending migrations. A plain container restart reruns migrations but cannot switch
-to a newly pulled image. PostgreSQL and pgAdmin are left running by `prod_restart`.
+pending migrations, waits for all applications to become healthy, and warms Sigrun
+and Bragi with six HTTP requests each. A plain container restart reruns migrations
+but cannot switch to a newly pulled image. PostgreSQL and pgAdmin are left running
+by `prod_restart`.
 Use `make prod_start` to apply changes to infrastructure images/configuration too.
 `prod_update` does not change your Git checkout; update deployment configuration
 files separately when a release changes them.
@@ -136,8 +138,10 @@ failures, stopped/restarting containers, and Supervisor `FATAL`/`STOPPED` progra
 fail the Make command. Worker stdout/stderr is included in the streamed logs. There
 is no fixed startup deadline: slow installs keep waiting for actual readiness.
 Use Compose `ps` and `logs` below to inspect progress, or Ctrl+C to stop waiting.
-Once all applications are healthy and the proxy has started, `prod_local_start`
-stops following logs and returns to the shell, leaving the containers running.
+Once all applications are healthy, `prod_local_start` warms Sigrun and Bragi with
+six HTTP requests each, using the same warmup targets as `prod_compile`.
+After warmup and proxy startup, `prod_local_start` returns to the shell, leaving
+the containers running.
 Use `make prod_local` to rebuild images after startup-script changes;
 `prod_local_start` uses existing images and pulls missing registry images without
 building applications.

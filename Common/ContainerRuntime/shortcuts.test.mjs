@@ -200,6 +200,8 @@ test('local startup validates settings before stopping the stack and starts the 
           '-q',
           `${service}.pantheon.internal`,
         ]),
+      ['make', '-C', 'Sigrun', 'container_warmup'],
+      ['make', '-C', 'Bragi', 'container_warmup'],
       ['make', 'reverse_proxy_start'],
     ]
   );
@@ -236,7 +238,26 @@ test('local startup validates settings before stopping the stack and starts the 
   assert.notEqual(notReady.status, 0);
   assert.match(notReady.stderr, /dependency installation, migration or supervised service failed/);
   assert.equal(notReady.logsStopped, true);
+  assert.ok(!notReady.commands.some(({ args }) => args.includes('container_warmup')));
   assert.ok(!notReady.commands.some(({ args }) => args.includes('reverse_proxy_start')));
+});
+
+test('production startup reports warmup failures before reporting success', () => {
+  for (const [target, service] of [
+    ['prod_local_start', 'Sigrun'],
+    ['prod_local_start', 'Bragi'],
+    ['prod_restart', 'Sigrun'],
+    ['prod_restart', 'Bragi'],
+  ]) {
+    const result = run(target, { failure: `-C ${service} container_warmup` });
+    assert.notEqual(result.status, 0);
+    assert.ok(result.commands.some(({ args }) => args.includes('container_warmup')));
+    assert.ok(!result.commands.some(({ args }) => args.includes('reverse_proxy_start')));
+    assert.doesNotMatch(result.stdout, /Local production services are ready/);
+    if (service === 'Sigrun') {
+      assert.ok(!result.commands.some(({ args }) => args.includes('Bragi')));
+    }
+  }
 });
 
 test('local startup falls back to a complete latest stack and pulls missing GHCR images', () => {
@@ -369,6 +390,18 @@ for (const target of ['prod_start', 'prod_restart']) {
       'dependencies-init',
     ]);
     assert.ok(result.commands[1].args.includes('up'));
+    if (target === 'prod_restart') {
+      const readiness = result.commands.filter(({ args }) => args.includes('ps'));
+      assert.equal(readiness.length, 11);
+      assert.ok(readiness.every(({ env }) => env === '.env.production'));
+      assert.deepEqual(result.commands.slice(-2).map(({ args }) => args), [
+        ['make', '-C', 'Sigrun', 'container_warmup'],
+        ['make', '-C', 'Bragi', 'container_warmup'],
+      ]);
+      const notReady = run(target, { health: 'unhealthy', startupFailed: true });
+      assert.notEqual(notReady.status, 0);
+      assert.ok(!notReady.commands.some(({ args }) => args.includes('container_warmup')));
+    }
     const failed = run(target, { failure: 'run --rm --no-deps dependencies-init' });
     assert.notEqual(failed.status, 0);
     assert.equal(failed.commands.length, 1);
