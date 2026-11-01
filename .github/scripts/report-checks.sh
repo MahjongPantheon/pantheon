@@ -3,8 +3,7 @@
 set -uo pipefail
 
 report_dir=${CI_REPORT_DIR:-.ci-results}
-root_log_dir=${ROOT_LOG_DIR:-tmp}
-make_command=${MAKE_COMMAND:-make}
+pantheon_command=${PANTHEON_COMMAND:-bin/pantheon}
 coverage_root=${COVERAGE_ROOT_DIR:-.}
 services=(Bragi Forseti Frey Gullveig Hermod Hugin Meili Mimir Sigrun Skirnir Tyr)
 test_services=(Tyr Frey Mimir Gullveig Meili Hermod Hugin Forseti Sigrun Bragi)
@@ -12,13 +11,9 @@ mkdir -p "$report_dir"
 failed=0
 
 run_check() {
-  local service=$1 check=$2 target log root_log result coverage_summary
+  local service=$1 check=$2 target log result coverage_summary
   target="${service,,}_$check"
   log="$report_dir/$target.log"
-  root_log="$root_log_dir/$target.log"
-  # Frey's root lint target uses this older log name.
-  if [[ $target == frey_oxlint ]]; then root_log="$root_log_dir/frey_lint.log"; fi
-  if [[ $check != test ]]; then rm -f "$root_log"; fi
   coverage_summary="$coverage_root/$service/coverage/coverage-summary.json"
   # Never reuse coverage from an earlier run if this suite fails to start.
   if [[ $check == test ]]; then
@@ -26,9 +21,8 @@ run_check() {
   fi
   echo "Running $target"
   result='✅ Passed'
-  if ! "$make_command" "$target" > "$log" 2>&1; then result='❌ Failed'; fi
-  if [[ $check != test && -f $root_log ]]; then cat "$root_log" >> "$log"; fi
-  # Some root wrappers return success when their container is absent.
+  if ! "$pantheon_command" task "$service" "$check" > "$log" 2>&1; then result='❌ Failed'; fi
+  # Also recognize explicit runtime errors in provider output.
   if grep -Eiq 'container.*(not running|is missing|not found)|no such container' "$log"; then
     result='❌ Failed'
   fi

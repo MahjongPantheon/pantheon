@@ -14,5 +14,5 @@ mkdir -p /home/user/.composer-cache
 chown user /home/user/.composer-cache
 
 echo 'Starting NGINX';
-nginx -g "daemon off;"
+exec supervisord -c /etc/supervisord.conf
 

@@ -7,7 +7,13 @@ import { test } from 'node:test';
 
 function prepare(
   service,
-  { mode = 'production', failInstall = false, failMigration = false } = {}
+  {
+    mode = 'production',
+    failInstall = false,
+    failMigration = false,
+    prepareDevelopment = false,
+    watch = false,
+  } = {}
 ) {
   const root = mkdtempSync(join(tmpdir(), 'pantheon-dependencies-'));
   try {
@@ -23,13 +29,19 @@ function prepare(
       mkdirSync(join(root, directory, 'node_modules/.pnpm'), { recursive: true });
       writeFileSync(join(root, directory, 'node_modules/.pnpm/retained'), 'package');
     }
-    for (const file of ['prepare.sh', 'install-dependencies.sh']) {
+    for (const file of [
+      'prepare.sh',
+      'install-dependencies.sh',
+      'prepare-development.sh',
+      'install-development.sh',
+    ]) {
       writeFileSync(
         join(runtime, file),
         readFileSync(new URL(file, import.meta.url), 'utf8')
           .replaceAll('/var/www/html', root)
           .replaceAll('/run/pantheon-ready', ready)
           .replaceAll('/run/pantheon-startup-failed', failed)
+          .replaceAll('/etc/supervisor.d', join(root, 'supervisor'))
       );
     }
     const log = join(root, 'commands.jsonl');
@@ -51,10 +63,10 @@ if (args[0] === 'pnpm' && args[1] === 'install') {
     process.exit(23);
   }
 }
-if (process.env.FAIL_MIGRATION === 'true' && args.some(arg => arg === 'migration:up' || arg.endsWith('/migrate.ts') || arg === 'migrate.js')) process.exit(24);
+if (process.env.FAIL_MIGRATION === 'true' && args.some(arg => arg === 'migration:up' || arg.endsWith('/migrate.ts') || arg === 'migrate.js' || arg === 'migrate')) process.exit(24);
 `
     );
-    for (const command of ['chown', 'pnpm', 'node']) {
+    for (const command of ['chown', 'pnpm', 'node', 'bash']) {
       writeFileSync(
         join(bin, command),
         `#!/bin/sh\nexec '${process.execPath}' '${stub}' ${command} "$@"\n`,
@@ -68,6 +80,8 @@ if (process.env.FAIL_MIGRATION === 'true' && args.some(arg => arg === 'migration
         ...process.env,
         PATH: `${bin}:${process.env.PATH}`,
         PANTHEON_MODE: mode,
+        PANTHEON_PREPARE_DEVELOPMENT: String(prepareDevelopment),
+        PANTHEON_DEV_WATCH: String(watch),
         COMMAND_LOG: log,
         FAIL_INSTALL: String(failInstall),
         FAIL_MIGRATION: String(failMigration),
@@ -89,6 +103,9 @@ if (process.env.FAIL_MIGRATION === 'true' && args.some(arg => arg === 'migration
       virtualStores,
       ready: existsSync(ready),
       failed: existsSync(failed),
+      watcher: existsSync(join(root, 'supervisor/development.conf'))
+        ? readFileSync(join(root, 'supervisor/development.conf'), 'utf8')
+        : '',
     };
   } finally {
     rmSync(root, { recursive: true, force: true });
@@ -192,4 +209,47 @@ test('development startup leaves dependency installation and migrations to devel
   const { status, commands } = prepare('Mimir', { mode: 'development' });
   assert.equal(status, 0);
   assert.deepEqual(commands, []);
+});
+
+test('managed development installs locked source dependencies and migrates before starting its watcher', () => {
+  const result = prepare('Frey', { mode: 'development', prepareDevelopment: true, watch: true });
+  assert.equal(result.status, 0, result.stderr);
+  assert.equal(result.ready, true);
+  const installs = result.commands.filter(
+    ({ args }) => args[0] === 'pnpm' && args[1] === 'install'
+  );
+  assert.equal(installs.length, 1);
+  assert.ok(installs[0].args.includes('--frozen-lockfile'));
+  assert.ok(installs[0].args.includes('--prod=false'));
+  const migration = result.commands.findIndex(({ args }) =>
+    args.includes('app/database/migrate.ts')
+  );
+  assert.ok(migration > result.commands.indexOf(installs[0]));
+  assert.match(result.watcher, /command = su-exec user bash .*\/Frey\/tasks.sh dev/);
+  assert.match(result.watcher, /stopasgroup = true/);
+  assert.match(result.watcher, /killasgroup = true/);
+  assert.match(result.watcher, /stdout_logfile = \/dev\/stdout/);
+});
+
+for (const failure of ['failInstall', 'failMigration']) {
+  test(`development never launches watchers after ${failure}`, () => {
+    const result = prepare('Frey', {
+      mode: 'development',
+      prepareDevelopment: true,
+      watch: true,
+      [failure]: true,
+    });
+    assert.notEqual(result.status, 0);
+    assert.equal(result.ready, false);
+    assert.equal(result.failed, true);
+    assert.equal(result.watcher, '');
+  });
+}
+
+test('source tooling prepares dependencies and migrations without launching development watchers', () => {
+  const result = prepare('Hugin', { mode: 'development', prepareDevelopment: true });
+  assert.equal(result.status, 0, result.stderr);
+  assert.equal(result.ready, true);
+  assert.equal(result.watcher, '');
+  assert.ok(result.commands.some(({ args }) => args.includes('src/migrate.ts')));
 });

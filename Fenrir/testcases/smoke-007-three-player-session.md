@@ -11,4 +11,4 @@ and the round labels East 1 through South 3. After South 3, verify the session
 finishes and displays exactly three results, each with 35000 points and zero
 rating change because all scores are tied.
 
-Run against the development stack with `make e2e_dev` from the repository root.
+Run against the development stack with `bin/pantheon e2e dev` from the repository root.

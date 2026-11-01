@@ -27,7 +27,7 @@ async function timeout(ms: number) {
 
 // Note: tests hardly rely on database contents created by TestSeeder
 // Make sure to run TestSeeder before running these tests manually
-// On CI and when using `make test` from project root, TestSeeder is automatically run on fresh database
+// On CI and when using `bin/pantheon test` from project root, TestSeeder is automatically run on fresh database
 
 describe('Mimir Twirp API', () => {
   const mimirClient = new MimirTest();

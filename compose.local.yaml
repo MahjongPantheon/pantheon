@@ -1,0 +1,12 @@
+# Local hostname proxy, shared by development and local production.
+services:
+  reverse-proxy:
+    image: pantheon-reverse-proxy
+    build:
+      context: ./Common/ReverseProxy
+    container_name: pantheon-reverse-proxy-container
+    ports:
+    - 80:80
+    networks:
+    - internal_net
+    restart: unless-stopped

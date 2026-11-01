@@ -33,4 +33,4 @@ These descriptions cover all existing tests; improvements and coverage limits ar
 
 For implementation, follow the Fenrir guidance in [AGENTS.md](../../AGENTS.md). Assert every documented expected result and keep the description aligned with the implementation. Use setup helpers for unrelated prerequisites so cases remain independent.
 
-Run flows from the repository root with `make e2e_dev` against the development stack. See the [root README](../../README.md) for environment setup and the production-build e2e flow. Development e2e runs do not cover SSR.
+Run flows from the repository root with `bin/pantheon e2e dev` against the development stack. See the [root README](../../README.md) for environment setup and the production-build e2e flow. Development e2e runs do not cover SSR.

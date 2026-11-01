@@ -26,7 +26,7 @@ value unique across the frontend services.
 
 ### Unit tests
 
-Unit test coverage (`make tyr_test` from the repository root) must reach
+Unit test coverage (`bin/pantheon test tyr` from the repository root) must reach
 at least 85% for lines, statements, functions, and branches. Reports are written
 to `Tyr/coverage/`.
 

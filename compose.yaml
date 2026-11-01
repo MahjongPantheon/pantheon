@@ -1,0 +1,389 @@
+# Shared topology and persistent storage; select exactly one mode overlay.
+name: pantheon
+volumes:
+  datavolume02: {}
+  backupvolume01: {}
+  configvolume01: {}
+  gullveigstorage01: {}
+  grafanastorage01: {}
+  pfspool01: null
+  pfetc01: null
+  prometheusdata: null
+  pgadmindata: null
+  pnpmstore01: {}
+networks:
+  internal_net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+      - subnet: 192.168.34.0/24
+        gateway: 192.168.34.1
+    attachable: true
+services:
+  hermod.pantheon.internal:
+    cgroup: host
+    cap_add:
+    - ALL
+    image: ghcr.io/mahjongpantheon/pantheon-hermod-${CONTAINER_ARCH:-amd64}:${IMAGE_TAG:-latest}
+    hostname: ${ALLOWED_SENDER_DOMAINS:-pantheon-hermod.local}
+    ports:
+    - 127.0.0.1:4007:80
+    volumes:
+    - pfspool01:/var/spool/postfix
+    - pfetc01:/etc/postfix
+    - ./Hermod/opendkim_keys:/etc/opendkim/keys
+    networks:
+      internal_net:
+        aliases:
+        - hermod.pantheon.local
+        - hermod.pantheon.internal
+  skirnir.pantheon.internal:
+    cgroup: host
+    cap_add:
+    - ALL
+    image: ghcr.io/mahjongpantheon/pantheon-skirnir-${CONTAINER_ARCH:-amd64}:${IMAGE_TAG:-latest}
+    ports:
+    - 127.0.0.1:4010:80
+    networks:
+      internal_net:
+        aliases:
+        - skirnir.pantheon.local
+        - skirnir.pantheon.internal
+  db.pantheon.internal:
+    cgroup: host
+    cap_add:
+    - ALL
+    image: ghcr.io/mahjongpantheon/pantheon-database-${CONTAINER_ARCH:-amd64}:${IMAGE_TAG:-latest}
+    ports:
+    - 127.0.0.1:5532:5432
+    volumes:
+    - datavolume02:/var/lib/postgresql/data
+    - configvolume01:/var/lib/postgresql/.ssh
+    - backupvolume01:/var/lib/postgresql/backup
+    networks:
+      internal_net:
+        aliases:
+        - db.pantheon.local
+        - db.pantheon.internal
+    healthcheck:
+      test:
+      - CMD-SHELL
+      - pg_isready -h 127.0.0.1 -U postgres
+      interval: 5s
+      timeout: 5s
+      retries: 30
+    env_file:
+    - ./Env/${ENV_FILENAME:-.env.production}
+  redis.pantheon.internal:
+    image: ghcr.io/mahjongpantheon/pantheon-redis-${CONTAINER_ARCH:-amd64}:${IMAGE_TAG:-latest}
+    ports:
+    - 127.0.0.1:6379:6379
+    networks:
+      internal_net:
+        aliases:
+        - redis.pantheon.local
+        - redis.pantheon.internal
+    env_file:
+    - ./Env/${ENV_FILENAME:-.env.production}
+  frey.pantheon.internal:
+    cgroup: host
+    cap_add:
+    - ALL
+    image: ghcr.io/mahjongpantheon/pantheon-frey-${CONTAINER_ARCH:-amd64}:${IMAGE_TAG:-latest}
+    ports:
+    - 127.0.0.1:4004:80
+    depends_on:
+      db.pantheon.internal:
+        condition: service_healthy
+      hermod.pantheon.internal:
+        condition: service_started
+    networks:
+      internal_net:
+        aliases:
+        - frey.pantheon.local
+        - frey.pantheon.internal
+  mimir.pantheon.internal:
+    cgroup: host
+    cap_add:
+    - ALL
+    image: ghcr.io/mahjongpantheon/pantheon-mimir-${CONTAINER_ARCH:-amd64}:${IMAGE_TAG:-latest}
+    ports:
+    - 127.0.0.1:4001:80
+    depends_on:
+      frey.pantheon.internal:
+        condition: service_started
+      db.pantheon.internal:
+        condition: service_healthy
+      skirnir.pantheon.internal:
+        condition: service_started
+    networks:
+      internal_net:
+        aliases:
+        - mimir.pantheon.local
+        - mimir.pantheon.internal
+  pgadmin.pantheon.internal:
+    image: docker.io/dpage/pgadmin4:8.11
+    cgroup: host
+    cap_add:
+    - ALL
+    ports:
+    - 127.0.0.1:5632:80
+    environment:
+      PGADMIN_DEFAULT_EMAIL: dev@pantheon.dev
+      PGADMIN_DEFAULT_PASSWORD: password
+      PGADMIN_CONFIG_WTF_CSRF_ENABLED: 'False'
+      PGADMIN_CONFIG_ENHANCED_COOKIE_PROTECTION: 'False'
+    volumes:
+    - pgadmindata:/var/lib/pgadmin
+    networks:
+      internal_net:
+        aliases:
+        - pga.pantheon.local
+        - pga.pantheon.internal
+    profiles:
+    - tools
+  tyr.pantheon.internal:
+    cgroup: host
+    cap_add:
+    - ALL
+    image: ghcr.io/mahjongpantheon/pantheon-tyr-${CONTAINER_ARCH:-amd64}:${IMAGE_TAG:-latest}
+    ports:
+    - 127.0.0.1:4003:80
+    depends_on:
+      frey.pantheon.internal:
+        condition: service_started
+      mimir.pantheon.internal:
+        condition: service_started
+    networks:
+      internal_net:
+        aliases:
+        - tyr.pantheon.local
+        - tyr.pantheon.internal
+  forseti.pantheon.internal:
+    cgroup: host
+    cap_add:
+    - ALL
+    image: ghcr.io/mahjongpantheon/pantheon-forseti-${CONTAINER_ARCH:-amd64}:${IMAGE_TAG:-latest}
+    ports:
+    - 127.0.0.1:4005:80
+    depends_on:
+      frey.pantheon.internal:
+        condition: service_started
+      mimir.pantheon.internal:
+        condition: service_started
+    networks:
+      internal_net:
+        aliases:
+        - forseti.pantheon.local
+        - forseti.pantheon.internal
+  sigrun.pantheon.internal:
+    cgroup: host
+    cap_add:
+    - ALL
+    image: ghcr.io/mahjongpantheon/pantheon-sigrun-${CONTAINER_ARCH:-amd64}:${IMAGE_TAG:-latest}
+    ports:
+    - 127.0.0.1:4002:80
+    depends_on:
+      frey.pantheon.internal:
+        condition: service_started
+      mimir.pantheon.internal:
+        condition: service_started
+    networks:
+      internal_net:
+        aliases:
+        - sigrun.pantheon.local
+        - sigrun.pantheon.internal
+  gullveig.pantheon.internal:
+    cgroup: host
+    cap_add:
+    - ALL
+    image: ghcr.io/mahjongpantheon/pantheon-gullveig-${CONTAINER_ARCH:-amd64}:${IMAGE_TAG:-latest}
+    ports:
+    - 127.0.0.1:4009:80
+    volumes:
+    - gullveigstorage01:/var/storage
+    networks:
+      internal_net:
+        aliases:
+        - gullveig.pantheon.local
+        - gullveig.pantheon.internal
+  meili.pantheon.internal:
+    cgroup: host
+    cap_add:
+    - ALL
+    image: ghcr.io/mahjongpantheon/pantheon-meili-${CONTAINER_ARCH:-amd64}:${IMAGE_TAG:-latest}
+    ports:
+    - 127.0.0.1:4012:80
+    networks:
+      internal_net:
+        aliases:
+        - meili.pantheon.local
+        - meili.pantheon.internal
+  bragi.pantheon.internal:
+    cgroup: host
+    cap_add:
+    - ALL
+    image: ghcr.io/mahjongpantheon/pantheon-bragi-${CONTAINER_ARCH:-amd64}:${IMAGE_TAG:-latest}
+    ports:
+    - 127.0.0.1:4006:80
+    networks:
+      internal_net:
+        aliases:
+        - bragi.pantheon.local
+        - bragi.pantheon.internal
+  hugin.pantheon.internal:
+    cgroup: host
+    cap_add:
+    - ALL
+    image: ghcr.io/mahjongpantheon/pantheon-hugin-${CONTAINER_ARCH:-amd64}:${IMAGE_TAG:-latest}
+    ports:
+    - 127.0.0.1:4008:80
+    depends_on:
+      redis.pantheon.internal:
+        condition: service_started
+      db.pantheon.internal:
+        condition: service_healthy
+      hermod.pantheon.internal:
+        condition: service_started
+      tyr.pantheon.internal:
+        condition: service_started
+      forseti.pantheon.internal:
+        condition: service_started
+      mimir.pantheon.internal:
+        condition: service_started
+      frey.pantheon.internal:
+        condition: service_started
+      gullveig.pantheon.internal:
+        condition: service_started
+      sigrun.pantheon.internal:
+        condition: service_started
+      bragi.pantheon.internal:
+        condition: service_started
+      skirnir.pantheon.internal:
+        condition: service_started
+    volumes:
+    - prometheusdata:/var/lib/prometheus
+    networks:
+      internal_net:
+        aliases:
+        - hugin.pantheon.local
+        - munin.pantheon.local
+        - hugin.pantheon.internal
+        - munin.pantheon.internal
+  fenrir.pantheon.internal:
+    cgroup: host
+    cap_add:
+    - ALL
+    image: ghcr.io/mahjongpantheon/pantheon-fenrir-${CONTAINER_ARCH:-amd64}:${FENRIR_IMAGE_TAG:-latest}
+    profiles:
+    - e2e
+    environment:
+      PNPM_HOME: /.pnpm
+      npm_config_store_dir: /.pnpm
+    ports:
+    - 127.0.0.1:4011:80
+    depends_on:
+    - db.pantheon.internal
+    - hermod.pantheon.internal
+    - tyr.pantheon.internal
+    - forseti.pantheon.internal
+    - mimir.pantheon.internal
+    - frey.pantheon.internal
+    - sigrun.pantheon.internal
+    - gullveig.pantheon.internal
+    - skirnir.pantheon.internal
+    volumes:
+    - ./Fenrir:/var/www/html/Fenrir
+    - ./Common:/var/www/html/Common
+    - pnpmstore01:/.pnpm
+    networks:
+      internal_net:
+        aliases:
+        - fenrir.pantheon.local
+        - fenrir.pantheon.internal
+    build:
+      context: ./Fenrir
+      args:
+        CONTAINER_ARCH: ${CONTAINER_ARCH:-amd64}
+    env_file:
+    - ./Env/${ENV_FILENAME:-.env.production}
+  cadvisor.pantheon.internal:
+    image: gcr.io/cadvisor/cadvisor:latest
+    cgroup: host
+    cap_add:
+    - ALL
+    ports:
+    - 127.0.0.1:8080:8080
+    volumes:
+    - /:/rootfs:ro
+    - /var/run:/var/run:rw
+    - /sys:/sys:ro
+    - /var/lib/docker/:/var/lib/docker:ro
+    - /dev/disk/:/dev/disk:ro
+    - /etc/machine-id:/etc/machine-id:ro
+    - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    - /var/lib/containers:/var/lib/containers:ro
+    - /var/lib/dbus/machine-id:/var/lib/dbus/machine-id:ro
+    networks:
+      internal_net:
+        aliases:
+        - cadvisor.pantheon.local
+        - cadvisor.pantheon.internal
+    profiles:
+    - monitoring
+  dbwatcher.pantheon.internal:
+    image: quay.io/prometheuscommunity/postgres-exporter:latest
+    cgroup: host
+    cap_add:
+    - ALL
+    user: root
+    ports:
+    - 127.0.0.1:9187:9187
+    environment:
+    - DATA_SOURCE_URI=db.pantheon.internal/postgres?sslmode=disable
+    - DATA_SOURCE_USER=postgres
+    - DATA_SOURCE_PASS=pgpass
+    depends_on:
+    - db.pantheon.internal
+    networks:
+      internal_net:
+        aliases:
+        - dbwatcher.pantheon.local
+        - dbwatcher.pantheon.internal
+    profiles:
+    - monitoring
+  grafana.pantheon.internal:
+    image: docker.io/grafana/grafana-oss:latest
+    cgroup: host
+    cap_add:
+    - ALL
+    restart: unless-stopped
+    ports:
+    - 127.0.0.1:3000:3000
+    volumes:
+    - grafanastorage01:/var/lib/grafana
+    networks:
+      internal_net:
+        aliases:
+        - grafana.pantheon.local
+        - grafana.pantheon.internal
+    profiles:
+    - monitoring
+  dozzle.pantheon.internal:
+    image: amir20/dozzle:latest
+    cgroup: host
+    cap_add:
+    - ALL
+    restart: unless-stopped
+    ports:
+    - 127.0.0.1:8050:8080
+    volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      internal_net:
+        aliases:
+        - dozzle.pantheon.local
+        - dozzle.pantheon.internal
+    profiles:
+    - monitoring

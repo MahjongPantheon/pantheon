@@ -23,7 +23,7 @@ We needed a simple but stateful API for gaming assistance in aspects like:
 We accept any help with developing, testing and improving our system, so please feel free to create issues or send
 pull requests for missing functionality.
 
-Run `make container_test` from this directory to seed the test database and run the tests with
+Run `bin/pantheon test container` from this directory to seed the test database and run the tests with
 combined coverage from Vitest and the separate Twirp test server. The server captures its executed sources and flushes its V8 coverage
 before teardown. Both processes use Vitest's V8-to-Istanbul AST converter and source maps;
 nyc merges their source coverage. Generated tsx module helpers are excluded, and
@@ -108,9 +108,9 @@ processes queued jobs in its configured database).
 
 ### Development sample data
 
-From the repository root, run `make seed` for a 12-player club rating (36 sessions),
-`make seed_tournament` for a 16-player tournament (16 sessions), or
-`make seed_bigevent` for a 128-player tournament (256 sessions).
+From the repository root, run `bin/pantheon seed` for a 12-player club rating (36 sessions),
+`bin/pantheon seed tournament` for a 16-player tournament (16 sessions), or
+`bin/pantheon seed big-event` for a 128-player tournament (256 sessions).
 These commands require running development Mimir, Frey, and database containers.
 They reject production and test environments and ask you to type `yes` before
 changing data. They delete **all data in the configured Mimir database**, recreate
@@ -135,9 +135,9 @@ achievements are populated by the usual cron jobs, as with TestSeeder.
 Sample players also use password `123456`; their emails and IDs are recorded
 in `/tmp/dump_users.txt` inside the Frey container. The command prints the event URL.
 
-The corresponding `container_seed`, `container_seed_tournament`, and
-`container_seed_bigevent` targets in Mimir also ask for confirmation, but expect
-that `make bootstrap_admin` has already been run from the root. These commands
+The corresponding `bin/pantheon task Mimir seed`, `seed-tournament`, and
+`seed-bigevent` commands also ask for confirmation, but expect
+that `bin/pantheon bootstrap-admin` has already been run from the root. These commands
 are for disposable development databases only. A failed run can leave partial
 sample data in Frey; rerun the command to reset Mimir and create fresh samples.
 

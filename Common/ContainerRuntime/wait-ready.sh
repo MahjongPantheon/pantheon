@@ -31,13 +31,13 @@ while :; do
     if [ -z "$id" ]; then
       echo "$service: production container is missing" >&2; exit 1
     fi
-    # CONTAINER_COMMAND follows the root Makefile convention: executable plus arguments.
+    # CONTAINER_COMMAND follows the runner convention: executable plus arguments.
     status=$($runtime inspect --format '{{.State.Status}}:{{if .State.Health}}{{.State.Health.Status}}{{else}}missing{{end}}' "$id")
     case "$status" in
       running:healthy) ;;
       running:starting|running:unhealthy)
         phase=$("$@" exec -T "$service.pantheon.internal" node /var/www/html/Common/ContainerRuntime/startup-status.mjs "$service") || {
-          echo "$service: startup status is unavailable; inspect logs or rebuild with make prod_local_build" >&2
+          echo "$service: startup status is unavailable; inspect logs or rebuild with bin/pantheon build-images" >&2
           exit 1
         }
         case "$phase" in
@@ -50,12 +50,12 @@ while :; do
         esac
         waiting="$waiting $service"
         ;;
-      *:missing) echo "$service: image has no production healthcheck; rebuild with make prod_local_build" >&2; exit 1 ;;
+      *:missing) echo "$service: image has no production healthcheck; rebuild with bin/pantheon build-images" >&2; exit 1 ;;
       *) echo "$service: container startup failed ($status); inspect production Compose logs" >&2; exit 1 ;;
     esac
   done
   if [ -z "$waiting" ]; then
-    echo 'All production applications are healthy (dependencies installed, migrations complete, supervised services running, workers listening).'
+    echo "All ${PANTHEON_STACK_MODE:-image} applications are healthy (dependencies installed, migrations complete, supervised services running, workers listening)."
     exit 0
   fi
   sleep 2

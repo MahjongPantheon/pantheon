@@ -21,22 +21,22 @@ on changes under `Fenrir/` on `master`, or manually through **Run workflow**.
 With the development stack and Fenrir container running, execute from the repository root:
 
 ```sh
-make e2e_ui
+bin/pantheon e2e ui
 ```
 
 Open [http://localhost:4011](http://localhost:4011) in your host browser and keep the command running. Use the localhost URL so browser features such as service workers have a secure context. No custom hostname, hosts-file entry, HTTPS setup, or external reverse proxy is needed.
 
 Select a test (for example, filter by `SMOKE-004`), press its run button, and inspect the action timeline, DOM snapshots, source, network requests, and errors. Enable the eye icon to rerun tests when their source changes. Tests and their browsers execute inside Fenrir, so the host browser does not need to resolve the service domains. UI runs use one worker and no retries. They create test data just like normal E2E runs.
 
-Press Ctrl+C in the terminal to stop the UI server. You can also use `make -C Fenrir container_ui` from the host, or `make ui` from `/var/www/html/Fenrir` inside the container. The UI uses port 4017 inside Fenrir and the Nginx/WebSocket proxy to container port 80, published at host `127.0.0.1:4011`. The target copies the mounted proxy configuration into Ubuntu Nginx's `conf.d` directory, validates it, and reloads Nginx before starting Playwright. This also fixes existing containers whose image copied the configuration into the unused `http.d` directory. The Compose mapping publishes container port 80 at host port 4011; recreate an existing Fenrir container if it still publishes the previous host port. Run only one UI server at a time; no desktop display or X server is required.
+Press Ctrl+C in the terminal to stop the UI server. You can also use `bin/pantheon task Fenrir ui` from the host, or `bash tasks.sh ui` from `/var/www/html/Fenrir` inside the container. The UI uses port 4017 inside Fenrir and the Nginx/WebSocket proxy to container port 80, published at host `127.0.0.1:4011`. The target copies the mounted proxy configuration into Ubuntu Nginx's `conf.d` directory, validates it, and reloads Nginx before starting Playwright. This also fixes existing containers whose image copied the configuration into the unused `http.d` directory. The Compose mapping publishes container port 80 at host port 4011; recreate an existing Fenrir container if it still publishes the previous host port. Run only one UI server at a time; no desktop display or X server is required.
 
 If Fenrir is not running, start only its container against the already-running development stack:
 
 ```sh
-ENV_FILENAME=.env.e2e docker compose -f docker-compose-amd64.yml --profile e2e up -d --no-deps fenrir.pantheon.internal
+ENV_FILENAME=.env.development bin/pantheon compose --profile e2e up -d --no-deps fenrir.pantheon.internal
 ```
 
-Use `docker-compose-arm64.yml` on ARM. For missing dependencies or browser executables, run `make -C Fenrir container_deps`. Starting UI mode does not rebuild services or automatically run the test suite.
+Architecture is detected automatically. For missing dependencies or browser executables, run `bin/pantheon task Fenrir deps`. Starting UI mode does not rebuild services or automatically run the test suite.
 
 See [Playwright's UI Mode documentation](https://playwright.dev/docs/test-ui-mode) for the debugging controls.
 
@@ -48,7 +48,7 @@ Alternatively, provide both `E2E_SUPERADMIN_EMAIL` and `E2E_SUPERADMIN_PASSWORD`
 
 The CI production-build flow uses `.pantheon.internal` hosts from `Env/.env.e2e`. Its workflow bootstraps the default administrator in the fresh CI database, writes its fixture credentials to the ignored local file, and selects the guarded API path. Browser actions still use newly created ordinary accounts. Production server builds receive the e2e configuration as their runtime `.env.production` file. Development runs use `Env/.env.development` and the already-running `.pantheon.local` services instead.
 
-Follow the root README's development `make e2e_dev` flow. To run only this case inside the running Fenrir container, enter it with `make -C Fenrir shell`, then run from `/var/www/html/Fenrir`:
+Follow the root README's development `bin/pantheon e2e dev` flow. To run only this case inside the running Fenrir container, enter it with `bin/pantheon shell Fenrir`, then run from `/var/www/html/Fenrir`:
 
 ```sh
 CI=true ./node_modules/.bin/playwright test tests/events.spec.ts --grep SMOKE-004

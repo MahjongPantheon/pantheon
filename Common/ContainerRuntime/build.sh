@@ -7,8 +7,8 @@ cd "/var/www/html/$service"
 # Build tools are needed even when the final worker uses NODE_ENV=production.
 pnpm install --frozen-lockfile
 mkdir -p "../$service-dist"
-PANTHEON_IMAGE_BUILD=1 NODE_ENV=production make build
-make prebuild
+PANTHEON_IMAGE_BUILD=1 NODE_ENV=production bash "/var/www/html/$service/tasks.sh" build
+bash "/var/www/html/$service/tasks.sh" prebuild
 # Remove build dependencies in the same RUN layer that installed them. Runtime
 # dependencies are installed into volumes by prepare.sh on every production start.
 rm -rf "/var/www/html/$service/node_modules" /var/www/html/Common/tsclients/node_modules

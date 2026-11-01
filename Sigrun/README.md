@@ -17,7 +17,7 @@ Sigrun provides a convenient view of games and player statistics for japanese (r
 
 ### Developer information
 
-Unit test coverage (`make sigrun_test` from the repository root) must reach
+Unit test coverage (`bin/pantheon test sigrun` from the repository root) must reach
 at least 85% for lines, statements, functions, and branches. Reports are written
 to `Sigrun/coverage/`.
 
@@ -92,7 +92,7 @@ Errors also return JSON, shaped as
 | 502         | `unavailable`        | Mimir failed, returned invalid JSON/data, or exceeded the 10-second request budget. Retry later. |
 
 The route is implemented in TypeScript in `app/services/gameApi.ts` and covered by
-`app/services/gameApi.test.ts`. The normal `make build` compiles it into
+`app/services/gameApi.test.ts`. The normal `bin/pantheon task Sigrun build` compiles it into
 `dist/server/gameApi.js`; the production server loads that middleware on the first
 API request. Vite loads the same TypeScript source during development.
 

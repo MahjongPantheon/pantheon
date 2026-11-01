@@ -13,7 +13,6 @@ RUN curl -sL https://deb.nodesource.com/setup_20.x | bash
 
 RUN apt-get update
 RUN apt-get install -y \
-    make \
     procps \
     dos2unix \
     net-tools \

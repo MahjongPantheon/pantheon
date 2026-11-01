@@ -1,0 +1,430 @@
+# Explicit mounted-source production compilation; never combined with image mode.
+services:
+  development-init:
+    image: ghcr.io/mahjongpantheon/pantheon-tyr-${CONTAINER_ARCH:-amd64}:${DEV_IMAGE_TAG:-development}
+    build:
+      context: .
+      dockerfile: Tyr/Dockerfile
+      target: development
+      args:
+        CONTAINER_ARCH: ${CONTAINER_ARCH:-amd64}
+    entrypoint:
+    - /bin/sh
+    - /var/www/html/Common/ContainerRuntime/development-init.sh
+    volumes:
+    - ./Common:/var/www/html/Common
+    - pnpmstore01:/.pnpm
+    restart: 'no'
+  tyr.pantheon.internal:
+    image: ghcr.io/mahjongpantheon/pantheon-tyr-${CONTAINER_ARCH:-amd64}:${DEV_IMAGE_TAG:-development}
+    build:
+      context: .
+      dockerfile: Tyr/Dockerfile
+      target: development
+      args:
+        CONTAINER_ARCH: ${CONTAINER_ARCH:-amd64}
+    env_file:
+    - ./Env/${ENV_FILENAME:-.env.production}
+    environment:
+      PANTHEON_MODE: ${SOURCE_RUNTIME_MODE:-development}
+      PANTHEON_PRODUCTION_WORKERS: ${PANTHEON_PRODUCTION_WORKERS:-false}
+      PNPM_HOME: /.pnpm
+      npm_config_store_dir: /.pnpm
+      NODE_ENV: ${SOURCE_NODE_ENV:-development}
+      PANTHEON_PREPARE_DEVELOPMENT: 'true'
+      PANTHEON_DEV_WATCH: 'false'
+    volumes:
+    - ./Tyr:/var/www/html/Tyr
+    - ./Tyr-dist:/var/www/html/Tyr-dist
+    - ./Common:/var/www/html/Common
+    - pnpmstore01:/.pnpm
+    depends_on:
+      development-init:
+        condition: service_completed_successfully
+    labels:
+      io.pantheon.mode: source
+    healthcheck:
+      test:
+      - CMD
+      - node
+      - /var/www/html/Common/ContainerRuntime/healthcheck.mjs
+      - Tyr
+      interval: 5s
+      timeout: 3s
+      retries: 3
+  forseti.pantheon.internal:
+    image: ghcr.io/mahjongpantheon/pantheon-forseti-${CONTAINER_ARCH:-amd64}:${DEV_IMAGE_TAG:-development}
+    build:
+      context: .
+      dockerfile: Forseti/Dockerfile
+      target: development
+      args:
+        CONTAINER_ARCH: ${CONTAINER_ARCH:-amd64}
+    env_file:
+    - ./Env/${ENV_FILENAME:-.env.production}
+    environment:
+      PANTHEON_MODE: ${SOURCE_RUNTIME_MODE:-development}
+      PANTHEON_PRODUCTION_WORKERS: ${PANTHEON_PRODUCTION_WORKERS:-false}
+      PNPM_HOME: /.pnpm
+      npm_config_store_dir: /.pnpm
+      NODE_ENV: ${SOURCE_NODE_ENV:-development}
+      PANTHEON_PREPARE_DEVELOPMENT: 'true'
+      PANTHEON_DEV_WATCH: 'false'
+    volumes:
+    - ./Forseti:/var/www/html/Forseti
+    - ./Forseti-dist:/var/www/html/Forseti-dist
+    - ./Common:/var/www/html/Common
+    - pnpmstore01:/.pnpm
+    depends_on:
+      development-init:
+        condition: service_completed_successfully
+    labels:
+      io.pantheon.mode: source
+    healthcheck:
+      test:
+      - CMD
+      - node
+      - /var/www/html/Common/ContainerRuntime/healthcheck.mjs
+      - Forseti
+      interval: 5s
+      timeout: 3s
+      retries: 3
+  sigrun.pantheon.internal:
+    image: ghcr.io/mahjongpantheon/pantheon-sigrun-${CONTAINER_ARCH:-amd64}:${DEV_IMAGE_TAG:-development}
+    build:
+      context: .
+      dockerfile: Sigrun/Dockerfile
+      target: development
+      args:
+        CONTAINER_ARCH: ${CONTAINER_ARCH:-amd64}
+    env_file:
+    - ./Env/${ENV_FILENAME:-.env.production}
+    environment:
+      PANTHEON_MODE: ${SOURCE_RUNTIME_MODE:-development}
+      PANTHEON_PRODUCTION_WORKERS: ${PANTHEON_PRODUCTION_WORKERS:-false}
+      PNPM_HOME: /.pnpm
+      npm_config_store_dir: /.pnpm
+      NODE_ENV: ${SOURCE_NODE_ENV:-development}
+      PANTHEON_PREPARE_DEVELOPMENT: 'true'
+      PANTHEON_DEV_WATCH: 'false'
+    volumes:
+    - ./Sigrun:/var/www/html/Sigrun
+    - ./Sigrun-dist:/var/www/html/Sigrun-dist
+    - ./Common:/var/www/html/Common
+    - pnpmstore01:/.pnpm
+    depends_on:
+      development-init:
+        condition: service_completed_successfully
+    labels:
+      io.pantheon.mode: source
+    healthcheck:
+      test:
+      - CMD
+      - node
+      - /var/www/html/Common/ContainerRuntime/healthcheck.mjs
+      - Sigrun
+      interval: 5s
+      timeout: 3s
+      retries: 3
+  bragi.pantheon.internal:
+    image: ghcr.io/mahjongpantheon/pantheon-bragi-${CONTAINER_ARCH:-amd64}:${DEV_IMAGE_TAG:-development}
+    build:
+      context: .
+      dockerfile: Bragi/Dockerfile
+      target: development
+      args:
+        CONTAINER_ARCH: ${CONTAINER_ARCH:-amd64}
+    env_file:
+    - ./Env/${ENV_FILENAME:-.env.production}
+    environment:
+      PANTHEON_MODE: ${SOURCE_RUNTIME_MODE:-development}
+      PANTHEON_PRODUCTION_WORKERS: ${PANTHEON_PRODUCTION_WORKERS:-false}
+      PNPM_HOME: /.pnpm
+      npm_config_store_dir: /.pnpm
+      NODE_ENV: ${SOURCE_NODE_ENV:-development}
+      PANTHEON_PREPARE_DEVELOPMENT: 'true'
+      PANTHEON_DEV_WATCH: 'false'
+    volumes:
+    - ./Bragi:/var/www/html/Bragi
+    - ./Bragi-dist:/var/www/html/Bragi-dist
+    - ./Common:/var/www/html/Common
+    - pnpmstore01:/.pnpm
+    depends_on:
+      development-init:
+        condition: service_completed_successfully
+    labels:
+      io.pantheon.mode: source
+    healthcheck:
+      test:
+      - CMD
+      - node
+      - /var/www/html/Common/ContainerRuntime/healthcheck.mjs
+      - Bragi
+      interval: 5s
+      timeout: 3s
+      retries: 3
+  frey.pantheon.internal:
+    image: ghcr.io/mahjongpantheon/pantheon-frey-${CONTAINER_ARCH:-amd64}:${DEV_IMAGE_TAG:-development}
+    build:
+      context: .
+      dockerfile: Frey/Dockerfile
+      target: development
+      args:
+        CONTAINER_ARCH: ${CONTAINER_ARCH:-amd64}
+    env_file:
+    - ./Env/${ENV_FILENAME:-.env.production}
+    environment:
+      PANTHEON_MODE: ${SOURCE_RUNTIME_MODE:-development}
+      PANTHEON_PRODUCTION_WORKERS: ${PANTHEON_PRODUCTION_WORKERS:-false}
+      PNPM_HOME: /.pnpm
+      npm_config_store_dir: /.pnpm
+      PHINX_DB_FREY_PORT: 5432
+      PHINX_DB_FREY_HOST: db.pantheon.internal
+      NODE_ENV: ${SOURCE_NODE_ENV:-development}
+      PANTHEON_PREPARE_DEVELOPMENT: 'true'
+      PANTHEON_DEV_WATCH: 'false'
+    volumes:
+    - ./Frey:/var/www/html/Frey
+    - ./Frey-dist:/var/www/html/Frey-dist
+    - ./Common:/var/www/html/Common
+    - pnpmstore01:/.pnpm
+    depends_on:
+      development-init:
+        condition: service_completed_successfully
+    labels:
+      io.pantheon.mode: source
+    healthcheck:
+      test:
+      - CMD
+      - node
+      - /var/www/html/Common/ContainerRuntime/healthcheck.mjs
+      - Frey
+      interval: 5s
+      timeout: 3s
+      retries: 3
+  mimir.pantheon.internal:
+    image: ghcr.io/mahjongpantheon/pantheon-mimir-${CONTAINER_ARCH:-amd64}:${DEV_IMAGE_TAG:-development}
+    build:
+      context: .
+      dockerfile: Mimir/Dockerfile
+      target: development
+      args:
+        CONTAINER_ARCH: ${CONTAINER_ARCH:-amd64}
+    env_file:
+    - ./Env/${ENV_FILENAME:-.env.production}
+    environment:
+      PANTHEON_MODE: ${SOURCE_RUNTIME_MODE:-development}
+      PANTHEON_PRODUCTION_WORKERS: ${PANTHEON_PRODUCTION_WORKERS:-false}
+      PHINX_DB_PORT: 5432
+      PHINX_DB_HOST: db.pantheon.internal
+      PNPM_HOME: /.pnpm
+      npm_config_store_dir: /.pnpm
+      NODE_ENV: ${SOURCE_NODE_ENV:-development}
+      PANTHEON_PREPARE_DEVELOPMENT: 'true'
+      PANTHEON_DEV_WATCH: 'false'
+    volumes:
+    - ./Mimir:/var/www/html/Mimir
+    - ./Mimir-dist:/var/www/html/Mimir-dist
+    - ./Common:/var/www/html/Common
+    - pnpmstore01:/.pnpm
+    depends_on:
+      development-init:
+        condition: service_completed_successfully
+    labels:
+      io.pantheon.mode: source
+    healthcheck:
+      test:
+      - CMD
+      - node
+      - /var/www/html/Common/ContainerRuntime/healthcheck.mjs
+      - Mimir
+      interval: 5s
+      timeout: 3s
+      retries: 3
+  hugin.pantheon.internal:
+    image: ghcr.io/mahjongpantheon/pantheon-hugin-${CONTAINER_ARCH:-amd64}:${DEV_IMAGE_TAG:-development}
+    build:
+      context: .
+      dockerfile: Hugin/Dockerfile
+      target: development
+      args:
+        CONTAINER_ARCH: ${CONTAINER_ARCH:-amd64}
+    env_file:
+    - ./Env/${ENV_FILENAME:-.env.production}
+    environment:
+      PANTHEON_MODE: ${SOURCE_RUNTIME_MODE:-development}
+      PANTHEON_PRODUCTION_WORKERS: ${PANTHEON_PRODUCTION_WORKERS:-false}
+      PNPM_HOME: /.pnpm
+      npm_config_store_dir: /.pnpm
+      PHINX_DB_HUGIN_PORT: 5432
+      PHINX_DB_HUGIN_HOST: db.pantheon.internal
+      NODE_ENV: ${SOURCE_NODE_ENV:-development}
+      PANTHEON_PREPARE_DEVELOPMENT: 'true'
+      PANTHEON_DEV_WATCH: 'false'
+    volumes:
+    - ./Hugin:/var/www/html/Hugin
+    - ./Hugin-dist:/var/www/html/Hugin-dist
+    - ./Common:/var/www/html/Common
+    - pnpmstore01:/.pnpm
+    depends_on:
+      development-init:
+        condition: service_completed_successfully
+    labels:
+      io.pantheon.mode: source
+    healthcheck:
+      test:
+      - CMD
+      - node
+      - /var/www/html/Common/ContainerRuntime/healthcheck.mjs
+      - Hugin
+      interval: 5s
+      timeout: 3s
+      retries: 3
+  gullveig.pantheon.internal:
+    image: ghcr.io/mahjongpantheon/pantheon-gullveig-${CONTAINER_ARCH:-amd64}:${DEV_IMAGE_TAG:-development}
+    build:
+      context: .
+      dockerfile: Gullveig/Dockerfile
+      target: development
+      args:
+        CONTAINER_ARCH: ${CONTAINER_ARCH:-amd64}
+    env_file:
+    - ./Env/${ENV_FILENAME:-.env.production}
+    environment:
+      PANTHEON_MODE: ${SOURCE_RUNTIME_MODE:-development}
+      PANTHEON_PRODUCTION_WORKERS: ${PANTHEON_PRODUCTION_WORKERS:-false}
+      PNPM_HOME: /.pnpm
+      npm_config_store_dir: /.pnpm
+      NODE_ENV: ${SOURCE_NODE_ENV:-development}
+      PANTHEON_PREPARE_DEVELOPMENT: 'true'
+      PANTHEON_DEV_WATCH: 'false'
+    volumes:
+    - ./Gullveig:/var/www/html/Gullveig
+    - ./Gullveig-dist:/var/www/html/Gullveig-dist
+    - ./Common:/var/www/html/Common
+    - pnpmstore01:/.pnpm
+    depends_on:
+      development-init:
+        condition: service_completed_successfully
+    labels:
+      io.pantheon.mode: source
+    healthcheck:
+      test:
+      - CMD
+      - node
+      - /var/www/html/Common/ContainerRuntime/healthcheck.mjs
+      - Gullveig
+      interval: 5s
+      timeout: 3s
+      retries: 3
+  meili.pantheon.internal:
+    image: ghcr.io/mahjongpantheon/pantheon-meili-${CONTAINER_ARCH:-amd64}:${DEV_IMAGE_TAG:-development}
+    build:
+      context: .
+      dockerfile: Meili/Dockerfile
+      target: development
+      args:
+        CONTAINER_ARCH: ${CONTAINER_ARCH:-amd64}
+    env_file:
+    - ./Env/${ENV_FILENAME:-.env.production}
+    environment:
+      PANTHEON_MODE: ${SOURCE_RUNTIME_MODE:-development}
+      PANTHEON_PRODUCTION_WORKERS: ${PANTHEON_PRODUCTION_WORKERS:-false}
+      PNPM_HOME: /.pnpm
+      npm_config_store_dir: /.pnpm
+      NODE_ENV: ${SOURCE_NODE_ENV:-development}
+      PANTHEON_PREPARE_DEVELOPMENT: 'true'
+      PANTHEON_DEV_WATCH: 'false'
+    volumes:
+    - ./Meili:/var/www/html/Meili
+    - ./Meili-dist:/var/www/html/Meili-dist
+    - ./Common:/var/www/html/Common
+    - pnpmstore01:/.pnpm
+    depends_on:
+      development-init:
+        condition: service_completed_successfully
+    labels:
+      io.pantheon.mode: source
+    healthcheck:
+      test:
+      - CMD
+      - node
+      - /var/www/html/Common/ContainerRuntime/healthcheck.mjs
+      - Meili
+      interval: 5s
+      timeout: 3s
+      retries: 3
+  hermod.pantheon.internal:
+    image: ghcr.io/mahjongpantheon/pantheon-hermod-${CONTAINER_ARCH:-amd64}:${DEV_IMAGE_TAG:-development}
+    build:
+      context: .
+      dockerfile: Hermod/Dockerfile
+      target: development
+      args:
+        CONTAINER_ARCH: ${CONTAINER_ARCH:-amd64}
+    env_file:
+    - ./Env/${ENV_FILENAME:-.env.production}
+    environment:
+      PANTHEON_MODE: ${SOURCE_RUNTIME_MODE:-development}
+      PANTHEON_PRODUCTION_WORKERS: ${PANTHEON_PRODUCTION_WORKERS:-false}
+      PNPM_HOME: /.pnpm
+      npm_config_store_dir: /.pnpm
+      NODE_ENV: ${SOURCE_NODE_ENV:-development}
+      PANTHEON_PREPARE_DEVELOPMENT: 'true'
+      PANTHEON_DEV_WATCH: 'false'
+    volumes:
+    - ./Hermod:/var/www/html/Hermod
+    - ./Hermod-dist:/var/www/html/Hermod-dist
+    - ./Common:/var/www/html/Common
+    - pnpmstore01:/.pnpm
+    depends_on:
+      development-init:
+        condition: service_completed_successfully
+    labels:
+      io.pantheon.mode: source
+    healthcheck:
+      test:
+      - CMD
+      - node
+      - /var/www/html/Common/ContainerRuntime/healthcheck.mjs
+      - Hermod
+      interval: 5s
+      timeout: 3s
+      retries: 3
+  skirnir.pantheon.internal:
+    image: ghcr.io/mahjongpantheon/pantheon-skirnir-${CONTAINER_ARCH:-amd64}:${DEV_IMAGE_TAG:-development}
+    build:
+      context: .
+      dockerfile: Skirnir/Dockerfile
+      target: development
+      args:
+        CONTAINER_ARCH: ${CONTAINER_ARCH:-amd64}
+    env_file:
+    - ./Env/${ENV_FILENAME:-.env.production}
+    environment:
+      PANTHEON_MODE: ${SOURCE_RUNTIME_MODE:-development}
+      PANTHEON_PRODUCTION_WORKERS: ${PANTHEON_PRODUCTION_WORKERS:-false}
+      PNPM_HOME: /.pnpm
+      npm_config_store_dir: /.pnpm
+      NODE_ENV: ${SOURCE_NODE_ENV:-development}
+      PANTHEON_PREPARE_DEVELOPMENT: 'true'
+      PANTHEON_DEV_WATCH: 'false'
+    volumes:
+    - ./Skirnir:/var/www/html/Skirnir
+    - ./Skirnir-dist:/var/www/html/Skirnir-dist
+    - ./Common:/var/www/html/Common
+    - pnpmstore01:/.pnpm
+    depends_on:
+      development-init:
+        condition: service_completed_successfully
+    labels:
+      io.pantheon.mode: source
+    healthcheck:
+      test:
+      - CMD
+      - node
+      - /var/www/html/Common/ContainerRuntime/healthcheck.mjs
+      - Skirnir
+      interval: 5s
+      timeout: 3s
+      retries: 3

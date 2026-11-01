@@ -1,0 +1,376 @@
+#!/usr/bin/env bash
+# Bash entry point for container lifecycle, checks and development helpers.
+set -euo pipefail
+caller_directory=$PWD
+root=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
+cd "$root"
+
+fail() { echo "pantheon: $*" >&2; exit 1; }
+if [[ -n ${CONTAINER_COMMAND:-} ]]; then
+  read -r -a runtime <<< "$CONTAINER_COMMAND"
+elif command -v docker >/dev/null; then runtime=(docker)
+elif command -v podman >/dev/null; then runtime=(podman)
+else fail 'Install Docker Compose or Podman with a Compose provider.'; fi
+if [[ -n ${PANTHEON_COMPOSE_PROVIDER:-} ]]; then
+  read -r -a provider <<< "$PANTHEON_COMPOSE_PROVIDER"
+else provider=("${runtime[@]}" compose); fi
+export CONTAINER_COMMAND="${runtime[*]}"
+export CONTAINER_ARCH=${CONTAINER_ARCH:-$(bash bin/get_arch.sh)}
+export COMPOSE_PROJECT_NAME=${COMPOSE_PROJECT_NAME:-pantheon}
+export PANTHEON_STACK_MODE=${PANTHEON_STACK_MODE:-dev}
+applications=(Tyr Forseti Sigrun Bragi Frey Mimir Hugin Gullveig Meili Hermod Skirnir)
+application_services=()
+for application in "${applications[@]}"; do application_services+=("${application,,}.pantheon.internal"); done
+
+defaults() {
+  case "$PANTHEON_STACK_MODE" in
+    dev) export ENV_FILENAME=${ENV_FILENAME:-.env.development} ;;
+    image|source) export ENV_FILENAME=${ENV_FILENAME:-.env.production} ;;
+    *) fail "Unknown mode: $PANTHEON_STACK_MODE" ;;
+  esac
+  [[ $ENV_FILENAME != */* && -f Env/$ENV_FILENAME ]] || fail "Missing environment: Env/$ENV_FILENAME"
+}
+compose() {
+  defaults
+  local files=(-f compose.yaml -f "compose.$PANTHEON_STACK_MODE.yaml")
+  if [[ ${PANTHEON_LOCAL:-false} == true ]]; then files+=(-f compose.local.yaml); fi
+  if [[ ${PANTHEON_BUILD:-false} == true ]]; then files+=(-f compose.build.yaml); fi
+  if [[ ${PANTHEON_COMPOSE_EXEC:-false} == true ]]; then
+    exec "${provider[@]}" --project-name "$COMPOSE_PROJECT_NAME" "${files[@]}" --env-file "Env/$ENV_FILENAME" "$@"
+  fi
+  "${provider[@]}" --project-name "$COMPOSE_PROJECT_NAME" "${files[@]}" --env-file "Env/$ENV_FILENAME" "$@"
+}
+service_name() {
+  case "${1,,}" in
+    db|database) service=Database; dns=db.pantheon.internal; directory=/ ;;
+    redis) service=Redis; dns=redis.pantheon.internal; directory=/ ;;
+    common) service=Common; dns=frey.pantheon.internal; directory=/var/www/html/Common ;;
+    *)
+      service=''
+      for application in "${applications[@]}" Fenrir; do
+        if [[ ${application,,} == "${1,,}" ]]; then service=$application; fi
+      done
+      [[ -n $service ]] || fail "Unknown service: $1"
+      dns="${service,,}.pantheon.internal"; directory="/var/www/html/$service"
+      ;;
+  esac
+}
+service_exec() {
+  local requested=$1; shift
+  service_name "$requested"
+  local terminal=(-T)
+  if [[ -t 0 && -t 1 ]]; then terminal=(); fi
+  # Compose addresses exactly one project and service. Missing/stopped containers
+  # return a nonzero result rather than printing a successful warning.
+  compose exec "${terminal[@]}" --workdir "$directory" "$dns" "$@"
+}
+prepare_env() {
+  defaults
+  local service
+  for service in Tyr Forseti Sigrun Bragi Frey Mimir Skirnir; do
+    cp "Env/$ENV_FILENAME" "$service/$ENV_FILENAME"
+    if [[ -f Env/$ENV_FILENAME.local ]]; then
+      printf '\n' >> "$service/$ENV_FILENAME"
+      cat "Env/$ENV_FILENAME.local" >> "$service/$ENV_FILENAME"
+    fi
+  done
+}
+build_base() {
+  "${runtime[@]}" build -t "ghcr.io/mahjongpantheon/pantheon-container-base-v4-$CONTAINER_ARCH:latest" Common/ContainerBase
+}
+ensure_base() {
+  "${runtime[@]}" image inspect "ghcr.io/mahjongpantheon/pantheon-container-base-v4-$CONTAINER_ARCH:latest" >/dev/null 2>&1 || build_base
+}
+retire_legacy_proxy() {
+  local owner
+  if owner=$("${runtime[@]}" inspect --format '{{index .Config.Labels "com.docker.compose.project"}}' pantheon-reverse-proxy-container 2>/dev/null); then
+    if [[ -z $owner || $owner == '<no value>' ]]; then
+      "${runtime[@]}" stop pantheon-reverse-proxy-container
+      "${runtime[@]}" rm pantheon-reverse-proxy-container
+    fi
+  fi
+}
+wait_ready() {
+  /bin/sh Common/ContainerRuntime/wait-ready.sh "$root/bin/pantheon" compose
+}
+warmup() {
+  local service
+  for service in Sigrun Bragi; do
+    service_exec "$service" sh -ec 'for i in 1 2 3 4 5 6; do curl --fail --silent --show-error "http://127.0.0.1/" -H "Host: '"${service,,}"'.pantheon.internal" > /dev/null; done'
+  done
+}
+ensure_images() {
+  local service image
+  for service in "${applications[@]}" Database Redis; do
+    image="ghcr.io/mahjongpantheon/pantheon-${service,,}-$CONTAINER_ARCH:${IMAGE_TAG:-latest}"
+    if ! "${runtime[@]}" image inspect "$image" >/dev/null 2>&1; then
+      if [[ ${PANTHEON_IMAGE_SOURCE:-registry} == local ]]; then fail "Local image unavailable: $image. Build the complete stack first."; fi
+      "${runtime[@]}" pull "$image"
+    fi
+  done
+}
+build_images() {
+  build_base
+  COMPOSE_PARALLEL_LIMIT=${BUILD_JOBS:-2} PANTHEON_BUILD=true compose build "${application_services[@]}" db.pantheon.internal redis.pantheon.internal
+}
+image_start() {
+  compose config --quiet
+  ensure_images
+  if [[ ${PANTHEON_LOCAL:-false} == true ]]; then
+    compose build reverse-proxy
+    retire_legacy_proxy
+  fi
+  compose run --rm --no-deps dependencies-init
+  compose up -d --no-build "$@"
+  wait_ready
+  warmup
+}
+source_compile() {
+  local id mode service
+  id=$(compose ps -q frey.pantheon.internal)
+  [[ -n $id ]] || fail 'Start the source stack before compiling.'
+  mode=$("${runtime[@]}" inspect --format '{{index .Config.Labels "io.pantheon.mode"}}' "$id")
+  [[ $mode == source ]] || fail 'Compilation requires source mode. Use source-prod start.'
+  if [[ ${1:-} != prepared ]]; then
+    service_exec Frey /bin/sh /var/www/html/Common/ContainerRuntime/development-init.sh
+    for service in "${applications[@]}"; do
+      service_exec "$service" /bin/sh /var/www/html/Common/ContainerRuntime/install-development.sh "$service"
+    done
+  fi
+  # Both source and image builds use the owning service build/prebuild commands.
+  for service in "${applications[@]}"; do
+    service_name "$service"
+    service_exec "$service" env NODE_ENV=production HOME=/home/user su-exec user bash "$directory/tasks.sh" build
+    case "$service" in Tyr|Forseti|Sigrun|Bragi)
+      service_exec "$service" env HOME=/home/user su-exec user bash "$directory/tasks.sh" cleanup-prebuilts ;;
+    esac
+    service_exec "$service" env HOME=/home/user su-exec user bash "$directory/tasks.sh" prebuild
+  done
+  export SOURCE_RUNTIME_MODE=production SOURCE_NODE_ENV=production PANTHEON_PRODUCTION_WORKERS=true
+  compose up -d --no-build --force-recreate "${application_services[@]}"
+  wait_ready
+  warmup
+}
+
+source "$root/bin/lib/tasks.sh"
+
+command=${1:-help}; if (( $# )); then shift; fi
+case "$command" in
+  lint) run_checks "$@" ;;
+  test) run_tests "$@" ;;
+  check)
+    select_services "$@"
+    check_services=("${selected[@]}"); suites=()
+    for name in "${check_services[@]}"; do
+      for candidate in "${test_services[@]}"; do [[ $name != "$candidate" ]] || suites+=("$name"); done
+    done
+    result=0
+    "$root/bin/pantheon" lint "${check_services[@]}" || result=1
+    if (( ${#suites[@]} )); then "$root/bin/pantheon" test "${suites[@]}" || result=1; fi
+    exit "$result"
+    ;;
+  format|autofix)
+    select_services "$@"
+    for name in "${selected[@]}"; do service_task "$name" "$command"; done
+    ;;
+  deps) refresh_dependencies "$@" ;;
+  migrate) for name in Frey Mimir Hugin; do service_task "$name" migrate; done ;;
+  bootstrap-admin) service_task Frey migrate; service_task Frey bootstrap-admin ;;
+  seed)
+    case "${1:-default}" in
+      default) target=seed ;;
+      big-event) target=seed-bigevent ;;
+      tournament) target=seed-tournament ;;
+      *) fail 'Usage: seed [default|big-event|tournament]' ;;
+    esac
+    # The owning seeder confirms and rejects production before any bootstrap.
+    service_task Mimir confirm-seed
+    service_task Frey migrate
+    service_task Frey bootstrap-admin
+    service_exec Mimir env HOME=/home/user SEED_CONFIRMED=1 su-exec user bash /var/www/html/Mimir/tasks.sh "$target"
+    ;;
+  i18n)
+    case "${1:-}" in extract) target=i18n-extract ;; compile) target=i18n-update ;; *) fail 'Usage: i18n {extract|compile} [SERVICE...]' ;; esac
+    shift
+    if (( $# )); then select_services "$@"; else selected=(Tyr Forseti Sigrun Bragi); fi
+    for name in "${selected[@]}"; do service_task "$name" "$target"; done
+    ;;
+  proto-gen) service_task Frey proto-gen; refresh_dependencies ;;
+  dump-users) service_task Frey dump-users ;;
+  dump-last-mail) service_task Hermod last-mail ;;
+  e2e)
+    action=${1:-dev}; if (( $# )); then shift; fi
+    case "$action" in
+      prepare)
+        export ENV_FILENAME=.env.e2e PANTHEON_LOCAL=true
+        "$root/bin/pantheon" source-prod start
+        export PANTHEON_STACK_MODE=source SOURCE_RUNTIME_MODE=production SOURCE_NODE_ENV=production PANTHEON_PRODUCTION_WORKERS=true
+        compose --profile e2e up -d --no-deps fenrir.pantheon.internal
+        service_task Fenrir deps
+        ;;
+      dev|run|ui)
+        if [[ $action == dev ]]; then export ENV_FILENAME=.env.development
+        else export ENV_FILENAME=${ENV_FILENAME:-.env.e2e}; fi
+        compose --profile e2e up -d --no-deps fenrir.pantheon.internal
+        service_task Fenrir deps
+        if [[ $action == ui ]]; then service_task Fenrir ui "$@"; else service_task Fenrir run "$@"; fi
+        ;;
+      *) fail 'Usage: e2e {dev|prepare|run|ui} [PLAYWRIGHT ARGS...]' ;;
+    esac
+    ;;
+  db) database_command "$@" ;;
+  backup) backup_command "$@" ;;
+  maintenance) maintenance_command "$@" ;;
+  infra-test) infra_test ;;
+  restart-watcher) service_exec "${1:?Service required}" supervisorctl restart development ;;
+  compose) PANTHEON_COMPOSE_EXEC=true compose "$@" ;;
+  exec) (( $# >= 2 )) || fail 'Usage: exec SERVICE COMMAND [ARGS...]'; service_exec "$@" ;;
+  task)
+    (( $# >= 2 )) || fail 'Usage: task SERVICE TASK [ARGS...]'
+    service_task "$@"
+    ;;
+  source-task)
+    (( $# == 2 )) || fail 'Usage: source-task SERVICE TARGET'
+    export PANTHEON_STACK_MODE=source
+    service_name "$1"
+    id=$(compose ps -q "$dns")
+    [[ -n $id ]] || fail 'Start the source stack first.'
+    mode=$("${runtime[@]}" inspect --format '{{index .Config.Labels "io.pantheon.mode"}}' "$id")
+    [[ $mode == source ]] || fail 'Source compilation requires source mode.'
+    if [[ $2 == deps ]]; then
+      service_exec "$1" /bin/sh /var/www/html/Common/ContainerRuntime/install-development.sh "$service"
+    else
+      service_exec "$1" env NODE_ENV=production HOME=/home/user su-exec user bash "$directory/tasks.sh" "$2"
+    fi
+    ;;
+  runtime) "${runtime[@]}" "$@" ;;
+  copy)
+    (( $# == 3 )) || fail 'Usage: copy SERVICE SOURCE DESTINATION (use :PATH for container paths)'
+    service_name "$1"
+    from=$2; to=$3
+    if [[ $from == :* ]]; then from="$dns$from"
+    elif [[ $from != /* ]]; then from="$caller_directory/$from"; fi
+    if [[ $to == :* ]]; then to="$dns$to"
+    elif [[ $to != /* ]]; then to="$caller_directory/$to"; fi
+    compose cp "$from" "$to"
+    ;;
+  shell) service_exec "${1:?Service required}" /bin/sh -l ;;
+  build-base) build_base ;;
+  dev)
+    export PANTHEON_STACK_MODE=dev PANTHEON_LOCAL=true ENV_FILENAME=${ENV_FILENAME:-.env.development}
+    prepare_env
+    compose config --quiet
+    ensure_base
+    retire_legacy_proxy
+    if [[ ${1:-} == --detach ]]; then
+      compose up -d --build || { result=$?; compose logs --tail=100; exit "$result"; }
+      wait_ready
+    else
+      # Compose attaches to preparation and worker output, and owns signals for
+      # the entire stack. No host-side watcher processes need PID tracking.
+      compose up --build --abort-on-container-failure
+    fi
+    ;;
+  local-prod)
+    export PANTHEON_STACK_MODE=image PANTHEON_LOCAL=true ENV_FILENAME=${PROD_LOCAL_ENV:-.env.e2e}
+    case "${1:-registry}" in
+      build) export IMAGE_TAG=${2:-${PROD_LOCAL_TAG:-local-production}} PANTHEON_IMAGE_SOURCE=local; build_images ;;
+      local) export IMAGE_TAG=${2:-${PROD_LOCAL_TAG:-local-production}} PANTHEON_IMAGE_SOURCE=local ;;
+      registry)
+        export IMAGE_TAG=${2:-latest} PANTHEON_IMAGE_SOURCE=registry
+        compose config --quiet
+        compose pull --ignore-buildable
+        ;;
+      *) fail 'Usage: local-prod {registry TAG|build [TAG]|local [TAG]}' ;;
+    esac
+    image_start
+    ;;
+  build-images)
+    export PANTHEON_STACK_MODE=image ENV_FILENAME=${PROD_LOCAL_ENV:-.env.e2e} IMAGE_TAG=${1:-${PROD_LOCAL_TAG:-local-production}}
+    build_images
+    ;;
+  prod)
+    export PANTHEON_STACK_MODE=image ENV_FILENAME=${ENV_FILENAME:-.env.production}
+    action=${1:-start}; export IMAGE_TAG=${2:-${IMAGE_TAG:-latest}}
+    case "$action" in
+      pull) compose pull ;;
+      start) image_start ;;
+      recreate) image_start --no-deps --force-recreate "${application_services[@]}" ;;
+      restart) compose restart "${application_services[@]}"; wait_ready; warmup ;;
+      update) compose pull; image_start --no-deps --force-recreate "${application_services[@]}" ;;
+      warmup) warmup ;;
+      stop) compose stop "${application_services[@]}" ;;
+      down) compose --profile '*' down --remove-orphans ;;
+      status) compose ps ;;
+      logs) compose logs --follow --tail=100 ;;
+      *) fail "Unknown production operation: $action" ;;
+    esac
+    ;;
+  source-prod)
+    export PANTHEON_STACK_MODE=source ENV_FILENAME=${ENV_FILENAME:-.env.production}
+    case "${1:-start}" in
+      start)
+        prepare_env; compose config --quiet; ensure_base
+        export SOURCE_RUNTIME_MODE=development SOURCE_NODE_ENV=development PANTHEON_PRODUCTION_WORKERS=false
+        compose up -d --build || { result=$?; compose logs --tail=100; exit "$result"; }
+        # Preparation and migrations precede compilation, but source mode has
+        # no listeners yet. Running a task waits below for every preparation.
+        for service in "${applications[@]}"; do
+          service_exec "$service" sh -ec 'while [ ! -f /run/pantheon-ready ]; do test ! -f /run/pantheon-startup-failed; sleep 1; done'
+        done
+        source_compile prepared
+        ;;
+      compile) prepare_env; source_compile ;;
+      stop) compose stop ;;
+      status) compose ps ;;
+      logs) compose logs --follow --tail=100 ;;
+      *) fail 'Usage: source-prod {start|compile|stop|status|logs}' ;;
+    esac
+    ;;
+  stop) PANTHEON_LOCAL=true compose --profile '*' down --remove-orphans ;;
+  logs)
+    log_services=()
+    for name in "$@"; do service_name "$name"; log_services+=("$dns"); done
+    compose logs --follow --tail=100 "${log_services[@]}"
+    ;;
+  status) compose ps ;;
+  help)
+    cat <<'EOF'
+Usage: bin/pantheon COMMAND
+  dev [--detach]                     Start development, prepare, watch and log
+  local-prod registry TAG            Start local production from GHCR images
+  local-prod build [TAG]             Build and start local production
+  local-prod local [TAG]             Start a complete locally built image set
+  build-images [TAG]                 Build production images without switching
+  prod OPERATION [TAG]               pull/start/recreate/restart/update/warmup/
+                                    stop/down/status/logs (server environment)
+  source-prod OPERATION              start/compile/stop/status/logs
+  lint [SERVICE...]                 Lint, format-check and typecheck; save logs
+  test [--verbose] [SERVICE...]      Run every selected unit suite, report failures
+  check [SERVICE...]                Run lint checks and unit suites
+  format | autofix [SERVICE...]     Apply formatting or lint fixes
+  deps [--update] [SERVICE...]       Install dependencies (update locks explicitly)
+  migrate | bootstrap-admin         Run migrations / create the administrator
+  i18n {extract|compile} [SERVICE...] Update translation files
+  seed [default|big-event|tournament] Confirm and seed development data
+  proto-gen                         Generate clients and refresh dependencies
+  e2e {dev|prepare|run|ui} [ARGS...]  Development or compiled Playwright flows
+  infra-test                        Runtime regressions and Compose invariants
+  db {export|import} [FILE]          Database transfer (import confirms)
+  backup {pubkey|history|restore COMMIT}
+  maintenance OPERATION             reset/migrate-frey1/migrate-mimir1/release-tag
+  dump-users | dump-last-mail        Development diagnostics
+  restart-watcher SERVICE           Restart a supervised development watcher
+  task SERVICE TASK [ARGS...]       Run an owning service's Bash task (help lists)
+  exec SERVICE COMMAND [ARGS...]     Run a command in a service container
+  shell SERVICE                     Open a service shell
+  compose [ARGS...]                  Inspect/control the selected configuration
+  stop | status | logs               Control the selected stack
+
+Configuration: ENV_FILENAME, CONTAINER_COMMAND, PANTHEON_COMPOSE_PROVIDER,
+CONTAINER_ARCH, COMPOSE_PROJECT_NAME, IMAGE_TAG, DEV_IMAGE_TAG,
+PANTHEON_STACK_MODE=dev|image|source, PANTHEON_LOCAL=true|false.
+EOF
+    ;;
+  *) fail "Unknown command: $command (see bin/pantheon help)" ;;
+esac

@@ -10,192 +10,123 @@ You may use github issues for error reports and feature requests. Pull requests 
 
 Pantheon can be run in production or in development mode. Please don't use development build for your production setup.
 
-### Production build
+### Container workflows
 
-⚠ For the detailed guide of setting up Pantheon on clean VPS, refer to [Production Setup Guide](./docs/technical/production-setup.md). Brief instructions on production setup are listed below.
+Docker Compose owns startup, process supervision and logs. `bin/pantheon` is
+our Bash entry point for lifecycle, checks and helpers. Host requirements are
+Bash 4+ and Docker with Compose and BuildKit. Node.js, pnpm, gettext and test tools
+run inside containers, including the infrastructure regression tests.
+`bin/pantheon help` lists commands; `bin/pantheon task SERVICE help` lists owning
+service tasks. Makefiles and Just are no longer used.
 
-Clone the pantheon repository to your own server. Make sure repo folder is not accessible for the outer world.
+There are three explicit modes:
 
-To deploy pantheon on your own VPS or personal environment on production mode:
+| Mode | Application files | Processes |
+| --- | --- | --- |
+| `dev` | Mounted working tree | Vite and TypeScript watchers |
+| `image` | Compiled release images | Production workers |
+| `source` | Mounted source and output directories | Compile in containers, then run production workers |
 
-1. Make sure you have GNU Make installed on your system. Also one of the following should be installed:
-   - [recommended] Docker with compose plugin - to run containers via docker runtime.
-   - Podman and podman-compose - to run containers over OCI runtime.
-     - Pantheon scripts use docker detection, so if you have both docker and podman installed, docker will be used.
-     - Podman has better security and doesn't have privileges problem with dependencies (e.g. you might need to remove `node_modules` as root when using docker).
-     - Podman has some gotchas to be considered to run properly. See podman notes below.
-2. Create new environment config file `Env/.env.production`. There are examples in `Env` folder. Fill the file with proper settings for your setup.
-3. Fill new environment file with proper values, mostly it's about hosts, where you want the services to be accessible from the outer internet. Please note: setting up Nginx or any other reverse proxy is your responsibility. You may refer to `nginx-reverse-proxy.example.conf` file for basic nginx setup.
-4. Set up your reverse proxy, add SSL certificates (optionally). Please use included `nginx-reverse-proxy.example.conf` as reference of what host to point where. Note that `*.pantheon.internal` hosts are used to distinguish the services inside container network. Optionally, you can also point PgAdmin4 host to port 5632.
-5. Run `make prod_pull` to fetch CI-built images from the registry.
-6. Run `make prod_start` to start containers. Each Node.js service installs its locked dependencies into volumes before starting. Frey, Mimir, and Hugin then wait for their databases and apply migrations before starting application workers. A failed install or migration stops startup; inspect the service logs before retrying.
-7. For a fresh setup, run `make bootstrap_admin` to create the default administrator (`admin@localhost.localdomain`, password `123456`). Change its email and reset its password immediately through Forseti.
+`compose.yaml` owns shared topology, host HTTP ports and persistent data.
+Select exactly one of `compose.dev.yaml`, `compose.image.yaml` or
+`compose.source.yaml`. `compose.local.yaml` adds the local hostname proxy;
+`compose.build.yaml` adds production image builds. Never combine execution-mode
+overlays. `docker-compose-{amd64,arm64}.yml` and
+`docker-compose-production.yml` are compatibility entry points using Compose
+`include`; the runner uses `-f` layers directly. Direct users of the old ARM64
+entry point inherit `CONTAINER_ARCH=arm64` from its include environment.
 
-Production uses the standalone `docker-compose-production.yml`, with the same network,
-HTTP ports and persistent data volumes as the development files. Application code,
-compiled bundles, dependency manifests/lockfiles, migrations and scheduled jobs are
-inside the images. Application `node_modules` are excluded from the images.
-Production Node.js containers share one `services_modules` volume mounted at
-`/.pnpm`. Its `store/` directory holds package contents, `cache/pnpm/` holds pnpm
-metadata and verification caches, and `modules/` holds separate
-dependency trees such as `Mimir/`, `Mimir-dist/`, and `Sigrun-dist/`. Each tree is
-mounted at its project's normal `node_modules` path using a volume subdirectory
-mount; main and dist dependencies remain isolated. A `dependencies-init` container
-creates the directories before application containers start. The production Make
-shortcuts run initialization automatically, including updates with `--no-deps`.
-This requires Compose and a container runtime that support
-[volume subdirectory mounts](https://docs.docker.com/engine/storage/volumes/#mount-a-volume-subdirectory).
-The volume is separate from development dependencies and reused on recreation.
-Keep `Env/.env.production` and Hermod's DKIM keys on the host. Existing database
-and upload volumes are reused.
+Both architectures share the same configuration. The runner detects architecture
+and Docker/Podman once; override `CONTAINER_ARCH`, `CONTAINER_COMMAND` or
+`PANTHEON_COMPOSE_PROVIDER` when needed. Docker Compose is the validated baseline.
+Podman requires a Compose provider supporting the selected features; the old
+entry points additionally need `include`, and image mode needs volume subdirectory
+mounts. Check your provider with the configuration validation described below.
 
-On every production start, `pnpm install --frozen-lockfile` synchronizes dependencies
-before migrations, cron or workers start. Bundles install production dependencies;
-Frey/Mimir source installs include development tools required by their CLIs. The
-package store, metadata cache and installed dependencies stay in the same
-`services_modules` volume. Production installs set `XDG_CACHE_HOME=/.pnpm/cache`
-so metadata does not accumulate in each container's home directory.
-`node_modules/.pnpm` holds installed packages inside each project's tree.
-Old `.pnpm-store` caches within a tree are removed after a successful install.
-Previous dependency and cache volumes are left untouched when switching to this
-layout; the combined volume is populated from the lockfiles at startup. Development
-Compose continues using `pnpmstore01` for its package cache. Synchronization also refreshes
-local `Common/tsclients` packages after image updates. Installations need access to
-the package registries and Git dependency sources when packages are missing from
-the store. Tyr and Forseti serve static bundles and need no runtime install.
-
-Image builds use BuildKit cache mounts for the npm download cache, the pnpm
-package store and pnpm metadata. These caches persist in the builder and are
-excluded from the resulting image layers. Rebuild the shared base and service
-images to remove caches included in older images; runtime volumes cannot remove
-files already baked into an image.
-
-To update production, run:
+`tools` enables pgAdmin; `monitoring` enables Grafana, cAdvisor, the PostgreSQL
+exporter and Dozzle; `e2e` enables Fenrir. For example:
 
 ```sh
-make prod_update
-# Equivalent:
-make prod_pull
-make prod_restart
+COMPOSE_PROFILES=tools,monitoring bin/pantheon dev
 ```
 
-`prod_restart` recreates application containers with the pulled images and applies
-pending migrations, waits for all applications to become healthy, and warms Sigrun
-and Bragi with six HTTP requests each. A plain container restart reruns migrations
-but cannot switch to a newly pulled image. PostgreSQL and pgAdmin are left running
-by `prod_restart`.
-Use `make prod_start` to apply changes to infrastructure images/configuration too.
-`prod_update` does not change your Git checkout; update deployment configuration
-files separately when a release changes them.
+All modes retain the `pantheon` project, network, published ports and existing
+named data volumes. Switching modes reuses databases and uploads and can apply
+migrations. It never deletes named volumes. Use a disposable database setup for
+experiments requiring clean data; changing only the project name is insufficient
+for parallel stacks because this installation retains its fixed subnet and host
+ports. The local proxy owns port 80, so stop any competing host proxy first.
 
-Set `IMAGE_TAG=<commit SHA>` when pulling and restarting to deploy a specific CI
-release, for example `make prod_update IMAGE_TAG=abc123...`. The manually triggered
-**Build project artifacts & containers** workflow builds AMD64 and ARM64 in parallel
-and publishes commit tags and `latest`. Make detects the host architecture;
-standalone Compose users should set `CONTAINER_ARCH=arm64` on ARM hosts.
+### Production build
 
-Changing `Env/.env.production`, including public `VITE_*` settings, requires only
-`make prod_restart`. CI builds defer these values to startup: browsers load
-`/runtime-env.js` with caching disabled and SSR reads the container environment.
-All `VITE_*` variables are public; never put secrets in them. Production requires
-no manual dependency installation or application compilation on the server. The
-old `prod_compile` and `prod_build_*` targets remain for local source-build diagnostics; use the
-existing e2e source-build flow for local production-bundle tests.
+For server prerequisites, external reverse proxy, TLS and mail configuration,
+see [Production Setup Guide](docs/technical/production-setup.md).
+Create the ignored `Env/.env.production` from an Env example and configure your
+public URLs. Keep private DKIM keys on the host in `Hermod/opendkim_keys`.
 
-Development Compose files continue mounting sources and build outputs. They set
-`PANTHEON_MODE=development` and disable production Supervisor workers by default,
-so `make dev` uses the existing development servers. Cron tasks run in both modes;
-Hugin runs TypeScript job sources in development and compiled jobs in production.
-`make e2e_run` explicitly enables production workers for the local `e2e_compile` flow. Development hostnames continue to proxy the
-watchers; production hostnames require production workers.
+```sh
+bin/pantheon prod start <commit-tag>  # Obtain missing images and start
+```
+
+Production startup validates configuration, checks image availability, initializes
+runtime dependency directories, starts containers, streams application logs while
+waiting for readiness, then warms Sigrun and Bragi with six requests each. There
+is no fixed startup deadline; dependency or migration failures, stopped containers,
+and failed Supervisor programs fail startup. Ctrl+C stops waiting without deleting
+data. Static Tyr and Forseti bundles need no runtime dependency installation.
+Other services install locked dependencies in the persistent `services_modules`
+volume; source migration and cron tools for Frey/Mimir remain available. Missing
+packages require registry/Git access. Existing dependency and cache volumes are
+preserved. BuildKit caches stay outside the resulting image layers.
+
+```sh
+bin/pantheon prod pull <tag>                  # Fetch without changing containers
+bin/pantheon prod recreate <tag>              # Adopt selected images/config; wait; warm up
+bin/pantheon prod restart                    # Restart existing containers; wait; warm up
+bin/pantheon prod update <tag>                # Pull, recreate applications, wait, warm up
+bin/pantheon prod warmup
+bin/pantheon prod status
+bin/pantheon prod logs
+bin/pantheon prod stop                       # Stop applications, retain infrastructure
+bin/pantheon prod down                       # Stop/remove stack, retain data volumes
+```
+
+`restart` restarts existing containers; `recreate` adopts selected images and
+configuration. Updates leave PostgreSQL and other infrastructure running;
+`start` applies infrastructure configuration changes too. Specify the same tag
+for each operation. `latest` is the default; commit tags are preferable for
+repeatable deployments. Commands do not update the Git checkout.
+
+Changing public `VITE_*` or other environment settings requires recreation.
+Image builds defer public frontend settings to `/runtime-env.js` at startup;
+all `VITE_*` values are public and must never contain secrets.
+
+On a fresh database, `bin/pantheon bootstrap-admin` creates the default administrator
+(`admin@localhost.localdomain`, password `123456`). Change its email and reset its
+password immediately through Forseti.
 
 #### Testing production images locally
 
-Run these shortcuts from the repository root:
-
 ```sh
-make prod_local        # Build all images, stop development, start production + local proxy
-make prod_local_build  # Build images only; leave running containers alone
-make prod_local_start  # Use local builds, or GHCR latest images, with the local proxy
-make dev_local         # Stop the test stack and start normal development servers
+bin/pantheon local-prod registry <tag>        # Pull the selected GHCR release and start
+bin/pantheon local-prod build                 # Build working tree, then start
+bin/pantheon local-prod local                 # Start the complete existing local build
+bin/pantheon build-images            # Build images without changing containers
+bin/pantheon dev                             # Return to development
 ```
 
-`prod_local` builds your working copy into the same images CI publishes, including
-all eleven applications, PostgreSQL, Redis and the shared base. Build failures stop
-the switch before the running stack is stopped. `prod_local_start` validates the
-Compose configuration and image availability, builds the proxy, initializes
-dependency subdirectories, stops the
-existing stack and starts
-`docker-compose-production.yml` with startup migrations and cron jobs enabled.
-It streams application logs, including pnpm installation progress and errors, to
-the terminal while waiting for all eleven applications to report healthy before
-starting the local proxy. The entrypoint completes every dependency install and
-migration before launching cron or Supervisor. Healthchecks require every
-Supervisor program (including cron) to be running and Nginx plus every production
-worker to accept connections on IPv4 or IPv6 localhost. The waiter rechecks all
-applications until the whole stack is healthy. Installation or migration
-failures, stopped/restarting containers, and Supervisor `FATAL`/`STOPPED` programs
-fail the Make command. Worker stdout/stderr is included in the streamed logs. There
-is no fixed startup deadline: slow installs keep waiting for actual readiness.
-Use Compose `ps` and `logs` below to inspect progress, or Ctrl+C to stop waiting.
-Once all applications are healthy, `prod_local_start` warms Sigrun and Bragi with
-six HTTP requests each, using the same warmup targets as `prod_compile`.
-After warmup and proxy startup, `prod_local_start` returns to the shell, leaving
-the containers running.
-Use `make prod_local` to rebuild images after startup-script changes;
-`prod_local_start` uses existing images and pulls missing registry images without
-building applications.
-`dev_local` runs the normal development dependency/migration setup and keeps the
-development watchers in the foreground, just like `make dev`.
+Local builds use `local-production`; override the tag with a positional argument
+or `PROD_LOCAL_TAG`. Incomplete local image sets fail before
+switching the running stack; **there is no fallback to another tag**. A build
+failure also leaves the running stack in place. Local and CI builds use the same
+production Dockerfile stages. Development stages omit application compilation.
+CI publishes release commit tags and separate `development`/`dev-<commit>` tooling
+tags; its base image dependency is pinned to the same commit.
 
-The preferred image tag is `local-production`. If any of the thirteen local images
-is missing, startup uses `latest` for the entire stack, pulling missing images from
-GHCR before stopping the running stack. Images from different tags are never mixed.
-To select prebuilt images explicitly, run `make prod_local_start PROD_LOCAL_TAG=latest`.
-Cached images are reused; custom tags also pull missing images from GHCR.
-The default environment is `Env/.env.e2e`, which supplies
-`.pantheon.internal` URLs and local test credentials, including enabled e2e fixture
-APIs. This environment is only for local testing; it is loaded at startup and is
-not copied into the images. Architecture detection and Docker/Podman selection
-follow the existing root Makefile behavior.
-
-Override the local tag and environment filename when needed, using the same values
-for building and starting:
-
-```sh
-make prod_local PROD_LOCAL_TAG=my-test PROD_LOCAL_ENV=.env.e2e
-```
-
-The local production stack shares the `pantheon` project, ports, subnet and named
-volumes with development. Both switching commands stop the existing stack first;
-existing database and upload data are reused and pending migrations are applied.
-Use a disposable local environment if you need fresh data. Neither command deletes
-named volumes. There is no host `make deps` or `make prod_compile` step for the
-production images.
-
-Inspect startup with these commands (adjust the tag/environment if overridden):
-
-```sh
-ENV_FILENAME=.env.e2e IMAGE_TAG=local-production CONTAINER_ARCH="$(bash bin/get_arch.sh)" \
-  docker compose -f docker-compose-production.yml --env-file Env/.env.e2e ps
-ENV_FILENAME=.env.e2e IMAGE_TAG=local-production CONTAINER_ARCH="$(bash bin/get_arch.sh)" \
-  docker compose -f docker-compose-production.yml --env-file Env/.env.e2e logs --follow --tail=100 \
-  frey.pantheon.internal mimir.pantheon.internal hugin.pantheon.internal
-ENV_FILENAME=.env.e2e IMAGE_TAG=local-production CONTAINER_ARCH="$(bash bin/get_arch.sh)" \
-  docker compose -f docker-compose-production.yml --env-file Env/.env.e2e exec \
-  mimir.pantheon.internal supervisorctl status
-```
-
-Node.js services install dependencies into their production volumes on startup;
-Frey, Mimir and Hugin then apply migrations before starting workers. Check their
-logs for install or migration failures. Compose may pull missing third-party
-infrastructure images. The application, PostgreSQL and Redis images come from
-your local builds. The server
-`prod_*` commands such as `prod_start` still select `Env/.env.production`; use the
-`prod_local*` shortcuts for this local test setup.
-
-The local reverse proxy starts automatically. Add these entries to your host's
-`/etc/hosts` for browser testing:
+Local production defaults to `Env/.env.e2e`, including local test credentials and
+enabled fixture APIs. It is unsuitable for public deployment. Override with
+`PROD_LOCAL_ENV=.env.custom`. The local proxy is managed by Compose and replaces
+the old standalone proxy automatically. Add these hosts to `/etc/hosts`:
 
 ```text
 127.0.0.1 bragi.pantheon.internal forseti.pantheon.internal sigrun.pantheon.internal tyr.pantheon.internal
@@ -203,27 +134,32 @@ The local reverse proxy starts automatically. Add these entries to your host's
 127.0.0.1 hermod.pantheon.internal skirnir.pantheon.internal meili.pantheon.internal
 ```
 
-Open <http://bragi.pantheon.internal>, <http://forseti.pantheon.internal>,
-<http://sigrun.pantheon.internal> or <http://tyr.pantheon.internal>.
-Use `.pantheon.internal` hosts: `.pantheon.local` hosts target development servers.
-For a quick check without editing `/etc/hosts`, run:
+Open `http://bragi.pantheon.internal`, `http://forseti.pantheon.internal`,
+`http://sigrun.pantheon.internal` or `http://tyr.pantheon.internal`.
+`.pantheon.local` routes to development watchers; `.pantheon.internal` routes to
+production workers. HTTP supports normal application/SSR checks; PWA testing
+requires local HTTPS. Rebuild after changing application code in image mode.
+
+#### Production compiled from mounted sources
+
+This preserves the older server compilation workflow as a separate mode:
 
 ```sh
-curl --fail --resolve tyr.pantheon.internal:80:127.0.0.1 http://tyr.pantheon.internal/
-curl --fail --resolve tyr.pantheon.internal:80:127.0.0.1 http://tyr.pantheon.internal/runtime-env.js
+bin/pantheon source-prod start               # Tooling images, source deps/migrations,
+                                     # compilation, production workers, warmup
+bin/pantheon source-prod compile             # Recompile an existing source-mode stack
+bin/pantheon source-prod logs
 ```
 
-HTTP supports application and SSR checks; testing browser PWA/service-worker
-behavior requires local HTTPS. On a fresh local database, `make bootstrap_admin`
-creates the default administrator described above.
-
-After changing code, run `make prod_local` again to rebuild the images and restart
-the production stack. A plain container restart reruns startup but does not adopt
-a newly built image. No source or compiled application folders are mounted into
-these containers.
-
-Run `make dev_local` to stop the local production stack and return to development.
-To stop without starting development, use `make pantheon_stop`.
+Source mode defaults to `Env/.env.production`. It mounts service sources,
+`Common`, and `*-dist` directories, refreshes locked source dependencies and local
+clients on recompilation, compiles with each service's existing
+`tasks.sh build`/`tasks.sh prebuild` commands, then recreates workers after successful compilation.
+`compile` rejects image-mode containers. Installations remain locked at startup.
+Unlike image builds, compilation writes host build outputs and may refresh their
+runtime dependencies. Run `start` again after configuration or Dockerfile changes.
+Use `PANTHEON_LOCAL=true ENV_FILENAME=.env.e2e` for a local source-mode setup.
+Image deployments never call this workflow.
 
 #### Frontend PWA updates
 
@@ -240,7 +176,7 @@ broken installation may still need a manual reload or its site cache cleared onc
 
 The application containers inherit Node.js and npm from Alpine's `nodejs-current` and `npm` packages in `Common/ContainerBase`. Both AMD64 and ARM64 use Alpine's prebuilt packages. pnpm is installed through npm with the `pnpm@12` major-version pin. Service settings and dependency build permissions live in each service's `pnpm-workspace.yaml`; production preparation copies that file alongside `package.json`. Node.js updates follow the selected Alpine branch; update the Alpine base tag when moving to a newer branch. Fenrir has a separate image and runtime.
 
-Run `make container_base` to rebuild the shared base, or `make container` to rebuild it along with the dependent service images and recreate their containers. Run the **Build project artifacts & containers** workflow manually in GitHub Actions to rebuild the shared base and application images for both AMD64 and ARM64. Existing running containers retain their previous runtime until recreated.
+Run `bin/pantheon build-base` to rebuild the shared base, then `bin/pantheon dev --detach` to rebuild dependent service images and recreate their containers. Run the **Build project artifacts & containers** workflow manually in GitHub Actions to rebuild the shared base and application images for both AMD64 and ARM64. Existing running containers retain their previous runtime until recreated.
 
 #### Email agent
 
@@ -257,17 +193,17 @@ If you're not intending to use https, please disable corresponding directives in
 
 #### Setting up database backups
 
-Pantheon provides built-in database backups using git. By default, it just stores database dump as new commits in `/var/lib/postgresql/backup` folder
-of the `Database` container (you can get to shell using `make shell_db`). If you want to set up some remote backups, you should do the following:
+Pantheon provides built-in database backups using git. By default, it stores database dump as new commits in `/var/lib/postgresql/backup` folder
+of the `Database` container (you can get to shell using `bin/pantheon shell Database`). If you want to set up some remote backups, you should do the following:
 
 - Set the `BACKUP_GIT_REMOTE` variable in your environment config to point to your backup remote repository. There is an example included in the env file.
-- Go to `Database` folder and call `make backup_dump_pubkey` command to get ssh public key.
+- From the repository root, call `bin/pantheon backup pubkey` command to get ssh public key.
 - Add this key to trusted keys in your account in Github, Gitlab or wherever your remote repository will reside.
-- Restart the containers with `make prod_restart`
+- Apply the database configuration with `bin/pantheon prod start`
 
-Every 15 minutes the database dump is made. You may view history of backups using `make backup_show_history` in `Database` folder. To rollback your
-database to previous state you may use either included pgadmin4 container (running at 5632 port) or the one-liner command from the `Database` folder:
-`COMMIT=1234567 make backup_restore`, where `1234567` should be replaced with target commit hash (which can be found using `make backup_show_history` command).
+Every 15 minutes the database dump is made. You may view history of backups using `bin/pantheon backup history` from the repository root. To rollback your
+database to previous state you may use either included pgadmin4 container (running at 5632 port) or the one-liner command from the repository root:
+`bin/pantheon backup restore 1234567`, where `1234567` should be replaced with target commit hash (which can be found using `bin/pantheon backup history` command).
 Please note that one-liner will rollback both mimir and frey databases!
 
 Please note that backups will consume quite much disk space. To clean up some space you may consider deleting the `/var/lib/postgresql/backup/.git` directory
@@ -302,50 +238,48 @@ First, please add the following entries to your `/etc/hosts` file so you could a
 
 Second, make sure your **local port 80** is not used by any other software (like nginx, apache or another web server).
 
-- If the port is not used, everything should work as is. Please note that in this case Pantheon development environment will use port 80, and no other service using that port can be started until `make pantheon_stop` is run.
+- If the port is not used, everything should work as is. Please note that in this case Pantheon development environment will use port 80, and no other service using that port can be started until `bin/pantheon stop` is run.
 - Otherwise, please refer to `Common/ReverseProxy/external-proxy.example.conf` file for a list of hosts configuration (for nginx). For other web servers, please use equivalent instructions. Modify configuration of your currently running web server to allow requests pass to the services from your local browser.
 - If there is some external nginx running inside docker container on your local machine, you can use `Common/ReverseProxy/nginx.conf` file to add pantheon configuration there. You'll also need to add the container to `pantheon_internal_net` docker network.
 
 #### Installing and running
 
-Make sure you have Docker, Docker compose plugin and Docker buildx plugin installed and daemon running on your system. For debugging, please make sure all the php extensions are
-installed as well, see Dockerfile for a complete list.
+```sh
+bin/pantheon dev                     # Prepare, start, watch and stream logs
+bin/pantheon dev --detach            # Prepare/start detached; wait for readiness
+bin/pantheon logs
+bin/pantheon shell Frey
+bin/pantheon stop                    # Remove containers; preserve named data
+```
 
-_Note: on some linux distros almost every container-related command should be run as root. If nothing happens, or error
-is displayed, try adding `sudo` before `make`._
+One command builds development tooling if needed, installs locked shared/service
+dependencies, migrates databases and starts all watchers. Foreground startup
+streams container logs from preparation onward; Ctrl+C stops the stack. Detached
+startup returns after application healthchecks pass. Watchers run under Supervisor
+inside containers, with grouped signal handling, so restarting a container also
+restarts its watcher. `bin/pantheon restart-watcher frey` restarts Frey's watcher.
 
-1. Run `make pull` to fetch all the containers from registry. This is optional, though, it will allow you to skip container build process.
-   - As an option, you can run `make container_dev` to build containers from scratch on you local machine. This may take a long time.
-2. Run `make dev` to start all containers, install dependencies for all projects, run database migrations and start development servers.
-3. After everything is build, you can use `make logs` and `make php_logs` in each subsystem folder to view logs in real-time. Also you may use `make shell` to get
-   to container shell, if you want to. Notice that killing postgres or nginx will ruin the container entirely.
-4. You can use `make pantheon_stop` to stop all containers (without deleting the data) and `make kill` to stop the container AND clean images (e.g. this will remove all db data).
+Local frontend/backend environment files are prepared from
+`Env/.env.development`; optional `Env/.env.development.local` values are appended.
+Normal startup never rewrites lockfiles. Use `bin/pantheon deps --update [SERVICE...]`
+when intentionally updating dependency manifests/lockfiles. `bin/pantheon deps` performs
+locked installation and refreshes local `file:` clients; Fenrir's optional browser dependencies are installed in the
+e2e flow. `bin/pantheon build-base` rebuilds shared tooling. Rebuild dependent images
+after base changes.
 
-The shared Node service image is built from `Common/ContainerBase` and published as
-`ghcr.io/mahjongpantheon/pantheon-container-base-v4-{amd64,arm64}:latest`.
-`make container_base` builds and loads the tag for the current architecture;
-`make container` builds it before rebuilding services. The base owns shared Node
-and build tools, the local `user`, nginx runtime directories/logging, and the
-default `/entrypoint.sh` command. Service Dockerfiles provide executable entrypoints,
-service configuration, folders and additional packages. Database and Redis use
-standalone Alpine images; Fenrir retains Ubuntu for Playwright. After changing
-the base image, rebuild dependent service images and recreate their containers.
+`bin/pantheon lint` checks formatting without writing and runs at most two checks
+concurrently (`LINT_JOBS=4` overrides this). It finishes independent checks after
+failures, keeps per-service `tmp` logs and returns failure for missing containers.
+`bin/pantheon format` applies formatting; `bin/pantheon autofix` also applies lint fixes.
+`bin/pantheon check frey` runs service checks, while `bin/pantheon check` runs all checks and tests.
+Fenrir's checks belong to its optional e2e flow. `bin/pantheon infra-test` checks runtime
+startup behavior and renders all modes/architectures without starting the stack.
+It runs Node regression tests and JSON validation in the shared tooling image.
+No host Node.js or Python installation is required.
 
-Development dependency installation (`make dev_deps` from the root or inside a service) reuses existing `node_modules` and the shared pnpm store. Local `file:` packages such as `Common/tsclients` are refreshed on each run, including added and removed files. The install uses `--no-frozen-lockfile` so local package manifest changes are also resolved, even when `CI` is set. To reinstall a service from scratch, remove its `node_modules` and run `make dev_deps` again. Production builds and CI prepare source-project dependencies with `make deps` and `--frozen-lockfile`, which fails if manifests and lockfiles differ. Existing `prod_deps` targets continue to prepare runtime dependencies in the built output folders.
-
-Development Vite watchers and lint/format tools exclude generated build, coverage,
-cache, temporary, and Playwright report directories. Backend `tsx watch` commands
-watch loaded dependencies and ignore dependency/vendor directories; generated
-translations and shared API clients remain available for normal source updates.
-Root `make lint` defaults to two concurrent checks because each tool can also
-use worker threads. Set `LINT_JOBS=1` on slower machines or increase it for CI,
-for example `make lint LINT_JOBS=4`.
-
-Please note: if you're using podman, trying to stop a single service container will result in also stopping all containers it depends on. Docker has no such issue.
-
-To create an event and fill it with some data, run `make seed`, `make seed_bigevent` or `make seed_tournament` (with `sudo` if required). Note that users are
+To create an event and fill it with some data, run `bin/pantheon seed`, `bin/pantheon seed big-event` or `bin/pantheon seed tournament` (with `sudo` if required). Note that users are
 re-seeded on each command run. To log in as one of the created users, you may need the id and client hash emitted in the console. Note that dump is output in development mode only.
-Created users' data is saved to temporary file inside Frey container, so you may also access this data using `make dump_users`.
+Created users' data is saved to temporary file inside Frey container, so you may also access this data using `bin/pantheon dump-users`.
 
 A separate [guide about debugging in PhpStorm IDE](./docs/technical/phpstorm.md) is available.
 
@@ -380,7 +314,7 @@ Services will be available at:
 See protocol description files in `Common` folder.
 Please note:
 
-- If you change the protocols, you should run `make proto_gen` in root repo folder to regenerate all protocol related code.
+- If you change the protocols, you should run `bin/pantheon proto-gen` in root repo folder to regenerate all protocol related code.
 - You always should change the proto files and never should change the generated code by hand.
 
 #### Upgrade to Mimir v2 and Frey v2
@@ -389,10 +323,10 @@ Please see UPDATE.md for details.
 
 #### Service tests
 
-Run `make test` from the root to execute every existing service suite: Tyr,
+Run `bin/pantheon test` from the root to execute every existing service suite: Tyr,
 Frey, Mimir, Gullveig, Meili, Hermod, Hugin, Forseti, Sigrun and Bragi. The runner
 attempts all suites even after a failure and returns a failing exit status if
-any suite fails or its container is missing. `make test_verbose` covers the same
+any suite fails or its container is missing. `bin/pantheon test --verbose` covers the same
 services. Skirnir currently has no test files. GitHub Actions runs
 these suites independently of lint results after dependency and migration setup;
 Fenrir's lint, formatting, type checks, and Playwright tests run in the separate
@@ -415,19 +349,18 @@ comments.
 #### End-to-end tests
 
 Pantheon services include e2e testing framework based on Playwright. To run it locally, make sure pantheon development
-environment is running (`make dev`) and use `make e2e_dev` command in separate terminal window. Note that it will run tests against
+environment is running (`bin/pantheon dev`) and use `bin/pantheon e2e dev` command in separate terminal window. Note that it will run tests against
 development build, so no SSR is tested locally. This starts only Fenrir with the development environment; it does not rebuild or recreate the application services.
 
 To test the production images and their startup behavior, follow [Testing production images locally](#testing-production-images-locally).
 For the existing source-mounted production-bundle e2e flow, stop development and run:
 
 ```
-make e2e_run
-make e2e_compile
-make e2e
+bin/pantheon e2e prepare
+PANTHEON_STACK_MODE=source bin/pantheon e2e run
 ```
 
-The production-build flow uses `Env/.env.e2e` and `.pantheon.internal` hosts. The `.pantheon.local` hosts proxy development servers and require `make dev`.
+The production-build flow uses `Env/.env.e2e` and `.pantheon.internal` hosts. The `.pantheon.local` hosts proxy development servers and require `bin/pantheon dev`.
 For account-backed cases, configure an existing fixture superadmin in the ignored `Fenrir/.env.e2e.local` file as described in [Fenrir's README](Fenrir/README.md).
 GitHub CI bootstraps the default administrator in its fresh test database and uses it only to create ordinary fixture accounts through Frey's guarded e2e API.
 
@@ -435,7 +368,7 @@ Remember to remove all the files created during the run before committing change
 
 #### Email agent
 
-Pantheon provides container with pre-installed email agent (Hermod). You can view last sent email in CLI using `make dump_last_mail` command.
+Pantheon provides container with pre-installed email agent (Hermod). You can view last sent email in CLI using `bin/pantheon dump-last-mail` command.
 This is useful to test registration and password recovery, because emails sent from the developer environment will most likely be rejected
 by target email relay (e.g. gmail rejects it in 100% of cases).
 
@@ -461,7 +394,7 @@ the confirmation button, bot will be enabled for this particular user.
 - Podman storage settings may cause errors in overlay management, so you might want to erase the config file: `sudo rm -f /etc/containers/storage.conf`.
 - In case of any other problems you might also try resetting podman to system defaults by running `podman system reset -f`. CAUTION: This will delete all running containers, images and volumes.
 - Development environment special notes:
-  - For dev mode, when running podman in rootless mode (which is default), make sure you set `net.ipv4.ip_unprivileged_port_start=80` in your `/etc/sysctl.conf` to allow binding on port 80, otherwise reverse proxy won't be able to start when you run `make dev`.
+  - For dev mode, when running podman in rootless mode (which is default), make sure you set `net.ipv4.ip_unprivileged_port_start=80` in your `/etc/sysctl.conf` to allow binding on port 80, otherwise reverse proxy won't be able to start when you run `bin/pantheon dev`.
 
 Basic all-in-one script for all the notes above:
 
@@ -477,8 +410,8 @@ sudo podman system reset -f
 ### Pull requests
 
 Any pull request should pass all current code style checks; also all unit tests should pass. Don't forget to run
-`make check` (with `sudo` if required) before sending your pull request. To fix all code style issues automatically
-(in php code only), run `make autofix` (also `sudo` may be required).
+`bin/pantheon check` (with `sudo` if required) before sending your pull request. To fix all code style issues automatically
+run `bin/pantheon autofix` (also `sudo` may be required).
 
 To create a PR fro existing issue using Codex, use `Use $github-issue-branch for issue #123` prompt.
 

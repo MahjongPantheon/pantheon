@@ -8,199 +8,98 @@ permissions:
   packages: write
 
 jobs:
-  buildContainers:
-    name: Build containers (${{ matrix.arch }})
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check runtime and Compose modes
+        run: bin/pantheon infra-test
+
+  base:
+    needs: validate
+    if: github.ref == 'refs/heads/master' && github.repository == 'MahjongPantheon/pantheon'
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         arch: [amd64, arm64]
-    env:
-      CONTAINER_ARCH_OVERRIDE: ${{ matrix.arch }}
-    if: |
-      github.ref == 'refs/heads/master' &&
-      github.repository == 'MahjongPantheon/pantheon'
     steps:
-      - uses: actions/checkout@v2
-
-      - name: Check container runtime configuration
-        run: |
-          node --test Common/ContainerRuntime/*.test.mjs
-          ENV_FILENAME=.env.e2e docker compose -f docker-compose-production.yml --env-file Env/.env.e2e config --quiet
-
-      - name: Set up Docker Buildx
-        id: buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-
-      - name: Login to GHCR
-        if: github.event_name != 'pull_request'
-        uses: docker/login-action@v3
+      - uses: actions/checkout@v4
+      - uses: docker/setup-qemu-action@v3
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Build and push [Container base]
-        uses: docker/build-push-action@v6
+      - uses: docker/build-push-action@v6
         with:
           context: ./Common/ContainerBase
           platforms: linux/${{ matrix.arch }}
-          push: ${{ github.event_name != 'pull_request' }}
+          push: true
           tags: |
             ghcr.io/mahjongpantheon/pantheon-container-base-v4-${{ matrix.arch }}:latest
             ghcr.io/mahjongpantheon/pantheon-container-base-v4-${{ matrix.arch }}:${{ github.sha }}
 
-      - name: Build and push [Database]
+  services:
+    needs: base
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        arch: [amd64, arm64]
+        service: [Tyr, Forseti, Sigrun, Bragi, Frey, Mimir, Hugin, Gullveig, Meili, Hermod, Skirnir, Database, Redis]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Resolve image and build context
+        id: image
+        shell: bash
+        run: |
+          service='${{ matrix.service }}'
+          echo "name=${service,,}" >> "$GITHUB_OUTPUT"
+          if [[ $service == Database || $service == Redis ]]; then
+            echo "context=./$service" >> "$GITHUB_OUTPUT"
+            echo 'target=' >> "$GITHUB_OUTPUT"
+            echo 'application=false' >> "$GITHUB_OUTPUT"
+          else
+            echo 'context=.' >> "$GITHUB_OUTPUT"
+            echo 'target=production' >> "$GITHUB_OUTPUT"
+            echo 'application=true' >> "$GITHUB_OUTPUT"
+          fi
+      - uses: docker/setup-qemu-action@v3
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build release image
         uses: docker/build-push-action@v6
         with:
-          context: ./Database
+          context: ${{ steps.image.outputs.context }}
+          file: ${{ matrix.service }}/Dockerfile
+          target: ${{ steps.image.outputs.target }}
           platforms: linux/${{ matrix.arch }}
-          push: ${{ github.event_name != 'pull_request' }}
+          build-args: |
+            CONTAINER_ARCH=${{ matrix.arch }}
+            BASE_TAG=${{ github.sha }}
+          push: true
           tags: |
-            ghcr.io/mahjongpantheon/pantheon-database-${{ matrix.arch }}:latest
-            ghcr.io/mahjongpantheon/pantheon-database-${{ matrix.arch }}:${{ github.sha }}
-
-      - name: Build and push [Redis]
-        uses: docker/build-push-action@v6
-        with:
-          context: ./Redis
-          platforms: linux/${{ matrix.arch }}
-          push: ${{ github.event_name != 'pull_request' }}
-          tags: |
-            ghcr.io/mahjongpantheon/pantheon-redis-${{ matrix.arch }}:latest
-            ghcr.io/mahjongpantheon/pantheon-redis-${{ matrix.arch }}:${{ github.sha }}
-
-      - name: Build and push [Forseti]
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          build-args: CONTAINER_ARCH=${{ matrix.arch }}
-          file: Forseti/Dockerfile
-          platforms: linux/${{ matrix.arch }}
-          push: ${{ github.event_name != 'pull_request' }}
-          tags: |
-            ghcr.io/mahjongpantheon/pantheon-forseti-${{ matrix.arch }}:latest
-            ghcr.io/mahjongpantheon/pantheon-forseti-${{ matrix.arch }}:${{ github.sha }}
-
-      - name: Build and push [Frey]
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          build-args: CONTAINER_ARCH=${{ matrix.arch }}
-          file: Frey/Dockerfile
-          platforms: linux/${{ matrix.arch }}
-          push: ${{ github.event_name != 'pull_request' }}
-          tags: |
-            ghcr.io/mahjongpantheon/pantheon-frey-${{ matrix.arch }}:latest
-            ghcr.io/mahjongpantheon/pantheon-frey-${{ matrix.arch }}:${{ github.sha }}
-
-      - name: Build and push [Hermod]
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          build-args: CONTAINER_ARCH=${{ matrix.arch }}
-          file: Hermod/Dockerfile
-          platforms: linux/${{ matrix.arch }}
-          push: ${{ github.event_name != 'pull_request' }}
-          tags: |
-            ghcr.io/mahjongpantheon/pantheon-hermod-${{ matrix.arch }}:latest
-            ghcr.io/mahjongpantheon/pantheon-hermod-${{ matrix.arch }}:${{ github.sha }}
-
-      - name: Build and push [Hugin]
+            ghcr.io/mahjongpantheon/pantheon-${{ steps.image.outputs.name }}-${{ matrix.arch }}:latest
+            ghcr.io/mahjongpantheon/pantheon-${{ steps.image.outputs.name }}-${{ matrix.arch }}:${{ github.sha }}
+      - name: Build development tooling without compiling applications
+        if: steps.image.outputs.application == 'true'
         uses: docker/build-push-action@v6
         with:
           context: .
-          build-args: CONTAINER_ARCH=${{ matrix.arch }}
-          file: Hugin/Dockerfile
+          file: ${{ matrix.service }}/Dockerfile
+          target: development
           platforms: linux/${{ matrix.arch }}
-          push: ${{ github.event_name != 'pull_request' }}
+          build-args: |
+            CONTAINER_ARCH=${{ matrix.arch }}
+            BASE_TAG=${{ github.sha }}
+          push: true
           tags: |
-            ghcr.io/mahjongpantheon/pantheon-hugin-${{ matrix.arch }}:latest
-            ghcr.io/mahjongpantheon/pantheon-hugin-${{ matrix.arch }}:${{ github.sha }}
-
-      - name: Build and push [Gullveig]
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          build-args: CONTAINER_ARCH=${{ matrix.arch }}
-          file: Gullveig/Dockerfile
-          platforms: linux/${{ matrix.arch }}
-          push: ${{ github.event_name != 'pull_request' }}
-          tags: |
-            ghcr.io/mahjongpantheon/pantheon-gullveig-${{ matrix.arch }}:latest
-            ghcr.io/mahjongpantheon/pantheon-gullveig-${{ matrix.arch }}:${{ github.sha }}
-
-      - name: Build and push [Meili]
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          build-args: CONTAINER_ARCH=${{ matrix.arch }}
-          file: Meili/Dockerfile
-          platforms: linux/${{ matrix.arch }}
-          push: ${{ github.event_name != 'pull_request' }}
-          tags: |
-            ghcr.io/mahjongpantheon/pantheon-meili-${{ matrix.arch }}:latest
-            ghcr.io/mahjongpantheon/pantheon-meili-${{ matrix.arch }}:${{ github.sha }}
-
-      - name: Build and push [Mimir]
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          build-args: CONTAINER_ARCH=${{ matrix.arch }}
-          file: Mimir/Dockerfile
-          platforms: linux/${{ matrix.arch }}
-          push: ${{ github.event_name != 'pull_request' }}
-          tags: |
-            ghcr.io/mahjongpantheon/pantheon-mimir-${{ matrix.arch }}:latest
-            ghcr.io/mahjongpantheon/pantheon-mimir-${{ matrix.arch }}:${{ github.sha }}
-
-      - name: Build and push [Sigrun]
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          build-args: CONTAINER_ARCH=${{ matrix.arch }}
-          file: Sigrun/Dockerfile
-          platforms: linux/${{ matrix.arch }}
-          push: ${{ github.event_name != 'pull_request' }}
-          tags: |
-            ghcr.io/mahjongpantheon/pantheon-sigrun-${{ matrix.arch }}:latest
-            ghcr.io/mahjongpantheon/pantheon-sigrun-${{ matrix.arch }}:${{ github.sha }}
-
-      - name: Build and push [Bragi]
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          build-args: CONTAINER_ARCH=${{ matrix.arch }}
-          file: Bragi/Dockerfile
-          platforms: linux/${{ matrix.arch }}
-          push: ${{ github.event_name != 'pull_request' }}
-          tags: |
-            ghcr.io/mahjongpantheon/pantheon-bragi-${{ matrix.arch }}:latest
-            ghcr.io/mahjongpantheon/pantheon-bragi-${{ matrix.arch }}:${{ github.sha }}
-
-      - name: Build and push [Skirnir]
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          build-args: CONTAINER_ARCH=${{ matrix.arch }}
-          file: Skirnir/Dockerfile
-          platforms: linux/${{ matrix.arch }}
-          push: ${{ github.event_name != 'pull_request' }}
-          tags: |
-            ghcr.io/mahjongpantheon/pantheon-skirnir-${{ matrix.arch }}:latest
-            ghcr.io/mahjongpantheon/pantheon-skirnir-${{ matrix.arch }}:${{ github.sha }}
-
-      - name: Build and push [Tyr]
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          build-args: CONTAINER_ARCH=${{ matrix.arch }}
-          file: Tyr/Dockerfile
-          platforms: linux/${{ matrix.arch }}
-          push: ${{ github.event_name != 'pull_request' }}
-          tags: |
-            ghcr.io/mahjongpantheon/pantheon-tyr-${{ matrix.arch }}:latest
-            ghcr.io/mahjongpantheon/pantheon-tyr-${{ matrix.arch }}:${{ github.sha }}
+            ghcr.io/mahjongpantheon/pantheon-${{ steps.image.outputs.name }}-${{ matrix.arch }}:development
+            ghcr.io/mahjongpantheon/pantheon-${{ steps.image.outputs.name }}-${{ matrix.arch }}:dev-${{ github.sha }}
