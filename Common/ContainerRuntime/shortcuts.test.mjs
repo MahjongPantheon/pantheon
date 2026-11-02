@@ -56,11 +56,30 @@ if (args[0] === 'runtime' && args[1] === 'inspect') {
     const file = process.env.TEST_LOG + '.count';
     const count = existsSync(file) ? Number(readFileSync(file, 'utf8')) : 0;
     if (args.at(-1).startsWith('mimir.')) writeFileSync(file, String(count + 1));
-    console.log(process.env.TEST_STATE + ':' + (count < Number(process.env.TEST_PENDING) ? 'unhealthy' : process.env.TEST_HEALTH));
+    const state = count < Number(process.env.TEST_PENDING) ? (process.env.TEST_INITIAL_STATE || process.env.TEST_STATE) : process.env.TEST_STATE;
+    const health = count < Number(process.env.TEST_PENDING) ? 'unhealthy' : process.env.TEST_HEALTH;
+    const observations = process.env.TEST_LOG + '.observations';
+    const observed = existsSync(observations) ? JSON.parse(readFileSync(observations, 'utf8')) : {};
+    observed[args.at(-1)] = state + ':' + health;
+    writeFileSync(observations, JSON.stringify(observed));
+    if (args.at(-1).startsWith('skirnir.') && Object.keys(observed).length === 11 && Object.values(observed).every(value => value === 'running:healthy')) writeFileSync(process.env.TEST_LOG + '.healthy', '');
+    console.log(state + ':' + health);
   }
 }
 if (args[0] === 'compose' && args.includes('ps') && args.includes('-q')) console.log(args.at(-1));
-if (args.includes('/var/www/html/Common/ContainerRuntime/startup-status.mjs')) console.log(process.env.TEST_PHASE);
+if (args.includes('/var/www/html/Common/ContainerRuntime/startup-status.mjs')) {
+  console.log(process.env.TEST_PHASE);
+  if (process.env.TEST_PHASE === 'failed') writeFileSync(process.env.TEST_LOG + '.failed', '');
+}
+if (args[0] === 'compose' && args.includes('up') && args.includes('--abort-on-container-failure')) {
+  const timer = setInterval(() => {
+    if (existsSync(process.env.TEST_LOG + '.failed')) process.exit(23);
+    if (existsSync(process.env.TEST_LOG + '.healthy')) {
+      clearInterval(timer);
+      setTimeout(() => process.exit(0), 200);
+    }
+  }, 20);
+}
 if (args[0] === 'compose' && args.includes('logs')) {
   writeSync(1, 'mimir: installing dependencies\\n');
   writeSync(2, 'mimir: registry retry\\n');
@@ -86,6 +105,7 @@ if (args[0] === 'log-child') {
     TEST_FAIL: options.fail ?? '',
     TEST_MISSING: JSON.stringify(options.missing ?? []),
     TEST_STATE: options.state ?? 'running',
+    TEST_INITIAL_STATE: options.initialState ?? '',
     TEST_HEALTH: options.health ?? 'healthy',
     TEST_PHASE: options.phase ?? 'preparing',
     TEST_PENDING: String(options.pending ?? 0),
@@ -238,10 +258,13 @@ test('attached development disables the interactive Compose shortcut menu', () =
   const result = run(['dev']);
   assert.equal(result.status, 0, result.stderr);
   const startup = result.commands.find(({ args }) =>
-    args.join(' ').includes('up --build --abort-on-container-failure')
+    args.join(' ').includes('up --no-build --abort-on-container-failure')
   );
   assert.ok(startup);
   assert.equal(startup.menu, 'false');
+  assert.ok(index(result.commands, 'create --build') < result.commands.indexOf(startup));
+  assert.ok(!has(result.commands, 'logs --follow'));
+  assert.match(result.stdout, /All development services are ready!/);
 });
 
 test('source compilation is rejected against an image stack', () => {
@@ -357,4 +380,38 @@ test('database helpers run the owning Bash script even with older storage images
       'cp db.pantheon.internal:/var/lib/postgresql/export.tar.gz /tmp/export.tar.gz'
     )
   );
+});
+
+test('development readiness waits through creation and preparation and prints aligned links once', () => {
+  for (const invocation of [['dev'], ['dev', '--detach']]) {
+    const result = run(invocation, {
+      pending: 1,
+      initialState: invocation.length === 1 ? 'created' : '',
+    });
+    assert.equal(result.status, 0, result.stderr);
+    assert.equal(
+      result.stdout.split('All development services are ready!').length - 1,
+      1,
+      result.stdout
+    );
+    for (const service of ['tyr', 'sigrun', 'forseti'])
+      assert.ok(result.stdout.includes(`http://${service}.pantheon.local/`));
+    const rows = result.stdout.split('\n').filter((line) => /^(\| |\+---)/.test(line));
+    assert.equal(rows.length, 7);
+    assert.ok(rows.every((line) => line.length === rows[0].length));
+    assert.ok(result.commands.filter(({ args }) => args.includes('ps')).length > 11);
+  }
+});
+
+test('failed development creation, launch or preparation never announces readiness', () => {
+  for (const options of [
+    { fail: 'create --build' },
+    { fail: 'up --no-build' },
+    { health: 'unhealthy', phase: 'failed' },
+  ]) {
+    const result = run(['dev'], options);
+    assert.notEqual(result.status, 0);
+    assert.ok(!result.stdout.includes('All development services are ready!'));
+    if (options.fail === 'create --build') assert.ok(!has(result.commands, 'ps --all -q'));
+  }
 });

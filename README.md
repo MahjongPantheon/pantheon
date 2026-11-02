@@ -274,7 +274,9 @@ bin/pantheon stop                    # Remove containers; preserve named data
 One command builds development tooling if needed, installs locked shared/service
 dependencies, migrates databases and starts all watchers. Foreground startup
 streams container logs from preparation onward; Ctrl+C stops the stack. Detached
-startup returns after application healthchecks pass. Watchers run under Supervisor
+startup returns after application healthchecks pass. Both modes print a bordered
+readiness message with links to Tyr, Sigrun and Forseti once all 11 applications
+are healthy. Foreground logs continue after the message. Watchers run under Supervisor
 inside containers, with grouped signal handling, so restarting a container also
 restarts its watcher. `bin/pantheon restart-watcher frey` restarts Frey's watcher.
 

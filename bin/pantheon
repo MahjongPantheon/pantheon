@@ -99,6 +99,15 @@ retire_legacy_proxy() {
 wait_ready() {
   /bin/sh Common/ContainerRuntime/wait-ready.sh "$root/bin/pantheon" compose
 }
+stop_development_readiness() {
+  local pid
+  # The checker normally exits long before Compose. Only signal an active child,
+  # since its old PID could have been reused during a long development session.
+  for pid in $(jobs -pr); do
+    if [[ $pid == "$readiness_pid" ]]; then kill "$pid" 2>/dev/null || true; fi
+  done
+  wait "$readiness_pid" 2>/dev/null || true
+}
 warmup() {
   local service
   for service in Sigrun Bragi; do
@@ -272,10 +281,17 @@ case "$command" in
       compose up -d --build || { result=$?; compose logs --tail=100; exit "$result"; }
       wait_ready
     else
+      # Finish builds and container replacement before checking readiness, so
+      # healthy containers from a previous run cannot announce a new build early.
+      compose create --build
+      PANTHEON_STREAM_LOGS=false PANTHEON_WAIT_FOR_START=true /bin/sh \
+        "$root/Common/ContainerRuntime/wait-ready.sh" "$root/bin/pantheon" compose &
+      readiness_pid=$!
+      trap stop_development_readiness EXIT
       # Compose attaches to preparation and worker output, and owns signals for
       # the entire stack. No host-side watcher processes need PID tracking.
       # Keep Compose's interactive shortcut menu out of the log stream.
-      COMPOSE_MENU=false compose up --build --abort-on-container-failure
+      COMPOSE_MENU=false compose up --no-build --abort-on-container-failure
     fi
     ;;
   local-prod)
