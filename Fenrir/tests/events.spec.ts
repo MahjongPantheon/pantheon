@@ -33,6 +33,8 @@ test('SMOKE-004: Create a local event and add players there', async ({
   await test.step('Create a local event through Forseti', async () => {
     await page.getByTestId('forseti-menu-sidebar-create-event').click();
     await expect(page.getByTestId('forseti-event-settings-page')).toBeVisible();
+    // Initial data loading resets the new-event form, so wait before typing.
+    await expect(page.getByTestId('forseti-event-settings-save')).toBeEnabled();
     const title = page.getByTestId('forseti-event-settings-basic-settings-event-title');
     const localType = page.getByTestId('forseti-event-settings-event-type-EVENT_TYPE_LOCAL');
     const ruleset = page.getByTestId('forseti-event-settings-basic-settings-event-ruleset');

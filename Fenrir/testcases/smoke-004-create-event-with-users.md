@@ -34,17 +34,17 @@ Accounts are created through Frey's development `RequestRegistration` and `Appro
 
 ## Steps and expected results
 
-| Step | Action                                                                                                                                             | Expected result                                                   |
-| ---- | -------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------- |
-| 1    | Open `FORSETI_URL`                                                                                                                                 | Login and password fields appeared                                |
-| 2    | Enter event administrator credentials and press Log in                                                                                             | Empty list of own events appears                                  |
-| 3    | Press "Create new event" menu item                                                                                                                 | The form of new event appears                                     |
-| 4    | Fill the form with an unique event name, select Local event type, select one of event rules from the popup, select one of timezones from the popup | Data is filled in the first form tab                              |
-| 5    | Press the event form's save control (`forseti-event-settings-save`, currently titled "Save changes")                                               | List of owned events with one item appears                        |
-| 6    | Open the event title link in a new browser tab (middle-click)                                                                                      | Event settings form appears with freshly loaded event permissions |
-| 7    | Press "Manage players" menu item                                                                                                                   | Empty players list appears                                        |
-| 8    | Type name of each of 8 mock users in the search field and click on the popup item appeared                                                         | All 8 mock users are added to the event                           |
-| 9    | Reload the player-management page                                                                                                                  | Exactly the same 8 mock users remain registered                   |
+| Step | Action                                                                                                                                             | Expected result                                                                                    |
+| ---- | -------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| 1    | Open `FORSETI_URL`                                                                                                                                 | Login and password fields appeared                                                                 |
+| 2    | Enter event administrator credentials and press Log in                                                                                             | Empty list of own events appears                                                                   |
+| 3    | Press "Create new event" menu item and wait for the save control to become enabled                                                                 | The new event form has finished loading and can be filled without its initial reset clearing input |
+| 4    | Fill the form with an unique event name, select Local event type, select one of event rules from the popup, select one of timezones from the popup | Data is filled in the first form tab                                                               |
+| 5    | Press the event form's save control (`forseti-event-settings-save`, currently titled "Save changes")                                               | List of owned events with one item appears                                                         |
+| 6    | Open the event title link in a new browser tab (middle-click)                                                                                      | Event settings form appears with freshly loaded event permissions                                  |
+| 7    | Press "Manage players" menu item                                                                                                                   | Empty players list appears                                                                         |
+| 8    | Type name of each of 8 mock users in the search field and click on the popup item appeared                                                         | All 8 mock users are added to the event                                                            |
+| 9    | Reload the player-management page                                                                                                                  | Exactly the same 8 mock users remain registered                                                    |
 
 ## Cleanup and isolation
 
