@@ -105,6 +105,8 @@ infra_test() (
     compose --profile '*' config --format json > "$rendered/source-production.json"
   ENV_FILENAME=.env.e2e CONTAINER_ARCH=amd64 COMPOSE_PROJECT_NAME=pantheon PANTHEON_STACK_MODE=image \
     PANTHEON_LOCAL=true PANTHEON_BUILD=true compose --profile '*' config --format json > "$rendered/local.json"
+  ENV_FILENAME=.env.e2e CONTAINER_ARCH=amd64 "${provider[@]}" -f docker-compose-production.yml \
+    --env-file Env/.env.e2e --profile '*' config --format json > "$rendered/production-compatibility.json"
   for arch in amd64 arm64; do
     ( unset CONTAINER_ARCH
       export ENV_FILENAME=.env.e2e

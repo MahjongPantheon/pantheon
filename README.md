@@ -98,6 +98,14 @@ volume; source migration and cron tools for Frey/Mimir remain available. Missing
 packages require registry/Git access. Existing dependency and cache volumes are
 preserved. BuildKit caches stay outside the resulting image layers.
 
+Production applications (image and source modes) and shared infrastructure use
+`restart: unless-stopped`. Running containers return automatically after a host
+reboot when Docker starts; manually stopped containers stay stopped. Enable Docker
+at boot as described in the production setup guide. After upgrading this checkout,
+run `bin/pantheon prod start <tag>` to apply restart policies to existing
+infrastructure as well as applications; `prod restart` does not apply configuration
+changes. For mounted sources, use `bin/pantheon source-prod start`.
+
 ```sh
 bin/pantheon prod pull <tag>                  # Fetch without changing containers
 bin/pantheon prod recreate <tag>              # Adopt selected images/config; wait; warm up

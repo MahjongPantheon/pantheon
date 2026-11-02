@@ -521,8 +521,13 @@ domains to new server IP. This may take some time to update everywhere.
 Also, to send emails, you will need to set your reverse DNS lookup to match your primary hostname
 (it should be the hostname emails are sent from, e.g. it should be `pantheon.org` if email
 address is `noreply@pantheon.org`. This is typically done through the control panel of your
-hosting provider. You may need to restart your server to apply the changes, if this is the case,
-don't forget to rerun pantheon containers after restart using `bin/pantheon prod start` in pantheon folder.
+hosting provider. If you need to reboot the server, running production containers
+return automatically when Docker starts, using `restart: unless-stopped`.
+Manually stopped containers stay stopped. Ensure Docker and containerd are enabled
+at boot as shown in the host setup above. For an existing installation, run
+`bin/pantheon prod start <tag>` after updating the Compose files to apply the
+policies to applications and infrastructure; `prod restart` alone does not update
+container configuration. Source deployments use `bin/pantheon source-prod start`.
 
 ### Issuing SSL certificates and finalizing nginx setup
 

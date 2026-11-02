@@ -16,6 +16,7 @@ services:
     - pnpmstore01:/.pnpm
     restart: 'no'
   tyr.pantheon.internal:
+    restart: unless-stopped
     image: ghcr.io/mahjongpantheon/pantheon-tyr-${CONTAINER_ARCH:-amd64}:${DEV_IMAGE_TAG:-development}
     build:
       context: .
@@ -53,6 +54,7 @@ services:
       timeout: 3s
       retries: 3
   forseti.pantheon.internal:
+    restart: unless-stopped
     image: ghcr.io/mahjongpantheon/pantheon-forseti-${CONTAINER_ARCH:-amd64}:${DEV_IMAGE_TAG:-development}
     build:
       context: .
@@ -90,6 +92,7 @@ services:
       timeout: 3s
       retries: 3
   sigrun.pantheon.internal:
+    restart: unless-stopped
     image: ghcr.io/mahjongpantheon/pantheon-sigrun-${CONTAINER_ARCH:-amd64}:${DEV_IMAGE_TAG:-development}
     build:
       context: .
@@ -127,6 +130,7 @@ services:
       timeout: 3s
       retries: 3
   bragi.pantheon.internal:
+    restart: unless-stopped
     image: ghcr.io/mahjongpantheon/pantheon-bragi-${CONTAINER_ARCH:-amd64}:${DEV_IMAGE_TAG:-development}
     build:
       context: .
@@ -164,6 +168,7 @@ services:
       timeout: 3s
       retries: 3
   frey.pantheon.internal:
+    restart: unless-stopped
     image: ghcr.io/mahjongpantheon/pantheon-frey-${CONTAINER_ARCH:-amd64}:${DEV_IMAGE_TAG:-development}
     build:
       context: .
@@ -203,6 +208,7 @@ services:
       timeout: 3s
       retries: 3
   mimir.pantheon.internal:
+    restart: unless-stopped
     image: ghcr.io/mahjongpantheon/pantheon-mimir-${CONTAINER_ARCH:-amd64}:${DEV_IMAGE_TAG:-development}
     build:
       context: .
@@ -242,6 +248,7 @@ services:
       timeout: 3s
       retries: 3
   hugin.pantheon.internal:
+    restart: unless-stopped
     image: ghcr.io/mahjongpantheon/pantheon-hugin-${CONTAINER_ARCH:-amd64}:${DEV_IMAGE_TAG:-development}
     build:
       context: .
@@ -281,6 +288,7 @@ services:
       timeout: 3s
       retries: 3
   gullveig.pantheon.internal:
+    restart: unless-stopped
     image: ghcr.io/mahjongpantheon/pantheon-gullveig-${CONTAINER_ARCH:-amd64}:${DEV_IMAGE_TAG:-development}
     build:
       context: .
@@ -318,6 +326,7 @@ services:
       timeout: 3s
       retries: 3
   meili.pantheon.internal:
+    restart: unless-stopped
     image: ghcr.io/mahjongpantheon/pantheon-meili-${CONTAINER_ARCH:-amd64}:${DEV_IMAGE_TAG:-development}
     build:
       context: .
@@ -355,6 +364,7 @@ services:
       timeout: 3s
       retries: 3
   hermod.pantheon.internal:
+    restart: unless-stopped
     image: ghcr.io/mahjongpantheon/pantheon-hermod-${CONTAINER_ARCH:-amd64}:${DEV_IMAGE_TAG:-development}
     build:
       context: .
@@ -392,6 +402,7 @@ services:
       timeout: 3s
       retries: 3
   skirnir.pantheon.internal:
+    restart: unless-stopped
     image: ghcr.io/mahjongpantheon/pantheon-skirnir-${CONTAINER_ARCH:-amd64}:${DEV_IMAGE_TAG:-development}
     build:
       context: .

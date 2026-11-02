@@ -8,6 +8,21 @@ const read = (name) => readFileSync(join(directory, name), 'utf8');
 const load = (name) => JSON.parse(read(`${name}.json`));
 const applications =
   'tyr forseti sigrun bragi frey mimir hugin gullveig meili hermod skirnir'.split(' ');
+const infrastructure = 'db redis pgadmin cadvisor dbwatcher grafana dozzle'.split(' ');
+const assertRestartPolicies = (data, label) => {
+  for (const name of [...applications, ...infrastructure]) {
+    assert.equal(
+      data.services[`${name}.pantheon.internal`].restart,
+      'unless-stopped',
+      `${label}: ${name} must recover after a host reboot and respect manual stops`
+    );
+  }
+  for (const name of ['dependencies-init', 'development-init', 'fenrir.pantheon.internal']) {
+    if (data.services[name]) {
+      assert.equal(data.services[name].restart ?? 'no', 'no', `${label}: ${name}`);
+    }
+  }
+};
 const ports = Object.fromEntries(
   'mimir sigrun tyr frey forseti bragi hermod hugin gullveig skirnir fenrir meili'
     .split(' ')
@@ -36,6 +51,7 @@ for (const mode of ['dev', 'source', 'image']) {
   for (const arch of ['amd64', 'arm64']) {
     const data = load(`${mode}-${arch}`);
     assert.equal(data.name, 'pantheon');
+    if (mode !== 'dev') assertRestartPolicies(data, `${mode}-${arch}`);
     for (const [name, port] of Object.entries(ports)) {
       assert.ok(
         data.services[`${name}.pantheon.internal`].ports.some((p) => p.published === String(port)),
@@ -44,6 +60,7 @@ for (const mode of ['dev', 'source', 'image']) {
     }
     for (const name of applications) {
       const service = data.services[`${name}.pantheon.internal`];
+      if (mode === 'dev') assert.equal(service.restart ?? 'no', 'no', `${mode}: ${name}`);
       assert.equal(service.labels['io.pantheon.mode'], mode);
       const sources = (service.volumes ?? []).filter(
         (mount) => mount.type === 'bind' && mount.target.startsWith('/var/www/html/')
@@ -89,6 +106,9 @@ for (const mode of ['dev', 'source', 'image']) {
     `${mode}: architecture drift`
   );
 }
+for (const name of ['source-production', 'local', 'production-compatibility']) {
+  assertRestartPolicies(load(name), name);
+}
 for (const name of applications) {
   const env = load('source-production').services[`${name}.pantheon.internal`].environment;
   assert.equal(env.NODE_ENV, 'production');
@@ -97,8 +117,9 @@ for (const name of applications) {
   assert.equal(load('local').services[`${name}.pantheon.internal`].build.target, 'production');
 }
 assert.equal(load('local').services['reverse-proxy'].ports[0].published, '80');
+assert.equal(load('local').services['reverse-proxy'].restart, 'unless-stopped');
 for (const arch of ['amd64', 'arm64'])
   assert.ok(read(`compatibility-${arch}.txt`).includes(`pantheon-frey-${arch}:`));
 console.log(
-  'Compose modes, architectures, ports, source boundaries and persistent volumes verified.'
+  'Compose modes, architectures, ports, restart policies, source boundaries and persistent volumes verified.'
 );
