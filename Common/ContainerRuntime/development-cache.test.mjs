@@ -132,6 +132,10 @@ test(
         })
       );
       writeFileSync(join(runtime, 'refresh-development-client.mjs'), readFileSync(helper));
+      writeFileSync(
+        join(runtime, 'install-slot.sh'),
+        readFileSync(new URL('install-slot.sh', import.meta.url))
+      );
       writeFileSync(join(root, 'install.sh'), installer.replaceAll('/var/www/html', root));
       writeFileSync(join(bin, 'su-exec'), '#!/bin/sh\nshift\nexec "$@"\n', { mode: 0o755 });
       writeFileSync(join(bin, 'chown'), '#!/bin/sh\nexit 0\n', { mode: 0o755 });

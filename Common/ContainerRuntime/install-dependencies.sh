@@ -9,6 +9,9 @@ store=${npm_config_store_dir:-/.pnpm/store}
 cache="$(dirname "$store")/cache"
 mkdir -p "$store" "$cache/pnpm"
 chown user: "$store" "$cache" "$cache/pnpm"
+. /var/www/html/Common/ContainerRuntime/install-slot.sh
+echo "$service: waiting for a dependency installation slot"
+wait_install_slot "$store"
 
 install_dependencies() {
   cd "$root/$1"

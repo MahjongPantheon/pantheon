@@ -2,7 +2,8 @@ import { createRequire } from 'node:module';
 import { setTimeout } from 'node:timers/promises';
 
 const service = process.argv[2];
-const directory = service === 'Hugin' ? 'Hugin-dist' : service;
+const directory =
+  service === 'Hugin' && process.env.PANTHEON_MODE === 'production' ? 'Hugin-dist' : service;
 const require = createRequire(`/var/www/html/${directory}/package.json`);
 const { Client } = require('pg');
 const prefix = service === 'Hugin' ? 'PHINX_DB_HUGIN' : `DB_${service.toUpperCase()}`;

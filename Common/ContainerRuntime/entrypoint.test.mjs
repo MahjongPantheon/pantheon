@@ -20,7 +20,7 @@ for (const fail of [false, true]) {
       const ready = join(root, 'ready');
       const failed = join(root, 'failed');
       const services = join(root, 'services');
-      for (const file of ['prepare.sh', 'install-dependencies.sh']) {
+      for (const file of ['prepare.sh', 'install-dependencies.sh', 'install-slot.sh']) {
         writeFileSync(
           join(runtime, file),
           readFileSync(new URL(file, import.meta.url), 'utf8')

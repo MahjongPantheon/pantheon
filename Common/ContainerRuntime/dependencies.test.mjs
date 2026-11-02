@@ -32,6 +32,7 @@ function prepare(
     for (const file of [
       'prepare.sh',
       'install-dependencies.sh',
+      'install-slot.sh',
       'prepare-development.sh',
       'install-development.sh',
     ]) {

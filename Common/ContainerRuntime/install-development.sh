@@ -6,6 +6,9 @@ store=${npm_config_store_dir:-/.pnpm}
 cache="$store/cache"
 mkdir -p node_modules "$store" "$cache/pnpm"
 chown user: node_modules "$store" "$cache" "$cache/pnpm"
+. /var/www/html/Common/ContainerRuntime/install-slot.sh
+echo "$service: waiting for a dependency installation slot"
+wait_install_slot "$store"
 echo "$service: installing development dependencies"
 su-exec user node /var/www/html/Common/ContainerRuntime/refresh-development-client.mjs
 # Keep package contents and registry policy metadata across container recreation.

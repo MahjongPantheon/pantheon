@@ -57,6 +57,14 @@ jobs:
         env:
           ENV_FILENAME: .env.e2e
 
+      - name: Collect failed startup diagnostics
+        if: ${{ !cancelled() && steps.setup.outcome == 'failure' }}
+        run: bash .github/scripts/collect-container-logs.sh .ci-e2e-results
+        env:
+          ENV_FILENAME: .env.e2e
+          PANTHEON_STACK_MODE: source
+          PANTHEON_LOCAL: 'true'
+
       - name: Run all tests
         id: tests
         if: ${{ !cancelled() && steps.setup.outcome == 'success' }}
@@ -109,4 +117,3 @@ jobs:
       - name: Stop containers
         if: always()
         run: bin/pantheon stop
-
