@@ -221,6 +221,17 @@ test('managed development installs locked source dependencies and migrates befor
   assert.equal(installs.length, 1);
   assert.ok(installs[0].args.includes('--frozen-lockfile'));
   assert.ok(installs[0].args.includes('--prod=false'));
+  assert.ok(installs[0].args.includes('--prefer-offline'));
+  assert.ok(!installs[0].args.includes('--force'));
+  assert.equal(installs[0].cache, join(result.root, 'dependencies/store/cache'));
+  const refresh = result.commands.findIndex(({ args }) =>
+    args[1]?.endsWith('/refresh-development-client.mjs')
+  );
+  assert.ok(refresh >= 0 && refresh < result.commands.indexOf(installs[0]));
+  assert.equal(
+    installs[0].args[installs[0].args.indexOf('--store-dir') + 1],
+    join(result.root, 'dependencies/store')
+  );
   const migration = result.commands.findIndex(({ args }) =>
     args.includes('app/database/migrate.ts')
   );

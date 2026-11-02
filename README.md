@@ -282,7 +282,11 @@ Local frontend/backend environment files are prepared from
 `Env/.env.development`; optional `Env/.env.development.local` values are appended.
 Normal startup never rewrites lockfiles. Use `bin/pantheon deps --update [SERVICE...]`
 when intentionally updating dependency manifests/lockfiles. `bin/pantheon deps` performs
-locked installation and refreshes local `file:` clients; Fenrir's optional browser dependencies are installed in the
+locked installation. Development startup reinstalls only the local `tsclients`
+package, so generated clients and removed files stay current. Registry packages
+are reused from the shared pnpm store; registry metadata also persists in that
+volume. Missing packages or metadata are fetched when necessary, without forcing
+a reinstall of the complete dependency tree. Fenrir's optional browser dependencies are installed in the
 e2e flow. `bin/pantheon build-base` rebuilds shared tooling. Rebuild dependent images
 after base changes.
 
