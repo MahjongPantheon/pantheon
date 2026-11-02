@@ -86,7 +86,8 @@ refresh_dependencies() {
     else service_task "$name" "$target"; fi
   done
 }
-infra_test() {
+infra_test() (
+  # Keep EXIT cleanup in the scope of its local variables, including on failure.
   ensure_base
   local rendered mode arch
   rendered=$(mktemp -d)
@@ -106,6 +107,7 @@ infra_test() {
     PANTHEON_LOCAL=true PANTHEON_BUILD=true compose --profile '*' config --format json > "$rendered/local.json"
   for arch in amd64 arm64; do
     ( unset CONTAINER_ARCH
+      export ENV_FILENAME=.env.e2e
       "${provider[@]}" -f "docker-compose-$arch.yml" --env-file Env/.env.e2e config --images
     ) > "$rendered/compatibility-$arch.txt"
   done
@@ -114,9 +116,7 @@ infra_test() {
     -v "$root:/workspace:ro" -v "$rendered:/rendered:ro" \
     "ghcr.io/mahjongpantheon/pantheon-container-base-v4-$CONTAINER_ARCH:latest" \
     bash -ec 'node --test Common/ContainerRuntime/*.test.mjs; node bin/check-compose.mjs /rendered'
-  rm -rf -- "$rendered"
-  trap - EXIT
-}
+)
 confirm() {
   local answer
   printf '%s\nContinue? (y/N) ' "$1" >&2

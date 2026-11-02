@@ -1,6 +1,14 @@
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import {
+  existsSync,
+  mkdirSync,
+  mkdtempSync,
+  readFileSync,
+  readdirSync,
+  rmSync,
+  writeFileSync,
+} from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -36,6 +44,8 @@ function run(args, options = {}) {
       mode: 0o755,
     });
   const log = join(root, 'commands.jsonl');
+  const temporary = join(root, 'temporary');
+  mkdirSync(temporary);
   const stub = join(root, 'command.mjs');
   writeFileSync(log, '');
   writeFileSync(
@@ -112,7 +122,9 @@ if (args[0] === 'log-child') {
     TEST_NESTED: String(options.nested ?? false),
     TEST_ACTUAL_MODE: options.actualMode ?? 'source',
     COMPOSE_MENU: 'true',
+    TMPDIR: temporary,
   };
+  if (options.withoutEnvironment) delete env.ENV_FILENAME;
   delete env.MAKEFLAGS;
   delete env.MFLAGS;
   try {
@@ -131,13 +143,35 @@ if (args[0] === 'log-child') {
       });
       childRunning = status.status === 0 && !status.stdout.trim().startsWith('Z');
     }
-    return { ...result, commands, logsStopped: existsSync(log + '.stopped'), childRunning };
+    return {
+      ...result,
+      commands,
+      logsStopped: existsSync(log + '.stopped'),
+      childRunning,
+      temporaryDirectories: readdirSync(temporary),
+    };
   } finally {
     rmSync(root, { recursive: true, force: true });
   }
 }
 const has = (commands, part) => commands.some(({ args }) => args.join(' ').includes(part));
 const index = (commands, part) => commands.findIndex(({ args }) => args.join(' ').includes(part));
+
+test('infrastructure checks select the public environment and remove temporary renders on every exit', () => {
+  for (const failure of ['', 'config --format json', 'config --images', 'runtime run']) {
+    const result = run(['infra-test'], { withoutEnvironment: true, fail: failure });
+    assert.equal(result.status, failure ? 23 : 0, result.stderr);
+    assert.ok(!result.stderr.includes('unbound variable'), result.stderr);
+    assert.deepEqual(result.temporaryDirectories, []);
+    const renders = result.commands.filter(({ args }) => args[0] === 'compose');
+    assert.ok(renders.length > 0);
+    for (const render of renders) assert.equal(render.env, '.env.e2e');
+    if (!failure) {
+      assert.equal(renders.filter(({ args }) => args.includes('--images')).length, 2);
+      assert.ok(has(result.commands, 'runtime run'));
+    }
+  }
+});
 
 test('release builds use all application production stages and build before switching', () => {
   const result = run(['local-prod', 'build', 'my-release']);
