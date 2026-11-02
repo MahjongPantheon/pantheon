@@ -20,7 +20,7 @@ All following commands are run as root.
 ```bash
 apt update
 apt upgrade
-apt install htop vim iptables mailutils make apache2-utils
+apt install htop vim iptables mailutils apache2-utils
 
 # change port to some other to prevent malicious ssh login attempts:
 vi /etc/ssh/sshd_config # edit port here
@@ -204,7 +204,14 @@ with updating your nginx configs on host.
 
 Create `/srv/__pantheon/Env/.env.production` using `Env/.env.example.production`
 as a starting point. Configure service URLs, database credentials and mail settings.
-Then run `make prod_pull` and `make prod_start` from the Pantheon folder.
+Then run `bin/pantheon prod pull <tag>` followed by
+`bin/pantheon prod start <tag>` from the Pantheon folder. Startup waits for all
+applications and warms SSR services. `bin/pantheon prod restart` restarts existing
+containers; `bin/pantheon prod recreate <tag>` adopts new images or settings.
+The older server-side compilation flow is isolated under
+`bin/pantheon source-prod start` and `source-prod compile`; image deployments never
+compile mounted sources. See [container workflows](../../README.md#container-workflows)
+for Compose layers and local production testing.
 
 CI images contain production bundles and dependency manifests/lockfiles, without
 application `node_modules`. On every production start, Node.js services run
@@ -231,20 +238,20 @@ the shared volume. Build-time npm and pnpm caches use BuildKit cache mounts and
 are excluded from image layers. Older images need rebuilding to remove their
 previously included caches.
 Tyr and Forseti serve static bundles and need no runtime install. You do not need
-`make deps` or `make prod_compile` on the server. An install or migration failure
+`bin/pantheon deps` or `bin/pantheon source-prod compile` on the server. An install or migration failure
 stops startup; inspect container logs before retrying.
 
 Application containers expose healthchecks that remain false until dependency
 installation and migrations succeed, all Supervisor programs (including cron)
 are running, and Nginx plus all production workers accept connections on IPv4 or
 IPv6 localhost. Check the health column in production Compose `ps` output. Local
-`make prod_local_start` follows this health status without a startup deadline and
+`bin/pantheon local-prod local` follows this health status without a startup deadline and
 reports installation/migration failures, stopped/restarting containers, and
 Supervisor `FATAL`/`STOPPED` programs. It rechecks earlier healthy applications
 until the whole stack is ready. Worker stdout/stderr goes to container logs.
 
-For updates, run `make prod_update` (pull images and recreate application containers).
-For environment changes, including `VITE_*`, run `make prod_restart`. Public frontend
+For updates, run `bin/pantheon prod update` (pull images and recreate application containers).
+For environment changes, including `VITE_*`, run `bin/pantheon prod recreate`. Public frontend
 settings are generated at startup; `VITE_*` must never contain secrets. See the
 [root deployment guide](../../README.md#production-build) for commit-tag pinning and
 production Compose details. Keep deployment configuration files in sync with the
@@ -515,7 +522,7 @@ Also, to send emails, you will need to set your reverse DNS lookup to match your
 (it should be the hostname emails are sent from, e.g. it should be `pantheon.org` if email
 address is `noreply@pantheon.org`. This is typically done through the control panel of your
 hosting provider. You may need to restart your server to apply the changes, if this is the case,
-don't forget to rerun pantheon containers after restart using `make prod_start` in pantheon folder.
+don't forget to rerun pantheon containers after restart using `bin/pantheon prod start` in pantheon folder.
 
 ### Issuing SSL certificates and finalizing nginx setup
 
@@ -571,8 +578,8 @@ To migrate:
 - Unarchive the keys folder on the new server: `cd / && tar xf /root/keys.tar.gz`
 
 To make new keys:
-- Ensure you have previously set ALLOWED_SENDER_DOMAINS variable in `Env/.env.production`. If not, set it and restart the containers using `make prod_restart`.
-- Enter Hermod container using `make shell_hermod`
+- Ensure you have previously set ALLOWED_SENDER_DOMAINS variable in `Env/.env.production`. If not, set it and restart the containers using `bin/pantheon prod recreate`.
+- Enter Hermod container using `bin/pantheon shell hermod`
 - Make a folder inside container named as your domain: `mkdir /etc/opendkim/keys/pantheon.org`
 - Run key generator: `opendkim-genkey -b 1024 -d pantheon.org -D /etc/opendkim/keys/pantheon.org -s default -v`
 - Set proper owner for the files: `chown opendkim:opendkim /etc/opendkim/keys -R`
@@ -596,14 +603,14 @@ external mail agent (see RELAYHOST_* variables in production environment config 
 ### Database and backups related hints
 
 If you're migrating to the new instance, transfer the database:
-- From pantheon folder on your old server, run `make db_export` as user
+- From pantheon folder on your old server, run `bin/pantheon db export` as user
 - Copy `Database/export.tar.gz` file from one server to another, to the same location
-- From pantheon folder on your new server, run `make db_import` as user as well.
+- From pantheon folder on your new server, run `bin/pantheon db import` as user as well.
 
 Don't forget to setup your backups on github:
 - Create a private repository
 - Update environment config and set the following variable to your repo address: `BACKUP_GIT_REMOTE=git@github.com:YOUR_USERNAME/backups.git`
-- Open database container using `make shell_db` as user from pantheon folder
+- Open database container using `bin/pantheon shell Database` as user from pantheon folder
 - Get your public key using `cat /var/lib/postgresql/.ssh/id_rsa.pub` - it's generated automatically on container start.
 - Add this public key to the list of SSH keys in github settings.
 - Exectue the following commands in container to reinitialize your backup repo folder:
@@ -620,7 +627,7 @@ Now the backups are set up and will be performed once an hour.
 ### Monitoring
 
 Pantheon comes with Prometheus installed inside Hugin service, and also offers cAdvisor and Grafana containers in its
-`docker-compose.yml` file. Note that migrating prometheus data from one host to another is not supported (yet?), so
+`compose.yaml` file. Note that migrating prometheus data from one host to another is not supported (yet?), so
 it's gonna be a clear setup.
 
 No setup is required for Prometheus itself and for cAdvisor. To set up Grafana, get to `https://monitoring.pantheon.org`
@@ -635,10 +642,10 @@ After it's done, you can import one or more dashboard configurations from `Hugin
 
 To setup Telegram bot for notifications, just put your bot token to the `BOT_TOKEN` variable in environment config
 and put your bot nickname to `VITE_BOT_NICKNAME` variable (this is used only in admin panel in informational purposes).
-After it's set, restart containers via `make prod_restart` from pantheon folder.
+After it's set, restart containers via `bin/pantheon prod recreate` from pantheon folder.
 
 If you're migrating existing installation, you'll also need to transfer uploaded avatars to new server.
-- On your old server, run `make shell_gullveig` from pantheon folder as user
+- On your old server, run `bin/pantheon shell gullveig` from pantheon folder as user
 - Archive the avatars using `cd /var/storage/files && tar czf avatars.tar.gz avatars`
 - Exit the container shell (Ctrl-D or `exit`)
 - Find Gullveig service ID using `docker ps | grep gullveig` - you'll need the first value in the line.
@@ -646,7 +653,7 @@ If you're migrating existing installation, you'll also need to transfer uploaded
 - Transfer avatar archive to your new server any way you want (ssh, sftp, etc) and place it into your user home folder
 - On your new server, find Gullveig service ID again using the same command `docker ps | grep gullveig`
 - Copy the archive inside container using `docker cp ~/avatars.tar.gz GULLVEIG_ID:/var/storage/files/`
-- Go to pantheon folder and open Gullveig container using `make shell_gullveig`
+- Go to pantheon folder and open Gullveig container using `bin/pantheon shell gullveig`
 - In Gullveig shell, run `cd /var/storage/files && tar xf avatars.tar.gz`
 - Remove the archive: `rm /var/storage/files/avatars.tar.gz`
 

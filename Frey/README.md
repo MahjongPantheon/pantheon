@@ -21,7 +21,7 @@ Frey is a simple authentication service with abilities of personal data storage.
 
 #### Test coverage
 
-`make test` runs Vitest and the external test server with V8 coverage enabled.
+`bin/pantheon test Frey` runs Vitest and the external test server with V8 coverage enabled.
 The server captures its executed sources and flushes its counters before teardown.
 Both processes use Vitest's V8-to-Istanbul AST converter and source maps; `nyc`
 merges their source coverage. Generated tsx module helpers are excluded, and
@@ -31,7 +31,7 @@ text, HTML, LCOV, and JSON reports are written to `Frey/coverage/` (open
 `coverage/index.html` for the HTML report). Each run clears the previous reports
 and preserves Vitest's failing exit status while still reporting coverage.
 
-The debug flows (`make test_verbose` and `make test_noserver`) continue to run
+The debug flows (`bin/pantheon test --verbose Frey` and `bin/pantheon task Frey test-noserver`) continue to run
 Vitest directly without collecting server coverage.
 
 The combined report must reach at least 85% for lines, statements, functions, and

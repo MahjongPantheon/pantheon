@@ -42,30 +42,17 @@ jobs:
         env:
           ENV_FILENAME: .env.development
 
-      - name: Pull containers
-        run: make pull
-        env:
-          ENV_FILENAME: .env.development
+      - name: Check container runtime and Compose configuration
+        run: bin/pantheon infra-test
 
-      - name: Run container
-        run: make pantheon_run
-        env:
-          ENV_FILENAME: .env.development
-
-      - name: Install project deps
-        id: deps
-        run: make deps
-        env:
-          ENV_FILENAME: .env.development
-
-      - name: Apply db migrations
-        id: migrate
-        run: make migrate
+      - name: Start development, install locked dependencies and migrate
+        id: setup
+        run: bin/pantheon dev --detach
         env:
           ENV_FILENAME: .env.development
 
       - name: Run and report every service check
-        if: ${{ !cancelled() && steps.deps.outcome == 'success' && steps.migrate.outcome == 'success' }}
+        if: ${{ !cancelled() && steps.setup.outcome == 'success' }}
         run: bash .github/scripts/report-checks.sh
         env:
           ENV_FILENAME: .env.development
@@ -87,7 +74,7 @@ jobs:
 
       - name: Stop containers
         if: always()
-        run: make pantheon_stop
+        run: bin/pantheon stop
         env:
           ENV_FILENAME: .env.development
 

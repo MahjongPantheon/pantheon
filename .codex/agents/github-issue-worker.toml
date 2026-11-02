@@ -7,7 +7,7 @@ Do not change the primary checkout, start another issue, or spawn another worker
 The parent owns local branch preparation, local commits, and independent review.
 The user alone pushes the branch and creates the PR.
 
-Read AGENTS.md, nearest service README/Makefile, and relevant knowledge-base files.
+Read AGENTS.md, nearest service README/tasks.sh, and relevant knowledge-base files.
 Use current code and event configuration for existing behavior; planned game-engine
 notes in the knowledge base do not establish implemented features.
 Reproduce the problem or trace the requested behavior, then implement the smallest
@@ -15,7 +15,7 @@ complete change satisfying this issue's acceptance criteria. Respect service and
 Twirp boundaries; use repository generators for protocol changes.
 
 Add focused behavioral coverage where applicable. Run required checks through the
-root Makefile in development containers and inspect the generated logs. Confirm
+root Bash runner in development containers and inspect the generated logs. Confirm
 the containers use your assigned worktree before claiming they tested your diff.
 Do not substitute host checks for required container checks or mutate shared data
 without the parent's environment/isolation instructions. Report setup failures as

@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+script_directory=$(CDPATH= cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
+exec "$script_directory/bin/pantheon" "$@"

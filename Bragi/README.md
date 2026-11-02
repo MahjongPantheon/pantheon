@@ -5,5 +5,5 @@ The browser and server share the same theme and stylesheet imports. Server rende
 use a separate Emotion cache per request and render a full document to collect
 React metadata before extracting the hydrated root markup.
 
-Run `make bragi_test` from the repository root for the metadata and route regression
-test. Bragi is also included in the root `make test` target.
+Run `bin/pantheon test bragi` from the repository root for the metadata and route regression
+test. Bragi is also included in the root `bin/pantheon test` target.

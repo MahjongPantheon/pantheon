@@ -7,6 +7,6 @@ import('node:http').then((http) => {
   });
   server.listen(port, '127.0.0.1', () => {
     console.log(`Gullveig placeholder listening on http://127.0.0.1:${server.address().port}`);
-    console.log('Run make prod_build_gullveig to replace this dummy server.');
+    console.log('Run bin/pantheon source-prod compile to replace this dummy server.');
   });
 });

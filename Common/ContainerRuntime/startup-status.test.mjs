@@ -67,15 +67,7 @@ test('Supervisor readiness requires every program, including crons, to be runnin
 });
 
 test('production worker logs are visible and non-mail services do not launch missing rsyslogd', () => {
-  for (const service of [
-    'Mimir',
-    'Frey',
-    'Sigrun',
-    'Bragi',
-    'Skirnir',
-    'Gullveig',
-    'Meili',
-  ]) {
+  for (const service of ['Mimir', 'Frey', 'Sigrun', 'Bragi', 'Skirnir', 'Gullveig', 'Meili']) {
     const source = readFileSync(
       new URL(`../../${service}/supervisord.conf`, import.meta.url),
       'utf8'
@@ -87,5 +79,33 @@ test('production worker logs are visible and non-mail services do not launch mis
       assert.match(block, /stdout_logfile_maxbytes = 0/, service);
       assert.match(block, /stderr_logfile_maxbytes = 0/, service);
     }
+  }
+});
+
+test('development ignores intentionally disabled production workers while requiring its watcher and cron', () => {
+  const previousMode = process.env.PANTHEON_MODE;
+  const previousWorkers = process.env.PANTHEON_PRODUCTION_WORKERS;
+  try {
+    process.env.PANTHEON_MODE = 'development';
+    process.env.PANTHEON_PRODUCTION_WORKERS = 'false';
+    const output =
+      'nginx RUNNING pid 1\nmimir:mimir_1 STOPPED\nmimir:mimir_cron RUNNING pid 2\ndevelopment RUNNING pid 3\n';
+    assert.equal(
+      supervisorStatus('Mimir', () => output),
+      'ready'
+    );
+    assert.equal(
+      supervisorStatus('Mimir', () => output.replace('development RUNNING', 'development FATAL')),
+      'failed'
+    );
+    assert.equal(
+      supervisorStatus('Mimir', () => output.replace('mimir_cron RUNNING', 'mimir_cron STOPPED')),
+      'failed'
+    );
+  } finally {
+    if (previousMode === undefined) delete process.env.PANTHEON_MODE;
+    else process.env.PANTHEON_MODE = previousMode;
+    if (previousWorkers === undefined) delete process.env.PANTHEON_PRODUCTION_WORKERS;
+    else process.env.PANTHEON_PRODUCTION_WORKERS = previousWorkers;
   }
 });

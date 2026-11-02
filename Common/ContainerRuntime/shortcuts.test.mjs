@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -8,418 +8,410 @@ import { test } from 'node:test';
 
 const repository = fileURLToPath(new URL('../../', import.meta.url));
 
-function run(
-  target,
-  {
-    failure = '',
-    overrides = [],
-    pending = 0,
-    startupFailed = false,
-    health = 'healthy',
-    regression = false,
-    state = 'running',
-    nestedLogs = false,
-    missingImages = [],
-  } = {}
-) {
-  const directory = mkdtempSync(join(tmpdir(), 'pantheon-shortcuts-'));
-  const log = join(directory, 'commands.jsonl');
-  const stub = join(directory, 'command.mjs');
+function run(args, options = {}) {
+  const root = mkdtempSync(join(tmpdir(), 'pantheon-shortcuts-'));
+  const workspace = join(root, 'workspace');
+  // Exercise the real Bash scripts against a disposable checkout skeleton.
+  // Environment preparation must never overwrite a developer's ignored files.
+  const files = [
+    'bin/pantheon',
+    'bin/get_arch.sh',
+    'bin/lib/tasks.sh',
+    'Common/ContainerRuntime/service-tasks.sh',
+    'Common/ContainerRuntime/wait-ready.sh',
+    'Env/.env.e2e',
+    'Database/tasks.sh',
+    ...'Tyr Forseti Sigrun Bragi Frey Mimir Hugin Gullveig Meili Hermod Skirnir Fenrir'
+      .split(' ')
+      .map((service) => `${service}/tasks.sh`),
+  ];
+  for (const file of files) {
+    mkdirSync(join(workspace, file, '..'), { recursive: true });
+    writeFileSync(join(workspace, file), readFileSync(join(repository, file)), { mode: 0o755 });
+  }
+  const blocked = join(root, 'blocked-runners');
+  mkdirSync(blocked);
+  for (const name of ['make', 'just'])
+    writeFileSync(join(blocked, name), '#!/bin/sh\necho Unexpected task runner >&2\nexit 99\n', {
+      mode: 0o755,
+    });
+  const log = join(root, 'commands.jsonl');
+  const stub = join(root, 'command.mjs');
   writeFileSync(log, '');
   writeFileSync(
     stub,
-    `#!/usr/bin/env node
+    `
 import { appendFileSync, existsSync, readFileSync, writeFileSync, writeSync } from 'node:fs';
-import { spawn, spawnSync } from 'node:child_process';
+import { spawn } from 'node:child_process';
 const args = process.argv.slice(2);
-if (args[0] === 'make' && (args[1] === '_prod_local_start' || args.includes('PROD_LOCAL_TAG=latest'))) {
-  const result = spawnSync('make', args.slice(1), { stdio: 'inherit' });
-  process.exit(result.status ?? 1);
-}
-appendFileSync(process.env.SHORTCUT_LOG, JSON.stringify({
-  args,
-  env: process.env.ENV_FILENAME,
-  tag: process.env.IMAGE_TAG,
-  workers: process.env.PANTHEON_PRODUCTION_WORKERS,
-}) + '\\n');
-if (process.env.SHORTCUT_FAILURE && args.join(' ').includes(process.env.SHORTCUT_FAILURE)) process.exit(23);
-if (args[0] === 'container' && args[1] === 'image' && args[2] === 'inspect' &&
-    JSON.parse(process.env.SHORTCUT_MISSING_IMAGES).some((image) => args.at(-1).endsWith(image))) process.exit(1);
-if (args[0] === 'log-plugin') {
-  // Model a plugin that inherits the terminal and does not handle SIGTERM.
-  process.on('SIGTERM', () => {});
-  writeFileSync(process.env.SHORTCUT_LOG + '.plugin-pid', String(process.pid));
-  setInterval(() => {}, 1000);
-}
-if (args[0] === 'compose' && args.includes('logs')) {
-  if (process.env.SHORTCUT_NESTED_LOGS === 'true') {
-    spawn(process.execPath, [process.argv[1], 'log-plugin'], { stdio: 'inherit' });
+appendFileSync(process.env.TEST_LOG, JSON.stringify({ args, mode: process.env.PANTHEON_STACK_MODE,
+  env: process.env.ENV_FILENAME, tag: process.env.IMAGE_TAG, menu: process.env.COMPOSE_MENU }) + '\\n');
+if (process.env.TEST_FAIL && args.join(' ').includes(process.env.TEST_FAIL)) process.exit(23);
+if (args[0] === 'runtime' && args[1] === 'image' && args[2] === 'inspect' &&
+  JSON.parse(process.env.TEST_MISSING).some(suffix => args.at(-1).endsWith(suffix))) process.exit(1);
+if (args[0] === 'runtime' && args[1] === 'inspect') {
+  if (args.at(-1) === 'pantheon-reverse-proxy-container') process.exit(1);
+  else if (args.join(' ').includes('io.pantheon.mode')) console.log(process.env.TEST_ACTUAL_MODE);
+  else {
+    const file = process.env.TEST_LOG + '.count';
+    const count = existsSync(file) ? Number(readFileSync(file, 'utf8')) : 0;
+    if (args.at(-1).startsWith('mimir.')) writeFileSync(file, String(count + 1));
+    const state = count < Number(process.env.TEST_PENDING) ? (process.env.TEST_INITIAL_STATE || process.env.TEST_STATE) : process.env.TEST_STATE;
+    const health = count < Number(process.env.TEST_PENDING) ? 'unhealthy' : process.env.TEST_HEALTH;
+    const observations = process.env.TEST_LOG + '.observations';
+    const observed = existsSync(observations) ? JSON.parse(readFileSync(observations, 'utf8')) : {};
+    observed[args.at(-1)] = state + ':' + health;
+    writeFileSync(observations, JSON.stringify(observed));
+    if (args.at(-1).startsWith('skirnir.') && Object.keys(observed).length === 11 && Object.values(observed).every(value => value === 'running:healthy')) writeFileSync(process.env.TEST_LOG + '.healthy', '');
+    console.log(state + ':' + health);
   }
-  // Flush the mock output before the readiness waiter can stop the follower.
-  writeSync(1, 'mimir: pnpm resolved 100 packages\\n');
-  writeSync(2, 'mimir: pnpm registry retry\\n');
-  setInterval(() => {}, 1000);
-  process.on('SIGTERM', () => {
-    writeFileSync(process.env.SHORTCUT_LOG + '.logs-stopped', 'stopped');
-    process.exit(0);
-  });
 }
 if (args[0] === 'compose' && args.includes('ps') && args.includes('-q')) console.log(args.at(-1));
-if (args[0] === 'container' && args[1] === 'inspect') {
-  let health = 'healthy';
-  if (args.at(-1).startsWith('mimir.')) {
-    const countFile = process.env.SHORTCUT_LOG + '.pending';
-    const count = existsSync(countFile) ? Number(readFileSync(countFile, 'utf8')) : 0;
-    writeFileSync(countFile, String(count + 1));
-    health = count < Number(process.env.SHORTCUT_PENDING) ? 'unhealthy' : process.env.SHORTCUT_HEALTH;
-  }
-  if (process.env.SHORTCUT_REGRESSION === 'true' && args.at(-1).startsWith('tyr.')) {
-    const countFile = process.env.SHORTCUT_LOG + '.tyr';
-    const count = existsSync(countFile) ? Number(readFileSync(countFile, 'utf8')) : 0;
-    writeFileSync(countFile, String(count + 1));
-    health = count === 1 ? 'unhealthy' : 'healthy';
-  }
-  console.log((args.at(-1).startsWith('mimir.') ? process.env.SHORTCUT_STATE : 'running') + ':' + health);
+if (args.includes('/var/www/html/Common/ContainerRuntime/startup-status.mjs')) {
+  console.log(process.env.TEST_PHASE);
+  if (process.env.TEST_PHASE === 'failed') writeFileSync(process.env.TEST_LOG + '.failed', '');
 }
-if (args.includes('/var/www/html/Common/ContainerRuntime/startup-status.mjs')) console.log(process.env.SHORTCUT_STARTUP_FAILED === 'true' ? 'failed' : 'ready');
-if (args.includes('/run/pantheon-startup-failed') && process.env.SHORTCUT_STARTUP_FAILED !== 'true') process.exit(1);
-`,
-    { mode: 0o755 }
+if (args[0] === 'compose' && args.includes('up') && args.includes('--abort-on-container-failure')) {
+  const timer = setInterval(() => {
+    if (existsSync(process.env.TEST_LOG + '.failed')) process.exit(23);
+    if (existsSync(process.env.TEST_LOG + '.healthy')) {
+      clearInterval(timer);
+      setTimeout(() => process.exit(0), 200);
+    }
+  }, 20);
+}
+if (args[0] === 'compose' && args.includes('logs')) {
+  writeSync(1, 'mimir: installing dependencies\\n');
+  writeSync(2, 'mimir: registry retry\\n');
+  if (process.env.TEST_NESTED === 'true') spawn(process.execPath, [process.argv[1], 'log-child'], { stdio: 'inherit' });
+  process.on('SIGTERM', () => { writeFileSync(process.env.TEST_LOG + '.stopped', ''); process.exit(0); });
+  setInterval(() => {}, 1000);
+}
+if (args[0] === 'log-child') {
+  writeFileSync(process.env.TEST_LOG + '.child', String(process.pid));
+  process.on('SIGTERM', () => {});
+  setInterval(() => {}, 1000);
+}
+`
   );
+  const env = {
+    ...process.env,
+    PATH: `${blocked}:${process.env.PATH}`,
+    CONTAINER_COMMAND: `${process.execPath} ${stub} runtime`,
+    PANTHEON_COMPOSE_PROVIDER: `${process.execPath} ${stub} compose`,
+    CONTAINER_ARCH: 'arm64',
+    ENV_FILENAME: '.env.e2e',
+    TEST_LOG: log,
+    TEST_FAIL: options.fail ?? '',
+    TEST_MISSING: JSON.stringify(options.missing ?? []),
+    TEST_STATE: options.state ?? 'running',
+    TEST_INITIAL_STATE: options.initialState ?? '',
+    TEST_HEALTH: options.health ?? 'healthy',
+    TEST_PHASE: options.phase ?? 'preparing',
+    TEST_PENDING: String(options.pending ?? 0),
+    TEST_NESTED: String(options.nested ?? false),
+    TEST_ACTUAL_MODE: options.actualMode ?? 'source',
+    COMPOSE_MENU: 'true',
+  };
+  delete env.MAKEFLAGS;
+  delete env.MFLAGS;
   try {
-    const executable = `${process.execPath} -- ${stub}`;
-    const result = spawnSync(
-      'make',
-      [
-        target,
-        `MAKE=${executable} make`,
-        `CONTAINER_COMMAND=${executable} container`,
-        `PROD_COMPOSE_COMMAND=${executable} compose`,
-        'CONTAINER_ARCH=arm64',
-        ...overrides,
-      ],
-      {
-        cwd: repository,
+    const result = spawnSync('bin/pantheon', args, {
+      cwd: workspace,
+      env,
+      encoding: 'utf8',
+      input: options.input ?? '',
+      timeout: 30000,
+    });
+    const commands = readFileSync(log, 'utf8').trim().split('\n').filter(Boolean).map(JSON.parse);
+    let childRunning = false;
+    if (existsSync(log + '.child')) {
+      const status = spawnSync('ps', ['-p', readFileSync(log + '.child', 'utf8'), '-o', 'stat='], {
         encoding: 'utf8',
-        timeout: 120000,
-        env: {
-          ...process.env,
-          SHORTCUT_LOG: log,
-          SHORTCUT_FAILURE: failure,
-          SHORTCUT_PENDING: String(pending),
-          SHORTCUT_STARTUP_FAILED: String(startupFailed),
-          SHORTCUT_HEALTH: health,
-          SHORTCUT_REGRESSION: String(regression),
-          SHORTCUT_STATE: state,
-          SHORTCUT_NESTED_LOGS: String(nestedLogs),
-          SHORTCUT_MISSING_IMAGES: JSON.stringify(missingImages),
-        },
-      }
-    );
-    const commands = readFileSync(log, 'utf8')
-      .trim()
-      .split('\n')
-      .filter(Boolean)
-      .map((line) => JSON.parse(line));
-    const pluginFile = `${log}.plugin-pid`;
-    let pluginRunning = false;
-    if (existsSync(pluginFile)) {
-      const pid = Number(readFileSync(pluginFile, 'utf8'));
-      const status = spawnSync('ps', ['-p', String(pid), '-o', 'stat='], { encoding: 'utf8' });
-      pluginRunning = status.status === 0 && !status.stdout.trim().startsWith('Z');
+      });
+      childRunning = status.status === 0 && !status.stdout.trim().startsWith('Z');
     }
-    return {
-      ...result,
-      commands,
-      logsStopped: existsSync(join(directory, 'commands.jsonl.logs-stopped')),
-      pluginRunning,
-    };
+    return { ...result, commands, logsStopped: existsSync(log + '.stopped'), childRunning };
   } finally {
-    rmSync(directory, { recursive: true, force: true });
+    rmSync(root, { recursive: true, force: true });
   }
 }
+const has = (commands, part) => commands.some(({ args }) => args.join(' ').includes(part));
+const index = (commands, part) => commands.findIndex(({ args }) => args.join(' ').includes(part));
 
-test('local builds tag all thirteen service images and stop at a failed build', () => {
-  const result = run('prod_local_build', { overrides: ['PROD_LOCAL_TAG=custom-test'] });
+test('release builds use all application production stages and build before switching', () => {
+  const result = run(['local-prod', 'build', 'my-release']);
   assert.equal(result.status, 0, result.stderr);
-  assert.deepEqual(result.commands[0].args, ['make', 'container_base']);
-  const builds = result.commands.slice(1);
-  assert.equal(builds.length, 13);
-  for (const { args } of builds) {
-    assert.deepEqual(args.slice(0, 2), ['container', 'build']);
-    assert.ok(args[args.indexOf('-t') + 1].endsWith('-arm64:custom-test'));
-  }
-  const applications = builds.filter(({ args }) => args.includes('-f'));
-  assert.equal(applications.length, 11);
-  for (const { args } of applications) {
-    assert.equal(args.at(-1), '.');
-    assert.ok(args.includes('CONTAINER_ARCH=arm64'));
-  }
-  assert.equal(builds.at(-2).args.at(-1), 'Database');
-  assert.equal(builds.at(-1).args.at(-1), 'Redis');
-  const failed = run('prod_local_build', { failure: 'Forseti/Dockerfile' });
+  const build = result.commands.find(
+    ({ args }) =>
+      args.includes('build') && args[0] === 'compose' && args.includes('frey.pantheon.internal')
+  );
+  assert.ok(build.args.includes('compose.build.yaml'));
+  assert.equal(build.args.filter((arg) => arg.endsWith('.pantheon.internal')).length, 13);
+  assert.ok(index(result.commands, 'build -t') < result.commands.indexOf(build));
+  assert.ok(result.commands.indexOf(build) < index(result.commands, 'up -d'));
+  const failed = run(['local-prod', 'build'], { fail: 'compose.build.yaml' });
   assert.notEqual(failed.status, 0);
-  assert.equal(failed.commands.length, 3);
+  assert.ok(!has(failed.commands, 'up -d'));
 });
 
-test('local startup validates settings before stopping the stack and starts the proxy last', () => {
-  const result = run('prod_local_start', {
-    overrides: ['PROD_LOCAL_TAG=custom-test', 'PROD_LOCAL_ENV=.env.custom-test'],
-  });
+test('local startup never falls back to latest when local images are incomplete', () => {
+  const result = run(['local-prod', 'local'], { missing: ['mimir-arm64:local-production'] });
+  assert.notEqual(result.status, 0);
+  assert.match(result.stderr, /Local image unavailable/);
+  assert.ok(!has(result.commands, 'pull'));
+  assert.ok(!has(result.commands, 'up -d'));
+});
+
+test('registry selection pulls explicitly and preserves one release tag for every operation', () => {
+  const result = run(['local-prod', 'registry', 'abc123']);
   assert.equal(result.status, 0, result.stderr);
-  assert.equal(
-    result.commands.filter(({ args }) => args[0] === 'container' && args[1] === 'image').length,
-    13
-  );
-  assert.deepEqual(
-    result.commands
-      .filter(({ args }) => args[0] !== 'container' && !args.includes('logs'))
-      .map(({ args }) => args),
-    [
-      ['compose', '--env-file', 'Env/.env.custom-test', 'config', '--quiet'],
-      ['make', 'build_reverse_proxy'],
-      [
-        'compose',
-        '--env-file',
-        'Env/.env.custom-test',
-        'run',
-        '--rm',
-        '--no-deps',
-        'dependencies-init',
-      ],
-      ['make', 'pantheon_stop'],
-      ['compose', '--env-file', 'Env/.env.custom-test', 'up', '-d', '--no-build'],
-      ...'tyr forseti sigrun bragi frey mimir hugin gullveig meili hermod skirnir'
-        .split(' ')
-        .map((service) => [
-          'compose',
-          '--env-file',
-          'Env/.env.custom-test',
-          'ps',
-          '--all',
-          '-q',
-          `${service}.pantheon.internal`,
-        ]),
-      ['make', '-C', 'Sigrun', 'container_warmup'],
-      ['make', '-C', 'Bragi', 'container_warmup'],
-      ['make', 'reverse_proxy_start'],
-    ]
-  );
-  const follower = result.commands.find(({ args }) => args.includes('logs'));
-  assert.deepEqual(follower.args.slice(0, 6), [
-    'compose',
-    '--env-file',
-    'Env/.env.custom-test',
-    'logs',
-    '--follow',
-    '--tail=100',
-  ]);
-  assert.equal(follower.args.length, 17);
-  assert.match(result.stdout, /mimir: pnpm resolved 100 packages/, result.stderr);
-  assert.match(result.stderr, /mimir: pnpm registry retry/);
-  assert.equal(result.logsStopped, true);
-  for (const command of result.commands.filter(({ args }) => args[0] === 'compose')) {
-    assert.equal(command.env, '.env.custom-test');
-    assert.equal(command.tag, 'custom-test');
-  }
-  const failed = run('prod_local_start', { failure: 'config --quiet' });
-  assert.notEqual(failed.status, 0);
-  assert.equal(failed.commands.length, 1);
-  const missing = run('prod_local_start', { failure: 'pantheon-mimir-arm64' });
-  assert.notEqual(missing.status, 0);
-  assert.ok(!missing.commands.some(({ args }) => args[0] === 'make'));
-  const initFailed = run('prod_local_start', { failure: 'run --rm --no-deps dependencies-init' });
-  assert.notEqual(initFailed.status, 0);
-  assert.ok(!initFailed.commands.some(({ args }) => args.includes('pantheon_stop')));
-  const notReady = run('prod_local_start', {
-    health: 'unhealthy',
-    startupFailed: true,
-  });
-  assert.notEqual(notReady.status, 0);
-  assert.match(notReady.stderr, /dependency installation, migration or supervised service failed/);
-  assert.equal(notReady.logsStopped, true);
-  assert.ok(!notReady.commands.some(({ args }) => args.includes('container_warmup')));
-  assert.ok(!notReady.commands.some(({ args }) => args.includes('reverse_proxy_start')));
-});
-
-test('production startup reports warmup failures before reporting success', () => {
-  for (const [target, service] of [
-    ['prod_local_start', 'Sigrun'],
-    ['prod_local_start', 'Bragi'],
-    ['prod_restart', 'Sigrun'],
-    ['prod_restart', 'Bragi'],
-  ]) {
-    const result = run(target, { failure: `-C ${service} container_warmup` });
-    assert.notEqual(result.status, 0);
-    assert.ok(result.commands.some(({ args }) => args.includes('container_warmup')));
-    assert.ok(!result.commands.some(({ args }) => args.includes('reverse_proxy_start')));
-    assert.doesNotMatch(result.stdout, /Local production services are ready/);
-    if (service === 'Sigrun') {
-      assert.ok(!result.commands.some(({ args }) => args.includes('Bragi')));
-    }
-  }
-});
-
-test('local startup falls back to a complete latest stack and pulls missing GHCR images', () => {
-  const result = run('prod_local_start', {
-    missingImages: ['mimir-arm64:local-production', 'frey-arm64:latest'],
-  });
-  assert.equal(result.status, 0, result.stderr);
-  assert.match(result.stdout, /using GHCR images tagged latest/);
-  const pulls = result.commands.filter(({ args }) => args[1] === 'pull');
-  assert.deepEqual(pulls.map(({ args }) => args.at(-1)), [
-    'ghcr.io/mahjongpantheon/pantheon-frey-arm64:latest',
-  ]);
-  const latestInspections = result.commands.filter(
-    ({ args }) => args[1] === 'image' && args.at(-1).endsWith(':latest')
-  );
-  assert.equal(latestInspections.length, 13);
-  for (const command of result.commands.filter(
-    ({ args }) => args[0] === 'compose' && !args.includes('config')
-  )) {
-    assert.equal(command.tag, 'latest');
+  assert.ok(index(result.commands, 'pull') < index(result.commands, 'up -d'));
+  for (const command of result.commands) {
+    assert.equal(command.tag, 'abc123');
+    assert.equal(command.mode, 'image');
     assert.equal(command.env, '.env.e2e');
   }
-  assert.ok(
-    result.commands.indexOf(pulls[0]) <
-      result.commands.findIndex(({ args }) => args.includes('pantheon_stop'))
-  );
-  const failed = run('prod_local_start', {
-    missingImages: ['mimir-arm64:local-production', 'frey-arm64:latest'],
-    failure: 'pull',
-  });
+  const failed = run(['local-prod', 'registry', 'abc123'], { fail: 'pull' });
   assert.notEqual(failed.status, 0);
-  assert.match(failed.stderr, /Production image unavailable/);
-  assert.ok(!failed.commands.some(({ args }) => args[0] === 'make'));
+  assert.ok(!has(failed.commands, 'up -d'));
 });
 
-test('explicit registry tags pull missing images without falling back to another tag', () => {
-  for (const tag of ['latest', 'custom-test']) {
-    const result = run('prod_local_start', {
-      overrides: [`PROD_LOCAL_TAG=${tag}`],
-      missingImages: [`redis-arm64:${tag}`],
-    });
-    assert.equal(result.status, 0, result.stderr);
-    assert.deepEqual(
-      result.commands.filter(({ args }) => args[1] === 'pull').map(({ args }) => args.at(-1)),
-      [`ghcr.io/mahjongpantheon/pantheon-redis-arm64:${tag}`]
-    );
-    for (const command of result.commands.filter(({ args }) => args[0] === 'compose')) {
-      assert.equal(command.tag, tag);
-    }
-  }
-});
-
-test('local startup follows container health through a slow install without a startup deadline', () => {
-  const result = run('prod_local_start', { pending: 2 });
+test('startup validates and initializes before creating containers, then warms both SSR services', () => {
+  const result = run(['prod', 'start', 'abc123']);
   assert.equal(result.status, 0, result.stderr);
-  assert.equal(
-    result.commands.filter(
-      ({ args }) => args[1] === 'inspect' && args.at(-1) === 'mimir.pantheon.internal'
-    ).length,
-    3
+  assert.ok(
+    index(result.commands, 'config --quiet') <
+      index(result.commands, 'run --rm --no-deps dependencies-init')
   );
-  assert.ok(result.commands.some(({ args }) => args.includes('reverse_proxy_start')));
-  const oldImage = run('prod_local_start', { health: 'missing' });
-  assert.notEqual(oldImage.status, 0);
-  assert.match(oldImage.stderr, /image has no production healthcheck/);
-});
-
-test('local startup returns with containers detached even when the log viewer spawns a plugin', () => {
-  const result = run('prod_local_start', { nestedLogs: true });
-  assert.equal(result.status, 0, result.stderr);
+  assert.ok(
+    index(result.commands, 'run --rm --no-deps dependencies-init') < index(result.commands, 'up -d')
+  );
+  assert.ok(index(result.commands, 'ps --all -q') < index(result.commands, 'curl --fail'));
+  const warmups = result.commands.filter(({ args }) => args.join(' ').includes('curl --fail'));
+  assert.equal(warmups.length, 2);
+  assert.ok(warmups[0].args.includes('sigrun.pantheon.internal'));
+  assert.ok(warmups[1].args.includes('bragi.pantheon.internal'));
+  assert.match(result.stdout, /installing dependencies/);
+  assert.match(result.stderr, /registry retry/);
   assert.equal(result.logsStopped, true);
-  assert.equal(result.pluginRunning, false);
-  assert.ok(result.commands.some(({ args }) => args[0] === 'log-plugin'));
-  assert.ok(result.commands.some(({ args }) => args.includes('reverse_proxy_start')));
-  assert.match(result.stdout, /containers remain running in the background/);
-  const started = result.commands.findIndex(({ args }) => args.includes('up'));
-  assert.ok(started >= 0);
-  assert.ok(
-    !result.commands
-      .slice(started + 1)
-      .some(({ args }) =>
-        args.some((arg) => ['down', 'stop', 'kill', 'pantheon_stop'].includes(arg))
-      )
-  );
-});
-
-test('startup rechecks earlier healthy applications until every application is ready', () => {
-  const result = run('prod_local_start', { pending: 1, regression: true });
-  assert.equal(result.status, 0, result.stderr);
-  for (const service of ['tyr', 'mimir']) {
-    assert.equal(
-      result.commands.filter(
-        ({ args }) => args[1] === 'inspect' && args.at(-1) === `${service}.pantheon.internal`
-      ).length,
-      3
-    );
-  }
-  const exited = run('prod_local_start', { state: 'exited' });
-  assert.notEqual(exited.status, 0);
-  assert.match(exited.stderr, /container startup failed/);
-  assert.equal(exited.logsStopped, true);
-});
-
-test('combined build and startup run sequentially and preserve build failures', () => {
-  const result = run('prod_local');
-  assert.equal(result.status, 0, result.stderr);
-  assert.deepEqual(
-    result.commands.map(({ args }) => args),
-    [
-      ['make', 'prod_local_build'],
-      ['make', 'prod_local_start'],
-    ]
-  );
-  const failed = run('prod_local', { failure: 'prod_local_build' });
-  assert.notEqual(failed.status, 0);
-  assert.equal(failed.commands.length, 1);
-});
-
-for (const target of ['prod_start', 'prod_restart']) {
-  test(`${target} initializes shared volume subdirectories before creating application containers`, () => {
-    const result = run(target);
-    assert.equal(result.status, 0, result.stderr);
-    assert.deepEqual(result.commands[0].args, [
-      'compose',
-      '--env-file',
-      'Env/.env.production',
-      'run',
-      '--rm',
-      '--no-deps',
-      'dependencies-init',
-    ]);
-    assert.ok(result.commands[1].args.includes('up'));
-    if (target === 'prod_restart') {
-      const readiness = result.commands.filter(({ args }) => args.includes('ps'));
-      assert.equal(readiness.length, 11);
-      assert.ok(readiness.every(({ env }) => env === '.env.production'));
-      assert.deepEqual(result.commands.slice(-2).map(({ args }) => args), [
-        ['make', '-C', 'Sigrun', 'container_warmup'],
-        ['make', '-C', 'Bragi', 'container_warmup'],
-      ]);
-      const notReady = run(target, { health: 'unhealthy', startupFailed: true });
-      assert.notEqual(notReady.status, 0);
-      assert.ok(!notReady.commands.some(({ args }) => args.includes('container_warmup')));
-    }
-    const failed = run(target, { failure: 'run --rm --no-deps dependencies-init' });
+  for (const fail of ['config --quiet', 'run --rm --no-deps dependencies-init']) {
+    const failed = run(['prod', 'start'], { fail });
     assert.notEqual(failed.status, 0);
-    assert.equal(failed.commands.length, 1);
+    assert.ok(!has(failed.commands, 'up -d'));
+  }
+});
+
+for (const operation of ['start', 'recreate', 'restart', 'update']) {
+  test(`${operation} surfaces failed preparation and never warms an unready stack`, () => {
+    const result = run(['prod', operation], { health: 'unhealthy', phase: 'failed' });
+    assert.notEqual(result.status, 0);
+    assert.ok(!has(result.commands, 'curl --fail'));
+    assert.equal(result.logsStopped, true);
   });
 }
 
-test('returning to development stops the old stack and disables production workers', () => {
-  const result = run('dev_local');
+test('restart keeps containers, while recreate adopts selected images', () => {
+  const restart = run(['prod', 'restart']);
+  assert.equal(restart.status, 0, restart.stderr);
+  assert.ok(has(restart.commands, 'restart'));
+  assert.ok(!has(restart.commands, 'up -d'));
+  for (const options of [{ args: ['prod', 'recreate'] }]) {
+    const result = run(options.args, options);
+    assert.equal(result.status, 0, result.stderr);
+    assert.ok(has(result.commands, '--no-deps --force-recreate'));
+  }
+});
+
+test('waiter tolerates slow preparation, checks all services and cleans up nested log followers', () => {
+  const result = run(['prod', 'start'], { pending: 1, nested: true });
   assert.equal(result.status, 0, result.stderr);
-  assert.deepEqual(
-    result.commands.map(({ args }) => args),
-    [
-      ['make', 'pantheon_stop'],
-      ['make', 'dev'],
-    ]
+  assert.equal(result.logsStopped, true);
+  assert.equal(result.childRunning, false);
+  assert.ok(result.commands.filter(({ args }) => args.includes('ps')).length > 11);
+  for (const state of ['exited', 'restarting']) {
+    const failed = run(['prod', 'start'], { state });
+    assert.notEqual(failed.status, 0);
+    assert.equal(failed.logsStopped, true);
+  }
+});
+
+test('failed warmup is propagated before success, including the second SSR service', () => {
+  for (const service of ['sigrun', 'bragi']) {
+    const result = run(['prod', 'start'], { fail: `Host: ${service}.pantheon.internal` });
+    assert.notEqual(result.status, 0);
+    if (service === 'sigrun') assert.ok(!has(result.commands, 'Host: bragi.pantheon.internal'));
+  }
+});
+
+test('development starts watchers through Compose and detached startup waits for readiness', () => {
+  const result = run(['dev', '--detach']);
+  assert.equal(result.status, 0, result.stderr);
+  assert.ok(has(result.commands, 'up -d --build'));
+  assert.ok(result.commands.every(({ args }) => !args.includes('compose.image.yaml')));
+  assert.ok(!has(result.commands, 'killall'));
+  assert.ok(!has(result.commands, 'curl --fail'));
+  assert.ok(result.commands.some(({ args }) => args.includes('compose.local.yaml')));
+});
+
+test('attached development disables the interactive Compose shortcut menu', () => {
+  const result = run(['dev']);
+  assert.equal(result.status, 0, result.stderr);
+  const startup = result.commands.find(({ args }) =>
+    args.join(' ').includes('up --no-build --abort-on-container-failure')
   );
-  assert.equal(result.commands[1].workers, 'false');
-  const failed = run('dev_local', { failure: 'pantheon_stop' });
+  assert.ok(startup);
+  assert.equal(startup.menu, 'false');
+  assert.ok(index(result.commands, 'create --build') < result.commands.indexOf(startup));
+  assert.ok(!has(result.commands, 'logs --follow'));
+  assert.match(result.stdout, /All development services are ready!/);
+});
+
+test('source compilation is rejected against an image stack', () => {
+  const result = run(['source-prod', 'compile'], { actualMode: 'image' });
+  assert.notEqual(result.status, 0);
+  assert.match(result.stderr, /requires source mode/);
+  assert.ok(!has(result.commands, 'tasks.sh build'));
+});
+
+test('source compilation builds every application before recreating production workers', () => {
+  const result = run(['source-prod', 'compile']);
+  assert.equal(result.status, 0, result.stderr);
+  const builds = result.commands.filter(({ args }) => args.join(' ').includes('tasks.sh build'));
+  const prebuilts = result.commands.filter(({ args }) =>
+    args.join(' ').includes('tasks.sh prebuild')
+  );
+  assert.equal(builds.length, 11);
+  assert.equal(prebuilts.length, 11);
+  const installs = result.commands.filter(({ args }) =>
+    args.includes('/var/www/html/Common/ContainerRuntime/install-development.sh')
+  );
+  assert.equal(installs.length, 11);
+  assert.ok(result.commands.indexOf(installs.at(-1)) < result.commands.indexOf(builds[0]));
+  assert.ok(result.commands.indexOf(prebuilts.at(-1)) < index(result.commands, 'up -d'));
+  assert.ok(result.commands.every(({ mode }) => mode === 'source'));
+  const failed = run(['source-prod', 'compile'], { fail: 'tasks.sh build' });
   assert.notEqual(failed.status, 0);
-  assert.equal(failed.commands.length, 1);
+  assert.ok(!has(failed.commands, 'up -d'));
+  const installFailed = run(['source-prod', 'compile'], { fail: 'install-development.sh' });
+  assert.notEqual(installFailed.status, 0);
+  assert.ok(!has(installFailed.commands, 'tasks.sh build'));
+});
+
+test('stop includes the managed local proxy and optional tools while retaining volumes', () => {
+  const result = run(['stop']);
+  assert.equal(result.status, 0, result.stderr);
+  assert.ok(has(result.commands, 'compose.local.yaml'));
+  assert.ok(has(result.commands, 'down --remove-orphans'));
+  assert.ok(!has(result.commands, '--volumes'));
+});
+
+test('missing-container and command failures propagate through Bash tasks', () => {
+  const result = run(['task', 'Frey', 'typecheck'], { fail: 'exec -T' });
+  assert.notEqual(result.status, 0);
+  assert.ok(has(result.commands, 'exec -T --workdir /var/www/html/Frey frey.pantheon.internal'));
+});
+
+test('lint runs every check after failure and records the failing container output', () => {
+  const result = run(['lint', 'Frey', 'Mimir'], { fail: '/Frey/tasks.sh oxlint' });
+  assert.notEqual(result.status, 0);
+  for (const name of ['Frey', 'Mimir']) {
+    for (const action of ['oxlint', 'oxfmt', 'typecheck'])
+      assert.ok(has(result.commands, `/${name}/tasks.sh ${action}`));
+  }
+  assert.match(result.stderr, /Failed: frey_oxlint/);
+});
+
+test('unit orchestration continues after a failed suite and verbose selects the owning task', () => {
+  const result = run(['test', '--verbose', 'Frey', 'Mimir'], {
+    fail: '/Frey/tasks.sh test-verbose',
+  });
+  assert.notEqual(result.status, 0);
+  assert.ok(has(result.commands, '/Mimir/tasks.sh test-verbose'));
+  const all = run(['test']);
+  assert.equal(all.status, 0, all.stderr);
+  assert.equal(all.commands.filter(({ args }) => args.at(-1) === 'test').length, 10);
+});
+
+test('check runs tests after failed lint and rejects unknown services before execution', () => {
+  const result = run(['check', 'Frey'], { fail: 'tasks.sh oxlint' });
+  assert.notEqual(result.status, 0);
+  assert.ok(has(result.commands, '/Frey/tasks.sh test'));
+  const unknown = run(['lint', 'typo']);
+  assert.notEqual(unknown.status, 0);
+  assert.equal(unknown.commands.length, 0);
+});
+
+test('seed confirms before bootstrap and passes confirmation without changing NODE_ENV', () => {
+  const denied = run(['seed'], { fail: 'tasks.sh confirm-seed' });
+  assert.notEqual(denied.status, 0);
+  assert.ok(!has(denied.commands, 'bootstrap-admin'));
+  const accepted = run(['seed', 'tournament']);
+  assert.equal(accepted.status, 0, accepted.stderr);
+  assert.ok(index(accepted.commands, 'confirm-seed') < index(accepted.commands, 'bootstrap-admin'));
+  assert.ok(
+    has(
+      accepted.commands,
+      'SEED_CONFIRMED=1 su-exec user bash /var/www/html/Mimir/tasks.sh seed-tournament'
+    )
+  );
+  assert.ok(!has(accepted.commands, 'NODE_ENV='));
+});
+
+test('destructive maintenance and imports require confirmation before any container operation', () => {
+  for (const args of [
+    ['maintenance', 'reset'],
+    ['db', 'import'],
+    ['backup', 'restore', 'abc123'],
+  ]) {
+    const denied = run(args, { input: 'n\n' });
+    assert.notEqual(denied.status, 0);
+    assert.equal(denied.commands.length, 0);
+  }
+});
+
+test('database helpers run the owning Bash script even with older storage images', () => {
+  const result = run(['db', 'export', '/tmp/export.tar.gz']);
+  assert.equal(result.status, 0, result.stderr);
+  assert.ok(has(result.commands, 'db.pantheon.internal bash -s -- export'));
+  assert.ok(
+    has(
+      result.commands,
+      'cp db.pantheon.internal:/var/lib/postgresql/export.tar.gz /tmp/export.tar.gz'
+    )
+  );
+});
+
+test('development readiness waits through creation and preparation and prints aligned links once', () => {
+  for (const invocation of [['dev'], ['dev', '--detach']]) {
+    const result = run(invocation, {
+      pending: 1,
+      initialState: invocation.length === 1 ? 'created' : '',
+    });
+    assert.equal(result.status, 0, result.stderr);
+    assert.equal(
+      result.stdout.split('All development services are ready!').length - 1,
+      1,
+      result.stdout
+    );
+    for (const service of ['tyr', 'sigrun', 'forseti'])
+      assert.ok(result.stdout.includes(`http://${service}.pantheon.local/`));
+    const rows = result.stdout.split('\n').filter((line) => /^(\| |\+---)/.test(line));
+    assert.equal(rows.length, 7);
+    assert.ok(rows.every((line) => line.length === rows[0].length));
+    assert.ok(result.commands.filter(({ args }) => args.includes('ps')).length > 11);
+  }
+});
+
+test('failed development creation, launch or preparation never announces readiness', () => {
+  for (const options of [
+    { fail: 'create --build' },
+    { fail: 'up --no-build' },
+    { health: 'unhealthy', phase: 'failed' },
+  ]) {
+    const result = run(['dev'], options);
+    assert.notEqual(result.status, 0);
+    assert.ok(!result.stdout.includes('All development services are ready!'));
+    if (options.fail === 'create --build') assert.ok(!has(result.commands, 'ps --all -q'));
+  }
 });

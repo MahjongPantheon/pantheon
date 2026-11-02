@@ -26,7 +26,7 @@ Features:
 
 ### Unit tests
 
-Unit test coverage (`make forseti_test` from the repository root) must reach
+Unit test coverage (`bin/pantheon test forseti` from the repository root) must reach
 at least 85% for lines, statements, functions, and branches. Reports are written
 to `Forseti/coverage/`.
 

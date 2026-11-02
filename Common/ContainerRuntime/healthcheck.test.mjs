@@ -58,3 +58,38 @@ test('healthcheck worker ports match the owning Supervisor configurations', () =
     assert.deepEqual(ports.slice(1), configured, service);
   }
 });
+
+test('development readiness probes the watcher rather than disabled production worker ports', async () => {
+  const root = mkdtempSync(join(tmpdir(), 'pantheon-dev-health-'));
+  const readyPath = join(root, 'ready');
+  const previous = process.env.PANTHEON_DEV_WATCH;
+  try {
+    process.env.PANTHEON_DEV_WATCH = 'true';
+    writeFileSync(readyPath, '');
+    const calls = [];
+    assert.equal(
+      await healthy('Mimir', {
+        readyPath,
+        supervisor: () => 'ready',
+        probe: async (port) => {
+          calls.push(port);
+          return true;
+        },
+      }),
+      true
+    );
+    assert.deepEqual(calls, [80, 4001]);
+    assert.equal(
+      await healthy('Mimir', {
+        readyPath,
+        supervisor: () => 'ready',
+        probe: async (port) => port !== 4001,
+      }),
+      false
+    );
+  } finally {
+    if (previous === undefined) delete process.env.PANTHEON_DEV_WATCH;
+    else process.env.PANTHEON_DEV_WATCH = previous;
+    rmSync(root, { recursive: true, force: true });
+  }
+});

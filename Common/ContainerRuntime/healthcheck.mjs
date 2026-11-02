@@ -18,6 +18,20 @@ export const servicePorts = {
   Bragi: [80, ...range(41081, 6)],
 };
 
+export const developmentPorts = {
+  Tyr: 4003,
+  Forseti: 4007,
+  Frey: 4004,
+  Mimir: 4001,
+  Hugin: 4008,
+  Gullveig: 4009,
+  Meili: 4012,
+  Hermod: 4007,
+  Skirnir: 4015,
+  Sigrun: 4002,
+  Bragi: 4008,
+};
+
 export function listening(port) {
   return new Promise((resolve) => {
     const socket = createConnection({ host: 'localhost', port, autoSelectFamily: true });
@@ -38,7 +52,11 @@ export async function healthy(
   if (startupStatus(service, { readyPath, supervisor }) !== 'ready' || !servicePorts[service]) {
     return false;
   }
-  return (await Promise.all(servicePorts[service].map(probe))).every(Boolean);
+  const ports =
+    process.env.PANTHEON_DEV_WATCH === 'true'
+      ? [80, developmentPorts[service]]
+      : servicePorts[service];
+  return (await Promise.all(ports.map(probe))).every(Boolean);
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {

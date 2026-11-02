@@ -1,7 +1,7 @@
 FROM alpine:3.24.3
 
 # PostgreSQL runtime plus initialization, compression and remote-backup tools.
-RUN apk add --no-cache bash ca-certificates curl git make openssh postgresql16 su-exec tzdata zstd
+RUN apk add --no-cache bash ca-certificates curl git openssh postgresql16 su-exec tzdata zstd
 ENV TIMEZONE=Europe/Berlin
 ENV LANG=en_US.utf8
 RUN cp /usr/share/zoneinfo/${TIMEZONE} /etc/localtime && \
@@ -23,7 +23,7 @@ COPY mimir_privileges.sql /container-entrypoint-initdb.d/mimir_privileges.sql
 COPY create_frey2_db.sh /create_frey2_db.sh
 COPY create_mimir2_db.sh /create_mimir2_db.sh
 COPY ensure_mimir_migrations_privileges.sh /ensure_mimir_migrations_privileges.sh
-COPY Makefile /var/lib/postgresql/Makefile
+COPY tasks.sh /var/lib/postgresql/tasks.sh
 
 # Copy cron defs
 COPY cron/tabs/postgres /var/spool/cron/crontabs/postgres

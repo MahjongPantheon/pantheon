@@ -1,0 +1,85 @@
+# Build release images locally using the same Dockerfiles as CI.
+services:
+  tyr.pantheon.internal:
+    build:
+      context: .
+      dockerfile: Tyr/Dockerfile
+      target: production
+      args:
+        CONTAINER_ARCH: ${CONTAINER_ARCH:-amd64}
+  forseti.pantheon.internal:
+    build:
+      context: .
+      dockerfile: Forseti/Dockerfile
+      target: production
+      args:
+        CONTAINER_ARCH: ${CONTAINER_ARCH:-amd64}
+  sigrun.pantheon.internal:
+    build:
+      context: .
+      dockerfile: Sigrun/Dockerfile
+      target: production
+      args:
+        CONTAINER_ARCH: ${CONTAINER_ARCH:-amd64}
+  bragi.pantheon.internal:
+    build:
+      context: .
+      dockerfile: Bragi/Dockerfile
+      target: production
+      args:
+        CONTAINER_ARCH: ${CONTAINER_ARCH:-amd64}
+  frey.pantheon.internal:
+    build:
+      context: .
+      dockerfile: Frey/Dockerfile
+      target: production
+      args:
+        CONTAINER_ARCH: ${CONTAINER_ARCH:-amd64}
+  mimir.pantheon.internal:
+    build:
+      context: .
+      dockerfile: Mimir/Dockerfile
+      target: production
+      args:
+        CONTAINER_ARCH: ${CONTAINER_ARCH:-amd64}
+  hugin.pantheon.internal:
+    build:
+      context: .
+      dockerfile: Hugin/Dockerfile
+      target: production
+      args:
+        CONTAINER_ARCH: ${CONTAINER_ARCH:-amd64}
+  gullveig.pantheon.internal:
+    build:
+      context: .
+      dockerfile: Gullveig/Dockerfile
+      target: production
+      args:
+        CONTAINER_ARCH: ${CONTAINER_ARCH:-amd64}
+  meili.pantheon.internal:
+    build:
+      context: .
+      dockerfile: Meili/Dockerfile
+      target: production
+      args:
+        CONTAINER_ARCH: ${CONTAINER_ARCH:-amd64}
+  hermod.pantheon.internal:
+    build:
+      context: .
+      dockerfile: Hermod/Dockerfile
+      target: production
+      args:
+        CONTAINER_ARCH: ${CONTAINER_ARCH:-amd64}
+  skirnir.pantheon.internal:
+    build:
+      context: .
+      dockerfile: Skirnir/Dockerfile
+      target: production
+      args:
+        CONTAINER_ARCH: ${CONTAINER_ARCH:-amd64}
+  db.pantheon.internal:
+    build:
+      context: ./Database
+  redis.pantheon.internal:
+    build:
+      context: ./Redis

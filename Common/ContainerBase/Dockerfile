@@ -13,7 +13,6 @@ RUN apk update && \
     bash \
     curl \
     tar \
-    make \
     procps \
     net-tools \
     findutils \
@@ -34,7 +33,7 @@ RUN apk update && \
 RUN --mount=type=cache,target=/root/.npm \
     node --version && npm install -g pnpm@12 i18n-stex i18n-po-json i18n-json-po && pnpm --version && chown -R root:root "$(npm root -g)"
 
-# ------------ Local user init (for make & build tasks) --------
+# ------------ Local user init (for service & build tasks) --------
 # Create user (workaround against too big uids)
 RUN echo "user:x:${LOCAL_USER_ID:9001}:${LOCAL_USER_ID:9001}::/home/user:" >> /etc/passwd
 ## thanks for http://stackoverflow.com/a/1094354/535203 to compute the creation date

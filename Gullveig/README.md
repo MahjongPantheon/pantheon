@@ -33,14 +33,14 @@ with the appropriate Compose file before installing dependencies.
 
 From the repository root:
 
-- `make deps` installs dependencies from the committed pnpm lockfiles.
-- `make dev_gullveig` starts the TypeScript watcher and Node inspector (host port 4209).
+- `bin/pantheon deps` installs dependencies from the committed pnpm lockfiles.
+- `bin/pantheon restart-watcher gullveig` starts the TypeScript watcher and Node inspector (host port 4209).
   `parallel_dev.sh` also starts Gullveig with the other services.
-- `make gullveig_oxlint gullveig_oxfmt gullveig_typecheck` runs the container checks.
-- `make gullveig_test` runs the Vitest upload tests using isolated temporary storage.
-  Gullveig is also included in `make test` and `make test_verbose`.
-- `make prod_build_gullveig` builds and stages the server in `Gullveig-dist` and
-  installs production dependencies. `prod_compile` and `e2e_compile` include it.
+- `bin/pantheon lint gullveig` runs the container checks.
+- `bin/pantheon test gullveig` runs the Vitest upload tests using isolated temporary storage.
+  Gullveig is also included in `bin/pantheon test` and `bin/pantheon test --verbose`.
+- `bin/pantheon source-prod compile` builds and stages the server in `Gullveig-dist` and
+  installs production dependencies. `bin/pantheon source-prod compile` and `bin/pantheon e2e prepare` include it.
 
 As with Mimir, the `.local` hostname proxies to the development watcher on port
 4009; `.internal` proxies to the compiled server on port 41091. Production runs

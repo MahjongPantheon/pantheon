@@ -1,5 +1,6 @@
 ARG CONTAINER_ARCH=amd64
-FROM ghcr.io/mahjongpantheon/pantheon-container-base-v4-${CONTAINER_ARCH}:latest
+ARG BASE_TAG=latest
+FROM ghcr.io/mahjongpantheon/pantheon-container-base-v4-${CONTAINER_ARCH}:${BASE_TAG} AS development
 
 # copy entry point
 COPY --chmod=755 Sigrun/entrypoint.sh /entrypoint.sh
@@ -15,6 +16,12 @@ RUN mkdir -p /var/www/html/Sigrun-dist
 COPY Common /var/www/html/Common
 COPY Sigrun /var/www/html/Sigrun
 COPY --chmod=755 Common/ContainerRuntime/prepare.sh /prepare-service.sh
+ENV PANTHEON_MODE=development
+ENV PANTHEON_PRODUCTION_WORKERS=false
+ENV PANTHEON_DEV_WATCH=false
+RUN mkdir -p /etc/supervisor.d && printf '\n[include]\nfiles = /etc/supervisor.d/*.conf\n' >> /etc/supervisord.conf
+
+FROM development AS production
 RUN --mount=type=cache,target=/root/.local/share/pnpm/store \
     --mount=type=cache,target=/root/.cache/pnpm \
     /bin/sh /var/www/html/Common/ContainerRuntime/build.sh Sigrun

@@ -3,7 +3,11 @@ import { existsSync } from 'node:fs';
 import { pathToFileURL } from 'node:url';
 
 export function supervisorStatus(service, run = execFileSync) {
-  if (['tyr', 'forseti'].includes(service.toLowerCase())) return 'ready';
+  if (
+    ['tyr', 'forseti'].includes(service.toLowerCase()) &&
+    process.env.PANTHEON_DEV_WATCH !== 'true'
+  )
+    return 'ready';
   let output;
   try {
     output = run('supervisorctl', ['status'], { encoding: 'utf8', timeout: 2000 });
@@ -11,7 +15,17 @@ export function supervisorStatus(service, run = execFileSync) {
     // Supervisor returns nonzero when one of its programs is not running.
     output = error.stdout ?? '';
   }
-  const processes = String(output).trim().split('\n').filter(Boolean);
+  const disabledWorkers =
+    process.env.PANTHEON_MODE === 'development' &&
+    process.env.PANTHEON_PRODUCTION_WORKERS === 'false';
+  const worker = new RegExp(
+    `^(?:${service.toLowerCase()}:)?${service.toLowerCase()}(?:_\\d+)?\\s+STOPPED\\b`
+  );
+  const processes = String(output)
+    .trim()
+    .split('\n')
+    .filter(Boolean)
+    .filter((line) => !(disabledWorkers && worker.test(line)));
   if (processes.some((line) => /^\S+\s+(FATAL|STOPPED)\b/.test(line))) return 'failed';
   if (processes.length && processes.every((line) => /^\S+\s+RUNNING\b/.test(line))) {
     return 'ready';
