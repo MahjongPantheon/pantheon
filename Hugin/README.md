@@ -44,7 +44,7 @@ Gauges are refreshed by their existing publishers after deployment.
 ### Database migration and scheduled work
 
 The existing `PHINX_DB_HUGIN_HOST`, `PORT`, `NAME`, `USER` and `PASS` environment
-variables still configure PostgreSQL. Run the root `bin/pantheon migrate` flow as before.
+variables still configure PostgreSQL. Run the root `./run migrate` flow as before.
 The service's `container_migrate` target now runs the Kysely migration CLI.
 Its baseline creates the final schema on a new database, or adopts existing
 Phinx tables and leaves their data and `phinxlog` history intact. It also applies
@@ -53,7 +53,7 @@ the historic text-column widening when needed. Future migrations belong under
 
 Cron runs as `user` in both development and production. `cron/run.sh` executes
 TypeScript job sources through `tsx` in development and compiled Node jobs from
-`Hugin-dist` in production. Development cron tasks require the normal `bin/pantheon dev`
+`Hugin-dist` in production. Development cron tasks require the normal `./run dev`
 dependency and migration setup, without a production build. The schedule is:
 
 - Daily aggregation at 03:15: upsert the previous calendar day's counts, then
@@ -73,13 +73,13 @@ Daily/monthly upserts can be rerun safely. Reporting retains the 24-hour,
 ### Development and validation
 
 Rebuild/recreate Hugin's container after migrating from the PHP image, then use
-`bin/pantheon deps`, `bin/pantheon migrate` and `bin/pantheon source-prod compile` from the repository root.
+`./run deps`, `./run migrate` and `./run source-prod compile` from the repository root.
 The compiled server, migrations, maintenance jobs and GeoLite databases are
 staged in `Hugin-dist`; production/e2e compilation includes Hugin automatically.
-`bin/pantheon restart-watcher hugin` starts the development watcher; `parallel_dev.sh` includes it.
+`./run restart-watcher hugin` starts the development watcher; `bin/pantheon dev` includes it.
 
-Run `bin/pantheon lint hugin` and `bin/pantheon test hugin` from the
-root. Hugin is also included in `bin/pantheon test` and `bin/pantheon test --verbose`. Its tests
+Run `./run lint hugin` and `./run test hugin` from the
+root. Hugin is also included in `./run test` and `./run test --verbose`. Its tests
 use `PHINX_DB_HUGIN_NAME_UNIT` (default `hugin_unit`), which must be a separate
 `_unit` or `_test` database; they never reset the configured application database.
 Tests need PostgreSQL and the shared Redis container. They cover real persistence,
@@ -87,4 +87,4 @@ Phinx schema adoption, protobuf/JSON APIs, shared metrics, aggregation/retention
 batched write failures, and daylight-saving boundaries.
 
 For final cross-service checks, recreate the development containers, start
-`parallel_dev.sh`, then run `bin/pantheon e2e dev`.
+`bin/pantheon dev`, then run `./run e2e dev`.

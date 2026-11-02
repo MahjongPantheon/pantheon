@@ -34,15 +34,15 @@ Rebuild/recreate the Meili container when migrating from the PHP implementation.
 
 From the repository root:
 
-- `bin/pantheon deps` installs dependencies from the committed pnpm lockfile.
-- `bin/pantheon restart-watcher meili` starts the TypeScript watcher on port 4012, with the Node
-  inspector on port 4212. `parallel_dev.sh` also starts Meili.
-- `bin/pantheon lint meili` runs the container checks.
-- `bin/pantheon test meili` runs Vitest API tests and real database lookup regression tests.
-  Meili is included in `bin/pantheon test` and `bin/pantheon test --verbose`.
-- `bin/pantheon source-prod compile` stages the compiled server and GeoLite database in
-  `Meili-dist` and installs production dependencies. `bin/pantheon source-prod compile` and
-  `bin/pantheon e2e prepare` include this build and reload all four workers.
+- `./run deps` installs dependencies from the committed pnpm lockfile.
+- `./run restart-watcher meili` starts the TypeScript watcher on port 4012, with the Node
+  inspector on port 4212. `bin/pantheon dev` also starts Meili.
+- `./run lint meili` runs the container checks.
+- `./run test meili` runs Vitest API tests and real database lookup regression tests.
+  Meili is included in `./run test` and `./run test --verbose`.
+- `./run source-prod compile` stages the compiled server and GeoLite database in
+  `Meili-dist` and installs production dependencies. `./run source-prod compile` and
+  `./run e2e prepare` include this build and reload all four workers.
 
 The `.local` hostname routes to the development watcher on port 4012.
 The `.internal` hostname uses nginx `least_conn` balancing and upstream keepalive

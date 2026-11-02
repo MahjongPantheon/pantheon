@@ -41,19 +41,19 @@ on their existing dedicated mount.
 
 From the repository root:
 
-- `bin/pantheon deps` installs the committed pnpm dependencies.
-- `bin/pantheon restart-watcher hermod` starts the TypeScript watcher on port 4007 and the Node
-  inspector on port 4207; `parallel_dev.sh` includes it.
-- `bin/pantheon lint hermod` runs the container checks.
-- `bin/pantheon test hermod` tests the HTTP contract, MIME dumps and sendmail process
+- `./run deps` installs the committed pnpm dependencies.
+- `./run restart-watcher hermod` starts the TypeScript watcher on port 4007 and the Node
+  inspector on port 4207; `bin/pantheon dev` includes it.
+- `./run lint hermod` runs the container checks.
+- `./run test hermod` tests the HTTP contract, MIME dumps and sendmail process
   handling using fake sendmail executables. These tests send no external mail.
-  Root `bin/pantheon test` and `bin/pantheon test --verbose` include Hermod.
-- `bin/pantheon source-prod compile` stages `server.js` and `dump-mail.js` in `Hermod-dist`.
-  `bin/pantheon source-prod compile` and `bin/pantheon e2e prepare` build and reload the server too.
+  Root `./run test` and `./run test --verbose` include Hermod.
+- `./run source-prod compile` stages `server.js` and `dump-mail.js` in `Hermod-dist`.
+  `./run source-prod compile` and `./run e2e prepare` build and reload the server too.
 
 nginx routes `.local` to the development process on 4007 and `.internal` to the
 production process on 41071. The host HTTP publication remains 4007; the inspector
 publishes 4207 on localhost. Supervisor control uses container localhost 30018.
 SMTP ports 25/587 and OpenDKIM's localhost port 8891 keep their existing setup.
 For final mail-flow checks, recreate the development containers, start
-`parallel_dev.sh`, then run `bin/pantheon e2e dev`.
+`bin/pantheon dev`, then run `./run e2e dev`.

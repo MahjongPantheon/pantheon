@@ -31,7 +31,7 @@ The table follows [shared Compose](../../compose.yaml), the source of truth for 
 | Dozzle | `dozzle.pantheon.internal` | 8080 | 8050 | Container log UI |
 | Development reverse proxy | `pantheon-reverse-proxy-container` | 80 | 80 | Hostname routing into the container network |
 
-The [development reverse proxy](../../Common/ReverseProxy/nginx.conf) forwards ordinary service hostnames to port 80, Grafana to 3000, and Dozzle to 8080. Its lifecycle is managed by Compose through [the shared runner](../../bin/pantheon); its publication is in [local Compose](../../compose.local.yaml). The fixed container name `pantheon-reverse-proxy-container` is preserved, and the runner replaces an older standalone proxy when switching. An external production reverse proxy may listen on 80/443; those are deployment entry points, not application worker ports.
+The [development reverse proxy](../../Common/ReverseProxy/nginx.conf) forwards ordinary service hostnames to port 80, Grafana to 3000, and Dozzle to 8080. Its lifecycle is managed by Compose through [the shared runner](../../run); its publication is in [local Compose](../../compose.local.yaml). The fixed container name `pantheon-reverse-proxy-container` is preserved, and the runner replaces an older standalone proxy when switching. An external production reverse proxy may listen on 80/443; those are deployment entry points, not application worker ports.
 
 ## Processes inside service containers
 
@@ -89,5 +89,5 @@ Compose publishes Mimir 4201/4301/4401/4501 and Frey 4204/4404/4504 on all host 
 
 - Check the owning service's Nginx upstreams, process entry point, Supervisor configuration, tasks.sh, and callers before changing a port.
 - Keep host ports, container ports, and container-local worker ports distinct. Reusing a number in separate containers is normal; reusing a listening port in one container can conflict.
-- Apply common mapping changes in `compose.yaml` and debugger changes in `compose.dev.yaml`. Run `bin/pantheon infra-test` to render all three modes for both architectures and verify ports, source-mount boundaries, and persistent volume names. Update environment examples and reverse-proxy examples when affected, without copying secrets into this document.
+- Apply common mapping changes in `compose.yaml` and debugger changes in `compose.dev.yaml`. Run `./run infra-test` to render all three modes for both architectures and verify ports, source-mount boundaries, and persistent volume names. Update environment examples and reverse-proxy examples when affected, without copying secrets into this document.
 - Update this reference alongside configuration changes. Follow [root validation guidance](../../AGENTS.md); documentation checks alone do not establish runtime connectivity.
