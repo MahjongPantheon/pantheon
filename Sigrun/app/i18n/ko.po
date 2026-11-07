@@ -1795,7 +1795,7 @@ msgstr "장풍: 서"
 
 #: app/helpers/yaku.ts:285:34
 msgid "West seat wind"
-msgstr "베스트 화료"
+msgstr "자풍: 서"
 
 #: app/helpers/yaku.ts:386:34
 msgid "West wind"
