@@ -1854,7 +1854,7 @@ msgstr "Ветер раунда: Запад"
 
 #: app/helpers/yaku.ts:285:34
 msgid "West seat wind"
-msgstr "Лучшая рука"
+msgstr "Ветер места: Запад"
 
 #: app/helpers/yaku.ts:386:34
 msgid "West wind"

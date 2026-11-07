@@ -1829,7 +1829,7 @@ msgstr "Rundenwind: West"
 
 #: app/helpers/yaku.ts:285:34
 msgid "West seat wind"
-msgstr "Beste Hand"
+msgstr "Sitzwind: West"
 
 #: app/helpers/yaku.ts:386:34
 msgid "West wind"
