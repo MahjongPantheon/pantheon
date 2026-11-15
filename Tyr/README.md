@@ -7,6 +7,18 @@
 
 Tyr targets mobile browsers only. Design and validate interactions for touch; do not add desktop keyboard shortcuts or keyboard-driven navigation.
 
+### iPhone Home Screen installation
+
+Tyr explicitly requests the default iOS status bar style, keeps controls inside
+the screen's safe areas, and paints a fixed status-bar surface with the active
+theme's background color. This avoids placing controls beneath the blurred edge
+of a translucent status bar. Theme changes update the surface with the app.
+
+iOS saves the status-bar configuration when installing a Home Screen app.
+Existing installations may need to be removed and added to the Home Screen
+again after updating. See [Apple's status-bar documentation](https://developer.apple.com/library/archive/documentation/AppleApplications/Reference/SafariHTMLRef/Articles/MetaTags.html)
+and the [iOS PWA blur report](https://www.reddit.com/r/PWA/comments/1w5mqj1/ios_27_beta_blurs_the_top_edge_of_installed_pwas/).
+
 Features:
 
 - Preview of current game state: players' points, riichi bets on table, renchan/honba count, current round.

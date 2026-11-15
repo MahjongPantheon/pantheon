@@ -157,8 +157,6 @@ export const App = (props: IProps) => {
     (curDate.getMonth() === 11 && curDate.getDate() > 20) ||
     (curDate.getMonth() === 0 && curDate.getDate() < 10);
 
-  const isInStandaloneMode = 'standalone' in window.navigator && window.navigator.standalone;
-
   const themeStyle = [
     currentThemeName === 'day' ? themes.themeDay : null,
     currentThemeName === 'night' ? themes.themeNight : null,
@@ -177,10 +175,8 @@ export const App = (props: IProps) => {
         haveNySpecs ? styles.newyear : null
       )}
     >
-      <div
-        className={clsx(styles.AppWrap, isInStandaloneMode ? styles.pwafix : null)}
-        data-testid={`tyr-screen-${state.currentScreen}`}
-      >
+      <div className={styles.statusBar} aria-hidden='true' />
+      <div className={styles.AppWrap} data-testid={`tyr-screen-${state.currentScreen}`}>
         <i18n.Provider value={i18nService}>
           <CurrentScreen state={state} dispatch={dispatch} newyear={haveNySpecs} />
           {state.yakuAdvice && <YakuAdviceDialog advice={state.yakuAdvice} dispatch={dispatch} />}
