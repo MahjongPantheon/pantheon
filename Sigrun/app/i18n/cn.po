@@ -1767,7 +1767,7 @@ msgstr "场风：西"
 
 #: app/helpers/yaku.ts:285:34
 msgid "West seat wind"
-msgstr "最佳手牌"
+msgstr "自风：西"
 
 #: app/helpers/yaku.ts:386:34
 msgid "West wind"
