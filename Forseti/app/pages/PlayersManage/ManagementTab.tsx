@@ -151,7 +151,7 @@ export const ManagementTab: React.FC<{
           testId='forseti-players-replacement-selector'
           eventId={eventId}
           excludePlayers={players.map((p) => p.id)}
-          placeholder={i18n._t('Find replacement player by name...')}
+          placeholder={i18n._t('Find replacement player by name or ID...')}
           onPlayerSelect={(newRepl) => {
             replacementDlgCtrl.close();
             updateReplacement(replPlayerData, newRepl);
@@ -168,7 +168,7 @@ export const ManagementTab: React.FC<{
                 testId='forseti-players-add-selector'
                 eventId={eventId}
                 excludePlayers={players.map((p) => p.id)}
-                placeholder={i18n._t('Find and add player by name...')}
+                placeholder={i18n._t('Find and add player by name or ID...')}
                 onPlayerSelect={(newPlayer) => {
                   api.registerPlayer(newPlayer.id, eventId).then(async (success) => {
                     if (success) {

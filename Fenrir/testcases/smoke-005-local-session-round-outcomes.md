@@ -98,7 +98,7 @@ R8–R42 enter **H01–H35 in order** from the [catalogue](smoke-hand-catalogue.
 ## Steps and expected results
 
 1. Create nine independent account fixtures. Log in as administrator in Forseti and create the TEST local event from EMA with the explicit rules above. Reopen its title in a fresh tab as in SMOKE-004 and verify all saved settings.
-2. Register A–H through Manage players. Reload and verify exactly eight distinct registrations; administrator is absent.
+2. Register A–H through Manage players, finding the first player by `#ID` and the others by name. Reload and verify exactly eight distinct registrations; administrator is absent.
 3. In a separate Tyr context, log in as A. Select the event, explicitly choose A/B/C/D in East/South/West/North order, and start a new game. Assert all four begin at 30,000, East 1, honba/pot zero.
 4. Preview R1, back out without saving, and verify unchanged table and empty log. Enter R1 again and submit once.
 5. Enter R2–R7. Before each save, verify the previous scores and payment arrows. After each save, verify all scores, current dealer, honba, pot, penalty indicator, retained count, and latest log entry. Reload after R7, reopen the current game if necessary, and verify the full seven-entry history.

@@ -4,8 +4,11 @@ import { MantineProvider } from '@mantine/core';
 import { Person } from 'tsclients/proto/atoms.pb';
 import { PlayerSelector } from './PlayerSelector';
 
-const { findByTitle } = vi.hoisted(() => ({ findByTitle: vi.fn() }));
-const api = { findByTitle };
+const { findByTitle, getPersonalInfo } = vi.hoisted(() => ({
+  findByTitle: vi.fn(),
+  getPersonalInfo: vi.fn(),
+}));
+const api = { findByTitle, getPersonalInfo };
 vi.mock('../../hooks/api', () => ({ useApi: () => api }));
 
 let container: HTMLDivElement;
@@ -27,6 +30,7 @@ beforeEach(() => {
   vi.useFakeTimers();
   selected.mockClear();
   findByTitle.mockReset().mockResolvedValue(people);
+  getPersonalInfo.mockReset().mockResolvedValue(people[1]);
   container = document.createElement('div');
   document.body.append(container);
   root = createRoot(container);
@@ -156,4 +160,26 @@ it('retains the five-result limit after excluding registered players', async () 
   expect(options).toHaveLength(5);
   expect(options[0].textContent).toContain('#2,');
   expect(options[4].textContent).toContain('#6,');
+});
+
+it.each(['2', '#2', '  #2  '])('finds and selects a player by ID using %s', async (query) => {
+  render();
+  await search(query);
+  expect(getPersonalInfo).toHaveBeenCalledExactlyOnceWith(2);
+  expect(findByTitle).not.toHaveBeenCalled();
+  const options = document.querySelectorAll<HTMLElement>('[role="option"]');
+  expect(options).toHaveLength(1);
+  expect(options[0].textContent).toContain('Same Name [#2');
+  act(() => options[0].click());
+  expect(selected).toHaveBeenCalledWith(expect.objectContaining({ id: 2 }));
+});
+
+it('excludes registered players from ID results and handles unknown IDs', async () => {
+  render([2]);
+  await search('2');
+  expect(document.querySelector('[role="option"]')).toBeNull();
+  getPersonalInfo.mockResolvedValue(undefined);
+  await search('999');
+  expect(document.querySelector('[role="option"]')).toBeNull();
+  expect(container.querySelector('.mantine-Loader-root')).toBeNull();
 });

@@ -807,16 +807,16 @@ msgid "Find and add administrator by name..."
 msgstr "名前で管理者を検索して追加..."
 
 #: app/pages/PlayersManage/ManagementTab.tsx:171:30
-msgid "Find and add player by name..."
-msgstr "名前でプレイヤーを検索して追加..."
+msgid "Find and add player by name or ID..."
+msgstr "名前またはIDでプレーヤーを検索して追加..."
 
 #: app/pages/PrivilegesManage/ManagementTab.tsx:100:26
 msgid "Find and add referee by name..."
 msgstr "名前で審判を検索して追加..."
 
 #: app/pages/PlayersManage/ManagementTab.tsx:154:24
-msgid "Find replacement player by name..."
-msgstr "代打プレイヤーを検索..."
+msgid "Find replacement player by name or ID..."
+msgstr "名前またはIDで代替プレーヤーを検索..."
 
 #: app/components/MainMenu.tsx:207:24 app/pages/OwnedEvents.tsx:476:40
 #: app/pages/OwnedEvents.tsx:484:34

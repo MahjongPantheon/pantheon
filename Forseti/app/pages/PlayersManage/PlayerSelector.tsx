@@ -40,7 +40,15 @@ export const PlayerSelector: React.FC<{
     () =>
       debounce(async (value: string, requestId: number) => {
         try {
-          const result = await api.findByTitle(value);
+          const idQuery = value.trim().match(/^#?([1-9]\d*)$/);
+          const playerId = idQuery ? Number(idQuery[1]) : 0;
+          let result: Person[];
+          if (playerId > 0 && playerId <= 2147483647) {
+            const player = await api.getPersonalInfo(playerId);
+            result = player ? [player] : [];
+          } else {
+            result = await api.findByTitle(value);
+          }
           if (requestId === request.current) {
             setPlayers(result);
           }
@@ -69,7 +77,8 @@ export const PlayerSelector: React.FC<{
     .filter(
       (player) =>
         !excludePlayers.includes(player.id) &&
-        player.title.toLowerCase().includes(query.toLowerCase().trim())
+        (player.title.toLowerCase().includes(query.toLowerCase().trim()) ||
+          player.id.toString() === query.trim().replace(/^#/, ''))
     )
     .slice(0, 5);
 

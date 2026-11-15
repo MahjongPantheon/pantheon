@@ -94,7 +94,9 @@ test('SMOKE-005: Registered player can finish a local session and view matching 
       const rows = admin.getByTestId(/^forseti-players-row-\d+$/);
       await expect(rows).toHaveCount(0);
       for (const [index, player] of registered.entries()) {
-        await admin.getByTestId('forseti-players-add-selector').fill(player.title);
+        await admin
+          .getByTestId('forseti-players-add-selector')
+          .fill(index === 0 ? `#${player.id}` : player.title);
         await admin
           .getByRole('option')
           .filter({ hasText: `${player.title} [#${player.id},` })

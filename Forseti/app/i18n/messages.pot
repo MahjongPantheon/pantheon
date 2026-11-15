@@ -1899,11 +1899,11 @@ msgid "Select replacement player for %1"
 msgstr ""
 
 #: app/pages/PlayersManage/ManagementTab.tsx:154:24
-msgid "Find replacement player by name..."
+msgid "Find replacement player by name or ID..."
 msgstr ""
 
 #: app/pages/PlayersManage/ManagementTab.tsx:171:30
-msgid "Find and add player by name..."
+msgid "Find and add player by name or ID..."
 msgstr ""
 
 #: app/pages/PlayersManage/ManagementTab.tsx:204:28

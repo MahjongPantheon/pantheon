@@ -806,16 +806,16 @@ msgid "Find and add administrator by name..."
 msgstr "이름으로 관리자를 검색하여 추가..."
 
 #: app/pages/PlayersManage/ManagementTab.tsx:171:30
-msgid "Find and add player by name..."
-msgstr "이벤트에 추가할 작사 검색"
+msgid "Find and add player by name or ID..."
+msgstr "이름 또는 ID로 플레이어를 검색하고 추가..."
 
 #: app/pages/PrivilegesManage/ManagementTab.tsx:100:26
 msgid "Find and add referee by name..."
 msgstr "이름으로 심판을 검색하여 추가..."
 
 #: app/pages/PlayersManage/ManagementTab.tsx:154:24
-msgid "Find replacement player by name..."
-msgstr "교체 작사 검색"
+msgid "Find replacement player by name or ID..."
+msgstr "이름 또는 ID로 교체 플레이어 검색..."
 
 #: app/components/MainMenu.tsx:207:24 app/pages/OwnedEvents.tsx:476:40
 #: app/pages/OwnedEvents.tsx:484:34

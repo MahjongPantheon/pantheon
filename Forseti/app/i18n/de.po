@@ -820,16 +820,16 @@ msgid "Find and add administrator by name..."
 msgstr "Administrator nach Namen suchen und hinzufügen..."
 
 #: app/pages/PlayersManage/ManagementTab.tsx:171:30
-msgid "Find and add player by name..."
-msgstr "Spieler such und hinzufügen..."
+msgid "Find and add player by name or ID..."
+msgstr "Spieler nach Namen oder ID suchen und hinzufügen..."
 
 #: app/pages/PrivilegesManage/ManagementTab.tsx:100:26
 msgid "Find and add referee by name..."
 msgstr "Schiedsrichter nach Namen suchen und hinzufügen..."
 
 #: app/pages/PlayersManage/ManagementTab.tsx:154:24
-msgid "Find replacement player by name..."
-msgstr "Ersatzspieler suchen..."
+msgid "Find replacement player by name or ID..."
+msgstr "Ersatzspieler nach Namen oder ID suchen..."
 
 #: app/components/MainMenu.tsx:207:24 app/pages/OwnedEvents.tsx:476:40
 #: app/pages/OwnedEvents.tsx:484:34
