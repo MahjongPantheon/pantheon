@@ -45,7 +45,7 @@ import {
 import { ClientConfiguration } from 'twirpscript';
 import { handleReleaseTag } from './releaseTags';
 import { Analytics } from './analytics';
-import { env } from '../env';
+import { handleRpcResponse } from './rpcResponse';
 
 export class ApiService {
   private _authToken: string | null = null;
@@ -92,28 +92,7 @@ export class ApiService {
         headers,
       })
         .then(handleReleaseTag)
-        .then((resp) => {
-          if (!resp.ok) {
-            return resp.json().then((err) => {
-              // Twirp server error handling
-              if (err.code && err.code === 'internal' && err.meta && err.meta.cause) {
-                fetch(env.urls.hugin, {
-                  method: 'POST',
-                  headers: { 'Content-Type': 'application/json' },
-                  body: JSON.stringify({
-                    source: 'Sigrun [twirp]',
-                    error: `From: ${
-                      typeof window !== 'undefined' && window.location.href
-                    } | To: ${url} | Details: ${err.meta.cause}`,
-                  }),
-                });
-                throw new Error(err.meta.cause);
-              }
-              return resp;
-            });
-          }
-          return resp;
-        });
+        .then((response) => handleRpcResponse(response, url));
     };
   }
 
