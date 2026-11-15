@@ -353,8 +353,8 @@ msgid "Cancel penalty"
 msgstr "Скасаваць штраф"
 
 #: app/pages/GamesControl/GamesList.tsx:300:29
-msgid "Cancel results"
-msgstr "Скасаваць вынікі"
+msgid "Cancel last round and results"
+msgstr "Адмяніць раунд і вынікі"
 
 #: app/pages/GamesControl/GamesList.tsx:250:29
 msgid "Cancel round"
@@ -1857,8 +1857,8 @@ msgid "Remove game"
 msgstr "Выдаліць гульню"
 
 #: app/pages/GamesControl/GamesList.tsx:299:30
-msgid "Remove game results"
-msgstr "Выдаліць вынікі гульні"
+msgid "Cancel last round and game results"
+msgstr "Адмяніць апошні раунд і вынікі гульні"
 
 #: app/pages/ProfileManage.tsx:307:16 app/pages/ProfileManage.tsx:369:14
 msgid "Remove my account"
@@ -2361,12 +2361,8 @@ msgstr ""
 "сесіі значэнне павялічваецца аўтаматычна."
 
 #: app/pages/GamesControl/GamesList.tsx:301:32
-msgid ""
-"This will only remove the game results, but you will need to cancel last "
-"round separately. Continue?"
-msgstr ""
-"Гэта выдаліць толькі вынікі гульні. Апошнюю раздачу трэба скасаваць асобна. "
-"Працягнуць?"
+msgid "This will remove the game results and the last round, and return the game to the state before that round. Continue?"
+msgstr "Гэта выдаліць вынікі гульні і апошні раунд і верне гульню ў стан перад гэтым раундам. Працягнуць?"
 
 #: app/pages/GamesControl/TournamentControls.tsx:265:24
 msgid "This will remove generated seating. Continue?"

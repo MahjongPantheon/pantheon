@@ -345,6 +345,14 @@ const cases: Case[] = [
     { success: true },
     true,
   ],
+  [
+    'cancelLastRound',
+    ['hash', [], true],
+    'DropLastRound',
+    { sessionHash: 'hash', intermediateResults: [], cancelResults: true },
+    { success: true },
+    true,
+  ],
   ['cancelGame', ['hash'], 'CancelGame', { sessionHash: 'hash' }, { success: true }, true],
   ['definalizeGame', ['hash'], 'DefinalizeGame', { sessionHash: 'hash' }, { success: true }, true],
   [

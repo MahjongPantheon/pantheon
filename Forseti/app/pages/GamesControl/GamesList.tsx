@@ -64,7 +64,7 @@ type GamesListProps = {
   timerState: EventsGetTimerStateResponse | null;
   onCancelLastRound: (hash: string, intermediateResults: IntermediateResultOfSession[]) => void;
   onRemoveGame?: (hash: string) => void;
-  onDefinalizeGame?: (hash: string) => void;
+  onDefinalizeGame?: (hash: string, intermediateResults: IntermediateResultOfSession[]) => void;
   onForceFinish?: (hash: string) => void;
   onAddExtraTime?: (hash: string, amount: number) => void;
 };
@@ -296,14 +296,14 @@ export function GamesList({
                     <Confirmation
                       testId={`forseti-game-cancel-results-${t.sessionHash}`}
                       icon={<IconArrowBackUp />}
-                      title={i18n._t('Remove game results')}
-                      text={i18n._t('Cancel results')}
+                      title={i18n._t('Cancel last round and game results')}
+                      text={i18n._t('Cancel last round and results')}
                       warning={i18n._t(
-                        'This will only remove the game results, but you will need to cancel last round separately. Continue?'
+                        'This will remove the game results and the last round, and return the game to the state before that round. Continue?'
                       )}
                       color='red'
                       onConfirm={() => {
-                        onDefinalizeGame(t.sessionHash);
+                        onDefinalizeGame(t.sessionHash, t.scores);
                       }}
                       i18n={i18n}
                     />

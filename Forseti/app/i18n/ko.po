@@ -345,8 +345,8 @@ msgid "Cancel penalty"
 msgstr "벌부 취소"
 
 #: app/pages/GamesControl/GamesList.tsx:300:29
-msgid "Cancel results"
-msgstr "결과 취소"
+msgid "Cancel last round and results"
+msgstr "마지막 국과 결과 취소"
 
 #: app/pages/GamesControl/GamesList.tsx:250:29
 msgid "Cancel round"
@@ -1828,8 +1828,8 @@ msgid "Remove game"
 msgstr "대국 삭제"
 
 #: app/pages/GamesControl/GamesList.tsx:299:30
-msgid "Remove game results"
-msgstr "대국 결과 삭제"
+msgid "Cancel last round and game results"
+msgstr "마지막 국과 게임 결과 취소"
 
 #: app/pages/ProfileManage.tsx:307:16 app/pages/ProfileManage.tsx:369:14
 msgid "Remove my account"
@@ -2327,11 +2327,8 @@ msgstr ""
 "동으로 증가함"
 
 #: app/pages/GamesControl/GamesList.tsx:301:32
-msgid ""
-"This will only remove the game results, but you will need to cancel last "
-"round separately. Continue?"
-msgstr ""
-"대국 결과만 삭제되며 마지막 국은 별도로 취소해야 합니다. 계속하시겠습니까?"
+msgid "This will remove the game results and the last round, and return the game to the state before that round. Continue?"
+msgstr "게임 결과와 마지막 국을 삭제하고 해당 국 이전 상태로 되돌립니다. 계속하시겠습니까?"
 
 #: app/pages/GamesControl/TournamentControls.tsx:265:24
 msgid "This will remove generated seating. Continue?"

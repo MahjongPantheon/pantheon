@@ -1226,8 +1226,15 @@ export class SessionModel extends Model {
           throw new Error("You don't have the necessary permissions to drop last round");
         }
 
-        if (sessions[0].status === SessionStatus.SESSION_STATUS_FINISHED) {
+        const finished = sessions[0].status === SessionStatus.SESSION_STATUS_FINISHED;
+        if (payload.cancelResults && !finished) {
+          throw new Error('Session is not finished');
+        }
+        if (finished && !payload.cancelResults) {
           throw new Error('Cannot drop last round for a finished session');
+        }
+        if (finished && !(await this.mayDefinalize(sessions[0]))) {
+          throw new Error('Session cannot be definalized');
         }
 
         const savedSessionState = new SessionState(
@@ -1250,8 +1257,13 @@ export class SessionModel extends Model {
         }
 
         const lastRound = rounds.pop()!;
+        if (finished) {
+          // REQUIRED propagation keeps results, history and round removal in one transaction.
+          await this.definalizeGame(payload.sessionHash);
+        }
         sessions[0].intermediateResults = lastRound.lastSessionState;
         sessions[0].status = SessionStatus.SESSION_STATUS_INPROGRESS;
+        sessions[0].endDate = undefined;
         this.repo.em.remove(lastRound.hands);
         this.repo.em.remove(lastRound);
         sessions[0].nextRoundToken = randomUUID();

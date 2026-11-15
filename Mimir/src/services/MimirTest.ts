@@ -250,9 +250,10 @@ export class MimirTest {
 
   async DropLastRound(
     sessionHash: string,
-    intermediateResults: IntermediateResultOfSession[]
+    intermediateResults: IntermediateResultOfSession[],
+    cancelResults = false
   ): Promise<GenericSuccessResponse> {
-    return DropLastRound({ sessionHash, intermediateResults }, this._config);
+    return DropLastRound({ sessionHash, intermediateResults, cancelResults }, this._config);
   }
 
   async ForceFinishGame(sessionHash: string): Promise<GenericSuccessResponse> {

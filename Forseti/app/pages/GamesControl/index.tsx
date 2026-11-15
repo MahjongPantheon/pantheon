@@ -169,10 +169,10 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
   );
 
   const onDefinalize = useCallback(
-    (sessionHash: string) => {
+    (sessionHash: string, intermediateResults: IntermediateResultOfSession[]) => {
       if (!id) return;
       api
-        .definalizeGame(sessionHash)
+        .cancelLastRound(sessionHash, intermediateResults, true)
         .then((r) => {
           if (!r) throw new Error(i18n._t('Failed to definalize game'));
         })

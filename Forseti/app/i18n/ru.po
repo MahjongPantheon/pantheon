@@ -362,8 +362,8 @@ msgid "Cancel penalty"
 msgstr "Отменить штраф"
 
 #: app/pages/GamesControl/GamesList.tsx:300:29
-msgid "Cancel results"
-msgstr "Удалить результаты"
+msgid "Cancel last round and results"
+msgstr "Отменить раунд и результаты"
 
 #: app/pages/GamesControl/GamesList.tsx:250:29
 msgid "Cancel round"
@@ -1892,8 +1892,8 @@ msgid "Remove game"
 msgstr "Удалить игру"
 
 #: app/pages/GamesControl/GamesList.tsx:299:30
-msgid "Remove game results"
-msgstr "Удалить результаты игры"
+msgid "Cancel last round and game results"
+msgstr "Отменить последний раунд и результаты игры"
 
 #: app/pages/ProfileManage.tsx:307:16 app/pages/ProfileManage.tsx:369:14
 msgid "Remove my account"
@@ -2404,12 +2404,8 @@ msgstr ""
 "индекс увеличивается автоматически."
 
 #: app/pages/GamesControl/GamesList.tsx:301:32
-msgid ""
-"This will only remove the game results, but you will need to cancel last "
-"round separately. Continue?"
-msgstr ""
-"Это действие только удалит результаты из БД, отменить последний раунд "
-"потребуется отдельным действием. Продолжить?"
+msgid "This will remove the game results and the last round, and return the game to the state before that round. Continue?"
+msgstr "Это удалит результаты игры и последний раунд и вернёт игру в состояние перед этим раундом. Продолжить?"
 
 #: app/pages/GamesControl/TournamentControls.tsx:265:24
 msgid "This will remove generated seating. Continue?"

@@ -6083,6 +6083,7 @@ export const GamesDropLastRoundPayload = {
     return {
       sessionHash: "",
       intermediateResults: [],
+      cancelResults: void 0,
       ...msg
     };
   },
@@ -6099,6 +6100,9 @@ export const GamesDropLastRoundPayload = {
         msg.intermediateResults,
         protoAtoms.IntermediateResultOfSession._writeMessage
       );
+    }
+    if (msg.cancelResults != void 0) {
+      writer.writeBool(3, msg.cancelResults);
     }
     return writer;
   },
@@ -6120,6 +6124,10 @@ export const GamesDropLastRoundPayload = {
             protoAtoms.IntermediateResultOfSession._readMessage
           );
           msg.intermediateResults.push(m);
+          break;
+        }
+        case 3: {
+          msg.cancelResults = reader.readBool();
           break;
         }
         default: {
@@ -11196,6 +11204,7 @@ export const GamesDropLastRoundPayloadJSON = {
     return {
       sessionHash: "",
       intermediateResults: [],
+      cancelResults: void 0,
       ...msg
     };
   },
@@ -11211,6 +11220,9 @@ export const GamesDropLastRoundPayloadJSON = {
       json["intermediateResults"] = msg.intermediateResults.map(
         protoAtoms.IntermediateResultOfSessionJSON._writeMessage
       );
+    }
+    if (msg.cancelResults != void 0) {
+      json["cancelResults"] = msg.cancelResults;
     }
     return json;
   },
@@ -11229,6 +11241,10 @@ export const GamesDropLastRoundPayloadJSON = {
         protoAtoms.IntermediateResultOfSessionJSON._readMessage(m, item);
         msg.intermediateResults.push(m);
       }
+    }
+    const _cancelResults_ = json["cancelResults"] ?? json["cancel_results"];
+    if (_cancelResults_) {
+      msg.cancelResults = _cancelResults_;
     }
     return msg;
   }

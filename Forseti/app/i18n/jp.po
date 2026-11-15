@@ -338,8 +338,8 @@ msgid "Cancel penalty"
 msgstr "ペナルティを取り消す"
 
 #: app/pages/GamesControl/GamesList.tsx:300:29
-msgid "Cancel results"
-msgstr "結果を取り消す"
+msgid "Cancel last round and results"
+msgstr "最終局と結果を取り消す"
 
 #: app/pages/GamesControl/GamesList.tsx:250:29
 msgid "Cancel round"
@@ -1832,8 +1832,8 @@ msgid "Remove game"
 msgstr "対局を削除"
 
 #: app/pages/GamesControl/GamesList.tsx:299:30
-msgid "Remove game results"
-msgstr "対局結果を削除"
+msgid "Cancel last round and game results"
+msgstr "最終局と対局結果を取り消す"
 
 #: app/pages/ProfileManage.tsx:307:16 app/pages/ProfileManage.tsx:369:14
 msgid "Remove my account"
@@ -2328,12 +2328,8 @@ msgstr ""
 "す。"
 
 #: app/pages/GamesControl/GamesList.tsx:301:32
-msgid ""
-"This will only remove the game results, but you will need to cancel last "
-"round separately. Continue?"
-msgstr ""
-"対局結果だけを削除します。直前の局は別途取り消す必要があります。続行します"
-"か？"
+msgid "This will remove the game results and the last round, and return the game to the state before that round. Continue?"
+msgstr "対局結果と最終局を削除し、その局の前の状態に戻します。続行しますか？"
 
 #: app/pages/GamesControl/TournamentControls.tsx:265:24
 msgid "This will remove generated seating. Continue?"

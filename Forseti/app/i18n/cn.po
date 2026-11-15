@@ -334,8 +334,8 @@ msgid "Cancel penalty"
 msgstr "取消处罚"
 
 #: app/pages/GamesControl/GamesList.tsx:300:29
-msgid "Cancel results"
-msgstr "取消结果"
+msgid "Cancel last round and results"
+msgstr "撤销最后一局和结果"
 
 #: app/pages/GamesControl/GamesList.tsx:250:29
 msgid "Cancel round"
@@ -1786,8 +1786,8 @@ msgid "Remove game"
 msgstr "删除对局"
 
 #: app/pages/GamesControl/GamesList.tsx:299:30
-msgid "Remove game results"
-msgstr "删除对局结果"
+msgid "Cancel last round and game results"
+msgstr "撤销最后一局和对局结果"
 
 #: app/pages/ProfileManage.tsx:307:16 app/pages/ProfileManage.tsx:369:14
 msgid "Remove my account"
@@ -2276,10 +2276,8 @@ msgid ""
 msgstr "下一场对局脚本的编号（从 1 开始）。每开始一场新对局，此值自动递增。"
 
 #: app/pages/GamesControl/GamesList.tsx:301:32
-msgid ""
-"This will only remove the game results, but you will need to cancel last "
-"round separately. Continue?"
-msgstr "此操作仅删除对局结果，最后一局需另行取消。是否继续？"
+msgid "This will remove the game results and the last round, and return the game to the state before that round. Continue?"
+msgstr "这将删除对局结果和最后一局，并将对局恢复到该局之前的状态。是否继续？"
 
 #: app/pages/GamesControl/TournamentControls.tsx:265:24
 msgid "This will remove generated seating. Continue?"

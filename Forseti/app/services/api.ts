@@ -542,11 +542,16 @@ export class ApiService {
     ).then((r) => r.success);
   }
 
-  cancelLastRound(sessionHash: string, intermediateResults: IntermediateResultOfSession[]) {
+  cancelLastRound(
+    sessionHash: string,
+    intermediateResults: IntermediateResultOfSession[],
+    cancelResults = false
+  ) {
     this._analytics?.track(Analytics.LOAD_STARTED, { method: 'DropLastRound' });
-    return DropLastRound({ sessionHash, intermediateResults }, this._clientConfMimir).then(
-      (r) => r.success
-    );
+    return DropLastRound(
+      { sessionHash, intermediateResults, ...(cancelResults ? { cancelResults: true } : {}) },
+      this._clientConfMimir
+    ).then((r) => r.success);
   }
 
   cancelGame(sessionHash: string) {

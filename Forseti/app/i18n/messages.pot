@@ -722,15 +722,15 @@ msgid "You are going to forcefully finish this game. Continue?"
 msgstr ""
 
 #: app/pages/GamesControl/GamesList.tsx:299:30
-msgid "Remove game results"
+msgid "Cancel last round and game results"
 msgstr ""
 
 #: app/pages/GamesControl/GamesList.tsx:300:29
-msgid "Cancel results"
+msgid "Cancel last round and results"
 msgstr ""
 
 #: app/pages/GamesControl/GamesList.tsx:301:32
-msgid "This will only remove the game results, but you will need to cancel last round separately. Continue?"
+msgid "This will remove the game results and the last round, and return the game to the state before that round. Continue?"
 msgstr ""
 
 #: app/pages/GamesControl/GamesList.tsx:334:20

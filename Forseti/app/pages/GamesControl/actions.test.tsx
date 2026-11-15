@@ -107,7 +107,7 @@ async function mount(sync = true) {
 
 const cases = [
   ['games', 'onCancelLastRound', ['hash', []], 'cancelLastRound', ['hash', []], 'tables'],
-  ['games', 'onDefinalizeGame', ['hash'], 'definalizeGame', ['hash'], 'tables'],
+  ['games', 'onDefinalizeGame', ['hash', []], 'cancelLastRound', ['hash', [], true], 'tables'],
   ['games', 'onRemoveGame', ['hash'], 'cancelGame', ['hash'], 'tables'],
   ['games', 'onForceFinish', ['hash'], 'forceFinish', ['hash'], 'tables'],
   ['games', 'onAddExtraTime', ['hash', 60], 'addExtraTime', [['hash'], 60], 'both'],

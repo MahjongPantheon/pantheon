@@ -49,6 +49,14 @@ Register new entities in `src/mikro-orm.config.ts` so they are included in the b
 
 ### Retry-safe mutations
 
+`DropLastRound` can undo a recently finished club game's results and final round
+in one transaction when `cancelResults` is explicitly true. It retains the
+existing administrator/referee permissions, three-hour reopening window, and
+last-session restriction. Stale scores or any failure leave the result and
+round intact. Successful undo restores the saved state before that round,
+removes result/history records, and rotates the round token. Ordinary round
+cancellation keeps `cancelResults` unset.
+
 `CreateEvent` and `StartGame` require a client-generated `request_id`. Generate it once
 per logical submission and reuse it on retries. Keys are scoped to the authenticated
 caller and RPC method. A reused key with different parameters is rejected.

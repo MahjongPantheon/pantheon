@@ -353,8 +353,8 @@ msgid "Cancel penalty"
 msgstr "Strafe aufheben"
 
 #: app/pages/GamesControl/GamesList.tsx:300:29
-msgid "Cancel results"
-msgstr "Spielergebnis abbrechen"
+msgid "Cancel last round and results"
+msgstr "Hand und Ergebnisse zurücknehmen"
 
 #: app/pages/GamesControl/GamesList.tsx:250:29
 msgid "Cancel round"
@@ -1880,8 +1880,8 @@ msgid "Remove game"
 msgstr "Spiel entfernen"
 
 #: app/pages/GamesControl/GamesList.tsx:299:30
-msgid "Remove game results"
-msgstr "Spielergebnisse entfernen"
+msgid "Cancel last round and game results"
+msgstr "Letzte Hand und Spielergebnisse zurücknehmen"
 
 #: app/pages/ProfileManage.tsx:307:16 app/pages/ProfileManage.tsx:369:14
 msgid "Remove my account"
@@ -2385,12 +2385,8 @@ msgstr ""
 "weg). Bei jedem Rundenstart wird dieser Wert automatisch erhöht."
 
 #: app/pages/GamesControl/GamesList.tsx:301:32
-msgid ""
-"This will only remove the game results, but you will need to cancel last "
-"round separately. Continue?"
-msgstr ""
-"Diese Aktion entfernt die Spielergebnisse, die letzte Runde muss aber "
-"zusätzlich noch manuell beendet werden. Fortfahren?"
+msgid "This will remove the game results and the last round, and return the game to the state before that round. Continue?"
+msgstr "Die Spielergebnisse und die letzte Hand werden entfernt. Das Spiel kehrt zum Zustand vor dieser Hand zurück. Fortfahren?"
 
 #: app/pages/GamesControl/TournamentControls.tsx:265:24
 msgid "This will remove generated seating. Continue?"

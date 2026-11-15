@@ -415,6 +415,9 @@ message GamesStartGamePayload {
 message GamesDropLastRoundPayload {
   string session_hash = 1;
   repeated IntermediateResultOfSession intermediate_results = 2;
+  // Explicit confirmation to undo a finished club game's results and last round
+  // atomically. Normal last-round cancellation leaves this unset.
+  optional bool cancel_results = 3;
 }
 
 message GamesAddPenaltyPayload {

@@ -354,6 +354,11 @@ export interface GamesStartGamePayload {
 export interface GamesDropLastRoundPayload {
   sessionHash: string;
   intermediateResults: protoAtoms.IntermediateResultOfSession[];
+  /**
+   * Explicit confirmation to undo a finished club game's results and last round
+   * atomically. Normal last-round cancellation leaves this unset.
+   */
+  cancelResults?: boolean | null | undefined;
 }
 
 export interface GamesAddPenaltyPayload {
@@ -8277,6 +8282,7 @@ export const GamesDropLastRoundPayload = {
     return {
       sessionHash: "",
       intermediateResults: [],
+      cancelResults: undefined,
       ...msg,
     };
   },
@@ -8297,6 +8303,9 @@ export const GamesDropLastRoundPayload = {
         msg.intermediateResults as any,
         protoAtoms.IntermediateResultOfSession._writeMessage,
       );
+    }
+    if (msg.cancelResults != undefined) {
+      writer.writeBool(3, msg.cancelResults);
     }
     return writer;
   },
@@ -8322,6 +8331,10 @@ export const GamesDropLastRoundPayload = {
             protoAtoms.IntermediateResultOfSession._readMessage,
           );
           msg.intermediateResults.push(m);
+          break;
+        }
+        case 3: {
+          msg.cancelResults = reader.readBool();
           break;
         }
         default: {
@@ -14400,6 +14413,7 @@ export const GamesDropLastRoundPayloadJSON = {
     return {
       sessionHash: "",
       intermediateResults: [],
+      cancelResults: undefined,
       ...msg,
     };
   },
@@ -14418,6 +14432,9 @@ export const GamesDropLastRoundPayloadJSON = {
       json["intermediateResults"] = msg.intermediateResults.map(
         protoAtoms.IntermediateResultOfSessionJSON._writeMessage,
       );
+    }
+    if (msg.cancelResults != undefined) {
+      json["cancelResults"] = msg.cancelResults;
     }
     return json;
   },
@@ -14441,6 +14458,10 @@ export const GamesDropLastRoundPayloadJSON = {
         protoAtoms.IntermediateResultOfSessionJSON._readMessage(m, item);
         msg.intermediateResults.push(m);
       }
+    }
+    const _cancelResults_ = json["cancelResults"] ?? json["cancel_results"];
+    if (_cancelResults_) {
+      msg.cancelResults = _cancelResults_;
     }
     return msg;
   },

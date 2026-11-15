@@ -384,6 +384,37 @@ test('SMOKE-005: Registered player can finish a local session and view matching 
           'pending'
         );
       });
+      await test.step('Cancel the club results and final round in one confirmed action', async () => {
+        await admin.goto(`${process.env.FORSETI_URL!.replace(/\/$/, '')}/event/${eventId}/games`);
+        const table = admin.getByTestId(`forseti-game-row-${hash}`);
+        await table.getByTestId(`forseti-game-cancel-results-${hash}-open`).click();
+        await expect(
+          admin.getByText(
+            'This will remove the game results and the last round, and return the game to the state before that round. Continue?',
+            { exact: true }
+          )
+        ).toBeVisible();
+        await admin.getByTestId(`forseti-game-cancel-results-${hash}-confirm`).click();
+        await expect(
+          table.getByTestId(`forseti-game-cancel-last-round-${hash}-open`)
+        ).toBeVisible();
+        await expect(table.getByTestId(`forseti-game-cancel-results-${hash}-open`)).toHaveCount(0);
+        await page.reload();
+        await expect(page.getByTestId('tyr-table').or(page.getByTestId('tyr-home'))).toBeVisible();
+        if (await page.getByTestId('tyr-home').isVisible())
+          await page.getByTestId('tyr-home-current-game').click();
+        await assertTable(page, players, rounds.at(-2)!, true);
+        await checkLog(page, players, rounds.length - 1);
+        const [gamesResponse] = await Promise.all([
+          sigrun.waitForResponse((response) =>
+            response.url().endsWith('/common.Mimir/GetLastGames')
+          ),
+          sigrun.goto(`${process.env.SIGRUN_URL!.replace(/\/$/, '')}/event/${eventId}/games`),
+        ]);
+        expect(gamesResponse.ok()).toBe(true);
+        await expect(sigrun.getByTestId('sigrun-recent-games-page')).toBeVisible();
+        await expect(sigrun.getByTestId(/^sigrun-game-row-/)).toHaveCount(0);
+      });
     });
   } catch (error) {
     await Promise.allSettled(
