@@ -2466,8 +2466,8 @@ msgid "Use yakitori rule"
 msgstr "야키토리 규칙 사용"
 
 #: app/pages/OwnedEventsEdit/RulesetSettings.tsx:240:22
-msgid "Value of one honba stick"
-msgstr "본장당 점수"
+msgid "Points paid by each opponent per honba on tsumo. On ron, the discarder pays the total for all opponents."
+msgstr "쯔모 시 각 상대가 본장마다 지불하는 점수입니다. 론 시 방총자가 모든 상대의 합계 점수를 지불합니다."
 
 #: app/pages/OwnedEvents.tsx:497:32
 msgid "Visibility"

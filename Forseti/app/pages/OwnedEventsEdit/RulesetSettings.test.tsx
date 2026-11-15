@@ -22,6 +22,7 @@ function Fixture() {
         ...RulesetConfig.initialize({
           startPoints: 25000,
           goalPoints: 30000,
+          honbaValuePerPlayer: 100,
           chomboAmount: 8000,
           umaType: UmaType.UMA_TYPE_UMA_SIMPLE,
           uma: { place1: 20000, place2: 10000, place3: -10000, place4: -20000 },
@@ -57,6 +58,7 @@ function input(suffix: string) {
 }
 
 it('loads numeric form values and updates them when a different ruleset is selected', () => {
+  expect(input('ruleset-settings-ruleset-honba-value')!.value).toBe('100');
   expect(input('ruleset-settings-ruleset-start-points')!.value).toBe('25000');
   expect(input('uma-select-ruleset-uma-place1')!.value).toBe('20000');
   act(() =>

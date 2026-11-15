@@ -178,6 +178,21 @@ It renames the stored `withButtobi` rule to `withTobi`, preserving each event's
 setting. The protobuf field keeps number 14; JSON clients must use `withTobi`.
 With tobi enabled, riichi requires at least 1,000 points before the round's payments.
 
+### Honba payments
+
+Apply `Migration20261116000000` before deploying the updated server and clients.
+`honbaValuePerPlayer` is the amount each opponent pays per honba on tsumo,
+normally 100. On ron, the discarder pays all shares: 300 in a four-player game
+or 200 in sanma at the default value. Pao tsumo uses the same total liability.
+The old protobuf field 39 (`honba_value`) is reserved; the new field is 46.
+
+The migration replaces stored total values with per-player values, dividing by
+three in four-player events and by two in sanma. The old incorrect sanma default
+of 300 becomes 100 per player. Custom totals that do not divide evenly are
+rounded to the nearest point. Explicit zero payments remain zero. Existing
+per-player settings and recorded scores are preserved. The v1 importer applies
+the same conversion.
+
 ### Agariyame and additional rounds
 
 With agariyame (`withLeadingDealerGameOver`) enabled, a dealer who wins or is

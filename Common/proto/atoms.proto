@@ -613,7 +613,8 @@ message RulesetConfig {
   int32 yakitori_penalty = 37;
   reserved 38;
   reserved "chombo_ends_game";
-  int32 honba_value = 39;
+  reserved 39;
+  reserved "honba_value";
   repeated int32 double_yakuman = 40;
   // False uses separate wind and dragon yaku for new events.
   bool use_aggregated_yakuhai = 41;
@@ -627,6 +628,9 @@ message RulesetConfig {
   // Count chombo after timeout as one hand under either timed ending policy.
   // All players penalized together consume a single hand.
   bool chombo_counts_as_hand = 45;
+  // Points paid by each opponent per honba on tsumo. The discarder pays
+  // (player_count - 1) shares on ron, including pao tsumo settled as ron.
+  int32 honba_value_per_player = 46;
 }
 
 message MajsoulSearchEx {

@@ -72,7 +72,7 @@ export class TestSeeder extends Seeder {
         neg3: { place1: 0, place2: 0, place3: 0, place4: 0 },
         otherwise: { place1: 0, place2: 0, place3: 0, place4: 0 },
       },
-      honbaValue: 300,
+      honbaValuePerPlayer: 100,
       maxPenalty: 40000,
       withKuitan: true,
       useAggregatedYakuhai: false,

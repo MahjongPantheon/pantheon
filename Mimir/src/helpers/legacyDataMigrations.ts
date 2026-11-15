@@ -4,6 +4,7 @@ import { Migration20261025000000 } from '../migrations/Migration20261025000000.j
 import { Migration20261027000000 } from '../migrations/Migration20261027000000.js';
 import { Migration20261031000000 } from '../migrations/Migration20261031000000.js';
 import { Migration20261031010000 } from '../migrations/Migration20261031010000.js';
+import { Migration20261116000000 } from '../migrations/Migration20261116000000.js';
 
 // Match Migration20261029000000 before inserting into the already-constrained table.
 // Deduplicate before pagination so older rows in another batch cannot survive.
@@ -28,6 +29,7 @@ export async function getLegacyDataMigrationQueries(orm: MikroORM): Promise<stri
     Migration20261027000000,
     Migration20261031000000,
     Migration20261031010000,
+    Migration20261116000000,
   ]) {
     const migration = new Migration(orm.em.getDriver(), orm.config);
     await migration.up();

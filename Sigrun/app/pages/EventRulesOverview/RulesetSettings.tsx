@@ -209,8 +209,10 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ config, i18n }
         hideControls
         leftSection={<IconBrandStackoverflow size='1rem' />}
         label={i18n._t('Honba Value')}
-        description={i18n._t('Value of one honba stick')}
-        value={config.rulesetConfig.honbaValue}
+        description={i18n._t(
+          'Points paid by each opponent per honba on tsumo. On ron, the discarder pays the total for all opponents.'
+        )}
+        value={config.rulesetConfig.honbaValuePerPlayer}
       />
       <UmaSelect config={config} i18n={i18n} />
       <Checkbox

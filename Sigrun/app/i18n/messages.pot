@@ -1470,7 +1470,7 @@ msgid "Honba Value"
 msgstr ""
 
 #: app/pages/EventRulesOverview/RulesetSettings.tsx:210:22
-msgid "Value of one honba stick"
+msgid "Points paid by each opponent per honba on tsumo. On ron, the discarder pays the total for all opponents."
 msgstr ""
 
 #: app/pages/EventRulesOverview/RulesetSettings.tsx:215:16

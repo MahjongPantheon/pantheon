@@ -1742,8 +1742,8 @@ msgid "Use yakitori rule"
 msgstr "启用烧鸡规则"
 
 #: app/pages/EventRulesOverview/RulesetSettings.tsx:210:22
-msgid "Value of one honba stick"
-msgstr "每根本场棒的点数"
+msgid "Points paid by each opponent per honba on tsumo. On ron, the discarder pays the total for all opponents."
+msgstr "自摸时每名对手每本场支付的点数。荣和时放铳者支付所有对手的总额。"
 
 #: app/components/RecentPublicGames.tsx:68:29
 #: app/components/RecentPublicGames.tsx:69:24 app/pages/Achievements.tsx:180:30

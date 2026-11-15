@@ -2504,8 +2504,8 @@ msgid "Use yakitori rule"
 msgstr "Выкарыстоўваць правіла якіторы"
 
 #: app/pages/OwnedEventsEdit/RulesetSettings.tsx:240:22
-msgid "Value of one honba stick"
-msgstr "Кошт адной палачкі хонба"
+msgid "Points paid by each opponent per honba on tsumo. On ron, the discarder pays the total for all opponents."
+msgstr "Ачкі, якія кожны сапернік плаціць за адну хонбу пры цумо. Пры роне той, хто скінуў тайл, плаціць агульную суму за ўсіх сапернікаў."
 
 #: app/pages/OwnedEvents.tsx:497:32
 msgid "Visibility"

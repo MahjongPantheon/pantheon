@@ -35,6 +35,7 @@ const config = GameConfig.decode(
       penaltyStep: 500,
       playAdditionalRounds: true,
       goalPoints: 35000,
+      honbaValuePerPlayer: 100,
       withYakitori: true,
       yakitoriPenalty: 1000,
       umaType: UmaType.UMA_TYPE_UMA_SIMPLE,
@@ -72,6 +73,7 @@ const tree = () => (
 
 it('displays current event settings and keeps every control read-only', () => {
   const { container } = render(tree());
+  expect(screen.getByLabelText<HTMLInputElement>('Honba Value').value).toBe('100');
   expect(screen.getByLabelText<HTMLInputElement>('Max arbitrary penalty score').value).toBe(
     '20000'
   );

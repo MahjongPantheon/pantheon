@@ -28,7 +28,7 @@ describe('Sanma scoring and session state', () => {
     expect(scores).toEqual({ 1: 35000, 2: 35000, 3: 35000 });
   });
 
-  it('splits the full honba value between two payers', () => {
+  it('charges the per-player honba value to both payers', () => {
     const calc = new PointsCalc();
     const result = calc.tsumo(
       RulesetEntity.createRuleset('sanma').rules,
@@ -41,8 +41,8 @@ describe('Sanma scoring and session state', () => {
       2,
       1
     );
-    expect(result).toEqual({ 1: 34200, 2: 38400, 3: 33400 });
-    expect(calc.lastPaymentsInfo().honba).toEqual({ '2<-1': 300, '2<-3': 300 });
+    expect(result).toEqual({ 1: 34300, 2: 38200, 3: 33500 });
+    expect(calc.lastPaymentsInfo().honba).toEqual({ '2<-1': 200, '2<-3': 200 });
     expect(Object.values(result).reduce((a, b) => a + b, 0)).toBe(106000);
   });
 

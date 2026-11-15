@@ -237,11 +237,13 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ form, i18n }) 
       <NumberInput
         leftSection={<IconBrandStackoverflow size='1rem' />}
         label={i18n._t('Honba Value')}
-        description={i18n._t('Value of one honba stick')}
+        description={i18n._t(
+          'Points paid by each opponent per honba on tsumo. On ron, the discarder pays the total for all opponents.'
+        )}
         min={0}
         data-testid='forseti-event-settings-ruleset-settings-ruleset-honba-value'
-        key={form.key('ruleset.honbaValue')}
-        {...form.getInputProps('ruleset.honbaValue')}
+        key={form.key('ruleset.honbaValuePerPlayer')}
+        {...form.getInputProps('ruleset.honbaValuePerPlayer')}
       />
       <UmaSelect form={form} i18n={i18n} />
       <Checkbox

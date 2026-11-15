@@ -5860,13 +5860,13 @@ export const RulesetConfig = {
       yakuWithPao: [],
       withYakitori: false,
       yakitoriPenalty: 0,
-      honbaValue: 0,
       doubleYakuman: [],
       useAggregatedYakuhai: false,
       withSanma: false,
       sanmaDrawPayments: 0,
       sanmaChomboPayments: 0,
       chomboCountsAsHand: false,
+      honbaValuePerPlayer: 0,
       ...msg
     };
   },
@@ -5985,9 +5985,6 @@ export const RulesetConfig = {
     if (msg.yakitoriPenalty) {
       writer.writeInt32(37, msg.yakitoriPenalty);
     }
-    if (msg.honbaValue) {
-      writer.writeInt32(39, msg.honbaValue);
-    }
     if (msg.doubleYakuman?.length) {
       writer.writePackedInt32(40, msg.doubleYakuman);
     }
@@ -6005,6 +6002,9 @@ export const RulesetConfig = {
     }
     if (msg.chomboCountsAsHand) {
       writer.writeBool(45, msg.chomboCountsAsHand);
+    }
+    if (msg.honbaValuePerPlayer) {
+      writer.writeInt32(46, msg.honbaValuePerPlayer);
     }
     return writer;
   },
@@ -6171,10 +6171,6 @@ export const RulesetConfig = {
           msg.yakitoriPenalty = reader.readInt32();
           break;
         }
-        case 39: {
-          msg.honbaValue = reader.readInt32();
-          break;
-        }
         case 40: {
           if (reader.isDelimited()) {
             msg.doubleYakuman.push(...reader.readPackedInt32());
@@ -6201,6 +6197,10 @@ export const RulesetConfig = {
         }
         case 45: {
           msg.chomboCountsAsHand = reader.readBool();
+          break;
+        }
+        case 46: {
+          msg.honbaValuePerPlayer = reader.readInt32();
           break;
         }
         default: {
@@ -11742,13 +11742,13 @@ export const RulesetConfigJSON = {
       yakuWithPao: [],
       withYakitori: false,
       yakitoriPenalty: 0,
-      honbaValue: 0,
       doubleYakuman: [],
       useAggregatedYakuhai: false,
       withSanma: false,
       sanmaDrawPayments: 0,
       sanmaChomboPayments: 0,
       chomboCountsAsHand: false,
+      honbaValuePerPlayer: 0,
       ...msg
     };
   },
@@ -11874,9 +11874,6 @@ export const RulesetConfigJSON = {
     if (msg.yakitoriPenalty) {
       json["yakitoriPenalty"] = msg.yakitoriPenalty;
     }
-    if (msg.honbaValue) {
-      json["honbaValue"] = msg.honbaValue;
-    }
     if (msg.doubleYakuman?.length) {
       json["doubleYakuman"] = msg.doubleYakuman;
     }
@@ -11894,6 +11891,9 @@ export const RulesetConfigJSON = {
     }
     if (msg.chomboCountsAsHand) {
       json["chomboCountsAsHand"] = msg.chomboCountsAsHand;
+    }
+    if (msg.honbaValuePerPlayer) {
+      json["honbaValuePerPlayer"] = msg.honbaValuePerPlayer;
     }
     return json;
   },
@@ -12053,10 +12053,6 @@ export const RulesetConfigJSON = {
     if (_yakitoriPenalty_) {
       msg.yakitoriPenalty = protoscript.parseNumber(_yakitoriPenalty_);
     }
-    const _honbaValue_ = json["honbaValue"] ?? json["honba_value"];
-    if (_honbaValue_) {
-      msg.honbaValue = protoscript.parseNumber(_honbaValue_);
-    }
     const _doubleYakuman_ = json["doubleYakuman"] ?? json["double_yakuman"];
     if (_doubleYakuman_) {
       msg.doubleYakuman = _doubleYakuman_.map(protoscript.parseNumber);
@@ -12080,6 +12076,10 @@ export const RulesetConfigJSON = {
     const _chomboCountsAsHand_ = json["chomboCountsAsHand"] ?? json["chombo_counts_as_hand"];
     if (_chomboCountsAsHand_) {
       msg.chomboCountsAsHand = _chomboCountsAsHand_;
+    }
+    const _honbaValuePerPlayer_ = json["honbaValuePerPlayer"] ?? json["honba_value_per_player"];
+    if (_honbaValuePerPlayer_) {
+      msg.honbaValuePerPlayer = protoscript.parseNumber(_honbaValuePerPlayer_);
     }
     return msg;
   }

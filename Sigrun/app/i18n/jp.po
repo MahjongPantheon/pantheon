@@ -1763,8 +1763,8 @@ msgid "Use yakitori rule"
 msgstr "焼き鳥ルールを有効にする"
 
 #: app/pages/EventRulesOverview/RulesetSettings.tsx:210:22
-msgid "Value of one honba stick"
-msgstr "本場 1 本の点数"
+msgid "Points paid by each opponent per honba on tsumo. On ron, the discarder pays the total for all opponents."
+msgstr "ツモ時に各対戦相手が1本場につき支払う点数。ロン時は放銃者が全対戦相手分の合計を支払います。"
 
 #: app/components/RecentPublicGames.tsx:68:29
 #: app/components/RecentPublicGames.tsx:69:24 app/pages/Achievements.tsx:180:30

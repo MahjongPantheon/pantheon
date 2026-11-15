@@ -141,7 +141,7 @@ const checkboxRules: Record<string, boolean> = {
 const numericRules: Record<string, number> = {
   'start-points': 30000,
   oka: 0,
-  'honba-value': 300,
+  'honba-value': 100,
   'chombo-amount': 20000,
 };
 

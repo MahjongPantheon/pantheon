@@ -1829,8 +1829,8 @@ msgid "Use yakitori rule"
 msgstr "Использовать правило якитори"
 
 #: app/pages/EventRulesOverview/RulesetSettings.tsx:210:22
-msgid "Value of one honba stick"
-msgstr "Сколько стоит один индикатор хонбы"
+msgid "Points paid by each opponent per honba on tsumo. On ron, the discarder pays the total for all opponents."
+msgstr "Очки, которые каждый соперник платит за одну хонбу при цумо. При роне проигравший платит общую сумму за всех соперников."
 
 #: app/components/RecentPublicGames.tsx:68:29
 #: app/components/RecentPublicGames.tsx:69:24 app/pages/Achievements.tsx:180:30

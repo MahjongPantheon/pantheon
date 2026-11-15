@@ -27,7 +27,7 @@ it('applies current data migrations to v1 imports without rerunning schema migra
       'create temporary table jobs_queue (job_arguments text, job_name text, created_at timestamp)'
     );
     for (const [id, rules] of [
-      [1, { allowedYaku: [13, 48], withButtobi: true, chomboEndsGame: true }],
+      [1, { allowedYaku: [13, 48], withButtobi: true, chomboEndsGame: true, honbaValue: 600 }],
       [2, { allowedYaku: [1, 2], withButtobi: false, chomboCountsAsHand: true }],
       [3, { allowedYaku: [16], chomboCountsAsHand: false, chomboEndsGame: false }],
     ] as const) {
@@ -54,6 +54,8 @@ it('applies current data migrations to v1 imports without rerunning schema migra
       expect(rules.chomboCountsAsHand).toBe(index !== 2);
       expect(rules).not.toHaveProperty('chomboEndsGame');
       expect(rules).not.toHaveProperty('withButtobi');
+      expect(rules).not.toHaveProperty('honbaValue');
+      expect(rules.honbaValuePerPlayer).toBe(index === 0 ? 200 : 100);
     }
     expect(rows[0].ruleset_config.rules.withTobi).toBe(true);
     expect(rows[1].ruleset_config.rules.withTobi).toBe(false);

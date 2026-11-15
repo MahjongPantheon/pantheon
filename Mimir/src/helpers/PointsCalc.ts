@@ -58,7 +58,7 @@ export class PointsCalc {
     totalRiichiInRound = 0
   ): Record<number, number> {
     this.resetPaymentsInfo();
-    const honbaValue = rules.honbaValue;
+    const honbaValue = rules.honbaValuePerPlayer * (Object.keys(currentScores).length - 1);
     const pointsDiff = this._calcPoints(rules, han, fu, false, isDealer);
 
     if (!winnerId || !loserId) {
@@ -150,7 +150,7 @@ export class PointsCalc {
     paoPlayerId: number | null = null
   ): Record<number, number> {
     this.resetPaymentsInfo();
-    const honbaValue = rules.honbaValue;
+    const honbaValuePerPlayer = rules.honbaValuePerPlayer;
 
     if (!winnerId) {
       throw new Error('Tsumo must have winner');
@@ -211,16 +211,14 @@ export class PointsCalc {
     scores[winnerId] += 1000 * riichiIdsArray.length;
     scores[winnerId] += 1000 * riichiBetsCount;
     this._lastPaymentsInfo.riichi[`${winnerId}<-`] = 1000 * riichiBetsCount;
-    scores[winnerId] += honbaValue * honba;
-
     for (const playerId of Object.keys(scores).map(Number)) {
       if (playerId === winnerId) {
         continue;
       }
-      scores[playerId] -= Math.floor((honbaValue / (Object.keys(scores).length - 1)) * honba);
-      this._lastPaymentsInfo.honba[`${winnerId}<-${playerId}`] = Math.floor(
-        (honbaValue / (Object.keys(scores).length - 1)) * honba
-      );
+      const payment = honbaValuePerPlayer * honba;
+      scores[playerId] -= payment;
+      scores[winnerId] += payment;
+      this._lastPaymentsInfo.honba[`${winnerId}<-${playerId}`] = payment;
     }
 
     return scores;

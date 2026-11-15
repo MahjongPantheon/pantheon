@@ -143,7 +143,7 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string; copyId?: string 
         endingPolicy: EndingPolicy.ENDING_POLICY_EP_UNSPECIFIED,
         startRating: 0,
         startPoints: 30000,
-        honbaValue: 300,
+        honbaValuePerPlayer: 100,
         replacementPlayerFixedPoints: -15000, // tourn
         withYakitori: false,
         yakitoriPenalty: 0,
