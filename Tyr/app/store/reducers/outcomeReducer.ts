@@ -141,7 +141,8 @@ export function outcomeReducer(state: IAppState, action: AppActionTypes): IAppSt
     const yaku = getWindYaku(
       action.payload.id,
       state.currentOutcome.roundIndex,
-      state.players?.findIndex((p) => p.id === winner) ?? -1
+      state.players?.findIndex((p) => p.id === winner) ?? -1,
+      state.gameConfig?.rulesetConfig.withSanma ? 3 : 4
     );
     const allowed = state.gameConfig?.rulesetConfig.allowedYaku ?? [];
     if (action.type === ADD_YAKU && yakuhai.includes(action.payload.id)) {

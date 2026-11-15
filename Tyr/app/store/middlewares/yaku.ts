@@ -108,7 +108,15 @@ export const yaku =
     const distinctWinds =
       playerIndex >= 0 &&
       outcome.roundIndex > 0 &&
-      !windYaku.some((pair) => getWindYaku(pair[0], outcome.roundIndex, playerIndex)?.length === 2);
+      !windYaku.some(
+        (pair) =>
+          getWindYaku(
+            pair[0],
+            outcome.roundIndex,
+            playerIndex,
+            after.gameConfig?.rulesetConfig.withSanma ? 3 : 4
+          )?.length === 2
+      );
     const advice = getYakuAdvice(selected, outcome.selectedOutcome, distinctWinds);
     if (advice)
       mw.dispatch({

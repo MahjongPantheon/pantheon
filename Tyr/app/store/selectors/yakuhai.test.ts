@@ -92,6 +92,30 @@ it('uses each winner’s own seat on multiron', () => {
   expect(getSelectedYaku(updated)[2]).toEqual([Y.SOUTH_SEAT_WIND]);
 });
 
+it.each([false, true])(
+  'allows the sanma West-round dealer to select East yakuhai (ron=%s)',
+  (ron: boolean) => {
+    for (const round of [7, 8, 9]) {
+      const dealer = ((round - 1) % 3) + 1;
+      let state = fixture(round, dealer, ron);
+      state.gameConfig!.rulesetConfig.withSanma = true;
+      state.players![3].id = -1;
+      expect(getDisabledYaku(state)[dealer]).not.toContain(Y.EAST_SEAT_WIND);
+      expect(getYakuList(state)[dealer].map((yaku) => yaku.id)).toContain(Y.WEST_ROUND_WIND);
+      state = outcomeReducer(state, {
+        type: ADD_YAKU,
+        payload: { id: Y.EAST_SEAT_WIND, winner: dealer },
+      });
+      expect(getSelectedYaku(state)[dealer]).toEqual([Y.EAST_SEAT_WIND]);
+      state = outcomeReducer(state, {
+        type: ADD_YAKU,
+        payload: { id: Y.WEST_ROUND_WIND, winner: dealer },
+      });
+      expect(getSelectedYaku(state)[dealer]).toEqual([Y.EAST_SEAT_WIND, Y.WEST_ROUND_WIND]);
+    }
+  }
+);
+
 it('clears wind yaku when changing the tsumo winner and preserves dragons', () => {
   let state = fixture(1, 1);
   state = outcomeReducer(state, { type: ADD_YAKU, payload: { id: Y.EAST_SEAT_WIND, winner: 1 } });

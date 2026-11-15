@@ -18,6 +18,21 @@ it('resolves seat and round winds independently for every seat and round', () =>
   }
 });
 
+it('resolves three-player winds through East, South and West without a North seat', () => {
+  for (let round = 1; round <= 9; round++) {
+    for (let player = 0; player < 3; player++) {
+      for (let wind = 0; wind < 4; wind++) {
+        const expected = [
+          ...((player - (round - 1) + 9) % 3 === wind ? [windYaku[wind][0]] : []),
+          ...(Math.floor((round - 1) / 3) === wind ? [windYaku[wind][1]] : []),
+        ];
+        expect(getWindYaku(windYaku[wind][0], round, player, 3)).toEqual(expected);
+        expect(getWindYaku(windYaku[wind][1], round, player, 3)).toEqual(expected);
+      }
+    }
+  }
+});
+
 it('counts every individual yakuhai as one han in open and closed hands', () => {
   for (const yaku of yakuhai) {
     expect(getHan([yaku])).toBe(1);

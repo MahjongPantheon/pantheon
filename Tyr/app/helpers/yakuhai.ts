@@ -21,13 +21,18 @@ export function getYakuhaiToAdd(selected: Y[], added: Y[]): Y[] | undefined {
 }
 
 // playerIndex is SessionPlayer.order - 1; roundIndex is one-based.
-export function getWindYaku(id: Y, roundIndex: number, playerIndex: number): Y[] | undefined {
+export function getWindYaku(
+  id: Y,
+  roundIndex: number,
+  playerIndex: number,
+  playerCount: 3 | 4 = 4
+): Y[] | undefined {
   const wind = windYaku.findIndex((pair) => pair.includes(id));
   if (wind === -1) {
     return undefined;
   }
-  const seatWind = (((playerIndex - (roundIndex - 1)) % 4) + 4) % 4;
-  const roundWind = Math.floor((roundIndex - 1) / 4) % 4;
+  const seatWind = (((playerIndex - (roundIndex - 1)) % playerCount) + playerCount) % playerCount;
+  const roundWind = Math.floor((roundIndex - 1) / playerCount) % 4;
   return [
     ...(wind === seatWind ? [windYaku[wind][0]] : []),
     ...(wind === roundWind ? [windYaku[wind][1]] : []),

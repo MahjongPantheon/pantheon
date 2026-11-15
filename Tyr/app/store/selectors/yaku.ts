@@ -146,7 +146,8 @@ function _excludeYaku(
     const yaku = getWindYaku(
       yakuId,
       outcome.roundIndex,
-      state.players?.findIndex((p) => p.id === winner) ?? -1
+      state.players?.findIndex((p) => p.id === winner) ?? -1,
+      state.gameConfig?.rulesetConfig.withSanma ? 3 : 4
     );
     if (yaku && !yaku.includes(yakuId)) {
       return false;
@@ -283,7 +284,8 @@ function _getYakuList(state: IAppState): { [id: number]: Yaku[] } {
         const yaku = getWindYaku(
           y.id,
           state.currentOutcome?.roundIndex ?? 1,
-          state.players?.findIndex((p) => p.id === user.id) ?? -1
+          state.players?.findIndex((p) => p.id === user.id) ?? -1,
+          state.gameConfig?.rulesetConfig.withSanma ? 3 : 4
         )!;
         const representative = yaku.find((id) => allowedYaku.includes(id)) ?? pair[0];
         return y.id === representative;
@@ -308,7 +310,12 @@ export function getDoubleWindYaku(state: IAppState): Record<number, YakuId | und
     const wind = windYaku.find(
       (pair) =>
         pair.every((id) => allowed.includes(id)) &&
-        getWindYaku(pair[0], roundIndex, playerIndex)?.length === 2
+        getWindYaku(
+          pair[0],
+          roundIndex,
+          playerIndex,
+          state.gameConfig?.rulesetConfig.withSanma ? 3 : 4
+        )?.length === 2
     );
     if (wind) result[user.id] = visible[user.id]?.find((yaku) => wind.includes(yaku.id))?.id;
   }
