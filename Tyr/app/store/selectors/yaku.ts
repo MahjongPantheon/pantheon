@@ -86,6 +86,19 @@ export function getSelectedYaku(state: IAppState): Record<number, YakuId[]> {
   }
 }
 
+const aggregateYakuhaiSet = new Set(aggregatedYakuhai);
+
+function getCompatibleYaku(state: IAppState, selected: YakuId[]): YakuId[] {
+  const compatible = getAllowedYakuCompat(state.yakuList, selected);
+  if (!state.gameConfig?.rulesetConfig.useAggregatedYakuhai) return compatible;
+  // Aggregate buttons replace one another, so test them without the current count.
+  const withoutCount = selected.filter((id) => !aggregateYakuhaiSet.has(id));
+  const replacements = getAllowedYakuCompat(state.yakuList, withoutCount).filter((id) =>
+    aggregateYakuhaiSet.has(id)
+  );
+  return [...new Set([...compatible, ...replacements])];
+}
+
 export function getAllowedYaku(state: IAppState): Record<number, YakuId[]> {
   let yakuList;
   const outcome = state.currentOutcome;
@@ -97,7 +110,7 @@ export function getAllowedYaku(state: IAppState): Record<number, YakuId[]> {
           state,
           outcome.winner,
           yakuList,
-          getAllowedYakuCompat(state.yakuList, yakuList),
+          getCompatibleYaku(state, yakuList),
           [YakuId.HOUTEI, YakuId.CHANKAN, YakuId.RENHOU]
         ),
       };
@@ -110,7 +123,7 @@ export function getAllowedYaku(state: IAppState): Record<number, YakuId[]> {
             state,
             user.id,
             yakuList,
-            getAllowedYakuCompat(state.yakuList, yakuList),
+            getCompatibleYaku(state, yakuList),
             [YakuId.MENZENTSUMO, YakuId.HAITEI, YakuId.TENHOU, YakuId.CHIHOU]
           );
           return acc;

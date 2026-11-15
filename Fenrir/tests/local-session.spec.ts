@@ -202,6 +202,17 @@ test('SMOKE-005: Registered player can finish a local session and view matching 
         await expect(yakuhaiGroup.getByRole('heading')).toHaveCount(0);
         await expect(yakuhaiGroup).toHaveAttribute('aria-label', 'Yakuhai');
         await expect(yakuhaiGroup.getByRole('button')).toHaveCount(aggregated ? 4 : 7);
+        if (aggregated) {
+          for (const selected of [15, 13, 14]) {
+            await page.getByTestId(`${prefix}-yaku-${selected}`).click();
+            for (const count of [13, 14, 15, 16]) {
+              const button = page.getByTestId(`${prefix}-yaku-${count}`);
+              await expect(button).toBeEnabled();
+              if (count === selected) await expect(button).toHaveClass(/checked/);
+              else await expect(button).not.toHaveClass(/checked/);
+            }
+          }
+        }
         if (!aggregated) {
           for (const name of [
             'East',

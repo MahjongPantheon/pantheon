@@ -138,6 +138,15 @@ export function outcomeReducer(state: IAppState, action: AppActionTypes): IAppSt
     ) {
       return state;
     }
+    if (action.type === ADD_YAKU && aggregated && aggregatedYakuhai.includes(action.payload.id)) {
+      const replaced = aggregatedYakuhai
+        .filter((id) => id !== action.payload.id)
+        .reduce(
+          (next, id) => reduceOutcome(next, { type: REMOVE_YAKU, payload: { id, winner } }),
+          state
+        );
+      return reduceOutcome(replaced, action);
+    }
     const yaku = getWindYaku(
       action.payload.id,
       state.currentOutcome.roundIndex,

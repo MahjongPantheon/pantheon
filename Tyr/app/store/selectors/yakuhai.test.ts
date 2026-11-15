@@ -240,6 +240,20 @@ it('rejects aggregate buttons when the event uses separate names', () => {
 });
 
 it.each([false, true])(
+  'keeps all aggregate counts available and replaces higher counts (ron=%s)',
+  (ron: boolean) => {
+    let state = fixture(1, 1, ron);
+    state.gameConfig!.rulesetConfig.useAggregatedYakuhai = true;
+    const counts = [Y.YAKUHAI1, Y.YAKUHAI2, Y.YAKUHAI3, Y.YAKUHAI4];
+    for (const id of [...counts, ...counts.toReversed()]) {
+      state = outcomeReducer(state, { type: ADD_YAKU, payload: { id, winner: 1 } });
+      expect(getSelectedYaku(state)[1].filter((yaku) => counts.includes(yaku))).toEqual([id]);
+      expect(getDisabledYaku(state)[1].filter((yaku) => counts.includes(yaku))).toEqual([]);
+    }
+  }
+);
+
+it.each([false, true])(
   'marks the matching double wind before selection (ron=%s)',
   (ron: boolean) => {
     for (const [round, winner, expected] of [
