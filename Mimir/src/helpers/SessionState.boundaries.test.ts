@@ -22,23 +22,28 @@ function round(outcome: RoundOutcome, hand: Partial<HandEntity> = {}) {
   });
 }
 
-it.each(['chombo', 'abort', 'draw'])(
-  'only permits a leading dealer finish after a normal oorasu: %s',
-  (lastOutcome) => {
-    const { state } = fixture();
-    Object.assign(state.state, { round: 8, roundJustChanged: false, lastOutcome });
-    state.setScores({ 1: 20000, 2: 20000, 3: 20000, 4: 40000 });
-    expect(state.isFinished()).toBe(lastOutcome === 'draw');
-    state.state.roundJustChanged = true;
-    expect(state.isFinished()).toBe(false);
-    state.state.round = 7;
-    expect(state.isFinished()).toBe(false);
-  }
-);
+it.each([
+  RoundOutcome.ROUND_OUTCOME_CHOMBO,
+  RoundOutcome.ROUND_OUTCOME_ABORT,
+  RoundOutcome.ROUND_OUTCOME_DRAW,
+])('only permits a leading dealer finish after a normal oorasu: %s', (lastOutcome) => {
+  const { state } = fixture();
+  Object.assign(state.state, { round: 8, roundJustChanged: false, lastOutcome });
+  state.setScores({ 1: 20000, 2: 20000, 3: 20000, 4: 40000 });
+  expect(state.isFinished()).toBe(lastOutcome === RoundOutcome.ROUND_OUTCOME_DRAW);
+  state.state.roundJustChanged = true;
+  expect(state.isFinished()).toBe(false);
+  state.state.round = 7;
+  expect(state.isFinished()).toBe(false);
+});
 
 it('requires the dealer to meet the goal and distinguishes east-only games', () => {
   const { state, rules } = fixture();
-  Object.assign(state.state, { round: 8, roundJustChanged: false, lastOutcome: 'draw' });
+  Object.assign(state.state, {
+    round: 8,
+    roundJustChanged: false,
+    lastOutcome: RoundOutcome.ROUND_OUTCOME_DRAW,
+  });
   state.setScores({ 1: 40000, 2: 20000, 3: 20000, 4: 20000 });
   expect(state.isFinished()).toBe(false);
   state.setScores({ 1: 25000, 2: 25000, 3: 25000, 4: 25000 });
@@ -51,14 +56,18 @@ it('requires the dealer to meet the goal and distinguishes east-only games', () 
 
 it('ends additional rounds at the goal or absolute round limit but not after chombo', () => {
   const { state } = fixture();
-  Object.assign(state.state, { round: 9, lastOutcome: 'draw' });
+  Object.assign(state.state, {
+    round: 9,
+    roundJustChanged: true,
+    lastOutcome: RoundOutcome.ROUND_OUTCOME_DRAW,
+  });
   state.setScores({ 1: 25000, 2: 25000, 3: 25000, 4: 25000 });
   expect(state.isFinished()).toBe(false);
   state.setScores({ 1: 31000, 2: 23000, 3: 23000, 4: 23000 });
   expect(state.isFinished()).toBe(true);
-  state.state.lastOutcome = 'chombo';
+  state.state.lastOutcome = RoundOutcome.ROUND_OUTCOME_CHOMBO;
   expect(state.isFinished()).toBe(false);
-  state.state.lastOutcome = 'draw';
+  state.state.lastOutcome = RoundOutcome.ROUND_OUTCOME_DRAW;
   state.state.round = 13;
   expect(state.isFinished()).toBe(true);
 });

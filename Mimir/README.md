@@ -178,6 +178,23 @@ It renames the stored `withButtobi` rule to `withTobi`, preserving each event's
 setting. The protobuf field keeps number 14; JSON clients must use `withTobi`.
 With tobi enabled, riichi requires at least 1,000 points before the round's payments.
 
+### Agariyame and additional rounds
+
+With agariyame (`withLeadingDealerGameOver`) enabled, a dealer who wins or is
+tenpai after a draw ends the session when they are the sole score leader after
+payments at South 4 (East 4 for tonpuusen). Ties retain the dealer. The same
+check applies to every round in an additional wind, using that round's dealer.
+Chombo and abortive draws do not trigger this finish.
+
+The goal score applies only when `playAdditionalRounds` is enabled. Otherwise,
+a leading final dealer can finish below a stored goal score. With additional
+rounds enabled, renchan takes priority over another player reaching the goal:
+the session ends at the goal when the dealer rotates, or when the repeating
+dealer satisfies agariyame. For example, two tenpai players reaching 31,000
+(dealer) and 31,300 retain the dealer. Without anyone reaching the goal, play
+ends when the additional wind is completed. Sanma uses South 3/East 3 and an
+additional wind of three rounds.
+
 ### Registration local IDs
 
 Apply `Migration20261029000000` before deploying the local-ID registration fix.

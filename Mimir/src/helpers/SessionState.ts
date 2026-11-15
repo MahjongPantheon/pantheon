@@ -59,7 +59,10 @@ export class SessionState {
   }
 
   protected _dealerIsLeaderOnOorasu(): boolean {
-    if (this._state.lastOutcome === 'chombo' || this._state.lastOutcome === 'abort') {
+    if (
+      this._state.lastOutcome === RoundOutcome.ROUND_OUTCOME_CHOMBO ||
+      this._state.lastOutcome === RoundOutcome.ROUND_OUTCOME_ABORT
+    ) {
       return false; // chombo or abortive draw should not finish game
     }
 
@@ -67,15 +70,19 @@ export class SessionState {
       return false; // should play last round at least once!
     }
 
-    const maxRound = this._ruleset.playerCount * (this._ruleset.rules.tonpuusen ? 1 : 2);
-    if (this.getRound() !== maxRound) {
-      return false; // not oorasu
+    const lastScheduledRound = this._ruleset.playerCount * (this._ruleset.rules.tonpuusen ? 1 : 2);
+    if (this.getRound() < lastScheduledRound) {
+      return false; // not oorasu or an additional round
     }
 
-    const dealerId = this._state.playerIds[this._state.playerIds.length - 1];
+    const dealerId = this.getCurrentDealer();
     const dealerScore = this.getScores()[dealerId];
-    const maxScore = Math.max(...Object.values(this.getScores()));
-    return dealerScore === maxScore && dealerScore >= this._ruleset.rules.goalPoints;
+    const dealerIsLeader = this._state.playerIds.every(
+      (id) => id === dealerId || dealerScore > this.getScores()[id]
+    );
+    const goalReached =
+      !this._ruleset.rules.playAdditionalRounds || dealerScore >= this._ruleset.rules.goalPoints;
+    return dealerIsLeader && goalReached;
   }
 
   protected _lastPossibleRoundWasPlayed(): boolean {
@@ -85,7 +92,7 @@ export class SessionState {
       return false;
     }
 
-    if (this._state.lastOutcome === 'chombo') {
+    if (this._state.lastOutcome === RoundOutcome.ROUND_OUTCOME_CHOMBO) {
       return false; // chombo should not finish game
     }
 
@@ -97,8 +104,9 @@ export class SessionState {
       return true;
     }
 
+    // A repeating dealer takes priority over the goal; agariyame is checked separately.
     const scores = Object.values(this.getScores());
-    return Math.max(...scores) >= this._ruleset.rules.goalPoints;
+    return this._state.roundJustChanged && Math.max(...scores) >= this._ruleset.rules.goalPoints;
   }
 
   /**
