@@ -1,40 +1,115 @@
-import { Meta } from '../components/Meta'
+import { Meta } from '../components/Meta';
 import { Link } from 'wouter';
 import { env } from '../env';
 
-<Meta title='Getting started with Pantheon'
-      description='How to start using Mahjong Pantheon' />
+<Meta title='Getting started and account help - Mahjong Pantheon'
+      description='Event modes, sign-up, event registration, profile settings and password recovery in Pantheon.' />
 
-### How to start using Pantheon
+## Getting started and account help
 
-At first, you should <a href={`${env.urls.forseti}/profile/signup`} target='_blank'>register in the system</a> once. You will need a
-working e-mail address to register. Pantheon tries to reduce count of external dependencies and services, which
-might require to pass your user data there, that's why there is no (and will never be) any quick login using
-external services (using oAuth or OpenID).
+Use the <a href={env.urls.tyr}>mobile assistant</a> to record games,
+<a href={env.urls.sigrun}>ratings and statistics</a> to view results, and the
+<a href={env.urls.forseti}>profile and administration panel</a> to manage your account and events.
+The same account works across these services.
 
-Confirmation link will be delivered as a message to your e-mail address. After following the link, your account
-will be activated. Things to remember:
-<section className='sparseList'>
-- Please, do not register twice. If there is an account registered to your e-mail, but you don't remember the password,
-  please use <a href={`${env.urls.forseti}/profile/resetPassword`} target='_blank'>password recovery page</a>.
-- Please, fill your data after account activation to complete your registration. At least we expect your name and
-  surname to be known, so administrators of tournaments and club ratings could find you easily and add to the rating table.
-- If you don't receive an activation link, please ensure that message from Pantheon was not delivered to your
-  spam folder (it happens sometimes). If you can't receive the link by no means, please contact service administrator.
-</section>
+On this page: [event modes](#event-modes), [creating an account](#sign-up), [joining an event](#registration),
+[your profile](#profile), [changing a password](#password), and [common questions](#questions).
 
-After you've completed the registration, please let tournament/club administrator know about it - then they will add you
-to the rating table. **Please register in advance, to avoid losing time registering just before the tournament -
-administrators will be grateful**.
+<h3 id='event-modes'>Which event mode do I need?</h3>
 
-To get to the mobile assistant app, use "Open game control app" link in the top menu (on mobile devices it's hidden
-under menu button). Also you can get directly to the <a href={env.urls.tyr} target='_blank'>mobile assistant</a> and log in
-with your mobile device.
+An **event** has its own player list, rules and rating table. A **session** is a game at one table;
+in tournament controls, it can also mean all tables playing together. A **round** in the controls is one hand.
 
-After you have successfully registered and logged in, you can use mobile assistant or create your own ratings and
-tournaments via administration panel.
+- **Local rating (club event):** players start games themselves, choose opponents and initial seats,
+  and record hands in the mobile assistant. Tables play independently, without a shared tournament timer.
+  Administrators can add players as the club rating continues.
+- **Tournament:** administrators prepare the player list and seating, start all tables with the timer,
+  and approve completed sessions together. Seating can be random, Swiss, interval-based or predefined.
+- **Online event:** results come from supported online platforms and replay logs. Ask the organizer
+  which platform and accounts the event requires; this flow differs from recording a game at a physical table.
 
-### What's next?
+<figure className='guideScreenshot'>
+  <a href='/assets/img/guides/en/event-modes.png'><img src='/assets/img/guides/en/event-modes.png' width='1280' height='1094' alt='New event form showing Local rating, Online event and Tournament choices' loading='lazy' /></a>
+  <figcaption>The event type is chosen when creating an event. All guide screenshots use synthetic players and TEST events.</figcaption>
+</figure>
 
-- <Link onClick={() => { window.scrollTo({ top: 0, behavior: 'smooth' }); }} to='/forPlayers'>Mobile assistant instructions</Link>
-- <Link onClick={() => { window.scrollTo({ top: 0, behavior: 'smooth' }); }} to='/forHosts'>Administration panel instructions</Link>
+<h3 id='sign-up'>How do I create an account?</h3>
+
+1. Open <a href={`${env.urls.forseti}/profile/signup`}>Register new account</a>.
+2. Enter a working email address, a player title and a strong password. Use a recognizable name and surname
+   as your player title so organizers can find the right person.
+3. Read the privacy policy, accept its terms and press **Register new account**.
+4. Open the verification email and follow its confirmation link. Then log in.
+5. Check your <a href={`${env.urls.forseti}/profile/manage`}>profile</a> and tell the organizer your account is ready.
+
+<figure className='guideScreenshot'>
+  <a href='/assets/img/guides/en/account-signup.png'><img src='/assets/img/guides/en/account-signup.png' width='1280' height='900' alt='Account sign-up form with email, player title, password and privacy policy acceptance' loading='lazy' /></a>
+  <figcaption>Sign up once. Your account can be registered in many events.</figcaption>
+</figure>
+
+If the email does not arrive, check spam and the address you entered. Contact the service administrator if you
+still cannot activate the account. If you already have an account, recover its password instead of creating
+another one: duplicate accounts split your game history. Sign up before arriving at a tournament.
+
+<h3 id='registration'>How do I join a club rating or tournament?</h3>
+
+**Signing up creates a Pantheon account. Player registration adds that account to a particular event.**
+Creating an account alone does not add you to a tournament or club player list.
+
+Send the organizer your player title or **System ID**, shown in your profile. The organizer adds you through
+**Manage players**. Then log in to the mobile assistant and select the event. Also follow any separate
+sign-up or payment process announced by the organizer.
+
+<h3 id='profile'>How do I manage my profile?</h3>
+
+1. Log in to the <a href={env.urls.forseti}>profile and administration panel</a> and open
+   <a href={`${env.urls.forseti}/profile/manage`}>your account</a>. The mobile assistant also has a personal area
+   button in settings.
+2. Update **Player title**, country, city and any optional contact or Tenhou information. Enter your public
+   Tenhou username, never a login string.
+3. To add an avatar, enable the avatar option and choose an image. Use a square image up to 256 KB;
+   other shapes are cropped to the center square.
+4. Press **Save changes** and wait for the saved confirmation.
+
+<figure className='guideScreenshot'>
+  <a href='/assets/img/guides/en/account-profile.png'><img src='/assets/img/guides/en/account-profile.png' width='1280' height='930' alt='Own profile with player title, System ID, country, city and avatar settings' loading='lazy' /></a>
+  <figcaption>Your System ID identifies the account; your player title helps organizers find you.</figcaption>
+</figure>
+
+Your email address is read-only here. Contact the chief administrator if it needs changing.
+Account removal deletes account data; it is not needed to leave an event or change a password.
+
+<h3 id='password'>How do I change or recover my password?</h3>
+
+Use email recovery both for a forgotten password and to choose a new one.
+
+1. Open <a href={`${env.urls.forseti}/profile/resetPassword`}>Recover password</a>, enter your account email and submit.
+2. Follow the link in the recovery email.
+3. Press **Reset my password** on the confirmation page. This starts the reset: your old password stops working,
+   so complete the next step before leaving the page.
+4. Enter a new strong password and press **Update password**.
+5. After the success message, go to the login page and use your new password.
+
+<figure className='guideScreenshot'>
+  <a href='/assets/img/guides/en/account-password.png'><img src='/assets/img/guides/en/account-password.png' width='1280' height='900' alt='Password recovery form asking for the account email address' loading='lazy' /></a>
+  <figcaption>Request the email first, then set a new password through its link.</figcaption>
+</figure>
+
+If the link has expired or was already used, request another one. Check spam if the message is missing.
+
+<h3 id='questions'>Common questions</h3>
+
+**My event is missing in the assistant.** Ask the organizer to check that your exact account is registered
+in the active event. Refresh the event list or select the event again in settings.
+
+**The organizer cannot find me.** Save a recognizable player title, or give them your System ID.
+Do not create another account to solve a search problem.
+
+**Where are my results?** Open <a href={env.urls.sigrun}>ratings and statistics</a> and select the event.
+Tournament results appear after administrator approval, subject to event visibility settings.
+
+### Next steps
+
+- <Link to='/forPlayers'>Using the mobile assistant</Link>
+- <a href='/en/forHosts#club'>Running a club event</a>
+- <a href='/en/forHosts#tournament'>Running a tournament</a>

@@ -69,3 +69,27 @@ body {
 .sparseList li {
   margin-top: 10px;
 }
+
+.guideScreenshot {
+  margin: 24px 0 32px;
+  text-align: center;
+}
+
+.guideScreenshot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--mantine-color-default-border);
+  border-radius: 8px;
+}
+
+.guideScreenshot.mobile img {
+  max-width: 390px;
+  margin: 0 auto;
+}
+
+.guideScreenshot figcaption {
+  margin-top: 8px;
+  color: var(--mantine-color-dimmed);
+  font-size: 0.9rem;
+}

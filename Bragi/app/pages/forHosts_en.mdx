@@ -2,131 +2,229 @@ import { Meta } from '../components/Meta';
 import { Link } from 'wouter';
 import { env } from '../env';
 
-<Meta title='Tournaments - Mahjong Pantheon'
-      description='How to host a tournament using Mahjong Pantheon' />
+<Meta title='Club and tournament administration - Mahjong Pantheon'
+      description='Step-by-step administrator guides for player registration, games, seating, timers and predefined tournament seating.' />
 
-### Hosting a tournament with Pantheon
+## Club and tournament administration
 
-#### 1. Basics
-<section className='sparseList'>
-- The system may work both in tournament mode and club rating mode. In tournament mode, there is timer,
-  automatic seating generator, but players can't be added or removed any time.
-- There is automatic seating generation and also a predefined seating mode.
-- The winner is defined by summary score of all games played.
-- Main address of admin panel - <a href={env.urls.sigrun} target='_blank'>{env.urls.sigrun}</a>.
-  The list of events you are an administrator at will be there. Use "Actions" menu to get to the management page
-  you need. When in particular event management mode, you can navigate between event management pages using menu
-  in left column.
-- Default settings (can be changed by tournament administrator):
-  - The game session lasts for 75 minutes.
-  - Uma is 15000/5000.
-</section>
+Open the <a href={env.urls.forseti}>administration panel</a>, log in and choose an event from **My events**.
+Use its **Actions** menu or open the event, then use the left sidebar to reach **Manage players**, **Manage games**
+and **Settings**. If you cannot see the event, ask its administrator to grant access through **Manage privileges**.
+Playing in an event alone does not grant administration rights.
 
-#### 2. Players management
-<section className='sparseList'>
-- The tournament administrator should add to the event all tournament players in advance on "Manage players" page.
-- To find a particular player, start typing his name/surname in the input field. You will see found players in
-  dropdown menu. Selecting a player in the menu will add them to the event. Note that you will not see all added
-  players immediately - you will need to refresh the page first.
-- If a player can't be found, notify them about it - probably, they forgot to fill in theis name and surname in
-  their profile.
-- For each player there are several buttons in the list:
-  - "Exclude from seating" - this button is useful if some of the players are not able to continue to participate
-    and count of such players exceeds cound of available replacement players. You can exclude four or more players
-    (e.g. whole table or several tables) from the tournament using this button. Also you can exclude from the
-    tournament seating all the non-playing referees, who are still required to be in the list.
-  - "Remove player" - this button is available when no games are played yet. You can remove from the list a player
-    added by accident.
-  - "Make an administrator" - this button gives a player access to the admin panel. Such player can cancel hands,
-    start the timer, generate seatings and other. Non-playing referees are required to be given admin privileges,
-    but they should be excluded from the seating.
-  - There is also a "Replace player" button to the right of player title, a dialog will pop up when it's pressed.
-    You can select a replacement player (found by name/surname) for the player who can't participate in current
-    session here. The player who has a replacement selected will achieve -30000 points in the end of game session no
-    matter what score they gained during the game. If a player gets back to the tournament, the replacement should be
-    nullified - please do it before "Confirm results" button is pressed, otherwise the player will still gain -30000
-    points for current game. Please don't set anyone who was already added to the rating as a replacement player -
-    it may lead to unforeseen consequences.
-- The system will not allow you to start the game session if the count of active players is not divisible by 4.
-  If required, the administrator may remove someone from the tournament or add some additional players (there are
-  "Replacement player 1-4" accounts for that; please ask you service administrator to create them if you can't find
-  these accounts).
-</section>
+Choose a guide: [club event](#club), [tournament](#tournament), or [predefined seating](#predefined).
+For account creation and event modes, see <Link to='/getStarted'>Getting started and account help</Link>.
+Click any screenshot to open it at full size. Examples use synthetic TEST events.
 
-#### 3. Running the tournament
-<section className='sparseList'>
-- The tournament session may have following statuses:
-  - "Not ready": players count is not divisible by 4, can't continue
-  - "Not started": on this stage, you can generate a seating.
-  - "Seating...": seating is in progress, please wait
-  - "Seating ready": seating is generated, but timer was not started yet. You'll have a "Start timer" button, which
-    you should press when all players have taken their seats. In case of some mistake during seating generation,
-    there is a "Reset seating" button.
-  - "Session started": games are started. There is a "Reset timer" button for some emergency situations.
-  - "Ready to approve": all games are finished, but results are not confirmed. You still can cancel the last hand of
-    any game. There is a "Confirm results" button to get to the next stage. After confirmation, new session begins
-    with "Not started" status.
-- When seating is ready, each player will see the table number in their mobile assistant (in the central part of the page).
-- Timer and seating table are also can be found on "Timer and seating" page in the ratings service. Tournament
-  administrators may show this page on some projector or big screen in the tournament hall, if there are any.
-- Games are started by pressing the "Start timer" button. The tournament administrator should also give a clear signal
-  for players to start the game.
-- Penalties:
-  - You can add some arbitrary penalties (e.g. for behavior or being late) in amount of 100 to 20000 game points.
-    You can use the "Penalties" page for that.
-  - Penalty reasons are visible to every player and also are listed in the penalties list in admin panel.
-  - Penalties can be cancelled any time (e.g. if a penalty was added by mistake).
-  - When a penalty is added, the player get notification through messenger bot (if it's set up).
-- The administrator can watch the tables state on "Manage games" page. You can't confirm the results until all tables
-  are finished with their game sessions.
-- If players have mistaken during logging the game, the administrator may cancel the last logged hand with a
-  "Cancel hand" button on "Manage games" page.
-- Please notify the players clearly that they need to call the referee to cancel the hand, because only referee
-  can make such decision.
-</section>
+<h3 id='club'>Club event: register players and manage games</h3>
 
-### Hosting local club games with Pantheon
+#### 1. Create or open the club event
 
-#### 1. Basics
-<section className='sparseList'>
-- The system may work both in tournament mode and club rating mode. In club mode, there is no timer or automatic
-  seating generator, but players can be added or removed any time.
-- The winner is defined by summary score of all games played.
-- Main address of mobile assistant - <a href={env.urls.tyr} target='_blank'>{env.urls.tyr}</a>.
-- Main address of admin panel - <a href={env.urls.forseti} target='_blank'>{env.urls.forseti}</a>. The list of
-  events you are an administrator at will be there. Use "Actions" menu to get to the management page you need.
-  When in particular event management mode, you can navigate between event management pages using menu in left column.
-- Default settings (can be changed by tournament administrator):
-  - Uma is 15000/5000.
-</section>
+For a new event, choose **Create new event**, select **Local rating**, enter a title, choose a basic ruleset
+and timezone, review the other settings, and save. Include TEST in the title for a practice event.
+An existing club event can continue across many visits: tables start and finish independently.
 
-#### 2. Players management
-<section className='sparseList'>
-- The tournament administrator should add to the event all tournament players in advance on "Manage players" page.
-- To find a particular player, start typing his name/surname in the input field. You will see found players in dropdown
-  menu. Selecting a player in the menu will add them to the event.
-- If a player can't be found, notify them about it - probably, they forgot to fill in theis name and surname in their profile.
-- For each player there are several buttons in the list:
-- "Remove player" - this button is available when no games are played yet. You can remove from the list a player added by accident.
-- "Make an administrator" - this button gives a player access to the admin panel. Such player can cancel hands and add penalties.
-</section>
+#### 2. Add players
 
-#### 3. Running games
-<section className='sparseList'>
-- In club mode, players can start games anytime they want using their mobile assistants. There is a "New game" button
-  on main page for that. After pressing on the button, you should select participants from the list (note that there
-  will only be players that are added to the rating by administrator). You also can shuffle players at the table before
-  the game start.
-- If players made a mistake while starting new game (e.g. added wrong person to the table), they can ask administrator
-  to cancel the game. Every table has a "Remove game" button on the "Manage games" page. The button is visible only if
-  there are no hands logged already, otherwise there will be a "Cancel hand" button.
-- If players made a mistake while logging a hand, the administrator can cancel their last logged hand. Each table with
-  at least one hand logged will have a "Cancel hand" button on the "Manage games" page.
-- You should clearly notify players that only administrator of the club rating can cancels hands and games. The final
-  decision about cancellation is made by the administrator.
-- Note that you can't cancel last hand of the game if any of players of that game have already started a new game.
-</section>
+1. Ask each player to <a href='/en/getStarted#sign-up'>create and activate an account</a> first.
+2. Open **Manage players**. In **Find and add player by name or ID...**, enter a player title or `#` followed
+   by their System ID.
+3. Select the correct search result. Check the ID when names are similar.
+4. The player appears in the list immediately. Repeat for the other participants; they can now select this event
+   in the mobile assistant. If a player cannot be found, check their profile title or ask for their System ID.
 
-### Additional information
+<figure className='guideScreenshot'>
+  <a href='/assets/img/guides/en/club-players.png'><img src='/assets/img/guides/en/club-players.png' width='1280' height='960' alt='Club player management with the add-player search and registered player list' loading='lazy' /></a>
+  <figcaption>Register existing accounts here. Creating an account and joining an event are separate steps.</figcaption>
+</figure>
 
-- <Link onClick={() => { window.scrollTo({ top: 0, behavior: 'smooth' }); }} to='/seatings'>How seatings work</Link>
+Club registration can continue while the event is running. Use the remove-player icon for an accidental registration
+when available; removing a player from the list does not cancel their games. Administration rights are managed
+separately in **Manage privileges**.
+
+#### 3. Let players start their games
+
+Players choose **New game** in the mobile assistant, select the participants in East–South–West–North order
+(or East–South–West for sanma), optionally shuffle them, and start. Only registered players can be selected.
+There is no shared club timer or automatic tournament seating. See the <a href='/en/forPlayers#club'>player guide</a>.
+
+#### 4. Cancel an incorrectly started game
+
+1. Open **Manage games** and identify the table by its players.
+2. If no hands have been recorded, press **Remove game** and confirm. This removes the entire empty game.
+3. Ask the players to refresh the assistant and start again with the correct participants and seats.
+
+<figure className='guideScreenshot'>
+  <a href='/assets/img/guides/en/club-remove-game.png'><img src='/assets/img/guides/en/club-remove-game.png' width='1280' height='900' alt='Club game management showing Remove game for a session without recorded hands' loading='lazy' /></a>
+  <figcaption>Remove game is available only while the game has no recorded hands.</figcaption>
+</figure>
+
+Once a hand has been recorded, **Cancel round** replaces **Remove game**. Check the latest hand with the players,
+press **Cancel round**, confirm, then have them enter the correct result. To reach an older error, later hands
+must be cancelled and re-entered in reverse order; agree on the record before doing this.
+If all hands are cancelled, the empty game can be removed.
+
+<figure className='guideScreenshot'>
+  <a href='/assets/img/guides/en/club-cancel-round.png'><img src='/assets/img/guides/en/club-cancel-round.png' width='1280' height='900' alt='Confirmation dialog for cancelling the latest hand of a club game' loading='lazy' /></a>
+  <figcaption>Cancel round removes only the latest hand, not the entire game.</figcaption>
+</figure>
+
+For a completed club game, **Cancel last round and results** reopens it and removes its last hand and published
+results together. This is available only when the server permits it; in particular, a player starting a later game
+can prevent reopening. Correct mistakes before players start their next game.
+
+<h3 id='tournament'>Tournament: from player list to approved results</h3>
+
+#### 1. Prepare the event and timer settings
+
+Create an event with type **Tournament**, or open an existing one. Choose the ruleset and timezone.
+In **Tournament settings**, check **Session duration in minutes** and **Session ending policy**, then save:
+
+- **Do not interrupt session until it ends:** the timer does not force the game to end.
+- **When time is out, finish current hand and interrupt the session.**
+- **When time is out, finish current hand, play one more, and then interrupt the session.**
+
+<figure className='guideScreenshot'>
+  <a href='/assets/img/guides/en/tournament-settings.png'><img src='/assets/img/guides/en/tournament-settings.png' width='1280' height='1081' alt='Tournament settings for duration, ending policy, predefined seating and wind shuffle' loading='lazy' /></a>
+  <figcaption>Announce the configured duration and ending policy to players before play. They are event settings, not universal defaults.</figcaption>
+</figure>
+
+#### 2. Register the players before starting
+
+Open **Manage players**, search by player title or `#SystemID`, and select each account, as in the club guide.
+Complete the list before generating the first seating: creating the tournament sessions locks additions
+and removals, even before the timer starts.
+
+For automatic seating, the number of included players must be a multiple of **four**, or **three for sanma**.
+The chair icon includes or excludes a player from the next seating when the controls allow it. Exclude non-playing
+referees if they are on the player list. An excluded player remains registered. Keep the included player count valid.
+
+<figure className='guideScreenshot'>
+  <a href='/assets/img/guides/en/tournament-players.png'><img src='/assets/img/guides/en/tournament-players.png' width='1280' height='960' alt='Tournament player list with inclusion and exclusion chair icons' loading='lazy' /></a>
+  <figcaption>Check the included players before generating each seating. Access rights are set through Manage privileges.</figcaption>
+</figure>
+
+If a participant needs a substitute, use the replacement control beside their name. Select someone who is not
+already registered in this event. Substitution scoring follows the event settings. Clear the replacement before
+results are approved when the original participant returns.
+
+#### 3. Generate seating
+
+Open **Manage games**. **Not ready** means the included player count needs correcting. When the status is
+**Not started**, choose the seating method and confirm:
+
+- **Random seating:** available for the first session and later ones; shuffles players without grouping by rank
+  and tries to reduce repeat encounters, but does not guarantee new opponents.
+- **Swiss seating:** available after previous games; uses standings and playing history to seek similarly ranked
+  opponents while reducing repeat encounters. Repeats can still occur.
+- **Interval seating:** available after previous games; select an interval in the dialog. Interval 1 groups adjacent
+  ranks (1–2–3–4, 5–6–7–8); interval 2 groups 1–3–5–7 and 2–4–6–8, and so on.
+- **Next seating:** used instead of the automatic choices in a predefined event; see [below](#predefined).
+
+<figure className='guideScreenshot'>
+  <a href='/assets/img/guides/en/tournament-seating.png'><img src='/assets/img/guides/en/tournament-seating.png' width='1280' height='900' alt='Manage games before the first session, with Random seating enabled and Swiss and interval seating disabled' loading='lazy' /></a>
+  <figcaption>For the first automatic seating, use Random seating. Swiss and interval seating need previous games.</figcaption>
+</figure>
+
+<figure className='guideScreenshot'>
+  <a href='/assets/img/guides/en/tournament-interval.png'><img src='/assets/img/guides/en/tournament-interval.png' width='1280' height='900' alt='Interval seating confirmation with the interval selector' loading='lazy' /></a>
+  <figcaption>After results are approved, choose the seating method for the next session.</figcaption>
+</figure>
+
+Wait while the status is **Seating...**. At **Seating ready**, verify the tables and initial winds. Players can
+see their table in the assistant; the event's **Timer and seating** page in the ratings service can also be
+shown on a shared screen. If the generated seating is wrong, use **Reset seating** before starting the timer,
+then generate it again.
+
+<figure className='guideScreenshot'>
+  <a href='/assets/img/guides/en/tournament-ready.png'><img src='/assets/img/guides/en/tournament-ready.png' width='1280' height='900' alt='Seating ready with generated tables, Reset seating and Start timer' loading='lazy' /></a>
+  <figcaption>Seating ready lets players take their places. Play has not started yet.</figcaption>
+</figure>
+
+#### 4. Start and manage the timer
+
+When everyone is seated, press **Start timer** and confirm. This starts the tournament sessions together;
+also give players a clear start signal. The status becomes **Session started**.
+
+During play, **Add extra time** in the tournament controls extends all tables. Choose 1, 2, 3, 4, 5 or 7 minutes
+and confirm. The **Add extra time** control within an individual table extends only that table, for example after
+a referee interruption. Check which control you are using before confirming. The current panel offers time
+extensions, rather than a pause or reset button.
+
+<figure className='guideScreenshot'>
+  <a href='/assets/img/guides/en/tournament-timer.png'><img src='/assets/img/guides/en/tournament-timer.png' width='1280' height='900' alt='Add extra time dialog in the tournament controls, stating that it applies to all tables' loading='lazy' /></a>
+  <figcaption>Use the global control for all tables and a table control for an individual delay.</figcaption>
+</figure>
+
+When time expires, apply the configured ending policy. A zero timer does not itself approve the results.
+
+#### 5. Correct or cancel a recorded hand
+
+On **Manage games**, find the affected table and use **Cancel round**, then confirm and ask the players to
+refresh and re-enter the result. It cancels only the latest recorded hand. It is also available for a table
+that has finished playing but whose results have not yet been approved.
+
+<figure className='guideScreenshot'>
+  <a href='/assets/img/guides/en/tournament-cancel-round.png'><img src='/assets/img/guides/en/tournament-cancel-round.png' width='1280' height='900' alt='Tournament table with the Cancel round confirmation open during the session' loading='lazy' /></a>
+  <figcaption>Cancel the latest hand at the affected table; the synchronized tournament session continues.</figcaption>
+</figure>
+
+To discard a generated seating before play, use **Reset seating**. Tournament tables do not have the club's
+**Remove game** action: do not try to fix one table by deleting it from the synchronized session.
+For an older error, agree with the referee which later hands must be cancelled and re-entered.
+
+#### 6. Approve results and continue
+
+When every table has finished, the status becomes **Ready to approve**. Resolve corrections first, then press
+**Approve sessions** and confirm. This publishes results according to visibility settings and allows the next
+seating. Normal tournament controls no longer allow cancelling those hands after approval.
+
+<figure className='guideScreenshot'>
+  <a href='/assets/img/guides/en/tournament-approve.png'><img src='/assets/img/guides/en/tournament-approve.png' width='1280' height='900' alt='Ready to approve with the Approve sessions confirmation dialog' loading='lazy' /></a>
+  <figcaption>Check all tables before confirming. Approval is a separate step from finishing play.</figcaption>
+</figure>
+
+Repeat seating → verify tables → start timer → record games → check and approve results for each session.
+**Finish event** ends the entire event; do not use it between sessions.
+
+<h3 id='predefined'>Predefined seating: prepare a script in advance</h3>
+
+Use this when you already have the full table plan. Enable **Seating is defined in advance** in
+**Tournament settings** and save. Automatic random, Swiss and interval controls are replaced by **Next seating**.
+
+1. Register the participants, then open the **Local IDs** tab in **Manage players**. Assign each player a unique
+   local number and save. These event-specific IDs are different from the account's System ID.
+2. Open **Predefined seating** in the event sidebar. Enter one table per line, with local IDs separated by hyphens.
+   Separate sessions with a blank line. Every table needs four IDs, or three for sanma; do not repeat a player
+   within the same session.
+3. Set **Next session index** to 1 for a new script and press **Update script**. Resolve all reported errors
+   before proceeding.
+4. On **Manage games**, press **Next seating** and confirm. Check tables and winds, then start the timer as usual.
+   The next session index advances when the timer starts. After approval, generate the next scripted seating.
+
+<figure className='guideScreenshot'>
+  <a href='/assets/img/guides/en/predefined-script.png'><img src='/assets/img/guides/en/predefined-script.png' width='1280' height='900' alt='Predefined seating editor showing two sessions, Next session index and No errors found' loading='lazy' /></a>
+  <figcaption>Numbers in the script refer to the saved Local IDs, not System IDs.</figcaption>
+</figure>
+
+For example, this four-player script has two tables in each of two sessions:
+
+```text
+1-2-3-4
+5-6-7-8
+
+1-3-5-7
+2-4-6-8
+```
+
+To preserve the listed East–South–West–North order, choose **Prescripted wind shuffle** in tournament settings.
+**Random wind shuffle** or **Balanced wind shuffle** keeps the table groups but can change their initial winds.
+For sanma, use three IDs per line, in East–South–West order when following the script.
+When the script runs out, add and validate the remaining sessions before generating another seating.
+Do not change the next session index casually: it chooses which block will be used next.
+
+### Related guides
+
+- <Link to='/getStarted'>Account help and event modes</Link>
+- <Link to='/forPlayers'>Mobile assistant instructions for players</Link>
+- <Link to='/seatings'>How seating methods work</Link>

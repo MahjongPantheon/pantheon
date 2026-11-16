@@ -1,76 +1,134 @@
-import { Meta } from '../components/Meta'
+import { Meta } from '../components/Meta';
+import { Link } from 'wouter';
+import { env } from '../env';
 
-<Meta title='How seatings work - Mahjong Pantheon'
-      description='Description of seatings algorihtms in Mahjong Pantheon' />
+<Meta title='How seating methods work - Mahjong Pantheon'
+      description='Random, Swiss, interval and predefined seating, initial winds and player inclusion in Pantheon tournaments.' />
 
-## How seatings work
+## How seating methods work
 
-Pantheon offers several options of how seatings can be made:
-
-- Random seating
-- Swiss seating
-- Interval-based seating
-- Predefined seating
-
-Here are some details about them.
+Generate tournament seating on **Manage games** in the <a href={env.urls.forseti}>administration panel</a>.
+For the complete sequence, see the <a href='/en/forHosts#tournament'>tournament administrator guide</a>.
+Each table needs four players, or three in a sanma event. Check the included player list before generation.
 
 ### Random seating
-<section className='sparseList'>
-- This seating can be used any time during the tournament, because it doesn't take into account any previous data.
-- When using this seating, players are shuffled randomly.
-- There can be (and most likely will be) intersections, if this seating is used on later stages of a tournament.
-- This is the only seating you can use in the beginning of the tournament.
-</section>
+
+Players are shuffled into tables without grouping them by their positions in the standings. This is the available
+automatic method for the first session, since it does not require earlier results. Predefined events can instead
+use their script from the first session.
+
+The generator tries several shuffled arrangements and compares their repeat encounters with previous seatings.
+It keeps the best arrangement it finds, then assigns initial winds according to the event's wind shuffle mode.
+This means the result is not a completely unrestricted random draw when playing history is available.
+Repeat opponents are still possible, especially later in the tournament; this method does not guarantee
+either new opponents or opponents with similar ratings.
 
 ### Swiss seating
-<section className='sparseList'>
-- This seating uses both current positions of players in the rating table and the games history to minimize intersections.
-- Swiss seating can't be used if no games were played yet.
-- The seating has two goals:
-  - Minimization of intersections count (as possible)
-  - Players should play with more or less equal opponents according to the current rating (as possible, too)
-- Basic seating algorithm:
-  - Take current rating table and select first player (the one who has biggest score).
-  - Look down the table and search for the first player with the biggest score, who didn't play with the selected one yet,
-    and select them too.
-  - Look down the table and search for the first player with the biggest score, who didn't play with both the selected ones yet,
-    and select them too.
-  - Last player is found the same way. This is our first table. Selected players are excluded from the table.
-  - The steps above are repeated until all tables are determined.
-  - On later stages of tournament, it might be impossible to find suitable combination of players, in this case the
-    condition "who didn't play with the selected ones yet" is replaced by "who has the least intersection when the selected
-    ones".
-  - The algorithm generates more than one combination at a time, counting total intersections count. The combination which
-    has the least total intersections count is then selected.
-  - There is also a complexity limit (in general, the solution is found in non-polynomial time). When generation time is
-    expired, the best combination of already generated is selected.
-  - In case of table count being not a multiple of power of 2, last tables are formed according to the residual principle.
-    This means that on last tables the probability of intersection is increased drastically.
-</section>
 
-### Interval-based seating
-<section className='sparseList'>
-- This seating uses only current positions of players in rating table.
-- Interval-based seating can't be used if no games were played yet.
-- The input of the algorithm is integer interval.
-  - If the interval is 1, tables will play according to current positions: 1-2-3-4, 5-6-7-8, and so on.
-  - If the interval is 2, tables will play as follows: 1-3-5-7, 2-4-6-8, and so on.
-  - And so on.
-- Note that tables are selected sequentially, e.g. first table is selected, then second one, then third one. In case of
-  odd interval, first 12 players will play at first three tables, second 12 - at second three tables, and so on.
-- In case of table count being not a multiple of selected interval, last tables are formed according to the residual principle.
-  This means that on last tables the probability of intersection is increased drastically.
-</section>
+Swiss seating uses current standings and the history of encounters. It tries to put similarly ranked players
+together while reducing repeat opponents. Those goals cannot always be met simultaneously, so a repeated
+encounter is not necessarily an error. It becomes available after previous games; approve their results before
+generating the next session.
+
+#### How the Swiss algorithm builds tables
+
+An **encounter** means that two players have already played at the same table. Playing together twice counts
+as two encounters, so the generator considers the number of previous meetings, not just whether a pair has met.
+The simplified procedure is:
+
+1. Start with the current standings and the history of who played whom. Select the highest-rated player
+   who has not yet been seated and put them at the next table.
+2. Look for the highest-rated available player who has not played with anyone already at that table.
+3. Repeat that selection until the table has four players, or three for sanma. A candidate is checked against
+   every player already selected for the table, not only its first player.
+4. Set those players aside and start the next table with the highest-rated remaining player.
+5. If a choice prevents the remaining tables from being completed under the current encounter limits,
+   backtrack and try another candidate. The first promising table is therefore not necessarily the final one.
+6. If avoiding repeats is no longer possible, allow repeat encounters. Prefer candidates with fewer previous
+   meetings with the selected players, then higher-rated candidates among those choices.
+7. Continue until everyone is seated, then assign the initial winds using the selected wind shuffle mode.
+
+The search is combinatorial: trying every possible seating would become impractical as the player count grows.
+The generator limits the search effort by relaxing encounter constraints as the search becomes more expensive.
+It does not guarantee a globally optimal seating or the absolute minimum number of repeated encounters.
+
+Later tables have fewer available players to choose from, so avoiding repeats can be harder there. The actual
+history matters more than the table count alone: a power-of-two table count is not a guarantee of no repeats,
+and other table counts are also supported.
+
+### Interval seating
+
+Interval seating groups players by their positions in the current standings, using the selected spacing.
+It does not use encounter history to avoid repeated opponents. It becomes available after previous games.
+
+- Interval **1**: ranks 1–2–3–4, then 5–6–7–8.
+- Interval **2**: ranks 1–3–5–7, then 2–4–6–8.
+- Larger intervals spread ranks farther apart. The remaining players form the later tables.
+- Sanma tables contain three players: for example, interval 1 starts with 1–2–3 and interval 2 with 1–3–5.
+
+#### How interval groups and remaining tables are formed
+
+The interval is a positive whole number. For four-player tables, an interval of 3 forms groups of three tables
+from blocks of 12 players in the standings. The first block is:
+
+- Table 1: ranks **1–4–7–10**.
+- Table 2: ranks **2–5–8–11**.
+- Table 3: ranks **3–6–9–12**.
+
+The next three tables use ranks 13–24 in the same way. Tables are ordered by their highest-ranked player.
+Thus the interval spreads players within each block; it does not distribute the entire field evenly between
+every table in the tournament.
+
+If the table count is not divisible by the selected interval, players at the bottom of the standings who do not
+fit a complete interval group are seated with **interval 1**. For example, with 16 players and interval 3,
+the first 12 players form the three tables above, while ranks **13–14–15–16** form the remaining table.
+If the interval is larger than the total number of tables, all tables use this fallback.
+
+For sanma, each complete interval group contains three times the interval in players: interval 3 uses nine
+players per group, and any remaining tables are also filled with adjacent ranks. Neither the regular groups
+nor the fallback avoids previous opponents, so repeated encounters can be concentrated at the remaining tables.
+
+<figure className='guideScreenshot'>
+  <a href='/assets/img/guides/en/tournament-interval.png'><img src='/assets/img/guides/en/tournament-interval.png' width='1280' height='900' alt='Interval seating dialog showing the spacing choices' loading='lazy' /></a>
+  <figcaption>Select the interval, then confirm generation.</figcaption>
+</figure>
 
 ### Predefined seating
-<section className='sparseList'>
-- This kind of seatings doesn't go well along with previous three, because it requires preparing a seating script in advance.
-- Tournament administrator defines the seating script in event settings, using local identifiers of players (integers from 1 to N).
-- Next, it's required to define which player has which local identifier on players management page.
-- After that, the tournament can be started.
-- There is "Current game" field on script definition page, which is updated automtically every time the game results are confirmed.
-- Technically, you can change the tournament type to use automatic seatings, they will use ratings table and history of games.
-  Though, it's generally not recommended to change the tournament type backwards (from automatic seatings to predefined),
-  because it would require you to define a script with some fake games in the beginning and set appropriate game index
-  in the "Current game" field.
-</section>
+
+Enable **Seating is defined in advance** in tournament settings, assign and save **Local IDs** on
+**Manage players**, then enter the table plan on **Predefined seating**. Each line is a table of local IDs
+separated by hyphens; a blank line starts the next session. Use four IDs per table, or three for sanma.
+
+<figure className='guideScreenshot'>
+  <a href='/assets/img/guides/en/predefined-ids.png'><img src='/assets/img/guides/en/predefined-ids.png' width='1280' height='900' alt='Player management Local IDs tab with saved event-specific player numbers' loading='lazy' /></a>
+  <figcaption>The script uses Local IDs from this event, not account System IDs.</figcaption>
+</figure>
+
+Set **Next session index** to the intended block (starting at 1), update the script and resolve validation errors.
+On **Manage games**, **Next seating** generates that block. The index advances when the timer starts.
+After session approval, generate the next block. When no blocks remain, add and validate more before continuing.
+See the <a href='/en/forHosts#predefined'>predefined seating walkthrough and example</a>.
+
+#### Combining a script with automatic seating
+
+Predefined seating requires preparation: save the player-to-local-ID assignments and the complete table plan
+before generating its first session. Automatic methods instead calculate each next seating from the registered
+players, standings and playing history available at that moment.
+
+Turning off **Seating is defined in advance** makes the automatic methods available; they use the event's existing
+results and encounter history. If you later return to a predefined plan, check both the script and
+**Next session index** carefully. The selected block must match the session you actually intend to play;
+changing the seating mode does not construct a matching script or erase earlier games. Prepare this transition
+in advance rather than switching modes during a session.
+
+### Table groups and initial winds
+
+The seating method chooses table groups. **Wind shuffle mode** determines the initial seats within those groups:
+
+- **Random wind shuffle:** randomly assigns winds at each table.
+- **Balanced wind shuffle:** tries to assign winds that each player has played less often.
+- **Prescripted wind shuffle:** available for predefined events; follows the order in each script line,
+  East–South–West–North (East–South–West in sanma).
+
+Check the generated tables and winds at **Seating ready**. Use **Reset seating** to discard a mistake
+before starting the timer. Once everyone is seated, **Start timer** begins all tables together.

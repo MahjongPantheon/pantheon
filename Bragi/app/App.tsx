@@ -20,6 +20,7 @@ import './App.css';
 import { components } from './Nav';
 import { supportedLanguages } from './services/i18n';
 import { useStorage } from './hooks/storage';
+import { useAnchorScroll } from './hooks/useAnchorScroll';
 
 const makeLangRoutes = (lang: string) => () => {
   return (
@@ -37,11 +38,17 @@ const makeLangRoutes = (lang: string) => () => {
   );
 };
 
+function AnchorScroll() {
+  useAnchorScroll();
+  return null;
+}
+
 export function App() {
   const routes = supportedLanguages.map((lang) => makeLangRoutes(lang));
   const selectedLang = useStorage().getLang() ?? 'en';
   return (
     <>
+      <AnchorScroll />
       <Route path='/'>
         <Redirect to={`/${selectedLang}`} />
       </Route>
