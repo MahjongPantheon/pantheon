@@ -1,3 +1,7 @@
 allowBuilds:
   '@swc/core': true
   esbuild: true
+
+overrides:
+  # GHSA-g3hv-75wg-m249: the patched release for minimatch v7+ is v11.
+  'minimatch@>=7.0.0 <11.0.1': ^11.0.1

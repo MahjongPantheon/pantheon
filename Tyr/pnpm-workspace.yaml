@@ -7,3 +7,7 @@ minimumReleaseAgeExclude:
 
 overrides:
   jackspeak: 2.1.1
+  # GHSA-g3hv-75wg-m249: the patched release for minimatch v7+ is v11.
+  'minimatch@>=7.0.0 <11.0.1': ^11.0.1
+  # GHSA-3g3m-2fjr-6pw4: update the promise-based glob API to its patched release.
+  'glob@>=9.0.0 <14.0.2': ^14.0.2

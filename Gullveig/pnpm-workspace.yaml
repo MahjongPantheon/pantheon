@@ -3,3 +3,7 @@ allowBuilds:
   esbuild: true
 minimumReleaseAgeExclude:
   - '@types/node@26.6.6'
+
+overrides:
+  # GHSA-g3hv-75wg-m249: the patched release for minimatch v7+ is v11.
+  'minimatch@>=7.0.0 <11.0.1': ^11.0.1
