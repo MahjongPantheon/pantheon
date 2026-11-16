@@ -416,15 +416,15 @@ test('SMOKE-005: Registered player can finish a local session and view matching 
           await page.getByTestId('tyr-home-current-game').click();
         await assertTable(page, players, rounds.at(-2)!, true);
         await checkLog(page, players, rounds.length - 1);
-        const [gamesResponse] = await Promise.all([
-          sigrun.waitForResponse((response) =>
-            response.url().endsWith('/common.Mimir/GetLastGames')
-          ),
-          sigrun.goto(`${process.env.SIGRUN_URL!.replace(/\/$/, '')}/event/${eventId}/games`),
-        ]);
-        expect(gamesResponse.ok()).toBe(true);
-        await expect(sigrun.getByTestId('sigrun-recent-games-page')).toBeVisible();
-        await expect(sigrun.getByTestId(/^sigrun-game-row-/)).toHaveCount(0);
+        const gamesResponse = await sigrun.goto(
+          `${process.env.SIGRUN_URL!.replace(/\/$/, '')}/event/${eventId}/games`
+        );
+        expect(gamesResponse?.ok()).toBe(true);
+        const recentGames = sigrun.getByTestId('sigrun-recent-games-page');
+        await expect(recentGames).toContainText(`${eventTitle} - Last games`);
+        // SSR supplies the games in the document without a browser RPC request.
+        await expect(recentGames.locator('[aria-busy]')).toHaveAttribute('aria-busy', 'false');
+        await expect(recentGames.getByTestId(/^sigrun-game-row-/)).toHaveCount(0);
       });
     });
   } catch (error) {

@@ -108,7 +108,7 @@ R8–R42 enter **H01–H35 in order** from the [catalogue](smoke-hand-catalogue.
 9. Open the game's details via its link, retain its hash, reload, and repeat the results/history checks. Do not identify the event by a global latest-game query.
 
 10. With the event listed publicly, open the Sigrun homepage. Find this known session hash in Last games above the events list. Verify its owning event title, game date, and all four player names and final scores, with no round log. Score and rating-delta badges on the event's Last games page, and score badges on the homepage, must display every digit without clipping. Follow the session and event links to this event's details pages; the homepage event link must navigate within the SPA without replacing the document.
-11. In Forseti, cancel the completed club session's results and final round through one confirmation. Verify the warning explicitly mentions both removals. Tyr must show the R45 score/round checkpoint and 45 retained rounds, and Sigrun must no longer list a finished game for the event.
+11. In Forseti, cancel the completed club session's results and final round through one confirmation. Verify the warning explicitly mentions both removals. Tyr must show the R45 score/round checkpoint and 45 retained rounds. Open Sigrun's event Last games page, wait for its games list to finish loading, and verify it lists no finished games. This check must work with both server-rendered data and browser-side fetching; it must not require a browser RPC request when SSR already supplied the data.
 
 ## Timeout and implementation requirements
 
