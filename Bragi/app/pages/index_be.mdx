@@ -1,0 +1,25 @@
+import { Meta } from '../components/Meta';
+import { Link } from 'wouter';
+import { env } from '../env';
+
+<Meta title="Дапамога і запіс гульняў у рыічы-маджонг - Mahjong Pantheon" description="Mahjong Pantheon прапануе карысныя інструменты гульцам і арганізатарам мерапрыемстваў па рыічы-маджонгу." />
+
+## Дапамога і запіс гульняў у рыічы-маджонг
+
+import { CardsCarousel } from '../components/Carousel';
+import { FeaturesGrid } from '../components/FeaturesList';
+import { Space, Title, Button, Center } from '@mantine/core';
+
+<Title ta='center'>Што прапануе Pantheon?</Title>
+
+<FeaturesGrid />
+
+<Title ta='center'>Як гэта выглядае?</Title>
+
+<Space h='xl' />
+
+<CardsCarousel />
+
+Прыклады сапраўдных турніраў і іншых мерапрыемстваў можна паглядзець <a href={env.urls.sigrun} target='_blank'>тут</a>.
+
+<Center><Link to='/getStarted'><Button variant='gradient' gradient={{ from: 'pink', to: 'cyan' }} size='xl'>Пачнём?</Button></Link></Center>

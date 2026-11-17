@@ -1,0 +1,25 @@
+import { Meta } from '../components/Meta';
+import { Link } from 'wouter';
+import { env } from '../env';
+
+<Meta title="Unterstützung und Protokollierung für Riichi-Mahjong - Mahjong Pantheon" description="Mahjong Pantheon unterstützt Spieler und Veranstalter bei Riichi-Mahjong-Events." />
+
+## Unterstützung und Protokollierung für Riichi-Mahjong
+
+import { CardsCarousel } from '../components/Carousel';
+import { FeaturesGrid } from '../components/FeaturesList';
+import { Space, Title, Button, Center } from '@mantine/core';
+
+<Title ta='center'>Was bietet Pantheon?</Title>
+
+<FeaturesGrid />
+
+<Title ta='center'>Wie sieht es aus?</Title>
+
+<Space h='xl' />
+
+<CardsCarousel />
+
+Beispiele laufender Turniere und anderer Events finden Sie <a href={env.urls.sigrun} target='_blank'>hier</a>.
+
+<Center><Link to='/getStarted'><Button variant='gradient' gradient={{ from: 'pink', to: 'cyan' }} size='xl'>Erste Schritte</Button></Link></Center>

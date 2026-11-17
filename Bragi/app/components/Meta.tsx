@@ -1,6 +1,8 @@
 import favicon from '../../assets/ico/favicon.png';
 import { Helmet } from 'react-helmet-async';
 import { env } from '../env';
+import { useLanguage } from '../hooks/useLanguage';
+import { htmlLanguages } from '../i18n/languages';
 
 type MetaProps = {
   title: string;
@@ -8,8 +10,10 @@ type MetaProps = {
 };
 
 export const Meta = ({ title, description }: MetaProps) => {
+  const language = useLanguage();
   return (
     <Helmet>
+      <html lang={htmlLanguages[language]} />
       <title>{title}</title>
       <meta charSet='UTF-8' />
       <meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1' />

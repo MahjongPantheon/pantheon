@@ -19,20 +19,27 @@ import { Redirect, Route, Router, Switch } from 'wouter';
 import './App.css';
 import { components } from './Nav';
 import { supportedLanguages } from './services/i18n';
-import { useStorage } from './hooks/storage';
+import { useLanguage } from './hooks/useLanguage';
+import { Language } from './i18n/languages';
+import { ComponentType } from 'react';
 import { useAnchorScroll } from './hooks/useAnchorScroll';
 
-const makeLangRoutes = (lang: string) => () => {
+const makeLangRoutes = (lang: Language) => () => {
   return (
     <Router base={`/${lang}`}>
       <Switch>
-        {Object.keys(components).map((url) => (
-          <Route
-            path={url}
-            key={url}
-            component={components[url as keyof typeof components][lang as 'ru' | 'en']}
-          />
-        ))}
+        {Object.entries(components)
+          .filter(([, languages]) => lang in languages)
+          .map(([url, languages]) => (
+            <Route
+              path={url}
+              key={url}
+              component={(languages as Partial<Record<Language, ComponentType>>)[lang]}
+            />
+          ))}
+        <Route>
+          <Redirect to='/' />
+        </Route>
       </Switch>
     </Router>
   );
@@ -43,17 +50,20 @@ function AnchorScroll() {
   return null;
 }
 
+const routes = supportedLanguages.map((lang) => ({ lang, Routes: makeLangRoutes(lang) }));
+
 export function App() {
-  const routes = supportedLanguages.map((lang) => makeLangRoutes(lang));
-  const selectedLang = useStorage().getLang() ?? 'en';
+  const selectedLang = useLanguage();
   return (
     <>
       <AnchorScroll />
       <Route path='/'>
         <Redirect to={`/${selectedLang}`} />
       </Route>
-      {routes.map((Routes, idx) => (
-        <Routes key={`route_${idx}`} />
+      {routes.map(({ lang, Routes }) => (
+        <Route path={`/${lang}/*?`} key={lang}>
+          <Routes />
+        </Route>
       ))}
     </>
   );

@@ -1,0 +1,25 @@
+import { Meta } from '../components/Meta';
+import { Link } from 'wouter';
+import { env } from '../env';
+
+<Meta title="리치 마작 대국 지원과 기록 - Mahjong Pantheon" description="Mahjong Pantheon은 리치 마작 플레이어와 대회 주최자를 위한 도구 모음입니다." />
+
+## 리치 마작 대국 지원과 기록
+
+import { CardsCarousel } from '../components/Carousel';
+import { FeaturesGrid } from '../components/FeaturesList';
+import { Space, Title, Button, Center } from '@mantine/core';
+
+<Title ta='center'>Pantheon은 무엇을 제공하나요?</Title>
+
+<FeaturesGrid />
+
+<Title ta='center'>화면 살펴보기</Title>
+
+<Space h='xl' />
+
+<CardsCarousel />
+
+실제 대회와 이벤트는 <a href={env.urls.sigrun} target='_blank'>여기</a>에서 확인할 수 있습니다.
+
+<Center><Link to='/getStarted'><Button variant='gradient' gradient={{ from: 'pink', to: 'cyan' }} size='xl'>시작하기</Button></Link></Center>

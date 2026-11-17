@@ -1,0 +1,25 @@
+import { Meta } from '../components/Meta';
+import { Link } from 'wouter';
+import { env } from '../env';
+
+<Meta title="立直麻将对局辅助与记录 - Mahjong Pantheon" description="Mahjong Pantheon 为立直麻将玩家和赛事主办方提供实用工具。" />
+
+## 立直麻将对局辅助与记录
+
+import { CardsCarousel } from '../components/Carousel';
+import { FeaturesGrid } from '../components/FeaturesList';
+import { Space, Title, Button, Center } from '@mantine/core';
+
+<Title ta='center'>Pantheon 能提供什么？</Title>
+
+<FeaturesGrid />
+
+<Title ta='center'>界面是什么样的？</Title>
+
+<Space h='xl' />
+
+<CardsCarousel />
+
+您也可以<a href={env.urls.sigrun} target='_blank'>在这里</a>查看真实比赛和活动。
+
+<Center><Link to='/getStarted'><Button variant='gradient' gradient={{ from: 'pink', to: 'cyan' }} size='xl'>开始使用</Button></Link></Center>

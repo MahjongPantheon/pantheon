@@ -8,56 +8,50 @@ import {
   IconNetwork,
   IconUsers,
 } from '@tabler/icons-react';
-import { useStorage } from '../hooks/storage';
+import { useI18n } from '../hooks/i18n';
 
-const featuresList = [
+const featuresList = (i18n: ReturnType<typeof useI18n>) => [
   {
     icon: IconDeviceMobile,
-    title: { en: 'Game assistant', ru: 'Ассистент для игр' },
-    description: {
-      en: 'Pantheon provides easy to use web-based assistant for your mobile device, which you can use to add new hands and games',
-      ru: 'Pantheon предоставляет простой веб-ассистент для вашего мобильного устройства для ввода раздач и игр',
-    },
+    title: i18n._t('Game assistant'),
+    description: i18n._t(
+      'Pantheon provides easy to use web-based assistant for your mobile device, which you can use to add new hands and games'
+    ),
   },
   {
     icon: IconChartDots,
-    title: { en: 'Player stats', ru: 'Статистика игрока' },
-    description: {
-      en: "Any player can see their own and opponents' statistics and achievements for particular event",
-      ru: 'Любой игрок может посмотреть свои и не только статистику и номинации для конкретного рейтинга',
-    },
+    title: i18n._t('Player stats'),
+    description: i18n._t(
+      "Any player can see their own and opponents' statistics and achievements for particular event"
+    ),
   },
   {
     icon: IconListCheck,
-    title: { en: 'Game logs', ru: 'Логи игр' },
-    description: {
-      en: 'Pantheon saves all game logs and provides a way to view them conveniently both in mobile assistant and on main ratings page',
-      ru: 'Pantheon сохраняет все логи игр и предоставляет возможность их удобного просмотра как в ассистенте, так и в общем списке',
-    },
+    title: i18n._t('Game logs'),
+    description: i18n._t(
+      'Pantheon saves all game logs and provides a way to view them conveniently both in mobile assistant and on main ratings page'
+    ),
   },
   {
     icon: IconCrown,
-    title: { en: 'Tournament assistance', ru: 'Проведение турниров' },
-    description: {
-      en: 'Any tournament host can use Pantheon to simplify the process of holding the tournament, use included seatings and other useful tools',
-      ru: 'Каждый организатор турнира может использовать Pantheon для упрощения процесса проведения турнира, использовать встроенные рассадки и другие полезные инструменты',
-    },
+    title: i18n._t('Tournament assistance'),
+    description: i18n._t(
+      'Any tournament host can use Pantheon to simplify the process of holding the tournament, use included seatings and other useful tools'
+    ),
   },
   {
     icon: IconNetwork,
-    title: { en: 'Online tournaments', ru: 'Онлайн-турниры' },
-    description: {
-      en: 'There is an option of holding an online tournament on external platform. Pantheon has paifu import functionality to view game logs',
-      ru: 'Есть возможность проведения онлайн-турниров на внешних платформах. Pantheon имеет возможность импорта реплеев для просмотра логов игр',
-    },
+    title: i18n._t('Online tournaments'),
+    description: i18n._t(
+      'There is an option of holding an online tournament on external platform. Pantheon has paifu import functionality to view game logs'
+    ),
   },
   {
     icon: IconUsers,
-    title: { en: 'Local club games', ru: 'Клубные и свободные игры' },
-    description: {
-      en: 'Pantheon helps not only with tournaments, it also can se used to log the games you play in your local club',
-      ru: 'Pantheon помогает не только с турнирами, есть также возможность записывать игры, которые вы играете в своем клубе',
-    },
+    title: i18n._t('Local club games'),
+    description: i18n._t(
+      'Pantheon helps not only with tournaments, it also can se used to log the games you play in your local club'
+    ),
   },
 ];
 
@@ -102,14 +96,13 @@ const useStyles = createStyles((theme) => ({
 
 export function FeaturesGrid() {
   const { classes } = useStyles();
-  const storage = useStorage();
-  const lang = storage.getLang() ?? 'en';
-  const features = featuresList.map((feature, index) => (
+  const i18n = useI18n();
+  const features = featuresList(i18n).map((feature) => (
     <Feature
       icon={feature.icon}
-      title={feature.title[lang as 'en' | 'ru']}
-      description={feature.description[lang as 'en' | 'ru']}
-      key={index}
+      title={feature.title}
+      description={feature.description}
+      key={feature.title}
     />
   ));
 

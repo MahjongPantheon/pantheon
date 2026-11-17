@@ -1,0 +1,84 @@
+import { Meta } from '../components/Meta';
+import { env } from '../env';
+import { GuideScreenshot } from '../components/GuideScreenshot';
+
+<Meta title="So funktionieren die Sitzplanmethoden - Mahjong Pantheon" description="Zufällige, Schweizer, Intervall- und vorgegebene Sitzpläne, Anfangswinde und Teilnehmerauswahl." />
+
+## So funktionieren die Sitzplanmethoden
+
+Erstellen Sie Turniersitzpläne unter **Partien verwalten** im <a href={env.urls.forseti}>Verwaltungsbereich</a>. Den vollständigen Ablauf beschreibt die <a href='/de/forHosts#tournament'>Turnieranleitung</a>. Je Tisch werden vier Spieler benötigt, bei Sanma drei. Prüfen Sie vorher die eingeschlossenen Spieler. Die Screenshots zeigen die englische Oberfläche mit Testdaten.
+
+### Zufälliger Sitzplan
+
+Spieler werden ohne Ranggruppierung gemischt. Diese automatische Methode ist schon in der ersten Session verfügbar, da sie keine früheren Ergebnisse braucht. Vorgegebene Events können stattdessen von Anfang an ihr Skript verwenden.
+
+Der Generator probiert mehrere zufällige Pläne und vergleicht Wiederbegegnungen mit früheren Sitzplänen. Er behält den besten gefundenen Plan und verteilt die Anfangswinde gemäß Eventeinstellung. Bei vorhandener Historie ist dies also keine völlig uneingeschränkte Zufallsziehung. Besonders später sind Wiederbegegnungen möglich; weder neue noch ähnlich platzierte Gegner werden garantiert.
+
+### Schweizer System
+
+Es berücksichtigt Rangliste und Begegnungshistorie und versucht, ähnlich platzierte Spieler bei weniger Wiederbegegnungen zusammenzusetzen. Beide Ziele sind nicht immer zugleich erfüllbar; eine Wiederholung ist nicht unbedingt ein Fehler. Die Methode wird nach vorherigen Partien verfügbar. Bestätigen Sie deren Ergebnisse vor der nächsten Erstellung.
+
+#### Wie die Tische entstehen
+
+Eine **Begegnung** bedeutet, dass zwei Spieler am selben Tisch gespielt haben. Zweimal gemeinsam spielen zählt als zwei Begegnungen; berücksichtigt wird die Anzahl, nicht nur Ja oder Nein.
+
+1. Nehmen Sie Rangliste und Historie. Setzen Sie den höchstplatzierten noch freien Spieler an den nächsten Tisch.
+2. Suchen Sie den höchstplatzierten verfügbaren Spieler, der mit keinem bereits ausgewählten Tischteilnehmer gespielt hat.
+3. Wiederholen Sie bis vier Spielern, bei Sanma drei. Jeder Kandidat wird gegen alle bereits gewählten Spieler geprüft, nicht nur gegen den ersten.
+4. Legen Sie diese Spieler beiseite und beginnen Sie den nächsten Tisch mit dem bestplatzierten verbleibenden Spieler.
+5. Verhindert eine Wahl die Vervollständigung der übrigen Tische unter den aktuellen Begegnungsgrenzen, gehen Sie zurück und probieren einen anderen Kandidaten. Der erste passende Tisch muss daher nicht der endgültige sein.
+6. Sind Wiederholungen unvermeidbar, werden sie zugelassen. Bevorzugt werden Kandidaten mit weniger früheren Begegnungen mit den gewählten Spielern; danach entscheidet die höhere Platzierung.
+7. Fahren Sie fort, bis alle sitzen, und verteilen Sie dann die Anfangswinde nach dem gewählten Modus.
+
+Die Suche ist kombinatorisch. Alle Pläne durchzuprobieren wäre bei vielen Spielern unpraktikabel. Mit wachsendem Suchaufwand lockert der Generator die Begegnungsgrenzen. Ein global optimales Ergebnis oder die absolut geringste Wiederholungszahl wird nicht garantiert.
+
+Spätere Tische haben weniger Auswahl und können mehr Wiederholungen erfordern. Die konkrete Historie ist wichtiger als die Tischzahl: Auch eine Zweierpotenz garantiert keine neuen Gegner, andere Tischzahlen werden ebenfalls unterstützt.
+
+### Intervallsitzplan
+
+Diese Methode gruppiert die aktuellen Rangplätze mit dem gewählten Abstand. Sie berücksichtigt keine Begegnungshistorie und ist nach vorherigen Partien verfügbar.
+
+- Intervall **1**: 1–2–3–4, danach 5–6–7–8.
+- Intervall **2**: 1–3–5–7, danach 2–4–6–8.
+- Größere Intervalle vergrößern den Rangabstand; verbleibende Spieler bilden spätere Tische.
+- Sanma: je drei Spieler, etwa 1–2–3 bei Intervall 1 oder 1–3–5 bei Intervall 2.
+
+#### Gruppen und verbleibende Tische
+
+Das Intervall ist eine positive ganze Zahl. Bei Vierertischen erzeugt Intervall 3 Gruppen aus drei Tischen und jeweils zwölf Rangplätzen:
+
+- Tisch 1: **1–4–7–10**.
+- Tisch 2: **2–5–8–11**.
+- Tisch 3: **3–6–9–12**.
+
+Die nächste Gruppe verwendet 13–24. Die Tische werden nach ihrem bestplatzierten Spieler geordnet. Das Intervall verteilt innerhalb eines Blocks, nicht das gesamte Feld gleichmäßig über alle Turniertische.
+
+Ist die Tischzahl nicht durch das Intervall teilbar, werden die untersten verbleibenden Rangplätze mit **Intervall 1** gesetzt. Bei 16 Spielern und Intervall 3 bilden die ersten zwölf die obigen Tische; **13–14–15–16** bilden den Resttisch. Ist das Intervall größer als die gesamte Tischzahl, gilt dies für alle Tische.
+
+Bei Sanma umfasst eine vollständige Gruppe das Dreifache des Intervalls an Spielern, bei Intervall 3 also neun. Resttische enthalten ebenfalls benachbarte Ränge. Weder reguläre Gruppen noch Resttische vermeiden frühere Gegner; Wiederholungen können sich an Resttischen häufen.
+
+<GuideScreenshot name="tournament-interval" alt="Intervallauswahl mit anschließender Bestätigung der Sitzplanerstellung." caption="Intervallauswahl mit anschließender Bestätigung der Sitzplanerstellung." />
+
+### Vorgegebener Sitzplan
+
+Aktivieren Sie **Sitzplan ist im Voraus festgelegt**, vergeben und speichern Sie **Lokale IDs** unter **Spieler verwalten**, und tragen Sie den Plan unter **Vorgegebener Sitzplan** ein. Eine Zeile entspricht einem Tisch mit durch Bindestriche getrennten lokalen IDs. Eine Leerzeile beginnt die nächste Session. Verwenden Sie vier IDs, bei Sanma drei.
+
+<GuideScreenshot name="predefined-ids" alt="Gespeicherte lokale Spieler-IDs des Events. Das Skript verwendet diese Nummern statt der Konto-System-IDs." caption="Gespeicherte lokale Spieler-IDs des Events. Das Skript verwendet diese Nummern statt der Konto-System-IDs." />
+
+Setzen Sie den **Index der nächsten Session** auf den gewünschten Block (beginnend bei 1), aktualisieren und validieren Sie das Skript. **Nächster Sitzplan** unter **Partien verwalten** erzeugt diesen Block. Beim Timerstart erhöht sich der Index. Nach Ergebnisbestätigung folgt der nächste Block. Ergänzen und validieren Sie rechtzeitig weitere Blöcke. Siehe <a href='/de/forHosts#predefined'>Anleitung und Beispiel</a>.
+
+#### Skript und automatische Methoden kombinieren
+
+Vor der ersten Session müssen lokale IDs und vollständiger Plan gespeichert sein. Automatische Methoden berechnen dagegen jede nächste Verteilung anhand der dann registrierten Spieler, Rangliste und Historie.
+
+Deaktivieren Sie **Sitzplan ist im Voraus festgelegt**, werden automatische Methoden mit der bestehenden Eventhistorie verfügbar. Bei späterer Rückkehr zum Skript prüfen Sie Plan und **Index der nächsten Session** sorgfältig. Der gewählte Block muss zur gewünschten Session passen. Ein Moduswechsel erzeugt kein passendes Skript und löscht keine früheren Partien. Planen Sie den Wechsel vorab statt während einer Session.
+
+### Tischgruppen und Anfangswinde
+
+Die Sitzplanmethode bestimmt die Tischgruppen; die **Windverteilung** bestimmt die Plätze innerhalb der Gruppen:
+
+- **Zufällig:** verteilt die Anfangswinde zufällig je Tisch.
+- **Ausgeglichen:** bevorzugt Winde, die der jeweilige Spieler bisher seltener gespielt hat.
+- **Vorgegeben:** bei Skripten gilt die Zeilenreihenfolge Ost–Süd–West–Nord, bei Sanma Ost–Süd–West.
+
+Prüfen Sie bei **Sitzplan bereit** Tische und Winde. Verwerfen Sie Fehler vor dem Start mit **Sitzplan zurücksetzen**. Sobald alle sitzen, beginnt **Timer starten** alle Tische gemeinsam.

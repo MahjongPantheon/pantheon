@@ -1,0 +1,141 @@
+import { Meta } from '../components/Meta';
+import { Link } from 'wouter';
+import { env } from '../env';
+import { GuideScreenshot } from '../components/GuideScreenshot';
+
+<Meta title="Club- und Turnierverwaltung - Mahjong Pantheon" description="Spieler registrieren, Partien verwalten, Sitzpläne erstellen, Timer steuern und vorgegebene Sitzpläne verwenden." />
+
+## Club- und Turnierverwaltung
+
+Öffnen Sie den <a href={env.urls.forseti}>Verwaltungsbereich</a>, melden Sie sich an und wählen Sie unter **Meine Events** das Event. Über **Aktionen** oder die linke Seitenleiste erreichen Sie **Spieler verwalten**, **Partien verwalten** und **Einstellungen**. Fehlt der Zugriff, muss die Eventadministration unter **Berechtigungen verwalten** Rechte erteilen. Die Teilnahme allein verleiht keine Verwaltungsrechte.
+
+Anleitungen: [Club](#club), [Turnier](#tournament), [vorgegebener Sitzplan](#predefined). Konten und Eventarten: <Link to='/getStarted'>Erste Schritte</Link>. Die anklickbaren Screenshots zeigen die englische Oberfläche mit erfundenen TEST-Events.
+
+<h3 id='club'>Club: Spieler registrieren und Partien verwalten</h3>
+
+#### 1. Club-Event erstellen oder öffnen
+
+Wählen Sie **Neues Event erstellen**, Typ **Lokale Rangliste**, Titel, Basisregelwerk und Zeitzone. Prüfen und speichern Sie die weiteren Einstellungen. Übungsevents sollten TEST im Titel tragen. Ein Club-Event kann über viele Treffen weiterlaufen; die Tische starten und enden unabhängig.
+
+#### 2. Spieler hinzufügen
+
+1. Bitten Sie die Spieler zuerst, <a href='/de/getStarted#sign-up'>ein Konto zu erstellen und zu aktivieren</a>.
+2. Öffnen Sie **Spieler verwalten** und suchen Sie im Namens-/ID-Feld nach Spielername oder `#` und System-ID.
+3. Wählen Sie den richtigen Treffer; prüfen Sie bei ähnlichen Namen die ID.
+4. Der Spieler erscheint sofort in der Liste und kann das Event im Assistenten wählen. Wiederholen Sie dies für alle Teilnehmer. Bei fehlenden Treffern Profilnamen oder System-ID prüfen.
+
+<GuideScreenshot name="club-players" alt="Clubspielerliste mit Suche. Hier werden bestehende Konten im Event registriert; die Kontoerstellung ist ein separater Schritt." caption="Clubspielerliste mit Suche. Hier werden bestehende Konten im Event registriert; die Kontoerstellung ist ein separater Schritt." height={960} />
+
+Clubregistrierung ist auch während des laufenden Events möglich. Versehentliche Registrierungen können über das Entfernen-Symbol korrigiert werden, wenn verfügbar. Das entfernt keine Partien. Rechte werden separat unter **Berechtigungen verwalten** vergeben.
+
+#### 3. Spieler starten ihre Partien
+
+Im Assistenten wählen Spieler **Neue Partie**, dann die Teilnehmer in Ost–Süd–West–Nord-Reihenfolge (Sanma: Ost–Süd–West), mischen bei Bedarf und starten. Nur registrierte Spieler sind auswählbar. Es gibt keinen gemeinsamen Clubtimer oder automatischen Turniersitzplan. Siehe <a href='/de/forPlayers#club'>Spieleranleitung</a>.
+
+#### 4. Falsch gestartete Partie entfernen
+
+1. Öffnen Sie **Partien verwalten** und identifizieren Sie den Tisch anhand der Spieler.
+2. Solange keine Hand erfasst wurde, drücken Sie **Partie entfernen** und bestätigen. Dadurch wird die gesamte leere Partie gelöscht.
+3. Lassen Sie die Spieler aktualisieren und mit den richtigen Teilnehmern und Sitzen neu starten.
+
+<GuideScreenshot name="club-remove-game" alt="Partieverwaltung mit Entfernen-Schaltfläche. Diese gibt es nur für Partien ohne erfasste Hände." caption="Partieverwaltung mit Entfernen-Schaltfläche. Diese gibt es nur für Partien ohne erfasste Hände." />
+
+Nach der ersten Hand erscheint stattdessen **Letzte Hand stornieren** (englisch **Cancel round**). Prüfen Sie die letzte Hand mit den Spielern, stornieren und bestätigen Sie, und lassen Sie das richtige Ergebnis eintragen. Für ältere Fehler stornieren Sie spätere Hände rückwärts und erfassen sie anschließend wieder in Spielreihenfolge; klären Sie die Daten vorher. Sind alle Hände storniert, lässt sich die leere Partie entfernen.
+
+<GuideScreenshot name="club-cancel-round" alt="Bestätigung zum Stornieren der letzten Clubhand. Dies entfernt nur die letzte Hand, nicht die ganze Partie." caption="Bestätigung zum Stornieren der letzten Clubhand. Dies entfernt nur die letzte Hand, nicht die ganze Partie." />
+
+Bei abgeschlossenen Clubpartien öffnet **Letzte Hand und Ergebnisse stornieren** die Partie erneut und entfernt letzte Hand samt veröffentlichtem Ergebnis. Das ist nur möglich, wenn der Server es erlaubt; eine spätere Partie eines Teilnehmers kann es verhindern. Korrigieren Sie Fehler vor dem nächsten Spielstart.
+
+<h3 id='tournament'>Turnier: von der Spielerliste zu bestätigten Ergebnissen</h3>
+
+#### 1. Event und Timer vorbereiten
+
+Erstellen oder öffnen Sie ein **Turnier**. Legen Sie Regelwerk und Zeitzone fest. Prüfen und speichern Sie unter **Turniereinstellungen** die **Sessiondauer in Minuten** und **Regel bei Zeitablauf**:
+
+- Partie regulär zu Ende spielen; der Timer erzwingt kein Ende.
+- Bei Zeitablauf die laufende Hand beenden und die Partie abbrechen.
+- Bei Zeitablauf die laufende Hand beenden, noch eine weitere spielen und dann abbrechen.
+
+<GuideScreenshot name="tournament-settings" alt="Turniereinstellungen mit Dauer, Endregel, vorgegebenem Sitzplan und Windverteilung. Dauer und Endregel vor Spielbeginn ankündigen." caption="Turniereinstellungen mit Dauer, Endregel, vorgegebenem Sitzplan und Windverteilung. Dauer und Endregel vor Spielbeginn ankündigen." height={1081} />
+
+#### 2. Spieler vor dem Start registrieren
+
+Suchen und wählen Sie unter **Spieler verwalten** die Konten per Name oder `#SystemID`. Vervollständigen Sie die Liste vor der ersten Sitzplanerstellung: Bereits das Anlegen der Turniersessions sperrt Hinzufügen und Entfernen, noch vor dem Timerstart.
+
+Automatische Sitzpläne benötigen eine durch **vier**, bei Sanma durch **drei** teilbare Teilnehmerzahl. Das Stuhlsymbol schließt Spieler für die nächste Sitzplanerstellung ein oder aus, soweit der Status dies erlaubt. Nicht mitspielende Schiedsrichter sollten ausgeschlossen werden. Ausgeschlossene bleiben registriert. Halten Sie die Zahl der eingeschlossenen Spieler gültig.
+
+<GuideScreenshot name="tournament-players" alt="Turnierspielerliste mit Stuhlsymbolen zum Ein- und Ausschließen. Prüfen Sie die Auswahl vor jedem Sitzplan." caption="Turnierspielerliste mit Stuhlsymbolen zum Ein- und Ausschließen. Prüfen Sie die Auswahl vor jedem Sitzplan." height={960} />
+
+Für Ersatzspieler verwenden Sie die Ersetzen-Funktion neben dem Namen und wählen jemanden, der noch nicht im Event registriert ist. Die Wertung richtet sich nach den Eventeinstellungen. Kehrt der ursprüngliche Teilnehmer zurück, löschen Sie die Vertretung vor der Ergebnisbestätigung.
+
+#### 3. Sitzplan erzeugen
+
+Unter **Partien verwalten** bedeutet **Nicht bereit**, dass die Spielerzahl korrigiert werden muss. Bei **Nicht gestartet** wählen und bestätigen Sie:
+
+- **Zufälliger Sitzplan:** ab der ersten Session; mischt ohne Ranggruppen und versucht Wiederbegegnungen zu verringern, garantiert aber keine neuen Gegner.
+- **Schweizer System:** nach vorherigen Partien; sucht anhand von Rangliste und Historie ähnlich platzierte Gegner mit möglichst wenigen Wiederbegegnungen. Wiederholungen sind möglich.
+- **Intervallsitzplan:** nach vorherigen Partien; wählen Sie das Intervall. Intervall 1: 1–2–3–4, 5–6–7–8. Intervall 2: 1–3–5–7, 2–4–6–8.
+- **Nächster Sitzplan:** bei vorgegebenen Sitzplänen anstelle der automatischen Methoden, siehe [unten](#predefined).
+
+<GuideScreenshot name="tournament-seating" alt="Vor der ersten Session ist nur der zufällige automatische Sitzplan verfügbar. Schweizer und Intervallmethode benötigen frühere Partien." caption="Vor der ersten Session ist nur der zufällige automatische Sitzplan verfügbar. Schweizer und Intervallmethode benötigen frühere Partien." />
+
+<GuideScreenshot name="tournament-interval" alt="Dialog zur Intervallauswahl. Nach bestätigten Ergebnissen wählen Sie die Methode für die nächste Session." caption="Dialog zur Intervallauswahl. Nach bestätigten Ergebnissen wählen Sie die Methode für die nächste Session." />
+
+Warten Sie während **Sitzplan wird erstellt**. Bei **Sitzplan bereit** prüfen Sie Tische und Anfangswinde. Spieler sehen ihren Tisch im Assistenten. **Timer und Sitzplan** im Ranglistendienst eignet sich für einen gemeinsamen Bildschirm. Fehler korrigieren Sie vor dem Timerstart über **Sitzplan zurücksetzen** und erneute Erstellung.
+
+<GuideScreenshot name="tournament-ready" alt="Fertiger Sitzplan mit Tischen, Zurücksetzen und Timerstart. Die Spieler können Platz nehmen; die Partie läuft noch nicht." caption="Fertiger Sitzplan mit Tischen, Zurücksetzen und Timerstart. Die Spieler können Platz nehmen; die Partie läuft noch nicht." />
+
+#### 4. Timer starten und verwalten
+
+Wenn alle sitzen, drücken und bestätigen Sie **Timer starten** und geben ein deutliches Startsignal. Alle Sessions beginnen gemeinsam, der Status lautet **Session gestartet**.
+
+Die globale Funktion **Zusatzzeit hinzufügen** verlängert alle Tische um 1, 2, 3, 4, 5 oder 7 Minuten. Dieselbe Funktion innerhalb eines einzelnen Tisches verlängert nur diesen, etwa nach einer Schiedsrichterunterbrechung. Prüfen Sie den Geltungsbereich vor der Bestätigung. Das aktuelle Panel bietet Zeitverlängerung, keine Pause- oder Zurücksetzen-Taste.
+
+<GuideScreenshot name="tournament-timer" alt="Globaler Zusatzzeitdialog mit Hinweis auf alle Tische. Für einzelne Verzögerungen die Funktion am jeweiligen Tisch verwenden." caption="Globaler Zusatzzeitdialog mit Hinweis auf alle Tische. Für einzelne Verzögerungen die Funktion am jeweiligen Tisch verwenden." />
+
+Bei Zeitablauf gilt die konfigurierte Endregel. Ein Timer auf null bestätigt keine Ergebnisse.
+
+#### 5. Erfasste Hand korrigieren
+
+Suchen Sie unter **Partien verwalten** den Tisch, drücken Sie **Letzte Hand stornieren**, bestätigen Sie und lassen Sie die Spieler aktualisieren und neu eingeben. Dies betrifft nur die letzte erfasste Hand und ist auch nach Spielende vor der Ergebnisbestätigung möglich.
+
+<GuideScreenshot name="tournament-cancel-round" alt="Stornierungsdialog an einem Turniertisch. Die gemeinsame Turniersession läuft weiter." caption="Stornierungsdialog an einem Turniertisch. Die gemeinsame Turniersession läuft weiter." />
+
+Einen ungespielten Sitzplan verwerfen Sie mit **Sitzplan zurücksetzen**. Turniertische haben keine Clubfunktion **Partie entfernen**; löschen Sie nicht einen Tisch aus einer synchronisierten Session. Bei älteren Fehlern stimmen Sie mit der Spielleitung ab, welche späteren Hände neu erfasst werden müssen.
+
+#### 6. Ergebnisse bestätigen und fortfahren
+
+Sind alle Tische fertig, erscheint **Bereit zur Bestätigung**. Korrigieren Sie zuerst alle Fehler, dann drücken und bestätigen Sie **Sessions bestätigen**. Dies veröffentlicht Ergebnisse entsprechend den Sichtbarkeitseinstellungen und gibt den nächsten Sitzplan frei. Danach können diese Hände über die normale Turnierverwaltung nicht mehr storniert werden.
+
+<GuideScreenshot name="tournament-approve" alt="Bestätigung aller Sessions. Prüfen Sie zuvor sämtliche Tische; Spielende und Ergebnisbestätigung sind separate Schritte." caption="Bestätigung aller Sessions. Prüfen Sie zuvor sämtliche Tische; Spielende und Ergebnisbestätigung sind separate Schritte." />
+
+Wiederholen Sie Sitzplan → Tische prüfen → Timer starten → Partien erfassen → prüfen und bestätigen. **Event beenden** beendet das gesamte Event und gehört nicht zwischen die Sessions.
+
+<h3 id='predefined'>Vorgegebener Sitzplan: Ablauf im Voraus planen</h3>
+
+Aktivieren und speichern Sie **Sitzplan ist im Voraus festgelegt** unter **Turniereinstellungen**. **Nächster Sitzplan** ersetzt die automatischen Methoden.
+
+1. Registrieren Sie alle Teilnehmer. Vergeben und speichern Sie unter **Spieler verwalten → Lokale IDs** eindeutige eventbezogene Nummern. Diese unterscheiden sich von den Konto-System-IDs.
+2. Öffnen Sie **Vorgegebener Sitzplan** in der Seitenleiste. Pro Zeile ein Tisch, lokale IDs mit Bindestrichen trennen, Sessions durch eine Leerzeile. Je Tisch vier IDs, bei Sanma drei; kein Spieler darf in derselben Session doppelt vorkommen.
+3. Setzen Sie bei einem neuen Skript den **Index der nächsten Session** auf 1 und drücken Sie **Skript aktualisieren**. Beheben Sie alle Validierungsfehler.
+4. Drücken und bestätigen Sie unter **Partien verwalten** den **Nächsten Sitzplan**, prüfen Sie Tische und Winde und starten Sie den Timer. Erst beim Timerstart wird der Index erhöht. Nach Bestätigung folgt der nächste Skriptblock.
+
+<GuideScreenshot name="predefined-script" alt="Skripteditor mit zwei Sessions, nächstem Index und fehlerfreier Validierung. Die Zahlen sind lokale IDs, keine System-IDs." caption="Skripteditor mit zwei Sessions, nächstem Index und fehlerfreier Validierung. Die Zahlen sind lokale IDs, keine System-IDs." />
+
+Beispiel mit zwei Vierertischen je Session:
+
+```text
+1-2-3-4
+5-6-7-8
+
+1-3-5-7
+2-4-6-8
+```
+
+**Vorgegebene Windverteilung** erhält die Reihenfolge Ost–Süd–West–Nord. Zufällige oder ausgeglichene Windverteilung lässt die Tischgruppen unverändert, kann aber die Anfangswinde ändern. Bei Sanma verwenden Sie drei IDs in Ost–Süd–West-Reihenfolge. Ist das Skript aufgebraucht, ergänzen und validieren Sie weitere Sessions vor der nächsten Erstellung. Ändern Sie den Index nicht unbedacht: Er legt den nächsten verwendeten Block fest.
+
+### Weiterführende Anleitungen
+
+- <Link to='/getStarted'>Konto und Eventarten</Link>
+- <Link to='/forPlayers'>Mobiler Assistent</Link>
+- <Link to='/seatings'>Funktionsweise der Sitzplanmethoden</Link>

@@ -72,48 +72,31 @@ export async function createServer(app, env) {
     res.send(`User-agent: *\n` + `Allow: /\n` + `Sitemap: https://${env.ROOT_HOST}/sitemap.xml\n`);
   });
 
-  app.get('/sitemap.xml', (req, res) => {
-    const urls = [
-      `https://${env.ROOT_HOST}/en`,
-      `https://${env.ROOT_HOST}/en/about`,
-      `https://${env.ROOT_HOST}/en/codeOfConduct`,
-      `https://${env.ROOT_HOST}/en/getStarted`,
-      `https://${env.ROOT_HOST}/en/forPlayers`,
-      `https://${env.ROOT_HOST}/en/forHosts`,
-      `https://${env.ROOT_HOST}/en/reports`,
-      `https://${env.ROOT_HOST}/en/seatings`,
-      `https://${env.ROOT_HOST}/ru`,
-      `https://${env.ROOT_HOST}/ru/about`,
-      `https://${env.ROOT_HOST}/ru/codeOfConduct`,
-      `https://${env.ROOT_HOST}/ru/getStarted`,
-      `https://${env.ROOT_HOST}/ru/forPlayers`,
-      `https://${env.ROOT_HOST}/ru/forHosts`,
-      `https://${env.ROOT_HOST}/ru/howToPlay`,
-      `https://${env.ROOT_HOST}/ru/yakuList`,
-      `https://${env.ROOT_HOST}/ru/forHosts`,
-      `https://${env.ROOT_HOST}/ru/reports`,
-      `https://${env.ROOT_HOST}/ru/seatings`,
-    ];
+  app.get('/sitemap.xml', async (req, res) => {
+    const { pagePaths } = await import('./dist/server/server.js');
+    const urls = pagePaths.map((page) => `https://${env.ROOT_HOST}${page}`);
     fs.readFile('./lastbuild.txt', { encoding: 'utf-8' }, (err, lastUpdate) => {
       if (err) {
         const date = new Date();
         lastUpdate =
           date.getFullYear() +
           '-' +
-          date.getMonth().toString().padStart(2, '0') +
+          (date.getMonth() + 1).toString().padStart(2, '0') +
           '-' +
           date.getDate().toString().padStart(2, '0');
       }
       res.send(`<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  ${urls.map(
-    (url) => `<url>
+  ${urls
+    .map(
+      (url) => `<url>
     <loc>${url}</loc>
     <lastmod>${lastUpdate.trim()}</lastmod>
     <changefreq>weekly</changefreq>
   </url>
 `
-  )}
+    )
+    .join('')}
 </urlset>`);
     });
   });
@@ -124,29 +107,32 @@ export async function createServer(app, env) {
     const template = fs.readFileSync(resolve('dist/client/index.html'), 'utf-8');
     const render = (await import('./dist/server/server.js')).SSRRender;
 
-    render(url, req.cookies).then(({ cookies, helmet, styles, appHtml, serverData }) => {
-      const html = template
-        .replace(`<!--app-head-->`, helmet)
-        // Custom Emotion rules must follow the bundled Mantine stylesheets.
-        .replace('</head>', `${styles}</head>`)
-        .replace(`<!--app-html-->`, appHtml)
-        .replace(`<!--app-server-data-->`, serverData);
-      res.status(200);
-      res.set({ 'Content-Type': 'text/html' });
-      for (const name in cookies.add) {
-        res.cookie(name, cookies.add[name], {
-          domain: env.VITE_COOKIE_DOMAIN,
-          expires: new Date(Date.now() + 365 * 24 * 3600 * 1000),
-        });
+    render(url, req.cookies).then(
+      ({ cookies, helmet, styles, appHtml, serverData, htmlLanguage }) => {
+        const html = template
+          .replace('<html lang="en">', `<html lang="${htmlLanguage}">`)
+          .replace(`<!--app-head-->`, helmet)
+          // Custom Emotion rules must follow the bundled Mantine stylesheets.
+          .replace('</head>', `${styles}</head>`)
+          .replace(`<!--app-html-->`, appHtml)
+          .replace(`<!--app-server-data-->`, serverData);
+        res.status(200);
+        res.set({ 'Content-Type': 'text/html' });
+        for (const name in cookies.add) {
+          res.cookie(name, cookies.add[name], {
+            domain: env.VITE_COOKIE_DOMAIN,
+            expires: new Date(Date.now() + 365 * 24 * 3600 * 1000),
+          });
+        }
+        for (const name of cookies.remove) {
+          res.clearCookie(name, {
+            domain: env.VITE_COOKIE_DOMAIN,
+            expires: new Date(Date.now() + 365 * 24 * 3600 * 1000),
+          });
+        }
+        res.end(html);
       }
-      for (const name of cookies.remove) {
-        res.clearCookie(name, {
-          domain: env.VITE_COOKIE_DOMAIN,
-          expires: new Date(Date.now() + 365 * 24 * 3600 * 1000),
-        });
-      }
-      res.end(html);
-    });
+    );
   });
 
   return app;

@@ -17,6 +17,8 @@
 
 import ReactDOMServer from 'react-dom/server';
 import { App } from './App';
+import { htmlLanguages, languageFromPath, normalizeLanguage } from './i18n/languages';
+export { pagePaths } from './Nav';
 import { Router } from 'wouter';
 import { StorageStrategyServer } from '../../Common/storageStrategyServer';
 import { Isomorphic } from './hooks/isomorphic';
@@ -36,6 +38,8 @@ export async function SSRRender(url: string, cookies: Record<string, string>) {
   const storageStrategy = new StorageStrategyServer();
   storageStrategy.fill(cookies);
   storage.setStrategy(storageStrategy);
+  const language = languageFromPath(url);
+  if (language) storage.setLang(language);
   i18n.init(
     (locale) => {
       storage.setLang(locale);
@@ -78,6 +82,7 @@ export async function SSRRender(url: string, cookies: Record<string, string>) {
 
   return {
     appHtml,
+    htmlLanguage: htmlLanguages[language ?? normalizeLanguage(storage.getLang()) ?? 'en'],
     helmet: head,
     styles: stylesServer.constructStyleTagsFromChunks(
       stylesServer.extractCriticalToChunks(appHtml)

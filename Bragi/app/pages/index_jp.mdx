@@ -1,0 +1,25 @@
+import { Meta } from '../components/Meta';
+import { Link } from 'wouter';
+import { env } from '../env';
+
+<Meta title="リーチ麻雀の対局支援と記録 - Mahjong Pantheon" description="Mahjong Pantheon は、リーチ麻雀のプレイヤーと大会主催者を支援するツール群です。" />
+
+## リーチ麻雀の対局支援と記録
+
+import { CardsCarousel } from '../components/Carousel';
+import { FeaturesGrid } from '../components/FeaturesList';
+import { Space, Title, Button, Center } from '@mantine/core';
+
+<Title ta='center'>Pantheon でできること</Title>
+
+<FeaturesGrid />
+
+<Title ta='center'>画面の紹介</Title>
+
+<Space h='xl' />
+
+<CardsCarousel />
+
+実際の大会やイベントは<a href={env.urls.sigrun} target='_blank'>こちら</a>でご覧いただけます。
+
+<Center><Link to='/getStarted'><Button variant='gradient' gradient={{ from: 'pink', to: 'cyan' }} size='xl'>はじめに</Button></Link></Center>

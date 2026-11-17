@@ -32,6 +32,8 @@ import { Meta } from './Meta';
 import * as React from 'react';
 import { Hero } from './Hero';
 import { useLocation } from 'wouter';
+import { Language, languageLink } from '../i18n/languages';
+import { TranslationNotice } from './TranslationNotice';
 
 // See also Tyr/app/services/themes.ts - we use names from there to sync themes
 const themeToLocal: (theme?: string | null) => 'light' | 'dark' = (theme) => {
@@ -57,7 +59,7 @@ const haveNySpecs =
 export function Layout({ children, cache }: { children: ReactNode; cache: EmotionCache }) {
   const storage = useStorage();
   const i18n = useI18n();
-  const [location, navigate] = useLocation();
+  const [, navigate] = useLocation();
   const [colorScheme, setColorScheme] = useState<'light' | 'dark'>(
     themeToLocal(storage.getTheme())
   );
@@ -78,15 +80,9 @@ export function Layout({ children, cache }: { children: ReactNode; cache: Emotio
   };
   const dark = colorScheme === 'dark';
 
-  const saveLang = (lang: string) => {
+  const saveLang = (lang: Language) => {
     storage.setLang(lang);
-    i18n.init(
-      (locale) => {
-        storage.setLang(locale);
-        navigate(location.replace(/^\/([^/]+)(.*)/, `/${locale}$2`));
-      },
-      (err) => console.error(err)
-    );
+    navigate(languageLink(window.location.href, lang));
   };
 
   return (
@@ -141,6 +137,7 @@ export function Layout({ children, cache }: { children: ReactNode; cache: Emotio
                       <Space h='xl' />
                       {children}
                     </div>
+                    <TranslationNotice />
                     <AppFooter
                       dark={dark}
                       toggleColorScheme={toggleColorScheme}

@@ -43,10 +43,14 @@ case "$action" in
     ./node_modules/.bin/stex -s 'app/**/*.?(ts|tsx)' -o app/i18n/messages.pot.json
     ./node_modules/.bin/jsonpo -s app/i18n/messages.pot.json -o app/i18n/messages.pot --printOccurences
     rm app/i18n/messages.pot.json
-    msgmerge -s -U ./app/i18n/ru.po ./app/i18n/messages.pot --backup=none
+    for lang in ru jp cn ko de be; do
+      msgmerge -s -U "./app/i18n/$lang.po" ./app/i18n/messages.pot --backup=none
+    done
     ;;
   i18n-update)
-    ./node_modules/.bin/pojson -s app/i18n/ru.po -o app/i18n/ru.json --withMeta
+    for lang in ru jp cn ko de be; do
+      ./node_modules/.bin/pojson -s "app/i18n/$lang.po" -o "app/i18n/$lang.json" --withMeta
+    done
     ;;
   reload)
     supervisorctl restart bragi:

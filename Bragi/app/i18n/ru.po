@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-09 18:55Z\n"
+"POT-Creation-Date: 2026-11-17 00:53+0100\n"
 "PO-Revision-Date: 2024-01-06 20:06+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -20,7 +20,90 @@ msgstr ""
 "Generated-By: i18n-json2po\n"
 "X-Generator: Poedit 3.0.1\n"
 
-#: app/components/Layout.tsx:115:30
+#: app/components/FeaturesList.tsx:24:18
+msgid ""
+"Any player can see their own and opponents' statistics and achievements for "
+"particular event"
+msgstr ""
+"Любой игрок может посмотреть свои и не только статистику и номинации для "
+"конкретного рейтинга"
+
+#: app/components/FeaturesList.tsx:38:18
+msgid ""
+"Any tournament host can use Pantheon to simplify the process of holding the "
+"tournament, use included seatings and other useful tools"
+msgstr ""
+"Каждый организатор турнира может использовать Pantheon для упрощения "
+"процесса проведения турнира, использовать встроенные рассадки и другие "
+"полезные инструменты"
+
+#: app/components/TranslationNotice.tsx:13:8
+msgid "Everyone is welcome to help refine translations. Suggest changes on"
+msgstr ""
+"Любой желающий может помочь улучшить переводы. Предлагайте изменения на"
+
+#: app/Nav.ts:83:33
+msgid "For hosts"
+msgstr "Организаторам"
+
+#: app/i18n/languages.test.tsx:12:33 app/Nav.ts:82:35
+msgid "For players"
+msgstr "Игрокам"
+
+#: app/components/FeaturesList.tsx:16:12
+msgid "Game assistant"
+msgstr "Ассистент для игр"
+
+#: app/components/FeaturesList.tsx:30:12
+msgid "Game logs"
+msgstr "Логи игр"
+
+#: app/components/Hero.tsx:298:16
+msgid "Get started"
+msgstr "Начинаем?"
+
+#: app/Nav.ts:84:32
+msgid "Have issue?"
+msgstr "Проблема?"
+
+#: app/components/FeaturesList.tsx:51:12
+msgid "Local club games"
+msgstr "Клубные и свободные игры"
+
+#: app/components/Hero.tsx:288:16
+msgid "Mahjong Pantheon can help with games and tournaments"
+msgstr "Mahjong Pantheon поможет с играми и турнирами"
+
+#: app/components/AppFooter.tsx:121:12
+msgid "Mahjong Pantheon team"
+msgstr "Команда Mahjong Pantheon"
+
+#: app/components/AppFooter.tsx:93:14 app/components/Carousel.tsx:8:12
+#: app/components/Hero.tsx:317:60 app/components/Hero.tsx:318:30
+msgid "Mobile assistant"
+msgstr "Мобильный ассистент"
+
+#: app/components/Hero.tsx:256:23
+msgid "Navigation menu"
+msgstr "Меню навигации"
+
+#: app/components/FeaturesList.tsx:44:12
+msgid "Online tournaments"
+msgstr "Онлайн-турниры"
+
+#: app/components/TranslationNotice.tsx:11:11
+msgid "Other language editions include machine-generated translations."
+msgstr "Версии на других языках включают машинные переводы."
+
+#: app/components/FeaturesList.tsx:52:18
+msgid ""
+"Pantheon helps not only with tournaments, it also can se used to log the "
+"games you play in your local club"
+msgstr ""
+"Pantheon помогает не только с турнирами, есть также возможность записывать "
+"игры, которые вы играете в своем клубе"
+
+#: app/components/Layout.tsx:108:30
 msgid ""
 "Pantheon is a set of tools to record and show detailed riichi mahjong games "
 "with recording assistance, admin panel and statistics service."
@@ -28,10 +111,84 @@ msgstr ""
 "Pantheon это набор инструментов для записи и отображения игр в риичи-маджонг "
 "с ассистированиев вводы, панелью администратора и сервисов статистики"
 
-#: app/components/Layout.tsx:114:24
+#: app/components/FeaturesList.tsx:17:18
+msgid ""
+"Pantheon provides easy to use web-based assistant for your mobile device, "
+"which you can use to add new hands and games"
+msgstr ""
+"Pantheon предоставляет простой веб-ассистент для вашего мобильного "
+"устройства для ввода раздач и игр"
+
+#: app/components/FeaturesList.tsx:31:18
+msgid ""
+"Pantheon saves all game logs and provides a way to view them conveniently "
+"both in mobile assistant and on main ratings page"
+msgstr ""
+"Pantheon сохраняет все логи игр и предоставляет возможность их удобного "
+"просмотра как в ассистенте, так и в общем списке"
+
+#: app/components/Layout.tsx:107:24
 msgid "Pantheon: riichi mahjong ratings and statistics"
 msgstr "Pantheon: рейтинги и статистика в риичи-маджонге"
 
-#: app/components/AppFooter.tsx:123:20
+#: app/components/Carousel.tsx:12:12
+msgid "Personal stats"
+msgstr "Личная статистика"
+
+#: app/components/FeaturesList.tsx:23:12
+msgid "Player stats"
+msgstr "Статистика игрока"
+
+#: app/components/AppFooter.tsx:115:14 app/components/Hero.tsx:327:64
+#: app/components/Hero.tsx:328:30
+msgid "Profile & admin panel"
+msgstr "Профиль и админка"
+
+#: app/components/Carousel.tsx:20:12
+msgid "Rating table"
+msgstr "Рейтинговая таблица"
+
+#: app/components/AppFooter.tsx:104:14 app/components/Hero.tsx:322:63
+#: app/components/Hero.tsx:323:30
+msgid "Ratings and stats"
+msgstr "Рейтинги и статистика"
+
+#: app/components/Carousel.tsx:16:12
+msgid "Recent games"
+msgstr "Последние игры"
+
+#: app/Nav.ts:87:12
+msgid "Tech info"
+msgstr "Тех.детали"
+
+#: app/Nav.ts:89:38
+msgid "Terms & conditions"
+msgstr "Условия и нормы"
+
+#: app/components/FeaturesList.tsx:45:18
+msgid ""
+"There is an option of holding an online tournament on external platform. "
+"Pantheon has paifu import functionality to view game logs"
+msgstr ""
+"Есть возможность проведения онлайн-турниров на внешних платформах. Pantheon "
+"имеет возможность импорта реплеев для просмотра логов игр"
+
+#: app/components/TranslationNotice.tsx:12:11
+msgid "This page is a machine-generated translation."
+msgstr "Эта страница переведена автоматически."
+
+#: app/components/AppFooter.tsx:143:20 app/components/AppFooter.tsx:144:25
 msgid "Toggle color scheme"
 msgstr "Переключить цветовую схему"
+
+#: app/components/FeaturesList.tsx:37:12
+msgid "Tournament assistance"
+msgstr "Проведение турниров"
+
+#: app/components/Hero.tsx:284:14
+msgid "Track and assist your riichi games"
+msgstr "Запись и помощь с играми в риичи"
+
+#: app/components/TranslationNotice.tsx:15:8
+msgid "or contact the developers on"
+msgstr "или свяжитесь с разработчиками в"

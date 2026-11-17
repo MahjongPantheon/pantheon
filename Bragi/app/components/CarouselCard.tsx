@@ -35,11 +35,10 @@ const useStyles = createStyles((theme) => ({
 
 interface CardProps {
   image: string;
-  title: Record<string, string>;
-  locale: string;
+  title: string;
 }
 
-export function CarouselCard({ image, title, locale }: CardProps) {
+export function CarouselCard({ image, title }: CardProps) {
   const { classes } = useStyles();
   const theme = useMantineTheme();
   const { colorScheme } = useMantineColorScheme();
@@ -66,7 +65,7 @@ export function CarouselCard({ image, title, locale }: CardProps) {
           backgroundColor: colorScheme === 'dark' ? theme.colors.gray[8] : theme.colors.gray[2],
         }}
       >
-        {title[locale]}
+        {title}
       </Title>
     </Paper>
   );

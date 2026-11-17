@@ -13,10 +13,11 @@ import {
   Transition,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { useEffect, useState } from 'react';
+
 import { Filler } from './Filler';
 import { useLocation, Link } from 'wouter';
-import { useStorage } from '../hooks/storage';
+import { useLanguage } from '../hooks/useLanguage';
+import { useI18n } from '../hooks/i18n';
 import {
   IconBrandDiscord,
   IconBrandGithub,
@@ -200,28 +201,19 @@ const useStyles = createStyles((theme, { dark }: { dark: boolean }, u) => ({
 }));
 
 export const Hero = () => {
-  const storage = useStorage();
-  const lang = storage.getLang() ?? 'en';
+  const lang = useLanguage();
+  const i18n = useI18n();
   const [opened, { toggle, close }] = useDisclosure(false);
-  const [active, setActive] = useState('/');
   const { classes, cx } = useStyles({ dark: useMantineColorScheme().colorScheme === 'dark' });
   const [location, navigate] = useLocation();
   const collapsed = location !== '/' + lang;
 
-  useEffect(() => {
-    links.forEach((link) => {
-      if (location === `/${lang}${link.link}`) {
-        setActive(link.link);
-      }
-    });
-  }, [location]);
-
-  const items = links.map((link, idx) => (
+  const items = links(i18n).map((link) => (
     <a
-      key={`mainmenu_${idx}`}
+      key={link.link}
       href={link.link.startsWith('/') ? `/${lang}${link.link}` : link.link}
       target={link.link.startsWith('/') ? undefined : '_blank'}
-      className={cx(classes.link, { [classes.linkActive]: active === link.link })}
+      className={cx(classes.link, { [classes.linkActive]: location === `/${lang}${link.link}` })}
       onClick={(event) => {
         if (link.link.startsWith('/')) {
           event.preventDefault();
@@ -230,7 +222,7 @@ export const Hero = () => {
         close();
       }}
     >
-      {link.label[lang as 'en' | 'ru']}
+      {link.label}
     </a>
   ));
 
@@ -238,8 +230,8 @@ export const Hero = () => {
     <div
       className={classes.wrapper}
       style={{
-        overflow: 'hidden',
-        height: collapsed ? 125 : 475,
+        overflow: opened ? 'visible' : 'hidden',
+        minHeight: collapsed ? 125 : 475,
       }}
     >
       {/* Main menu */}
@@ -251,7 +243,6 @@ export const Hero = () => {
           onClick={(event) => {
             event.preventDefault();
             navigate('/' + lang);
-            setActive('/' + lang);
             close();
           }}
         >
@@ -262,6 +253,7 @@ export const Hero = () => {
         </Group>
 
         <Burger
+          aria-label={i18n._t('Navigation menu')}
           opened={opened}
           onClick={toggle}
           className={classes.burger}
@@ -287,37 +279,13 @@ export const Hero = () => {
           transition: 'all 0.4s',
         }}
       >
-        {storage.getLang() === 'ru' ? (
-          <Title className={classes.title}>
-            <Text
-              component='span'
-              inherit
-              variant='gradient'
-              gradient={{ from: 'pink', to: 'cyan' }}
-            >
-              Запись&nbsp;и&nbsp;помощь
-            </Text>{' '}
-            с&nbsp;играми&nbsp;в&nbsp;риичи
-          </Title>
-        ) : (
-          <Title className={classes.title}>
-            <Text
-              component='span'
-              inherit
-              variant='gradient'
-              gradient={{ from: 'pink', to: 'cyan' }}
-            >
-              Track&nbsp;and&nbsp;assist
-            </Text>{' '}
-            your&nbsp;riichi&nbsp;games
-          </Title>
-        )}
+        <Title className={classes.title}>
+          <Text component='span' inherit variant='gradient' gradient={{ from: 'pink', to: 'cyan' }}>
+            {i18n._t('Track and assist your riichi games')}
+          </Text>
+        </Title>
 
-        <Text>
-          {storage.getLang() === 'ru'
-            ? 'Mahjong Pantheon поможет с играми и турнирами'
-            : 'Mahjong Pantheon can help with games and tournaments'}
-        </Text>
+        <Text>{i18n._t('Mahjong Pantheon can help with games and tournaments')}</Text>
 
         <Group>
           <Link to={`/${lang}/getStarted`}>
@@ -327,10 +295,10 @@ export const Hero = () => {
               size='xl'
               className={classes.control}
             >
-              {storage.getLang() === 'ru' ? 'Начинаем?' : 'Get started'}
+              {i18n._t('Get started')}
             </Button>
           </Link>
-          {storage.getLang() === 'ru' && (
+          {lang === 'ru' && (
             <Link to={`/${lang}/howToPlay`}>
               <Button
                 variant='gradient'
@@ -346,47 +314,35 @@ export const Hero = () => {
       </div>
 
       <div className={classes.quickLinks}>
-        <a href={env.urls.tyr} target='_blank'>
-          <ActionIcon
-            title={storage.getLang() === 'ru' ? 'Мобильный ассистент' : 'Mobile assistant'}
-            color='green'
-            variant='filled'
-          >
+        <a href={env.urls.tyr} target='_blank' aria-label={i18n._t('Mobile assistant')}>
+          <ActionIcon title={i18n._t('Mobile assistant')} color='green' variant='filled'>
             <IconDeviceMobile />
           </ActionIcon>
         </a>
-        <a href={env.urls.sigrun} target='_blank'>
-          <ActionIcon
-            title={storage.getLang() === 'ru' ? 'Рейтинги и статистика' : 'Ratings and stats'}
-            color='blue'
-            variant='filled'
-          >
+        <a href={env.urls.sigrun} target='_blank' aria-label={i18n._t('Ratings and stats')}>
+          <ActionIcon title={i18n._t('Ratings and stats')} color='blue' variant='filled'>
             <IconGraph />
           </ActionIcon>
         </a>
-        <a href={env.urls.forseti} target='_blank'>
-          <ActionIcon
-            title={storage.getLang() === 'ru' ? 'Профиль и админка' : 'Profile & admin panel'}
-            color='orange'
-            variant='filled'
-          >
+        <a href={env.urls.forseti} target='_blank' aria-label={i18n._t('Profile & admin panel')}>
+          <ActionIcon title={i18n._t('Profile & admin panel')} color='orange' variant='filled'>
             <IconSettings />
           </ActionIcon>
         </a>
       </div>
 
       <div className={classes.contacts}>
-        <a href='https://github.com/MahjongPantheon/pantheon' target='_blank'>
+        <a href='https://github.com/MahjongPantheon/pantheon' target='_blank' aria-label='GitHub'>
           <ActionIcon title='Github repo' color='gray' variant='filled'>
             <IconBrandGithub />
           </ActionIcon>
         </a>
-        <a href='https://discord.gg/U5qBkexfEQ' target='_blank'>
+        <a href='https://discord.gg/U5qBkexfEQ' target='_blank' aria-label='Discord (EN)'>
           <ActionIcon title='Discord (EN)' color='grape' variant='filled'>
             <IconBrandDiscord />
           </ActionIcon>
         </a>
-        <a href='https://t.me/pantheon_support' target='_blank'>
+        <a href='https://t.me/pantheon_support' target='_blank' aria-label='Telegram (RU)'>
           <ActionIcon title='Telegram (RU)' color='blue' variant='filled'>
             <IconBrandTelegram />
           </ActionIcon>

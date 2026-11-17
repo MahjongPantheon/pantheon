@@ -35,9 +35,10 @@ import {
 } from '@tabler/icons-react';
 import { useI18n } from '../hooks/i18n';
 import * as React from 'react';
-import { FlagEn, FlagRu } from '../helpers/flags';
+import { FlagEn, FlagRu, FlagJa, FlagCn, FlagKo, FlagDe, FlagBe } from '../helpers/flags';
+import { Language, supportedLanguages, languageNames } from '../i18n/languages';
 import { env } from '../env';
-import { useStorage } from '../hooks/storage';
+import { useLanguage } from '../hooks/useLanguage';
 
 const useStyles = createStyles((theme) => ({
   grid: {
@@ -47,17 +48,27 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
+const flags = {
+  en: FlagEn,
+  ru: FlagRu,
+  jp: FlagJa,
+  cn: FlagCn,
+  ko: FlagKo,
+  de: FlagDe,
+  be: FlagBe,
+};
+
 interface AppHeaderProps {
   dark: boolean;
   toggleColorScheme: () => void;
-  saveLang: (lang: string) => void;
+  saveLang: (lang: Language) => void;
 }
 
 export function AppFooter({ dark, toggleColorScheme, saveLang }: AppHeaderProps) {
   const { classes } = useStyles();
   const i18n = useI18n();
   const theme = useMantineTheme();
-  const storage = useStorage();
+  const language = useLanguage();
 
   return (
     <SimpleGrid
@@ -79,7 +90,7 @@ export function AppFooter({ dark, toggleColorScheme, saveLang }: AppHeaderProps)
           }
         >
           <a href={env.urls.tyr} target='_blank'>
-            {storage.getLang() === 'ru' ? 'Мобильный ассистент' : 'Mobile assistant'}
+            {i18n._t('Mobile assistant')}
           </a>
         </List.Item>
         <List.Item
@@ -90,7 +101,7 @@ export function AppFooter({ dark, toggleColorScheme, saveLang }: AppHeaderProps)
           }
         >
           <a href={env.urls.sigrun} target='_blank'>
-            {storage.getLang() === 'ru' ? 'Рейтинги и статистика' : 'Ratings and stats'}
+            {i18n._t('Ratings and stats')}
           </a>
         </List.Item>
         <List.Item
@@ -101,34 +112,36 @@ export function AppFooter({ dark, toggleColorScheme, saveLang }: AppHeaderProps)
           }
         >
           <a href={env.urls.forseti} target='_blank'>
-            {storage.getLang() === 'ru' ? 'Профиль и админка' : 'Profile & admin panel'}
+            {i18n._t('Profile & admin panel')}
           </a>
         </List.Item>
       </List>
       <Stack align='flex-end' gap={0}>
-        <Text size='xs'>Mahjong Pantheon dream team, {new Date().getFullYear()}.</Text>
-        <Group mt={0} gap={16} justify='flex-end'>
-          <ActionIcon
-            onClick={() => {
-              saveLang('en');
-            }}
-            title={'In English'}
-          >
-            <FlagEn width={20} />
-          </ActionIcon>
-          <ActionIcon
-            onClick={() => {
-              saveLang('ru');
-            }}
-            title={'По-русски'}
-          >
-            <FlagRu width={20} />
-          </ActionIcon>
+        <Text size='xs'>
+          {i18n._t('Mahjong Pantheon team')}, {new Date().getFullYear()}.
+        </Text>
+        <Group mt={0} gap={8} justify='flex-end'>
+          {supportedLanguages.map((locale) => {
+            const Flag = flags[locale];
+            return (
+              <ActionIcon
+                key={locale}
+                onClick={() => saveLang(locale)}
+                title={languageNames[locale]}
+                aria-label={languageNames[locale]}
+                aria-pressed={locale === language}
+                variant={locale === language ? 'filled' : 'subtle'}
+              >
+                <Flag width={20} />
+              </ActionIcon>
+            );
+          })}
           <ActionIcon
             onClick={() => {
               toggleColorScheme();
             }}
             title={i18n._t('Toggle color scheme')}
+            aria-label={i18n._t('Toggle color scheme')}
           >
             {dark ? <IconSun size={20} /> : <IconMoonStars size={20} />}
           </ActionIcon>

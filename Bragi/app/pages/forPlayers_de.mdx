@@ -1,0 +1,91 @@
+import { Meta } from '../components/Meta';
+import { Link } from 'wouter';
+import { env } from '../env';
+import { GuideScreenshot } from '../components/GuideScreenshot';
+
+<Meta title="Den mobilen Assistenten verwenden - Mahjong Pantheon" description="Event wählen, Clubpartien starten, Turniertische finden, Hände erfassen und Fehler mit einem Schiedsrichter korrigieren." />
+
+## Den mobilen Assistenten verwenden
+
+Öffnen Sie den <a href={env.urls.tyr}>mobilen Assistenten</a> auf Ihrem Telefon. Sie benötigen ein aktiviertes Konto und die Registrierung im Event: <Link to='/getStarted'>Erste Schritte und Hilfe zum Konto</Link>.
+
+Abschnitte: [Event wählen](#event), [Clubpartien](#club), [Turniere](#tournament), [Hand erfassen](#recording), [Verlauf und Korrekturen](#corrections). Die anklickbaren Screenshots zeigen die englische Oberfläche und erfundene Spieler.
+
+<h3 id='event'>1. Anmelden und Event wählen</h3>
+
+Melden Sie sich mit E-Mail und Passwort an. Wählen Sie die Clubrangliste oder das Turnier. Fehlt ein Event oder ist die Liste leer, lassen Sie die Registrierung prüfen: Ein Pantheon-Konto allein genügt nicht.
+
+<GuideScreenshot name="mobile-events" alt="Eventliste mit Club und Turnieren. Wählen Sie das Event, in dem Sie spielen." caption="Eventliste mit Club und Turnieren. Wählen Sie das Event, in dem Sie spielen." mobile />
+
+Die Startseite zeigt Eventname und verfügbare Aktionen. Bei laufender Partie kann direkt der Tisch erscheinen; über die Home-Taste gelangen Sie zurück.
+
+<GuideScreenshot name="mobile-home" alt="Clubstartseite mit neuer Partie und Statistik. Prüfen Sie vor jeder Eingabe den Eventnamen." caption="Clubstartseite mit neuer Partie und Statistik. Prüfen Sie vor jeder Eingabe den Eventnamen." mobile />
+
+Die Zahnrad-Taste öffnet Einstellungen für Sprache, Design, persönlichen Bereich, Eventwechsel und Abmeldung. **Einzelgerätemodus** eignet sich, wenn ein Telefon für den ganzen Tisch aufzeichnet; nicht jeder Spieler muss ein eigenes Gerät bedienen.
+
+<GuideScreenshot name="mobile-settings" alt="Einstellungen mit Sprache, Design, Eventauswahl und Einzelgerätemodus. Kontodaten und Passwort behandelt die Kontoanleitung." caption="Einstellungen mit Sprache, Design, Eventauswahl und Einzelgerätemodus. Kontodaten und Passwort behandelt die Kontoanleitung." mobile />
+
+<h3 id='club'>2. Eine Clubpartie starten</h3>
+
+1. Drücken Sie auf der Eventstartseite **Neue Partie**.
+2. Wählen Sie registrierte Teilnehmer in der Reihenfolge **Ost–Süd–West–Nord**, bei Sanma **Ost–Süd–West**. Bei Bedarf leeren Sie die Auswahl und beginnen neu.
+3. Für zufällige Anfangssitze nutzen Sie die Mischfunktion und prüfen gemeinsam die neue Reihenfolge.
+4. Prüfen Sie Namen und Winde und starten Sie. Nur ein Spieler muss die Partie anlegen; die anderen öffnen denselben Tisch nach Aktualisierung ihres Assistenten.
+
+<GuideScreenshot name="mobile-new-game" alt="Neue Clubpartie mit vier Spielern, Misch- und Startfunktion. Namen und Anfangswinde vor dem Start prüfen." caption="Neue Clubpartie mit vier Spielern, Misch- und Startfunktion. Namen und Anfangswinde vor dem Start prüfen." mobile />
+
+Clubpartien haben keinen gemeinsamen Turniertimer. Sie enden nach den Eventregeln, etwa Ost- oder Südspiel, Händlerfortsetzung, Zielpunktzahl oder Bankrott. Bei falschen Teilnehmern soll ein Administrator die noch leere Partie entfernen.
+
+<h3 id='tournament'>3. An einem Turniertisch Platz nehmen</h3>
+
+Die Administration erzeugt den Sitzplan. Verwenden Sie dafür nicht **Neue Partie**. Prüfen Sie bei fertigem Sitzplan Tisch und Anfangswind, suchen Sie den Tisch und gleichen Sie die Teilnehmer ab.
+
+<GuideScreenshot name="mobile-tournament-ready" alt="Tischzuweisung vor dem Timerstart. Nehmen Sie Ihren Platz ein und warten Sie auf das Startsignal." caption="Tischzuweisung vor dem Timerstart. Nehmen Sie Ihren Platz ein und warten Sie auf das Startsignal." mobile />
+
+Die Administration startet Timer und Tische gemeinsam. Der Assistent zeigt die Restzeit. Dauer und Endregel sind eventspezifisch: Bei Zeitablauf wird die aktuelle Hand beendet, gegebenenfalls noch eine weitere gespielt, oder die Partie läuft regulär zu Ende. Beachten Sie Ansage und Status; 75 Minuten sind kein allgemeiner Standard.
+
+<GuideScreenshot name="mobile-tournament-timer" alt="Laufende Turnierpartie mit Countdown. Timer und Zusatzzeit steuert der Veranstalter." caption="Laufende Turnierpartie mit Countdown. Timer und Zusatzzeit steuert der Veranstalter." mobile />
+
+Warten Sie nach Spielende auf die Bestätigung aller Sessions. Melden Sie Fehler davor. Ergebnisse erscheinen danach entsprechend den Sichtbarkeitseinstellungen; die nächste Tischzuweisung erscheint mit dem nächsten Sitzplan.
+
+<h3 id='recording'>4. Eine Hand erfassen</h3>
+
+Eine Person trägt ein, alle prüfen. Der Spielzustand wird zwischen den Geräten geteilt. Erfassen Sie dieselbe Hand nicht mehrfach.
+
+<GuideScreenshot name="mobile-table" alt="Tischansicht mit Punktständen und Winden. Die Plustaste öffnet die Ergebnisauswahl." caption="Tischansicht mit Punktständen und Winden. Die Plustaste öffnet die Ergebnisauswahl." mobile />
+
+1. Drücken Sie **+** und wählen Sie je nach Eventregeln **Ron**, **Tsumo**, **erschöpfendes Remis**, **Abbruch**, **Chombo** oder **Nagashi**. Bei Doppel- oder Dreifach-Ron wählen Sie einmal Ron und anschließend alle Gewinner.
+
+<GuideScreenshot name="mobile-outcome" alt="Auswahl des tatsächlichen Handergebnisses: Ron, Tsumo, Remis oder Chombo." caption="Auswahl des tatsächlichen Handergebnisses: Ron, Tsumo, Remis oder Chombo." mobile />
+
+2. Wählen Sie bei Ron Gewinner und Abwerfer, bei Tsumo den Gewinner, beim erschöpfenden Remis die Tenpai-Spieler und bei Chombo die bestraften Spieler. Markieren Sie jetzt über die Statusfelder alle Riichi-Ansagen dieser Hand.
+
+<GuideScreenshot name="mobile-players" alt="Spielerstatus mit Gewinner, Abwerfer und Riichi. Riichi wird vor der Yaku-Auswahl eingetragen." caption="Spielerstatus mit Gewinner, Abwerfer und Riichi. Riichi wird vor der Yaku-Auswahl eingetragen." mobile />
+
+3. Wählen Sie für jeden Gewinner die Yaku. Ohne **Offene Hand** gilt die Hand als geschlossen. Prüfen Sie bei mehreren Gewinnern jeden Reiter. Yaku und Kombinationen hängen von den Regeln ab; trotz gesperrter unvereinbarer Optionen müssen die Spieler selbst prüfen.
+4. Wählen Sie Dora-Gesamtzahl und Fu. Manche Fu-Werte sind durch Yaku festgelegt oder eingeschränkt. Dora ersetzt kein gültiges Yaku. Treffen Sie gegebenenfalls die angeforderte Pao-Auswahl zur Zahlungshaftung.
+
+<GuideScreenshot name="mobile-hand" alt="Handeditor mit Yaku, Dora und Fu. Offen/geschlossen und alle Gewinner einzeln prüfen." caption="Handeditor mit Yaku, Dora und Fu. Offen/geschlossen und alle Gewinner einzeln prüfen." mobile />
+
+5. Öffnen Sie die Vorschau und zeigen Sie allen die Punktänderungen. Klären Sie Einwände jetzt, korrigieren Sie über Zurück und bestätigen Sie erst bei Einigkeit mit dem Häkchen.
+
+<GuideScreenshot name="mobile-preview" alt="Vorschau der Punktänderungen. Erst die Bestätigung speichert die Hand." caption="Vorschau der Punktänderungen. Erst die Bestätigung speichert die Hand." mobile />
+
+Prüfen Sie danach Punktstände und Handnummer. Bei Verbindungsproblemen aktualisieren Sie zuerst und prüfen das Protokoll, bevor Sie die Hand erneut eingeben.
+
+<h3 id='corrections'>5. Verlauf prüfen und Fehler korrigieren</h3>
+
+Die Protokolltaste am Tisch zeigt gespeicherte Hände; Antippen einer Zeile öffnet Details. Antippen eines Punktestands zeigt Punktedifferenzen.
+
+<GuideScreenshot name="mobile-log" alt="Aufgeklappte Hand im Spielprotokoll. Klären Sie anhand der Details, welche Hand korrigiert werden muss." caption="Aufgeklappte Hand im Spielprotokoll. Klären Sie anhand der Details, welche Hand korrigiert werden muss." mobile />
+
+Rufen Sie bei einer falschen gespeicherten Hand die Spielleitung. Spieler können sie nicht selbst stornieren. Der Schiedsrichter storniert die letzte Hand, danach erfassen Sie das richtige Ergebnis. Für ältere Fehler müssen auch spätere Hände storniert und neu erfasst werden; stimmen Sie die Daten vorher ab.
+
+Melden Sie Fehler in abgeschlossenen Clubpartien, bevor jemand die nächste Partie startet: Danach kann die Wiederöffnung gesperrt sein. Im Turnier muss die Meldung vor der Sessionbestätigung erfolgen. Ein Timer auf null ersetzt diese Bestätigung nicht.
+
+**Statistik** auf der Startseite oder <a href={env.urls.sigrun}>Ranglisten und Statistiken</a> zeigt Ranglisten, abgeschlossene Partien und Spielerstatistiken gemäß Sichtbarkeitseinstellungen.
+
+### Weiterführende Anleitungen
+
+- <Link to='/getStarted'>Registrierung, Profil und Passwort</Link>
+- <Link to='/forHosts'>Club- und Turnierverwaltung</Link>

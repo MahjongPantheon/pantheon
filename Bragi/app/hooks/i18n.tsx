@@ -16,11 +16,11 @@
  */
 
 import * as React from 'react';
-import { createContext, useContext } from 'react';
+import { createContext } from 'react';
 import { I18nService } from '../services/i18n';
 import { storage } from './storage';
-
-// TODO: remove. i18n is handled by hand in Bragi
+import { useLanguage } from './useLanguage';
+import { supportedLanguages } from '../i18n/languages';
 
 /**
  * @deprecated use hook useI18n instead!
@@ -28,9 +28,10 @@ import { storage } from './storage';
 export const i18n = new I18nService(storage);
 export const i18nCtx = createContext(i18n);
 
-export const useI18n = () => {
-  return useContext(i18nCtx);
-};
+const localizedServices = Object.fromEntries(
+  supportedLanguages.map((language) => [language, new I18nService(storage, language)])
+);
+export const useI18n = () => localizedServices[useLanguage()];
 
 export const I18nProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
   return <i18nCtx.Provider value={i18n}>{children}</i18nCtx.Provider>;

@@ -1,45 +1,32 @@
 import { Carousel } from '@mantine/carousel';
 import { CarouselCard } from './CarouselCard';
-import { useStorage } from '../hooks/storage';
+import { useI18n } from '../hooks/i18n';
 
-const dataPreview = [
+const dataPreview = (i18n: ReturnType<typeof useI18n>) => [
   {
     image: '/assets/img/preview/tyr.avif',
-    title: {
-      en: 'Mobile assistant',
-      ru: 'Мобильный ассистент',
-    },
+    title: i18n._t('Mobile assistant'),
   },
   {
     image: '/assets/img/preview/sigrun1.avif',
-    title: {
-      en: 'Personal stats',
-      ru: 'Личная статистика',
-    },
+    title: i18n._t('Personal stats'),
   },
   {
     image: '/assets/img/preview/sigrun3.avif',
-    title: {
-      en: 'Recent games',
-      ru: 'Последние игры',
-    },
+    title: i18n._t('Recent games'),
   },
   {
     image: '/assets/img/preview/sigrun2.avif',
-    title: {
-      en: 'Rating table',
-      ru: 'Рейтинговая таблица',
-    },
+    title: i18n._t('Rating table'),
   },
 ];
 
 export function CardsCarousel() {
-  const storage = useStorage();
-  const locale = storage.getLang();
+  const i18n = useI18n();
 
-  const slides = dataPreview.map((item, idx) => (
-    <Carousel.Slide key={`card${idx}`}>
-      <CarouselCard {...item} locale={locale ?? 'en'} />
+  const slides = dataPreview(i18n).map((item) => (
+    <Carousel.Slide key={item.image}>
+      <CarouselCard {...item} />
     </Carousel.Slide>
   ));
 

@@ -19,55 +19,53 @@ import { TranslationProvider, TranslationController } from 'i18n-dialect';
 import { TranslationJson } from 'i18n-proto';
 
 import langRu from '../i18n/ru.json';
-// import langDe from '../i18n/de.json';
+import langDe from '../i18n/de.json';
+import langJp from '../i18n/jp.json';
+import langCn from '../i18n/cn.json';
+import langKo from '../i18n/ko.json';
+import langBe from '../i18n/be.json';
 import { IStorage } from '../../../Common/storage';
-export const supportedLanguages = ['en', 'ru' /* 'de'*/];
-const langs = {
-  ru: langRu,
-  /*de: langDe,*/
-};
+import { Language, languageFromPath, normalizeLanguage } from '../i18n/languages';
+export { supportedLanguages } from '../i18n/languages';
+const langs = { ru: langRu, de: langDe, jp: langJp, cn: langCn, ko: langKo, be: langBe };
 
 export class I18nService {
   protected i18nController: TranslationController;
   protected i18n: TranslationProvider;
 
-  constructor(private readonly storage: IStorage) {
+  constructor(
+    private readonly storage: IStorage,
+    locale?: Language
+  ) {
     this.i18nController = new TranslationController(
       /* translationGetter: */ (
         name: string,
         onReady: (name: string, contents: string) => void
       ) => {
-        switch (name) {
-          case 'ru':
-            onReady(name, JSON.stringify(langs[name]));
-            break;
-          // case 'de':
-          //   onReady(name, JSON.stringify(langs[name]));
-          //   break;
-          case 'en':
-          default:
-            const defaultTrn: TranslationJson = {
-              items: [],
-              meta: {
-                projectIdVersion: '1',
-                reportMsgidBugsTo: '',
-                potCreationDate: '',
-                poRevisionDate: '',
-                lastTranslator: {
-                  name: '',
-                  email: '',
-                },
-                language: 'en',
-                languageTeam: '',
-                pluralForms: 'nplurals=1; plural=(n==1 ? 0 : 1)', // (n: number) => number
-                mimeVersion: '',
-                contentType: '',
-                contentTransferEncoding: '',
-                generatedBy: '',
+        if (name in langs) {
+          onReady(name, JSON.stringify(langs[name as keyof typeof langs]));
+        } else {
+          const defaultTrn: TranslationJson = {
+            items: [],
+            meta: {
+              projectIdVersion: '1',
+              reportMsgidBugsTo: '',
+              potCreationDate: '',
+              poRevisionDate: '',
+              lastTranslator: {
+                name: '',
+                email: '',
               },
-            };
-            onReady('en', JSON.stringify(defaultTrn));
-            break;
+              language: 'en',
+              languageTeam: '',
+              pluralForms: 'nplurals=1; plural=(n==1 ? 0 : 1)', // (n: number) => number
+              mimeVersion: '',
+              contentType: '',
+              contentTransferEncoding: '',
+              generatedBy: '',
+            },
+          };
+          onReady('en', JSON.stringify(defaultTrn));
         }
       },
       /* onFailedSubstitution: */ (str: string, substitutions) => {
@@ -76,32 +74,22 @@ export class I18nService {
       /* defaultPluralSelect: */ (factor: number) => (factor == 1 ? 0 : 1) // default english plurality rule
     );
     this.i18n = new TranslationProvider(this.i18nController);
+    if (locale) this.i18nController.setLocale(locale, () => {}, console.error);
   }
 
   public init(onReady: (localeName: string) => void, onError: (error: any) => void) {
-    // See also app.component.ts where this item is set
-    const lang = this.storage.getLang();
-    if (lang) {
-      if (!supportedLanguages.includes(lang)) {
-        this.storage.deleteLang();
-        // pass further if wrong lang is contained in local storage
-      } else {
-        this.i18nController.setLocale(lang, onReady, onError);
-        return;
-      }
-    }
-
-    if (!import.meta.env.SSR) {
-      for (const navlang of window.navigator.languages) {
-        if (supportedLanguages.includes(navlang)) {
-          this.i18nController.setLocale(navlang, onReady, onError);
-          return;
-        }
-      }
-    }
-
-    // default to en if nothing good found
-    this.i18nController.setLocale('en', onReady, onError);
+    const pathLanguage = !import.meta.env.SSR
+      ? languageFromPath(window.location.pathname)
+      : undefined;
+    const savedLanguage = normalizeLanguage(this.storage.getLang());
+    const browserLanguage = !import.meta.env.SSR
+      ? window.navigator.languages.map(normalizeLanguage).find(Boolean)
+      : undefined;
+    this.i18nController.setLocale(
+      pathLanguage ?? savedLanguage ?? browserLanguage ?? 'en',
+      onReady,
+      onError
+    );
   }
 
   get _t() {
