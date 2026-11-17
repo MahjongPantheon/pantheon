@@ -17,6 +17,7 @@ export function filterPersonalDataSingle(person?: PersonEx): PersonEx {
       msNickname: '',
       msAccountId: 0,
       notifications: '',
+      roninId: '',
     }),
     email: '',
     phone: '',

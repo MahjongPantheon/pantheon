@@ -1,5 +1,6 @@
 import { vi } from 'vitest';
 import {
+  EventData,
   EventType,
   PlatformType,
   PersonEx,
@@ -457,5 +458,40 @@ describe('Event creation', () => {
     await expect(model.createEvent(eventData)).rejects.toThrow('Save failed');
     expect(refresh).not.toHaveBeenCalled();
     expect(grant).not.toHaveBeenCalled();
+  });
+
+  describe('Ronin online event', () => {
+    const createRoninEvent = async () => {
+      const { eventId } = await model.createEvent({
+        ...eventData,
+        type: EventType.EVENT_TYPE_ONLINE,
+        platformId: PlatformType.PLATFORM_TYPE_RONIN,
+      });
+      repo.em.clear();
+      return eventId;
+    };
+
+    const updateAndReload = async (eventId: number, changes: Partial<EventData>) => {
+      const { event } = await model.getEventForEdit({ id: eventId });
+      await model.updateEvent({ id: eventId, event: { ...event, ...changes } });
+      await repo.em.flush();
+      repo.em.clear();
+      return model.getEventForEdit({ id: eventId });
+    };
+
+    it('keeps the Ronin platform when an event organizer updates the event', async () => {
+      const eventId = await createRoninEvent();
+      vi.spyOn(repo.frey, 'GetSuperadminFlag').mockResolvedValue({ isAdmin: false });
+      vi.spyOn(repo.frey, 'GetEventAdmins').mockResolvedValue({
+        admins: [
+          { personId: 42, personName: 'organizer', ruleId: 1, hasAvatar: false, lastUpdate: '' },
+        ],
+      });
+
+      const { event } = await updateAndReload(eventId, {
+        platformId: PlatformType.PLATFORM_TYPE_TENHOUNET,
+      });
+      expect(event.platformId).toBe(PlatformType.PLATFORM_TYPE_RONIN);
+    });
   });
 });

@@ -33,7 +33,8 @@ import {
 } from '@mantine/core';
 import { EventTypeIcon } from '../components/EventTypeIcon';
 import { useI18n } from '../hooks/i18n';
-import { EventType, PersonEx } from 'tsclients/proto/atoms.pb';
+import { PersonEx } from 'tsclients/proto/atoms.pb';
+import { getOnlineIdGetter } from '../helpers/onlineId';
 import { GameListing } from '../components/GameListing';
 import { Fragment } from 'react';
 import { useMediaQuery } from '@mantine/hooks';
@@ -103,7 +104,7 @@ export const RecentGames: React.FC<{
               <Fragment key={game.sessionHash}>
                 <GameListing
                   showShareLink={true}
-                  isOnline={events?.[0]?.type === EventType.EVENT_TYPE_ONLINE}
+                  onlineId={getOnlineIdGetter(events?.[0])}
                   isDimmed={isDimmed}
                   withYakitori={events?.[0]?.withYakitori}
                   eventId={eventId}

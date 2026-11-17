@@ -26,6 +26,7 @@ type PlayerStatsData = Partial<{
     hasAvatar: boolean;
     lastUpdate: string;
     tenhouId?: string;
+    roninId?: string;
   }>;
   placesSummary: Record<number, number>;
   totalPlayedGames: number;

@@ -324,6 +324,7 @@ export class PlayerHistoryModel extends Model {
       item.avgScore = item.rating / item.gamesPlayed;
       item.playerTitle = playersMap[item.playerId]?.title;
       item.playerTenhouId = playersMap[item.playerId]?.tenhouId;
+      item.playerRoninId = playersMap[item.playerId]?.roninId;
       item.playerTeamName = teamNames[item.playerId];
       item.playerHasAvatar = playersMap[item.playerId]?.hasAvatar;
       item.playerLastUpdate = playersMap[item.playerId]?.lastUpdate;

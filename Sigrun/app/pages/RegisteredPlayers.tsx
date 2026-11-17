@@ -34,7 +34,7 @@ import {
   Box,
 } from '@mantine/core';
 import { PlayerAvatar } from '../components/PlayerAvatar';
-import { EventType } from 'tsclients/proto/atoms.pb';
+import { getOnlineIdGetter } from '../helpers/onlineId';
 import { useMediaQuery } from '@mantine/hooks';
 import { useI18n } from '../hooks/i18n';
 import { useEvent } from '../hooks/useEvent';
@@ -52,6 +52,7 @@ export const RegisteredPlayers: React.FC<{
   const i18n = useI18n();
   const [event] = useEvent(eventId) ?? [undefined];
   const id = event?.id;
+  const onlineId = getOnlineIdGetter(event);
   const largeScreen = useMediaQuery('(min-width: 768px)');
   const [, navigate] = useLocation();
   const theme = useMantineTheme();
@@ -132,9 +133,7 @@ export const RegisteredPlayers: React.FC<{
                     >
                       {player.title}
                     </Anchor>
-                    {event.type === EventType.EVENT_TYPE_ONLINE && (
-                      <Text c='dimmed'>{player.tenhouId}</Text>
-                    )}
+                    {onlineId && <Text c='dimmed'>{onlineId(player)}</Text>}
                     {event.isTeam && player.teamName && <Text>{player.teamName}</Text>}
                   </Stack>
                 </Group>

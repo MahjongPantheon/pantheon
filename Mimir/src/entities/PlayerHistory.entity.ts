@@ -33,6 +33,7 @@ export class PlayerHistoryEntity {
   avgScore?: number;
   playerTitle?: string;
   playerTenhouId?: string;
+  playerRoninId?: string;
   playerTeamName?: string | null;
   playerHasAvatar?: boolean;
   playerLastUpdate?: string;
@@ -52,6 +53,7 @@ export class PlayerHistoryEntity {
     cloned.avgScore = this.avgScore;
     cloned.playerTitle = this.playerTitle;
     cloned.playerTenhouId = this.playerTenhouId;
+    cloned.playerRoninId = this.playerRoninId;
     cloned.playerTeamName = this.playerTeamName;
     cloned.playerHasAvatar = this.playerHasAvatar;
     cloned.playerLastUpdate = this.playerLastUpdate;

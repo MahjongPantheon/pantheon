@@ -44,6 +44,7 @@ export interface Person {
   phone: string | null;
   telegram_id: string | null;
   tenhou_id: string | null;
+  ronin_id: string | null;
   title: string;
   last_login: string | null; // date string
 }

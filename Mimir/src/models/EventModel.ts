@@ -389,6 +389,7 @@ export class EventModel extends Model {
             id: item.playerId,
             title: item.playerTitle!,
             tenhouId: item.playerTenhouId ?? '',
+            roninId: item.playerRoninId ?? '',
             rating: item.rating,
             chips: item.chips ?? 0,
             winnerZone: item.rating >= (mainEvent.ruleset.rules.startRating ?? 0),
@@ -776,6 +777,7 @@ export class EventModel extends Model {
               localId,
               teamName,
               tenhouId: player.tenhouId,
+              roninId: player.roninId,
               majsoulId: player.msAccountId,
               majsoulNickname: player.msNickname,
               hasAvatar: player.hasAvatar,
@@ -1039,11 +1041,12 @@ export class EventModel extends Model {
           ).isAdmin
         ) {
           event.onlinePlatform = eventData.event.platformId;
-        } else {
-          if (event.isOnline) {
-            // fixes online event created by users
-            event.onlinePlatform = PlatformType.PLATFORM_TYPE_TENHOUNET;
-          }
+        } else if (
+          event.isOnline &&
+          (!event.onlinePlatform || event.onlinePlatform === PlatformType.PLATFORM_TYPE_UNSPECIFIED)
+        ) {
+          // fixes online event created by users
+          event.onlinePlatform = PlatformType.PLATFORM_TYPE_TENHOUNET;
         }
 
         if (event.syncStart) {
@@ -1468,6 +1471,7 @@ export class EventModel extends Model {
                 localId: reg.localId,
                 teamName: reg.teamName,
                 tenhouId: (replacements[reg.replacementId!] ?? players[p.playerId]).tenhouId,
+                roninId: (replacements[reg.replacementId!] ?? players[p.playerId]).roninId,
                 ignoreSeating: !!reg.ignoreSeating,
                 replacedBy: reg.replacementId ? replacements[reg.replacementId] : undefined,
                 hasAvatar: (replacements[reg.replacementId!] ?? players[p.playerId]).hasAvatar,

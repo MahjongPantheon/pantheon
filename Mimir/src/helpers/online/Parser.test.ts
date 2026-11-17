@@ -2,14 +2,10 @@ import { readFileSync } from 'fs';
 import { join } from 'path';
 import { Yaku } from '../yaku.js';
 import { RoundEntity } from '../../entities/Round.entity.js';
-import { EventEntity } from '../../entities/Event.entity.js';
-import { EventRegisteredPlayersEntity } from '../../entities/EventRegisteredPlayers.entity.js';
-import { RulesetEntity } from '../../entities/Ruleset.entity.js';
-import { init } from '../../tests/initOrm.js';
-import { RoundOutcome } from 'tsclients/proto/atoms.pb.js';
+import { prepareTestEntities } from '../../tests/eventFixtures.js';
+import { PlatformType, RoundOutcome } from 'tsclients/proto/atoms.pb.js';
 import { OnlineParser } from './Parser.js';
-import { Repository } from '../../services/Repository.js';
-import { EntityManager } from '@mikro-orm/core';
+import { vi } from 'vitest';
 
 function expectReplayRounds(content: string, rounds: RoundEntity[]) {
   const expectedRounds = [...content.matchAll(/<INIT[^>]* seed="([^"]+)"/g)].map(([, seed]) => {
@@ -18,65 +14,6 @@ function expectReplayRounds(content: string, rounds: RoundEntity[]) {
   });
   expect(rounds.map((round) => [round.round, round.honba])).toEqual(expectedRounds);
 }
-
-const makeEvent = (em: EntityManager) => {
-  const event = new EventEntity();
-  event.title = 'title';
-  event.timezone = 'UTC';
-  event.description = 'desc';
-  event.lobbyId = 0;
-  event.isOnline = 1;
-  event.isTeam = 0;
-  event.syncStart = 0;
-  event.syncEnd = 0;
-  event.autoSeating = 0;
-  event.useTimer = 0;
-  event.usePenalty = 0;
-  event.allowPlayerAppend = 1;
-  event.statHost = '';
-  event.seriesLength = 0;
-  event.hideResults = 0;
-  event.hideAchievements = 0;
-  event.isPrescripted = 0;
-  event.minGamesCount = 0;
-  event.finished = 0;
-  event.isListed = 1;
-  event.allowViewOtherTables = 1;
-  event.allowManualAddReplay = 1;
-  event.ruleset = RulesetEntity.createRuleset('tenhounet');
-  em.persist(event);
-  return event;
-};
-
-const makeRegs = (em: EntityManager, event: EventEntity) => {
-  const regs = [];
-  for (const p of [1, 2, 3, 4]) {
-    const reg = new EventRegisteredPlayersEntity();
-    reg.playerId = p;
-    reg.event = event;
-    reg.ignoreSeating = 0;
-    em.persist(reg);
-    regs.push(reg);
-  }
-  return regs;
-};
-
-const makeRepo = async () => {
-  const orm = await init();
-  await orm.schema.create();
-  const repo = Repository.instance({}, orm);
-  await repo.cache.connect();
-  repo.mockFrey();
-  return repo;
-};
-
-const prepareTestEntities = async () => {
-  const repo = await makeRepo();
-  const event = makeEvent(repo.em);
-  const regs = makeRegs(repo.em, event);
-  await repo.em.flush();
-  return [repo, event, regs] as const;
-};
 
 /**
  * Replay parser integration test suite
@@ -472,5 +409,80 @@ describe('OnlinelogParserTest', () => {
     expect(rounds.length).toBe(13);
     expect(rounds[6].outcome).toBe(RoundOutcome.ROUND_OUTCOME_ABORT);
     await repo.destroy();
+  });
+
+  describe('Ronin replays', () => {
+    const usual = readFileSync(join(import.meta.dirname, 'testdata/usual.xml'), 'utf-8');
+    const roninReplay = usual.replace('lobby="0"', 'lobby="3f2b8c1e-9a4d-4f6b-8e2a-1c5d7b9e0f13"');
+    const nicknames = [0, 1, 2, 3].map((seat) =>
+      decodeURIComponent(new RegExp(`<UN [^>]*n${seat}="([^"]*)"`).exec(usual)![1])
+    );
+
+    test('imports a Tenhou XML replay with a UUID lobby by Ronin nicknames', async () => {
+      const [repo, event] = await prepareTestEntities();
+      const lookup = vi.spyOn(repo.frey, 'FindByRoninIds');
+      const tenhouLookup = vi.spyOn(repo.frey, 'FindByTenhouIds');
+
+      const [, , rounds] = await new OnlineParser(repo).parseToSession(
+        event,
+        roninReplay,
+        false,
+        PlatformType.PLATFORM_TYPE_RONIN
+      );
+
+      expect(rounds.length).toBe(16);
+      expect(lookup).toHaveBeenCalledWith({ ids: nicknames });
+      expect(tenhouLookup).not.toHaveBeenCalled();
+      await repo.destroy();
+    });
+
+    test('matches replay nicknames to Ronin IDs stored in another case', async () => {
+      const [repo, event] = await prepareTestEntities();
+      const registered = await repo.frey.FindByRoninIds({ ids: nicknames });
+      vi.spyOn(repo.frey, 'FindByRoninIds').mockResolvedValue({
+        people: registered.people.map((p) => ({ ...p, roninId: p.roninId.toUpperCase() })),
+      });
+
+      const [, , rounds] = await new OnlineParser(repo).parseToSession(
+        event,
+        roninReplay,
+        false,
+        PlatformType.PLATFORM_TYPE_RONIN
+      );
+
+      expect(rounds.length).toBe(16);
+      await repo.destroy();
+    });
+
+    test('rejects a replay with an unregistered Ronin nickname', async () => {
+      const [repo, event] = await prepareTestEntities();
+      const registered = await repo.frey.FindByRoninIds({ ids: nicknames.slice(0, 3) });
+      vi.spyOn(repo.frey, 'FindByRoninIds').mockResolvedValue(registered);
+
+      await expect(
+        new OnlineParser(repo).parseToSession(
+          event,
+          roninReplay,
+          false,
+          PlatformType.PLATFORM_TYPE_RONIN
+        )
+      ).rejects.toThrow(`Not all Ronin nicknames were registered in the system: ${nicknames[3]}`);
+      await repo.destroy();
+    });
+
+    test('accepts NoName as a regular Ronin nickname', async () => {
+      const [repo, event] = await prepareTestEntities();
+      const content = roninReplay.replace(/(<UN [^>]*n0=")[^"]*"/, '$1NoName"');
+
+      const [, , rounds] = await new OnlineParser(repo).parseToSession(
+        event,
+        content,
+        false,
+        PlatformType.PLATFORM_TYPE_RONIN
+      );
+
+      expect(rounds.length).toBe(16);
+      await repo.destroy();
+    });
   });
 });

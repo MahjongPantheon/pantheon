@@ -137,7 +137,7 @@ describe('Penalty games', () => {
     const result = await model.listChombo(19);
     expect(result.chombos).toEqual([{ playerId: 2, amount: event.ruleset.rules.chomboAmount }]);
     expect(result.players).toEqual([
-      { id: 2, title: 'Player 2', tenhouId: '', hasAvatar: false, lastUpdate: '' },
+      { id: 2, title: 'Player 2', tenhouId: '', hasAvatar: false, lastUpdate: '', roninId: '' },
     ]);
     expect(findPlayers).toHaveBeenCalledWith([2]);
   });

@@ -16,6 +16,7 @@ describe('Public player data', () => {
     phone: 'private-phone',
     telegramId: 'private-telegram',
     notifications: 'settings',
+    roninId: 'ronin-player',
   };
 
   it('removes contact details without mutating the original player', () => {

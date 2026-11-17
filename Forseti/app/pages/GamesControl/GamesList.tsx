@@ -18,6 +18,7 @@
 import {
   GameConfig,
   IntermediateResultOfSession,
+  PlatformType,
   RegisteredPlayer,
   SessionStatus,
   TableState,
@@ -61,6 +62,7 @@ import { orderTables } from '../../helpers/orderTables';
 type GamesListProps = {
   tablesState: TableState[];
   eventConfig: GameConfig | null;
+  platformId?: PlatformType;
   timerState: EventsGetTimerStateResponse | null;
   onCancelLastRound: (hash: string, intermediateResults: IntermediateResultOfSession[]) => void;
   onRemoveGame?: (hash: string) => void;
@@ -72,6 +74,7 @@ type GamesListProps = {
 export function GamesList({
   tablesState,
   eventConfig,
+  platformId,
   timerState,
   onDefinalizeGame,
   onRemoveGame,
@@ -179,7 +182,9 @@ export function GamesList({
                         >
                           {p.title}
                           {eventConfig?.isPrescripted ? ` id #${p.localId ?? '??'}` : null}
-                          {eventConfig?.isOnline ? ` (${p.tenhouId})` : null}
+                          {eventConfig?.isOnline
+                            ? ` (${platformId === PlatformType.PLATFORM_TYPE_RONIN ? p.roninId : p.tenhouId})`
+                            : null}
                         </Text>
                       </Group>
                     );

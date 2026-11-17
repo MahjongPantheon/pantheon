@@ -13,6 +13,7 @@ const { api, show } = vi.hoisted(() => ({
     getTablesState: vi.fn(),
     getAllPlayers: vi.fn(),
     getTimerState: vi.fn(),
+    getEventsById: vi.fn(),
     startTimer: vi.fn(),
   },
   show: vi.fn(),
@@ -53,6 +54,7 @@ beforeEach(() => {
   api.getTablesState.mockResolvedValue([]);
   api.getAllPlayers.mockResolvedValue([]);
   api.getTimerState.mockResolvedValue(null);
+  api.getEventsById.mockResolvedValue([]);
   api.startTimer.mockResolvedValue(true);
   container = document.createElement('div');
   document.body.append(container);

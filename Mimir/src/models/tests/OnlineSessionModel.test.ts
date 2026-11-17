@@ -1,4 +1,6 @@
 import { vi } from 'vitest';
+import { readFileSync } from 'fs';
+import { join } from 'path';
 import { UniqueConstraintViolationException } from '@mikro-orm/core';
 import { Model } from '../Model.js';
 import { OnlineSessionModel } from '../OnlineSessionModel.js';
@@ -18,7 +20,9 @@ import { Downloader } from '../../helpers/online/Downloader.js';
 import { PlatformType, SessionStatus } from 'tsclients/proto/atoms.pb.js';
 import { roundFixtures } from '../../tests/roundFixtures.js';
 import { init } from '../../tests/initOrm.js';
+import { prepareTestEntities } from '../../tests/eventFixtures.js';
 import { makePlayer } from '../../tests/playerFixtures.js';
+import { sha1 } from '../../helpers/crypto.js';
 
 const orm = await init();
 const repo = Repository.instance({}, orm);
@@ -95,7 +99,7 @@ describe('Online replay import', () => {
       expect(parser).toHaveBeenCalledTimes(1);
       expect(parser).toHaveBeenCalledWith(
         ...(contentType === 1
-          ? [event, 'replay-content', false]
+          ? [event, 'replay-content', false, PlatformType.PLATFORM_TYPE_TENHOUNET]
           : [event, 'replay-hash', 'replay-content', false, PlatformType.PLATFORM_TYPE_TENHOUNET])
       );
       expect(result.game.sessionHash).toBe(session.representationalHash);
@@ -161,6 +165,17 @@ describe('Online replay import', () => {
       expect(session.intermediateResults?.scores[1]).toBe(winnerScore);
     }
   );
+
+  it('refuses a replay without rounds before saving anything', async () => {
+    const { event, session } = fixture();
+    vi.spyOn(OnlineParser.prototype, 'parseToSession').mockResolvedValue([session, {}, [], []]);
+    const persist = vi.spyOn(repo.em, 'persist');
+
+    await expect(
+      model.addGameContent(event, 'replay-hash', '<mjloggm></mjloggm>', '')
+    ).rejects.toMatchObject({ code: 'malformed', msg: 'The replay has no rounds' });
+    expect(persist).not.toHaveBeenCalled();
+  });
 
   it('downloads a validated replay and passes its content to the importer', async () => {
     const { event } = fixture();
@@ -248,7 +263,10 @@ describe('Online replay import', () => {
 
   it('rejects a replay hash in the same event but allows it in another event', async () => {
     vi.spyOn(repo.em, 'findOne').mockResolvedValue(new SessionEntity());
-    await expect(model._checkReplayHash(19, 'duplicate')).rejects.toThrow('already added');
+    await expect(model._checkReplayHash(19, 'duplicate')).rejects.toMatchObject({
+      code: 'already_exists',
+      msg: 'This game is already added to the system',
+    });
     expect(repo.em.findOne).toHaveBeenLastCalledWith(SessionEntity, {
       event: repo.em.getReference(EventEntity, 19),
       replayHash: 'duplicate',
@@ -279,7 +297,10 @@ describe('Online replay import', () => {
         Object.assign(new Error('duplicate key'), { constraint: 'session_replay_hash_index' })
       );
       vi.spyOn(repo.em, 'transactional').mockRejectedValue(error);
-      await expect(importReplay()).rejects.toThrow('This game is already added to the system');
+      await expect(importReplay()).rejects.toMatchObject({
+        code: 'already_exists',
+        msg: 'This game is already added to the system',
+      });
     });
 
     it.each([
@@ -327,5 +348,118 @@ describe('Online replay import', () => {
     expect(() => model._checkGameTimestampExpired(0, event.ruleset.rules)).toThrow(
       'Replay is older'
     );
+  });
+
+  describe('Ronin replay import', () => {
+    const replay = readFileSync(
+      join(import.meta.dirname, '../../helpers/online/testdata/usual.xml'),
+      'utf-8'
+    );
+    const roninEvent = () =>
+      Object.assign(new EventEntity(), {
+        id: 19,
+        isOnline: 1,
+        finished: 0,
+        onlinePlatform: PlatformType.PLATFORM_TYPE_RONIN,
+        ruleset: RulesetEntity.createRuleset('tenhounet'),
+      });
+    const typedRonin = (contentType = 1) => ({
+      eventId: 19,
+      replayHash: 'ronin-hash',
+      content: replay,
+      contentType,
+      platformId: PlatformType.PLATFORM_TYPE_RONIN,
+      logTimestamp: Math.floor(Date.now() / 1000),
+    });
+
+    it('imports typed Ronin XML into an online Ronin event', async () => {
+      const [roninRepo, event] = await prepareTestEntities();
+      event.onlinePlatform = PlatformType.PLATFORM_TYPE_RONIN;
+      await roninRepo.em.flush();
+      vi.spyOn(roninRepo.em, 'execute').mockResolvedValue([{ id: 1000 }]);
+      vi.spyOn(PlayerHistoryModel.prototype, 'findAllLastByEventAndPlayer').mockResolvedValue([]);
+
+      const gameId = '6277d442-071d-45a6-9060-f56731e35d78';
+      const result = await Model.getModel(roninRepo, OnlineSessionModel).addTypedGame({
+        ...typedRonin(),
+        eventId: event.id,
+        replayHash: gameId,
+      });
+      roninRepo.em.clear();
+
+      expect(result.game.rounds).toHaveLength(16);
+      expect(result.game.replayLink).toBe(`https://ronin.mahjong.click/play/history/${gameId}`);
+      const saved = await roninRepo.em.findOneOrFail(SessionEntity, {
+        replayHash: sha1(replay),
+      });
+      expect(saved.status).toBe(SessionStatus.SESSION_STATUS_FINISHED);
+
+      await expect(
+        Model.getModel(roninRepo, OnlineSessionModel).addTypedGame({
+          ...typedRonin(),
+          eventId: event.id,
+          replayHash: 'another-client-hash',
+        })
+      ).rejects.toMatchObject({ code: 'already_exists' });
+      await roninRepo.destroy();
+    });
+
+    it.each([
+      ['JSON content', roninEvent(), typedRonin(2), 'Ronin replays must be uploaded as XML'],
+      [
+        'a non-Ronin online event',
+        Object.assign(roninEvent(), { onlinePlatform: PlatformType.PLATFORM_TYPE_TENHOUNET }),
+        typedRonin(),
+        'Event 19 is not an online Ronin event',
+      ],
+      [
+        'an offline event',
+        Object.assign(roninEvent(), { isOnline: 0, onlinePlatform: undefined }),
+        typedRonin(),
+        'Event 19 is not an online Ronin event',
+      ],
+      [
+        'a Majsoul upload into a Ronin event',
+        roninEvent(),
+        { ...typedRonin(2), platformId: PlatformType.PLATFORM_TYPE_MAHJONGSOUL },
+        'Event 19 accepts only Ronin replays',
+      ],
+    ])('rejects a typed upload with %s', async (_name, event, payload, error) => {
+      vi.spyOn(repo.em, 'findOne').mockResolvedValue(event);
+      const importer = vi.spyOn(model, 'addGameContent');
+      await expect(model.addTypedGame(payload)).rejects.toThrow(error);
+      expect(importer).not.toHaveBeenCalled();
+    });
+
+    it('stores no Ronin replay link when the replay hash is not a game id', async () => {
+      vi.spyOn(repo.em, 'findOne').mockResolvedValue(roninEvent());
+      vi.spyOn(model, '_checkReplayHash').mockResolvedValue();
+      const importer = vi.spyOn(model, 'addGameContent').mockResolvedValue({
+        game: { sessionHash: 'hash', replayLink: '', players: [], finalResults: [], rounds: [] },
+        players: [],
+      });
+
+      await model.addTypedGame({ ...typedRonin(), replayHash: 'https://evil.example/x' });
+
+      expect(importer).toHaveBeenCalledWith(
+        expect.anything(),
+        sha1(replay),
+        replay,
+        '',
+        1,
+        PlatformType.PLATFORM_TYPE_RONIN
+      );
+    });
+
+    it('rejects Ronin replay links before downloading', async () => {
+      vi.spyOn(repo.em, 'findOne').mockResolvedValue(roninEvent());
+      const validate = vi.spyOn(Downloader.prototype, 'validateUrl');
+      const download = vi.spyOn(Downloader.prototype, 'getReplay');
+      await expect(
+        model.addGame({ eventId: 19, link: 'https://ronin.example/replay/1' })
+      ).rejects.toThrow('Ronin replay links are not supported yet');
+      expect(validate).not.toHaveBeenCalled();
+      expect(download).not.toHaveBeenCalled();
+    });
   });
 });

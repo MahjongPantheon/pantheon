@@ -133,6 +133,7 @@ export class PlayerStatsModel extends Model {
               playersInfo: (stats[0].data.playersInfo ?? []).map((i) => ({
                 ...i,
                 tenhouId: i.tenhouId ?? '',
+                roninId: i.roninId ?? '',
               })),
               placesSummary: [1, 2, 3, 4].map((place) => ({
                 place,
@@ -236,6 +237,7 @@ export class PlayerStatsModel extends Model {
         id: p.id,
         title: p.title,
         tenhouId: p.tenhouId,
+        roninId: p.roninId,
         hasAvatar: p.hasAvatar,
         lastUpdate: p.lastUpdate,
       })),

@@ -2,6 +2,7 @@ import {
   PersonsCreateAccountPayload,
   PersonsCreateAccountResponse,
   PersonsFindByMajsoulIdsPayload,
+  PersonsFindByRoninIdsPayload,
   PersonsFindByTenhouIdsPayload,
   PersonsFindByTenhouIdsResponse,
   PersonsFindByTitlePayload,
@@ -89,9 +90,16 @@ export async function createAccount(
     email: personsCreateAccountPayload.email,
     phone: personsCreateAccountPayload.phone,
     tenhou_id: personsCreateAccountPayload.tenhouId,
+    ronin_id:
+      personsCreateAccountPayload.roninId === '' ? null : personsCreateAccountPayload.roninId,
     title: personsCreateAccountPayload.title,
   };
-  const result = await db.insertInto('person').values(value).returning('id').execute();
+  const result = await db
+    .insertInto('person')
+    .values(value)
+    .returning('id')
+    .execute()
+    .catch(rethrowRoninIdTaken);
 
   if (env.development) {
     await writeFile(
@@ -161,6 +169,7 @@ export async function depersonalizeAccount(
           title,
           person_id: context.personId,
           tenhou_id: tenhouId,
+          ronin_id: '',
         }),
       })
     );
@@ -189,6 +198,7 @@ export async function depersonalizeAccount(
         city,
         title,
         tenhou_id: '',
+        ronin_id: null,
         phone,
         has_avatar: 0,
         telegram_id: '',
@@ -269,6 +279,7 @@ export async function findByMajsoulAccountId(
       msAccountId: accById[r.id].account_id,
       telegramId: r.telegram_id ?? '',
       notifications: r.notifications ?? '',
+      roninId: r.ronin_id ?? '',
     })),
   };
 }
@@ -278,11 +289,36 @@ export async function findByTenhouIds(
   payload: PersonsFindByTenhouIdsPayload,
   context: Context
 ): Promise<PersonsFindByTenhouIdsResponse> {
+  return findByOnlineIds(db, 'tenhou', payload.ids, context);
+}
+
+export async function findByRoninIds(
+  db: Database,
+  payload: PersonsFindByRoninIdsPayload,
+  context: Context
+): Promise<PersonsFindByTenhouIdsResponse> {
+  return findByOnlineIds(db, 'ronin', payload.ids, context);
+}
+
+async function findByOnlineIds(
+  db: Database,
+  platform: 'tenhou' | 'ronin',
+  ids: string[],
+  context: Context
+): Promise<PersonsFindByTenhouIdsResponse> {
   const [persons, currentPerson, rights] = await Promise.all([
     db
       .selectFrom('person')
       .leftJoin('majsoul_platform_account', 'majsoul_platform_account.person_id', 'person.id')
-      .where('person.tenhou_id', 'in', payload.ids)
+      .where((eb) =>
+        platform === 'ronin'
+          ? eb(
+              eb.fn('lower', ['person.ronin_id']),
+              'in',
+              ids.map((id) => eb.fn('lower', [eb.val(id)]))
+            )
+          : eb('person.tenhou_id', 'in', ids)
+      )
       .selectAll('person')
       .select([
         'majsoul_platform_account.person_id',
@@ -321,6 +357,7 @@ export async function findByTenhouIds(
       msAccountId: r.account_id ?? 0,
       telegramId: r.telegram_id ?? '',
       notifications: r.notifications ?? '',
+      roninId: r.ronin_id ?? '',
     })),
   };
 }
@@ -356,6 +393,7 @@ export async function findByTitle(
       title: r.title,
       hasAvatar: r.has_avatar === 1,
       lastUpdate: (r.last_update ? new Date(r.last_update) : new Date()).toISOString(),
+      roninId: r.ronin_id ?? '',
     })),
   };
 }
@@ -459,6 +497,7 @@ export async function getPersonalInfo(
       msAccountId: r.account_id ?? 0,
       telegramId: r.telegram_id ?? '',
       notifications: r.notifications ?? '',
+      roninId: r.ronin_id ?? '',
     })),
   };
 }
@@ -502,6 +541,29 @@ export async function setNotificationsSettings(
   return { success: true };
 }
 
+function rethrowRoninIdTaken(error: unknown): never {
+  if (
+    error instanceof Error &&
+    'constraint' in error &&
+    error.constraint === 'person_ronin_id_lower'
+  ) {
+    throw new ExistsError('Ronin ID is already taken');
+  }
+  throw error;
+}
+
+async function assertRoninIdFree(db: Database, personId: number, roninId: string) {
+  const owners = await db
+    .selectFrom('person')
+    .where('id', '!=', personId)
+    .where((eb) => eb(eb.fn('lower', ['ronin_id']), '=', eb.fn('lower', [eb.val(roninId)])))
+    .select('id')
+    .execute();
+  if (owners.length > 0) {
+    throw new ExistsError('Ronin ID is already taken');
+  }
+}
+
 export async function updatePersonalInfo(
   db: Database,
   redisClient: IRedisClient,
@@ -527,8 +589,39 @@ export async function updatePersonalInfo(
   if (isSuperadmin && payload.email.length === 0) {
     throw new DataMalformedError('Some of required field are empty');
   }
+  if (payload.roninId) {
+    await assertRoninIdFree(db, payload.id, payload.roninId);
+  }
+
   // Do not persist a successful profile update until storage has accepted the image.
   await uploadAvatar(env.gullveigUrl, payload.id, payload.avatarData, env.internalQuerySecret);
+
+  const value: Partial<RowPerson> = {
+    city: payload.city,
+    country: payload.country,
+    has_avatar: payload.hasAvatar ? 1 : 0,
+    last_update: new Date().toISOString(),
+    phone: payload.phone,
+    tenhou_id: payload.tenhouId,
+    title: payload.title,
+  };
+  if (payload.roninId !== undefined) {
+    value.ronin_id = payload.roninId === '' ? null : payload.roninId;
+  }
+
+  if (isSuperadmin) {
+    // allow superadmin to change emails of users
+    value.email = payload.email;
+    value.auth_reset_token = null;
+    value.auth_reset_expires_at = null;
+  }
+
+  await db
+    .updateTable('person')
+    .set(value)
+    .where('id', '=', payload.id)
+    .execute()
+    .catch(rethrowRoninIdTaken);
 
   const promises = [];
   if (env.userinfoHook) {
@@ -544,33 +637,15 @@ export async function updatePersonalInfo(
           city: payload.city,
           country: payload.country,
           title: payload.title,
-          person_id: context.personId,
+          person_id: payload.id,
           tenhou_id: payload.tenhouId,
+          ronin_id: payload.roninId,
         }),
       })
     );
   }
 
   promises.push(clearStatCache(payload.id));
-
-  const value: Partial<RowPerson> = {
-    city: payload.city,
-    country: payload.country,
-    has_avatar: payload.hasAvatar ? 1 : 0,
-    last_update: new Date().toISOString(),
-    phone: payload.phone,
-    tenhou_id: payload.tenhouId,
-    title: payload.title,
-  };
-
-  if (isSuperadmin) {
-    // allow superadmin to change emails of users
-    value.email = payload.email;
-    value.auth_reset_token = null;
-    value.auth_reset_expires_at = null;
-  }
-
-  promises.push(db.updateTable('person').set(value).where('id', '=', payload.id).execute());
 
   let soulAcc: Array<{
     account_id: number;

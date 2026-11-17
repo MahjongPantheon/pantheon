@@ -388,6 +388,7 @@ export const PlatformType = {
   PLATFORM_TYPE_UNSPECIFIED: "PLATFORM_TYPE_UNSPECIFIED",
   PLATFORM_TYPE_TENHOUNET: "PLATFORM_TYPE_TENHOUNET",
   PLATFORM_TYPE_MAHJONGSOUL: "PLATFORM_TYPE_MAHJONGSOUL",
+  PLATFORM_TYPE_RONIN: "PLATFORM_TYPE_RONIN",
   /**
    * @private
    */
@@ -401,6 +402,9 @@ export const PlatformType = {
       }
       case 2: {
         return "PLATFORM_TYPE_MAHJONGSOUL";
+      }
+      case 3: {
+        return "PLATFORM_TYPE_RONIN";
       }
       // unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
       default: {
@@ -421,6 +425,9 @@ export const PlatformType = {
       }
       case "PLATFORM_TYPE_MAHJONGSOUL": {
         return 2;
+      }
+      case "PLATFORM_TYPE_RONIN": {
+        return 3;
       }
       // unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
       default: {
@@ -637,6 +644,7 @@ export const Person = {
       title: "",
       hasAvatar: false,
       lastUpdate: "",
+      roninId: "",
       ...msg
     };
   },
@@ -661,6 +669,9 @@ export const Person = {
     }
     if (msg.lastUpdate) {
       writer.writeString(6, msg.lastUpdate);
+    }
+    if (msg.roninId) {
+      writer.writeString(7, msg.roninId);
     }
     return writer;
   },
@@ -693,6 +704,10 @@ export const Person = {
         }
         case 6: {
           msg.lastUpdate = reader.readString();
+          break;
+        }
+        case 7: {
+          msg.roninId = reader.readString();
           break;
         }
         default: {
@@ -741,6 +756,7 @@ export const PersonEx = {
       msAccountId: 0,
       telegramId: "",
       notifications: "",
+      roninId: "",
       ...msg
     };
   },
@@ -786,6 +802,9 @@ export const PersonEx = {
     }
     if (msg.notifications) {
       writer.writeString(14, msg.notifications);
+    }
+    if (msg.roninId) {
+      writer.writeString(15, msg.roninId);
     }
     return writer;
   },
@@ -846,6 +865,10 @@ export const PersonEx = {
         }
         case 14: {
           msg.notifications = reader.readString();
+          break;
+        }
+        case 15: {
+          msg.roninId = reader.readString();
           break;
         }
         default: {
@@ -1475,6 +1498,7 @@ export const PlayerInRating = {
       lastUpdate: "",
       penaltiesAmount: 0,
       penaltiesCount: 0,
+      roninId: "",
       ...msg
     };
   },
@@ -1523,6 +1547,9 @@ export const PlayerInRating = {
     }
     if (msg.penaltiesCount) {
       writer.writeInt32(14, msg.penaltiesCount);
+    }
+    if (msg.roninId) {
+      writer.writeString(15, msg.roninId);
     }
     return writer;
   },
@@ -1589,6 +1616,10 @@ export const PlayerInRating = {
           msg.penaltiesCount = reader.readInt32();
           break;
         }
+        case 15: {
+          msg.roninId = reader.readString();
+          break;
+        }
         default: {
           reader.skipField();
           break;
@@ -1627,6 +1658,7 @@ export const Player = {
       tenhouId: "",
       hasAvatar: false,
       lastUpdate: "",
+      roninId: "",
       ...msg
     };
   },
@@ -1648,6 +1680,9 @@ export const Player = {
     }
     if (msg.lastUpdate) {
       writer.writeString(5, msg.lastUpdate);
+    }
+    if (msg.roninId) {
+      writer.writeString(6, msg.roninId);
     }
     return writer;
   },
@@ -1676,6 +1711,10 @@ export const Player = {
         }
         case 5: {
           msg.lastUpdate = reader.readString();
+          break;
+        }
+        case 6: {
+          msg.roninId = reader.readString();
           break;
         }
         default: {
@@ -3446,6 +3485,7 @@ export const RegisteredPlayer = {
       lastUpdate: "",
       majsoulId: void 0,
       majsoulNickname: void 0,
+      roninId: void 0,
       ...msg
     };
   },
@@ -3485,6 +3525,9 @@ export const RegisteredPlayer = {
     }
     if (msg.majsoulNickname != void 0) {
       writer.writeString(11, msg.majsoulNickname);
+    }
+    if (msg.roninId != void 0) {
+      writer.writeString(12, msg.roninId);
     }
     return writer;
   },
@@ -3538,6 +3581,10 @@ export const RegisteredPlayer = {
         }
         case 11: {
           msg.majsoulNickname = reader.readString();
+          break;
+        }
+        case 12: {
+          msg.roninId = reader.readString();
           break;
         }
         default: {
@@ -6902,6 +6949,7 @@ export const PlatformTypeJSON = {
   PLATFORM_TYPE_UNSPECIFIED: "PLATFORM_TYPE_UNSPECIFIED",
   PLATFORM_TYPE_TENHOUNET: "PLATFORM_TYPE_TENHOUNET",
   PLATFORM_TYPE_MAHJONGSOUL: "PLATFORM_TYPE_MAHJONGSOUL",
+  PLATFORM_TYPE_RONIN: "PLATFORM_TYPE_RONIN",
   /**
    * @private
    */
@@ -6915,6 +6963,9 @@ export const PlatformTypeJSON = {
       }
       case 2: {
         return "PLATFORM_TYPE_MAHJONGSOUL";
+      }
+      case 3: {
+        return "PLATFORM_TYPE_RONIN";
       }
       // unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
       default: {
@@ -6935,6 +6986,9 @@ export const PlatformTypeJSON = {
       }
       case "PLATFORM_TYPE_MAHJONGSOUL": {
         return 2;
+      }
+      case "PLATFORM_TYPE_RONIN": {
+        return 3;
       }
       // unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
       default: {
@@ -7123,6 +7177,7 @@ export const PersonJSON = {
       title: "",
       hasAvatar: false,
       lastUpdate: "",
+      roninId: "",
       ...msg
     };
   },
@@ -7148,6 +7203,9 @@ export const PersonJSON = {
     }
     if (msg.lastUpdate) {
       json["lastUpdate"] = msg.lastUpdate;
+    }
+    if (msg.roninId) {
+      json["roninId"] = msg.roninId;
     }
     return json;
   },
@@ -7178,6 +7236,10 @@ export const PersonJSON = {
     const _lastUpdate_ = json["lastUpdate"] ?? json["last_update"];
     if (_lastUpdate_) {
       msg.lastUpdate = _lastUpdate_;
+    }
+    const _roninId_ = json["roninId"] ?? json["ronin_id"];
+    if (_roninId_) {
+      msg.roninId = _roninId_;
     }
     return msg;
   }
@@ -7216,6 +7278,7 @@ export const PersonExJSON = {
       msAccountId: 0,
       telegramId: "",
       notifications: "",
+      roninId: "",
       ...msg
     };
   },
@@ -7262,6 +7325,9 @@ export const PersonExJSON = {
     }
     if (msg.notifications) {
       json["notifications"] = msg.notifications;
+    }
+    if (msg.roninId) {
+      json["roninId"] = msg.roninId;
     }
     return json;
   },
@@ -7320,6 +7386,10 @@ export const PersonExJSON = {
     const _notifications_ = json["notifications"];
     if (_notifications_) {
       msg.notifications = _notifications_;
+    }
+    const _roninId_ = json["roninId"] ?? json["ronin_id"];
+    if (_roninId_) {
+      msg.roninId = _roninId_;
     }
     return msg;
   }
@@ -7891,6 +7961,7 @@ export const PlayerInRatingJSON = {
       lastUpdate: "",
       penaltiesAmount: 0,
       penaltiesCount: 0,
+      roninId: "",
       ...msg
     };
   },
@@ -7940,6 +8011,9 @@ export const PlayerInRatingJSON = {
     }
     if (msg.penaltiesCount) {
       json["penaltiesCount"] = msg.penaltiesCount;
+    }
+    if (msg.roninId) {
+      json["roninId"] = msg.roninId;
     }
     return json;
   },
@@ -8003,6 +8077,10 @@ export const PlayerInRatingJSON = {
     if (_penaltiesCount_) {
       msg.penaltiesCount = protoscript.parseNumber(_penaltiesCount_);
     }
+    const _roninId_ = json["roninId"] ?? json["ronin_id"];
+    if (_roninId_) {
+      msg.roninId = _roninId_;
+    }
     return msg;
   }
 };
@@ -8029,6 +8107,7 @@ export const PlayerJSON = {
       tenhouId: "",
       hasAvatar: false,
       lastUpdate: "",
+      roninId: "",
       ...msg
     };
   },
@@ -8051,6 +8130,9 @@ export const PlayerJSON = {
     }
     if (msg.lastUpdate) {
       json["lastUpdate"] = msg.lastUpdate;
+    }
+    if (msg.roninId) {
+      json["roninId"] = msg.roninId;
     }
     return json;
   },
@@ -8077,6 +8159,10 @@ export const PlayerJSON = {
     const _lastUpdate_ = json["lastUpdate"] ?? json["last_update"];
     if (_lastUpdate_) {
       msg.lastUpdate = _lastUpdate_;
+    }
+    const _roninId_ = json["roninId"] ?? json["ronin_id"];
+    if (_roninId_) {
+      msg.roninId = _roninId_;
     }
     return msg;
   }
@@ -9612,6 +9698,7 @@ export const RegisteredPlayerJSON = {
       lastUpdate: "",
       majsoulId: void 0,
       majsoulNickname: void 0,
+      roninId: void 0,
       ...msg
     };
   },
@@ -9653,6 +9740,9 @@ export const RegisteredPlayerJSON = {
     }
     if (msg.majsoulNickname != void 0) {
       json["majsoulNickname"] = msg.majsoulNickname;
+    }
+    if (msg.roninId != void 0) {
+      json["roninId"] = msg.roninId;
     }
     return json;
   },
@@ -9704,6 +9794,10 @@ export const RegisteredPlayerJSON = {
     const _majsoulNickname_ = json["majsoulNickname"] ?? json["majsoul_nickname"];
     if (_majsoulNickname_) {
       msg.majsoulNickname = _majsoulNickname_;
+    }
+    const _roninId_ = json["roninId"] ?? json["ronin_id"];
+    if (_roninId_) {
+      msg.roninId = _roninId_;
     }
     return msg;
   }

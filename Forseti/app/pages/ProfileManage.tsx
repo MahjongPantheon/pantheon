@@ -51,10 +51,12 @@ import { usePageTitle } from '../hooks/pageTitle';
 import { useStorage } from '../hooks/storage';
 import { TopActionButton } from '../components/TopActionButton';
 import { nprogress } from '@mantine/nprogress';
+import { notifications } from '@mantine/notifications';
 import { Redirect } from 'wouter';
 import { FileUploadButton } from '../components/FileUploadButton';
 import { env } from '../env';
 import { useDisclosure } from '@mantine/hooks';
+import { isRoninIdTaken } from '../helpers/roninIdTaken';
 
 export const ProfileManage: React.FC = () => {
   const i18n = useI18n();
@@ -83,6 +85,7 @@ export const ProfileManage: React.FC = () => {
       city: '',
       phone: '',
       tenhouId: '',
+      roninId: '',
       hasAvatar: false,
       avatarData: '',
     },
@@ -119,6 +122,7 @@ export const ProfileManage: React.FC = () => {
       city: string;
       phone: string;
       tenhouId: string;
+      roninId: string;
       hasAvatar: boolean;
       avatarData: string;
     }) => {
@@ -136,7 +140,8 @@ export const ProfileManage: React.FC = () => {
           values.avatarData,
           '',
           -1,
-          -1
+          -1,
+          values.roninId.trim()
         )
         .then((resp) => {
           setIsSaving(false);
@@ -146,12 +151,16 @@ export const ProfileManage: React.FC = () => {
           setIsSaved(true);
           setTimeout(() => setIsSaved(false), 5000);
         })
-        .catch(() => {
+        .catch((err: unknown) => {
           setIsSaving(false);
-          form.setFieldError(
-            'password',
-            i18n._t('Failed to update profile. Is your connection stable?')
-          );
+          if (isRoninIdTaken(err)) {
+            form.setFieldError('roninId', i18n._t('This Ronin nickname is already taken'));
+            return;
+          }
+          notifications.show({
+            color: 'red',
+            message: i18n._t('Failed to update profile. Is your connection stable?'),
+          });
         });
     },
     [api]
@@ -169,6 +178,7 @@ export const ProfileManage: React.FC = () => {
         form.setFieldValue('city', resp.city);
         form.setFieldValue('phone', resp.phone);
         form.setFieldValue('tenhouId', resp.tenhouId);
+        form.setFieldValue('roninId', resp.roninId);
         form.setFieldValue('country', resp.country || respCountries.preferredByIp);
         form.setFieldValue('hasAvatar', resp.hasAvatar);
         setIsLoading(false);
@@ -257,6 +267,13 @@ export const ProfileManage: React.FC = () => {
               label={i18n._t('Tenhou nickname')}
               data-testid='forseti-profile-manage-tenhou-id'
               {...form.getInputProps('tenhouId')}
+            />
+            <Space h='md' />
+            <TextInput
+              leftSection={<IconIdBadge2 size='1rem' />}
+              label={i18n._t('Ronin nickname')}
+              data-testid='forseti-profile-manage-ronin-id'
+              {...form.getInputProps('roninId')}
             />
             <Space h='md' />
             <Checkbox

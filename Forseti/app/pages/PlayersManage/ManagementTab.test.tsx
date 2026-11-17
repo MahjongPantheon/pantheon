@@ -6,6 +6,7 @@ import {
   Event,
   EventType,
   GameConfig,
+  PlatformType,
   RegisteredPlayer,
   TableState,
   SessionStatus,
@@ -156,6 +157,17 @@ it.each([false, true])('sets a replacement only after API success (%s)', async (
       players[2],
     ]);
   else expect(setPlayers).not.toHaveBeenCalled();
+});
+it('shows Ronin nicknames instead of Tenhou nicknames for a Ronin event', async () => {
+  await render({
+    players: players.map((p) => ({ ...p, roninId: `ronin${p.id}` })),
+    event: Event.initialize({
+      type: EventType.EVENT_TYPE_ONLINE,
+      platformId: PlatformType.PLATFORM_TYPE_RONIN,
+    }),
+  });
+  expect(container.textContent).toContain('ronin2');
+  expect(container.textContent).not.toContain('online2');
 });
 it('clears a replacement using the API sentinel', async () => {
   await render({

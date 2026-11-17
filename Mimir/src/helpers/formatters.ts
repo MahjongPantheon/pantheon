@@ -26,7 +26,7 @@ export function formatGameResult(
     date: session.endDate
       ? moment.utc(session.endDate).tz(event.timezone).format('YYYY-MM-DD HH:mm:ss')
       : undefined,
-    replayLink: makeReplayLink(session.replayHash ?? null, sessionPlatform),
+    replayLink: makeReplayLink(session.replayHash ?? null, sessionPlatform, session.origLink),
     players,
     finalResults: results.map((result) => ({
       playerId: result.playerId,
@@ -140,7 +140,11 @@ export function formatRound(round: RoundEntity, sessionState: SessionStateEntity
   }
 }
 
-export function makeReplayLink(hash: string | null, platform: PlatformType) {
+export function makeReplayLink(hash: string | null, platform: PlatformType, origLink?: string) {
+  if (platform === PlatformType.PLATFORM_TYPE_RONIN) {
+    return origLink ?? '';
+  }
+
   if (!hash) {
     return '';
   }

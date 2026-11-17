@@ -41,6 +41,7 @@ message Person {
   string title = 4;
   bool has_avatar = 5;
   string last_update = 6;
+  string ronin_id = 7;
 }
 
 message PersonEx {
@@ -57,6 +58,7 @@ message PersonEx {
   int32 ms_account_id = 12;
   string telegram_id = 13;
   string notifications = 14;
+  string ronin_id = 15;
 }
 
 // Mimir specifics
@@ -176,6 +178,7 @@ message PlayerInRating {
   string last_update = 12;
   float penalties_amount = 13;
   int32 penalties_count = 14;
+  string ronin_id = 15;
 }
 
 message Player {
@@ -184,6 +187,7 @@ message Player {
   string tenhou_id = 3;
   bool has_avatar = 4;
   string last_update = 5;
+  string ronin_id = 6;
 }
 
 message FinalResultOfSession {
@@ -356,6 +360,7 @@ message RegisteredPlayer {
   string last_update = 9;
   optional int32 majsoul_id = 10;
   optional string majsoul_nickname = 11;
+  optional string ronin_id = 12;
 }
 
 message SessionHistoryResult {
@@ -571,6 +576,7 @@ enum PlatformType {
   PLATFORM_TYPE_UNSPECIFIED = 0;
   PLATFORM_TYPE_TENHOUNET = 1;
   PLATFORM_TYPE_MAHJONGSOUL = 2;
+  PLATFORM_TYPE_RONIN = 3;
 }
 
 message RulesetConfig {

@@ -21,7 +21,8 @@ import { useApi } from '../hooks/api';
 import { Container, Divider, Space } from '@mantine/core';
 import { EventTypeIcon } from '../components/EventTypeIcon';
 import { useI18n } from '../hooks/i18n';
-import { EventType, PersonEx } from 'tsclients/proto/atoms.pb';
+import { PersonEx } from 'tsclients/proto/atoms.pb';
+import { getOnlineIdGetter } from '../helpers/onlineId';
 import { GameListing } from '../components/GameListing';
 import { useEvent } from '../hooks/useEvent';
 import { Meta } from '../components/Meta';
@@ -78,7 +79,7 @@ export const Game: React.FC<{
         <Space h='md' />
         <GameListing
           showShareLink={false}
-          isOnline={events?.[0]?.type === EventType.EVENT_TYPE_ONLINE}
+          onlineId={getOnlineIdGetter(events?.[0])}
           isDimmed={isDimmed}
           eventId={events?.[0]?.id.toString()}
           withYakitori={events?.[0]?.withYakitori}

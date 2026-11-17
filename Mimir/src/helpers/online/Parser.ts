@@ -10,7 +10,7 @@ import { EventRegisteredPlayersEntity } from '../../entities/EventRegisteredPlay
 import { Repository } from '../../services/Repository.js';
 import { PlayerModel } from '../../models/PlayerModel.js';
 import { validateAndCreateFromOnlineData } from '../roundValidation.js';
-import { Round } from 'tsclients/proto/atoms.pb.js';
+import { PlatformType, Round } from 'tsclients/proto/atoms.pb.js';
 
 export class OnlineParser {
   protected _repo: Repository;
@@ -25,6 +25,7 @@ export class OnlineParser {
   protected _kanNakiCache: { m: string; who: string } = { m: '', who: '' };
   protected _sessionState?: SessionState;
   protected _session?: SessionEntity;
+  protected _platformId: PlatformType = PlatformType.PLATFORM_TYPE_TENHOUNET;
 
   constructor(repo: Repository) {
     this._repo = repo;
@@ -39,8 +40,10 @@ export class OnlineParser {
   public async parseToSession(
     event: EventEntity,
     content: string,
-    withChips = false
+    withChips = false,
+    platformId: PlatformType = PlatformType.PLATFORM_TYPE_TENHOUNET
   ): Promise<[SessionEntity, Record<number, number>, RoundEntity[], string[]]> {
+    this._platformId = platformId;
     this._session = new SessionEntity();
     this._sessionState = new SessionState(event.ruleset, []);
     this._session.event = event;
@@ -238,16 +241,19 @@ export class OnlineParser {
         decodeURIComponent(attributes[`n${seat}`] ?? '')
       );
 
-      if (playerKeys.includes('NoName')) {
+      const isRonin = this._platformId === PlatformType.PLATFORM_TYPE_RONIN;
+      if (!isRonin && playerKeys.includes('NoName')) {
         throw new Error('"NoName" players are not allowed in replays');
       }
 
       const playerModel = Model.getModel(this._repo, PlayerModel);
-      const playersByKey = await playerModel.findByTenhouId(playerKeys);
+      const playersByKey = isRonin
+        ? await playerModel.findByRoninIds(playerKeys)
+        : await playerModel.findByTenhouId(playerKeys);
       const missedPlayers = playerKeys.filter((key) => !playersByKey[key]);
       if (missedPlayers.length > 0) {
         throw new Error(
-          `Not all tenhou nicknames were registered in the system: ${missedPlayers.join(', ')}`
+          `Not all ${isRonin ? 'Ronin' : 'tenhou'} nicknames were registered in the system: ${missedPlayers.join(', ')}`
         );
       }
       const players = playerKeys.map((key) => playersByKey[key]);
@@ -497,6 +503,10 @@ export class OnlineParser {
    * Token handler: GO (game info)
    */
   protected _tokenGO(attributes: any, session: SessionEntity): void {
+    if (this._platformId === PlatformType.PLATFORM_TYPE_RONIN) {
+      return;
+    }
+
     const eventLobby = session.event.lobbyId;
     const lobby = parseInt(attributes['lobby'] ?? '0');
 

@@ -37,10 +37,11 @@ import { IconShare } from '@tabler/icons-react';
 import { YakitoriIndicator } from './YakitoriIndicator';
 import { calcDimmedBackground, calcDimmedText } from '../helpers/theme';
 import { GHOST_PLAYER_ID } from '../../../Common/constants';
+import { OnlineIdGetter } from '../helpers/onlineId';
 
 type GameListingProps = {
   eventId: string;
-  isOnline: boolean;
+  onlineId: OnlineIdGetter | null;
   isDimmed: boolean;
   withYakitori: boolean;
   game: GameResult;
@@ -50,7 +51,7 @@ type GameListingProps = {
 };
 export const GameListing: React.FC<GameListingProps> = ({
   eventId,
-  isOnline,
+  onlineId,
   isDimmed,
   withYakitori,
   game,
@@ -173,7 +174,7 @@ export const GameListing: React.FC<GameListingProps> = ({
                 >
                   {players[result.playerId]?.title}
                 </Anchor>
-                {isOnline && <Text c='dimmed'>{players[result.playerId]?.tenhouId}</Text>}
+                {onlineId && <Text c='dimmed'>{onlineId(players[result.playerId])}</Text>}
                 <Group gap={2} mt={10}>
                   <Badge
                     w={75}
@@ -209,7 +210,7 @@ export const GameListing: React.FC<GameListingProps> = ({
 
       {/* Game data */}
       <Stack style={{ flex: 1, maxWidth: 'unset' }}>
-        {isOnline && (
+        {!!game.replayLink && (
           <>
             <a
               data-testid={`sigrun-game-replay-link-${game.sessionHash}`}

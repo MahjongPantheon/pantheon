@@ -24,6 +24,7 @@ import { usePageTitle } from '../../hooks/pageTitle';
 import {
   GameConfig,
   IntermediateResultOfSession,
+  PlatformType,
   RegisteredPlayer,
   TableState,
   WindShuffleMode,
@@ -55,6 +56,7 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
   const [isLoading, setIsLoading] = useState(false);
   const [seatingLoading, setSeatingLoading] = useState(false);
   const [eventConfig, setEventConfig] = useState<null | GameConfig>(null);
+  const [platformId, setPlatformId] = useState<PlatformType>();
   const [prescriptedConfig, setPrescriptedConfig] =
     useState<null | EventsGetPrescriptedEventConfigResponse>(null);
   const [timerState, setTimerState] = useState<null | EventsGetTimerStateResponse>(null);
@@ -81,10 +83,12 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
       api.getTablesState(eventId),
       api.getAllPlayers(eventId),
       api.getTimerState(eventId),
+      api.getEventsById([eventId]),
     ])
-      .then(([config, prescriptConfig, tables, regs, tState]) => {
+      .then(([config, prescriptConfig, tables, regs, tState, [eventData]]) => {
         if (cancelled) return;
         setEventConfig(config);
+        setPlatformId(eventData?.platformId);
         setPrescriptedConfig(prescriptConfig);
         setTablesState(tables);
         setPlayers(regs);
@@ -431,6 +435,7 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
       <GamesList
         tablesState={tablesState}
         eventConfig={eventConfig}
+        platformId={platformId}
         timerState={timerState}
         onCancelLastRound={onCancelRound}
         onDefinalizeGame={eventConfig?.syncStart ? undefined : onDefinalize}

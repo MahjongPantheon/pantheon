@@ -51,7 +51,9 @@ export const OnlineSettings: React.FC<OnlineSettingsProps> = ({ config, event, i
             ? 'Tenhou.net'
             : event.platformId === PlatformType.PLATFORM_TYPE_MAHJONGSOUL
               ? 'MahjongSoul'
-              : i18n._t('Not selected')
+              : event.platformId === PlatformType.PLATFORM_TYPE_RONIN
+                ? 'Ronin'
+                : i18n._t('Not selected')
         }
       />
       <Checkbox readOnly label={i18n._t('Team tournament')} checked={config.isTeam} />

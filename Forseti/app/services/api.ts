@@ -144,23 +144,26 @@ export class ApiService {
         .then(handleReleaseTag)
         .then((resp) => {
           if (!resp.ok) {
-            return resp.json().then((err) => {
-              // Twirp server error handling
-              if (err.code && err.code === 'internal' && err.meta && err.meta.cause) {
-                fetch(env.urls.hugin, {
-                  method: 'POST',
-                  headers: { 'Content-Type': 'application/json' },
-                  body: JSON.stringify({
-                    source: 'Forseti [twirp]',
-                    error: `From: ${
-                      typeof window !== 'undefined' && window.location.href
-                    } | To: ${url} | Details: ${err.meta.cause}`,
-                  }),
-                });
-                throw new Error(err.meta.cause);
-              }
-              return resp;
-            });
+            return resp
+              .clone()
+              .json()
+              .then((err) => {
+                // Twirp server error handling
+                if (err.code && err.code === 'internal' && err.meta && err.meta.cause) {
+                  fetch(env.urls.hugin, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                      source: 'Forseti [twirp]',
+                      error: `From: ${
+                        typeof window !== 'undefined' && window.location.href
+                      } | To: ${url} | Details: ${err.meta.cause}`,
+                    }),
+                  });
+                  throw new Error(err.meta.cause);
+                }
+                return resp;
+              });
           }
           return resp;
         });
@@ -268,7 +271,8 @@ export class ApiService {
     avatarData: string,
     msNickname: string,
     msFriendId: number,
-    msAccountId: number
+    msAccountId: number,
+    roninId: string
   ) {
     this._analytics?.track(Analytics.LOAD_STARTED, { method: 'UpdatePersonalInfo' });
     return UpdatePersonalInfo(
@@ -285,6 +289,7 @@ export class ApiService {
         msNickname,
         msFriendId,
         msAccountId,
+        roninId,
       },
       this._clientConfFrey
     ).then((resp) => resp.success);
@@ -688,11 +693,12 @@ export class ApiService {
     city: string,
     country: string,
     phone: string,
-    tenhouId: string
+    tenhouId: string,
+    roninId: string
   ) {
     this._analytics?.track(Analytics.LOAD_STARTED, { method: 'CreateAccount' });
     return CreateAccount(
-      { email, title, password, city, country, phone, tenhouId },
+      { email, title, password, city, country, phone, tenhouId, roninId },
       this._clientConfFrey
     ).then((r) => r.personId);
   }

@@ -33,6 +33,7 @@ const f = vi.hoisted(() => ({
       'getTablesState',
       'getAllPlayers',
       'getTimerState',
+      'getEventsById',
       'cancelLastRound',
       'definalizeGame',
       'cancelGame',
@@ -90,6 +91,7 @@ beforeEach(() => {
   f.api.getTablesState.mockResolvedValue([TableState.initialize({ sessionHash: 'hash' })]);
   f.api.getAllPlayers.mockResolvedValue([]);
   f.api.getTimerState.mockResolvedValue(null);
+  f.api.getEventsById.mockResolvedValue([]);
 });
 afterEach(cleanup);
 async function mount(sync = true) {

@@ -98,6 +98,14 @@ export async function FindByTenhouIds(personsFindByTenhouIdsPayload, config) {
   );
   return PersonsFindByTenhouIdsResponse.decode(response);
 }
+export async function FindByRoninIds(personsFindByRoninIdsPayload, config) {
+  const response = await PBrequest(
+    "/common.Frey/FindByRoninIds",
+    PersonsFindByRoninIdsPayload.encode(personsFindByRoninIdsPayload),
+    config
+  );
+  return PersonsFindByTenhouIdsResponse.decode(response);
+}
 export async function FindByMajsoulAccountId(personsFindByMajsoulIdsPayload, config) {
   const response = await PBrequest(
     "/common.Frey/FindByMajsoulAccountId",
@@ -316,6 +324,14 @@ export async function FindByTenhouIdsJSON(personsFindByTenhouIdsPayload, config)
   const response = await JSONrequest(
     "/common.Frey/FindByTenhouIds",
     PersonsFindByTenhouIdsPayloadJSON.encode(personsFindByTenhouIdsPayload),
+    config
+  );
+  return PersonsFindByTenhouIdsResponseJSON.decode(response);
+}
+export async function FindByRoninIdsJSON(personsFindByRoninIdsPayload, config) {
+  const response = await JSONrequest(
+    "/common.Frey/FindByRoninIds",
+    PersonsFindByRoninIdsPayloadJSON.encode(personsFindByRoninIdsPayload),
     config
   );
   return PersonsFindByTenhouIdsResponseJSON.decode(response);
@@ -584,6 +600,18 @@ export function createFrey(service) {
         input: {
           protobuf: PersonsFindByTenhouIdsPayload,
           json: PersonsFindByTenhouIdsPayloadJSON
+        },
+        output: {
+          protobuf: PersonsFindByTenhouIdsResponse,
+          json: PersonsFindByTenhouIdsResponseJSON
+        }
+      },
+      FindByRoninIds: {
+        name: "FindByRoninIds",
+        handler: service.FindByRoninIds,
+        input: {
+          protobuf: PersonsFindByRoninIdsPayload,
+          json: PersonsFindByRoninIdsPayloadJSON
         },
         output: {
           protobuf: PersonsFindByTenhouIdsResponse,
@@ -1529,6 +1557,7 @@ export const AuthMeResponse = {
       title: "",
       hasAvatar: false,
       lastUpdate: "",
+      roninId: "",
       ...msg
     };
   },
@@ -1562,6 +1591,9 @@ export const AuthMeResponse = {
     }
     if (msg.lastUpdate) {
       writer.writeString(10, msg.lastUpdate);
+    }
+    if (msg.roninId) {
+      writer.writeString(11, msg.roninId);
     }
     return writer;
   },
@@ -1606,6 +1638,10 @@ export const AuthMeResponse = {
         }
         case 10: {
           msg.lastUpdate = reader.readString();
+          break;
+        }
+        case 11: {
+          msg.roninId = reader.readString();
           break;
         }
         default: {
@@ -2681,6 +2717,7 @@ export const PersonsCreateAccountPayload = {
       phone: "",
       tenhouId: "",
       country: "",
+      roninId: void 0,
       ...msg
     };
   },
@@ -2708,6 +2745,9 @@ export const PersonsCreateAccountPayload = {
     }
     if (msg.country) {
       writer.writeString(7, msg.country);
+    }
+    if (msg.roninId != void 0) {
+      writer.writeString(8, msg.roninId);
     }
     return writer;
   },
@@ -2744,6 +2784,10 @@ export const PersonsCreateAccountPayload = {
         }
         case 7: {
           msg.country = reader.readString();
+          break;
+        }
+        case 8: {
+          msg.roninId = reader.readString();
           break;
         }
         default: {
@@ -2848,6 +2892,7 @@ export const PersonsUpdatePersonalInfoPayload = {
       msNickname: void 0,
       msFriendId: void 0,
       msAccountId: void 0,
+      roninId: void 0,
       ...msg
     };
   },
@@ -2890,6 +2935,9 @@ export const PersonsUpdatePersonalInfoPayload = {
     }
     if (msg.msAccountId != void 0) {
       writer.writeInt32(12, msg.msAccountId);
+    }
+    if (msg.roninId != void 0) {
+      writer.writeString(13, msg.roninId);
     }
     return writer;
   },
@@ -2946,6 +2994,10 @@ export const PersonsUpdatePersonalInfoPayload = {
         }
         case 12: {
           msg.msAccountId = reader.readInt32();
+          break;
+        }
+        case 13: {
+          msg.roninId = reader.readString();
           break;
         }
         default: {
@@ -3102,6 +3154,63 @@ export const PersonsFindByTenhouIdsPayload = {
   },
   /**
    * Initializes PersonsFindByTenhouIdsPayload with all fields set to their default value.
+   */
+  initialize: function(msg) {
+    return {
+      ids: [],
+      ...msg
+    };
+  },
+  /**
+   * @private
+   */
+  _writeMessage: function(msg, writer) {
+    if (msg.ids?.length) {
+      writer.writeRepeatedString(1, msg.ids);
+    }
+    return writer;
+  },
+  /**
+   * @private
+   */
+  _readMessage: function(msg, reader) {
+    while (reader.nextField()) {
+      const field = reader.getFieldNumber();
+      switch (field) {
+        case 1: {
+          msg.ids.push(reader.readString());
+          break;
+        }
+        default: {
+          reader.skipField();
+          break;
+        }
+      }
+    }
+    return msg;
+  }
+};
+export const PersonsFindByRoninIdsPayload = {
+  /**
+   * Serializes PersonsFindByRoninIdsPayload to protobuf.
+   */
+  encode: function(msg) {
+    return PersonsFindByRoninIdsPayload._writeMessage(
+      msg,
+      new protoscript.BinaryWriter()
+    ).getResultBuffer();
+  },
+  /**
+   * Deserializes PersonsFindByRoninIdsPayload from protobuf.
+   */
+  decode: function(bytes) {
+    return PersonsFindByRoninIdsPayload._readMessage(
+      PersonsFindByRoninIdsPayload.initialize(),
+      new protoscript.BinaryReader(bytes)
+    );
+  },
+  /**
+   * Initializes PersonsFindByRoninIdsPayload with all fields set to their default value.
    */
   initialize: function(msg) {
     return {
@@ -4369,6 +4478,7 @@ export const AuthMeResponseJSON = {
       title: "",
       hasAvatar: false,
       lastUpdate: "",
+      roninId: "",
       ...msg
     };
   },
@@ -4403,6 +4513,9 @@ export const AuthMeResponseJSON = {
     }
     if (msg.lastUpdate) {
       json["lastUpdate"] = msg.lastUpdate;
+    }
+    if (msg.roninId) {
+      json["roninId"] = msg.roninId;
     }
     return json;
   },
@@ -4445,6 +4558,10 @@ export const AuthMeResponseJSON = {
     const _lastUpdate_ = json["lastUpdate"] ?? json["last_update"];
     if (_lastUpdate_) {
       msg.lastUpdate = _lastUpdate_;
+    }
+    const _roninId_ = json["roninId"] ?? json["ronin_id"];
+    if (_roninId_) {
+      msg.roninId = _roninId_;
     }
     return msg;
   }
@@ -5337,6 +5454,7 @@ export const PersonsCreateAccountPayloadJSON = {
       phone: "",
       tenhouId: "",
       country: "",
+      roninId: void 0,
       ...msg
     };
   },
@@ -5365,6 +5483,9 @@ export const PersonsCreateAccountPayloadJSON = {
     }
     if (msg.country) {
       json["country"] = msg.country;
+    }
+    if (msg.roninId != void 0) {
+      json["roninId"] = msg.roninId;
     }
     return json;
   },
@@ -5399,6 +5520,10 @@ export const PersonsCreateAccountPayloadJSON = {
     const _country_ = json["country"];
     if (_country_) {
       msg.country = _country_;
+    }
+    const _roninId_ = json["roninId"] ?? json["ronin_id"];
+    if (_roninId_) {
+      msg.roninId = _roninId_;
     }
     return msg;
   }
@@ -5484,6 +5609,7 @@ export const PersonsUpdatePersonalInfoPayloadJSON = {
       msNickname: void 0,
       msFriendId: void 0,
       msAccountId: void 0,
+      roninId: void 0,
       ...msg
     };
   },
@@ -5527,6 +5653,9 @@ export const PersonsUpdatePersonalInfoPayloadJSON = {
     }
     if (msg.msAccountId != void 0) {
       json["msAccountId"] = msg.msAccountId;
+    }
+    if (msg.roninId != void 0) {
+      json["roninId"] = msg.roninId;
     }
     return json;
   },
@@ -5581,6 +5710,10 @@ export const PersonsUpdatePersonalInfoPayloadJSON = {
     const _msAccountId_ = json["msAccountId"] ?? json["ms_account_id"];
     if (_msAccountId_) {
       msg.msAccountId = protoscript.parseNumber(_msAccountId_);
+    }
+    const _roninId_ = json["roninId"] ?? json["ronin_id"];
+    if (_roninId_) {
+      msg.roninId = _roninId_;
     }
     return msg;
   }
@@ -5701,6 +5834,52 @@ export const PersonsFindByTenhouIdsPayloadJSON = {
   },
   /**
    * Initializes PersonsFindByTenhouIdsPayload with all fields set to their default value.
+   */
+  initialize: function(msg) {
+    return {
+      ids: [],
+      ...msg
+    };
+  },
+  /**
+   * @private
+   */
+  _writeMessage: function(msg) {
+    const json = {};
+    if (msg.ids?.length) {
+      json["ids"] = msg.ids;
+    }
+    return json;
+  },
+  /**
+   * @private
+   */
+  _readMessage: function(msg, json) {
+    const _ids_ = json["ids"];
+    if (_ids_) {
+      msg.ids = _ids_;
+    }
+    return msg;
+  }
+};
+export const PersonsFindByRoninIdsPayloadJSON = {
+  /**
+   * Serializes PersonsFindByRoninIdsPayload to JSON.
+   */
+  encode: function(msg) {
+    return JSON.stringify(PersonsFindByRoninIdsPayloadJSON._writeMessage(msg));
+  },
+  /**
+   * Deserializes PersonsFindByRoninIdsPayload from JSON.
+   */
+  decode: function(json) {
+    return PersonsFindByRoninIdsPayloadJSON._readMessage(
+      PersonsFindByRoninIdsPayloadJSON.initialize(),
+      JSON.parse(json)
+    );
+  },
+  /**
+   * Initializes PersonsFindByRoninIdsPayload with all fields set to their default value.
    */
   initialize: function(msg) {
     return {

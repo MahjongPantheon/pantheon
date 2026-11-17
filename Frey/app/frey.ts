@@ -35,6 +35,7 @@ import {
   PersonsCreateAccountPayload,
   PersonsCreateAccountResponse,
   PersonsFindByMajsoulIdsPayload,
+  PersonsFindByRoninIdsPayload,
   PersonsFindByTenhouIdsPayload,
   PersonsFindByTenhouIdsResponse,
   PersonsFindByTitlePayload,
@@ -71,6 +72,7 @@ import {
   createAccount,
   depersonalizeAccount,
   findByMajsoulAccountId,
+  findByRoninIds,
   findByTenhouIds,
   findByTitle,
   getMajsoulNicknames,
@@ -178,6 +180,13 @@ export const freyClient: Frey<Context> = {
     context: Context
   ): Promise<PersonsFindByTenhouIdsResponse> {
     return wrapError(findByMajsoulAccountId(context.db, personsFindByMajsoulIdsPayload, context));
+  },
+
+  async FindByRoninIds(
+    personsFindByRoninIdsPayload: PersonsFindByRoninIdsPayload,
+    context: Context
+  ): Promise<PersonsFindByTenhouIdsResponse> {
+    return wrapError(findByRoninIds(context.db, personsFindByRoninIdsPayload, context));
   },
 
   async FindByTenhouIds(
