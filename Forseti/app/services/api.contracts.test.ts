@@ -179,6 +179,7 @@ const cases: Case[] = [
       'nickname',
       123,
       456,
+      'ronin',
     ],
     'UpdatePersonalInfo',
     {
@@ -194,6 +195,7 @@ const cases: Case[] = [
       msNickname: 'nickname',
       msFriendId: 123,
       msAccountId: 456,
+      roninId: 'ronin',
     },
     { success: true },
     true,
@@ -382,7 +384,7 @@ const cases: Case[] = [
   ],
   [
     'createAccount',
-    ['email', 'title', 'password', 'city', 'country', 'phone', 'tenhou'],
+    ['email', 'title', 'password', 'city', 'country', 'phone', 'tenhou', 'ronin'],
     'CreateAccount',
     {
       email: 'email',
@@ -392,6 +394,7 @@ const cases: Case[] = [
       country: 'country',
       phone: 'phone',
       tenhouId: 'tenhou',
+      roninId: 'ronin',
     },
     { personId: 7 },
     7,

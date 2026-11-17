@@ -19,6 +19,7 @@ import { SessionState } from '../helpers/SessionState.js';
 import { PlayerHistoryModel } from './PlayerHistoryModel.js';
 import { PlayerHistoryEntity } from '../entities/PlayerHistory.entity.js';
 import { PlayerModel } from './PlayerModel.js';
+import { DataMalformedError, ExistsError } from '../helpers/errors.js';
 import { sha1 } from '../helpers/crypto.js';
 import { SessionPlayerEntity } from '../entities/SessionPlayer.entity.js';
 import moment from 'moment-timezone';
@@ -26,6 +27,12 @@ import moment from 'moment-timezone';
 enum ContentType {
   Xml = 1,
   Json = 2,
+}
+
+const RONIN_GAME_ID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+function roninReplayLink(gameId: string): string {
+  return RONIN_GAME_ID.test(gameId) ? `https://ronin.mahjong.click/play/history/${gameId}` : '';
 }
 
 export class OnlineSessionModel extends Model {
@@ -47,7 +54,7 @@ export class OnlineSessionModel extends Model {
             throw new Error(`Event ${data.eventId} is already finished`);
           }
 
-          const downloader = new Downloader();
+          const downloader = this._makeDownloader(event.onlinePlatform);
           downloader.validateUrl(data.link);
           const replayHash = downloader.getReplayHash(data.link);
 
@@ -72,7 +79,12 @@ export class OnlineSessionModel extends Model {
           if (!event) {
             throw new Error(`Event ${data.eventId} not found`);
           }
-          if (event.isOnline) {
+          const isRonin =
+            data.platformId === PlatformType.PLATFORM_TYPE_RONIN ||
+            event.onlinePlatform === PlatformType.PLATFORM_TYPE_RONIN;
+          if (isRonin) {
+            this._checkRoninTypedUpload(event, data);
+          } else if (event.isOnline) {
             throw new Error(`Event ${data.eventId} is not online`);
           }
           if (event.finished) {
@@ -80,13 +92,14 @@ export class OnlineSessionModel extends Model {
           }
 
           this._checkGameTimestampExpired(data.logTimestamp, event.ruleset.rules);
-          await this._checkReplayHash(event.id, data.replayHash);
+          const replayHash = isRonin ? sha1(data.content) : data.replayHash;
+          await this._checkReplayHash(event.id, replayHash);
 
           return this.addGameContent(
             event,
-            data.replayHash,
+            replayHash,
             data.content,
-            '',
+            isRonin ? roninReplayLink(data.replayHash) : '',
             data.contentType,
             data.platformId
           );
@@ -111,7 +124,7 @@ export class OnlineSessionModel extends Model {
 
     if (contentType === ContentType.Xml) {
       const parser = new OnlineParser(this.repo);
-      [session, , rounds] = await parser.parseToSession(event, content, withChips);
+      [session, , rounds] = await parser.parseToSession(event, content, withChips, platformId);
     } else {
       const parser = new Tenhou6OnlineParser(this.repo);
       [session, , rounds] = await parser.parseToSession(
@@ -121,6 +134,10 @@ export class OnlineSessionModel extends Model {
         withChips,
         platformId
       );
+    }
+
+    if (rounds.length === 0) {
+      throw new DataMalformedError('The replay has no rounds');
     }
 
     session.extraTime = 0;
@@ -241,7 +258,7 @@ export class OnlineSessionModel extends Model {
       game: {
         sessionHash: session.representationalHash ?? '',
         date: session.endDate,
-        replayLink: makeReplayLink(session.replayHash ?? null, platformId),
+        replayLink: makeReplayLink(session.replayHash ?? null, platformId, session.origLink),
         players,
         finalResults: sessionResults,
         rounds: rounds.map((round) =>
@@ -259,13 +276,32 @@ export class OnlineSessionModel extends Model {
     };
   }
 
+  private _makeDownloader(platform?: PlatformType): Downloader {
+    if (platform === PlatformType.PLATFORM_TYPE_RONIN) {
+      throw new Error('Ronin replay links are not supported yet');
+    }
+    return new Downloader();
+  }
+
+  private _checkRoninTypedUpload(event: EventEntity, data: TypedGamesAddOnlineReplayPayload) {
+    if (data.platformId !== PlatformType.PLATFORM_TYPE_RONIN) {
+      throw new Error(`Event ${event.id} accepts only Ronin replays`);
+    }
+    if (data.contentType !== ContentType.Xml) {
+      throw new Error('Ronin replays must be uploaded as XML');
+    }
+    if (!event.isOnline || event.onlinePlatform !== PlatformType.PLATFORM_TYPE_RONIN) {
+      throw new Error(`Event ${event.id} is not an online Ronin event`);
+    }
+  }
+
   private _handleReplayImportError(error: unknown): never {
     if (
       error instanceof UniqueConstraintViolationException &&
       'constraint' in error &&
       error.constraint === 'session_replay_hash_index'
     ) {
-      throw new Error(`This game is already added to the system`);
+      throw new ExistsError('This game is already added to the system');
     }
     throw error;
   }
@@ -276,7 +312,7 @@ export class OnlineSessionModel extends Model {
       replayHash,
     });
     if (session) {
-      throw new Error(`This game is already added to the system`);
+      throw new ExistsError('This game is already added to the system');
     }
   }
 

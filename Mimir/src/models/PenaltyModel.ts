@@ -243,6 +243,7 @@ export class PenaltyModel extends Model {
             id: r.id,
             title: r.title,
             tenhouId: r.tenhouId,
+            roninId: r.roninId,
             hasAvatar: r.hasAvatar,
             lastUpdate: r.lastUpdate,
           })),
@@ -276,6 +277,7 @@ export class PenaltyModel extends Model {
             id: r.id,
             title: r.title,
             tenhouId: r.tenhouId,
+            roninId: r.roninId,
             hasAvatar: r.hasAvatar,
             lastUpdate: r.lastUpdate,
           })),
@@ -359,6 +361,7 @@ export class PenaltyModel extends Model {
             hasAvatar: p.hasAvatar,
             lastUpdate: p.lastUpdate,
             tenhouId: p.tenhouId,
+            roninId: p.roninId,
           })),
         };
       },

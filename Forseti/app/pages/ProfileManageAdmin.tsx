@@ -50,6 +50,7 @@ import { useStorage } from '../hooks/storage';
 import { FileUploadButton } from '../components/FileUploadButton';
 import { env } from '../env';
 import { authCtx, PrivilegesLevel } from '../hooks/auth';
+import { isRoninIdTaken } from '../helpers/roninIdTaken';
 
 export const ProfileManageAdmin: React.FC<{ params: { id?: string } }> = ({ params: { id } }) => {
   const { privilegesLevel, isLoggedIn } = useContext(authCtx);
@@ -75,6 +76,7 @@ export const ProfileManageAdmin: React.FC<{ params: { id?: string } }> = ({ para
       country: '',
       phone: '',
       tenhouId: '',
+      roninId: '',
       hasAvatar: false,
       avatarData: '',
     },
@@ -86,6 +88,14 @@ export const ProfileManageAdmin: React.FC<{ params: { id?: string } }> = ({ para
     },
   });
 
+  const showSaveError = (err: unknown, message: string) => {
+    if (isRoninIdTaken(err)) {
+      form.setFieldError('roninId', i18n._t('This Ronin nickname is already taken'));
+    } else {
+      notifications.show({ color: 'red', message });
+    }
+  };
+
   const submitForm = useCallback(
     (values: {
       email: string;
@@ -95,6 +105,7 @@ export const ProfileManageAdmin: React.FC<{ params: { id?: string } }> = ({ para
       country: string;
       phone: string;
       tenhouId: string;
+      roninId: string;
       hasAvatar: boolean;
       avatarData: string;
     }) => {
@@ -108,7 +119,8 @@ export const ProfileManageAdmin: React.FC<{ params: { id?: string } }> = ({ para
             values.city.trim(),
             values.country.trim(),
             values.phone.trim(),
-            values.tenhouId.trim()
+            values.tenhouId.trim(),
+            values.roninId.trim()
           )
           .then((resp) => {
             setIsSaving(false);
@@ -123,12 +135,9 @@ export const ProfileManageAdmin: React.FC<{ params: { id?: string } }> = ({ para
             setIsSaved(true);
             setTimeout(() => setIsSaved(false), 5000);
           })
-          .catch(() => {
+          .catch((err: unknown) => {
             setIsSaving(false);
-            form.setFieldError(
-              'password',
-              i18n._t('Failed to register player. Is your connection stable?')
-            );
+            showSaveError(err, i18n._t('Failed to register player. Is your connection stable?'));
           });
       } else {
         setIsSaving(true);
@@ -145,7 +154,8 @@ export const ProfileManageAdmin: React.FC<{ params: { id?: string } }> = ({ para
             values.avatarData,
             '',
             -1,
-            -1
+            -1,
+            values.roninId.trim()
           )
           .then((resp) => {
             setIsSaving(false);
@@ -162,10 +172,10 @@ export const ProfileManageAdmin: React.FC<{ params: { id?: string } }> = ({ para
             setIsSaved(true);
             setTimeout(() => setIsSaved(false), 5000);
           })
-          .catch(() => {
+          .catch((err: unknown) => {
             setIsSaving(false);
-            form.setFieldError(
-              'password',
+            showSaveError(
+              err,
               i18n._t('Failed to update player details. Is your connection stable?')
             );
           });
@@ -279,6 +289,13 @@ export const ProfileManageAdmin: React.FC<{ params: { id?: string } }> = ({ para
             description={i18n._t('Tenhou nickname')}
             data-testid='forseti-profile-manage-admin-tenhou-id'
             {...form.getInputProps('tenhouId')}
+          />
+          <Space h='md' />
+          <TextInput
+            leftSection={<IconIdBadge2 size='1rem' />}
+            description={i18n._t('Ronin nickname')}
+            data-testid='forseti-profile-manage-admin-ronin-id'
+            {...form.getInputProps('roninId')}
           />
           <Space h='md' />
           <Checkbox

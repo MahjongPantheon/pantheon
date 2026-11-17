@@ -65,6 +65,10 @@ export const OnlineSettings: React.FC<OnlineSettingsProps> = ({ form, i18n }) =>
               value: PlatformType.PLATFORM_TYPE_MAHJONGSOUL,
               label: 'MahjongSoul',
             },
+            {
+              value: PlatformType.PLATFORM_TYPE_RONIN,
+              label: 'Ronin',
+            },
           ]}
           data-testid='forseti-event-settings-online-settings-event-platform-id'
           key={form.key('event.platformId')}

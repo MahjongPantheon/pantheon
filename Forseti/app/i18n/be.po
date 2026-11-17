@@ -2286,6 +2286,14 @@ msgstr "Тэнхо"
 msgid "Tenhou nickname"
 msgstr "Імя ў Tenhou"
 
+#: app/pages/ProfileManage.tsx:274:22 app/pages/ProfileManageAdmin.tsx:296:26
+msgid "Ronin nickname"
+msgstr "Імя ў Ronin"
+
+#: app/pages/ProfileManage.tsx:157:43 app/pages/ProfileManageAdmin.tsx:93:37
+msgid "This Ronin nickname is already taken"
+msgstr "Гэта імя ў Ronin ужо занятае"
+
 #: app/pages/ProfileManage.tsx:94:13
 msgid ""
 "Tenhou.net usernames can't be longer than 8 symbols. If you provided a login "

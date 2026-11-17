@@ -15,7 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Event, EventType, PlayerInRating } from 'tsclients/proto/atoms.pb';
+import { Event, PlayerInRating } from 'tsclients/proto/atoms.pb';
+import { getOnlineIdGetter } from '../helpers/onlineId';
 import {
   Anchor,
   Badge,
@@ -33,6 +34,7 @@ import { useLocation } from 'wouter';
 export const TeamTable = ({ players, events }: { players: PlayerInRating[]; events: Event[] }) => {
   const [, navigate] = useLocation();
   const largeScreen = useMediaQuery('(min-width: 768px)');
+  const onlineId = getOnlineIdGetter(events[0]);
   const DataCmp = largeScreen ? Group : Stack;
   const theme = useMantineTheme();
   const isDark = useMantineColorScheme().colorScheme === 'dark';
@@ -112,9 +114,7 @@ export const TeamTable = ({ players, events }: { players: PlayerInRating[]; even
                         >
                           {player.title}
                         </Anchor>
-                        {events?.[0]?.type === EventType.EVENT_TYPE_ONLINE && (
-                          <Text c='dimmed'>{player.tenhouId}</Text>
-                        )}
+                        {onlineId && <Text c='dimmed'>{onlineId(player)}</Text>}
                       </Stack>
                     </Group>
                     <Badge

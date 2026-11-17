@@ -40,7 +40,8 @@ import {
 } from '@mantine/core';
 import { EventTypeIcon } from '../components/EventTypeIcon';
 import { PlayerAvatar } from '../components/PlayerAvatar';
-import { EventType, PlayerInRating } from 'tsclients/proto/atoms.pb';
+import { PlayerInRating } from 'tsclients/proto/atoms.pb';
+import { getOnlineIdGetter } from '../helpers/onlineId';
 import { useMediaQuery } from '@mantine/hooks';
 import { useI18n } from '../hooks/i18n';
 import { useEvent } from '../hooks/useEvent';
@@ -85,6 +86,7 @@ export const RatingTable: React.FC<{
   const storage = useStorage();
   const i18n = useI18n();
   const events = useEvent(eventId);
+  const onlineId = getOnlineIdGetter(events?.[0]);
   const largeScreen = useMediaQuery('(min-width: 768px)');
   const [, navigate] = useLocation();
   const theme = useMantineTheme();
@@ -479,9 +481,7 @@ export const RatingTable: React.FC<{
                         >
                           {player.title}
                         </Anchor>
-                        {events?.[0]?.type === EventType.EVENT_TYPE_ONLINE && (
-                          <Text c='dimmed'>{player.tenhouId}</Text>
-                        )}
+                        {onlineId && <Text c='dimmed'>{onlineId(player)}</Text>}
                         {events?.[0]?.isTeam && player.teamName && <Text>{player.teamName}</Text>}
                       </Stack>
                       {player.penaltiesCount > 0 && (

@@ -2138,6 +2138,16 @@ msgstr ""
 msgid "Tenhou nickname"
 msgstr ""
 
+#: app/pages/ProfileManage.tsx:274:22
+#: app/pages/ProfileManageAdmin.tsx:296:26
+msgid "Ronin nickname"
+msgstr ""
+
+#: app/pages/ProfileManage.tsx:157:43
+#: app/pages/ProfileManageAdmin.tsx:93:37
+msgid "This Ronin nickname is already taken"
+msgstr ""
+
 #: app/pages/ProfileManage.tsx:263:22
 #: app/pages/ProfileManageAdmin.tsx:285:20
 msgid "Show user avatar"

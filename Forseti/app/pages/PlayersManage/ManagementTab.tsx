@@ -24,6 +24,7 @@ import {
   RegisteredPlayer,
   Event,
   EventType,
+  PlatformType,
   TableState,
 } from 'tsclients/proto/atoms.pb';
 import {
@@ -196,7 +197,13 @@ export const ManagementTab: React.FC<{
                 <PlayerAvatar p={p} />
                 <Stack gap='0'>
                   <Text>{p.title}</Text>
-                  {config?.isOnline && <Text c='dimmed'>{p.tenhouId}</Text>}
+                  {config?.isOnline && (
+                    <Text c='dimmed'>
+                      {event?.platformId === PlatformType.PLATFORM_TYPE_RONIN
+                        ? p.roninId
+                        : p.tenhouId}
+                    </Text>
+                  )}
                 </Stack>
                 {showReplace && !p.replacedBy && (
                   <ActionIcon

@@ -30,6 +30,7 @@ import {
   PersonsCreateAccountPayload,
   PersonsCreateAccountResponse,
   PersonsFindByMajsoulIdsPayload,
+  PersonsFindByRoninIdsPayload,
   PersonsFindByTenhouIdsPayload,
   PersonsFindByTenhouIdsResponse,
   PersonsFindByTitlePayload,
@@ -88,6 +89,7 @@ export class FreyServiceMock extends FreyService {
       city: 'test',
       phone: '',
       lastUpdate: new Date().toISOString(),
+      roninId: '',
     });
   }
 
@@ -139,6 +141,7 @@ export class FreyServiceMock extends FreyService {
         msAccountId: this._mockMajsoulIds[id] ?? 1,
         telegramId: '121345',
         notifications: 'notifications',
+        roninId: '',
       })),
     });
   }
@@ -162,6 +165,31 @@ export class FreyServiceMock extends FreyService {
         msAccountId: 1,
         telegramId: '121345',
         notifications: 'notifications',
+        roninId: '',
+      })),
+    });
+  }
+
+  FindByRoninIds(
+    personsFindByRoninIdsPayload: PersonsFindByRoninIdsPayload
+  ): Promise<PersonsFindByTenhouIdsResponse> {
+    let id = 1;
+    return Promise.resolve({
+      people: personsFindByRoninIdsPayload.ids.map((roninId) => ({
+        id: id++,
+        city: 'city',
+        tenhouId: '',
+        title: 'title',
+        country: 'country',
+        email: 'email',
+        phone: 'phone',
+        hasAvatar: false,
+        lastUpdate: new Date().toISOString(),
+        msNickname: '',
+        msAccountId: 0,
+        telegramId: '121345',
+        notifications: 'notifications',
+        roninId,
       })),
     });
   }
@@ -184,6 +212,7 @@ export class FreyServiceMock extends FreyService {
         msAccountId: accountId,
         telegramId: '121345',
         notifications: 'notifications',
+        roninId: '',
       })),
     });
   }
@@ -200,6 +229,7 @@ export class FreyServiceMock extends FreyService {
           title: 'title',
           hasAvatar: false,
           lastUpdate: new Date().toISOString(),
+          roninId: '',
         },
       ],
     });

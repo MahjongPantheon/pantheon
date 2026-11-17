@@ -243,7 +243,14 @@ describe('Identifier mappings', () => {
       PlatformType.PLATFORM_TYPE_MAHJONGSOUL,
       'https://mahjongsoul.game.yo-star.com/?paipu=replay-hash',
     ],
+    [PlatformType.PLATFORM_TYPE_RONIN, 'https://ronin.mahjong.click/play/history/game-id'],
   ])('links platform %s replays to the correct site', (platform, expected) => {
-    expect(makeReplayLink('replay-hash', platform as PlatformType)).toBe(expected);
+    expect(
+      makeReplayLink(
+        'replay-hash',
+        platform as PlatformType,
+        'https://ronin.mahjong.click/play/history/game-id'
+      )
+    ).toBe(expected);
   });
 });

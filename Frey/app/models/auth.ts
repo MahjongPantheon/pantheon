@@ -222,6 +222,7 @@ export async function me(
     title: personData.title,
     hasAvatar: !!personData.has_avatar,
     lastUpdate: personData.last_update ?? '',
+    roninId: personData.ronin_id ?? '',
   };
 }
 

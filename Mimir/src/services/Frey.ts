@@ -39,6 +39,7 @@ import {
   DepersonalizeAccount,
   DepersonalizePayload,
   FindByMajsoulAccountId,
+  FindByRoninIds,
   FindByTenhouIds,
   FindByTitle,
   GetEventAdmins,
@@ -52,6 +53,7 @@ import {
   PersonsCreateAccountPayload,
   PersonsCreateAccountResponse,
   PersonsFindByMajsoulIdsPayload,
+  PersonsFindByRoninIdsPayload,
   PersonsFindByTenhouIdsPayload,
   PersonsFindByTenhouIdsResponse,
   PersonsFindByTitlePayload,
@@ -184,6 +186,12 @@ export class FreyService {
     personsFindByMajsoulIdsPayload: PersonsFindByMajsoulIdsPayload
   ): Promise<PersonsFindByTenhouIdsResponse> {
     return FindByMajsoulAccountId(personsFindByMajsoulIdsPayload, this._config);
+  }
+
+  FindByRoninIds(
+    personsFindByRoninIdsPayload: PersonsFindByRoninIdsPayload
+  ): Promise<PersonsFindByTenhouIdsResponse> {
+    return FindByRoninIds(personsFindByRoninIdsPayload, this._config);
   }
 
   FindByTitle(

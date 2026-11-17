@@ -31,6 +31,7 @@ service Frey {
   rpc UpdatePersonalInfo(PersonsUpdatePersonalInfoPayload) returns (GenericSuccessResponse);
   rpc GetPersonalInfo(PersonsGetPersonalInfoPayload) returns (PersonsGetPersonalInfoResponse);
   rpc FindByTenhouIds(PersonsFindByTenhouIdsPayload) returns (PersonsFindByTenhouIdsResponse);
+  rpc FindByRoninIds(PersonsFindByRoninIdsPayload) returns (PersonsFindByTenhouIdsResponse);
   rpc FindByMajsoulAccountId(PersonsFindByMajsoulIdsPayload) returns (PersonsFindByTenhouIdsResponse);
   rpc FindByTitle(PersonsFindByTitlePayload) returns (PersonsFindByTitleResponse);
   rpc GetEventAdmins(AccessGetEventAdminsPayload) returns (AccessGetEventAdminsResponse);
@@ -118,6 +119,7 @@ message AuthMeResponse {
   string title = 7;
   bool has_avatar = 9;
   string last_update = 10;
+  string ronin_id = 11;
 }
 
 message AuthChangePasswordPayload {
@@ -202,6 +204,7 @@ message PersonsCreateAccountPayload {
   string phone = 5;
   string tenhou_id = 6;
   string country = 7;
+  optional string ronin_id = 8;
 }
 
 message PersonsCreateAccountResponse {
@@ -221,6 +224,7 @@ message PersonsUpdatePersonalInfoPayload {
   optional string ms_nickname = 10;
   optional int32 ms_friend_id = 11;
   optional int32 ms_account_id = 12;
+  optional string ronin_id = 13;
 }
 
 message PersonsGetPersonalInfoPayload {
@@ -232,6 +236,10 @@ message PersonsGetPersonalInfoResponse {
 }
 
 message PersonsFindByTenhouIdsPayload {
+  repeated string ids = 1;
+}
+
+message PersonsFindByRoninIdsPayload {
   repeated string ids = 1;
 }
 

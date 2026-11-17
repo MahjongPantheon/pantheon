@@ -3,7 +3,7 @@ import { client } from 'twirpscript';
 import { readFile } from 'fs/promises';
 import { v4 } from 'uuid';
 
-export async function createUser(frey: typeof Frey, email: string) {
+export async function createUser(frey: typeof Frey, email: string, roninId?: string) {
   const adminCreds = await getAdminCreds();
   const result = await frey.CreateAccount(
     {
@@ -14,6 +14,7 @@ export async function createUser(frey: typeof Frey, email: string) {
       phone: '123321',
       tenhouId: 'sometenhou',
       title: 'Test Account',
+      roninId,
     },
     {
       headers: { 'x-current-person-id': adminCreds.id.toString(), 'x-auth-token': adminCreds.hash },

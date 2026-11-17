@@ -79,6 +79,19 @@ export class PlayerModel extends Model {
     );
   }
 
+  async findByRoninIds(ids: string[]): Promise<Record<string, PersonEx>> {
+    const data = await this.repo.frey.FindByRoninIds({ ids });
+    const byLowerRoninId = new Map(
+      data.people.map((player) => [player.roninId.toLowerCase(), filterPersonalDataSingle(player)])
+    );
+    return Object.fromEntries(
+      ids.flatMap((id) => {
+        const player = byLowerRoninId.get(id.toLowerCase());
+        return player ? [[id, player]] : [];
+      })
+    );
+  }
+
   async findMajsoulAccounts(
     ids: [string, number][] // ms_nickname, ms_account_id
   ): Promise<Record<string, PersonEx>> {
@@ -210,6 +223,7 @@ export class PlayerModel extends Model {
             id: data.people[0].id,
             title: data.people[0].title,
             tenhouId: data.people[0].tenhouId,
+            roninId: data.people[0].roninId,
             hasAvatar: data.people[0].hasAvatar,
             lastUpdate: data.people[0].lastUpdate,
           },
