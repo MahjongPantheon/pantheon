@@ -7,7 +7,7 @@ import { GuideScreenshot } from '../components/GuideScreenshot';
 
 ## Den mobilen Assistenten verwenden
 
-Öffnen Sie den <a href={env.urls.tyr}>mobilen Assistenten</a> auf Ihrem Telefon. Sie benötigen ein aktiviertes Konto und die Registrierung im Event: <Link to='/getStarted'>Erste Schritte und Hilfe zum Konto</Link>.
+Öffnen Sie den <a href={env.urls.tyr}>mobilen Assistenten</a> auf Ihrem Telefon. Sie benötigen ein gültiges Pantheon-Konto und die Registrierung im Event: <Link to='/getStarted'>Erste Schritte und Hilfe zum Konto</Link>.
 
 Abschnitte: [Event wählen](#event), [Clubpartien](#club), [Turniere](#tournament), [Hand erfassen](#recording), [Verlauf und Korrekturen](#corrections). Die anklickbaren Screenshots zeigen die englische Oberfläche und erfundene Spieler.
 
@@ -50,7 +50,7 @@ Warten Sie nach Spielende auf die Bestätigung aller Sessions. Melden Sie Fehler
 
 <h3 id='recording'>4. Eine Hand erfassen</h3>
 
-Eine Person trägt ein, alle prüfen. Der Spielzustand wird zwischen den Geräten geteilt. Erfassen Sie dieselbe Hand nicht mehrfach.
+Eine Person trägt ein, alle prüfen. Der Spielzustand wird zwischen den Geräten geteilt. Erfassen Sie dieselbe Hand nicht gleichzeitig auf mehreren Telefonen: Nur die erste Übermittlung gelingt, die anderen führen zu einem Fehler.
 
 <GuideScreenshot name="mobile-table" alt="Tischansicht mit Punktständen und Winden. Die Plustaste öffnet die Ergebnisauswahl." caption="Tischansicht mit Punktständen und Winden. Die Plustaste öffnet die Ergebnisauswahl." mobile />
 
@@ -62,12 +62,12 @@ Eine Person trägt ein, alle prüfen. Der Spielzustand wird zwischen den Geräte
 
 <GuideScreenshot name="mobile-players" alt="Spielerstatus mit Gewinner, Abwerfer und Riichi. Riichi wird vor der Yaku-Auswahl eingetragen." caption="Spielerstatus mit Gewinner, Abwerfer und Riichi. Riichi wird vor der Yaku-Auswahl eingetragen." mobile />
 
-3. Wählen Sie für jeden Gewinner die Yaku. Ohne **Offene Hand** gilt die Hand als geschlossen. Prüfen Sie bei mehreren Gewinnern jeden Reiter. Yaku und Kombinationen hängen von den Regeln ab; trotz gesperrter unvereinbarer Optionen müssen die Spieler selbst prüfen.
+3. Wählen Sie für jeden Gewinner die Yaku. Ohne **Offene Hand** gilt die Hand als geschlossen. Prüfen Sie bei mehreren Gewinnern jeden Reiter; wechseln Sie mit den Pfeilen oder durch Wischen nach links oder rechts. Yaku und Kombinationen hängen von den Regeln ab; trotz gesperrter unvereinbarer Optionen müssen die Spieler selbst prüfen.
 4. Wählen Sie Dora-Gesamtzahl und Fu. Manche Fu-Werte sind durch Yaku festgelegt oder eingeschränkt. Dora ersetzt kein gültiges Yaku. Treffen Sie gegebenenfalls die angeforderte Pao-Auswahl zur Zahlungshaftung.
 
 <GuideScreenshot name="mobile-hand" alt="Handeditor mit Yaku, Dora und Fu. Offen/geschlossen und alle Gewinner einzeln prüfen." caption="Handeditor mit Yaku, Dora und Fu. Offen/geschlossen und alle Gewinner einzeln prüfen." mobile />
 
-5. Öffnen Sie die Vorschau und zeigen Sie allen die Punktänderungen. Klären Sie Einwände jetzt, korrigieren Sie über Zurück und bestätigen Sie erst bei Einigkeit mit dem Häkchen.
+5. Öffnen Sie die Vorschau und zeigen Sie allen die Punktänderungen. Klären Sie mögliche Einwände, korrigieren Sie über Zurück und bestätigen Sie erst mit dem Häkchen, wenn der ganze Tisch mit dem Ergebnis einverstanden ist.
 
 <GuideScreenshot name="mobile-preview" alt="Vorschau der Punktänderungen. Erst die Bestätigung speichert die Hand." caption="Vorschau der Punktänderungen. Erst die Bestätigung speichert die Hand." mobile />
 
@@ -81,7 +81,7 @@ Die Protokolltaste am Tisch zeigt gespeicherte Hände; Antippen einer Zeile öff
 
 Rufen Sie bei einer falschen gespeicherten Hand die Spielleitung. Spieler können sie nicht selbst stornieren. Der Schiedsrichter storniert die letzte Hand, danach erfassen Sie das richtige Ergebnis. Für ältere Fehler müssen auch spätere Hände storniert und neu erfasst werden; stimmen Sie die Daten vorher ab.
 
-Melden Sie Fehler in abgeschlossenen Clubpartien, bevor jemand die nächste Partie startet: Danach kann die Wiederöffnung gesperrt sein. Im Turnier muss die Meldung vor der Sessionbestätigung erfolgen. Ein Timer auf null ersetzt diese Bestätigung nicht.
+Melden Sie Fehler in abgeschlossenen Clubpartien, bevor jemand die nächste Partie startet: Danach kann das Stornieren des vorherigen Ergebnisses gesperrt sein. Im Turnier muss die Meldung vor der Sessionbestätigung durch die Administration erfolgen. Ein Timer auf null bestätigt die Ergebnisse nicht automatisch.
 
 **Statistik** auf der Startseite oder <a href={env.urls.sigrun}>Ranglisten und Statistiken</a> zeigt Ranglisten, abgeschlossene Partien und Spielerstatistiken gemäß Sichtbarkeitseinstellungen.
 

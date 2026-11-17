@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-17 00:53+0100\n"
+"POT-Creation-Date: 2026-11-18 00:40+0300\n"
 "PO-Revision-Date: 2024-03-28 19:52+0100\n"
 "Last-Translator: Geunmo Kim <kimgeunmo@gmail.com>\n"
 "Language-Team: \n"
@@ -34,10 +34,6 @@ msgstr ""
 "주최자는 내장된 자리 배정 기능과 다양한 도구로 대회 운영을 간소화할 수 있습니"
 "다."
 
-#: app/components/TranslationNotice.tsx:13:8
-msgid "Everyone is welcome to help refine translations. Suggest changes on"
-msgstr "누구나 번역 개선에 참여할 수 있습니다. 수정 제안:"
-
 #: app/Nav.ts:83:33
 msgid "For hosts"
 msgstr "주최자 안내"
@@ -61,6 +57,10 @@ msgstr "시작하기"
 #: app/Nav.ts:84:32
 msgid "Have issue?"
 msgstr "문제가 있나요?"
+
+#: app/components/TranslationNotice.tsx:9:8
+msgid "If you notice any mistakes, please suggest corrections on"
+msgstr "오류를 발견하면 다음에서 수정 사항을 제안해 주세요:"
 
 #: app/components/FeaturesList.tsx:51:12
 msgid "Local club games"
@@ -86,10 +86,6 @@ msgstr "탐색 메뉴"
 #: app/components/FeaturesList.tsx:44:12
 msgid "Online tournaments"
 msgstr "온라인 대회"
-
-#: app/components/TranslationNotice.tsx:11:11
-msgid "Other language editions include machine-generated translations."
-msgstr "다른 언어판에는 기계 번역이 포함되어 있습니다."
 
 #: app/components/FeaturesList.tsx:52:18
 msgid ""
@@ -166,9 +162,9 @@ msgstr ""
 "외부 플랫폼에서 온라인 대회를 진행하고 패보를 가져와 대국 기록을 볼 수 있습니"
 "다."
 
-#: app/components/TranslationNotice.tsx:12:11
-msgid "This page is a machine-generated translation."
-msgstr "이 페이지는 기계 번역된 문서입니다."
+#: app/components/TranslationNotice.tsx:8:8
+msgid "This page was translated or prepared with the help of AI."
+msgstr "이 페이지는 AI의 도움을 받아 번역하거나 작성했습니다."
 
 #: app/components/AppFooter.tsx:143:20 app/components/AppFooter.tsx:144:25
 msgid "Toggle color scheme"
@@ -182,6 +178,6 @@ msgstr "대회 진행 지원"
 msgid "Track and assist your riichi games"
 msgstr "리치 마작 대국 기록과 진행 지원"
 
-#: app/components/TranslationNotice.tsx:15:8
+#: app/components/TranslationNotice.tsx:11:8
 msgid "or contact the developers on"
 msgstr "또는 개발자 문의:"

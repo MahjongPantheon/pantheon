@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-17 00:53+0100\n"
+"POT-Creation-Date: 2026-11-18 00:40+0300\n"
 "PO-Revision-Date: 2024-01-06 20:06+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -37,11 +37,6 @@ msgstr ""
 "процесса проведения турнира, использовать встроенные рассадки и другие "
 "полезные инструменты"
 
-#: app/components/TranslationNotice.tsx:13:8
-msgid "Everyone is welcome to help refine translations. Suggest changes on"
-msgstr ""
-"Любой желающий может помочь улучшить переводы. Предлагайте изменения на"
-
 #: app/Nav.ts:83:33
 msgid "For hosts"
 msgstr "Организаторам"
@@ -65,6 +60,10 @@ msgstr "Начинаем?"
 #: app/Nav.ts:84:32
 msgid "Have issue?"
 msgstr "Проблема?"
+
+#: app/components/TranslationNotice.tsx:9:8
+msgid "If you notice any mistakes, please suggest corrections on"
+msgstr "Если вы заметили ошибки, предложите исправления на"
 
 #: app/components/FeaturesList.tsx:51:12
 msgid "Local club games"
@@ -90,10 +89,6 @@ msgstr "Меню навигации"
 #: app/components/FeaturesList.tsx:44:12
 msgid "Online tournaments"
 msgstr "Онлайн-турниры"
-
-#: app/components/TranslationNotice.tsx:11:11
-msgid "Other language editions include machine-generated translations."
-msgstr "Версии на других языках включают машинные переводы."
 
 #: app/components/FeaturesList.tsx:52:18
 msgid ""
@@ -173,9 +168,9 @@ msgstr ""
 "Есть возможность проведения онлайн-турниров на внешних платформах. Pantheon "
 "имеет возможность импорта реплеев для просмотра логов игр"
 
-#: app/components/TranslationNotice.tsx:12:11
-msgid "This page is a machine-generated translation."
-msgstr "Эта страница переведена автоматически."
+#: app/components/TranslationNotice.tsx:8:8
+msgid "This page was translated or prepared with the help of AI."
+msgstr "Эта страница переведена или подготовлена с помощью ИИ."
 
 #: app/components/AppFooter.tsx:143:20 app/components/AppFooter.tsx:144:25
 msgid "Toggle color scheme"
@@ -189,6 +184,6 @@ msgstr "Проведение турниров"
 msgid "Track and assist your riichi games"
 msgstr "Запись и помощь с играми в риичи"
 
-#: app/components/TranslationNotice.tsx:15:8
+#: app/components/TranslationNotice.tsx:11:8
 msgid "or contact the developers on"
 msgstr "или свяжитесь с разработчиками в"

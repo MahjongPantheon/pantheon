@@ -18,7 +18,7 @@ On this page: [event modes](#event-modes), [creating an account](#sign-up), [joi
 <h3 id='event-modes'>Which event mode do I need?</h3>
 
 An **event** has its own player list, rules and rating table. A **session** is a game at one table;
-in tournament controls, it can also mean all tables playing together. A **round** in the controls is one hand.
+in tournament controls, it can also mean all tables playing together. A single hand is called a **round** or **hand** in the controls.
 
 - **Local rating (club event):** players start games themselves, choose opponents and initial seats,
   and record hands in the mobile assistant. Tables play independently, without a shared tournament timer.
@@ -40,7 +40,7 @@ in tournament controls, it can also mean all tables playing together. A **round*
    as your player title so organizers can find the right person.
 3. Read the privacy policy, accept its terms and press **Register new account**.
 4. Open the verification email and follow its confirmation link. Then log in.
-5. Check your <a href={`${env.urls.forseti}/profile/manage`}>profile</a> and tell the organizer your account is ready.
+5. Complete your <a href={`${env.urls.forseti}/profile/manage`}>profile</a> and tell the organizer your account is ready.
 
 <figure className='guideScreenshot'>
   <a href='/assets/img/guides/en/account-signup.png'><img src='/assets/img/guides/en/account-signup.png' width='1280' height='900' alt='Account sign-up form with email, player title, password and privacy policy acceptance' loading='lazy' /></a>
@@ -49,7 +49,8 @@ in tournament controls, it can also mean all tables playing together. A **round*
 
 If the email does not arrive, check spam and the address you entered. Contact the service administrator if you
 still cannot activate the account. If you already have an account, recover its password instead of creating
-another one: duplicate accounts split your game history. Sign up before arriving at a tournament.
+another one: duplicate accounts split your game history. Sign up in advance: organizers may not have time to help
+just before the tournament.
 
 <h3 id='registration'>How do I join a club rating or tournament?</h3>
 
@@ -63,8 +64,7 @@ sign-up or payment process announced by the organizer.
 <h3 id='profile'>How do I manage my profile?</h3>
 
 1. Log in to the <a href={env.urls.forseti}>profile and administration panel</a> and open
-   <a href={`${env.urls.forseti}/profile/manage`}>your account</a>. The mobile assistant also has a personal area
-   button in settings.
+   <a href={`${env.urls.forseti}/profile/manage`}>your account</a>.
 2. Update **Player title**, country, city and any optional contact or Tenhou information. Enter your public
    Tenhou username, never a login string.
 3. To add an avatar, enable the avatar option and choose an image. Use a square image up to 256 KB;
@@ -76,8 +76,9 @@ sign-up or payment process announced by the organizer.
   <figcaption>Your System ID identifies the account; your player title helps organizers find you.</figcaption>
 </figure>
 
-Your email address is read-only here. Contact the chief administrator if it needs changing.
-Account removal deletes account data; it is not needed to leave an event or change a password.
+Your email address is read-only here. Contact the service's chief administrator if it needs changing.
+Account removal deletes personal data but keeps records of games already played. Use it only if you decide
+to stop using the service; it is not needed to leave an event or change a password.
 
 <h3 id='password'>How do I change or recover my password?</h3>
 

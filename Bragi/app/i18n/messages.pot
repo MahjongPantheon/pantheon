@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-17 00:53+0100\n"
+"POT-Creation-Date: 2026-11-18 00:40+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -129,19 +129,15 @@ msgstr ""
 msgid "Pantheon is a set of tools to record and show detailed riichi mahjong games with recording assistance, admin panel and statistics service."
 msgstr ""
 
-#: app/components/TranslationNotice.tsx:11:11
-msgid "Other language editions include machine-generated translations."
+#: app/components/TranslationNotice.tsx:8:8
+msgid "This page was translated or prepared with the help of AI."
 msgstr ""
 
-#: app/components/TranslationNotice.tsx:12:11
-msgid "This page is a machine-generated translation."
+#: app/components/TranslationNotice.tsx:9:8
+msgid "If you notice any mistakes, please suggest corrections on"
 msgstr ""
 
-#: app/components/TranslationNotice.tsx:13:8
-msgid "Everyone is welcome to help refine translations. Suggest changes on"
-msgstr ""
-
-#: app/components/TranslationNotice.tsx:15:8
+#: app/components/TranslationNotice.tsx:11:8
 msgid "or contact the developers on"
 msgstr ""
 

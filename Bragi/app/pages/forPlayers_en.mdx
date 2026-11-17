@@ -7,7 +7,7 @@ import { env } from '../env';
 
 ## Using the mobile assistant
 
-Open the <a href={env.urls.tyr}>mobile assistant</a> on your phone. You need an activated Pantheon account
+Open the <a href={env.urls.tyr}>mobile assistant</a> on your phone. You need a valid Pantheon account
 and registration in the event: see <Link to='/getStarted'>Getting started and account help</Link>.
 
 On this page: [choose an event](#event), [club games](#club), [tournaments](#tournament),
@@ -87,7 +87,8 @@ appears when the next seating is generated.
 <h3 id='recording'>4. Record a hand</h3>
 
 One person enters the result; everyone at the table should check it. The same game state is shared across
-participants' assistants. Do not enter the same hand on several phones.
+participants' assistants. Do not enter the same hand on several phones at once: only the first submission
+will succeed; the others will receive an error.
 
 <figure className='guideScreenshot mobile'>
   <a href='/assets/img/guides/en/mobile-table.png'><img src='/assets/img/guides/en/mobile-table.png' width='390' height='844' alt='Current game showing player scores, winds and the add-hand button' loading='lazy' /></a>
@@ -113,8 +114,9 @@ participants' assistants. Do not enter the same hand on several phones.
 </figure>
 
 3. For each winning hand, choose its yaku. Hands are treated as closed unless you select **Open hand**.
-   For multiple winners, check each winner's hand tab. The available yaku and their combinations depend on
-   the event rules; the assistant disables incompatible selections, but players must still verify the hand.
+   For multiple winners, check each winner's hand tab, using the arrows or swiping left or right to switch.
+   The available yaku and their combinations depend on the event rules; the assistant disables incompatible
+   selections, but players must still verify the hand.
 4. Select the total number of dora and the fu value using their controls on the hand screen.
    Some fu choices are fixed or restricted by the selected yaku. Dora adds value but does not replace the
    requirement for a valid yaku. Complete any responsibility-payment (pao) selection when requested.
@@ -124,8 +126,8 @@ participants' assistants. Do not enter the same hand on several phones.
   <figcaption>Check the open or closed state, yaku, dora and fu for each winner.</figcaption>
 </figure>
 
-5. Go forward to the preview. Show the point changes to the other players and resolve disagreements now.
-   Use back to correct an entry; confirm with the check button only when the table agrees.
+5. Go forward to the preview. Show the point changes to the other players and resolve any disagreements.
+   Use back to correct an entry; confirm with the check button only when the table agrees with the result.
 
 <figure className='guideScreenshot mobile'>
   <a href='/assets/img/guides/en/mobile-preview.png'><img src='/assets/img/guides/en/mobile-preview.png' width='390' height='844' alt='Hand preview showing point changes before submission' loading='lazy' /></a>
@@ -150,8 +152,8 @@ The referee cancels the latest hand, and the table records the correct result. C
 requires cancelling and re-entering the later hands too, so agree on their details first.
 
 For a completed club game, contact the administrator before anyone starts another game: later play can prevent
-reopening the previous results. For a tournament, report the error before the administrator approves sessions.
-A timer reaching zero does not replace that approval step.
+cancelling the previous results. For a tournament, report the error before the administrator approves sessions.
+A timer reaching zero does not automatically approve the results.
 
 For standings, finished games and player statistics, use **Statistics** on the event home screen or open
 <a href={env.urls.sigrun}>ratings and statistics</a>. Visibility depends on the event settings.

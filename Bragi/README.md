@@ -55,10 +55,9 @@ translations when updating catalogs.
 The guides and screenshots are included in the normal Bragi browser/server build
 and deployment; no separate publishing service is required.
 
-The five new language editions use machine-generated translations, with a localized
-notice and GitHub/Discord contribution links at the bottom of each page. English
-and Russian pages invite the same help while explaining that other editions include
-machine translations. The Russian-only `howToPlay` and `yakuList` reference pages
+All pages use the same localized notice that their content was translated or
+prepared with the help of AI, with GitHub/Discord links for reporting mistakes
+at the bottom of each page. The Russian-only `howToPlay` and `yakuList` reference pages
 remain untranslated. Switching from these pages to another language opens that
 language's home page.
 

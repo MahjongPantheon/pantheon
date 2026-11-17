@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-17 00:53+0100\n"
+"POT-Creation-Date: 2026-11-18 00:40+0300\n"
 "Language: jp\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -19,10 +19,6 @@ msgid ""
 "Any tournament host can use Pantheon to simplify the process of holding the "
 "tournament, use included seatings and other useful tools"
 msgstr "席順の作成などの運営ツールで、大会の進行を簡単にできます。"
-
-#: app/components/TranslationNotice.tsx:13:8
-msgid "Everyone is welcome to help refine translations. Suggest changes on"
-msgstr "翻訳の改善にはどなたでもご協力いただけます。修正の提案先："
 
 #: app/Nav.ts:83:33
 msgid "For hosts"
@@ -48,6 +44,10 @@ msgstr "はじめに"
 msgid "Have issue?"
 msgstr "お問い合わせ"
 
+#: app/components/TranslationNotice.tsx:9:8
+msgid "If you notice any mistakes, please suggest corrections on"
+msgstr "誤りにお気づきの場合は、次のサイトで修正をご提案ください："
+
 #: app/components/FeaturesList.tsx:51:12
 msgid "Local club games"
 msgstr "クラブでの対局"
@@ -72,10 +72,6 @@ msgstr "ナビゲーションメニュー"
 #: app/components/FeaturesList.tsx:44:12
 msgid "Online tournaments"
 msgstr "オンライン大会"
-
-#: app/components/TranslationNotice.tsx:11:11
-msgid "Other language editions include machine-generated translations."
-msgstr "他言語版には機械翻訳が含まれます。"
 
 #: app/components/FeaturesList.tsx:52:18
 msgid ""
@@ -152,9 +148,9 @@ msgid ""
 msgstr ""
 "外部プラットフォームでオンライン大会を開催し、牌譜を取り込んで閲覧できます。"
 
-#: app/components/TranslationNotice.tsx:12:11
-msgid "This page is a machine-generated translation."
-msgstr "このページは機械翻訳です。"
+#: app/components/TranslationNotice.tsx:8:8
+msgid "This page was translated or prepared with the help of AI."
+msgstr "このページは AI の支援を受けて翻訳または作成されました。"
 
 #: app/components/AppFooter.tsx:143:20 app/components/AppFooter.tsx:144:25
 msgid "Toggle color scheme"
@@ -168,6 +164,6 @@ msgstr "大会運営支援"
 msgid "Track and assist your riichi games"
 msgstr "リーチ麻雀の対局を記録・サポート"
 
-#: app/components/TranslationNotice.tsx:15:8
+#: app/components/TranslationNotice.tsx:11:8
 msgid "or contact the developers on"
 msgstr "／開発者へのお問い合わせ先："

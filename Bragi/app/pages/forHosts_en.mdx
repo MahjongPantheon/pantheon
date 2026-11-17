@@ -26,7 +26,7 @@ An existing club event can continue across many visits: tables start and finish 
 
 #### 2. Add players
 
-1. Ask each player to <a href='/en/getStarted#sign-up'>create and activate an account</a> first.
+1. Ask each player to <a href='/en/getStarted#sign-up'>create an account</a> in advance if they do not already have one.
 2. Open **Manage players**. In **Find and add player by name or ID...**, enter a player title or `#` followed
    by their System ID.
 3. Select the correct search result. Check the ID when names are similar.
@@ -38,8 +38,8 @@ An existing club event can continue across many visits: tables start and finish 
   <figcaption>Register existing accounts here. Creating an account and joining an event are separate steps.</figcaption>
 </figure>
 
-Club registration can continue while the event is running. Use the remove-player icon for an accidental registration
-when available; removing a player from the list does not cancel their games. Administration rights are managed
+Club registration can continue while the event is running. If a player was added by mistake, use the remove-player
+icon when available; removing a player from the list does not cancel their games. Administration rights are managed
 separately in **Manage privileges**.
 
 #### 3. Let players start their games
@@ -48,10 +48,11 @@ Players choose **New game** in the mobile assistant, select the participants in 
 (or East–South–West for sanma), optionally shuffle them, and start. Only registered players can be selected.
 There is no shared club timer or automatic tournament seating. See the <a href='/en/forPlayers#club'>player guide</a>.
 
-#### 4. Cancel an incorrectly started game
+#### 4. Cancelling incorrectly created games
 
 1. Open **Manage games** and identify the table by its players.
 2. If no hands have been recorded, press **Remove game** and confirm. This removes the entire empty game.
+   If the game has recorded hands, cancel all of them first.
 3. Ask the players to refresh the assistant and start again with the correct participants and seats.
 
 <figure className='guideScreenshot'>
@@ -61,8 +62,7 @@ There is no shared club timer or automatic tournament seating. See the <a href='
 
 Once a hand has been recorded, **Cancel round** replaces **Remove game**. Check the latest hand with the players,
 press **Cancel round**, confirm, then have them enter the correct result. To reach an older error, later hands
-must be cancelled and re-entered in reverse order; agree on the record before doing this.
-If all hands are cancelled, the empty game can be removed.
+must be cancelled in reverse order and then re-entered in playing order; agree on the record before doing this.
 
 <figure className='guideScreenshot'>
   <a href='/assets/img/guides/en/club-cancel-round.png'><img src='/assets/img/guides/en/club-cancel-round.png' width='1280' height='900' alt='Confirmation dialog for cancelling the latest hand of a club game' loading='lazy' /></a>
@@ -78,11 +78,13 @@ can prevent reopening. Correct mistakes before players start their next game.
 #### 1. Prepare the event and timer settings
 
 Create an event with type **Tournament**, or open an existing one. Choose the ruleset and timezone.
-In **Tournament settings**, check **Session duration in minutes** and **Session ending policy**, then save:
+In **Tournament settings**, check **Session duration in minutes** and **Session ending policy**:
 
 - **Do not interrupt session until it ends:** the timer does not force the game to end.
 - **When time is out, finish current hand and interrupt the session.**
 - **When time is out, finish current hand, play one more, and then interrupt the session.**
+
+Remember to save the settings.
 
 <figure className='guideScreenshot'>
   <a href='/assets/img/guides/en/tournament-settings.png'><img src='/assets/img/guides/en/tournament-settings.png' width='1280' height='1081' alt='Tournament settings for duration, ending policy, predefined seating and wind shuffle' loading='lazy' /></a>
@@ -93,7 +95,7 @@ In **Tournament settings**, check **Session duration in minutes** and **Session 
 
 Open **Manage players**, search by player title or `#SystemID`, and select each account, as in the club guide.
 Complete the list before generating the first seating: creating the tournament sessions locks additions
-and removals, even before the timer starts.
+and removals.
 
 For automatic seating, the number of included players must be a multiple of **four**, or **three for sanma**.
 The chair icon includes or excludes a player from the next seating when the controls allow it. Exclude non-playing
@@ -105,8 +107,10 @@ referees if they are on the player list. An excluded player remains registered. 
 </figure>
 
 If a participant needs a substitute, use the replacement control beside their name. Select someone who is not
-already registered in this event. Substitution scoring follows the event settings. Clear the replacement before
-results are approved when the original participant returns.
+already registered in this event. A dedicated substitute account can be used if the substitute does not want
+to play with their own account. Substitution scoring follows the event settings and is applied when results
+are approved. When the original participant returns, clear the replacement before results are approved,
+if the tournament regulations allow it.
 
 #### 3. Generate seating
 
@@ -148,17 +152,16 @@ also give players a clear start signal. The status becomes **Session started**.
 
 During play, **Add extra time** in the tournament controls extends all tables. Choose 1, 2, 3, 4, 5 or 7 minutes
 and confirm. The **Add extra time** control within an individual table extends only that table, for example after
-a referee interruption. Check which control you are using before confirming. The current panel offers time
-extensions, rather than a pause or reset button.
+a referee interruption. Check which control you are using before confirming.
 
 <figure className='guideScreenshot'>
   <a href='/assets/img/guides/en/tournament-timer.png'><img src='/assets/img/guides/en/tournament-timer.png' width='1280' height='900' alt='Add extra time dialog in the tournament controls, stating that it applies to all tables' loading='lazy' /></a>
   <figcaption>Use the global control for all tables and a table control for an individual delay.</figcaption>
 </figure>
 
-When time expires, apply the configured ending policy. A zero timer does not itself approve the results.
+When time expires, apply the configured game-ending policy. A zero timer does not itself approve the results.
 
-#### 5. Correct or cancel a recorded hand
+#### 5. Correcting or cancelling recorded hands
 
 On **Manage games**, find the affected table and use **Cancel round**, then confirm and ask the players to
 refresh and re-enter the result. It cancels only the latest recorded hand. It is also available for a table
@@ -189,7 +192,7 @@ Repeat seating → verify tables → start timer → record games → check and 
 
 <h3 id='predefined'>Predefined seating: prepare a script in advance</h3>
 
-Use this when you already have the full table plan. Enable **Seating is defined in advance** in
+Use this when you already have the game plan for all tables. Enable **Seating is defined in advance** in
 **Tournament settings** and save. Automatic random, Swiss and interval controls are replaced by **Next seating**.
 
 1. Register the participants, then open the **Local IDs** tab in **Manage players**. Assign each player a unique
@@ -197,8 +200,8 @@ Use this when you already have the full table plan. Enable **Seating is defined 
 2. Open **Predefined seating** in the event sidebar. Enter one table per line, with local IDs separated by hyphens.
    Separate sessions with a blank line. Every table needs four IDs, or three for sanma; do not repeat a player
    within the same session.
-3. Set **Next session index** to 1 for a new script and press **Update script**. Resolve all reported errors
-   before proceeding.
+3. For a new script, set **Next session index** to 1 (this value is set automatically when the event is created)
+   and press **Update script**. Resolve all reported errors before proceeding.
 4. On **Manage games**, press **Next seating** and confirm. Check tables and winds, then start the timer as usual.
    The next session index advances when the timer starts. After approval, generate the next scripted seating.
 
