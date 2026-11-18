@@ -41,7 +41,7 @@ export async function getBestDealer(event: EventEntity, repo: Repository) {
   const bestDealerWonMapCountSorted = [...bestDealerWonMapCount.entries()].sort(
     (a, b) => b[1] - a[1]
   );
-  const bestDealerWonCount = bestDealerWonMapCountSorted[0][1];
+  const bestDealerWonCount = bestDealerWonMapCountSorted[0]?.[1] ?? 0;
   const playerIds = new Set<number>();
   for (const [playerId, count] of bestDealerWonMapCountSorted) {
     if (count === bestDealerWonCount) {

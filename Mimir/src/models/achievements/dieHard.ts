@@ -37,7 +37,7 @@ export async function getDieHard(event: EventEntity, repo: Repository) {
   }
 
   const bestCountsSorted = [...throwCounts.entries()].sort((a, b) => a[1] - b[1]);
-  const bestCount = bestCountsSorted[0][1];
+  const bestCount = bestCountsSorted[0]?.[1] ?? 0;
   const playerIds = new Set<number>();
   for (const [playerId, count] of bestCountsSorted) {
     if (count === bestCount) {
