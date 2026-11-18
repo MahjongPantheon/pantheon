@@ -27,6 +27,11 @@ import { getDovakin } from './dovakin.js';
 import { getCatchThemAll } from './catchThemAll.js';
 import { Yaku } from '../../helpers/yaku.js';
 import { getHonoredDonor } from './honoredDonor.js';
+import { getRiichiNomi } from './riichiNomi.js';
+import { getBestShithander } from './bestShithander.js';
+import { getBraveSapper } from './braveSapper.js';
+import { getJustAsPlanned } from './justAsPlanned.js';
+import { getNinja } from './ninja.js';
 import { init } from '../../tests/initOrm.js';
 import { makePlayer } from '../../tests/playerFixtures.js';
 import { RoundOutcome } from 'tsclients/proto/atoms.pb.js';
@@ -130,6 +135,40 @@ describe('Achievement calculations', () => {
       12000, 12000, 12000,
     ]);
     expect(await getDieHard(event, repo)).toEqual({ count: 1, playerIds: [1, 2, 3] });
+  });
+
+  it('counts only one-han riichi ron as riichi nomi and returns no winners without one', async () => {
+    const { event, session } = fixture();
+    const ron = round(session, RoundOutcome.ROUND_OUTCOME_RON, [1]);
+    ron.hands[0].han = 2;
+    ron.hands[0].yaku = [Yaku.RIICHI, Yaku.TANYAO];
+    const tsumo = round(session, RoundOutcome.ROUND_OUTCOME_TSUMO, [2]);
+    tsumo.hands[0].han = 1;
+    tsumo.hands[0].yaku = [Yaku.RIICHI];
+    vi.spyOn(sessionModel, 'findByEventAndStatus').mockResolvedValue([session]);
+    vi.spyOn(roundModel, 'findBySessionIds').mockResolvedValue([ron, tsumo]);
+    await expect(getRiichiNomi(event, repo)).resolves.toEqual({ count: 0, playerIds: [] });
+  });
+
+  it('returns zero counts with no winners for an event without finished games', async () => {
+    const { event } = fixture();
+    vi.spyOn(sessionModel, 'findByEventAndStatus').mockResolvedValue([]);
+    vi.spyOn(roundModel, 'findBySessionIds').mockResolvedValue([]);
+    const empty = { count: 0, playerIds: [] };
+    await expect(getRiichiNomi(event, repo)).resolves.toEqual(empty);
+    await expect(getNinja(event, repo)).resolves.toEqual(empty);
+    await expect(getBraveSapper(event, repo)).resolves.toEqual(empty);
+    await expect(getDieHard(event, repo)).resolves.toEqual(empty);
+    await expect(getJustAsPlanned(event, repo)).resolves.toEqual(empty);
+    await expect(getDovakin(event, repo)).resolves.toEqual(empty);
+    await expect(getCatchThemAll(event, repo)).resolves.toEqual(empty);
+    await expect(getBestShithander(event, repo)).resolves.toEqual({ handsCount: 0, playerIds: [] });
+    await expect(getBestDealer(event, repo)).resolves.toEqual({ bestWinCount: 0, playerIds: [] });
+    await expect(getBestTsumoistInSingleSession(event, repo)).resolves.toEqual({
+      tsumo: 0,
+      playerIds: [],
+      gamesByPlayer: {},
+    });
   });
 
   it('selects tied maximum tsumo counts within a single session rather than event totals', async () => {

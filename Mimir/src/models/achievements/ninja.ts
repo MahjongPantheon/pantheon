@@ -36,7 +36,7 @@ export async function getNinja(event: EventEntity, repo: Repository) {
   }
 
   const bestCountsSorted = [...damatenCounts.entries()].sort((a, b) => b[1] - a[1]);
-  const bestCount = bestCountsSorted[0][1];
+  const bestCount = bestCountsSorted[0]?.[1] ?? 0;
   const playerIds = new Set<number>();
   for (const [playerId, count] of bestCountsSorted) {
     if (count === bestCount) {
