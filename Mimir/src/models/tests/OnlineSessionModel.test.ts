@@ -61,6 +61,7 @@ function fixture() {
 describe('Online replay import', () => {
   afterEach(() => {
     vi.restoreAllMocks();
+    vi.useRealTimers();
     repo.em.clear();
   });
   afterAll(() => repo.destroy());
@@ -348,6 +349,27 @@ describe('Online replay import', () => {
     expect(() => model._checkGameTimestampExpired(0, event.ruleset.rules)).toThrow(
       'Replay is older'
     );
+  });
+
+  it('refuses replays older than the configured number of hours', () => {
+    vi.useFakeTimers({ toFake: ['Date'] });
+    vi.setSystemTime(new Date(2026, 0, 2, 0, 30));
+    const { event } = fixture();
+    event.ruleset.rules.gameExpirationTime = 24;
+    const now = Math.floor(Date.now() / 1000);
+    const limit = 24 * 60 * 60;
+    expect(() =>
+      model._checkGameTimestampExpired(now - limit + 1, event.ruleset.rules)
+    ).not.toThrow();
+    expect(() => model._checkGameTimestampExpired(now - limit - 1, event.ruleset.rules)).toThrow(
+      'Replay is older than 24 hours'
+    );
+    expect(() =>
+      model._checkGameExpired('2026010101gm-0001-0000-12345678', event.ruleset.rules)
+    ).not.toThrow();
+    expect(() =>
+      model._checkGameExpired('2026010100gm-0001-0000-12345678', event.ruleset.rules)
+    ).toThrow('Replay is older than 24 hours');
   });
 
   describe('Ronin replay import', () => {
