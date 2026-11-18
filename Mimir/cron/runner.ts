@@ -1,6 +1,5 @@
 import { FlushMode } from '@mikro-orm/core';
-import { MikroORM } from '@mikro-orm/postgresql';
-import config from '../src/mikro-orm.config.js';
+import { MikroORM, Options } from '@mikro-orm/postgresql';
 import { Repository } from '../src/services/Repository.js';
 import { rebuildAchievements } from './achievements.js';
 import { rebuildPlayerStats } from './player_stats.js';
@@ -35,10 +34,10 @@ export async function runJob(repo: Repository, name: JobName) {
   return withJobLock(repo, name, () => handlers[name](repo));
 }
 
-export async function runWorker(name: JobName) {
+export async function runWorker(name: JobName, config: Options) {
   const startedAt = Date.now();
   console.log(JSON.stringify({ job: name, status: 'started' }));
-  const orm = await MikroORM.init(config());
+  const orm = await MikroORM.init(config);
   const repo = Repository.instance({}, orm);
   try {
     await repo.cache.connect();

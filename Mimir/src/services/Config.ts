@@ -27,6 +27,7 @@ type EnvVars = {
   LOG_FACILITY: string; // 'stdout' (default) or full path to log file
   TZ: string;
   TEST: string;
+  MIMIR_CRON_CONCURRENCY: string;
 };
 
 export class ConfigService {
@@ -60,6 +61,14 @@ export class ConfigService {
   // For unit testing, should not be true in any other cases
   get test(): boolean {
     return this._test;
+  }
+
+  get cronConcurrency(): number {
+    const value = Number(this._envData.MIMIR_CRON_CONCURRENCY ?? '2');
+    if (!Number.isSafeInteger(value) || value < 1) {
+      throw new Error('MIMIR_CRON_CONCURRENCY must be a positive integer');
+    }
+    return value;
   }
 
   get db() {

@@ -82,12 +82,12 @@ describe('PlayerStatsModel.getPlayerStats', () => {
       throw new Error(`Unexpected query: ${String(entity)}`);
     });
     vi.spyOn(repo.em, 'findOne').mockImplementation(async () => cache);
-    vi.spyOn(repo.em, 'persist').mockImplementation((entity) => {
+    vi.spyOn(repo.em, 'upsert').mockImplementation(async (entity) => {
       // Exercise the JSON representation stored in PostgreSQL, including cache updates.
       cache = Object.assign(new PlayerStatsEntity(), entity, {
         data: JSON.parse(JSON.stringify((entity as PlayerStatsEntity).data)),
       });
-      return repo.em;
+      return cache;
     });
     vi.spyOn(players, 'findById').mockImplementation(async (ids) => ids.map(makePlayer));
     vi.spyOn(players, 'findPlayerIdsForSessions').mockResolvedValue(
@@ -274,7 +274,7 @@ describe('PlayerStatsModel.getPlayerStats', () => {
     expect(result.totalPlayedGames).toBe(2);
     expect(result.playersInfo).toHaveLength(4);
     expect(stats._fetchGamesHistory).toHaveBeenCalledWith(19, 101, '2026-01-01', undefined);
-    expect(repo.em.persist).not.toHaveBeenCalled();
+    expect(repo.em.upsert).not.toHaveBeenCalled();
     expect(cache.data.totalPlayedGames).toBe(99);
   });
 

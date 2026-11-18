@@ -16,8 +16,12 @@ export async function rebuildScoring(repo: Repository) {
   }
 
   const eventModel = Model.getModel(repo, EventModel);
+  const unique = new Map<number, (typeof jobs)[number]>();
+  for (const job of jobs) {
+    unique.set(+JSON.parse(job.jobArguments).eventId, job);
+  }
   await settleJobs(
-    jobs.map((job) => async () => {
+    Array.from(unique.values(), (job) => async () => {
       const { eventId } = JSON.parse(job.jobArguments);
       try {
         await eventModel.rebuildEventScoring(+eventId);
@@ -29,7 +33,8 @@ export async function rebuildScoring(repo: Repository) {
           }
         );
       }
-    })
+    }),
+    repo.config.cronConcurrency
   );
   repo.em.remove(jobs);
   return jobs.length;

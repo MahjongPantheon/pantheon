@@ -9,6 +9,7 @@ export async function rebuildAchievements(repo: Repository) {
     where: {
       jobName: 'achievements',
     },
+    orderBy: { id: 'asc' },
     limit: 20,
   });
 
@@ -17,11 +18,12 @@ export async function rebuildAchievements(repo: Repository) {
   }
 
   const achievementsModel = Model.getModel(repo, AchievementsModel);
+  const eventIds = new Set(jobs.map((job) => +JSON.parse(job.jobArguments).eventId));
   await settleJobs(
-    jobs.map((job) => async () => {
-      const { eventId } = JSON.parse(job.jobArguments);
+    Array.from(eventIds, (eventId) => async () => {
       await achievementsModel.precalculateAchievements(eventId);
-    })
+    }),
+    repo.config.cronConcurrency
   );
   repo.em.remove(jobs);
   return jobs.length;

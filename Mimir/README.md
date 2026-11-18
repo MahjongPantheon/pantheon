@@ -42,10 +42,11 @@ The `test_verbose` and `test_noserver` targets retain their existing debugging b
 generating the combined report. The coverage target starts and stops its own test server.
 
 The normal test target also builds the production server and runs it from an isolated
-directory against the seeded test database. This checks that the deployed bundle can
-read an event without TypeScript sources. Deploy both `server.js` and `metadata.json`;
+directory against the seeded test database. This checks that the deployed API can
+read an event and the compiled cron worker can initialize without TypeScript sources
+or runtime reflection tooling. Deploy `server.js`, `cron.js`, `worker.js` and `metadata.json`;
 the latter contains the ORM metadata generated from the source entities during the build.
-Register new entities in `src/mikro-orm.config.ts` so they are included in the bundle and its metadata.
+Register new entities in `src/orm.config.ts` so they are included in the bundle and its metadata.
 
 ### Retry-safe mutations
 
@@ -83,7 +84,9 @@ failure semantics; database idempotency does not make remote calls transactional
 
 ### Scheduled workers
 
-Supervisor runs `cron/cron.ts`, a scheduler with no database or Redis connections.
+Supervisor runs the compiled `cron.js` in production and `cron/cron.ts` in development,
+a scheduler with no database or Redis connections. The production API and workers
+use generated ORM metadata; TypeScript reflection is confined to source tools and builds.
 Every minute it launches a separate Node process for each of `achievements`,
 `playerStats`, `scoring`, and `metrics`. Each process initializes its own services, executes
 one bounded batch, closes its services, and exits. Business handlers accept a
@@ -95,6 +98,20 @@ across scheduler processes and containers. Lock identifiers in `cron/jobs.ts`
 must remain stable across deployments. Different job types can run concurrently.
 Results and completed queue entries commit together. Failed batches remain queued
 for the next tick; all started operations settle before rollback begins.
+
+Each job type processes at most two rebuilds concurrently by default. Set
+`MIMIR_CRON_CONCURRENCY` to a positive integer to tune this per-process limit.
+Player statistics batches select up to 300 queue records; achievements and scoring
+select up to 20. Duplicate player/event or event rebuilds in the selected batch run
+once, while all selected duplicate queue records are removed on successful commit.
+Jobs queued after selection remain for a later batch.
+
+Player statistics read only the session/result fields needed for the returned
+histories, and fold detached pages of up to 256 rounds across at most 128 session
+IDs per query into summaries. Cached statistics writes use the same transaction
+without retaining each rebuilt history in the batch's ORM identity map. Per-game
+rating and score histories still grow with the number of games because they are
+part of the API response.
 
 Each execution has a five-minute deadline, including startup and cleanup. The
 scheduler sends SIGTERM at the deadline and SIGKILL after a five-second grace
