@@ -17,7 +17,6 @@
 
 import './pwa';
 import React from 'react';
-import ReactDOM from 'react-dom/client';
 import { App } from './App';
 import { Router } from 'wouter';
 import { StorageStrategyClient } from '../../Common/storageStrategyClient';
@@ -30,6 +29,7 @@ import { registerFrontErrorHandler } from './helpers/logFrontError';
 import { env } from './env';
 import { HelmetProvider } from 'react-helmet-async';
 import { fontLoader } from './helpers/fontLoader';
+import { renderApp } from './helpers/renderApp';
 
 registerFrontErrorHandler();
 const storageStrategy = new StorageStrategyClient(env.cookieDomain);
@@ -43,7 +43,8 @@ i18n.init(
 );
 
 let isomorphicCtxValue = { __running: 0 };
-if (window && (window as any).initialData) {
+const hasServerData = !!(window as any).initialData;
+if (hasServerData) {
   isomorphicCtxValue = (window as any).initialData;
   isomorphicCtxValue.__running = 0;
 }
@@ -54,33 +55,18 @@ window.addEventListener('error', (event) => {
   }
 });
 
-if (import.meta.env.MODE === 'development') {
-  ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-    <React.StrictMode>
-      <HelmetProvider>
-        <Isomorphic.Provider value={isomorphicCtxValue}>
-          <Router hook={useLocation}>
-            <Layout>
-              <App />
-            </Layout>
-          </Router>
-        </Isomorphic.Provider>
-      </HelmetProvider>
-    </React.StrictMode>
-  );
-} else {
-  ReactDOM.hydrateRoot(
-    document.getElementById('root') as HTMLElement,
-    <React.StrictMode>
-      <HelmetProvider>
-        <Isomorphic.Provider value={isomorphicCtxValue}>
-          <Router hook={useLocation}>
-            <Layout>
-              <App />
-            </Layout>
-          </Router>
-        </Isomorphic.Provider>
-      </HelmetProvider>
-    </React.StrictMode>
-  );
-}
+renderApp(
+  document.getElementById('root') as HTMLElement,
+  <React.StrictMode>
+    <HelmetProvider>
+      <Isomorphic.Provider value={isomorphicCtxValue}>
+        <Router hook={useLocation}>
+          <Layout>
+            <App />
+          </Layout>
+        </Router>
+      </Isomorphic.Provider>
+    </HelmetProvider>
+  </React.StrictMode>,
+  hasServerData
+);

@@ -75,8 +75,8 @@ export const TeamTable = ({ players, events }: { players: PlayerInRating[]; even
                 <Badge w={50} size='xl' color='blue' radius='sm' style={{ padding: 0 }}>
                   {idx + 1}
                 </Badge>
-                <Text fw={700} style={{ flex: 1 }}>
-                  <Text display='inline-flex' mr={14}>
+                <Text component='div' fw={700} style={{ flex: 1 }}>
+                  <Text span display='inline-flex' mr={14}>
                     {team.name}
                   </Text>
                   <Badge

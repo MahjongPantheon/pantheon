@@ -40,7 +40,7 @@ import { Suspense, useState } from 'react';
 import { Player, SessionHistoryResultTable } from 'tsclients/proto/atoms.pb';
 import { PlayersGetPlayerStatsResponse } from 'tsclients/proto/mimir.pb';
 import { PlayerAvatar } from '../components/PlayerAvatar';
-import { useMediaQuery } from '@mantine/hooks';
+import { useMediaQuery, useMounted } from '@mantine/hooks';
 import { PlayerStatsListing } from '../components/PlayerStatsListing';
 import { useI18n } from '../hooks/i18n';
 import { IconChevronLeft, IconChevronRight, IconInfoCircle, IconX } from '@tabler/icons-react';
@@ -68,6 +68,7 @@ const PlayerStatsContent: React.FC<PlayerStatsProps & { events: ReturnType<typeo
 }) => {
   const api = useApi();
   const largeScreen = useMediaQuery('(min-width: 768px)');
+  const mounted = useMounted();
   const DataCmp = largeScreen ? Group : Stack;
 
   const [lastSelectionX, setLastSelectionX] = useState<number | null>(null);
@@ -130,7 +131,7 @@ const PlayerStatsContent: React.FC<PlayerStatsProps & { events: ReturnType<typeo
       <Space h='md' />
       <Suspense fallback={<Skeleton height={400} />}>
         <div data-testid='sigrun-player-stats-rating-graph'>
-          {statsLoading ? (
+          {statsLoading || !mounted ? (
             <Skeleton height={400} data-testid='sigrun-player-stats-rating-skeleton' />
           ) : (
             <RatingGraph
@@ -172,7 +173,7 @@ const PlayerStatsContent: React.FC<PlayerStatsProps & { events: ReturnType<typeo
       <Divider size='xs' />
       <Space h='md' />
       <Suspense fallback={<Skeleton height={350} />}>
-        {statsLoading ? (
+        {statsLoading || !mounted ? (
           <Skeleton height={350} data-testid='sigrun-player-stats-hands-skeleton' />
         ) : (
           <HandsGraph handValueStat={playerStats.handsValueSummary} />
@@ -182,7 +183,7 @@ const PlayerStatsContent: React.FC<PlayerStatsProps & { events: ReturnType<typeo
       <Divider size='xs' />
       <Space h='md' />
       <Suspense fallback={<Skeleton height={112} />}>
-        {statsLoading ? (
+        {statsLoading || !mounted ? (
           <Skeleton height={112} data-testid='sigrun-player-stats-yaku-skeleton' />
         ) : (
           <YakuGraph yakuStat={playerStats.yakuSummary} />

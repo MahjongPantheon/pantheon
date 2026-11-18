@@ -49,6 +49,17 @@ export default defineConfig({
       },
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg,jpg,gif,woff2}'],
+        // Online navigations need request-specific SSR HTML. Use the static shell
+        // only when offline; the client renders it without hydration data.
+        directoryIndex: null,
+        navigateFallback: null,
+        runtimeCaching: [
+          {
+            urlPattern: ({ request }) => request.mode === 'navigate',
+            handler: 'NetworkOnly',
+            options: { precacheFallback: { fallbackURL: 'index.html' } },
+          },
+        ],
       },
       includeAssets: ['apple-touch-icon.png'],
       manifest: {

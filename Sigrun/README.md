@@ -43,6 +43,13 @@ theme persistence, hydration, and request-specific CSS extraction.
 Fenrir's UI-004 case covers responsive navigation and display preferences;
 run it against a production SSR build as well as the development server.
 
+Online PWA navigations request fresh SSR HTML. The precached HTML shell is used
+only as an offline fallback and renders on the client without hydration. The
+client also accepts shells cached by older service workers. Browser-only charts
+start loading after hydration, with the same skeletons on the server and client.
+Fenrir's PWA-001 case verifies online reloads and offline navigation with an active
+service worker against the production SSR build.
+
 We accept any help with developing, testing and improving our system, so please feel free to create issues or send
 pull requests for missing functionality.
 

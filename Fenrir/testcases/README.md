@@ -31,6 +31,10 @@ SMOKE-005 and SMOKE-006 share the [complete yaku hand catalogue](smoke-hand-cata
 
 These descriptions cover all existing tests; improvements and coverage limits are identified separately. AUTH-003 covers navigation to password recovery; AUTH-004 covers the password-reset journey.
 
+[PWA-001](pwa-001-sigrun-reload.md) verifies online SSR reloads and offline cached-shell
+rendering with a real Sigrun service worker in `tests/sigrun-pwa.spec.ts`. It requires
+a production SSR build and explicitly skips on the development Vite server.
+
 For implementation, follow the Fenrir guidance in [AGENTS.md](../../AGENTS.md). Assert every documented expected result and keep the description aligned with the implementation. Use setup helpers for unrelated prerequisites so cases remain independent.
 
 Run flows from the repository root with `./run e2e dev` against the development stack. See the [root README](../../README.md) for environment setup and the production-build e2e flow. Development e2e runs do not cover SSR.

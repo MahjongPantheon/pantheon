@@ -3,6 +3,8 @@ import { MantineProvider } from '@mantine/core';
 import { afterEach, beforeEach, expect, it, vi } from 'vitest';
 import { PlayerStats } from './PlayerStats';
 import { Isomorphic } from '../hooks/isomorphic';
+import { renderToString } from 'react-dom/server';
+import { hydrateRoot, Root } from 'react-dom/client';
 
 const f = vi.hoisted(() => ({
   navigate: vi.fn(),
@@ -143,4 +145,29 @@ it.each([false, true])('retains game preview navigation and date filters=%s', as
   );
   fireEvent.click(screen.getByTestId('sigrun-player-stats-close-game-preview'));
   expect(screen.queryByTestId('sigrun-player-stats-selected-game-link')).toBeNull();
+});
+
+it('hydrates chart skeletons before loading browser-only graphs', async () => {
+  const container = document.createElement('div');
+  container.innerHTML = renderToString(view('1'));
+  document.body.append(container);
+  for (const chart of ['rating', 'hands', 'yaku']) {
+    expect(
+      container.querySelector(`[data-testid="sigrun-player-stats-${chart}-skeleton"]`)
+    ).toBeTruthy();
+  }
+  const errors = vi.fn();
+  let root: Root | undefined;
+  try {
+    await act(async () => {
+      root = hydrateRoot(container, view('1'), { onRecoverableError: errors });
+    });
+    expect(container.textContent).toContain('Rating graph');
+    expect(container.textContent).toContain('Hands graph');
+    expect(container.textContent).toContain('Yaku graph');
+    expect(errors).not.toHaveBeenCalled();
+  } finally {
+    await act(async () => root?.unmount());
+    container.remove();
+  }
 });
