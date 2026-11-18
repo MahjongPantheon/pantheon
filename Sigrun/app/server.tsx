@@ -15,66 +15,69 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import ReactDOMServer from 'react-dom/server';
 import { App } from './App';
 import { Router } from 'wouter';
 import { StorageStrategyServer } from '../../Common/storageStrategyServer';
 import { Isomorphic } from './hooks/isomorphic';
 import { Layout } from './Layout';
 import { HelmetProvider } from 'react-helmet-async';
-import { JSDOM } from 'jsdom';
-import { storage } from './hooks/storage';
-import { i18n } from './hooks/i18n';
+import { StorageProvider } from './hooks/storage';
+import { I18nProvider } from './hooks/i18n';
+import { ApiProvider } from './hooks/api';
+import { Storage } from '../../Common/storage';
+import { I18nService } from './services/i18n';
+import { ApiService } from './services/api';
+import { preloadRouteData } from './services/routeData';
 import createEmotionServer from '@emotion/server/create-instance';
 import { createEmotionCache } from './emotion/cache';
 import { renderDocument } from './helpers/renderDocument';
 import { serializeServerData } from './helpers/serializeServerData';
 
-export async function SSRRender(url: string, cookies: Record<string, string>) {
+export async function SSRRender(
+  url: string,
+  cookies: Record<string, string>,
+  options: { signal?: AbortSignal } = {}
+) {
+  const signal = options.signal ?? AbortSignal.timeout(10000);
   const emotionCache = createEmotionCache();
   const stylesServer = createEmotionServer(emotionCache);
   const storageStrategy = new StorageStrategyServer();
-  storageStrategy.fill(cookies);
+  storageStrategy.fill({ ...cookies });
+  const storage = new Storage();
   storage.setStrategy(storageStrategy);
-  i18n.init(
-    (locale) => {
+  const i18n = new I18nService(storage);
+  await new Promise<void>((resolve, reject) => {
+    i18n.init((locale) => {
       storage.setLang(locale);
-    },
-    (err) => console.error(err)
+      resolve();
+    }, reject);
+  });
+  const api = new ApiService(
+    import.meta.env.VITE_FREY_URL_SSR,
+    import.meta.env.VITE_MIMIR_URL_SSR,
+    signal
   );
-
-  const isomorphicCtxValue: Record<string, any> & { requests?: any[] } = { requests: [] };
-  (global as any).JSDOM = JSDOM;
-
-  // First pass to collect effects
-  ReactDOMServer.renderToString(
-    <Isomorphic.Provider value={isomorphicCtxValue}>
-      <HelmetProvider>
-        <Router ssrPath={url}>
-          <Layout emotionCache={emotionCache}>
-            <App />
-          </Layout>
-        </Router>
-      </HelmetProvider>
-    </Isomorphic.Provider>
-  );
-
-  if (isomorphicCtxValue.requests) {
-    await Promise.all(isomorphicCtxValue.requests);
-    delete isomorphicCtxValue.requests;
-  }
+  api.setCredentials(storage.getPersonId() ?? 0, storage.getAuthToken() ?? '');
+  const isomorphicCtxValue = await preloadRouteData(url, api, storage.getPersonId(), signal);
 
   const { appHtml, head } = renderDocument(
     <Isomorphic.Provider value={isomorphicCtxValue}>
-      <HelmetProvider>
-        <Router ssrPath={url}>
-          <Layout emotionCache={emotionCache}>
-            <App />
-          </Layout>
-        </Router>
-      </HelmetProvider>
+      <StorageProvider value={storage}>
+        <I18nProvider value={i18n}>
+          <ApiProvider value={api}>
+            <HelmetProvider>
+              <Router ssrPath={url}>
+                <Layout emotionCache={emotionCache}>
+                  <App />
+                </Layout>
+              </Router>
+            </HelmetProvider>
+          </ApiProvider>
+        </I18nProvider>
+      </StorageProvider>
     </Isomorphic.Provider>
   );
+  signal.throwIfAborted();
 
   return {
     appHtml,

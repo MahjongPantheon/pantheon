@@ -31,6 +31,7 @@ import { Globals, globalsCtx } from './hooks/globals';
 import { AppFooter } from './components/AppFooter';
 import { NavigationProgress } from '@mantine/nprogress';
 import { useIsomorphicState } from './hooks/useIsomorphicState';
+import { loadAuthData } from './services/routeData';
 import { PersonEx, PlatformType } from 'tsclients/proto/atoms.pb';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import { MainMenu } from './components/MainMenu';
@@ -85,22 +86,7 @@ export function Layout({
   >(
     [false, false, null, []],
     'Global_auth_' + (personId ?? '').toString(),
-    () => {
-      if (!personId) {
-        return Promise.resolve([false, false, null, []]);
-      }
-      return Promise.allSettled([
-        api.quickAuthorize(),
-        api.getSuperadminFlag(personId ?? undefined),
-        api.getPersonalInfo(personId ?? undefined),
-        api.getOwnedEventIds(personId ?? undefined),
-      ]).then(([authdata, superadmin, info, ownedEvents]) => [
-        authdata.status === 'fulfilled' ? authdata.value : false,
-        superadmin.status === 'fulfilled' ? superadmin.value : false,
-        info.status === 'fulfilled' ? info.value : null,
-        ownedEvents.status === 'fulfilled' ? ownedEvents.value : [],
-      ]);
-    },
+    () => loadAuthData(api, personId),
     [personId]
   );
 

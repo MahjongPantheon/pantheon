@@ -75,9 +75,6 @@ importers:
       i18n-proto:
         specifier: ^1.0.5
         version: 1.0.5
-      jsdom:
-        specifier: ^30.1.3
-        version: 30.1.3
       lodash.debounce:
         specifier: ^4.0.8
         version: 4.0.8
@@ -102,6 +99,12 @@ importers:
       react-router-dom:
         specifier: ^7.18.5
         version: 7.18.5(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+      regexparam:
+        specifier: ^3.0.0
+        version: 3.0.0
+      remark-parse:
+        specifier: ^9.0.0
+        version: 9.0.0(supports-color@7.2.0)
       serve-static:
         specifier: ^2.2.1
         version: 2.2.1(supports-color@7.2.0)
@@ -114,6 +117,9 @@ importers:
       twirpscript:
         specifier: ^0.0.72
         version: 0.0.72
+      unified:
+        specifier: ^9.2.2
+        version: 9.2.2
       uuid:
         specifier: ^14.0.3
         version: 14.0.3
@@ -172,6 +178,9 @@ importers:
       i18n-stex:
         specifier: https://github.com/ctizen/stex#2.1.2
         version: https://codeload.github.com/ctizen/stex/tar.gz/0b763d09939daef502510d78edccb94e4056f918
+      jsdom:
+        specifier: ^30.1.3
+        version: 30.1.3
       oxfmt:
         specifier: 0.75.0
         version: 0.75.0
@@ -2694,15 +2703,6 @@ packages:
 
   debug@2.6.9:
     resolution: {integrity: sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA==}
-    peerDependencies:
-      supports-color: '*'
-    peerDependenciesMeta:
-      supports-color:
-        optional: true
-
-  debug@4.3.7:
-    resolution: {integrity: sha512-Er2nc/H7RrMXZBFCEim6TCmMk02Z8vLC2Rbi1KEBggpo0fS6l0S1nnapwmIi3yW/+GOJap1Krg4w0Hg80oCqgQ==}
-    engines: {node: '>=6.0'}
     peerDependencies:
       supports-color: '*'
     peerDependenciesMeta:
@@ -7179,12 +7179,6 @@ snapshots:
     optionalDependencies:
       supports-color: 7.2.0
 
-  debug@4.3.7(supports-color@7.2.0):
-    dependencies:
-      ms: 2.1.3
-    optionalDependencies:
-      supports-color: 7.2.0
-
   debug@4.4.1(supports-color@7.2.0):
     dependencies:
       ms: 2.1.3
@@ -8184,7 +8178,7 @@ snapshots:
 
   micromark@2.11.4(supports-color@7.2.0):
     dependencies:
-      debug: 4.3.7(supports-color@7.2.0)
+      debug: 4.4.3(supports-color@7.2.0)
       parse-entities: 2.0.0
     transitivePeerDependencies:
       - supports-color

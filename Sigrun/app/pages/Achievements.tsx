@@ -16,6 +16,7 @@
  */
 
 import * as React from 'react';
+import { Achievement, fullList } from '../helpers/achievements';
 import {
   Accordion,
   ActionIcon,
@@ -66,56 +67,6 @@ import { authCtx } from '../hooks/auth';
 import { globalsCtx } from '../hooks/globals';
 import { useMediaQuery } from '@mantine/hooks';
 import { PersonEx } from 'tsclients/proto/atoms.pb';
-
-enum Achievement {
-  BEST_HAND = 'bestHand',
-  BEST_FU = 'bestFu',
-  BEST_TSUMOIST = 'bestTsumoist',
-  DIE_HARD = 'dieHard',
-  BRAVE_SAPPER = 'braveSapper',
-  DOVAKINS = 'dovakins',
-  BEST_DEALER = 'bestDealer',
-  SHITHANDER = 'shithander',
-  YAKUMANS = 'yakumans',
-  IMPOSSIBLE_WAIT = 'impossibleWait',
-  HONORED_DONOR = 'honoredDonor',
-  JUST_AS_PLANNED = 'justAsPlanned',
-  CAREFUL_PLANNING = 'carefulPlanning',
-  DORA_LORD = 'doraLord',
-  CATCH_EM_ALL = 'catchEmAll',
-  FAVORITE_ASAPIN_APPRENTICE = 'favoriteAsapinApprentice',
-  AND_YOUR_RIICHI_BET = 'andYourRiichiBet',
-  COVETOUS_KNIGHT = 'covetousKnight',
-  NINJA = 'ninja',
-  NEED_MORE_GOLD = 'needMoreGold',
-  RIICHI_NOMI = 'riichiNomi',
-  FAVORITE_TSUCHIDA_APPRENTICE = 'favoriteTsuchidaApprentice',
-}
-
-const fullList: Achievement[] = [
-  Achievement.BEST_HAND,
-  Achievement.BEST_FU,
-  Achievement.BEST_TSUMOIST,
-  Achievement.DIE_HARD,
-  Achievement.BRAVE_SAPPER,
-  Achievement.DOVAKINS,
-  Achievement.BEST_DEALER,
-  Achievement.SHITHANDER,
-  Achievement.YAKUMANS,
-  Achievement.IMPOSSIBLE_WAIT,
-  Achievement.HONORED_DONOR,
-  Achievement.JUST_AS_PLANNED,
-  Achievement.CAREFUL_PLANNING,
-  Achievement.DORA_LORD,
-  Achievement.CATCH_EM_ALL,
-  Achievement.FAVORITE_ASAPIN_APPRENTICE,
-  Achievement.AND_YOUR_RIICHI_BET,
-  Achievement.COVETOUS_KNIGHT,
-  Achievement.NINJA,
-  Achievement.NEED_MORE_GOLD,
-  Achievement.RIICHI_NOMI,
-  Achievement.FAVORITE_TSUCHIDA_APPRENTICE,
-];
 
 export const Achievements: React.FC<{ params: { eventId: string } }> = ({
   params: { eventId },

@@ -59,7 +59,11 @@ export class ApiService {
     prefix: '/v2',
   };
 
-  constructor(freyUrl: string, mimirUrl: string) {
+  constructor(
+    freyUrl: string,
+    mimirUrl: string,
+    private readonly signal?: AbortSignal
+  ) {
     this._clientConfFrey.baseURL = freyUrl;
     this._clientConfMimir.baseURL = mimirUrl;
   }
@@ -78,18 +82,18 @@ export class ApiService {
     this._authToken = token;
     this._personId = (personId || 0).toString();
 
-    const headers = new Headers();
-    headers.append('X-Auth-Token', this._authToken ?? '');
-    headers.append('X-Current-Person-Id', this._personId ?? '');
-
     // eslint-disable-next-line no-multi-assign
     this._clientConfFrey.rpcTransport = this._clientConfMimir.rpcTransport = (url, opts) => {
+      const headers = new Headers();
+      headers.set('X-Auth-Token', this._authToken ?? '');
+      headers.set('X-Current-Person-Id', this._personId ?? '');
       Object.keys(opts.headers ?? {}).forEach((key) => headers.set(key, opts.headers[key]));
       headers.set('X-Current-Event-Id', this._eventId ?? '');
       // @ts-expect-error TODO: update types & node?
       return fetch(url, {
         ...opts,
         headers,
+        signal: this.signal,
       })
         .then(handleReleaseTag)
         .then((response) => handleRpcResponse(response, url));

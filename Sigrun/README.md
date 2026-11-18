@@ -46,6 +46,34 @@ run it against a production SSR build as well as the development server.
 We accept any help with developing, testing and improving our system, so please feel free to create issues or send
 pull requests for missing functionality.
 
+### Server rendering and memory
+
+Production SSR preloads data for the matched route and renders the React tree once.
+Storage, language, API credentials, cancellation, and Emotion caches belong to each
+request. The browser reuses the same hydration keys and fetches data normally during
+navigation. Add a matching loader in `app/services/routeData.ts` when introducing a
+new `useIsomorphicState` key; missing SSR loaders fail explicitly.
+
+Event-list descriptions are extracted directly from the Markdown syntax tree.
+JSDOM is a development dependency used by tests and is not loaded by production SSR.
+The production launcher also reads the HTML template once per worker.
+
+The following server-only environment settings bound work in each of the six SSR
+workers:
+
+| Setting                  | Default | Meaning                                                                    |
+| ------------------------ | ------- | -------------------------------------------------------------------------- |
+| `SIGRUN_SSR_CONCURRENCY` | `4`     | Maximum active page requests, including preloading and rendering.          |
+| `SIGRUN_SSR_QUEUE_SIZE`  | `8`     | Maximum waiting requests; `0` rejects immediately when busy.               |
+| `SIGRUN_SSR_TIMEOUT_MS`  | `10000` | Total request budget, including queue time and upstream response decoding. |
+
+A full queue returns HTTP 503 with `Retry-After: 1`. An expired budget returns HTTP 504. Client disconnects and expired budgets abort upstream RPCs. A render slot is
+released when its work actually settles, even if an upstream implementation ignores
+cancellation. These limits bound pending pages; an individual large response can
+still require substantial memory. Benchmark representative traffic before adjusting
+the limits. The Vite development server uses client rendering and does not apply
+these SSR limits.
+
 ### Public game JSON
 
 External tools can fetch a session without authentication using

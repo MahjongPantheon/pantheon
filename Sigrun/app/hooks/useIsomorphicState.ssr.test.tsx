@@ -1,23 +1,29 @@
 // @vitest-environment node
 import { renderToString } from 'react-dom/server';
-import { expect, it } from 'vitest';
+import { expect, it, vi } from 'vitest';
 import { Isomorphic } from './isomorphic';
 import { useIsomorphicState } from './useIsomorphicState';
 
-it.each([false, 0, '', null])('preserves %s across the two server render passes', async (value) => {
-  const context: Record<string, unknown> & { requests?: Promise<unknown>[] } = { requests: [] };
+it.each([false, 0, '', null])('renders preloaded %s without starting a request', (value) => {
+  const effect = vi.fn();
   function Content() {
-    const [data] = useIsomorphicState('Loading', 'event', async () => value, []);
+    const [data] = useIsomorphicState('Loading', 'event', effect, []);
     return <output>{JSON.stringify(data)}</output>;
   }
-  const render = () =>
+  expect(
     renderToString(
-      <Isomorphic.Provider value={context}>
+      <Isomorphic.Provider value={{ event: value }}>
         <Content />
       </Isomorphic.Provider>
-    );
-  render();
-  await Promise.all(context.requests!);
-  delete context.requests;
-  expect(render()).toBe(renderToString(<output>{JSON.stringify(value)}</output>));
+    )
+  ).toBe(renderToString(<output>{JSON.stringify(value)}</output>));
+  expect(effect).not.toHaveBeenCalled();
+});
+
+it('reports a missing server loader instead of silently starting work during rendering', () => {
+  function Content() {
+    useIsomorphicState(null, 'missing', async () => 'value', []);
+    return null;
+  }
+  expect(() => renderToString(<Content />)).toThrow('Missing SSR data loader for missing');
 });

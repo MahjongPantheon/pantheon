@@ -30,6 +30,10 @@ export const useI18n = () => {
   return useContext(i18nCtx);
 };
 
-export const I18nProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
-  return <i18nCtx.Provider value={i18n}>{children}</i18nCtx.Provider>;
+export const I18nProvider: React.FC<React.PropsWithChildren<{ value?: I18nService }>> = ({
+  children,
+  value,
+}) => {
+  const inherited = useI18n();
+  return <i18nCtx.Provider value={value ?? inherited}>{children}</i18nCtx.Provider>;
 };

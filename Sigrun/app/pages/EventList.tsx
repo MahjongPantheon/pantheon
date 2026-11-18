@@ -35,9 +35,7 @@ import { useLocation } from 'wouter';
 import { useI18n } from '../hooks/i18n';
 import { CSSProperties } from 'react';
 import { EventTypeIcon } from '../components/EventTypeIcon';
-import { useRemarkSync as renderMarkdown } from 'react-remark';
-import strip from 'strip-markdown';
-import { renderToString } from 'react-dom/server';
+import { descriptionText } from '../helpers/descriptionText';
 import { useEvent } from '../hooks/useEvent';
 import { useIsomorphicState } from '../hooks/useIsomorphicState';
 import { useApi } from '../hooks/api';
@@ -45,18 +43,6 @@ import { useMediaQuery } from '@mantine/hooks';
 import { Meta } from '../components/Meta';
 import { TextFilter } from '../components/TextFilter';
 import { RecentPublicGames } from '../components/RecentPublicGames';
-
-let stripHtml: (dirtyString: string) => string;
-if (import.meta.env.SSR) {
-  stripHtml = (dirtyString) => {
-    return (global as any).JSDOM.fragment(dirtyString).textContent ?? '';
-  };
-} else {
-  stripHtml = (dirtyString: string) => {
-    const doc = new DOMParser().parseFromString(dirtyString, 'text/html');
-    return doc.body.textContent ?? '';
-  };
-}
 
 const PERPAGE = 20;
 export const EventList: React.FC<{ params: { page?: string; filter?: string } }> = ({
@@ -99,10 +85,7 @@ export const EventList: React.FC<{ params: { page?: string; filter?: string } }>
         <LoadingOverlay visible={eventsLoading} overlayProps={{ blur: 2 }} />
         <Stack justify='flex-start' gap='0'>
           {(events?.events ?? []).map((e, idx) => {
-            const desc = renderMarkdown(e.description, {
-              remarkPlugins: [strip as any],
-            }) as React.JSX.Element;
-            const renderedDesc = stripHtml(renderToString(desc)).slice(0, 300);
+            const renderedDesc = descriptionText(e.description);
             return (
               <Group
                 data-testid={`sigrun-event-row-${e.id}`}
