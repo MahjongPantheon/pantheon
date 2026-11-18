@@ -29,6 +29,10 @@ export const useStorage = () => {
   return useContext(storageCtx);
 };
 
-export const StorageProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
-  return <storageCtx.Provider value={storage}>{children}</storageCtx.Provider>;
+export const StorageProvider: React.FC<React.PropsWithChildren<{ value?: Storage }>> = ({
+  children,
+  value,
+}) => {
+  const inherited = useStorage();
+  return <storageCtx.Provider value={value ?? inherited}>{children}</storageCtx.Provider>;
 };

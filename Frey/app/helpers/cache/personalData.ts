@@ -1,12 +1,14 @@
 import { getPersonalInfoCacheKey } from './schema';
 import { IRedisClient } from './RedisClient';
 import { Database } from '../../database/db';
-import { RowMajsoulPlatformAccount, RowPerson } from '../../database/schema';
-import { Nullable } from '../types';
+import { selectPersonProfile } from '../../database/profiles';
+import type { InferResult } from 'kysely';
 
-export type PersonalInfoData = Array<
-  { id: number } & RowPerson & Nullable<RowMajsoulPlatformAccount>
->;
+// Authentication and profiles share this cache and its existing invalidation paths.
+const selectCachedPersonalData = (db: Database) =>
+  selectPersonProfile(db).select(['person.auth_hash', 'person.is_superadmin', 'person.last_login']);
+
+export type PersonalInfoData = InferResult<ReturnType<typeof selectCachedPersonalData>>;
 
 export const getCachedPersonalData = async (
   db: Database,
@@ -17,18 +19,7 @@ export const getCachedPersonalData = async (
   if (cached !== null) {
     return cached;
   }
-  const data = await db
-    .selectFrom('person')
-    .leftJoin('majsoul_platform_account', 'majsoul_platform_account.person_id', 'person.id')
-    .where('person.id', '=', id)
-    .selectAll('person')
-    .select([
-      'majsoul_platform_account.person_id',
-      'majsoul_platform_account.account_id',
-      'majsoul_platform_account.friend_id',
-      'majsoul_platform_account.nickname',
-    ])
-    .execute();
+  const data = await selectCachedPersonalData(db).where('person.id', '=', id).execute();
   await redisClient.set<PersonalInfoData>(getPersonalInfoCacheKey(id), data);
   return data;
 };

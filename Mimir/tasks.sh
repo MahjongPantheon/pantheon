@@ -40,6 +40,14 @@ case "$action" in
     echo "======= Mimir: test_noserver ======"
     pnpm exec vitest run
     ;;
+  cron)
+    if [[ ${PANTHEON_PRODUCTION_WORKERS:-false} == true ]]; then
+      cd ../Mimir-dist
+      exec node cron.js
+    else
+      exec node --import tsx cron/cron.ts
+    fi
+    ;;
   dev)
     pnpm exec tsx watch --inspect=0.0.0.0:4201/debug src/server.ts
     ;;
@@ -74,7 +82,7 @@ case "$action" in
     ( cd ../Common/tsclients && NODE_ENV=production pnpm install )
     ;;
   prebuild)
-    cp -f dist/server.js ../Mimir-dist/
+    cp -f dist/server.js dist/cron.js dist/worker.js ../Mimir-dist/
     cp -f dist/metadata.json ../Mimir-dist/
     if [ -f .env.production ]; then cp -f .env.production ../Mimir-dist/ ; fi
     cp -f package.json ../Mimir-dist/
@@ -95,6 +103,6 @@ case "$action" in
   seed|seed-tournament|seed-bigevent)
     pnpm exec tsx src/development/seed.ts "${action//-/_}"
     ;;
-  help) echo "Mimir tasks: migrate test test-verbose run-test-server test-noserver dev init-test-db bootstrap-admin seed-test-db clean-test-db reload build prod-deps common-deps prebuild proto-gen confirm-seed migrate-mimir1 seed seed-tournament seed-bigevent $common_tasks" ;;
+  help) echo "Mimir tasks: migrate test test-verbose run-test-server test-noserver dev init-test-db bootstrap-admin seed-test-db clean-test-db reload build prod-deps common-deps prebuild cron proto-gen confirm-seed migrate-mimir1 seed seed-tournament seed-bigevent $common_tasks" ;;
   *) common_task "$action" "$@" ;;
 esac

@@ -2,6 +2,7 @@ import { vi } from 'vitest';
 import { MikroORM } from '@mikro-orm/postgresql';
 import { Repository } from '../src/services/Repository.js';
 import { runWorker } from './runner.js';
+import config from '../src/mikro-orm.config.js';
 
 afterEach(() => vi.restoreAllMocks());
 
@@ -28,7 +29,7 @@ function mockRepository() {
 
 it('closes worker services after successful execution', async () => {
   const mocks = mockRepository();
-  await runWorker('achievements');
+  await runWorker('achievements', config());
   expect(mocks.findAll).toHaveBeenCalledTimes(1);
   expect(mocks.destroy).toHaveBeenCalledTimes(1);
 });
@@ -36,14 +37,14 @@ it('closes worker services after successful execution', async () => {
 it('closes worker services after database errors', async () => {
   const mocks = mockRepository();
   mocks.findAll.mockRejectedValue(new Error('Database failed'));
-  await expect(runWorker('achievements')).rejects.toThrow('Database failed');
+  await expect(runWorker('achievements', config())).rejects.toThrow('Database failed');
   expect(mocks.destroy).toHaveBeenCalledTimes(1);
 });
 
 it('closes worker services when cache initialization fails', async () => {
   const mocks = mockRepository();
   mocks.connect.mockRejectedValue(new Error('Cache failed'));
-  await expect(runWorker('achievements')).rejects.toThrow('Cache failed');
+  await expect(runWorker('achievements', config())).rejects.toThrow('Cache failed');
   expect(mocks.destroy).toHaveBeenCalledTimes(1);
   expect(mocks.execute).not.toHaveBeenCalled();
 });
@@ -51,7 +52,7 @@ it('closes worker services when cache initialization fails', async () => {
 it('closes skipped workers without processing queued jobs', async () => {
   const mocks = mockRepository();
   mocks.execute.mockResolvedValue([{ acquired: false }]);
-  await runWorker('achievements');
+  await runWorker('achievements', config());
   expect(mocks.findAll).not.toHaveBeenCalled();
   expect(mocks.destroy).toHaveBeenCalledTimes(1);
 });

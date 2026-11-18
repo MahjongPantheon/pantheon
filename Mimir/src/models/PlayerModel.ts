@@ -6,7 +6,6 @@ import { Model } from './Model.js';
 import { playerInfo } from '../helpers/cache/schema.js';
 import { EventRegistrationModel } from './EventRegistrationModel.js';
 import { SessionPlayerEntity } from '../entities/SessionPlayer.entity.js';
-import { SessionEntity } from '../entities/Session.entity.js';
 import { SessionModel } from './SessionModel.js';
 import { filterPersonalData, filterPersonalDataSingle } from '../helpers/filterPersonalData.js';
 
@@ -114,12 +113,16 @@ export class PlayerModel extends Model {
     return this._findPlayers(playerIds, registrationData);
   }
 
-  async findPlayerIdsForSessions(sessionIds: number[]): Promise<Array<[number, number]>> {
+  async findPlayerIdsForSessions(
+    sessionIds: number[],
+    options: { disableIdentityMap?: boolean } = {}
+  ): Promise<Array<[number, number]>> {
     return (
       await this.repo.em.findAll(SessionPlayerEntity, {
         fields: ['playerId', 'session.id'],
+        disableIdentityMap: options.disableIdentityMap,
         where: {
-          session: sessionIds.map((id) => this.repo.em.getReference(SessionEntity, id)),
+          session: { $in: sessionIds },
         },
         orderBy: { order: 1 },
       })

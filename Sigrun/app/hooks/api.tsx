@@ -18,24 +18,30 @@
 import * as React from 'react';
 import { createContext, useContext } from 'react';
 import { ApiService } from '../services/api';
-import { storage } from './storage';
+import { useStorage } from './storage';
 import { analytics } from './analytics';
 import { env } from '../env';
 
-const api = new ApiService(
+const defaultApi = new ApiService(
   import.meta.env.SSR ? import.meta.env.VITE_FREY_URL_SSR : env.urls.frey,
   import.meta.env.SSR ? import.meta.env.VITE_MIMIR_URL_SSR : env.urls.mimir
 );
 
-export const apiCtx = createContext(api);
+export const apiCtx = createContext(defaultApi);
 
 export const useApi = () => {
+  const api = useContext(apiCtx);
+  const storage = useStorage();
   api
     .setAnalytics(analytics)
     .setCredentials(storage.getPersonId() ?? 0, storage.getAuthToken() ?? '');
-  return useContext(apiCtx);
+  return api;
 };
 
-export const ApiProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
-  return <apiCtx.Provider value={api}>{children}</apiCtx.Provider>;
+export const ApiProvider: React.FC<React.PropsWithChildren<{ value?: ApiService }>> = ({
+  children,
+  value,
+}) => {
+  const inherited = useContext(apiCtx);
+  return <apiCtx.Provider value={value ?? inherited}>{children}</apiCtx.Provider>;
 };

@@ -47,7 +47,21 @@ describe('Service configuration', () => {
     expect(config.userinfoHookApiKey).toBe('');
     expect(config.internalQuerySecret).toBe('');
     expect(config.logFacility).toBe('stdout');
+    expect(config.cronConcurrency).toBe(2);
   });
+
+  it('configures cron concurrency from the environment', () => {
+    process.env.MIMIR_CRON_CONCURRENCY = '4';
+    expect(new ConfigService().cronConcurrency).toBe(4);
+  });
+
+  it.each(['', '0', '-1', '1.5', 'invalid', 'Infinity'])(
+    'rejects invalid cron concurrency %s',
+    (value) => {
+      process.env.MIMIR_CRON_CONCURRENCY = value;
+      expect(() => new ConfigService().cronConcurrency).toThrow('positive integer');
+    }
+  );
 
   it('selects production configuration and prioritizes process overrides', () => {
     process.env.NODE_ENV = 'production';

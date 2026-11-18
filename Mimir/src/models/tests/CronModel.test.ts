@@ -10,6 +10,7 @@ import { PlayerStatsModel } from '../PlayerStatsModel.js';
 import { EventRegistrationModel } from '../EventRegistrationModel.js';
 import { EventRegisteredPlayersEntity } from '../../entities/EventRegisteredPlayers.entity.js';
 import { AchievementsModel } from '../AchievementsModel.js';
+import { EventModel } from '../EventModel.js';
 import { runJob } from '../../../cron/runner.js';
 
 const afterFlush = vi.fn<() => void>();
@@ -168,4 +169,36 @@ describe('Explicit model transactions', () => {
     expect(jobs).toHaveLength(2);
     expect(jobs.every((job) => job.jobName === 'achievements')).toBe(true);
   });
+
+  it.each(['achievements', 'playerStats', 'scoring'] as const)(
+    'coalesces duplicate %s rebuilds and removes all selected queue records',
+    async (jobName) => {
+      await repo.em.transactional(async () => {
+        for (const eventId of [19, 19, 20, 19]) {
+          repo.em.persist(
+            Object.assign(new JobsQueueEntity(), {
+              createdAt: new Date().toISOString(),
+              jobName,
+              jobArguments: JSON.stringify({ eventId, playerId: 1 }),
+            })
+          );
+        }
+      });
+      const rebuild =
+        jobName === 'achievements'
+          ? vi
+              .spyOn(Model.getModel(repo, AchievementsModel), 'precalculateAchievements')
+              .mockResolvedValue(undefined)
+          : jobName === 'scoring'
+            ? vi
+                .spyOn(Model.getModel(repo, EventModel), 'rebuildEventScoring')
+                .mockResolvedValue({ success: true })
+            : vi
+                .spyOn(stats, 'getPlayerStats')
+                .mockResolvedValue(PlayersGetPlayerStatsResponse.initialize());
+      expect(await runJob(repo, jobName)).toEqual({ status: 'completed', processed: 4 });
+      expect(rebuild).toHaveBeenCalledTimes(2);
+      expect(await model.getPendingJobs(10)).toEqual([]);
+    }
+  );
 });

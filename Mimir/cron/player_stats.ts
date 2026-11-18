@@ -9,6 +9,7 @@ export async function rebuildPlayerStats(repo: Repository) {
     where: {
       jobName: 'playerStats',
     },
+    orderBy: { id: 'asc' },
     limit: 300,
   });
 
@@ -17,14 +18,19 @@ export async function rebuildPlayerStats(repo: Repository) {
   }
 
   const playerModel = Model.getModel(repo, PlayerStatsModel);
+  const unique = new Map<string, { playerId: number; eventId: number }>();
+  for (const job of jobs) {
+    const { playerId, eventId } = JSON.parse(job.jobArguments);
+    unique.set(`${+eventId}:${+playerId}`, { playerId: +playerId, eventId: +eventId });
+  }
   await settleJobs(
-    jobs.map((job) => async () => {
-      const { playerId, eventId } = JSON.parse(job.jobArguments);
+    Array.from(unique.values(), ({ playerId, eventId }) => async () => {
       await playerModel.getPlayerStats(
         { playerId: +playerId, eventIdList: [+eventId] },
         { forceRebuild: true }
       );
-    })
+    }),
+    repo.config.cronConcurrency
   );
 
   repo.em.remove(jobs);

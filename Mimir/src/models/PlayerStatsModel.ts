@@ -13,9 +13,7 @@ import { EventEntity } from '../entities/Event.entity.js';
 import { PlayerModel } from './PlayerModel.js';
 import { SessionEntity } from '../entities/Session.entity.js';
 import { SessionResultsEntity } from '../entities/SessionResults.entity.js';
-import { SessionModel } from './SessionModel.js';
 import { RoundEntity } from '../entities/Round.entity.js';
-import { SessionPlayerEntity } from '../entities/SessionPlayer.entity.js';
 import {
   HandValueStat,
   PersonEx,
@@ -27,6 +25,19 @@ import { RulesetEntity } from '../entities/Ruleset.entity.js';
 import { PointsCalc, RiichiBetAssignment } from '../helpers/PointsCalc.js';
 import { HandEntity } from '../entities/Hand.entity.js';
 import { SessionState } from '../helpers/SessionState.js';
+
+const roundBatchSize = 256;
+const sessionBatchSize = 128;
+
+type StatsSession = Pick<SessionEntity, 'id' | 'event' | 'representationalHash'>;
+type StatsResult = Pick<
+  SessionResultsEntity,
+  'id' | 'session' | 'playerId' | 'score' | 'ratingDelta' | 'place' | 'chips'
+>;
+type StatsRound = Pick<
+  RoundEntity,
+  'id' | 'session' | 'event' | 'outcome' | 'riichi' | 'lastSessionState' | 'hands'
+>;
 
 type OutcomeStats = {
   ron: number;
@@ -109,6 +120,7 @@ export class PlayerStatsModel extends Model {
               event: input.eventIdList[0],
               playerId: input.playerId,
             },
+            disableIdentityMap: true,
           });
           // Older rebuilds stored empty summaries or null ratings even when games existed.
           const cachedData = stats[0]?.data;
@@ -208,18 +220,20 @@ export class PlayerStatsModel extends Model {
       new Map<
         number,
         {
-          session: SessionEntity;
-          results: Map<number, SessionResultsEntity>;
+          session: StatsSession;
+          results: Map<number, StatsResult>;
         }
       >()
     );
 
     const gameIds = Array.from(games.keys());
 
-    const [rounds, playerInfo, playerBySession] = await Promise.all([
-      this._fetchRounds(gameIds),
-      this._fetchPlayerInfo(gameIds),
-      playerModel.findPlayerIdsForSessions(gameIds),
+    const playerBySession = await playerModel.findPlayerIdsForSessions(gameIds, {
+      disableIdentityMap: true,
+    });
+    const [roundSummaries, playerInfo] = await Promise.all([
+      this._getRoundSummaries(mainEvent.ruleset, playerId, gameIds),
+      this._fetchPlayerInfo(gameIds, playerBySession),
     ]);
     const scoresAndPlayers = await this._getScoreHistoryAndPlayers(
       mainEvent.ruleset,
@@ -243,23 +257,20 @@ export class PlayerStatsModel extends Model {
       })),
       placesSummary: await this._getPlacesSummary(playerId, games),
       totalPlayedGames: games.size,
-      totalPlayedRounds: rounds.length,
-      winSummary: this._getOutcomeSummary(mainEvent.ruleset, playerId, rounds),
-      handsValueSummary: this._getHanSummary(playerId, rounds),
-      yakuSummary: this._getYakuSummary(playerId, rounds),
-      riichiSummary: this._getRiichiSummary(mainEvent.ruleset, playerId, rounds),
-      doraStat: this._getDoraStat(playerId, rounds),
+      ...roundSummaries,
       lastUpdate: moment().tz(mainEvent.timezone).format('YYYY-MM-DD HH:mm:ss'),
     };
 
     // Save precalculated stats; don't support aggregated events
     if (eventIdList.length === 1 && !dateFrom && !dateTo) {
-      const stats = await this.repo.em.findOne(PlayerStatsEntity, {
-        playerId,
-        event: this.repo.em.getReference(EventEntity, eventIdList[0]),
-      });
+      const stats = await this.repo.em.findOne(
+        PlayerStatsEntity,
+        { playerId, event: eventIdList[0] },
+        { fields: ['id'], disableIdentityMap: true }
+      );
 
-      const entity = stats ?? new PlayerStatsEntity();
+      const entity = new PlayerStatsEntity();
+      if (stats) entity.id = stats.id;
       entity.data = {
         ...data,
         scoreHistoryOrder: gameIds,
@@ -279,7 +290,9 @@ export class PlayerStatsModel extends Model {
       entity.event = this.repo.em.getReference(EventEntity, eventIdList[0]);
       entity.playerId = playerId;
       entity.lastUpdate = moment().format('YYYY-MM-DD HH:mm:ss');
-      this.repo.em.persist(entity);
+      // Write within the caller's transaction without retaining every rebuilt JSON
+      // history in a cron batch's unit of work until its final commit.
+      await this.repo.em.upsert(entity, undefined, { disableIdentityMap: true });
     }
 
     return data;
@@ -290,27 +303,39 @@ export class PlayerStatsModel extends Model {
     playerId: number,
     dateFrom?: string,
     dateTo?: string
-  ): Promise<Map<number, { session: SessionEntity; results: Map<number, SessionResultsEntity> }>> {
-    const sessionModel = this.getModel(SessionModel);
-    const games = await sessionModel.findByPlayerAndEvent(playerId, event, '*', dateFrom, dateTo);
+  ): Promise<Map<number, { session: StatsSession; results: Map<number, StatsResult> }>> {
+    const games = await this.repo.em.findAll(SessionEntity, {
+      where: {
+        players: { playerId },
+        event,
+        ...(dateFrom
+          ? { startDate: { $gte: moment(dateFrom).utc().format('YYYY-MM-DD HH:mm:ss') } }
+          : {}),
+        ...(dateTo ? { endDate: { $lt: moment(dateTo).utc().format('YYYY-MM-DD HH:mm:ss') } } : {}),
+      },
+      fields: ['id', 'event', 'representationalHash'],
+      disableIdentityMap: true,
+    });
     if (games.length === 0) {
       return new Map();
     }
 
-    const gamesById = new Map<number, SessionEntity>();
+    const gamesById = new Map<number, StatsSession>();
     for (const game of games) {
       gamesById.set(game.id, game);
     }
 
     const results = await this.repo.em.findAll(SessionResultsEntity, {
       where: {
-        session: games.map((game) => this.repo.em.getReference(SessionEntity, game.id)),
+        session: { $in: games.map((game) => game.id) },
       },
+      fields: ['session', 'playerId', 'score', 'ratingDelta', 'place', 'chips'],
+      disableIdentityMap: true,
     });
 
     const fullResults = new Map<
       number,
-      { session: SessionEntity; results: Map<number, SessionResultsEntity> }
+      { session: StatsSession; results: Map<number, StatsResult> }
     >();
     results.forEach((result) => {
       if (!fullResults.has(result.session.id)) {
@@ -324,12 +349,14 @@ export class PlayerStatsModel extends Model {
     return fullResults;
   }
 
-  async _fetchRounds(gameIds: number[]) {
+  async _fetchRounds(gameIds: number[], afterId = 0) {
     const rounds = await this.repo.em.findAll(RoundEntity, {
-      where: {
-        session: gameIds.map((id) => this.repo.em.getReference(SessionEntity, id)),
-      },
+      where: { session: { $in: gameIds }, id: { $gt: afterId } },
       populate: ['hands'],
+      fields: ['id', 'session', 'event', 'outcome', 'riichi', 'lastSessionState', 'hands.*'],
+      orderBy: { id: 'asc', hands: { id: 'asc' } },
+      limit: roundBatchSize,
+      disableIdentityMap: true,
     });
     return rounds.map((round) => ({
       ...round,
@@ -337,19 +364,73 @@ export class PlayerStatsModel extends Model {
     }));
   }
 
-  async _fetchPlayerInfo(gameIds: number[]) {
-    const players = await this.repo.em.findAll(SessionPlayerEntity, {
-      where: {
-        session: gameIds.map((id) => this.repo.em.getReference(SessionEntity, id)),
+  async _getRoundSummaries(ruleset: RulesetEntity, playerId: number, gameIds: number[]) {
+    const winSummary = this._getOutcomeSummary(ruleset, playerId, []);
+    const riichiSummary = this._getRiichiSummary(ruleset, playerId, []);
+    const handsValueSummary = new Map<number, number>();
+    const yakuSummary = new Map<number, number>();
+    let totalPlayedRounds = 0;
+    let doraCount = 0;
+    let handsWon = 0;
+    // Release each detached page after folding it into fixed-size summaries.
+    // The full per-game histories remain in the response, but round snapshots do not.
+    for (let offset = 0; offset < gameIds.length; offset += sessionBatchSize) {
+      const ids = gameIds.slice(offset, offset + sessionBatchSize);
+      let afterId = 0;
+      while (true) {
+        const rounds = await this._fetchRounds(ids, afterId);
+        totalPlayedRounds += rounds.length;
+        const outcomes = this._getOutcomeSummary(ruleset, playerId, rounds);
+        for (const key of Object.keys(winSummary) as (keyof OutcomeStats)[]) {
+          winSummary[key] += outcomes[key];
+        }
+        const riichi = this._getRiichiSummary(ruleset, playerId, rounds);
+        for (const key of Object.keys(riichiSummary) as (keyof RiichiStats)[]) {
+          riichiSummary[key] += riichi[key];
+        }
+        for (const { hanCount, count } of this._getHanSummary(playerId, rounds)) {
+          handsValueSummary.set(hanCount, (handsValueSummary.get(hanCount) ?? 0) + count);
+        }
+        for (const { yakuId, count } of this._getYakuSummary(playerId, rounds)) {
+          yakuSummary.set(yakuId, (yakuSummary.get(yakuId) ?? 0) + count);
+        }
+        const dora = this._getDoraTotals(playerId, rounds);
+        doraCount += dora.count;
+        handsWon += dora.handsWon;
+        if (rounds.length < roundBatchSize) break;
+        afterId = rounds[rounds.length - 1].id;
+      }
+    }
+    return {
+      totalPlayedRounds,
+      winSummary,
+      riichiSummary,
+      handsValueSummary: Array.from(handsValueSummary, ([hanCount, count]) => ({
+        hanCount,
+        count,
+      })).sort((a, b) => a.hanCount - b.hanCount),
+      yakuSummary: Array.from(yakuSummary, ([yakuId, count]) => ({ yakuId, count })).sort(
+        (a, b) => a.yakuId - b.yakuId
+      ),
+      doraStat: {
+        count: doraCount,
+        average: handsWon > 0 ? +(doraCount / handsWon).toFixed(2) : 0,
       },
-    });
-    const playerIds = players.map((sp) => sp.playerId).filter((id) => id !== GHOST_PLAYER_ID);
+    };
+  }
+
+  async _fetchPlayerInfo(gameIds: number[], playerBySession?: Array<[number, number]>) {
     const playerModel = this.getModel(PlayerModel);
+    const seating =
+      playerBySession ??
+      (await playerModel.findPlayerIdsForSessions(gameIds, {
+        disableIdentityMap: true,
+      }));
+    const playerIds = [
+      ...new Set(seating.map(([id]) => id).filter((id) => id !== GHOST_PLAYER_ID)),
+    ];
     const playerInfo = await playerModel.findById(playerIds);
-    return playerInfo.reduce((acc, player) => {
-      acc.set(player.id, player);
-      return acc;
-    }, new Map<number, PersonEx>());
+    return new Map(playerInfo.map((player) => [player.id, player]));
   }
 
   async _getScoreHistoryAndPlayers(
@@ -358,8 +439,8 @@ export class PlayerStatsModel extends Model {
     games: Map<
       number,
       {
-        session: SessionEntity;
-        results: Map<number, SessionResultsEntity>;
+        session: StatsSession;
+        results: Map<number, StatsResult>;
       }
     >,
     playerInfo: Map<number, PersonEx>
@@ -405,7 +486,7 @@ export class PlayerStatsModel extends Model {
   _getRatingHistorySequence(
     ruleset: RulesetEntity,
     playerId: number,
-    games: Map<number, { session: SessionEntity; results: Map<number, SessionResultsEntity> }>
+    games: Map<number, { session: StatsSession; results: Map<number, StatsResult> }>
   ) {
     let rating = ruleset.rules.startRating ?? 0;
     const ratingHistory = Array.from(
@@ -423,7 +504,7 @@ export class PlayerStatsModel extends Model {
 
   async _getPlacesSummary(
     playerId: number,
-    games: Map<number, { session: SessionEntity; results: Map<number, SessionResultsEntity> }>
+    games: Map<number, { session: StatsSession; results: Map<number, StatsResult> }>
   ): Promise<PlacesSummaryItem[]> {
     const summary = games.values().reduce(
       (acc, game) => {
@@ -441,11 +522,7 @@ export class PlayerStatsModel extends Model {
     );
   }
 
-  _getOutcomeSummary(
-    ruleset: RulesetEntity,
-    playerId: number,
-    rounds: RoundEntity[]
-  ): OutcomeStats {
+  _getOutcomeSummary(ruleset: RulesetEntity, playerId: number, rounds: StatsRound[]): OutcomeStats {
     return rounds.reduce(
       (acc, round) => {
         if (round.hands.length === 0) {
@@ -628,7 +705,7 @@ export class PlayerStatsModel extends Model {
     );
   }
 
-  _getMultironRiichiAssignments(round: RoundEntity) {
+  _getMultironRiichiAssignments(round: StatsRound) {
     const state = round.lastSessionState;
     try {
       return new PointsCalc().assignRiichiBets(
@@ -748,7 +825,7 @@ export class PlayerStatsModel extends Model {
     }
   }
 
-  _getHanSummary(playerId: number, rounds: RoundEntity[]): HandValueStat[] {
+  _getHanSummary(playerId: number, rounds: StatsRound[]): HandValueStat[] {
     const summary = new Map<number, number>();
     for (const round of rounds) {
       for (const hand of round.hands) {
@@ -765,7 +842,7 @@ export class PlayerStatsModel extends Model {
       }));
   }
 
-  _getYakuSummary(playerId: number, rounds: RoundEntity[]): YakuStat[] {
+  _getYakuSummary(playerId: number, rounds: StatsRound[]): YakuStat[] {
     const summary = new Map<number, number>();
     for (const round of rounds) {
       for (const hand of round.hands) {
@@ -784,7 +861,7 @@ export class PlayerStatsModel extends Model {
       }));
   }
 
-  _getRiichiSummary(ruleset: RulesetEntity, playerId: number, rounds: RoundEntity[]): RiichiStats {
+  _getRiichiSummary(ruleset: RulesetEntity, playerId: number, rounds: StatsRound[]): RiichiStats {
     return rounds.reduce(
       (acc, round) => {
         round.hands.forEach((hand) => {
@@ -846,7 +923,7 @@ export class PlayerStatsModel extends Model {
     );
   }
 
-  _getDoraStat(playerId: number, rounds: RoundEntity[]) {
+  _getDoraTotals(playerId: number, rounds: StatsRound[]) {
     let handsWon = 0;
     const doraCount = rounds.reduce((acc, round) => {
       if (
@@ -864,7 +941,11 @@ export class PlayerStatsModel extends Model {
       });
       return acc;
     }, 0);
-    const average = handsWon > 0 ? +(doraCount / handsWon).toFixed(2) : 0;
-    return { count: doraCount, average };
+    return { count: doraCount, handsWon };
+  }
+
+  _getDoraStat(playerId: number, rounds: StatsRound[]) {
+    const { count, handsWon } = this._getDoraTotals(playerId, rounds);
+    return { count, average: handsWon > 0 ? +(count / handsWon).toFixed(2) : 0 };
   }
 }

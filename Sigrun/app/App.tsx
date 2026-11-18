@@ -30,54 +30,30 @@ import { RegisteredPlayers } from './pages/RegisteredPlayers';
 import './App.css';
 import { Meta } from './components/Meta';
 import { TablesState } from './pages/TablesState';
+import { routes, Page } from './routes';
+import type { ComponentType } from 'react';
+
+const pages: Record<Page, ComponentType<any>> = {
+  EventList,
+  EventInfo,
+  RatingTable,
+  RegisteredPlayers,
+  TablesState,
+  PlayerStats,
+  RecentGames,
+  Game,
+  SeriesRating,
+  Timer,
+  Achievements,
+  EventRulesOverview,
+};
 
 export function App() {
   return (
     <Switch>
-      <Route path='/' component={EventList} />
-      <Route path='/filter/:filter' component={EventList} />
-      <Route path='/page/:page' component={EventList} />
-      <Route path='/filter/:filter/page/:page' component={EventList} />
-      <Route path='/event/:eventId/info' component={EventInfo} />
-      <Route path='/event/:eventId/order/:orderBy' component={RatingTable} />
-      <Route path='/event/:eventId/order/:orderBy/from/:dateFrom' component={RatingTable} />
-      <Route path='/event/:eventId/order/:orderBy/to/:dateTo' component={RatingTable} />
-      <Route
-        path='/event/:eventId/order/:orderBy/from/:dateFrom/to/:dateTo'
-        component={RatingTable}
-      />
-      <Route
-        path='/event/:eventId/order/:orderBy/filter/:minGamesSelector'
-        component={RatingTable}
-      />
-      <Route
-        path='/event/:eventId/order/:orderBy/filter/:minGamesSelector/from/:dateFrom'
-        component={RatingTable}
-      />
-      <Route
-        path='/event/:eventId/order/:orderBy/filter/:minGamesSelector/to/:dateTo'
-        component={RatingTable}
-      />
-      <Route
-        path='/event/:eventId/order/:orderBy/filter/:minGamesSelector/from/:dateFrom/to/:dateTo'
-        component={RatingTable}
-      />
-      <Route path='/event/:eventId/playersList' component={RegisteredPlayers} />
-      <Route path='/event/:eventId/tablesState' component={TablesState} />
-      <Route path='/event/:eventId/player/:playerId' component={PlayerStats} />
-      <Route path='/event/:eventId/player/:playerId/from/:dateFrom' component={PlayerStats} />
-      <Route path='/event/:eventId/player/:playerId/to/:dateTo' component={PlayerStats} />
-      <Route
-        path='/event/:eventId/player/:playerId/from/:dateFrom/to/:dateTo'
-        component={PlayerStats}
-      />
-      <Route path='/event/:eventId/games' component={RecentGames} />
-      <Route path='/event/:eventId/games/page/:page' component={RecentGames} />
-      <Route path='/event/:eventId/game/:sessionHash' component={Game} />
-      <Route path='/event/:eventId/seriesRating' component={SeriesRating} />
-      <Route path='/event/:eventId/timer' component={Timer} />
-      <Route path='/event/:eventId/achievements' component={Achievements} />
-      <Route path='/event/:eventId/rules' component={EventRulesOverview} />
+      {routes.map(({ path, page }) => (
+        <Route key={path} path={path} component={pages[page]} />
+      ))}
       <Route>
         <Meta />
       </Route>

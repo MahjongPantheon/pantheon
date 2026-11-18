@@ -3,11 +3,11 @@ import { fileURLToPath } from 'node:url';
 import { JobName } from './jobs.js';
 
 function launchWorker(name: JobName) {
-  return spawn(
-    process.execPath,
-    ['--import', 'tsx', fileURLToPath(new URL('./worker.ts', import.meta.url)), name],
-    { stdio: 'inherit' }
-  );
+  const source = import.meta.url.endsWith('.ts');
+  const worker = fileURLToPath(new URL(source ? './worker.ts' : './worker.js', import.meta.url));
+  return spawn(process.execPath, [...(source ? ['--import', 'tsx'] : []), worker, name], {
+    stdio: 'inherit',
+  });
 }
 
 export class JobScheduler {

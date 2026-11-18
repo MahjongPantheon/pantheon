@@ -19,14 +19,8 @@ import { useState, useContext, useEffect, DependencyList } from 'react';
 import { Isomorphic } from './isomorphic';
 import { nprogress } from '@mantine/nprogress';
 
-// Note: there should be no nested calls to useIsomorphicState. The render cycle happens only twice:
-// 1) Collect isomorphic state effects,
-// 2) Render components using settled data from isomorphic state effects.
-// Caveats:
-// - If a component depending on some data fetched with useIsomorphicState on upper level, tries to use
-// useIsomorphicState itself, it won't work on server and will lead to hydration error.
-// - If you try to use return value of useIsomorphicState as an argument for another useIsomorphicState,
-// it won't work on server and will lead to hydration error.
+// Server routes preload these keys before rendering. Browser navigation fetches
+// missing data in the effect and reuses settled hydration data on its first render.
 export const useIsomorphicState = <I, R, E extends Error>(
   initial: I,
   key: string,
@@ -35,7 +29,6 @@ export const useIsomorphicState = <I, R, E extends Error>(
   options?: { retainDataFor: string }
 ) => {
   const context = useContext(Isomorphic) as Record<string, any> & {
-    requests: any[];
     __running: number;
   };
   const retainDataFor = options?.retainDataFor;
@@ -47,12 +40,12 @@ export const useIsomorphicState = <I, R, E extends Error>(
     error: context[key + '__err'] ?? null,
     loading: false,
   }));
-  if (context.requests) {
-    context.requests.push(
-      effect()
-        .then((res) => (context[key] = res))
-        .catch((err: E) => (context[key + '__err'] = err))
-    );
+  if (
+    import.meta.env.SSR &&
+    !hasData &&
+    !Object.prototype.hasOwnProperty.call(context, key + '__err')
+  ) {
+    throw new Error(`Missing SSR data loader for ${key}`);
   }
   useEffect(() => {
     let cancelled = false;
