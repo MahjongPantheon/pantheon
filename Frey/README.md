@@ -38,6 +38,20 @@ The combined report must reach at least 85% for lines, statements, functions, an
 branches. Coverage tooling regression tests run before the suite and verify that
 source alignment preserves counters and rejects ambiguous mappings.
 
+#### Profile lookup memory
+
+Profile queries select the response fields explicitly. The existing per-person Redis
+cache also retains the hash, superadmin flag, and last-login timestamp used by
+authentication; password salts and reset-token fields are excluded. Cache keys,
+expiry, and invalidation remain the same, so old entries shrink as they expire.
+
+Bulk profile and Majsoul nickname requests deduplicate inputs and query at most
+250 identifiers at a time. Online lookups also page results by person ID in groups
+of 250, since a Tenhou ID or Majsoul nickname can match multiple people. Each page
+is converted directly into the response before reading the next page. Responses
+remain complete and retain their existing private-data permission checks; their
+memory usage still grows with the number of people returned.
+
 #### Password recovery and avatar authorization
 
 Password recovery links expire after one hour and are single-use. Requesting a new

@@ -31,6 +31,12 @@ import { getNotificationSettingsCacheKey, getPersonalInfoCacheKey } from '../hel
 import { getCachedPersonalData } from '../helpers/cache/personalData';
 import { getSuperadminFlag } from './access';
 import {
+  PERSON_LOOKUP_BATCH_SIZE,
+  PersonProfile,
+  readPersonProfilePages,
+  selectPersonProfile,
+} from '../database/profiles';
+import {
   ActionNotAllowedError,
   DataMalformedError,
   ExistsError,
@@ -222,66 +228,12 @@ export async function findByMajsoulAccountId(
   payload: PersonsFindByMajsoulIdsPayload,
   context: Context
 ): Promise<PersonsFindByTenhouIdsResponse> {
-  const soulAccounts = await db
-    .selectFrom('majsoul_platform_account')
-    .where(
-      'nickname',
-      'in',
-      payload.ids.map((i) => i.nickname)
-    )
-    .selectAll()
-    .execute();
-  const accById = soulAccounts.reduce(
-    (acc, r) => {
-      acc[r.person_id] = r;
-      return acc;
-    },
-    {} as Record<number, (typeof soulAccounts)[number]>
+  return findByOnlineIds(
+    db,
+    'majsoul',
+    payload.ids.map((id) => id.nickname),
+    context
   );
-
-  const [persons, currentPerson, rights] = await Promise.all([
-    db
-      .selectFrom('person')
-      .where(
-        'id',
-        'in',
-        soulAccounts.map((r) => r.person_id)
-      )
-      .selectAll()
-      .execute(),
-    db.selectFrom('person').where('id', '=', context.personId).selectAll().execute(),
-    db.selectFrom('person_access').where('person_id', '=', context.personId).selectAll().execute(),
-  ]);
-
-  let withPrivateData = false;
-  if (
-    currentPerson[0]?.is_superadmin ||
-    rights.filter(
-      (e) => e.acl_name === Rights.GET_PERSONAL_INFO_WITH_PRIVATE_DATA && e.acl_value === 1
-    ).length > 0
-  ) {
-    await verifyHash(context.authToken ?? '', currentPerson[0]?.auth_hash);
-    withPrivateData = true;
-  }
-
-  return {
-    people: persons.map((r) => ({
-      id: r.id,
-      city: r.city ?? '',
-      tenhouId: r.tenhou_id ?? '',
-      title: r.title,
-      country: r.country,
-      email: withPrivateData ? r.email : '',
-      phone: withPrivateData ? (r.phone ?? '') : '',
-      hasAvatar: r.has_avatar === 1,
-      lastUpdate: (r.last_update ? new Date(r.last_update) : new Date()).toISOString(),
-      msNickname: accById[r.id].nickname,
-      msAccountId: accById[r.id].account_id,
-      telegramId: r.telegram_id ?? '',
-      notifications: r.notifications ?? '',
-      roninId: r.ronin_id ?? '',
-    })),
-  };
 }
 
 export async function findByTenhouIds(
@@ -300,66 +252,107 @@ export async function findByRoninIds(
   return findByOnlineIds(db, 'ronin', payload.ids, context);
 }
 
+function* uniqueLookupBatches<T>(ids: T[]) {
+  const seen = new Set<T>();
+  let batch: T[] = [];
+  for (const id of ids) {
+    if (seen.has(id)) {
+      continue;
+    }
+    seen.add(id);
+    batch.push(id);
+    if (batch.length === PERSON_LOOKUP_BATCH_SIZE) {
+      yield batch;
+      batch = [];
+    }
+  }
+  if (batch.length > 0) {
+    yield batch;
+  }
+}
+
+function selectPrivateDataPermission(db: Database, personId: number) {
+  return db
+    .selectFrom('person_access')
+    .where('person_id', '=', personId)
+    .where('acl_name', '=', Rights.GET_PERSONAL_INFO_WITH_PRIVATE_DATA)
+    .where('acl_value', '=', 1)
+    .select('id')
+    .limit(1);
+}
+
+async function canReadPrivateProfiles(db: Database, context: Context) {
+  if (context.personId === null) {
+    return false;
+  }
+  const [currentPerson, rights] = await Promise.all([
+    db
+      .selectFrom('person')
+      .where('id', '=', context.personId)
+      .select(['auth_hash', 'is_superadmin'])
+      .executeTakeFirst(),
+    selectPrivateDataPermission(db, context.personId).execute(),
+  ]);
+  const withPrivateData = !!currentPerson?.is_superadmin || rights.length > 0;
+  if (withPrivateData) {
+    await verifyHash(context.authToken ?? '', currentPerson?.auth_hash ?? '');
+  }
+  return withPrivateData;
+}
+
+function toPersonInfo(r: PersonProfile, withPrivateData: boolean) {
+  return {
+    id: r.id,
+    city: r.city ?? '',
+    tenhouId: r.tenhou_id ?? '',
+    title: r.title,
+    country: r.country,
+    email: withPrivateData ? r.email : '',
+    phone: withPrivateData ? (r.phone ?? '') : '',
+    hasAvatar: r.has_avatar === 1,
+    lastUpdate: (r.last_update ? new Date(r.last_update) : new Date()).toISOString(),
+    msNickname: r.nickname ?? '',
+    msAccountId: r.account_id ?? 0,
+    telegramId: r.telegram_id ?? '',
+    notifications: r.notifications ?? '',
+    roninId: r.ronin_id ?? '',
+  };
+}
+
 async function findByOnlineIds(
   db: Database,
-  platform: 'tenhou' | 'ronin',
+  platform: 'tenhou' | 'ronin' | 'majsoul',
   ids: string[],
   context: Context
 ): Promise<PersonsFindByTenhouIdsResponse> {
-  const [persons, currentPerson, rights] = await Promise.all([
-    db
-      .selectFrom('person')
-      .leftJoin('majsoul_platform_account', 'majsoul_platform_account.person_id', 'person.id')
-      .where((eb) =>
-        platform === 'ronin'
-          ? eb(
-              eb.fn('lower', ['person.ronin_id']),
-              'in',
-              ids.map((id) => eb.fn('lower', [eb.val(id)]))
-            )
-          : eb('person.tenhou_id', 'in', ids)
-      )
-      .selectAll('person')
-      .select([
-        'majsoul_platform_account.person_id',
-        'majsoul_platform_account.account_id',
-        'majsoul_platform_account.friend_id',
-        'majsoul_platform_account.nickname',
-      ])
-      .execute(),
-    db.selectFrom('person').where('id', '=', context.personId).selectAll().execute(),
-    db.selectFrom('person_access').where('person_id', '=', context.personId).selectAll().execute(),
-  ]);
-
-  let withPrivateData = false;
-  if (
-    currentPerson[0]?.is_superadmin ||
-    rights.filter(
-      (e) => e.acl_name === Rights.GET_PERSONAL_INFO_WITH_PRIVATE_DATA && e.acl_value === 1
-    ).length > 0
-  ) {
-    await verifyHash(context.authToken ?? '', currentPerson[0]?.auth_hash);
-    withPrivateData = true;
+  const withPrivateData = await canReadPrivateProfiles(db, context);
+  const people: PersonsFindByTenhouIdsResponse['people'] = [];
+  const seen = new Set<number>();
+  for (const batch of uniqueLookupBatches(ids)) {
+    const query = selectPersonProfile(db).where((eb) =>
+      platform === 'ronin'
+        ? eb(
+            eb.fn('lower', ['person.ronin_id']),
+            'in',
+            batch.map((id) => eb.fn('lower', [eb.val(id)]))
+          )
+        : eb(
+            platform === 'tenhou' ? 'person.tenhou_id' : 'majsoul_platform_account.nickname',
+            'in',
+            batch
+          )
+    );
+    for await (const rows of readPersonProfilePages(query)) {
+      for (const row of rows) {
+        // Case variants of a Ronin ID in different batches can match the same person.
+        if (!seen.has(row.id)) {
+          seen.add(row.id);
+          people.push(toPersonInfo(row, withPrivateData));
+        }
+      }
+    }
   }
-
-  return {
-    people: persons.map((r) => ({
-      id: r.id ?? 0,
-      city: r.city ?? '',
-      tenhouId: r.tenhou_id ?? '',
-      title: r.title,
-      country: r.country,
-      email: withPrivateData ? r.email : '',
-      phone: withPrivateData ? (r.phone ?? '') : '',
-      hasAvatar: r.has_avatar === 1,
-      lastUpdate: (r.last_update ? new Date(r.last_update) : new Date()).toISOString(),
-      msNickname: r.nickname ?? '',
-      msAccountId: r.account_id ?? 0,
-      telegramId: r.telegram_id ?? '',
-      notifications: r.notifications ?? '',
-      roninId: r.ronin_id ?? '',
-    })),
-  };
+  return { people };
 }
 
 export async function findByTitle(
@@ -368,7 +361,6 @@ export async function findByTitle(
 ): Promise<PersonsFindByTitleResponse> {
   const persons = await db
     .selectFrom('person')
-    .selectAll()
     .where((eb) =>
       eb(
         sql`to_tsvector('simple', coalesce(title, ''))`,
@@ -381,7 +373,7 @@ export async function findByTitle(
         )})`
       )
     )
-    .selectAll()
+    .select(['id', 'city', 'tenhou_id', 'ronin_id', 'title', 'has_avatar', 'last_update'])
     .limit(10)
     .execute();
 
@@ -402,17 +394,18 @@ export async function getMajsoulNicknames(
   db: Database,
   payload: PersonsGetMajsoulNicknamesPayload
 ): Promise<PersonsGetMajsoulNicknamesResponse> {
-  const result = await db
-    .selectFrom('majsoul_platform_account')
-    .where('person_id', 'in', payload.ids)
-    .select(['nickname', 'person_id'])
-    .execute();
-  return {
-    mapping: result.map((item) => ({
-      personId: item.person_id,
-      nickname: item.nickname,
-    })),
-  };
+  const mapping: PersonsGetMajsoulNicknamesResponse['mapping'] = [];
+  for (const batch of uniqueLookupBatches(payload.ids)) {
+    const rows = await db
+      .selectFrom('majsoul_platform_account')
+      .where('person_id', 'in', batch)
+      .select(['nickname', 'person_id'])
+      .execute();
+    for (const row of rows) {
+      mapping.push({ personId: row.person_id, nickname: row.nickname });
+    }
+  }
+  return { mapping };
 }
 
 export async function getNotificationsSettings(
@@ -429,7 +422,7 @@ export async function getNotificationsSettings(
     const result = await db
       .selectFrom('person')
       .where('id', '=', payload.personId)
-      .selectAll()
+      .select(['telegram_id', 'notifications'])
       .execute();
     data = {
       telegramId: result[0].telegram_id ?? '',
@@ -441,23 +434,15 @@ export async function getNotificationsSettings(
   return data;
 }
 
-async function getPersonData(db: Database, redisClient: IRedisClient, ids: number[]) {
+async function* getPersonData(db: Database, redisClient: IRedisClient, ids: number[]) {
   if (ids.length === 1) {
-    return getCachedPersonalData(db, redisClient, ids[0]);
+    yield await getCachedPersonalData(db, redisClient, ids[0]);
+    return;
   }
 
-  return db
-    .selectFrom('person')
-    .leftJoin('majsoul_platform_account', 'majsoul_platform_account.person_id', 'person.id')
-    .where('person.id', 'in', ids)
-    .selectAll('person')
-    .select([
-      'majsoul_platform_account.person_id',
-      'majsoul_platform_account.account_id',
-      'majsoul_platform_account.friend_id',
-      'majsoul_platform_account.nickname',
-    ])
-    .execute();
+  for (const batch of uniqueLookupBatches(ids)) {
+    yield await selectPersonProfile(db).where('person.id', 'in', batch).execute();
+  }
 }
 
 export async function getPersonalInfo(
@@ -466,40 +451,27 @@ export async function getPersonalInfo(
   payload: PersonsGetPersonalInfoPayload,
   context: Context
 ): Promise<PersonsGetPersonalInfoResponse> {
-  const [data, currentPersonData, rights] = await Promise.all([
-    getPersonData(db, redisClient, payload.ids),
-    getCachedPersonalData(db, redisClient, context.personId ?? 0),
-    db.selectFrom('person_access').where('person_id', '=', context.personId).selectAll().execute(),
-  ]);
+  const [currentPersonData, rights] =
+    context.personId === null
+      ? [[], []]
+      : await Promise.all([
+          getCachedPersonalData(db, redisClient, context.personId),
+          selectPrivateDataPermission(db, context.personId).execute(),
+        ]);
 
-  const canReadAllPrivateData =
-    !!currentPersonData[0]?.is_superadmin ||
-    rights.some(
-      (e) => e.acl_name === Rights.GET_PERSONAL_INFO_WITH_PRIVATE_DATA && e.acl_value === 1
-    );
+  const canReadAllPrivateData = !!currentPersonData[0]?.is_superadmin || rights.length > 0;
   const includesSelf = context.personId !== null && payload.ids.includes(context.personId);
   if (canReadAllPrivateData || includesSelf) {
     await verifyHash(context.authToken ?? '', currentPersonData[0]?.auth_hash ?? '');
   }
 
-  return {
-    people: data.map((r) => ({
-      id: r.id ?? 0,
-      city: r.city ?? '',
-      tenhouId: r.tenhou_id ?? '',
-      title: r.title,
-      country: r.country,
-      email: canReadAllPrivateData || r.id === context.personId ? r.email : '',
-      phone: canReadAllPrivateData || r.id === context.personId ? (r.phone ?? '') : '',
-      hasAvatar: r.has_avatar === 1,
-      lastUpdate: (r.last_update ? new Date(r.last_update) : new Date()).toISOString(),
-      msNickname: r.nickname ?? '',
-      msAccountId: r.account_id ?? 0,
-      telegramId: r.telegram_id ?? '',
-      notifications: r.notifications ?? '',
-      roninId: r.ronin_id ?? '',
-    })),
-  };
+  const people: PersonsGetPersonalInfoResponse['people'] = [];
+  for await (const rows of getPersonData(db, redisClient, payload.ids)) {
+    for (const row of rows) {
+      people.push(toPersonInfo(row, canReadAllPrivateData || row.id === context.personId));
+    }
+  }
+  return { people };
 }
 
 export async function setNotificationsSettings(
