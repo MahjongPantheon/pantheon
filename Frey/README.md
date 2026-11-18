@@ -38,6 +38,21 @@ The combined report must reach at least 85% for lines, statements, functions, an
 branches. Coverage tooling regression tests run before the suite and verify that
 source alignment preserves counters and rejects ambiguous mappings.
 
+#### Request metrics
+
+Completed RPCs enqueue duration gauges without waiting for Hugin. Each API worker
+keeps at most 128 pending metric keys and sends batches of up to 64 through one
+HTTP request at a time, scheduled after 100 ms. Repeated pending samples for the
+same method replace the earlier value, matching Hugin's last-value gauge storage.
+New keys are dropped when the queue is full. Exports retain only the destination
+and metric scalars, outside the request's async context.
+
+Each export has a one-second deadline covering headers and body consumption.
+Acknowledgement bodies are drained without buffering; responses exceeding 16 KiB
+are cancelled. Failed batches are discarded without retries. Metrics are best
+effort and pending samples may be lost on worker shutdown; telemetry failures
+never change the RPC result.
+
 #### Profile lookup memory
 
 Profile queries select the response fields explicitly. The existing per-person Redis

@@ -1,23 +1,19 @@
 import { Middleware } from 'twirpscript';
 import { Context } from '../context.js';
 import { IncomingMessage } from 'http';
+import { createMetricsExporter } from '../../../Common/metricsExporter.js';
 
 export function metrics(): Middleware<Context, IncomingMessage> {
+  const exporter = createMetricsExporter();
   return async (req, ctx, next) => {
     const time = performance.now();
     try {
       const result = await next();
       const duration = performance.now() - time;
-      await fetch(ctx.repository.config.huginUrl + '/addMetric', {
-        method: 'post',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify([
-          {
-            m: 'method_exec_duration_' + req.url?.replace('/v2/common.Mimir/', ''),
-            v: duration,
-            s: 'mimir',
-          },
-        ]),
+      exporter.record(ctx.repository.config.huginUrl + '/addMetric', {
+        m: 'method_exec_duration_' + req.url?.replace('/v2/common.Mimir/', ''),
+        v: duration,
+        s: 'mimir',
       });
       return result;
     } catch (e: any) {

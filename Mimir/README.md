@@ -48,6 +48,21 @@ or runtime reflection tooling. Deploy `server.js`, `cron.js`, `worker.js` and `m
 the latter contains the ORM metadata generated from the source entities during the build.
 Register new entities in `src/orm.config.ts` so they are included in the bundle and its metadata.
 
+### Request metrics
+
+Completed RPCs enqueue duration gauges without waiting for Hugin. Each API worker
+keeps at most 128 pending metric keys and sends batches of up to 64 through one
+HTTP request at a time, scheduled after 100 ms. Repeated pending samples for the
+same method replace the earlier value, matching Hugin's last-value gauge storage.
+New keys are dropped when the queue is full. Exports run outside the ORM request
+context and retain only the destination and metric scalars.
+
+Each export has a one-second deadline covering headers and body consumption.
+Acknowledgement bodies are drained without buffering; responses exceeding 16 KiB
+are cancelled. Failed batches are discarded without retries. Metrics are best
+effort and pending samples may be lost on worker shutdown; telemetry failures
+never change the RPC result.
+
 ### Retry-safe mutations
 
 `DropLastRound` can undo a recently finished club game's results and final round
