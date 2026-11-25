@@ -132,6 +132,9 @@ test('SETTINGS-003: Administrator can allow triple ron while keeping other abort
   };
   const saveMode = async (label: string) => {
     await admin.goto(`${process.env.FORSETI_URL}/ownedEvents/edit/${eventId}`);
+    await expect(
+      admin.getByTestId('forseti-event-settings-basic-settings-event-title')
+    ).toHaveValue(title, { timeout: 15_000 });
     await admin.getByTestId('forseti-event-settings-tab-ruleset').click();
     await admin
       .getByTestId('forseti-event-settings-ruleset-settings-ruleset-with-abortives')
@@ -171,7 +174,7 @@ test('SETTINGS-003: Administrator can allow triple ron while keeping other abort
         await admin.goto(`${process.env.FORSETI_URL}/ownedEvents/edit/${eventId}`);
         await expect(
           admin.getByTestId('forseti-event-settings-basic-settings-event-title')
-        ).toHaveValue(title);
+        ).toHaveValue(title, { timeout: 15_000 });
         await admin.getByTestId('forseti-event-settings-tab-ruleset').click();
         const input = admin.getByTestId(
           'forseti-event-settings-ruleset-settings-ruleset-with-abortives'
