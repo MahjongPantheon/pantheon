@@ -20,6 +20,7 @@ import { v4 } from 'uuid';
 import {
   AddExtraTime,
   AddPenalty,
+  AddRefereeNote,
   CancelGame,
   CancelPenalty,
   CreateEvent,
@@ -40,6 +41,7 @@ import {
   GetTimerState,
   ListChombo,
   ListPenalties,
+  ListRefereeNotes,
   MakeIntervalSeating,
   MakePrescriptedSeating,
   MakeShuffledSeating,
@@ -421,6 +423,18 @@ export class ApiService {
   getPenalties(eventId: number) {
     this._analytics?.track(Analytics.LOAD_STARTED, { method: 'ListPenalties' });
     return ListPenalties({ eventId }, this._clientConfMimir);
+  }
+
+  getRefereeNotes(eventId: number) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'ListRefereeNotes' });
+    return ListRefereeNotes({ eventId }, this._clientConfMimir);
+  }
+
+  addRefereeNote(eventId: number, content: string, playerId?: number) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'AddRefereeNote' });
+    return AddRefereeNote({ eventId, content, playerId }, this._clientConfMimir).then(
+      (response) => response.success
+    );
   }
 
   getChombo(eventId: number) {

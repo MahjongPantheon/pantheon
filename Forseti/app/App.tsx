@@ -27,6 +27,7 @@ import { ProfileLogout } from './pages/ProfileLogout';
 import { OwnedEvents } from './pages/OwnedEvents';
 import { OwnedEventsEdit } from './pages/OwnedEventsEdit';
 import { Penalties } from './pages/Penalties';
+import { RefereeNotes } from './pages/RefereeNotes';
 import { PlayersManage } from './pages/PlayersManage';
 import { GamesControl } from './pages/GamesControl';
 import { EventPrescript } from './pages/EventPrescript';
@@ -66,6 +67,7 @@ export const App = () => {
       <Route path='/ownedEvents' component={OwnedEvents} />
 
       <Route path='/event/:id/penalties' component={Penalties} />
+      <Route path='/event/:id/notes' component={RefereeNotes} />
       <Route path='/event/:id/players' component={PlayersManage} />
       <Route path='/event/:id/games' component={GamesControl} />
       <Route path='/event/:id/prescript' component={EventPrescript} />

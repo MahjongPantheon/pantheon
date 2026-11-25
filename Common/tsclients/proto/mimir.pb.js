@@ -568,6 +568,22 @@ export async function ListChombo(genericEventPayload, config) {
   );
   return ChomboResponse.decode(response);
 }
+export async function ListRefereeNotes(genericEventPayload, config) {
+  const response = await PBrequest(
+    "/common.Mimir/ListRefereeNotes",
+    protoAtoms.GenericEventPayload.encode(genericEventPayload),
+    config
+  );
+  return RefereeNotesResponse.decode(response);
+}
+export async function AddRefereeNote(addRefereeNotePayload, config) {
+  const response = await PBrequest(
+    "/common.Mimir/AddRefereeNote",
+    AddRefereeNotePayload.encode(addRefereeNotePayload),
+    config
+  );
+  return protoAtoms.GenericSuccessResponse.decode(response);
+}
 export async function GetCurrentStateForPlayer(getCurrentStatePayload, config) {
   const response = await PBrequest(
     "/common.Mimir/GetCurrentStateForPlayer",
@@ -1151,6 +1167,22 @@ export async function ListChomboJSON(genericEventPayload, config) {
     config
   );
   return ChomboResponseJSON.decode(response);
+}
+export async function ListRefereeNotesJSON(genericEventPayload, config) {
+  const response = await JSONrequest(
+    "/common.Mimir/ListRefereeNotes",
+    protoAtoms.GenericEventPayloadJSON.encode(genericEventPayload),
+    config
+  );
+  return RefereeNotesResponseJSON.decode(response);
+}
+export async function AddRefereeNoteJSON(addRefereeNotePayload, config) {
+  const response = await JSONrequest(
+    "/common.Mimir/AddRefereeNote",
+    AddRefereeNotePayloadJSON.encode(addRefereeNotePayload),
+    config
+  );
+  return protoAtoms.GenericSuccessResponseJSON.decode(response);
 }
 export async function GetCurrentStateForPlayerJSON(getCurrentStatePayload, config) {
   const response = await JSONrequest(
@@ -1976,6 +2008,30 @@ export function createMimir(service) {
           json: protoAtoms.GenericEventPayloadJSON
         },
         output: { protobuf: ChomboResponse, json: ChomboResponseJSON }
+      },
+      ListRefereeNotes: {
+        name: "ListRefereeNotes",
+        handler: service.ListRefereeNotes,
+        input: {
+          protobuf: protoAtoms.GenericEventPayload,
+          json: protoAtoms.GenericEventPayloadJSON
+        },
+        output: {
+          protobuf: RefereeNotesResponse,
+          json: RefereeNotesResponseJSON
+        }
+      },
+      AddRefereeNote: {
+        name: "AddRefereeNote",
+        handler: service.AddRefereeNote,
+        input: {
+          protobuf: AddRefereeNotePayload,
+          json: AddRefereeNotePayloadJSON
+        },
+        output: {
+          protobuf: protoAtoms.GenericSuccessResponse,
+          json: protoAtoms.GenericSuccessResponseJSON
+        }
       },
       GetCurrentStateForPlayer: {
         name: "GetCurrentStateForPlayer",
@@ -7361,6 +7417,259 @@ export const PenaltiesResponse = {
     return msg;
   }
 };
+export const RefereeNote = {
+  /**
+   * Serializes RefereeNote to protobuf.
+   */
+  encode: function(msg) {
+    return RefereeNote._writeMessage(
+      msg,
+      new protoscript.BinaryWriter()
+    ).getResultBuffer();
+  },
+  /**
+   * Deserializes RefereeNote from protobuf.
+   */
+  decode: function(bytes) {
+    return RefereeNote._readMessage(
+      RefereeNote.initialize(),
+      new protoscript.BinaryReader(bytes)
+    );
+  },
+  /**
+   * Initializes RefereeNote with all fields set to their default value.
+   */
+  initialize: function(msg) {
+    return {
+      id: 0,
+      content: "",
+      authorId: 0,
+      createdAt: "",
+      playerId: void 0,
+      ...msg
+    };
+  },
+  /**
+   * @private
+   */
+  _writeMessage: function(msg, writer) {
+    if (msg.id) {
+      writer.writeInt32(1, msg.id);
+    }
+    if (msg.content) {
+      writer.writeString(2, msg.content);
+    }
+    if (msg.authorId) {
+      writer.writeInt32(3, msg.authorId);
+    }
+    if (msg.createdAt) {
+      writer.writeString(4, msg.createdAt);
+    }
+    if (msg.playerId != void 0) {
+      writer.writeInt32(5, msg.playerId);
+    }
+    return writer;
+  },
+  /**
+   * @private
+   */
+  _readMessage: function(msg, reader) {
+    while (reader.nextField()) {
+      const field = reader.getFieldNumber();
+      switch (field) {
+        case 1: {
+          msg.id = reader.readInt32();
+          break;
+        }
+        case 2: {
+          msg.content = reader.readString();
+          break;
+        }
+        case 3: {
+          msg.authorId = reader.readInt32();
+          break;
+        }
+        case 4: {
+          msg.createdAt = reader.readString();
+          break;
+        }
+        case 5: {
+          msg.playerId = reader.readInt32();
+          break;
+        }
+        default: {
+          reader.skipField();
+          break;
+        }
+      }
+    }
+    return msg;
+  }
+};
+export const RefereeNotesResponse = {
+  /**
+   * Serializes RefereeNotesResponse to protobuf.
+   */
+  encode: function(msg) {
+    return RefereeNotesResponse._writeMessage(
+      msg,
+      new protoscript.BinaryWriter()
+    ).getResultBuffer();
+  },
+  /**
+   * Deserializes RefereeNotesResponse from protobuf.
+   */
+  decode: function(bytes) {
+    return RefereeNotesResponse._readMessage(
+      RefereeNotesResponse.initialize(),
+      new protoscript.BinaryReader(bytes)
+    );
+  },
+  /**
+   * Initializes RefereeNotesResponse with all fields set to their default value.
+   */
+  initialize: function(msg) {
+    return {
+      notes: [],
+      authors: [],
+      players: [],
+      ...msg
+    };
+  },
+  /**
+   * @private
+   */
+  _writeMessage: function(msg, writer) {
+    if (msg.notes?.length) {
+      writer.writeRepeatedMessage(
+        1,
+        msg.notes,
+        RefereeNote._writeMessage
+      );
+    }
+    if (msg.authors?.length) {
+      writer.writeRepeatedMessage(
+        2,
+        msg.authors,
+        protoAtoms.Player._writeMessage
+      );
+    }
+    if (msg.players?.length) {
+      writer.writeRepeatedMessage(
+        3,
+        msg.players,
+        protoAtoms.Player._writeMessage
+      );
+    }
+    return writer;
+  },
+  /**
+   * @private
+   */
+  _readMessage: function(msg, reader) {
+    while (reader.nextField()) {
+      const field = reader.getFieldNumber();
+      switch (field) {
+        case 1: {
+          const m = RefereeNote.initialize();
+          reader.readMessage(m, RefereeNote._readMessage);
+          msg.notes.push(m);
+          break;
+        }
+        case 2: {
+          const m = protoAtoms.Player.initialize();
+          reader.readMessage(m, protoAtoms.Player._readMessage);
+          msg.authors.push(m);
+          break;
+        }
+        case 3: {
+          const m = protoAtoms.Player.initialize();
+          reader.readMessage(m, protoAtoms.Player._readMessage);
+          msg.players.push(m);
+          break;
+        }
+        default: {
+          reader.skipField();
+          break;
+        }
+      }
+    }
+    return msg;
+  }
+};
+export const AddRefereeNotePayload = {
+  /**
+   * Serializes AddRefereeNotePayload to protobuf.
+   */
+  encode: function(msg) {
+    return AddRefereeNotePayload._writeMessage(
+      msg,
+      new protoscript.BinaryWriter()
+    ).getResultBuffer();
+  },
+  /**
+   * Deserializes AddRefereeNotePayload from protobuf.
+   */
+  decode: function(bytes) {
+    return AddRefereeNotePayload._readMessage(
+      AddRefereeNotePayload.initialize(),
+      new protoscript.BinaryReader(bytes)
+    );
+  },
+  /**
+   * Initializes AddRefereeNotePayload with all fields set to their default value.
+   */
+  initialize: function(msg) {
+    return {
+      eventId: 0,
+      content: "",
+      playerId: void 0,
+      ...msg
+    };
+  },
+  /**
+   * @private
+   */
+  _writeMessage: function(msg, writer) {
+    if (msg.eventId) {
+      writer.writeInt32(1, msg.eventId);
+    }
+    if (msg.content) {
+      writer.writeString(2, msg.content);
+    }
+    if (msg.playerId != void 0) {
+      writer.writeInt32(3, msg.playerId);
+    }
+    return writer;
+  },
+  /**
+   * @private
+   */
+  _readMessage: function(msg, reader) {
+    while (reader.nextField()) {
+      const field = reader.getFieldNumber();
+      switch (field) {
+        case 1: {
+          msg.eventId = reader.readInt32();
+          break;
+        }
+        case 2: {
+          msg.content = reader.readString();
+          break;
+        }
+        case 3: {
+          msg.playerId = reader.readInt32();
+          break;
+        }
+        default: {
+          reader.skipField();
+          break;
+        }
+      }
+    }
+    return msg;
+  }
+};
 export const CancelPenaltyPayload = {
   /**
    * Serializes CancelPenaltyPayload to protobuf.
@@ -12272,6 +12581,220 @@ export const PenaltiesResponseJSON = {
         protoAtoms.PlayerJSON._readMessage(m, item);
         msg.referees.push(m);
       }
+    }
+    return msg;
+  }
+};
+export const RefereeNoteJSON = {
+  /**
+   * Serializes RefereeNote to JSON.
+   */
+  encode: function(msg) {
+    return JSON.stringify(RefereeNoteJSON._writeMessage(msg));
+  },
+  /**
+   * Deserializes RefereeNote from JSON.
+   */
+  decode: function(json) {
+    return RefereeNoteJSON._readMessage(
+      RefereeNoteJSON.initialize(),
+      JSON.parse(json)
+    );
+  },
+  /**
+   * Initializes RefereeNote with all fields set to their default value.
+   */
+  initialize: function(msg) {
+    return {
+      id: 0,
+      content: "",
+      authorId: 0,
+      createdAt: "",
+      playerId: void 0,
+      ...msg
+    };
+  },
+  /**
+   * @private
+   */
+  _writeMessage: function(msg) {
+    const json = {};
+    if (msg.id) {
+      json["id"] = msg.id;
+    }
+    if (msg.content) {
+      json["content"] = msg.content;
+    }
+    if (msg.authorId) {
+      json["authorId"] = msg.authorId;
+    }
+    if (msg.createdAt) {
+      json["createdAt"] = msg.createdAt;
+    }
+    if (msg.playerId != void 0) {
+      json["playerId"] = msg.playerId;
+    }
+    return json;
+  },
+  /**
+   * @private
+   */
+  _readMessage: function(msg, json) {
+    const _id_ = json["id"];
+    if (_id_) {
+      msg.id = protoscript.parseNumber(_id_);
+    }
+    const _content_ = json["content"];
+    if (_content_) {
+      msg.content = _content_;
+    }
+    const _authorId_ = json["authorId"] ?? json["author_id"];
+    if (_authorId_) {
+      msg.authorId = protoscript.parseNumber(_authorId_);
+    }
+    const _createdAt_ = json["createdAt"] ?? json["created_at"];
+    if (_createdAt_) {
+      msg.createdAt = _createdAt_;
+    }
+    const _playerId_ = json["playerId"] ?? json["player_id"];
+    if (_playerId_) {
+      msg.playerId = protoscript.parseNumber(_playerId_);
+    }
+    return msg;
+  }
+};
+export const RefereeNotesResponseJSON = {
+  /**
+   * Serializes RefereeNotesResponse to JSON.
+   */
+  encode: function(msg) {
+    return JSON.stringify(RefereeNotesResponseJSON._writeMessage(msg));
+  },
+  /**
+   * Deserializes RefereeNotesResponse from JSON.
+   */
+  decode: function(json) {
+    return RefereeNotesResponseJSON._readMessage(
+      RefereeNotesResponseJSON.initialize(),
+      JSON.parse(json)
+    );
+  },
+  /**
+   * Initializes RefereeNotesResponse with all fields set to their default value.
+   */
+  initialize: function(msg) {
+    return {
+      notes: [],
+      authors: [],
+      players: [],
+      ...msg
+    };
+  },
+  /**
+   * @private
+   */
+  _writeMessage: function(msg) {
+    const json = {};
+    if (msg.notes?.length) {
+      json["notes"] = msg.notes.map(RefereeNoteJSON._writeMessage);
+    }
+    if (msg.authors?.length) {
+      json["authors"] = msg.authors.map(protoAtoms.PlayerJSON._writeMessage);
+    }
+    if (msg.players?.length) {
+      json["players"] = msg.players.map(protoAtoms.PlayerJSON._writeMessage);
+    }
+    return json;
+  },
+  /**
+   * @private
+   */
+  _readMessage: function(msg, json) {
+    const _notes_ = json["notes"];
+    if (_notes_) {
+      for (const item of _notes_) {
+        const m = RefereeNoteJSON.initialize();
+        RefereeNoteJSON._readMessage(m, item);
+        msg.notes.push(m);
+      }
+    }
+    const _authors_ = json["authors"];
+    if (_authors_) {
+      for (const item of _authors_) {
+        const m = protoAtoms.PlayerJSON.initialize();
+        protoAtoms.PlayerJSON._readMessage(m, item);
+        msg.authors.push(m);
+      }
+    }
+    const _players_ = json["players"];
+    if (_players_) {
+      for (const item of _players_) {
+        const m = protoAtoms.PlayerJSON.initialize();
+        protoAtoms.PlayerJSON._readMessage(m, item);
+        msg.players.push(m);
+      }
+    }
+    return msg;
+  }
+};
+export const AddRefereeNotePayloadJSON = {
+  /**
+   * Serializes AddRefereeNotePayload to JSON.
+   */
+  encode: function(msg) {
+    return JSON.stringify(AddRefereeNotePayloadJSON._writeMessage(msg));
+  },
+  /**
+   * Deserializes AddRefereeNotePayload from JSON.
+   */
+  decode: function(json) {
+    return AddRefereeNotePayloadJSON._readMessage(
+      AddRefereeNotePayloadJSON.initialize(),
+      JSON.parse(json)
+    );
+  },
+  /**
+   * Initializes AddRefereeNotePayload with all fields set to their default value.
+   */
+  initialize: function(msg) {
+    return {
+      eventId: 0,
+      content: "",
+      playerId: void 0,
+      ...msg
+    };
+  },
+  /**
+   * @private
+   */
+  _writeMessage: function(msg) {
+    const json = {};
+    if (msg.eventId) {
+      json["eventId"] = msg.eventId;
+    }
+    if (msg.content) {
+      json["content"] = msg.content;
+    }
+    if (msg.playerId != void 0) {
+      json["playerId"] = msg.playerId;
+    }
+    return json;
+  },
+  /**
+   * @private
+   */
+  _readMessage: function(msg, json) {
+    const _eventId_ = json["eventId"] ?? json["event_id"];
+    if (_eventId_) {
+      msg.eventId = protoscript.parseNumber(_eventId_);
+    }
+    const _content_ = json["content"];
+    if (_content_) {
+      msg.content = _content_;
+    }
+    const _playerId_ = json["playerId"] ?? json["player_id"];
+    if (_playerId_) {
+      msg.playerId = protoscript.parseNumber(_playerId_);
     }
     return msg;
   }

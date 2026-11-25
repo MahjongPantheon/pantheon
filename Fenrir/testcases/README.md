@@ -37,4 +37,8 @@ a production SSR build and explicitly skips on the development Vite server.
 
 For implementation, follow the Fenrir guidance in [AGENTS.md](../../AGENTS.md). Assert every documented expected result and keep the description aligned with the implementation. Use setup helpers for unrelated prerequisites so cases remain independent.
 
+[REFEREE-001](referee-001-shared-notes.md) verifies shared private referee notes,
+player links on Penalties, and denial for ordinary players and anonymous callers
+in `tests/referee-notes.spec.ts`.
+
 Run flows from the repository root with `./run e2e dev` against the development stack. See the [root README](../../README.md) for environment setup and the production-build e2e flow. Development e2e runs do not cover SSR.

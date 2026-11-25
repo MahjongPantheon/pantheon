@@ -7,6 +7,7 @@ import {
 } from 'tsclients/proto/atoms.pb.js';
 import {
   AddExtraTimePayload,
+  AddRefereeNotePayload,
   CallRefereePayload,
   CancelPenaltyPayload,
   ChomboResponse,
@@ -58,6 +59,7 @@ import {
   GetCurrentStateResponse,
   Mimir,
   PenaltiesResponse,
+  RefereeNotesResponse,
   PlayersGetAllRoundsResponse,
   PlayersGetCurrentSessionsPayload,
   PlayersGetCurrentSessionsResponse,
@@ -94,6 +96,7 @@ import { SessionResultsModel } from './models/SessionResultsModel.js';
 import { PlayerInSessionModel } from './models/PlayerInSessionModel.js';
 import { EventRegistrationModel } from './models/EventRegistrationModel.js';
 import { PenaltyModel } from './models/PenaltyModel.js';
+import { RefereeNoteModel } from './models/RefereeNoteModel.js';
 import { AchievementsModel } from './models/AchievementsModel.js';
 import { SeatingModel } from './models/SeatingModel.js';
 
@@ -618,6 +621,18 @@ export const mimirServer: Mimir<Context> = {
   ): Promise<PenaltiesResponse> {
     const penaltyModel = Model.getModel(context.repository, PenaltyModel);
     return penaltyModel.listPenalties(genericEventPayload.eventId);
+  },
+  ListRefereeNotes: function (
+    payload: GenericEventPayload,
+    context: Context
+  ): Promise<RefereeNotesResponse> {
+    return Model.getModel(context.repository, RefereeNoteModel).listRefereeNotes(payload.eventId);
+  },
+  AddRefereeNote: function (
+    payload: AddRefereeNotePayload,
+    context: Context
+  ): Promise<GenericSuccessResponse> {
+    return Model.getModel(context.repository, RefereeNoteModel).addRefereeNote(payload);
   },
   CancelPenalty: function (
     cancelPenaltyPayload: CancelPenaltyPayload,

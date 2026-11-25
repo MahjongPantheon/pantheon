@@ -7,6 +7,7 @@ import { EventRegisteredPlayersEntity } from './entities/EventRegisteredPlayers.
 import { HandEntity } from './entities/Hand.entity.js';
 import { JobsQueueEntity } from './entities/JobsQueue.entity.js';
 import { PenaltyEntity } from './entities/Penalty.entity.js';
+import { RefereeNoteEntity } from './entities/RefereeNote.entity.js';
 import { PlayerHistoryEntity } from './entities/PlayerHistory.entity.js';
 import { PlayerStatsEntity } from './entities/PlayerStats.entity.js';
 import { RoundEntity } from './entities/Round.entity.js';
@@ -37,6 +38,7 @@ export const createBaseConfig = () =>
       HandEntity,
       JobsQueueEntity,
       PenaltyEntity,
+      RefereeNoteEntity,
       PlayerHistoryEntity,
       PlayerStatsEntity,
       RoundEntity,

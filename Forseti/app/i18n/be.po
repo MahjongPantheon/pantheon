@@ -2741,3 +2741,60 @@ msgid ""
 "If set, a chombo after timeout counts as one played hand. All selected "
 "players are penalized together. Applies to both timed ending policies."
 msgstr "Калі ўключана, чомба пасля заканчэння часу лічыцца адной згулянай раздачай. Усе выбраныя гульцы штрафуюцца адначасова. Ужываецца для абодвух спосабаў завяршэння гульні па часе."
+
+#: app/components/RefereeNotes.tsx:141:16
+msgid "Add referee note"
+msgstr ""
+
+#: app/components/RefereeNotes.tsx:165:18
+msgid "Author: %1"
+msgstr ""
+
+#: app/components/RefereeNotes.tsx:160:19
+msgid "Event-wide note"
+msgstr ""
+
+#: app/components/RefereeNotes.tsx:83:37
+msgid "Failed to save referee note"
+msgstr ""
+
+#: app/components/RefereeNotes.tsx:126:28
+msgid "Leave empty for an event-wide note."
+msgstr ""
+
+#: app/components/RefereeNotes.tsx:125:22
+msgid "Linked player (optional)"
+msgstr ""
+
+#: app/components/RefereeNotes.tsx:150:15
+msgid "No referee notes linked to players yet"
+msgstr ""
+
+#: app/components/RefereeNotes.tsx:151:15
+msgid "No referee notes yet"
+msgstr ""
+
+#: app/components/RefereeNotes.tsx:114:22
+msgid "Note"
+msgstr ""
+
+#: app/components/RefereeNotes.tsx:143:44
+msgid "Referee note saved"
+msgstr ""
+
+#: app/components/MainMenu.tsx:108:23 app/components/RefereeNotes.tsx:98:27
+#: app/pages/RefereeNotes.tsx:11:16
+msgid "Referee notes"
+msgstr ""
+
+#: app/components/RefereeNotes.tsx:63:14
+msgid "Referee notes are available to event referees and administrators."
+msgstr ""
+
+#: app/components/RefereeNotes.tsx:105:12
+msgid "Refresh notes"
+msgstr ""
+
+#: app/components/RefereeNotes.tsx:115:28
+msgid "Visible only to event referees and administrators."
+msgstr ""

@@ -15,6 +15,7 @@ import {
   IconMilitaryRank,
   IconMoonStars,
   IconNotification,
+  IconNotes,
   IconOlympics,
   IconRefresh,
   IconRefreshAlert,
@@ -99,6 +100,15 @@ export const MainMenu = ({
                 onClick={closeMenu}
               />
             )}
+            {eventData && privilegesLevel >= PrivilegesLevel.REFEREE && (
+              <MainMenuLink
+                testId={`forseti-menu-${testIdScope}-event-notes`}
+                href={`/event/${eventId}/notes`}
+                icon={<IconNotes size={18} />}
+                text={i18n._t('Referee notes')}
+                onClick={closeMenu}
+              />
+            )}
             {eventData && !eventData.finished && (
               <>
                 {privilegesLevel >= PrivilegesLevel.ADMIN && (
@@ -123,7 +133,7 @@ export const MainMenu = ({
                   <>
                     <MainMenuLink
                       testId={`forseti-menu-${testIdScope}-event-penalties`}
-                      href={`event/${eventId}/penalties`}
+                      href={`/event/${eventId}/penalties`}
                       icon={<IconAlertOctagon size={18} />}
                       text={i18n._t('Penalties')}
                       onClick={closeMenu}

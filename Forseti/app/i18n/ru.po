@@ -2837,3 +2837,60 @@ msgid ""
 "If set, a chombo after timeout counts as one played hand. All selected "
 "players are penalized together. Applies to both timed ending policies."
 msgstr "Если включено, чомбо после истечения времени считается одной сыгранной раздачей. Все выбранные игроки штрафуются одновременно. Применяется к обоим способам завершения игры по таймеру."
+
+#: app/components/RefereeNotes.tsx:141:16
+msgid "Add referee note"
+msgstr "Добавить заметку судьи"
+
+#: app/components/RefereeNotes.tsx:165:18
+msgid "Author: %1"
+msgstr "Автор: %1"
+
+#: app/components/RefereeNotes.tsx:160:19
+msgid "Event-wide note"
+msgstr "Заметка о событии"
+
+#: app/components/RefereeNotes.tsx:83:37
+msgid "Failed to save referee note"
+msgstr "Не удалось сохранить заметку судьи"
+
+#: app/components/RefereeNotes.tsx:126:28
+msgid "Leave empty for an event-wide note."
+msgstr "Оставьте пустым для заметки обо всём событии."
+
+#: app/components/RefereeNotes.tsx:125:22
+msgid "Linked player (optional)"
+msgstr "Связанный игрок (необязательно)"
+
+#: app/components/RefereeNotes.tsx:150:15
+msgid "No referee notes linked to players yet"
+msgstr "Заметок судей об игроках пока нет"
+
+#: app/components/RefereeNotes.tsx:151:15
+msgid "No referee notes yet"
+msgstr "Заметок судей пока нет"
+
+#: app/components/RefereeNotes.tsx:114:22
+msgid "Note"
+msgstr "Заметка"
+
+#: app/components/RefereeNotes.tsx:143:44
+msgid "Referee note saved"
+msgstr "Заметка судьи сохранена"
+
+#: app/components/MainMenu.tsx:108:23 app/components/RefereeNotes.tsx:98:27
+#: app/pages/RefereeNotes.tsx:11:16
+msgid "Referee notes"
+msgstr "Заметки судей"
+
+#: app/components/RefereeNotes.tsx:63:14
+msgid "Referee notes are available to event referees and administrators."
+msgstr "Заметки судей доступны судьям и администраторам события."
+
+#: app/components/RefereeNotes.tsx:105:12
+msgid "Refresh notes"
+msgstr "Обновить заметки"
+
+#: app/components/RefereeNotes.tsx:115:28
+msgid "Visible only to event referees and administrators."
+msgstr "Видно только судьям и администраторам события."
