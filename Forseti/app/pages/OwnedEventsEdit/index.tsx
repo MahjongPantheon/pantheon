@@ -80,6 +80,7 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string; copyId?: string 
   const form = useForm<FormFields>({
     mode: 'uncontrolled',
     cascadeUpdates: true,
+    onValuesChange: () => setIsSaved(false),
     initialValues: {
       event: {
         isListed: true,

@@ -67,3 +67,9 @@ Tyr keeps the selected event's rules only in memory. It loads them when selectin
 a different event in settings or reloading the browser. Refreshing the current
 game, entering a round, and selecting winners retain the loaded rules. After an
 administrator changes event rules, switch events or reload Tyr to apply them.
+
+### Generated API clients during development
+
+Vite excludes the local `tsclients` package from dependency prebundling. These
+protocol clients can change without a lockfile change; serving them as source
+avoids reusing a browser-cached codec that silently drops newly added fields.

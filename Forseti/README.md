@@ -20,7 +20,7 @@ Features:
 - Uses Mantine UI v9 with package stylesheets and CSS Modules.
 - System statistics use `react-chartjs-2` and Chart.js with stacked series and theme-aware colors.
 - `app/components/NumberInput.tsx` preserves numeric form values and integer precision while allowing intermediate editing states.
-- Event settings use uncontrolled form inputs with field subscriptions so typing does not rerender hidden tabs. Programmatic updates use keyed inputs, and the timezone search limits rendered results.
+- Event settings use uncontrolled form inputs with field subscriptions so typing does not rerender hidden tabs. Programmatic updates use keyed inputs, and the timezone search limits rendered results. Editing a saved form clears its success indicator and immediately enables saving the new changes.
 - Settings tabs use `keepMountedMode="display-none"` so validation can find and focus invalid fields across tabs.
 - Theme preferences retain the shared `day`/`night` cookies and separate dimmed palette.
 
@@ -33,3 +33,9 @@ to `Forseti/coverage/`.
 ### Legend
 
 **Forseti** is the god of justice and reconciliation in Norse mythology. See wikipedia for details :)
+
+### Generated API clients during development
+
+Vite excludes the local `tsclients` package from dependency prebundling. These
+protocol clients can change without a lockfile change; serving them as source
+avoids reusing a browser-cached codec that silently drops newly added fields.

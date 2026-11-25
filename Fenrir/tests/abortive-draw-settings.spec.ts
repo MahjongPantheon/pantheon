@@ -73,13 +73,33 @@ test('SETTINGS-003: Administrator can allow triple ron while keeping other abort
     data: { eventId: alternateEventId, playerId: players[0].id },
   });
   await expect(registration).toBeOK();
+  const optimizedProtocolRequests: string[] = [];
+  const immutableProtocolResponses: string[] = [];
   const rulesRequests: string[] = [];
   page.on('request', (req) => {
+    if (req.url().includes('/.vite/deps/tsclients_')) optimizedProtocolRequests.push(req.url());
     if (req.url().endsWith('/common.Mimir/GetGameConfig')) rulesRequests.push(req.url());
+  });
+  page.on('response', (response) => {
+    if (
+      response.url().includes('/tsclients/proto/') &&
+      response.headers()['cache-control']?.includes('immutable')
+    )
+      immutableProtocolResponses.push(response.url());
   });
   const adminContext = await browser.newContext();
   adminContext.setDefaultTimeout(15_000);
   const admin = await adminContext.newPage();
+  admin.on('request', (req) => {
+    if (req.url().includes('/.vite/deps/tsclients_')) optimizedProtocolRequests.push(req.url());
+  });
+  admin.on('response', (response) => {
+    if (
+      response.url().includes('/tsclients/proto/') &&
+      response.headers()['cache-control']?.includes('immutable')
+    )
+      immutableProtocolResponses.push(response.url());
+  });
   const spectatorContext = await browser.newContext();
   spectatorContext.setDefaultTimeout(15_000);
   const spectator = await spectatorContext.newPage();
@@ -186,6 +206,26 @@ test('SETTINGS-003: Administrator can allow triple ron while keeping other abort
       }
     });
 
+    await test.step('Save a changed mode immediately after a successful save', async () => {
+      await saveMode('All');
+      await expect(admin.getByTestId('forseti-event-settings-save')).toBeDisabled();
+      await admin
+        .getByTestId('forseti-event-settings-ruleset-settings-ruleset-with-abortives')
+        .click();
+      await admin.getByRole('option', { name: 'All except triple ron', exact: true }).click();
+      await expect(admin.getByTestId('forseti-event-settings-save')).toBeEnabled({ timeout: 1000 });
+      const [saved] = await Promise.all([
+        admin.waitForResponse((response) => response.url().endsWith('/common.Mimir/UpdateEvent')),
+        admin.getByTestId('forseti-event-settings-save').click(),
+      ]);
+      expect(saved.ok()).toBe(true);
+      await admin.reload();
+      await admin.getByTestId('forseti-event-settings-tab-ruleset').click();
+      await expect(
+        admin.getByTestId('forseti-event-settings-ruleset-settings-ruleset-with-abortives')
+      ).toHaveValue('All except triple ron');
+    });
+
     await test.step('Keep loaded rules during game refresh and round entry', async () => {
       await page.getByTestId('tyr-table-refresh').click();
       await assertWinnerLimit(false);
@@ -212,6 +252,8 @@ test('SETTINGS-003: Administrator can allow triple ron while keeping other abort
       await openCurrentGame();
       await assertWinnerLimit(true);
       expect(rulesRequests).toEqual([]);
+      expect(optimizedProtocolRequests).toEqual([]);
+      expect(immutableProtocolResponses).toEqual([]);
     });
 
     await test.step('Select three winners and record matching preview and saved scores in Tyr', async () => {

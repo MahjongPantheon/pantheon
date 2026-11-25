@@ -18,11 +18,14 @@
 import { runtimeEnvironment } from '../Common/ContainerRuntime/vite-runtime-env.mjs';
 
 import { defineConfig } from 'vite';
+import { fileURLToPath } from 'node:url';
 import react from '@vitejs/plugin-react-swc';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import { VitePWA } from 'vite-plugin-pwa';
 
 export default defineConfig({
+  // Generated clients change without lockfile updates; do not cache an older wire schema.
+  optimizeDeps: { exclude: ['tsclients'] },
   plugins: [
     runtimeEnvironment(),
     react(),
@@ -58,6 +61,7 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
+      tsclients: fileURLToPath(new URL('../Common/tsclients', import.meta.url)),
       // /esm/icons/index.mjs only exports the icons statically, so no separate chunks are created
       '@tabler/icons-react': '@tabler/icons-react/dist/esm/icons/index.mjs',
     },
