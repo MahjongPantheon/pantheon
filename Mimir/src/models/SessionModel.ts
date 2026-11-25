@@ -1,4 +1,5 @@
 import { checkRiichiPoints, checkRonWinners } from '../helpers/roundValidation.js';
+import { correctSessionSeating } from '../helpers/correctSessionSeating.js';
 import { GHOST_PLAYER_ID } from '../../../Common/constants.js';
 import { LockMode, TransactionPropagation } from '@mikro-orm/core';
 import { randomUUID } from 'node:crypto';
@@ -33,6 +34,7 @@ import {
   AddExtraTimePayload,
   GamesAddRoundResponse,
   GamesDropLastRoundPayload,
+  GamesCorrectSessionSeatingPayload,
   GamesGetSessionOverviewResponse,
   GamesPreviewRoundResponse,
   GamesStartGamePayload,
@@ -79,6 +81,7 @@ export class SessionModel extends Model {
       // Lock the session only; joined population would also lock the event/ruleset.
       populate: forUpdate ? undefined : populate,
       ...(forUpdate ? { lockMode: LockMode.PESSIMISTIC_WRITE, refresh: true } : {}),
+      orderBy: { id: 'asc' },
     });
     if (forUpdate && populate) await this.repo.em.populate(sessions, populate);
     return sessions;
@@ -90,11 +93,12 @@ export class SessionModel extends Model {
     offset = 0,
     limit: number | null = null,
     orderBy: keyof SessionEntity | null = null,
-    order: 'asc' | 'desc' = 'desc'
+    order: 'asc' | 'desc' = 'desc',
+    forUpdate = false
   ) {
-    return this.repo.em.findAll(SessionEntity, {
+    const sessions = await this.repo.em.findAll(SessionEntity, {
       where: {
-        status,
+        ...(status.length ? { status } : {}),
         event: {
           id: {
             $in: eventIds,
@@ -108,8 +112,13 @@ export class SessionModel extends Model {
         : {}),
       limit: limit ?? undefined,
       offset,
-      populate: ['players', 'event'],
+      populate: forUpdate ? undefined : ['players', 'event'],
+      ...(forUpdate
+        ? { lockMode: LockMode.PESSIMISTIC_WRITE, refresh: true, orderBy: { id: 'asc' as const } }
+        : {}),
     });
+    if (forUpdate) await this.repo.em.populate(sessions, ['players', 'event']);
+    return sessions;
   }
 
   async findByPlayerAndEvent(
@@ -911,7 +920,12 @@ export class SessionModel extends Model {
         const sessionModel = this.getModel(SessionModel);
         const sessions = await sessionModel.findByEventAndStatus(
           [eventId],
-          [SessionStatus.SESSION_STATUS_PREFINISHED]
+          [SessionStatus.SESSION_STATUS_PREFINISHED],
+          0,
+          null,
+          'id',
+          'asc',
+          true
         );
         if (sessions.length === 0) {
           return { success: true };
@@ -1270,6 +1284,78 @@ export class SessionModel extends Model {
         sessions[0].nextRoundToken = randomUUID();
         this.repo.em.persist(sessions[0]);
 
+        return { success: true };
+      },
+      { propagation: TransactionPropagation.REQUIRED }
+    );
+  }
+
+  async correctSessionSeating(payload: GamesCorrectSessionSeatingPayload) {
+    return this.repo.em.transactional(
+      async () => {
+        const [session] = await this.findByRepresentationalHash(
+          [payload.sessionHash],
+          ['event'],
+          true
+        );
+        if (!session) throw new Error('Session not found');
+        const playerModel = this.getModel(PlayerModel);
+        if (
+          !this.repo.meta.personId ||
+          !(
+            (await playerModel.isEventAdmin(session.event.id)) ||
+            (await playerModel.isEventReferee(session.event.id))
+          )
+        ) {
+          throw new Error("You don't have the necessary permissions to correct seating");
+        }
+        const event = session.event;
+        if (
+          session.status !== SessionStatus.SESSION_STATUS_INPROGRESS ||
+          event.finished ||
+          event.isOnline ||
+          event.gamesStatus === TournamentGamesStatus.TOURNAMENT_GAMES_STATUS_SEATING_READY
+        ) {
+          throw new Error('Seating can only be corrected for an active offline session');
+        }
+        if (!payload.nextRoundToken || session.nextRoundToken !== payload.nextRoundToken) {
+          throw new TwirpError({
+            code: 'failed_precondition',
+            msg: 'Round token is stale; refresh the session overview',
+          });
+        }
+        const current = session.intermediateResults;
+        const ids = payload.playerIds;
+        if (
+          !current ||
+          ids.length !== event.ruleset.playerCount ||
+          new Set(ids).size !== ids.length ||
+          ids.some((id) => id === GHOST_PLAYER_ID || !current.playerIds.includes(id))
+        ) {
+          throw new Error('Seating must contain each real session player exactly once');
+        }
+        const rounds = await this.getModel(RoundModel).findBySessionIds([session.id]);
+        const replay = correctSessionSeating(event.ruleset, current, rounds, ids);
+        const players = await this.repo.em.find(SessionPlayerEntity, { session: session.id });
+        if (
+          players.filter((player) => player.playerId !== GHOST_PLAYER_ID).length !== ids.length ||
+          ids.some((id) => !players.some((player) => player.playerId === id))
+        ) {
+          throw new Error('Session seating does not match the recorded players');
+        }
+        for (const [index, round] of rounds.entries()) {
+          round.lastSessionState = replay.snapshots[index];
+          round.round = replay.snapshots[index].round;
+          round.honba = replay.snapshots[index].honba;
+          this.repo.em.persist(round);
+        }
+        for (const player of players) {
+          player.order = player.playerId === GHOST_PLAYER_ID ? 4 : ids.indexOf(player.playerId) + 1;
+          this.repo.em.persist(player);
+        }
+        session.intermediateResults = replay.state;
+        session.nextRoundToken = randomUUID();
+        this.repo.em.persist(session);
         return { success: true };
       },
       { propagation: TransactionPropagation.REQUIRED }

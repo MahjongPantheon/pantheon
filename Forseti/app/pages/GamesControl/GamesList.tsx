@@ -58,6 +58,7 @@ import { PlayerAvatar } from '../../components/PlayerAvatar';
 import { useState } from 'react';
 import { EventsGetTimerStateResponse } from 'tsclients/proto/mimir.pb';
 import { orderTables } from '../../helpers/orderTables';
+import { SeatingCorrection } from './SeatingCorrection';
 
 type GamesListProps = {
   tablesState: TableState[];
@@ -69,6 +70,7 @@ type GamesListProps = {
   onDefinalizeGame?: (hash: string, intermediateResults: IntermediateResultOfSession[]) => void;
   onForceFinish?: (hash: string) => void;
   onAddExtraTime?: (hash: string, amount: number) => void;
+  onSeatingCorrected?: () => Promise<unknown>;
 };
 
 export function GamesList({
@@ -81,6 +83,7 @@ export function GamesList({
   onCancelLastRound,
   onForceFinish,
   onAddExtraTime,
+  onSeatingCorrected,
 }: GamesListProps) {
   const i18n = useI18n();
   const theme = useMantineTheme();
@@ -205,6 +208,18 @@ export function GamesList({
                 </Box>
               </Group>
               <Group justify='flex-end'>
+                {onSeatingCorrected &&
+                  eventConfig &&
+                  !eventConfig.isOnline &&
+                  !eventConfig.isFinished &&
+                  eventConfig.gamesStatus !==
+                    TournamentGamesStatus.TOURNAMENT_GAMES_STATUS_SEATING_READY &&
+                  t.status === SessionStatus.SESSION_STATUS_INPROGRESS && (
+                    <SeatingCorrection
+                      sessionHash={t.sessionHash}
+                      onCorrected={onSeatingCorrected}
+                    />
+                  )}
                 {eventConfig?.syncStart &&
                   t.status === SessionStatus.SESSION_STATUS_INPROGRESS &&
                   !timerState?.waitingForTimer && (

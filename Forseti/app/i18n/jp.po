@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-25 19:21+0100\n"
+"POT-Creation-Date: 2026-11-25 19:38+0100\n"
 "PO-Revision-Date: 2026-10-20 00:34+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -33,7 +33,7 @@ msgid "%1 item"
 msgid_plural "%1 items"
 msgstr[0] ""
 
-#: app/pages/GamesControl/GamesList.tsx:224:53
+#: app/pages/GamesControl/GamesList.tsx:239:53
 #: app/pages/GamesControl/TournamentControls.tsx:314:45
 msgid "1 minute"
 msgstr "1 分"
@@ -50,7 +50,7 @@ msgstr "13 番以上の手は三倍満ではなく役満として扱います。
 msgid "1st"
 msgstr "1 位"
 
-#: app/pages/GamesControl/GamesList.tsx:225:54
+#: app/pages/GamesControl/GamesList.tsx:240:54
 #: app/pages/GamesControl/TournamentControls.tsx:315:46
 msgid "2 minutes"
 msgstr "2 分"
@@ -59,7 +59,7 @@ msgstr "2 分"
 msgid "2nd"
 msgstr "2 位"
 
-#: app/pages/GamesControl/GamesList.tsx:226:54
+#: app/pages/GamesControl/GamesList.tsx:241:54
 #: app/pages/GamesControl/TournamentControls.tsx:316:46
 msgid "3 minutes"
 msgstr "3 分"
@@ -72,7 +72,7 @@ msgstr "開始点未満のプレイヤーが 3 人"
 msgid "3rd"
 msgstr "3 位"
 
-#: app/pages/GamesControl/GamesList.tsx:227:54
+#: app/pages/GamesControl/GamesList.tsx:242:54
 #: app/pages/GamesControl/TournamentControls.tsx:317:46
 msgid "4 minutes"
 msgstr "4 分"
@@ -81,12 +81,12 @@ msgstr "4 分"
 msgid "4th"
 msgstr "4 位"
 
-#: app/pages/GamesControl/GamesList.tsx:228:54
+#: app/pages/GamesControl/GamesList.tsx:243:54
 #: app/pages/GamesControl/TournamentControls.tsx:318:46
 msgid "5 minutes"
 msgstr "5 分"
 
-#: app/pages/GamesControl/GamesList.tsx:229:54
+#: app/pages/GamesControl/GamesList.tsx:244:54
 #: app/pages/GamesControl/TournamentControls.tsx:319:46
 msgid "7 minutes"
 msgstr "7 分"
@@ -127,13 +127,13 @@ msgstr "操作"
 msgid "Add a penalty"
 msgstr "ペナルティを追加"
 
-#: app/pages/GamesControl/GamesList.tsx:215:29
+#: app/pages/GamesControl/GamesList.tsx:230:29
 #: app/pages/GamesControl/TournamentControls.tsx:304:22
 #: app/pages/GamesControl/TournamentControls.tsx:305:21
 msgid "Add extra time"
 msgstr "時間を追加"
 
-#: app/pages/GamesControl/GamesList.tsx:214:30
+#: app/pages/GamesControl/GamesList.tsx:229:30
 msgid "Add extra time for this table"
 msgstr "このテーブルに時間を追加"
 
@@ -145,7 +145,7 @@ msgstr ""
 msgid "Add selected amount of extra time for all tables?"
 msgstr "すべてのテーブルに選択した時間を追加しますか？"
 
-#: app/pages/GamesControl/GamesList.tsx:234:30
+#: app/pages/GamesControl/GamesList.tsx:249:30
 msgid "Add selected amount of extra time for this table?"
 msgstr "このテーブルに選択した時間を追加しますか？"
 
@@ -341,19 +341,21 @@ msgstr "座席表を生成できません：登録プレイヤー数が 4 の倍
 
 #: app/components/RecalcAchievementsModal.tsx:54:12
 #: app/components/RecalcPlayerStatsModal.tsx:54:12
-#: app/components/StopEventModal.tsx:41:12 app/pages/OwnedEvents.tsx:259:14
+#: app/components/StopEventModal.tsx:41:12
+#: app/pages/GamesControl/SeatingCorrection.tsx:123:16
+#: app/pages/OwnedEvents.tsx:259:14
 msgid "Cancel"
 msgstr "キャンセル"
 
-#: app/pages/GamesControl/GamesList.tsx:254:30
+#: app/pages/GamesControl/GamesList.tsx:269:30
 msgid "Cancel last played round"
 msgstr "直前の局を取り消す"
 
-#: app/pages/GamesControl/GamesList.tsx:304:30
+#: app/pages/GamesControl/GamesList.tsx:319:30
 msgid "Cancel last round and game results"
 msgstr "最終局と対局結果を取り消す"
 
-#: app/pages/GamesControl/GamesList.tsx:305:29
+#: app/pages/GamesControl/GamesList.tsx:320:29
 msgid "Cancel last round and results"
 msgstr "最終局と結果を取り消す"
 
@@ -361,7 +363,7 @@ msgstr "最終局と結果を取り消す"
 msgid "Cancel penalty"
 msgstr "ペナルティを取り消す"
 
-#: app/pages/GamesControl/GamesList.tsx:255:29
+#: app/pages/GamesControl/GamesList.tsx:270:29
 msgid "Cancel round"
 msgstr "局を取り消す"
 
@@ -473,6 +475,15 @@ msgstr "メールアドレスを確認"
 msgid "Copy event"
 msgstr "イベントをコピー"
 
+#: app/pages/GamesControl/SeatingCorrection.tsx:74:10
+#: app/pages/GamesControl/SeatingCorrection.tsx:131:16
+msgid "Correct seating"
+msgstr ""
+
+#: app/pages/GamesControl/SeatingCorrection.tsx:79:16
+msgid "Correct starting winds"
+msgstr ""
+
 #: app/pages/OwnedEventsEdit/LocalSettings.tsx:39:22
 #: app/pages/OwnedEventsEdit/OnlineSettings.tsx:130:22
 msgid ""
@@ -491,7 +502,7 @@ msgstr "新しいイベントを作成"
 msgid "Current penalties"
 msgstr "現在のペナルティ"
 
-#: app/pages/GamesControl/GamesList.tsx:139:30
+#: app/pages/GamesControl/GamesList.tsx:142:30
 msgid "Current round"
 msgstr "現在の局"
 
@@ -544,6 +555,10 @@ msgstr ""
 #: app/helpers/lastRound.ts:122:7
 msgid "Draw, tempai: %1, riichi: %2"
 msgstr "流局、聴牌：%1、立直：%2"
+
+#: app/pages/GamesControl/SeatingCorrection.tsx:97:20
+msgid "East"
+msgstr ""
 
 #: app/helpers/yaku.ts:273:34
 msgid "East round wind"
@@ -688,7 +703,7 @@ msgstr "イベント：%1"
 msgid "External gaming platform for the tournament"
 msgstr "大会に使用する外部ゲームプラットフォーム"
 
-#: app/pages/GamesControl/GamesList.tsx:196:24
+#: app/pages/GamesControl/GamesList.tsx:199:24
 msgid "Extra minutes: %1"
 msgstr "追加時間：%1 分"
 
@@ -730,6 +745,11 @@ msgid ""
 msgstr ""
 "メールアドレスを確認できませんでした。リンクが期限切れか、使用済みの可能性が"
 "あります。再度登録してください。"
+
+#: app/pages/GamesControl/SeatingCorrection.tsx:29:50
+#: app/pages/GamesControl/SeatingCorrection.tsx:58:25
+msgid "Failed to correct seating"
+msgstr ""
 
 #: app/pages/GamesControl/index.tsx:181:35
 msgid "Failed to definalize game"
@@ -884,11 +904,11 @@ msgstr "代打プレイヤーの固定得点"
 msgid "Fixed uma for replacement player"
 msgstr "代打プレイヤーの固定ウマ"
 
-#: app/pages/GamesControl/GamesList.tsx:289:29
+#: app/pages/GamesControl/GamesList.tsx:304:29
 msgid "Force finish game"
 msgstr "対局を強制終了"
 
-#: app/pages/GamesControl/GamesList.tsx:288:30
+#: app/pages/GamesControl/GamesList.tsx:303:30
 msgid "Forcefully finish the game"
 msgstr "対局を強制終了する"
 
@@ -1398,6 +1418,10 @@ msgstr ""
 msgid "No referee notes yet"
 msgstr ""
 
+#: app/pages/GamesControl/SeatingCorrection.tsx:97:72
+msgid "North"
+msgstr ""
+
 #: app/helpers/yaku.ts:297:34
 msgid "North round wind"
 msgstr "場風：北"
@@ -1855,6 +1879,12 @@ msgstr "再計算を予約できませんでした"
 msgid "Recalculation scheduled"
 msgstr "再計算を予約しました"
 
+#: app/pages/GamesControl/SeatingCorrection.tsx:86:14
+msgid ""
+"Recorded outcomes stay attached to the named players. Scores and round "
+"progression will be recalculated using these starting winds."
+msgstr ""
+
 #: app/pages/ProfileResetPassword.tsx:32:16
 #: app/pages/ProfileResetPasswordConfirm.tsx:218:14
 msgid "Recover password"
@@ -1880,7 +1910,7 @@ msgstr ""
 msgid "Referee privileges include:"
 msgstr "審判の権限："
 
-#: app/pages/GamesControl/index.tsx:449:16
+#: app/pages/GamesControl/index.tsx:450:16
 msgid "Refresh data [%1]"
 msgstr "データを更新 [%1]"
 
@@ -1905,7 +1935,7 @@ msgstr "登録が完了しました！"
 msgid "Remove administrator from event"
 msgstr "イベントから管理者を削除"
 
-#: app/pages/GamesControl/GamesList.tsx:271:29
+#: app/pages/GamesControl/GamesList.tsx:286:29
 msgid "Remove game"
 msgstr "対局を削除"
 
@@ -1926,7 +1956,7 @@ msgstr "イベントから審判を削除"
 msgid "Remove replacement"
 msgstr "代打を解除"
 
-#: app/pages/GamesControl/GamesList.tsx:270:30
+#: app/pages/GamesControl/GamesList.tsx:285:30
 msgid "Remove the game as it never existed"
 msgstr "対局をなかったことにして削除"
 
@@ -2072,7 +2102,7 @@ msgstr "アバターを選択"
 msgid "Select event type"
 msgstr "イベントの種類を選択"
 
-#: app/pages/GamesControl/GamesList.tsx:220:36
+#: app/pages/GamesControl/GamesList.tsx:235:36
 #: app/pages/GamesControl/TournamentControls.tsx:310:28
 msgid "Select extra time"
 msgstr "追加時間を選択"
@@ -2108,7 +2138,7 @@ msgid ""
 "removed account."
 msgstr "サーバー管理者も、削除されたアカウントへのアクセスを復元できません。"
 
-#: app/pages/GamesControl/GamesList.tsx:388:18
+#: app/pages/GamesControl/GamesList.tsx:403:18
 msgid "Session cancelled"
 msgstr "対局を取り消しました"
 
@@ -2120,23 +2150,23 @@ msgstr "対局時間（分）"
 msgid "Session ending policy"
 msgstr "対局の終了ルール"
 
-#: app/pages/GamesControl/GamesList.tsx:376:18
+#: app/pages/GamesControl/GamesList.tsx:391:18
 msgid "Session finished"
 msgstr "対局が終了しました"
 
-#: app/pages/GamesControl/GamesList.tsx:364:18
+#: app/pages/GamesControl/GamesList.tsx:379:18
 msgid "Session finished, but not confirmed"
 msgstr "対局終了、未承認"
 
-#: app/pages/GamesControl/GamesList.tsx:351:20
+#: app/pages/GamesControl/GamesList.tsx:366:20
 msgid "Session in progress"
 msgstr "対局中"
 
-#: app/pages/GamesControl/GamesList.tsx:339:20
+#: app/pages/GamesControl/GamesList.tsx:354:20
 msgid "Session is ready to start"
 msgstr "対局の開始準備ができました"
 
-#: app/pages/GamesControl/GamesList.tsx:400:18
+#: app/pages/GamesControl/GamesList.tsx:415:18
 msgid "Session is scheduled"
 msgstr "対局を予定しています"
 
@@ -2220,6 +2250,10 @@ msgstr "順位別の簡易設定"
 msgid "Something went wrong. Contact pantheon service administrator"
 msgstr "問題が発生しました。Pantheon のサービス管理者にお問い合わせください"
 
+#: app/pages/GamesControl/SeatingCorrection.tsx:97:37
+msgid "South"
+msgstr ""
+
 #: app/helpers/yaku.ts:281:34
 msgid "South round wind"
 msgstr "場風：南"
@@ -2297,7 +2331,7 @@ msgstr "システム ID"
 msgid "System stats"
 msgstr "システム統計"
 
-#: app/pages/GamesControl/GamesList.tsx:123:30
+#: app/pages/GamesControl/GamesList.tsx:126:30
 msgid "Table # %1"
 msgstr "第 # %1 卓"
 
@@ -2373,8 +2407,8 @@ msgstr ""
 msgid "This Ronin nickname is already taken"
 msgstr "このRoninのニックネームは既に使われています"
 
-#: app/pages/GamesControl/GamesList.tsx:256:32
-#: app/pages/GamesControl/GamesList.tsx:272:32
+#: app/pages/GamesControl/GamesList.tsx:271:32
+#: app/pages/GamesControl/GamesList.tsx:287:32
 msgid "This action can't be undone. Continue?"
 msgstr "この操作は取り消せません。続行しますか？"
 
@@ -2413,7 +2447,7 @@ msgstr ""
 msgid "This will remove generated seating. Continue?"
 msgstr "生成した座席表を削除します。続行しますか？"
 
-#: app/pages/GamesControl/GamesList.tsx:306:32
+#: app/pages/GamesControl/GamesList.tsx:321:32
 msgid ""
 "This will remove the game results and the last round, and return the game to "
 "the state before that round. Continue?"
@@ -2560,6 +2594,10 @@ msgstr "公開設定の管理"
 msgid "Visible only to event referees and administrators."
 msgstr ""
 
+#: app/pages/GamesControl/SeatingCorrection.tsx:97:55
+msgid "West"
+msgstr ""
+
 #: app/helpers/yaku.ts:289:34
 msgid "West round wind"
 msgstr "場風：西"
@@ -2658,7 +2696,7 @@ msgstr ""
 "システムからアカウント情報を削除します。確認してください。キャンセルするには"
 "ウィンドウを閉じてください。"
 
-#: app/pages/GamesControl/GamesList.tsx:290:32
+#: app/pages/GamesControl/GamesList.tsx:305:32
 msgid "You are going to forcefully finish this game. Continue?"
 msgstr "この対局を強制終了します。続行しますか？"
 

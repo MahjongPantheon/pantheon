@@ -76,7 +76,7 @@ export class SessionStateEntity {
     clone.lastOutcome = this.lastOutcome;
     clone.yakitori = { ...this.yakitori };
     clone.replacements = { ...this.replacements };
-    clone.playerIds = [...this.playerIds];
+    clone.playerIds = [...(this.playerIds ?? [])];
     return clone;
   }
 }

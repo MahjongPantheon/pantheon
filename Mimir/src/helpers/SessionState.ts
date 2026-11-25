@@ -17,8 +17,8 @@ export class SessionState {
     this._ruleset = ruleset;
     this._state = state?.clone() ?? new SessionStateEntity();
 
-    if (!state) {
-      // initialize state if not provided
+    if (!state || (state.round == null && Object.keys(state.scores ?? {}).length === 0)) {
+      // Legacy sessions with no recorded rounds can have an empty JSON snapshot.
       const startPoints = ruleset.rules.startPoints;
       this._state.scores = {};
       this._state.round = 1;
@@ -216,7 +216,7 @@ export class SessionState {
   public update(round: RoundEntity): PaymentsInfo {
     const participants = [
       ...(round.riichi ?? []),
-      ...round.hands.flatMap((hand) => [
+      ...[...round.hands].flatMap((hand) => [
         hand.winnerId,
         hand.loserId,
         hand.paoPlayerId,
@@ -333,9 +333,9 @@ export class SessionState {
     calc.resetPaymentsInfo();
     let payments = calc.lastPaymentsInfo();
 
-    round.hands.forEach((hand) => {
+    for (const hand of round.hands) {
       const winnerId = hand.winnerId;
-      if (winnerId === undefined) return;
+      if (winnerId === undefined) continue;
 
       dealerWon = dealerWon || this.getCurrentDealer() === winnerId;
       const winnerInfo = riichiWinners[winnerId];
@@ -359,7 +359,7 @@ export class SessionState {
       // Merge payments recursively
       const newPayments = calc.lastPaymentsInfo();
       payments = this._mergePayments(payments, newPayments);
-    });
+    }
 
     if (dealerWon && !this._ruleset.rules.withWinningDealerHonbaSkipped) {
       this._addHonba();
@@ -497,12 +497,12 @@ export class SessionState {
 
   protected _updateYakitori(round: RoundEntity): void {
     if (this._ruleset.rules.withYakitori) {
-      round.hands.forEach((r) => {
+      for (const r of round.hands) {
         const winnerId = r.winnerId;
-        if (winnerId !== undefined) {
+        if (winnerId !== undefined && winnerId !== null) {
           this._state.yakitori[winnerId] = false;
         }
-      });
+      }
     }
   }
 

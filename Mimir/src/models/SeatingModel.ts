@@ -280,7 +280,12 @@ export class SeatingModel extends Model {
         const sessionModel = this.getModel(SessionModel);
         const sessions = await sessionModel.findByEventAndStatus(
           [eventId],
-          [SessionStatus.SESSION_STATUS_INPROGRESS]
+          [SessionStatus.SESSION_STATUS_INPROGRESS],
+          0,
+          null,
+          'id',
+          'asc',
+          true
         );
         const sp = await this.repo.em.findAll(SessionPlayerEntity, {
           where: { session: { id: { $in: sessions.map((s) => s.id) } } },

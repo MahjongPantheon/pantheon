@@ -64,6 +64,8 @@ service Mimir {
   rpc CancelGame(GenericSessionPayload) returns (GenericSuccessResponse);
   rpc FinalizeSession(GenericEventPayload) returns (GenericSuccessResponse);
   rpc DropLastRound(GamesDropLastRoundPayload) returns (GenericSuccessResponse);
+  rpc CorrectSessionSeating(GamesCorrectSessionSeatingPayload)
+    returns (GenericSuccessResponse);
   rpc DefinalizeGame(GenericSessionPayload) returns (GenericSuccessResponse);
   rpc AddPenalty(GamesAddPenaltyPayload) returns (GenericSuccessResponse);
   rpc AddPenaltyGame(GamesAddPenaltyGamePayload) returns (GenericSessionPayload);
@@ -420,6 +422,14 @@ message GamesDropLastRoundPayload {
   // Explicit confirmation to undo a finished club game's results and last round
   // atomically. Normal last-round cancellation leaves this unset.
   optional bool cancel_results = 3;
+}
+
+message GamesCorrectSessionSeatingPayload {
+  string session_hash = 1;
+  // Real players in initial east-south-west-north order.
+  repeated int32 player_ids = 2;
+  // Required concurrency guard from GetSessionOverview.
+  string next_round_token = 3;
 }
 
 message GamesAddPenaltyPayload {
