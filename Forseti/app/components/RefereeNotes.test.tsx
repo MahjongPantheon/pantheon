@@ -5,6 +5,7 @@ import { Player, RegisteredPlayer } from 'tsclients/proto/atoms.pb';
 import type { RefereeNotesResponse } from 'tsclients/proto/mimir.pb';
 import { RefereeNotes } from './RefereeNotes';
 import { auth, authCtx, PrivilegesLevel } from '../hooks/auth';
+import { actionButtonCtx } from '../hooks/actionButton';
 
 const { api } = vi.hoisted(() => ({
   api: { getRefereeNotes: vi.fn(), getAllPlayers: vi.fn(), addRefereeNote: vi.fn() },
@@ -14,6 +15,7 @@ vi.mock('../hooks/api', () => ({ useApi: () => api }));
 vi.mock('../hooks/i18n', () => ({ useI18n: () => i18n }));
 
 let container: HTMLDivElement;
+let actions: HTMLDivElement;
 let root: Root;
 const data = (): RefereeNotesResponse => ({
   notes: [
@@ -46,8 +48,11 @@ beforeEach(() => {
   ]);
   api.addRefereeNote.mockResolvedValue(true);
   container = document.createElement('div');
+  actions = document.createElement('div');
+  const content = document.createElement('div');
+  container.append(actions, content);
   document.body.append(container);
-  root = createRoot(container);
+  root = createRoot(content);
 });
 
 afterEach(() => {
@@ -77,7 +82,9 @@ async function render(
             ...authOptions,
           }}
         >
-          <RefereeNotes eventId={eventId} linkedPlayersOnly={linkedPlayersOnly} />
+          <actionButtonCtx.Provider value={{ current: actions }}>
+            <RefereeNotes eventId={eventId} linkedPlayersOnly={linkedPlayersOnly} />
+          </actionButtonCtx.Provider>
         </authCtx.Provider>
       </MantineProvider>
     )
@@ -170,7 +177,9 @@ it("keeps an unsaved draft when refreshing other referees' notes", async () => {
   type('forseti-referee-note-content', 'Draft in progress');
   type('forseti-referee-note-player', 'Linked');
   act(() => document.querySelector<HTMLElement>('[role="option"]')!.click());
-  await act(async () => container.querySelector<HTMLButtonElement>('button')!.click());
+  await act(async () =>
+    container.querySelector<HTMLButtonElement>('[data-testid="referee-notes-refresh"]')!.click()
+  );
   expect(container.querySelector<HTMLTextAreaElement>('textarea')!.value).toBe('Draft in progress');
   await submit();
   expect(api.addRefereeNote).toHaveBeenCalledExactlyOnceWith(42, 'Draft in progress', 12);
@@ -201,7 +210,7 @@ it('can retry loading and handles empty lists and missing display names', async 
   expect(container.textContent).toContain('Load unavailable');
   api.getRefereeNotes.mockResolvedValueOnce({ notes: [], authors: [], players: [] });
   await act(async () => {
-    container.querySelector<HTMLButtonElement>('button')!.click();
+    container.querySelector<HTMLButtonElement>('[data-testid="referee-notes-refresh"]')!.click();
   });
   expect(container.textContent).toContain('No referee notes yet');
   api.getRefereeNotes.mockResolvedValueOnce({ notes: data().notes, authors: [], players: [] });
@@ -210,7 +219,7 @@ it('can retry loading and handles empty lists and missing display names', async 
   expect(container.textContent).toContain('Author: #8');
   api.getRefereeNotes.mockResolvedValueOnce({ notes: [], authors: [], players: [] });
   await act(async () => {
-    container.querySelector<HTMLButtonElement>('button')!.click();
+    container.querySelector<HTMLButtonElement>('[data-testid="referee-notes-refresh"]')!.click();
   });
   expect(container.textContent).toContain('No referee notes linked to players yet');
 });
