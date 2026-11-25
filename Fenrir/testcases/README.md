@@ -32,6 +32,9 @@ SMOKE-005 and SMOKE-006 share the [complete yaku hand catalogue](smoke-hand-cata
 
 These descriptions cover all existing tests; improvements and coverage limits are identified separately. AUTH-003 covers navigation to password recovery; AUTH-004 covers the password-reset journey.
 
+[RULES-001](rules-001-correct-session-seating.md) covers atomic starting-wind
+correction after recorded rounds in `tests/correct-seating.spec.ts`.
+
 [PWA-001](pwa-001-sigrun-reload.md) verifies online SSR reloads and offline cached-shell
 rendering with a real Sigrun service worker in `tests/sigrun-pwa.spec.ts`. It requires
 a production SSR build and explicitly skips on the development Vite server.

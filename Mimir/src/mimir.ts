@@ -51,6 +51,7 @@ import {
   GamesAddRoundPayload,
   GamesAddRoundResponse,
   GamesDropLastRoundPayload,
+  GamesCorrectSessionSeatingPayload,
   GamesGetSessionOverviewResponse,
   GamesPreviewRoundPayload,
   GamesPreviewRoundResponse,
@@ -474,6 +475,12 @@ export const mimirServer: Mimir<Context> = {
   ): Promise<GenericSuccessResponse> {
     const sessionModel = Model.getModel(context.repository, SessionModel);
     return sessionModel.dropLastRound(gamesDropLastRoundPayload);
+  },
+  CorrectSessionSeating: function (
+    payload: GamesCorrectSessionSeatingPayload,
+    context: Context
+  ): Promise<GenericSuccessResponse> {
+    return Model.getModel(context.repository, SessionModel).correctSessionSeating(payload);
   },
   DefinalizeGame: function (
     genericSessionPayload: GenericSessionPayload,

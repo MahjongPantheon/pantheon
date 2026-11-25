@@ -361,6 +361,18 @@ export interface GamesDropLastRoundPayload {
   cancelResults?: boolean | null | undefined;
 }
 
+export interface GamesCorrectSessionSeatingPayload {
+  sessionHash: string;
+  /**
+   * Real players in initial east-south-west-north order.
+   */
+  playerIds: number[];
+  /**
+   * Required concurrency guard from GetSessionOverview.
+   */
+  nextRoundToken: string;
+}
+
 export interface GamesAddPenaltyPayload {
   eventId: number;
   playerId: number;
@@ -1034,6 +1046,18 @@ export async function DropLastRound(
   const response = await PBrequest(
     "/common.Mimir/DropLastRound",
     GamesDropLastRoundPayload.encode(gamesDropLastRoundPayload),
+    config,
+  );
+  return protoAtoms.GenericSuccessResponse.decode(response);
+}
+
+export async function CorrectSessionSeating(
+  gamesCorrectSessionSeatingPayload: GamesCorrectSessionSeatingPayload,
+  config?: ClientConfiguration,
+): Promise<protoAtoms.GenericSuccessResponse> {
+  const response = await PBrequest(
+    "/common.Mimir/CorrectSessionSeating",
+    GamesCorrectSessionSeatingPayload.encode(gamesCorrectSessionSeatingPayload),
     config,
   );
   return protoAtoms.GenericSuccessResponse.decode(response);
@@ -1925,6 +1949,20 @@ export async function DropLastRoundJSON(
   return protoAtoms.GenericSuccessResponseJSON.decode(response);
 }
 
+export async function CorrectSessionSeatingJSON(
+  gamesCorrectSessionSeatingPayload: GamesCorrectSessionSeatingPayload,
+  config?: ClientConfiguration,
+): Promise<protoAtoms.GenericSuccessResponse> {
+  const response = await JSONrequest(
+    "/common.Mimir/CorrectSessionSeating",
+    GamesCorrectSessionSeatingPayloadJSON.encode(
+      gamesCorrectSessionSeatingPayload,
+    ),
+    config,
+  );
+  return protoAtoms.GenericSuccessResponseJSON.decode(response);
+}
+
 export async function DefinalizeGameJSON(
   genericSessionPayload: protoAtoms.GenericSessionPayload,
   config?: ClientConfiguration,
@@ -2494,6 +2532,12 @@ export interface Mimir<Context = unknown> {
     | protoAtoms.GenericSuccessResponse;
   DropLastRound: (
     gamesDropLastRoundPayload: GamesDropLastRoundPayload,
+    context: Context,
+  ) =>
+    | Promise<protoAtoms.GenericSuccessResponse>
+    | protoAtoms.GenericSuccessResponse;
+  CorrectSessionSeating: (
+    gamesCorrectSessionSeatingPayload: GamesCorrectSessionSeatingPayload,
     context: Context,
   ) =>
     | Promise<protoAtoms.GenericSuccessResponse>
@@ -3180,6 +3224,18 @@ export function createMimir<Context>(service: Mimir<Context>) {
         input: {
           protobuf: GamesDropLastRoundPayload,
           json: GamesDropLastRoundPayloadJSON,
+        },
+        output: {
+          protobuf: protoAtoms.GenericSuccessResponse,
+          json: protoAtoms.GenericSuccessResponseJSON,
+        },
+      },
+      CorrectSessionSeating: {
+        name: "CorrectSessionSeating",
+        handler: service.CorrectSessionSeating,
+        input: {
+          protobuf: GamesCorrectSessionSeatingPayload,
+          json: GamesCorrectSessionSeatingPayloadJSON,
         },
         output: {
           protobuf: protoAtoms.GenericSuccessResponse,
@@ -8437,6 +8493,98 @@ export const GamesDropLastRoundPayload = {
         }
         case 3: {
           msg.cancelResults = reader.readBool();
+          break;
+        }
+        default: {
+          reader.skipField();
+          break;
+        }
+      }
+    }
+    return msg;
+  },
+};
+
+export const GamesCorrectSessionSeatingPayload = {
+  /**
+   * Serializes GamesCorrectSessionSeatingPayload to protobuf.
+   */
+  encode: function (
+    msg: PartialDeep<GamesCorrectSessionSeatingPayload>,
+  ): Uint8Array {
+    return GamesCorrectSessionSeatingPayload._writeMessage(
+      msg,
+      new protoscript.BinaryWriter(),
+    ).getResultBuffer();
+  },
+
+  /**
+   * Deserializes GamesCorrectSessionSeatingPayload from protobuf.
+   */
+  decode: function (bytes: ByteSource): GamesCorrectSessionSeatingPayload {
+    return GamesCorrectSessionSeatingPayload._readMessage(
+      GamesCorrectSessionSeatingPayload.initialize(),
+      new protoscript.BinaryReader(bytes),
+    );
+  },
+
+  /**
+   * Initializes GamesCorrectSessionSeatingPayload with all fields set to their default value.
+   */
+  initialize: function (
+    msg?: Partial<GamesCorrectSessionSeatingPayload>,
+  ): GamesCorrectSessionSeatingPayload {
+    return {
+      sessionHash: "",
+      playerIds: [],
+      nextRoundToken: "",
+      ...msg,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: PartialDeep<GamesCorrectSessionSeatingPayload>,
+    writer: protoscript.BinaryWriter,
+  ): protoscript.BinaryWriter {
+    if (msg.sessionHash) {
+      writer.writeString(1, msg.sessionHash);
+    }
+    if (msg.playerIds?.length) {
+      writer.writePackedInt32(2, msg.playerIds);
+    }
+    if (msg.nextRoundToken) {
+      writer.writeString(3, msg.nextRoundToken);
+    }
+    return writer;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: GamesCorrectSessionSeatingPayload,
+    reader: protoscript.BinaryReader,
+  ): GamesCorrectSessionSeatingPayload {
+    while (reader.nextField()) {
+      const field = reader.getFieldNumber();
+      switch (field) {
+        case 1: {
+          msg.sessionHash = reader.readString();
+          break;
+        }
+        case 2: {
+          if (reader.isDelimited()) {
+            msg.playerIds.push(...reader.readPackedInt32());
+          } else {
+            msg.playerIds.push(reader.readInt32());
+          }
+          break;
+        }
+        case 3: {
+          msg.nextRoundToken = reader.readString();
           break;
         }
         default: {
@@ -14854,6 +15002,84 @@ export const GamesDropLastRoundPayloadJSON = {
     const _cancelResults_ = json["cancelResults"] ?? json["cancel_results"];
     if (_cancelResults_) {
       msg.cancelResults = _cancelResults_;
+    }
+    return msg;
+  },
+};
+
+export const GamesCorrectSessionSeatingPayloadJSON = {
+  /**
+   * Serializes GamesCorrectSessionSeatingPayload to JSON.
+   */
+  encode: function (
+    msg: PartialDeep<GamesCorrectSessionSeatingPayload>,
+  ): string {
+    return JSON.stringify(
+      GamesCorrectSessionSeatingPayloadJSON._writeMessage(msg),
+    );
+  },
+
+  /**
+   * Deserializes GamesCorrectSessionSeatingPayload from JSON.
+   */
+  decode: function (json: string): GamesCorrectSessionSeatingPayload {
+    return GamesCorrectSessionSeatingPayloadJSON._readMessage(
+      GamesCorrectSessionSeatingPayloadJSON.initialize(),
+      JSON.parse(json),
+    );
+  },
+
+  /**
+   * Initializes GamesCorrectSessionSeatingPayload with all fields set to their default value.
+   */
+  initialize: function (
+    msg?: Partial<GamesCorrectSessionSeatingPayload>,
+  ): GamesCorrectSessionSeatingPayload {
+    return {
+      sessionHash: "",
+      playerIds: [],
+      nextRoundToken: "",
+      ...msg,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: PartialDeep<GamesCorrectSessionSeatingPayload>,
+  ): Record<string, unknown> {
+    const json: Record<string, unknown> = {};
+    if (msg.sessionHash) {
+      json["sessionHash"] = msg.sessionHash;
+    }
+    if (msg.playerIds?.length) {
+      json["playerIds"] = msg.playerIds;
+    }
+    if (msg.nextRoundToken) {
+      json["nextRoundToken"] = msg.nextRoundToken;
+    }
+    return json;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: GamesCorrectSessionSeatingPayload,
+    json: any,
+  ): GamesCorrectSessionSeatingPayload {
+    const _sessionHash_ = json["sessionHash"] ?? json["session_hash"];
+    if (_sessionHash_) {
+      msg.sessionHash = _sessionHash_;
+    }
+    const _playerIds_ = json["playerIds"] ?? json["player_ids"];
+    if (_playerIds_) {
+      msg.playerIds = _playerIds_.map(protoscript.parseNumber);
+    }
+    const _nextRoundToken_ = json["nextRoundToken"] ?? json["next_round_token"];
+    if (_nextRoundToken_) {
+      msg.nextRoundToken = _nextRoundToken_;
     }
     return msg;
   },

@@ -6,6 +6,7 @@ import { HandEntity } from '../entities/Hand.entity.js';
 import { RoundOutcome } from 'tsclients/proto/atoms.pb.js';
 import { SessionEntity } from '../entities/Session.entity.js';
 import { EventEntity } from '../entities/Event.entity.js';
+import { SessionStateEntity } from '../entities/SessionState.entity.js';
 
 type Vals = {
   outcome: RoundOutcome;
@@ -54,6 +55,36 @@ describe('Session state', () => {
   const playerIds = [1, 2, 3, 4];
   const sessionId = 1234;
   const eventId = 321;
+
+  it('initializes an empty legacy snapshot using the supplied seating', () => {
+    const saved = new SessionStateEntity();
+    const seating = [3, 1, 4, 2];
+    const state = new SessionState(ruleset, seating, saved);
+
+    expect(state.state.playerIds).toEqual(seating);
+    expect(state.getCurrentDealer()).toBe(3);
+    expect(state.getScores()).toEqual({ 1: 30000, 2: 30000, 3: 30000, 4: 30000 });
+    expect(state.getRound()).toBe(1);
+    expect(state.getHonba()).toBe(0);
+    expect(state.getRiichiBets()).toBe(0);
+    expect(saved).toEqual(new SessionStateEntity());
+
+    // Seating correction clones snapshots before it supplies the player IDs.
+    const cloned = saved.clone();
+    cloned.playerIds = seating;
+    expect(new SessionState(ruleset, seating, cloned).state).toEqual(state.state);
+  });
+
+  it('preserves an initialized online snapshot before players are known', () => {
+    const saved = new SessionState(ruleset, []).state;
+    saved.lastHandStarted = true;
+    saved.prematurelyFinished = true;
+
+    const resumed = new SessionState(ruleset, [], saved);
+
+    expect(resumed.state).toEqual(saved);
+    expect(resumed.state).not.toBe(saved);
+  });
 
   it('resumes from an independent copy of the saved state', () => {
     const saved = new SessionState(ruleset, playerIds).state;

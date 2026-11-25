@@ -164,11 +164,14 @@ export class RoundModel extends Model {
   }
 
   getRoundPaymentsInfo(event: EventEntity, session: SessionEntity, round: RoundEntity) {
-    const sessionState = new SessionState(
-      event.ruleset,
-      session.intermediateResults?.playerIds ?? [],
-      session.intermediateResults
-    );
+    const before = round.lastSessionState ?? session.intermediateResults;
+    const sessionState = new SessionState(event.ruleset, before?.playerIds ?? [], before);
+    // Snapshots are authoritative for historical dealer, pot and winner priority.
+    // Imported legacy rounds without snapshots retain the existing fallback below.
+    // Reading an old abort must not validate whether today's rules allow it.
+    if (round.lastSessionState && round.outcome !== RoundOutcome.ROUND_OUTCOME_ABORT) {
+      return sessionState.update(round);
+    }
 
     const calc = new PointsCalc();
     switch (round.outcome) {
@@ -263,7 +266,7 @@ export class RoundModel extends Model {
             riichiWinners[hand.winnerId!].fromPlayers,
             riichiWinners[hand.winnerId!].honba,
             riichiWinners[hand.winnerId!].fromTable,
-            round.hands[0].paoPlayerId,
+            hand.paoPlayerId,
             null, // TODO: why closest winner is not required here?
             round.riichi?.length ?? 0
           );

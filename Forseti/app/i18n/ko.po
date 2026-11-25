@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-25 19:21+0100\n"
+"POT-Creation-Date: 2026-11-25 19:38+0100\n"
 "PO-Revision-Date: 2025-03-23 23:41+0300\n"
 "Last-Translator: Geunmo Kim <kimgeunmo@gmail.com>\n"
 "Language-Team: \n"
@@ -39,7 +39,7 @@ msgid "%1 item"
 msgid_plural "%1 items"
 msgstr[0] ""
 
-#: app/pages/GamesControl/GamesList.tsx:224:53
+#: app/pages/GamesControl/GamesList.tsx:239:53
 #: app/pages/GamesControl/TournamentControls.tsx:314:45
 msgid "1 minute"
 msgstr "1분"
@@ -56,7 +56,7 @@ msgstr "13판 이상의 화료는 삼배만이 아닌 역만으로 취급됨"
 msgid "1st"
 msgstr "1위"
 
-#: app/pages/GamesControl/GamesList.tsx:225:54
+#: app/pages/GamesControl/GamesList.tsx:240:54
 #: app/pages/GamesControl/TournamentControls.tsx:315:46
 msgid "2 minutes"
 msgstr "2분"
@@ -65,7 +65,7 @@ msgstr "2분"
 msgid "2nd"
 msgstr "2위"
 
-#: app/pages/GamesControl/GamesList.tsx:226:54
+#: app/pages/GamesControl/GamesList.tsx:241:54
 #: app/pages/GamesControl/TournamentControls.tsx:316:46
 msgid "3 minutes"
 msgstr "3분"
@@ -78,7 +78,7 @@ msgstr "3명의 작사가 시작 점수보다 낮은 점수를 기록함"
 msgid "3rd"
 msgstr "3위"
 
-#: app/pages/GamesControl/GamesList.tsx:227:54
+#: app/pages/GamesControl/GamesList.tsx:242:54
 #: app/pages/GamesControl/TournamentControls.tsx:317:46
 msgid "4 minutes"
 msgstr "4분"
@@ -87,12 +87,12 @@ msgstr "4분"
 msgid "4th"
 msgstr "4위"
 
-#: app/pages/GamesControl/GamesList.tsx:228:54
+#: app/pages/GamesControl/GamesList.tsx:243:54
 #: app/pages/GamesControl/TournamentControls.tsx:318:46
 msgid "5 minutes"
 msgstr "5분"
 
-#: app/pages/GamesControl/GamesList.tsx:229:54
+#: app/pages/GamesControl/GamesList.tsx:244:54
 #: app/pages/GamesControl/TournamentControls.tsx:319:46
 msgid "7 minutes"
 msgstr "7분"
@@ -133,13 +133,13 @@ msgstr "동작"
 msgid "Add a penalty"
 msgstr "벌부 추가"
 
-#: app/pages/GamesControl/GamesList.tsx:215:29
+#: app/pages/GamesControl/GamesList.tsx:230:29
 #: app/pages/GamesControl/TournamentControls.tsx:304:22
 #: app/pages/GamesControl/TournamentControls.tsx:305:21
 msgid "Add extra time"
 msgstr "추가 시간 부여"
 
-#: app/pages/GamesControl/GamesList.tsx:214:30
+#: app/pages/GamesControl/GamesList.tsx:229:30
 msgid "Add extra time for this table"
 msgstr "이 테이블에 추가 시간 부여"
 
@@ -151,7 +151,7 @@ msgstr ""
 msgid "Add selected amount of extra time for all tables?"
 msgstr "모든 테이블에 선택한 만큼 추가 시간을 부여하시겠습니까?"
 
-#: app/pages/GamesControl/GamesList.tsx:234:30
+#: app/pages/GamesControl/GamesList.tsx:249:30
 msgid "Add selected amount of extra time for this table?"
 msgstr "이 테이블에 선택한 만큼 추가 시간을 부여하시겠습니까?"
 
@@ -348,19 +348,21 @@ msgstr "좌석 생성 불가: 등록 작사 수를 4로 나눌 수 없습니다"
 
 #: app/components/RecalcAchievementsModal.tsx:54:12
 #: app/components/RecalcPlayerStatsModal.tsx:54:12
-#: app/components/StopEventModal.tsx:41:12 app/pages/OwnedEvents.tsx:259:14
+#: app/components/StopEventModal.tsx:41:12
+#: app/pages/GamesControl/SeatingCorrection.tsx:123:16
+#: app/pages/OwnedEvents.tsx:259:14
 msgid "Cancel"
 msgstr "취소"
 
-#: app/pages/GamesControl/GamesList.tsx:254:30
+#: app/pages/GamesControl/GamesList.tsx:269:30
 msgid "Cancel last played round"
 msgstr "이전 국 취소"
 
-#: app/pages/GamesControl/GamesList.tsx:304:30
+#: app/pages/GamesControl/GamesList.tsx:319:30
 msgid "Cancel last round and game results"
 msgstr "마지막 국과 게임 결과 취소"
 
-#: app/pages/GamesControl/GamesList.tsx:305:29
+#: app/pages/GamesControl/GamesList.tsx:320:29
 msgid "Cancel last round and results"
 msgstr "마지막 국과 결과 취소"
 
@@ -368,7 +370,7 @@ msgstr "마지막 국과 결과 취소"
 msgid "Cancel penalty"
 msgstr "벌부 취소"
 
-#: app/pages/GamesControl/GamesList.tsx:255:29
+#: app/pages/GamesControl/GamesList.tsx:270:29
 msgid "Cancel round"
 msgstr "국 취소"
 
@@ -480,6 +482,15 @@ msgstr "이메일을 인증해주세요"
 msgid "Copy event"
 msgstr "이벤트 복사"
 
+#: app/pages/GamesControl/SeatingCorrection.tsx:74:10
+#: app/pages/GamesControl/SeatingCorrection.tsx:131:16
+msgid "Correct seating"
+msgstr ""
+
+#: app/pages/GamesControl/SeatingCorrection.tsx:79:16
+msgid "Correct starting winds"
+msgstr ""
+
 #: app/pages/OwnedEventsEdit/LocalSettings.tsx:39:22
 #: app/pages/OwnedEventsEdit/OnlineSettings.tsx:130:22
 msgid ""
@@ -498,7 +509,7 @@ msgstr "신규 이벤트 생성"
 msgid "Current penalties"
 msgstr "현재 벌부"
 
-#: app/pages/GamesControl/GamesList.tsx:139:30
+#: app/pages/GamesControl/GamesList.tsx:142:30
 msgid "Current round"
 msgstr "현재 국"
 
@@ -551,6 +562,10 @@ msgstr ""
 #: app/helpers/lastRound.ts:122:7
 msgid "Draw, tempai: %1, riichi: %2"
 msgstr "유국, 텐파이: %1, 리치: %2"
+
+#: app/pages/GamesControl/SeatingCorrection.tsx:97:20
+msgid "East"
+msgstr ""
 
 #: app/helpers/yaku.ts:273:34
 msgid "East round wind"
@@ -695,7 +710,7 @@ msgstr "이벤트: %1"
 msgid "External gaming platform for the tournament"
 msgstr "대회에 사용할 외부 게임 플랫폼"
 
-#: app/pages/GamesControl/GamesList.tsx:196:24
+#: app/pages/GamesControl/GamesList.tsx:199:24
 msgid "Extra minutes: %1"
 msgstr "추가 시간: %1분"
 
@@ -735,6 +750,11 @@ msgid ""
 msgstr ""
 "이메일 인증 실패. 사용한 링크가 만료되었거나 이미 사용되었을 수 있습니다. 다"
 "시 등록 시도해 주시기 바랍니다."
+
+#: app/pages/GamesControl/SeatingCorrection.tsx:29:50
+#: app/pages/GamesControl/SeatingCorrection.tsx:58:25
+msgid "Failed to correct seating"
+msgstr ""
 
 #: app/pages/GamesControl/index.tsx:181:35
 msgid "Failed to definalize game"
@@ -882,11 +902,11 @@ msgstr "교체 작사에게 고정 점수 적용"
 msgid "Fixed uma for replacement player"
 msgstr "교체 작사에게 고정 우마 적용"
 
-#: app/pages/GamesControl/GamesList.tsx:289:29
+#: app/pages/GamesControl/GamesList.tsx:304:29
 msgid "Force finish game"
 msgstr "대국 강제 종료"
 
-#: app/pages/GamesControl/GamesList.tsx:288:30
+#: app/pages/GamesControl/GamesList.tsx:303:30
 msgid "Forcefully finish the game"
 msgstr "대국 강제 종료하기"
 
@@ -1393,6 +1413,10 @@ msgstr ""
 msgid "No referee notes yet"
 msgstr ""
 
+#: app/pages/GamesControl/SeatingCorrection.tsx:97:72
+msgid "North"
+msgstr ""
+
 #: app/helpers/yaku.ts:297:34
 msgid "North round wind"
 msgstr "장풍: 북"
@@ -1850,6 +1874,12 @@ msgstr "재계산 예약 실패"
 msgid "Recalculation scheduled"
 msgstr "재계산 예약됨"
 
+#: app/pages/GamesControl/SeatingCorrection.tsx:86:14
+msgid ""
+"Recorded outcomes stay attached to the named players. Scores and round "
+"progression will be recalculated using these starting winds."
+msgstr ""
+
 #: app/pages/ProfileResetPassword.tsx:32:16
 #: app/pages/ProfileResetPasswordConfirm.tsx:218:14
 msgid "Recover password"
@@ -1875,7 +1905,7 @@ msgstr ""
 msgid "Referee privileges include:"
 msgstr "심판 권한은 다음과 같습니다:"
 
-#: app/pages/GamesControl/index.tsx:449:16
+#: app/pages/GamesControl/index.tsx:450:16
 msgid "Refresh data [%1]"
 msgstr "데이터 새로고침 [%1]"
 
@@ -1900,7 +1930,7 @@ msgstr "회원가입되었습니다!"
 msgid "Remove administrator from event"
 msgstr "이벤트에서 관리자 삭제"
 
-#: app/pages/GamesControl/GamesList.tsx:271:29
+#: app/pages/GamesControl/GamesList.tsx:286:29
 msgid "Remove game"
 msgstr "대국 삭제"
 
@@ -1921,7 +1951,7 @@ msgstr "이벤트에서 심판 삭제"
 msgid "Remove replacement"
 msgstr "교체 작사 삭제"
 
-#: app/pages/GamesControl/GamesList.tsx:270:30
+#: app/pages/GamesControl/GamesList.tsx:285:30
 msgid "Remove the game as it never existed"
 msgstr "대국 기록을 완전히 삭제합니다"
 
@@ -2069,7 +2099,7 @@ msgstr "아바타 선택"
 msgid "Select event type"
 msgstr "이벤트 종류 선택"
 
-#: app/pages/GamesControl/GamesList.tsx:220:36
+#: app/pages/GamesControl/GamesList.tsx:235:36
 #: app/pages/GamesControl/TournamentControls.tsx:310:28
 msgid "Select extra time"
 msgstr "추가 시간 선택"
@@ -2105,7 +2135,7 @@ msgid ""
 "removed account."
 msgstr "서버 관리자도 삭제된 계정을 되돌릴 수는 없습니다."
 
-#: app/pages/GamesControl/GamesList.tsx:388:18
+#: app/pages/GamesControl/GamesList.tsx:403:18
 msgid "Session cancelled"
 msgstr "대국 취소됨"
 
@@ -2117,23 +2147,23 @@ msgstr "대국 시간 (분)"
 msgid "Session ending policy"
 msgstr "대국 종료 규칙"
 
-#: app/pages/GamesControl/GamesList.tsx:376:18
+#: app/pages/GamesControl/GamesList.tsx:391:18
 msgid "Session finished"
 msgstr "대국 종료됨"
 
-#: app/pages/GamesControl/GamesList.tsx:364:18
+#: app/pages/GamesControl/GamesList.tsx:379:18
 msgid "Session finished, but not confirmed"
 msgstr "대국이 종료되었지만 확인되기 전임"
 
-#: app/pages/GamesControl/GamesList.tsx:351:20
+#: app/pages/GamesControl/GamesList.tsx:366:20
 msgid "Session in progress"
 msgstr "대국 진행 중"
 
-#: app/pages/GamesControl/GamesList.tsx:339:20
+#: app/pages/GamesControl/GamesList.tsx:354:20
 msgid "Session is ready to start"
 msgstr "대국 시작 준비됨"
 
-#: app/pages/GamesControl/GamesList.tsx:400:18
+#: app/pages/GamesControl/GamesList.tsx:415:18
 msgid "Session is scheduled"
 msgstr "대국 예약됨"
 
@@ -2217,6 +2247,10 @@ msgstr "단순 순위 기반"
 msgid "Something went wrong. Contact pantheon service administrator"
 msgstr "오류가 발생했습니다. Pantheon 서비스 관리자에게 문의하세요"
 
+#: app/pages/GamesControl/SeatingCorrection.tsx:97:37
+msgid "South"
+msgstr ""
+
 #: app/helpers/yaku.ts:281:34
 msgid "South round wind"
 msgstr "장풍: 남"
@@ -2295,7 +2329,7 @@ msgstr "시스템 ID"
 msgid "System stats"
 msgstr "시스템 통계"
 
-#: app/pages/GamesControl/GamesList.tsx:123:30
+#: app/pages/GamesControl/GamesList.tsx:126:30
 msgid "Table # %1"
 msgstr "제 #%1 탁"
 
@@ -2371,8 +2405,8 @@ msgstr ""
 msgid "This Ronin nickname is already taken"
 msgstr "이 Ronin nickname은 이미 사용 중입니다"
 
-#: app/pages/GamesControl/GamesList.tsx:256:32
-#: app/pages/GamesControl/GamesList.tsx:272:32
+#: app/pages/GamesControl/GamesList.tsx:271:32
+#: app/pages/GamesControl/GamesList.tsx:287:32
 msgid "This action can't be undone. Continue?"
 msgstr "이 행동은 돌이킬 수 없습니다. 계속하시겠습니까?"
 
@@ -2411,7 +2445,7 @@ msgstr ""
 msgid "This will remove generated seating. Continue?"
 msgstr "생성된 좌석을 삭제하게됩니다. 계속하시겠습니까?"
 
-#: app/pages/GamesControl/GamesList.tsx:306:32
+#: app/pages/GamesControl/GamesList.tsx:321:32
 msgid ""
 "This will remove the game results and the last round, and return the game to "
 "the state before that round. Continue?"
@@ -2559,6 +2593,10 @@ msgstr "표시 여부 관리"
 msgid "Visible only to event referees and administrators."
 msgstr ""
 
+#: app/pages/GamesControl/SeatingCorrection.tsx:97:55
+msgid "West"
+msgstr ""
+
 #: app/helpers/yaku.ts:289:34
 msgid "West round wind"
 msgstr "장풍: 서"
@@ -2657,7 +2695,7 @@ msgstr ""
 "시스템에서 계정 데이터를 삭제하려고 합니다. 확인바랍니다. 창을 닫으시면 취소"
 "됩니다."
 
-#: app/pages/GamesControl/GamesList.tsx:290:32
+#: app/pages/GamesControl/GamesList.tsx:305:32
 msgid "You are going to forcefully finish this game. Continue?"
 msgstr "이 대국을 강제로 종료하려고 합니다. 계속하시겠습니까?"
 

@@ -16,6 +16,7 @@ const orm = await init();
 const repo = Repository.instance({}, orm);
 const model = Model.getModel(repo, RoundModel);
 const ruleset = RulesetEntity.createRuleset('ema');
+ruleset.rules.withAbortives = true;
 const players = [1, 2, 3, 4];
 const state = new SessionState(ruleset, players).state;
 
@@ -64,7 +65,10 @@ describe('Round persistence', () => {
     (kind, message) => {
       const event = Object.assign(new EventEntity(), { ruleset });
       const session = Object.assign(new SessionEntity(), { intermediateResults: state });
-      const round = RoundEntity.fromMessage(session, event, message, state);
+      const before = state.clone();
+      before.honba = 1;
+      before.round = 2;
+      const round = RoundEntity.fromMessage(session, event, message, before);
       const scores = { ...state.scores };
       const payments = model.getRoundPaymentsInfo(event, session, round);
       expect(payments).toEqual(
@@ -76,7 +80,7 @@ describe('Round persistence', () => {
       );
       if (kind === 'ron')
         expect(payments).toEqual({
-          direct: { '2<-3': 1000 },
+          direct: { '2<-3': 1500 },
           riichi: { '2<-2': 1000, '2<-': 0 },
           honba: { '2<-3': 300 },
         });
@@ -94,5 +98,30 @@ describe('Round persistence', () => {
     expect(() => model.getRoundPaymentsInfo(event, session, round)).toThrow(
       'Unrecognized round outcome'
     );
+  });
+
+  it('uses a historical snapshot for dealer payments instead of the latest state', () => {
+    const event = Object.assign(new EventEntity(), { ruleset });
+    const before = new SessionState(ruleset, [2, 1, 3, 4]).state;
+    const session = Object.assign(new SessionEntity(), { intermediateResults: state });
+    const round = RoundEntity.fromMessage(session, event, roundFixtures[0][1], before);
+    expect(model.getRoundPaymentsInfo(event, session, round).direct).toEqual({ '2<-3': 1500 });
+    expect(before.scores[2]).toBe(30000);
+    expect(state.scores[2]).toBe(30000);
+  });
+
+  it('keeps historical abort payments readable after abortive draws are disabled', () => {
+    const historicalRules = RulesetEntity.createRuleset('ema');
+    historicalRules.rules.withAbortives = false;
+    const before = new SessionState(historicalRules, players).state;
+    const event = Object.assign(new EventEntity(), { ruleset: historicalRules });
+    const session = Object.assign(new SessionEntity(), { intermediateResults: state });
+    const round = RoundEntity.fromMessage(session, event, roundFixtures[3][1], before);
+    expect(model.getRoundPaymentsInfo(event, session, round)).toMatchObject({
+      direct: {},
+      honba: {},
+      riichi: { '<-2': 1000 },
+    });
+    expect(before.scores[2]).toBe(30000);
   });
 });

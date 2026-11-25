@@ -16,6 +16,8 @@ vi.mock('tsclients/proto/mimir.pb', () => ({
   CreateEvent: vi.fn(),
   DefinalizeGame: vi.fn(),
   DropLastRound: vi.fn(),
+  CorrectSessionSeating: vi.fn(),
+  GetSessionOverview: vi.fn(),
   FinalizeSession: vi.fn(),
   FinishEvent: vi.fn(),
   ForceFinishGame: vi.fn(),
@@ -99,6 +101,22 @@ afterEach(() => {
 
 type Case = [keyof ApiService, unknown[], string, unknown, unknown, unknown];
 const cases: Case[] = [
+  [
+    'getSessionOverview',
+    ['hash'],
+    'GetSessionOverview',
+    { sessionHash: 'hash' },
+    { nextRoundToken: 'fresh' },
+    { nextRoundToken: 'fresh' },
+  ],
+  [
+    'correctSessionSeating',
+    ['hash', [2, 1, 3, 4], 'fresh'],
+    'CorrectSessionSeating',
+    { sessionHash: 'hash', playerIds: [2, 1, 3, 4], nextRoundToken: 'fresh' },
+    { success: true },
+    true,
+  ],
   ['getAllPlayers', [42], 'GetAllRegisteredPlayers', { eventIds: [42] }, { players: [1] }, [1]],
   [
     'getTablesState',

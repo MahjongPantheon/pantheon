@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-25 19:21+0100\n"
+"POT-Creation-Date: 2026-11-25 19:38+0100\n"
 "PO-Revision-Date: 2026-10-20 01:13+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -43,7 +43,7 @@ msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: app/pages/GamesControl/GamesList.tsx:224:53
+#: app/pages/GamesControl/GamesList.tsx:239:53
 #: app/pages/GamesControl/TournamentControls.tsx:314:45
 msgid "1 minute"
 msgstr "1 хвіліна"
@@ -60,7 +60,7 @@ msgstr "Рукі коштам 13+ хан лічацца якуманам, а н�
 msgid "1st"
 msgstr "1-е"
 
-#: app/pages/GamesControl/GamesList.tsx:225:54
+#: app/pages/GamesControl/GamesList.tsx:240:54
 #: app/pages/GamesControl/TournamentControls.tsx:315:46
 msgid "2 minutes"
 msgstr "2 хвіліны"
@@ -69,7 +69,7 @@ msgstr "2 хвіліны"
 msgid "2nd"
 msgstr "2-е"
 
-#: app/pages/GamesControl/GamesList.tsx:226:54
+#: app/pages/GamesControl/GamesList.tsx:241:54
 #: app/pages/GamesControl/TournamentControls.tsx:316:46
 msgid "3 minutes"
 msgstr "3 хвіліны"
@@ -82,7 +82,7 @@ msgstr "3 гульцы з ачкамі ніжэй за пачатковыя"
 msgid "3rd"
 msgstr "3-е"
 
-#: app/pages/GamesControl/GamesList.tsx:227:54
+#: app/pages/GamesControl/GamesList.tsx:242:54
 #: app/pages/GamesControl/TournamentControls.tsx:317:46
 msgid "4 minutes"
 msgstr "4 хвіліны"
@@ -91,12 +91,12 @@ msgstr "4 хвіліны"
 msgid "4th"
 msgstr "4-е"
 
-#: app/pages/GamesControl/GamesList.tsx:228:54
+#: app/pages/GamesControl/GamesList.tsx:243:54
 #: app/pages/GamesControl/TournamentControls.tsx:318:46
 msgid "5 minutes"
 msgstr "5 хвілін"
 
-#: app/pages/GamesControl/GamesList.tsx:229:54
+#: app/pages/GamesControl/GamesList.tsx:244:54
 #: app/pages/GamesControl/TournamentControls.tsx:319:46
 msgid "7 minutes"
 msgstr "7 хвілін"
@@ -137,13 +137,13 @@ msgstr "Дзеянні"
 msgid "Add a penalty"
 msgstr "Дадаць штраф"
 
-#: app/pages/GamesControl/GamesList.tsx:215:29
+#: app/pages/GamesControl/GamesList.tsx:230:29
 #: app/pages/GamesControl/TournamentControls.tsx:304:22
 #: app/pages/GamesControl/TournamentControls.tsx:305:21
 msgid "Add extra time"
 msgstr "Дадаць час"
 
-#: app/pages/GamesControl/GamesList.tsx:214:30
+#: app/pages/GamesControl/GamesList.tsx:229:30
 msgid "Add extra time for this table"
 msgstr "Дадаць час для гэтага стала"
 
@@ -155,7 +155,7 @@ msgstr ""
 msgid "Add selected amount of extra time for all tables?"
 msgstr "Дадаць выбраны час для ўсіх сталоў?"
 
-#: app/pages/GamesControl/GamesList.tsx:234:30
+#: app/pages/GamesControl/GamesList.tsx:249:30
 msgid "Add selected amount of extra time for this table?"
 msgstr "Дадаць выбраны час для гэтага стала?"
 
@@ -356,19 +356,21 @@ msgstr ""
 
 #: app/components/RecalcAchievementsModal.tsx:54:12
 #: app/components/RecalcPlayerStatsModal.tsx:54:12
-#: app/components/StopEventModal.tsx:41:12 app/pages/OwnedEvents.tsx:259:14
+#: app/components/StopEventModal.tsx:41:12
+#: app/pages/GamesControl/SeatingCorrection.tsx:123:16
+#: app/pages/OwnedEvents.tsx:259:14
 msgid "Cancel"
 msgstr "Скасаваць"
 
-#: app/pages/GamesControl/GamesList.tsx:254:30
+#: app/pages/GamesControl/GamesList.tsx:269:30
 msgid "Cancel last played round"
 msgstr "Скасаваць апошнюю раздачу"
 
-#: app/pages/GamesControl/GamesList.tsx:304:30
+#: app/pages/GamesControl/GamesList.tsx:319:30
 msgid "Cancel last round and game results"
 msgstr "Адмяніць апошні раунд і вынікі гульні"
 
-#: app/pages/GamesControl/GamesList.tsx:305:29
+#: app/pages/GamesControl/GamesList.tsx:320:29
 msgid "Cancel last round and results"
 msgstr "Адмяніць раунд і вынікі"
 
@@ -376,7 +378,7 @@ msgstr "Адмяніць раунд і вынікі"
 msgid "Cancel penalty"
 msgstr "Скасаваць штраф"
 
-#: app/pages/GamesControl/GamesList.tsx:255:29
+#: app/pages/GamesControl/GamesList.tsx:270:29
 msgid "Cancel round"
 msgstr "Скасаваць раздачу"
 
@@ -488,6 +490,15 @@ msgstr "Пацвердзіце электронную пошту"
 msgid "Copy event"
 msgstr "Скапіяваць падзею"
 
+#: app/pages/GamesControl/SeatingCorrection.tsx:74:10
+#: app/pages/GamesControl/SeatingCorrection.tsx:131:16
+msgid "Correct seating"
+msgstr ""
+
+#: app/pages/GamesControl/SeatingCorrection.tsx:79:16
+msgid "Correct starting winds"
+msgstr ""
+
 #: app/pages/OwnedEventsEdit/LocalSettings.tsx:39:22
 #: app/pages/OwnedEventsEdit/OnlineSettings.tsx:130:22
 msgid ""
@@ -506,7 +517,7 @@ msgstr "Стварыць новую падзею"
 msgid "Current penalties"
 msgstr "Бягучыя штрафы"
 
-#: app/pages/GamesControl/GamesList.tsx:139:30
+#: app/pages/GamesControl/GamesList.tsx:142:30
 msgid "Current round"
 msgstr "Бягучая раздача"
 
@@ -559,6 +570,10 @@ msgstr ""
 #: app/helpers/lastRound.ts:122:7
 msgid "Draw, tempai: %1, riichi: %2"
 msgstr "Нічыя, тэмпай: %1, рыічы: %2"
+
+#: app/pages/GamesControl/SeatingCorrection.tsx:97:20
+msgid "East"
+msgstr ""
 
 #: app/helpers/yaku.ts:273:34
 msgid "East round wind"
@@ -703,7 +718,7 @@ msgstr "Падзея: %1"
 msgid "External gaming platform for the tournament"
 msgstr "Знешняя гульнявая платформа для турніру"
 
-#: app/pages/GamesControl/GamesList.tsx:196:24
+#: app/pages/GamesControl/GamesList.tsx:199:24
 msgid "Extra minutes: %1"
 msgstr "Дадатковыя хвіліны: %1"
 
@@ -743,6 +758,11 @@ msgid ""
 msgstr ""
 "Не ўдалося пацвердзіць электронную пошту. Магчыма, спасылка ўжо выкарыстана "
 "або тэрмін яе дзеяння скончыўся. Паспрабуйце зарэгістравацца зноў."
+
+#: app/pages/GamesControl/SeatingCorrection.tsx:29:50
+#: app/pages/GamesControl/SeatingCorrection.tsx:58:25
+msgid "Failed to correct seating"
+msgstr ""
 
 #: app/pages/GamesControl/index.tsx:181:35
 msgid "Failed to definalize game"
@@ -895,11 +915,11 @@ msgstr "Фіксаваны лік для гульца на замене"
 msgid "Fixed uma for replacement player"
 msgstr "Фіксаваная ума для гульца на замене"
 
-#: app/pages/GamesControl/GamesList.tsx:289:29
+#: app/pages/GamesControl/GamesList.tsx:304:29
 msgid "Force finish game"
 msgstr "Прымусова завяршыць гульню"
 
-#: app/pages/GamesControl/GamesList.tsx:288:30
+#: app/pages/GamesControl/GamesList.tsx:303:30
 msgid "Forcefully finish the game"
 msgstr "Прымусова завяршыць гульню"
 
@@ -1418,6 +1438,10 @@ msgstr ""
 msgid "No referee notes yet"
 msgstr ""
 
+#: app/pages/GamesControl/SeatingCorrection.tsx:97:72
+msgid "North"
+msgstr ""
+
 #: app/helpers/yaku.ts:297:34
 msgid "North round wind"
 msgstr "Вецер раўнда: Поўнач"
@@ -1879,6 +1903,12 @@ msgstr "Не ўдалося запланаваць пералік"
 msgid "Recalculation scheduled"
 msgstr "Пералік запланаваны"
 
+#: app/pages/GamesControl/SeatingCorrection.tsx:86:14
+msgid ""
+"Recorded outcomes stay attached to the named players. Scores and round "
+"progression will be recalculated using these starting winds."
+msgstr ""
+
 #: app/pages/ProfileResetPassword.tsx:32:16
 #: app/pages/ProfileResetPasswordConfirm.tsx:218:14
 msgid "Recover password"
@@ -1904,7 +1934,7 @@ msgstr ""
 msgid "Referee privileges include:"
 msgstr "Прывілеі суддзі:"
 
-#: app/pages/GamesControl/index.tsx:449:16
+#: app/pages/GamesControl/index.tsx:450:16
 msgid "Refresh data [%1]"
 msgstr "Абнавіць даныя [%1]"
 
@@ -1929,7 +1959,7 @@ msgstr "Рэгістрацыя завершана!"
 msgid "Remove administrator from event"
 msgstr "Выдаліць адміністратара з падзеі"
 
-#: app/pages/GamesControl/GamesList.tsx:271:29
+#: app/pages/GamesControl/GamesList.tsx:286:29
 msgid "Remove game"
 msgstr "Выдаліць гульню"
 
@@ -1950,7 +1980,7 @@ msgstr "Выдаліць суддзю з падзеі"
 msgid "Remove replacement"
 msgstr "Скасаваць замену"
 
-#: app/pages/GamesControl/GamesList.tsx:270:30
+#: app/pages/GamesControl/GamesList.tsx:285:30
 msgid "Remove the game as it never existed"
 msgstr "Выдаліць гульню, нібыта яе не было"
 
@@ -2099,7 +2129,7 @@ msgstr "Выберыце аватар"
 msgid "Select event type"
 msgstr "Выберыце тып падзеі"
 
-#: app/pages/GamesControl/GamesList.tsx:220:36
+#: app/pages/GamesControl/GamesList.tsx:235:36
 #: app/pages/GamesControl/TournamentControls.tsx:310:28
 msgid "Select extra time"
 msgstr "Выберыце дадатковы час"
@@ -2137,7 +2167,7 @@ msgstr ""
 "Адміністратар сервера таксама не зможа аднавіць ваш доступ да выдаленага "
 "ўліковага запісу."
 
-#: app/pages/GamesControl/GamesList.tsx:388:18
+#: app/pages/GamesControl/GamesList.tsx:403:18
 msgid "Session cancelled"
 msgstr "Сесія скасавана"
 
@@ -2149,23 +2179,23 @@ msgstr "Працягласць сесіі ў хвілінах"
 msgid "Session ending policy"
 msgstr "Правілы завяршэння сесіі"
 
-#: app/pages/GamesControl/GamesList.tsx:376:18
+#: app/pages/GamesControl/GamesList.tsx:391:18
 msgid "Session finished"
 msgstr "Сесія завершана"
 
-#: app/pages/GamesControl/GamesList.tsx:364:18
+#: app/pages/GamesControl/GamesList.tsx:379:18
 msgid "Session finished, but not confirmed"
 msgstr "Сесія завершана, але яшчэ не пацверджана"
 
-#: app/pages/GamesControl/GamesList.tsx:351:20
+#: app/pages/GamesControl/GamesList.tsx:366:20
 msgid "Session in progress"
 msgstr "Сесія ідзе"
 
-#: app/pages/GamesControl/GamesList.tsx:339:20
+#: app/pages/GamesControl/GamesList.tsx:354:20
 msgid "Session is ready to start"
 msgstr "Сесія гатова да пачатку"
 
-#: app/pages/GamesControl/GamesList.tsx:400:18
+#: app/pages/GamesControl/GamesList.tsx:415:18
 msgid "Session is scheduled"
 msgstr "Сесія запланавана"
 
@@ -2249,6 +2279,10 @@ msgstr "Просты, паводле месца"
 msgid "Something went wrong. Contact pantheon service administrator"
 msgstr "Нешта пайшло не так. Звярніцеся да адміністратара сэрвісу Pantheon"
 
+#: app/pages/GamesControl/SeatingCorrection.tsx:97:37
+msgid "South"
+msgstr ""
+
 #: app/helpers/yaku.ts:281:34
 msgid "South round wind"
 msgstr "Вецер раўнда: Поўдзень"
@@ -2326,7 +2360,7 @@ msgstr "Сістэмны ID"
 msgid "System stats"
 msgstr "Сістэмная статыстыка"
 
-#: app/pages/GamesControl/GamesList.tsx:123:30
+#: app/pages/GamesControl/GamesList.tsx:126:30
 msgid "Table # %1"
 msgstr "Стол # %1"
 
@@ -2404,8 +2438,8 @@ msgstr ""
 msgid "This Ronin nickname is already taken"
 msgstr "Гэта імя ў Ronin ужо занятае"
 
-#: app/pages/GamesControl/GamesList.tsx:256:32
-#: app/pages/GamesControl/GamesList.tsx:272:32
+#: app/pages/GamesControl/GamesList.tsx:271:32
+#: app/pages/GamesControl/GamesList.tsx:287:32
 msgid "This action can't be undone. Continue?"
 msgstr "Гэта дзеянне нельга скасаваць. Працягнуць?"
 
@@ -2445,7 +2479,7 @@ msgstr ""
 msgid "This will remove generated seating. Continue?"
 msgstr "Створаная рассадка будзе выдалена. Працягнуць?"
 
-#: app/pages/GamesControl/GamesList.tsx:306:32
+#: app/pages/GamesControl/GamesList.tsx:321:32
 msgid ""
 "This will remove the game results and the last round, and return the game to "
 "the state before that round. Continue?"
@@ -2596,6 +2630,10 @@ msgstr "Кіраванне бачнасцю"
 msgid "Visible only to event referees and administrators."
 msgstr ""
 
+#: app/pages/GamesControl/SeatingCorrection.tsx:97:55
+msgid "West"
+msgstr ""
+
 #: app/helpers/yaku.ts:289:34
 msgid "West round wind"
 msgstr "Вецер раўнда: Захад"
@@ -2696,7 +2734,7 @@ msgstr ""
 "Вы збіраецеся выдаліць даныя свайго ўліковага запісу з сістэмы. Пацвердзіце "
 "дзеянне. Каб скасаваць яго, зачыніце акно."
 
-#: app/pages/GamesControl/GamesList.tsx:290:32
+#: app/pages/GamesControl/GamesList.tsx:305:32
 msgid "You are going to forcefully finish this game. Continue?"
 msgstr "Вы збіраецеся прымусова завяршыць гэтую гульню. Працягнуць?"
 

@@ -26,6 +26,8 @@ import {
   CreateEvent,
   DefinalizeGame,
   DropLastRound,
+  CorrectSessionSeating,
+  GetSessionOverview,
   FinalizeSession,
   FinishEvent,
   ForceFinishGame,
@@ -576,6 +578,17 @@ export class ApiService {
   cancelGame(sessionHash: string) {
     this._analytics?.track(Analytics.LOAD_STARTED, { method: 'CancelGame' });
     return CancelGame({ sessionHash }, this._clientConfMimir).then((r) => r.success);
+  }
+
+  getSessionOverview(sessionHash: string) {
+    return GetSessionOverview({ sessionHash }, this._clientConfMimir);
+  }
+
+  correctSessionSeating(sessionHash: string, playerIds: number[], nextRoundToken: string) {
+    return CorrectSessionSeating(
+      { sessionHash, playerIds, nextRoundToken },
+      this._clientConfMimir
+    ).then((response) => response.success);
   }
 
   definalizeGame(sessionHash: string) {

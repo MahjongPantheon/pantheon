@@ -442,6 +442,7 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
         onRemoveGame={eventConfig?.syncStart ? undefined : onRemoveGame}
         onForceFinish={eventConfig?.syncStart ? undefined : onForceFinish}
         onAddExtraTime={onAddExtraTimeForTable}
+        onSeatingCorrected={() => doReloadTablesOnly().catch(errHandler)}
       />
       <TopActionButton
         testId='forseti-games-control-save'

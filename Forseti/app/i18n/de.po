@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-25 19:21+0100\n"
+"POT-Creation-Date: 2026-11-25 19:38+0100\n"
 "PO-Revision-Date: 2024-04-12 22:47+0300\n"
 "Last-Translator: Jesterboxboy <github@jesterbox.org>\n"
 "Language-Team: \n"
@@ -42,7 +42,7 @@ msgid_plural "%1 items"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/pages/GamesControl/GamesList.tsx:224:53
+#: app/pages/GamesControl/GamesList.tsx:239:53
 #: app/pages/GamesControl/TournamentControls.tsx:314:45
 msgid "1 minute"
 msgstr "1 Minute"
@@ -59,7 +59,7 @@ msgstr "13+ han Hände werden als Yakuman, nicht als sanbaiman, gewertet."
 msgid "1st"
 msgstr "1ter"
 
-#: app/pages/GamesControl/GamesList.tsx:225:54
+#: app/pages/GamesControl/GamesList.tsx:240:54
 #: app/pages/GamesControl/TournamentControls.tsx:315:46
 msgid "2 minutes"
 msgstr "2 Minuten"
@@ -68,7 +68,7 @@ msgstr "2 Minuten"
 msgid "2nd"
 msgstr "2ter"
 
-#: app/pages/GamesControl/GamesList.tsx:226:54
+#: app/pages/GamesControl/GamesList.tsx:241:54
 #: app/pages/GamesControl/TournamentControls.tsx:316:46
 msgid "3 minutes"
 msgstr "3 Minuten"
@@ -81,7 +81,7 @@ msgstr "Drei Spieler sind unter den Startpunkten"
 msgid "3rd"
 msgstr "3ter"
 
-#: app/pages/GamesControl/GamesList.tsx:227:54
+#: app/pages/GamesControl/GamesList.tsx:242:54
 #: app/pages/GamesControl/TournamentControls.tsx:317:46
 msgid "4 minutes"
 msgstr "4 Minuten"
@@ -90,12 +90,12 @@ msgstr "4 Minuten"
 msgid "4th"
 msgstr "4ter"
 
-#: app/pages/GamesControl/GamesList.tsx:228:54
+#: app/pages/GamesControl/GamesList.tsx:243:54
 #: app/pages/GamesControl/TournamentControls.tsx:318:46
 msgid "5 minutes"
 msgstr "5 Minuten"
 
-#: app/pages/GamesControl/GamesList.tsx:229:54
+#: app/pages/GamesControl/GamesList.tsx:244:54
 #: app/pages/GamesControl/TournamentControls.tsx:319:46
 msgid "7 minutes"
 msgstr "7 Minuten"
@@ -136,13 +136,13 @@ msgstr "Aktionen"
 msgid "Add a penalty"
 msgstr "Strafe hinzufügen"
 
-#: app/pages/GamesControl/GamesList.tsx:215:29
+#: app/pages/GamesControl/GamesList.tsx:230:29
 #: app/pages/GamesControl/TournamentControls.tsx:304:22
 #: app/pages/GamesControl/TournamentControls.tsx:305:21
 msgid "Add extra time"
 msgstr "Zusätzliche Zeit hinzufügen"
 
-#: app/pages/GamesControl/GamesList.tsx:214:30
+#: app/pages/GamesControl/GamesList.tsx:229:30
 msgid "Add extra time for this table"
 msgstr "Zusätzliche Zeit für diesen Tisch hinzufügen"
 
@@ -154,7 +154,7 @@ msgstr ""
 msgid "Add selected amount of extra time for all tables?"
 msgstr "Ausgewählte zusätzliche Zeit für alle Tische hinzufügen?"
 
-#: app/pages/GamesControl/GamesList.tsx:234:30
+#: app/pages/GamesControl/GamesList.tsx:249:30
 msgid "Add selected amount of extra time for this table?"
 msgstr "Ausgewählte zusätzliche Zeit für diesen Tisch hinzufügen?"
 
@@ -356,19 +356,21 @@ msgstr ""
 
 #: app/components/RecalcAchievementsModal.tsx:54:12
 #: app/components/RecalcPlayerStatsModal.tsx:54:12
-#: app/components/StopEventModal.tsx:41:12 app/pages/OwnedEvents.tsx:259:14
+#: app/components/StopEventModal.tsx:41:12
+#: app/pages/GamesControl/SeatingCorrection.tsx:123:16
+#: app/pages/OwnedEvents.tsx:259:14
 msgid "Cancel"
 msgstr "Abbrechen"
 
-#: app/pages/GamesControl/GamesList.tsx:254:30
+#: app/pages/GamesControl/GamesList.tsx:269:30
 msgid "Cancel last played round"
 msgstr "Letzte gespielte Runde abbrechen"
 
-#: app/pages/GamesControl/GamesList.tsx:304:30
+#: app/pages/GamesControl/GamesList.tsx:319:30
 msgid "Cancel last round and game results"
 msgstr "Letzte Hand und Spielergebnisse zurücknehmen"
 
-#: app/pages/GamesControl/GamesList.tsx:305:29
+#: app/pages/GamesControl/GamesList.tsx:320:29
 msgid "Cancel last round and results"
 msgstr "Hand und Ergebnisse zurücknehmen"
 
@@ -376,7 +378,7 @@ msgstr "Hand und Ergebnisse zurücknehmen"
 msgid "Cancel penalty"
 msgstr "Strafe aufheben"
 
-#: app/pages/GamesControl/GamesList.tsx:255:29
+#: app/pages/GamesControl/GamesList.tsx:270:29
 msgid "Cancel round"
 msgstr "Runde abbrechen"
 
@@ -488,6 +490,15 @@ msgstr "Email bestätigen"
 msgid "Copy event"
 msgstr "Event kopieren"
 
+#: app/pages/GamesControl/SeatingCorrection.tsx:74:10
+#: app/pages/GamesControl/SeatingCorrection.tsx:131:16
+msgid "Correct seating"
+msgstr ""
+
+#: app/pages/GamesControl/SeatingCorrection.tsx:79:16
+msgid "Correct starting winds"
+msgstr ""
+
 #: app/pages/OwnedEventsEdit/LocalSettings.tsx:39:22
 #: app/pages/OwnedEventsEdit/OnlineSettings.tsx:130:22
 msgid ""
@@ -506,7 +517,7 @@ msgstr "Neues Event erstellen"
 msgid "Current penalties"
 msgstr "Aktuelle Strafen"
 
-#: app/pages/GamesControl/GamesList.tsx:139:30
+#: app/pages/GamesControl/GamesList.tsx:142:30
 msgid "Current round"
 msgstr "Aktuelle Runde"
 
@@ -559,6 +570,10 @@ msgstr "Unentschieden-Zahlungen (Sanma)"
 #: app/helpers/lastRound.ts:122:7
 msgid "Draw, tempai: %1, riichi: %2"
 msgstr "Unentschieden, Tenpai: %1, Riichi: %2"
+
+#: app/pages/GamesControl/SeatingCorrection.tsx:97:20
+msgid "East"
+msgstr ""
 
 #: app/helpers/yaku.ts:273:34
 msgid "East round wind"
@@ -705,7 +720,7 @@ msgstr "Event: %1"
 msgid "External gaming platform for the tournament"
 msgstr "Externe Spielplattform für das Turnier"
 
-#: app/pages/GamesControl/GamesList.tsx:196:24
+#: app/pages/GamesControl/GamesList.tsx:199:24
 msgid "Extra minutes: %1"
 msgstr "Zusätzliche Minuten: %1"
 
@@ -745,6 +760,11 @@ msgid ""
 msgstr ""
 "Email konnte nicht bestätigt werden. Möglicherweise ist der Link zu alt oder "
 "wurde bereits benutzt. Bitte nochmal versuchen."
+
+#: app/pages/GamesControl/SeatingCorrection.tsx:29:50
+#: app/pages/GamesControl/SeatingCorrection.tsx:58:25
+msgid "Failed to correct seating"
+msgstr ""
 
 #: app/pages/GamesControl/index.tsx:181:35
 msgid "Failed to definalize game"
@@ -900,11 +920,11 @@ msgstr "Fixe Punktzahl für Ersatzspieler"
 msgid "Fixed uma for replacement player"
 msgstr "Uma für Ersatzspieler"
 
-#: app/pages/GamesControl/GamesList.tsx:289:29
+#: app/pages/GamesControl/GamesList.tsx:304:29
 msgid "Force finish game"
 msgstr "Spielende erzwingen"
 
-#: app/pages/GamesControl/GamesList.tsx:288:30
+#: app/pages/GamesControl/GamesList.tsx:303:30
 msgid "Forcefully finish the game"
 msgstr "Spielende erzwingen"
 
@@ -1432,6 +1452,10 @@ msgstr ""
 msgid "No referee notes yet"
 msgstr ""
 
+#: app/pages/GamesControl/SeatingCorrection.tsx:97:72
+msgid "North"
+msgstr ""
+
 #: app/helpers/yaku.ts:297:34
 msgid "North round wind"
 msgstr "Rundenwind: Nord"
@@ -1902,6 +1926,12 @@ msgstr "Neuberechnung konnte nicht eingeplant werden"
 msgid "Recalculation scheduled"
 msgstr "Neuberechnung eingeplant"
 
+#: app/pages/GamesControl/SeatingCorrection.tsx:86:14
+msgid ""
+"Recorded outcomes stay attached to the named players. Scores and round "
+"progression will be recalculated using these starting winds."
+msgstr ""
+
 #: app/pages/ProfileResetPassword.tsx:32:16
 #: app/pages/ProfileResetPasswordConfirm.tsx:218:14
 msgid "Recover password"
@@ -1927,7 +1957,7 @@ msgstr ""
 msgid "Referee privileges include:"
 msgstr "Schiedsrichter haben folgende Rechte:"
 
-#: app/pages/GamesControl/index.tsx:449:16
+#: app/pages/GamesControl/index.tsx:450:16
 msgid "Refresh data [%1]"
 msgstr "Daten aktualisieren [%1]"
 
@@ -1952,7 +1982,7 @@ msgstr "Anmeldung abgeschlossen!"
 msgid "Remove administrator from event"
 msgstr "Administrator aus dem Event entfernen"
 
-#: app/pages/GamesControl/GamesList.tsx:271:29
+#: app/pages/GamesControl/GamesList.tsx:286:29
 msgid "Remove game"
 msgstr "Spiel entfernen"
 
@@ -1973,7 +2003,7 @@ msgstr "Schiedsrichter aus dem Event entfernen"
 msgid "Remove replacement"
 msgstr "Ersatzspieler entfernen"
 
-#: app/pages/GamesControl/GamesList.tsx:270:30
+#: app/pages/GamesControl/GamesList.tsx:285:30
 msgid "Remove the game as it never existed"
 msgstr "Spiel entfernen, da es nicht stattgefunden hat"
 
@@ -2122,7 +2152,7 @@ msgstr "Wähle ein Profilbild"
 msgid "Select event type"
 msgstr "Art des Events auswählen"
 
-#: app/pages/GamesControl/GamesList.tsx:220:36
+#: app/pages/GamesControl/GamesList.tsx:235:36
 #: app/pages/GamesControl/TournamentControls.tsx:310:28
 msgid "Select extra time"
 msgstr "Zusätzliche Zeit auswählen"
@@ -2160,7 +2190,7 @@ msgstr ""
 "Die Daten können auch von Administratoren nicht mehr wiederhergestellt "
 "werden."
 
-#: app/pages/GamesControl/GamesList.tsx:388:18
+#: app/pages/GamesControl/GamesList.tsx:403:18
 msgid "Session cancelled"
 msgstr "Runde abgebrochen"
 
@@ -2172,23 +2202,23 @@ msgstr "Matchdauer in Minuten"
 msgid "Session ending policy"
 msgstr "Einstellungen zum Matchende"
 
-#: app/pages/GamesControl/GamesList.tsx:376:18
+#: app/pages/GamesControl/GamesList.tsx:391:18
 msgid "Session finished"
 msgstr "Runde beendet"
 
-#: app/pages/GamesControl/GamesList.tsx:364:18
+#: app/pages/GamesControl/GamesList.tsx:379:18
 msgid "Session finished, but not confirmed"
 msgstr "Runde beendet, aber noch nicht bestätigt"
 
-#: app/pages/GamesControl/GamesList.tsx:351:20
+#: app/pages/GamesControl/GamesList.tsx:366:20
 msgid "Session in progress"
 msgstr "Runde läuft"
 
-#: app/pages/GamesControl/GamesList.tsx:339:20
+#: app/pages/GamesControl/GamesList.tsx:354:20
 msgid "Session is ready to start"
 msgstr "Runde ist bereit gestartet zu werden"
 
-#: app/pages/GamesControl/GamesList.tsx:400:18
+#: app/pages/GamesControl/GamesList.tsx:415:18
 msgid "Session is scheduled"
 msgstr "Runde ist geplant"
 
@@ -2272,6 +2302,10 @@ msgstr "Rang basiert"
 msgid "Something went wrong. Contact pantheon service administrator"
 msgstr "Ein Fehler ist aufgetreten. Wende dich an den Pantheon-Administrator"
 
+#: app/pages/GamesControl/SeatingCorrection.tsx:97:37
+msgid "South"
+msgstr ""
+
 #: app/helpers/yaku.ts:281:34
 msgid "South round wind"
 msgstr "Rundenwind: Süd"
@@ -2353,7 +2387,7 @@ msgstr "System ID"
 msgid "System stats"
 msgstr "Systeminformationen"
 
-#: app/pages/GamesControl/GamesList.tsx:123:30
+#: app/pages/GamesControl/GamesList.tsx:126:30
 msgid "Table # %1"
 msgstr "Tisch # %1"
 
@@ -2429,8 +2463,8 @@ msgstr ""
 msgid "This Ronin nickname is already taken"
 msgstr "Dieser Ronin-Spitzname ist bereits vergeben"
 
-#: app/pages/GamesControl/GamesList.tsx:256:32
-#: app/pages/GamesControl/GamesList.tsx:272:32
+#: app/pages/GamesControl/GamesList.tsx:271:32
+#: app/pages/GamesControl/GamesList.tsx:287:32
 msgid "This action can't be undone. Continue?"
 msgstr ""
 "Diese Aktion kann nicht rückgängig gemacht werden. Trotzdem Fortfahren?"
@@ -2469,7 +2503,7 @@ msgstr ""
 msgid "This will remove generated seating. Continue?"
 msgstr "Erstellte Sitzordnung wirklich löschen?"
 
-#: app/pages/GamesControl/GamesList.tsx:306:32
+#: app/pages/GamesControl/GamesList.tsx:321:32
 msgid ""
 "This will remove the game results and the last round, and return the game to "
 "the state before that round. Continue?"
@@ -2621,6 +2655,10 @@ msgstr "Sichtbarkeit verwalten"
 msgid "Visible only to event referees and administrators."
 msgstr ""
 
+#: app/pages/GamesControl/SeatingCorrection.tsx:97:55
+msgid "West"
+msgstr ""
+
 #: app/helpers/yaku.ts:289:34
 msgid "West round wind"
 msgstr "Rundenwind: West"
@@ -2721,7 +2759,7 @@ msgstr ""
 "kann nicht rückgängig gemacht werden. Bitte bestätigen Sie  oder schliessen "
 "sie das Fenster zum Abbruch."
 
-#: app/pages/GamesControl/GamesList.tsx:290:32
+#: app/pages/GamesControl/GamesList.tsx:305:32
 msgid "You are going to forcefully finish this game. Continue?"
 msgstr "Das Spiel wird jetzt beendet. Fortfahren?"
 

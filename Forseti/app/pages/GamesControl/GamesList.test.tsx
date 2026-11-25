@@ -12,6 +12,9 @@ import { GamesList } from './GamesList';
 
 vi.mock('../../hooks/i18n', () => ({ useI18n: () => ({ _t: (text: string) => text }) }));
 vi.mock('../../components/PlayerAvatar', () => ({ PlayerAvatar: () => null }));
+vi.mock('./SeatingCorrection', () => ({
+  SeatingCorrection: () => <button>Correct seating</button>,
+}));
 let container: HTMLDivElement;
 let root: Root;
 const callbacks = {
@@ -22,6 +25,25 @@ const callbacks = {
   onAddExtraTime: vi.fn(),
 };
 const scores = [{ playerId: 1, score: 30000, chomboCount: 0 }];
+
+it('offers correction for an active offline table', () => {
+  render({ status: SessionStatus.SESSION_STATUS_INPROGRESS }, {}, { onSeatingCorrected: vi.fn() });
+  expect(container.textContent).toContain('Correct seating');
+});
+
+it.each([
+  [{ status: SessionStatus.SESSION_STATUS_FINISHED }, {}],
+  [{ status: SessionStatus.SESSION_STATUS_PREFINISHED }, {}],
+  [{ status: SessionStatus.SESSION_STATUS_INPROGRESS }, { isOnline: true }],
+  [{ status: SessionStatus.SESSION_STATUS_INPROGRESS }, { isFinished: true }],
+  [
+    { status: SessionStatus.SESSION_STATUS_INPROGRESS },
+    { gamesStatus: TournamentGamesStatus.TOURNAMENT_GAMES_STATUS_SEATING_READY },
+  ],
+])('hides correction when the table is unavailable (%j, %j)', (table, config) => {
+  render(table, config, { onSeatingCorrected: vi.fn() });
+  expect(container.textContent).not.toContain('Correct seating');
+});
 beforeEach(() => {
   vi.clearAllMocks();
   container = document.createElement('div');

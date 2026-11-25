@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-25 19:21+0100\n"
+"POT-Creation-Date: 2026-11-25 19:38+0100\n"
 "PO-Revision-Date: 2026-10-20 00:34+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -33,7 +33,7 @@ msgid "%1 item"
 msgid_plural "%1 items"
 msgstr[0] ""
 
-#: app/pages/GamesControl/GamesList.tsx:224:53
+#: app/pages/GamesControl/GamesList.tsx:239:53
 #: app/pages/GamesControl/TournamentControls.tsx:314:45
 msgid "1 minute"
 msgstr "1 分钟"
@@ -50,7 +50,7 @@ msgstr "13 番及以上的手牌按役满计算，而非三倍满。"
 msgid "1st"
 msgstr "第 1 名"
 
-#: app/pages/GamesControl/GamesList.tsx:225:54
+#: app/pages/GamesControl/GamesList.tsx:240:54
 #: app/pages/GamesControl/TournamentControls.tsx:315:46
 msgid "2 minutes"
 msgstr "2 分钟"
@@ -59,7 +59,7 @@ msgstr "2 分钟"
 msgid "2nd"
 msgstr "第 2 名"
 
-#: app/pages/GamesControl/GamesList.tsx:226:54
+#: app/pages/GamesControl/GamesList.tsx:241:54
 #: app/pages/GamesControl/TournamentControls.tsx:316:46
 msgid "3 minutes"
 msgstr "3 分钟"
@@ -72,7 +72,7 @@ msgstr "3 名玩家低于起始点数"
 msgid "3rd"
 msgstr "第 3 名"
 
-#: app/pages/GamesControl/GamesList.tsx:227:54
+#: app/pages/GamesControl/GamesList.tsx:242:54
 #: app/pages/GamesControl/TournamentControls.tsx:317:46
 msgid "4 minutes"
 msgstr "4 分钟"
@@ -81,12 +81,12 @@ msgstr "4 分钟"
 msgid "4th"
 msgstr "第 4 名"
 
-#: app/pages/GamesControl/GamesList.tsx:228:54
+#: app/pages/GamesControl/GamesList.tsx:243:54
 #: app/pages/GamesControl/TournamentControls.tsx:318:46
 msgid "5 minutes"
 msgstr "5 分钟"
 
-#: app/pages/GamesControl/GamesList.tsx:229:54
+#: app/pages/GamesControl/GamesList.tsx:244:54
 #: app/pages/GamesControl/TournamentControls.tsx:319:46
 msgid "7 minutes"
 msgstr "7 分钟"
@@ -125,13 +125,13 @@ msgstr "操作"
 msgid "Add a penalty"
 msgstr "添加处罚"
 
-#: app/pages/GamesControl/GamesList.tsx:215:29
+#: app/pages/GamesControl/GamesList.tsx:230:29
 #: app/pages/GamesControl/TournamentControls.tsx:304:22
 #: app/pages/GamesControl/TournamentControls.tsx:305:21
 msgid "Add extra time"
 msgstr "追加时间"
 
-#: app/pages/GamesControl/GamesList.tsx:214:30
+#: app/pages/GamesControl/GamesList.tsx:229:30
 msgid "Add extra time for this table"
 msgstr "为本桌追加时间"
 
@@ -143,7 +143,7 @@ msgstr ""
 msgid "Add selected amount of extra time for all tables?"
 msgstr "为所有桌追加所选时长？"
 
-#: app/pages/GamesControl/GamesList.tsx:234:30
+#: app/pages/GamesControl/GamesList.tsx:249:30
 msgid "Add selected amount of extra time for this table?"
 msgstr "为本桌追加所选时长？"
 
@@ -337,19 +337,21 @@ msgstr "无法生成座位表：已注册玩家人数不是 4 的倍数"
 
 #: app/components/RecalcAchievementsModal.tsx:54:12
 #: app/components/RecalcPlayerStatsModal.tsx:54:12
-#: app/components/StopEventModal.tsx:41:12 app/pages/OwnedEvents.tsx:259:14
+#: app/components/StopEventModal.tsx:41:12
+#: app/pages/GamesControl/SeatingCorrection.tsx:123:16
+#: app/pages/OwnedEvents.tsx:259:14
 msgid "Cancel"
 msgstr "取消"
 
-#: app/pages/GamesControl/GamesList.tsx:254:30
+#: app/pages/GamesControl/GamesList.tsx:269:30
 msgid "Cancel last played round"
 msgstr "取消最后一局"
 
-#: app/pages/GamesControl/GamesList.tsx:304:30
+#: app/pages/GamesControl/GamesList.tsx:319:30
 msgid "Cancel last round and game results"
 msgstr "撤销最后一局和对局结果"
 
-#: app/pages/GamesControl/GamesList.tsx:305:29
+#: app/pages/GamesControl/GamesList.tsx:320:29
 msgid "Cancel last round and results"
 msgstr "撤销最后一局和结果"
 
@@ -357,7 +359,7 @@ msgstr "撤销最后一局和结果"
 msgid "Cancel penalty"
 msgstr "取消处罚"
 
-#: app/pages/GamesControl/GamesList.tsx:255:29
+#: app/pages/GamesControl/GamesList.tsx:270:29
 msgid "Cancel round"
 msgstr "取消本局"
 
@@ -467,6 +469,15 @@ msgstr "验证你的邮箱"
 msgid "Copy event"
 msgstr "复制活动"
 
+#: app/pages/GamesControl/SeatingCorrection.tsx:74:10
+#: app/pages/GamesControl/SeatingCorrection.tsx:131:16
+msgid "Correct seating"
+msgstr ""
+
+#: app/pages/GamesControl/SeatingCorrection.tsx:79:16
+msgid "Correct starting winds"
+msgstr ""
+
 #: app/pages/OwnedEventsEdit/LocalSettings.tsx:39:22
 #: app/pages/OwnedEventsEdit/OnlineSettings.tsx:130:22
 msgid ""
@@ -485,7 +496,7 @@ msgstr "创建新活动"
 msgid "Current penalties"
 msgstr "当前处罚"
 
-#: app/pages/GamesControl/GamesList.tsx:139:30
+#: app/pages/GamesControl/GamesList.tsx:142:30
 msgid "Current round"
 msgstr "当前局"
 
@@ -538,6 +549,10 @@ msgstr ""
 #: app/helpers/lastRound.ts:122:7
 msgid "Draw, tempai: %1, riichi: %2"
 msgstr "流局，听牌：%1，立直：%2"
+
+#: app/pages/GamesControl/SeatingCorrection.tsx:97:20
+msgid "East"
+msgstr ""
 
 #: app/helpers/yaku.ts:273:34
 msgid "East round wind"
@@ -682,7 +697,7 @@ msgstr "活动：%1"
 msgid "External gaming platform for the tournament"
 msgstr "赛事使用的外部游戏平台"
 
-#: app/pages/GamesControl/GamesList.tsx:196:24
+#: app/pages/GamesControl/GamesList.tsx:199:24
 msgid "Extra minutes: %1"
 msgstr "追加分钟数：%1"
 
@@ -720,6 +735,11 @@ msgid ""
 "Failed to confirm your email. Probably the link you followed has been "
 "expired or already used. Please try registering again."
 msgstr "验证邮箱失败。链接可能已过期或已使用，请重新注册。"
+
+#: app/pages/GamesControl/SeatingCorrection.tsx:29:50
+#: app/pages/GamesControl/SeatingCorrection.tsx:58:25
+msgid "Failed to correct seating"
+msgstr ""
 
 #: app/pages/GamesControl/index.tsx:181:35
 msgid "Failed to definalize game"
@@ -865,11 +885,11 @@ msgstr "替补玩家的固定得分"
 msgid "Fixed uma for replacement player"
 msgstr "替补玩家的固定顺位分"
 
-#: app/pages/GamesControl/GamesList.tsx:289:29
+#: app/pages/GamesControl/GamesList.tsx:304:29
 msgid "Force finish game"
 msgstr "强制结束对局"
 
-#: app/pages/GamesControl/GamesList.tsx:288:30
+#: app/pages/GamesControl/GamesList.tsx:303:30
 msgid "Forcefully finish the game"
 msgstr "强制结束对局"
 
@@ -1363,6 +1383,10 @@ msgstr ""
 msgid "No referee notes yet"
 msgstr ""
 
+#: app/pages/GamesControl/SeatingCorrection.tsx:97:72
+msgid "North"
+msgstr ""
+
 #: app/helpers/yaku.ts:297:34
 msgid "North round wind"
 msgstr "场风：北"
@@ -1807,6 +1831,12 @@ msgstr "安排重新计算失败"
 msgid "Recalculation scheduled"
 msgstr "已安排重新计算"
 
+#: app/pages/GamesControl/SeatingCorrection.tsx:86:14
+msgid ""
+"Recorded outcomes stay attached to the named players. Scores and round "
+"progression will be recalculated using these starting winds."
+msgstr ""
+
 #: app/pages/ProfileResetPassword.tsx:32:16
 #: app/pages/ProfileResetPasswordConfirm.tsx:218:14
 msgid "Recover password"
@@ -1832,7 +1862,7 @@ msgstr ""
 msgid "Referee privileges include:"
 msgstr "裁判权限包括："
 
-#: app/pages/GamesControl/index.tsx:449:16
+#: app/pages/GamesControl/index.tsx:450:16
 msgid "Refresh data [%1]"
 msgstr "刷新数据 [%1]"
 
@@ -1857,7 +1887,7 @@ msgstr "注册完成！"
 msgid "Remove administrator from event"
 msgstr "移除活动管理员"
 
-#: app/pages/GamesControl/GamesList.tsx:271:29
+#: app/pages/GamesControl/GamesList.tsx:286:29
 msgid "Remove game"
 msgstr "删除对局"
 
@@ -1878,7 +1908,7 @@ msgstr "移除活动裁判"
 msgid "Remove replacement"
 msgstr "取消替补"
 
-#: app/pages/GamesControl/GamesList.tsx:270:30
+#: app/pages/GamesControl/GamesList.tsx:285:30
 msgid "Remove the game as it never existed"
 msgstr "彻底删除对局记录"
 
@@ -2024,7 +2054,7 @@ msgstr "选择头像"
 msgid "Select event type"
 msgstr "选择活动类型"
 
-#: app/pages/GamesControl/GamesList.tsx:220:36
+#: app/pages/GamesControl/GamesList.tsx:235:36
 #: app/pages/GamesControl/TournamentControls.tsx:310:28
 msgid "Select extra time"
 msgstr "选择追加时间"
@@ -2060,7 +2090,7 @@ msgid ""
 "removed account."
 msgstr "服务器管理员也无法恢复你对已删除账号的访问权限。"
 
-#: app/pages/GamesControl/GamesList.tsx:388:18
+#: app/pages/GamesControl/GamesList.tsx:403:18
 msgid "Session cancelled"
 msgstr "对局已取消"
 
@@ -2072,23 +2102,23 @@ msgstr "对局时长（分钟）"
 msgid "Session ending policy"
 msgstr "对局结束规则"
 
-#: app/pages/GamesControl/GamesList.tsx:376:18
+#: app/pages/GamesControl/GamesList.tsx:391:18
 msgid "Session finished"
 msgstr "对局已结束"
 
-#: app/pages/GamesControl/GamesList.tsx:364:18
+#: app/pages/GamesControl/GamesList.tsx:379:18
 msgid "Session finished, but not confirmed"
 msgstr "对局已结束，尚未确认"
 
-#: app/pages/GamesControl/GamesList.tsx:351:20
+#: app/pages/GamesControl/GamesList.tsx:366:20
 msgid "Session in progress"
 msgstr "对局进行中"
 
-#: app/pages/GamesControl/GamesList.tsx:339:20
+#: app/pages/GamesControl/GamesList.tsx:354:20
 msgid "Session is ready to start"
 msgstr "对局已准备开始"
 
-#: app/pages/GamesControl/GamesList.tsx:400:18
+#: app/pages/GamesControl/GamesList.tsx:415:18
 msgid "Session is scheduled"
 msgstr "对局已安排"
 
@@ -2172,6 +2202,10 @@ msgstr "按顺位设置简单顺位分"
 msgid "Something went wrong. Contact pantheon service administrator"
 msgstr "发生错误，请联系 Pantheon 服务管理员"
 
+#: app/pages/GamesControl/SeatingCorrection.tsx:97:37
+msgid "South"
+msgstr ""
+
 #: app/helpers/yaku.ts:281:34
 msgid "South round wind"
 msgstr "场风：南"
@@ -2249,7 +2283,7 @@ msgstr "系统 ID"
 msgid "System stats"
 msgstr "系统统计"
 
-#: app/pages/GamesControl/GamesList.tsx:123:30
+#: app/pages/GamesControl/GamesList.tsx:126:30
 msgid "Table # %1"
 msgstr "第 # %1 桌"
 
@@ -2323,8 +2357,8 @@ msgstr ""
 msgid "This Ronin nickname is already taken"
 msgstr "该Ronin昵称已被占用"
 
-#: app/pages/GamesControl/GamesList.tsx:256:32
-#: app/pages/GamesControl/GamesList.tsx:272:32
+#: app/pages/GamesControl/GamesList.tsx:271:32
+#: app/pages/GamesControl/GamesList.tsx:287:32
 msgid "This action can't be undone. Continue?"
 msgstr "此操作无法撤销，是否继续？"
 
@@ -2359,7 +2393,7 @@ msgstr "下一场对局脚本的编号（从 1 开始）。每开始一场新对
 msgid "This will remove generated seating. Continue?"
 msgstr "此操作将删除已生成的座位表，是否继续？"
 
-#: app/pages/GamesControl/GamesList.tsx:306:32
+#: app/pages/GamesControl/GamesList.tsx:321:32
 msgid ""
 "This will remove the game results and the last round, and return the game to "
 "the state before that round. Continue?"
@@ -2505,6 +2539,10 @@ msgstr "可见性管理"
 msgid "Visible only to event referees and administrators."
 msgstr ""
 
+#: app/pages/GamesControl/SeatingCorrection.tsx:97:55
+msgid "West"
+msgstr ""
+
 #: app/helpers/yaku.ts:289:34
 msgid "West round wind"
 msgstr "场风：西"
@@ -2597,7 +2635,7 @@ msgid ""
 "the action. You can close the window to cancel."
 msgstr "你将从系统中删除账号数据，请确认。可关闭窗口取消操作。"
 
-#: app/pages/GamesControl/GamesList.tsx:290:32
+#: app/pages/GamesControl/GamesList.tsx:305:32
 msgid "You are going to forcefully finish this game. Continue?"
 msgstr "你将强制结束此对局，是否继续？"
 

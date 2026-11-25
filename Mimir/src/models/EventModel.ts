@@ -1196,13 +1196,19 @@ export class EventModel extends Model {
   // Internal rebuild used by the authorized API and the scoring worker.
   async rebuildEventScoring(eventId: number) {
     const sessionModel = this.getModel(SessionModel);
-    const sessions = await sessionModel.findByEventAndStatus(
+    // Lock every existing session before replacing event-wide result/history rows:
+    // an active session may otherwise finish while this rebuild is awaiting a lock.
+    const locked = await sessionModel.findByEventAndStatus(
       [eventId],
-      [SessionStatus.SESSION_STATUS_FINISHED],
+      [],
       0,
       null,
       'id',
-      'asc'
+      'asc',
+      true
+    );
+    const sessions = locked.filter(
+      (session) => session.status === SessionStatus.SESSION_STATUS_FINISHED
     );
     if (sessions.length === 0) {
       return { success: true };
@@ -1415,7 +1421,8 @@ export class EventModel extends Model {
       (game) =>
         new SessionState(
           event.ruleset,
-          game.intermediateResults?.playerIds ?? [],
+          game.intermediateResults?.playerIds ??
+            [...game.players].sort((a, b) => a.order - b.order).map((player) => player.playerId),
           game.intermediateResults
         )
     );

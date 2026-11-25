@@ -7,8 +7,16 @@ import { EventEntity } from '../../entities/Event.entity.js';
 import { SessionEntity } from '../../entities/Session.entity.js';
 import { RulesetEntity } from '../../entities/Ruleset.entity.js';
 import { SessionState } from '../../helpers/SessionState.js';
+import { RoundModel } from '../RoundModel.js';
+import { SessionPlayerEntity } from '../../entities/SessionPlayer.entity.js';
+import { GHOST_PLAYER_ID } from '../../../../Common/constants.js';
 import { RoundEntity } from '../../entities/Round.entity.js';
-import { EndingPolicy, RoundOutcome, SessionStatus } from 'tsclients/proto/atoms.pb.js';
+import {
+  EndingPolicy,
+  RoundOutcome,
+  SessionStatus,
+  TournamentGamesStatus,
+} from 'tsclients/proto/atoms.pb.js';
 import type { Context } from '../../context.js';
 
 function fixture(personId: number | null = 7) {
@@ -39,7 +47,7 @@ function fixture(personId: number | null = 7) {
   vi.spyOn(player, 'isEventAdmin').mockResolvedValue(false);
   vi.spyOn(player, 'isEventReferee').mockResolvedValue(false);
   vi.spyOn(events, 'findById').mockResolvedValue([event]);
-  return { model, player, events, event, session, em };
+  return { model, player, events, event, session, em, repo };
 }
 afterEach(() => {
   vi.restoreAllMocks();
@@ -75,6 +83,88 @@ it('permits a referee to cancel an active game and invalidates the round token',
   expect(f.session.status).toBe(SessionStatus.SESSION_STATUS_CANCELLED);
   expect(f.session.nextRoundToken).not.toBe('old');
   await expect(f.model.cancelGame({ sessionHash: 'hash' })).rejects.toThrow('not in progress');
+});
+
+describe('Seating correction guards', () => {
+  function correctionFixture() {
+    const f = fixture();
+    f.session.intermediateResults = new SessionState(f.event.ruleset, [1, 2, 3, 4]).state;
+    vi.mocked(f.player.isEventReferee).mockResolvedValue(true);
+    vi.spyOn(Model.getModel(f.repo, RoundModel), 'findBySessionIds').mockResolvedValue([]);
+    const seats = [1, 2, 3, 4].map((playerId, index) =>
+      Object.assign(new SessionPlayerEntity(), { playerId, order: index + 1 })
+    );
+    f.em.find.mockResolvedValue(seats);
+    return {
+      ...f,
+      seats,
+      payload: { sessionHash: 'hash', playerIds: [2, 1, 3, 4], nextRoundToken: 'old' },
+    };
+  }
+  it('requires a session, authorization and a fresh token', async () => {
+    const f = correctionFixture();
+    vi.mocked(f.model.findByRepresentationalHash).mockResolvedValueOnce([]);
+    await expect(f.model.correctSessionSeating(f.payload)).rejects.toThrow('not found');
+    vi.mocked(f.player.isEventReferee).mockResolvedValue(false);
+    await expect(f.model.correctSessionSeating(f.payload)).rejects.toThrow('permissions');
+    vi.mocked(f.player.isEventAdmin).mockResolvedValue(true);
+    for (const nextRoundToken of ['', 'stale']) {
+      await expect(
+        f.model.correctSessionSeating({ ...f.payload, nextRoundToken })
+      ).rejects.toMatchObject({
+        code: 'failed_precondition',
+        msg: expect.stringContaining('stale'),
+      });
+    }
+    expect(f.em.persist).not.toHaveBeenCalled();
+  });
+  it.each(['finished', 'online', 'seating', 'status'] as const)(
+    'rejects an unavailable session: %s',
+    async (condition) => {
+      const f = correctionFixture();
+      if (condition === 'finished') f.event.finished = 1;
+      if (condition === 'online') f.event.isOnline = 1;
+      if (condition === 'seating')
+        f.event.gamesStatus = TournamentGamesStatus.TOURNAMENT_GAMES_STATUS_SEATING_READY;
+      if (condition === 'status') f.session.status = SessionStatus.SESSION_STATUS_PREFINISHED;
+      await expect(f.model.correctSessionSeating(f.payload)).rejects.toThrow('active offline');
+      expect(f.em.persist).not.toHaveBeenCalled();
+    }
+  );
+  it.each([
+    [1, 1, 3, 4],
+    [1, 2, 3],
+    [1, 2, 3, 99],
+    [1, 2, 3, GHOST_PLAYER_ID],
+  ])('rejects an invalid permutation %j', async (...playerIds) => {
+    const f = correctionFixture();
+    await expect(f.model.correctSessionSeating({ ...f.payload, playerIds })).rejects.toThrow(
+      'exactly once'
+    );
+    expect(f.em.persist).not.toHaveBeenCalled();
+  });
+  it('updates the starting order and token for an empty session', async () => {
+    const f = correctionFixture();
+    await expect(f.model.correctSessionSeating(f.payload)).resolves.toEqual({ success: true });
+    expect(f.seats.map((seat) => seat.order)).toEqual([2, 1, 3, 4]);
+    expect(f.session.intermediateResults!.playerIds).toEqual(f.payload.playerIds);
+    expect(f.session.nextRoundToken).not.toBe('old');
+    expect(f.model.findByRepresentationalHash).toHaveBeenCalledWith(['hash'], ['event'], true);
+  });
+  it('keeps the sanma ghost in North', async () => {
+    const f = correctionFixture();
+    f.event.ruleset = RulesetEntity.createRuleset('sanma');
+    f.session.intermediateResults = new SessionState(f.event.ruleset, [1, 2, 3]).state;
+    f.seats[3].playerId = GHOST_PLAYER_ID;
+    await f.model.correctSessionSeating({ ...f.payload, playerIds: [3, 1, 2] });
+    expect(f.seats.map((seat) => seat.order)).toEqual([2, 3, 1, 4]);
+  });
+  it('rejects inconsistent stored seating without any writes', async () => {
+    const f = correctionFixture();
+    f.seats.pop();
+    await expect(f.model.correctSessionSeating(f.payload)).rejects.toThrow('does not match');
+    expect(f.em.persist).not.toHaveBeenCalled();
+  });
 });
 
 it('requires extra-time requests to use one event and an authorized caller', async () => {
