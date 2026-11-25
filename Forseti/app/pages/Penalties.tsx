@@ -29,6 +29,7 @@ import { Redirect } from 'wouter';
 import { useStorage } from '../hooks/storage';
 import { PenaltiesList } from './Penalties/PenaltiesList';
 import { PenaltyForm } from './Penalties/PenaltyForm';
+import { RefereeNotes } from '../components/RefereeNotes';
 
 export const Penalties: React.FC<{ params: { id?: string } }> = ({ params: { id } }) => {
   const { isLoggedIn } = useContext(authCtx);
@@ -136,6 +137,8 @@ export const Penalties: React.FC<{ params: { id?: string } }> = ({ params: { id 
         chomboList={chomboList}
         chomboPlayersList={chomboPlayersList}
       />
+      <Space h='xl' />
+      <RefereeNotes key={id} eventId={Number(id)} linkedPlayersOnly />
     </Container>
   );
 };

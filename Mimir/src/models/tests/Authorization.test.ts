@@ -43,6 +43,17 @@ describe('Authenticated event permissions', () => {
     }
   );
 
+  it('rejects spoofed referee-note reads and writes before accessing stored notes', async () => {
+    const { repo, persist } = fixture('wrong', false);
+    await expect(
+      mimirServer.ListRefereeNotes({ eventId: 77 }, { repository: repo })
+    ).rejects.toThrow('Invalid token');
+    await expect(
+      mimirServer.AddRefereeNote({ eventId: 77, content: 'Private' }, { repository: repo })
+    ).rejects.toThrow('Invalid token');
+    expect(persist).not.toHaveBeenCalled();
+  });
+
   it.each(['isEventAdmin', 'isEventReferee'] as const)(
     'checks credentials before accepting an event role in %s',
     async (method) => {

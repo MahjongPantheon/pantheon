@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-30 00:32+0100\n"
+"POT-Creation-Date: 2026-11-25 17:24+0100\n"
 "PO-Revision-Date: 2026-10-20 00:34+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -14,30 +14,30 @@ msgstr ""
 "Generated-By: i18n-json2po\n"
 "X-Generator: Poedit 3.4.2\n"
 
-#: app/pages/Achievements.tsx:486:20
+#: app/pages/Achievements.tsx:437:20
 msgctxt "Achievements badge"
 msgid "%1 bet"
 msgid_plural "%1 bets"
 msgstr[0] "%1 根"
 
-#: app/pages/Achievements.tsx:791:20
+#: app/pages/Achievements.tsx:742:20
 msgctxt "Achievements badge"
 msgid "%1 chiitoitsu"
 msgstr "%1 次七对子"
 
-#: app/pages/Achievements.tsx:563:20
+#: app/pages/Achievements.tsx:514:20
 msgctxt "Achievements badge"
 msgid "%1 dora"
 msgid_plural "%1 dora"
 msgstr[0] "%1 张宝牌"
 
-#: app/pages/Achievements.tsx:262:14 app/pages/Achievements.tsx:287:14
+#: app/pages/Achievements.tsx:213:14 app/pages/Achievements.tsx:238:14
 msgctxt "Achievements badge"
 msgid "%1 feed"
 msgid_plural "%1 feeds"
 msgstr[0] "%1 次放铳"
 
-#: app/pages/Achievements.tsx:213:14
+#: app/pages/Achievements.tsx:164:14
 msgctxt "Achievements badge"
 msgid "%1 fu"
 msgstr "%1 符"
@@ -46,12 +46,12 @@ msgstr "%1 符"
 msgid "%1 han"
 msgstr "%1 番"
 
-#: app/pages/Achievements.tsx:186:14
+#: app/pages/Achievements.tsx:137:14
 msgctxt "Achievements badge"
 msgid "%1 han"
 msgstr "%1 番"
 
-#: app/pages/Achievements.tsx:460:25
+#: app/pages/Achievements.tsx:411:25
 msgctxt "Achievements badge"
 msgid "%1 han (%2)"
 msgstr "%1 番 (%2)"
@@ -60,12 +60,12 @@ msgstr "%1 番 (%2)"
 msgid "%1 han, %2 fu"
 msgstr "%1 番，%2 符"
 
-#: app/pages/Achievements.tsx:455:25
+#: app/pages/Achievements.tsx:406:25
 msgctxt "Achievements badge"
 msgid "%1 han, %2 fu (%3)"
 msgstr "%1 番，%2 符 (%3)"
 
-#: app/pages/Achievements.tsx:514:14
+#: app/pages/Achievements.tsx:465:14
 msgctxt "Achievements badge"
 msgid "%1 ippatsu"
 msgid_plural "%1 ippatsu"
@@ -82,49 +82,49 @@ msgid "%1 item"
 msgid_plural "%1 items"
 msgstr[0] ""
 
-#: app/pages/Achievements.tsx:540:20 app/pages/Achievements.tsx:622:20
-#: app/pages/Achievements.tsx:739:22
+#: app/pages/Achievements.tsx:491:20 app/pages/Achievements.tsx:573:20
+#: app/pages/Achievements.tsx:690:22
 msgctxt "Achievements badge"
 msgid "%1 points"
 msgstr "%1 点"
 
-#: app/pages/Achievements.tsx:362:14
+#: app/pages/Achievements.tsx:313:14
 msgctxt "Achievements badge"
 msgid "%1 quickest hand"
 msgid_plural "%1 quickest hands"
 msgstr[0] "最快和牌：%1"
 
-#: app/pages/Achievements.tsx:647:20 app/pages/Achievements.tsx:675:20
+#: app/pages/Achievements.tsx:598:20 app/pages/Achievements.tsx:626:20
 msgctxt "Achievements badge"
 msgid "%1 riichi bet"
 msgid_plural "%1 riichi bets"
 msgstr[0] "%1 根立直棒"
 
-#: app/pages/Achievements.tsx:765:14
+#: app/pages/Achievements.tsx:716:14
 msgctxt "Achievements badge"
 msgid "%1 riichi nomi hand"
 msgid_plural "%1 riichi nomi hands"
 msgstr[0] "%1 次仅立直和牌"
 
-#: app/pages/Achievements.tsx:240:14
+#: app/pages/Achievements.tsx:191:14
 msgctxt "Achievements badge"
 msgid "%1 tsumo"
 msgstr "%1 次自摸"
 
-#: app/pages/Achievements.tsx:337:14 app/pages/Achievements.tsx:706:14
+#: app/pages/Achievements.tsx:288:14 app/pages/Achievements.tsx:657:14
 #: app/services/i18n.be.test.ts:52:12 app/services/i18n.test.ts:37:14
 msgctxt "Achievements badge"
 msgid "%1 win"
 msgid_plural "%1 wins"
 msgstr[0] "%1 次和牌"
 
-#: app/pages/Achievements.tsx:596:14
+#: app/pages/Achievements.tsx:547:14
 msgctxt "Achievements badge"
 msgid "%1 yaku"
 msgid_plural "%1 yaku"
 msgstr[0] "%1 种役"
 
-#: app/pages/Achievements.tsx:312:14
+#: app/pages/Achievements.tsx:263:14
 msgctxt "Achievements badge"
 msgid "%1 yakuhai"
 msgid_plural "%1 yakuhais"
@@ -179,7 +179,7 @@ msgstr "（自摸，包牌玩家：<b>%1</b>）"
 msgid "1 player with score less than starting"
 msgstr "1 名玩家低于起始点数"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:187:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:189:22
 msgid "13+ han hands are considered yakuman, not sanbaiman."
 msgstr "13 番及以上的手牌按役满计算，而非三倍满。"
 
@@ -234,8 +234,8 @@ msgctxt "Multiron inner log item"
 msgid "<li>%1 - %2, %3</li>"
 msgstr "<li>%1 - %2，%3</li>"
 
-#: app/components/AppFooter.tsx:96:20 app/pages/Achievements.tsx:837:42
-#: app/pages/Achievements.tsx:845:35
+#: app/components/AppFooter.tsx:96:20 app/pages/Achievements.tsx:788:42
+#: app/pages/Achievements.tsx:796:35
 msgid "Achievements"
 msgstr "成就"
 
@@ -244,15 +244,15 @@ msgctxt "Event menu"
 msgid "Achievements"
 msgstr "成就"
 
-#: app/pages/Achievements.tsx:819:12
+#: app/pages/Achievements.tsx:770:12
 msgid "Achievements are hidden by tournament administrator"
 msgstr "赛事管理员已隐藏成就"
 
-#: app/pages/Achievements.tsx:829:29
+#: app/pages/Achievements.tsx:780:29
 msgid "Achievements are not available for aggregated events"
 msgstr "合并活动不提供成就"
 
-#: app/pages/Achievements.tsx:838:22
+#: app/pages/Achievements.tsx:789:22
 msgid "Achievements list for the event \"%1\" provided by Mahjong Pantheon"
 msgstr "由 Mahjong Pantheon 提供的活动“%1”成就列表"
 
@@ -269,20 +269,20 @@ msgstr "添加在线对局"
 msgid "Add replay"
 msgstr "添加牌谱"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:97:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:99:16
 msgid "Agariyame"
 msgstr "和牌终局"
 
-#: app/pages/EventInfo.tsx:60:20 app/pages/RatingTable.tsx:187:51
-#: app/pages/RecentGames.tsx:82:49
+#: app/pages/EventInfo.tsx:60:20 app/pages/RatingTable.tsx:189:51
+#: app/pages/RecentGames.tsx:83:49
 msgid "Aggregated event"
 msgstr "合并活动"
 
-#: app/pages/RatingTable.tsx:403:24
+#: app/pages/RatingTable.tsx:405:24
 msgid "All players"
 msgstr "所有玩家"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:178:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:180:22
 msgid ""
 "All riichi bets on the table will be given to the first winner. If not "
 "checked, winning riichi bets will always be given back, lost bets would be "
@@ -291,15 +291,15 @@ msgstr ""
 "桌上所有立直棒归按摸牌顺序的首位和牌玩家。若未勾选，和牌玩家取回自己的立直"
 "棒，其余立直棒归首位和牌玩家。"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:146:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:148:16
 msgid "Allow abortive draws"
 msgstr "允许中途流局"
 
-#: app/pages/EventRulesOverview/OnlineSettings.tsx:60:16
+#: app/pages/EventRulesOverview/OnlineSettings.tsx:62:16
 msgid "Allow adding of replays manually"
 msgstr "允许手动添加牌谱"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:113:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:115:16
 msgid "Allow bankruptcy"
 msgstr "允许击飞"
 
@@ -307,19 +307,19 @@ msgstr "允许击飞"
 msgid "Allow combination of yakumans, e.g. tsuuisou + daisangen"
 msgstr "允许役满复合，例如字一色 + 大三元"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:254:18
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:258:18
 msgid "Amount of chombo penalty"
 msgstr "犯规罚分"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:255:24
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:259:24
 msgid "Amount of penalty applied in the end of the session after uma bonus."
 msgstr "对局结束后，在顺位分结算后扣除的罚分。"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:273:24
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:277:24
 msgid "Amount of penalty applied to those who didn't win once in game."
 msgstr "对整场对局中未和牌玩家扣除的罚分。"
 
-#: app/pages/EventRulesOverview/OnlineSettings.tsx:87:22
+#: app/pages/EventRulesOverview/OnlineSettings.tsx:89:22
 msgid ""
 "Amount of points given for each chip. Chips should be set up in tournament "
 "settings in Tenhou.net. Set to 0 to disable chips."
@@ -330,25 +330,25 @@ msgid ""
 "Amount of points given to every player in the beginning of every session"
 msgstr "每场对局开始时发给每位玩家的点数"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:202:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:204:22
 msgid "Amount of points given to player at 1st place"
 msgstr "第 1 名获得的额外点数"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:81:26
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:82:28
 msgid ""
 "Amount of points paid by the offending player to each of the other players "
 "on a chombo"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:132:24
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:134:24
 msgid "Amount of score player should get to end the game."
 msgstr "结束对局所需的目标点数。"
 
-#: app/pages/Achievements.tsx:636:14
+#: app/pages/Achievements.tsx:587:14
 msgid "And your riichi bet, please"
 msgstr "你的立直棒归我了"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:138:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:140:16
 msgid "Atamahane"
 msgstr "头跳"
 
@@ -360,7 +360,7 @@ msgstr "平均放铳点数： "
 msgid "Average dora per hand: "
 msgstr "每次和牌平均宝牌数： "
 
-#: app/pages/RatingTable.tsx:372:20 app/pages/RatingTable.tsx:612:7
+#: app/pages/RatingTable.tsx:374:20 app/pages/RatingTable.tsx:612:7
 msgid "Average place"
 msgstr "平均顺位"
 
@@ -372,7 +372,7 @@ msgstr "平均得点"
 msgid "Average points lost: "
 msgstr "平均失点： "
 
-#: app/pages/RatingTable.tsx:348:20
+#: app/pages/RatingTable.tsx:350:20
 msgid "Average score"
 msgstr "平均点数"
 
@@ -400,7 +400,7 @@ msgstr "均衡分配座风"
 msgid "Because of riichi: "
 msgstr "因立直： "
 
-#: app/pages/Achievements.tsx:167:14
+#: app/pages/Achievements.tsx:118:14
 msgid "Best hand"
 msgstr "最佳手牌"
 
@@ -416,7 +416,7 @@ msgstr "失去的立直棒： "
 msgid "Bets won: "
 msgstr "获得的立直棒： "
 
-#: app/pages/Achievements.tsx:277:14
+#: app/pages/Achievements.tsx:228:14
 msgid "Brave minesweeper"
 msgstr "勇敢的扫雷者"
 
@@ -428,7 +428,7 @@ msgstr "荣和： "
 msgid "By tsumo: "
 msgstr "自摸： "
 
-#: app/pages/Achievements.tsx:529:14
+#: app/pages/Achievements.tsx:480:14
 msgid "Careful planning"
 msgstr "精心策划"
 
@@ -456,20 +456,20 @@ msgstr "清一色"
 msgid "Chinroutou"
 msgstr "清老头"
 
-#: app/pages/RatingTable.tsx:322:22 app/pages/RatingTable.tsx:565:34
+#: app/pages/RatingTable.tsx:324:22 app/pages/RatingTable.tsx:565:34
 #: app/pages/RatingTable.tsx:610:24
 msgid "Chips"
 msgstr "筹码"
 
-#: app/pages/EventRulesOverview/OnlineSettings.tsx:86:16
+#: app/pages/EventRulesOverview/OnlineSettings.tsx:88:16
 msgid "Chips value"
 msgstr "筹码点数"
 
 #: app/pages/EventRulesOverview/TournamentSettings.tsx:71:16
-msgid "Chombo in last round ends game"
-msgstr "最后一局犯规时结束对局"
+msgid "Chombo after time is out counts as hand"
+msgstr "超时后的犯规计为一局"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:80:20
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:81:22
 msgid "Chombo payments (sanma)"
 msgstr ""
 
@@ -477,7 +477,7 @@ msgstr ""
 msgid "Chombo penalties: "
 msgstr "犯规处罚： "
 
-#: app/components/GameListing.tsx:235:16
+#: app/components/GameListing.tsx:236:16
 msgid "Chombo: %1"
 msgstr "犯规：%1"
 
@@ -489,11 +489,11 @@ msgstr "九莲宝灯"
 msgid "Chuuren poutou 9-side"
 msgstr "纯正九莲宝灯"
 
-#: app/pages/PlayerStats.tsx:296:20
+#: app/pages/PlayerStats.tsx:297:20
 msgid "Close game preview"
 msgstr "关闭对局预览"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:177:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:179:16
 msgid "Collect riichi bets by atamahane"
 msgstr "按头跳规则分配立直棒"
 
@@ -509,22 +509,22 @@ msgstr "综合统计"
 msgid "Complex position-based"
 msgstr "按顺位设置复杂顺位分"
 
-#: app/pages/Achievements.tsx:190:32 app/pages/Achievements.tsx:217:32
-#: app/pages/Achievements.tsx:246:32 app/pages/Achievements.tsx:271:32
-#: app/pages/Achievements.tsx:296:32 app/pages/Achievements.tsx:321:32
-#: app/pages/Achievements.tsx:346:32 app/pages/Achievements.tsx:371:32
-#: app/pages/Achievements.tsx:419:32 app/pages/Achievements.tsx:471:32
-#: app/pages/Achievements.tsx:496:32 app/pages/Achievements.tsx:523:32
-#: app/pages/Achievements.tsx:548:32 app/pages/Achievements.tsx:576:32
-#: app/pages/Achievements.tsx:605:32 app/pages/Achievements.tsx:630:32
-#: app/pages/Achievements.tsx:660:32 app/pages/Achievements.tsx:688:32
-#: app/pages/Achievements.tsx:715:32 app/pages/Achievements.tsx:747:32
-#: app/pages/Achievements.tsx:774:32 app/pages/Achievements.tsx:799:32
+#: app/pages/Achievements.tsx:141:32 app/pages/Achievements.tsx:168:32
+#: app/pages/Achievements.tsx:197:32 app/pages/Achievements.tsx:222:32
+#: app/pages/Achievements.tsx:247:32 app/pages/Achievements.tsx:272:32
+#: app/pages/Achievements.tsx:297:32 app/pages/Achievements.tsx:322:32
+#: app/pages/Achievements.tsx:370:32 app/pages/Achievements.tsx:422:32
+#: app/pages/Achievements.tsx:447:32 app/pages/Achievements.tsx:474:32
+#: app/pages/Achievements.tsx:499:32 app/pages/Achievements.tsx:527:32
+#: app/pages/Achievements.tsx:556:32 app/pages/Achievements.tsx:581:32
+#: app/pages/Achievements.tsx:611:32 app/pages/Achievements.tsx:639:32
+#: app/pages/Achievements.tsx:666:32 app/pages/Achievements.tsx:698:32
+#: app/pages/Achievements.tsx:725:32 app/pages/Achievements.tsx:750:32
 msgid "Couldn't get nomination details"
 msgstr "无法获取成就详情"
 
 #: app/pages/EventRulesOverview/LocalSettings.tsx:37:22
-#: app/pages/EventRulesOverview/OnlineSettings.tsx:97:22
+#: app/pages/EventRulesOverview/OnlineSettings.tsx:99:22
 msgid ""
 "Count of session in game series. Set to 0 to disable series functionality."
 msgstr "系列中的对局场数。设为 0 可禁用系列功能。"
@@ -567,11 +567,11 @@ msgstr "说明"
 msgid "Description of the event \"%1\" provided by Mahjong Pantheon"
 msgstr "由 Mahjong Pantheon 提供的活动“%1”说明"
 
-#: app/pages/Achievements.tsx:252:14
+#: app/pages/Achievements.tsx:203:14
 msgid "Die Hard"
 msgstr "顽强不屈"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:105:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:107:16
 msgid "Disable renchans"
 msgstr "禁用连庄"
 
@@ -583,7 +583,7 @@ msgstr "对局自然结束前不终止"
 msgid "Dora collected: "
 msgstr "获得的宝牌数： "
 
-#: app/pages/Achievements.tsx:554:14
+#: app/pages/Achievements.tsx:505:14
 msgid "Dora lord"
 msgstr "宝牌之王"
 
@@ -591,7 +591,7 @@ msgstr "宝牌之王"
 msgid "Double yakuman:"
 msgstr "双倍役满："
 
-#: app/components/GameListing.tsx:231:14
+#: app/components/GameListing.tsx:232:14
 msgid "Draw: %1"
 msgstr "流局：%1"
 
@@ -615,7 +615,7 @@ msgstr "东风"
 msgid "Edit my profile"
 msgstr "编辑我的个人资料"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:155:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:157:22
 msgid "Enable \"Nagashi\" outcome to record this special draw"
 msgstr "启用“流局满贯”结果以记录这种特殊流局"
 
@@ -623,7 +623,7 @@ msgstr "启用“流局满贯”结果以记录这种特殊流局"
 msgid "Enable aggregated yakuhai"
 msgstr "启用聚合役牌"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:215:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:219:16
 msgid "Equalize uma"
 msgstr "同分时平分顺位分"
 
@@ -635,7 +635,8 @@ msgstr "活动管理面板"
 msgid "Event administrators: "
 msgstr "活动管理员： "
 
-#: app/pages/EventList.tsx:85:19 app/services/i18n.test.ts:35:12
+#: app/pages/EventList.tsx:71:19 app/server.test.tsx:38:16
+#: app/services/i18n.test.ts:35:12
 msgid "Event list"
 msgstr "活动列表"
 
@@ -667,39 +668,39 @@ msgstr "对局最终得分"
 msgid "First displayed game"
 msgstr "显示的首局"
 
-#: app/pages/EventRulesOverview/OnlineSettings.tsx:127:22
+#: app/pages/EventRulesOverview/OnlineSettings.tsx:129:22
 #: app/pages/EventRulesOverview/TournamentSettings.tsx:131:22
 msgid ""
 "Fixed amount of rank penalty applied for each replacement player regardless "
 "of session results."
 msgstr "不论对局结果如何，对每位替补玩家应用的固定顺位罚分。"
 
-#: app/pages/EventRulesOverview/OnlineSettings.tsx:117:22
+#: app/pages/EventRulesOverview/OnlineSettings.tsx:119:22
 #: app/pages/EventRulesOverview/TournamentSettings.tsx:121:22
 msgid ""
 "Fixed amount of result score applied for each replacement player regardless "
 "of session results."
 msgstr "不论对局结果如何，对每位替补玩家应用的固定结果点数。"
 
-#: app/pages/EventRulesOverview/OnlineSettings.tsx:116:16
+#: app/pages/EventRulesOverview/OnlineSettings.tsx:118:16
 #: app/pages/EventRulesOverview/TournamentSettings.tsx:120:16
 msgid "Fixed score applied to replacement player"
 msgstr "替补玩家的固定得分"
 
-#: app/pages/EventRulesOverview/OnlineSettings.tsx:126:16
+#: app/pages/EventRulesOverview/OnlineSettings.tsx:128:16
 #: app/pages/EventRulesOverview/TournamentSettings.tsx:130:16
 msgid "Fixed uma for replacement player"
 msgstr "替补玩家的固定顺位分"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:89:25
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:91:25
 msgid "Game duration"
 msgstr "对局时长"
 
-#: app/pages/EventRulesOverview/OnlineSettings.tsx:76:16
+#: app/pages/EventRulesOverview/OnlineSettings.tsx:78:16
 msgid "Game expiration time (in hours)"
 msgstr "对局有效期（小时）"
 
-#: app/pages/Game.tsx:66:44
+#: app/pages/Game.tsx:67:44
 msgid "Game preview"
 msgstr "对局预览"
 
@@ -712,116 +713,116 @@ msgstr "已进行的对局"
 msgid "Games played: "
 msgstr "已进行的对局： "
 
-#: app/pages/RatingTable.tsx:298:20
+#: app/pages/RatingTable.tsx:300:20
 msgid "Games+Rating"
 msgstr "对局与排名"
 
-#: app/pages/Achievements.tsx:378:20
+#: app/pages/Achievements.tsx:329:20
 msgid "Given for collecting a yakuman during tournament."
 msgstr "授予在赛事中和出役满的玩家。"
 
-#: app/pages/Achievements.tsx:168:20
+#: app/pages/Achievements.tsx:119:20
 msgid ""
 "Given for collecting the hand with biggest han count (independent of cost)."
 msgstr "授予和牌番数最高的玩家，不考虑点数。"
 
-#: app/pages/Achievements.tsx:197:20
+#: app/pages/Achievements.tsx:148:20
 msgid "Given for collecting the hand with biggest minipoints (fu) count."
 msgstr "授予和牌符数最高的玩家。"
 
-#: app/pages/Achievements.tsx:637:20
+#: app/pages/Achievements.tsx:588:20
 msgid ""
 "Given for collecting the largest amount of other players' riichi bets during "
 "the tournament."
 msgstr "授予在赛事中收取他人立直棒最多的玩家。"
 
-#: app/pages/Achievements.tsx:224:20
+#: app/pages/Achievements.tsx:175:20
 msgid "Given for collecting the most of tsumo hands during single game."
 msgstr "授予单场对局中自摸次数最多的玩家。"
 
-#: app/pages/Achievements.tsx:303:20
+#: app/pages/Achievements.tsx:254:20
 msgid "Given for collecting the most of yakuhais during the tournament."
 msgstr "授予在赛事中役牌和牌次数最多的玩家。"
 
-#: app/pages/Achievements.tsx:426:20
+#: app/pages/Achievements.tsx:377:20
 msgid ""
 "Given for feeding into largest hand during tournament (but not while in "
 "riichi)."
 msgstr "授予在赛事中向最高点数手牌放铳的玩家，立直状态下的放铳除外。"
 
-#: app/pages/Achievements.tsx:503:20
+#: app/pages/Achievements.tsx:454:20
 msgid "Given for getting largest number of ippatsu during tournament."
 msgstr "授予在赛事中一发次数最多的玩家。"
 
-#: app/pages/Achievements.tsx:722:20
+#: app/pages/Achievements.tsx:673:20
 msgid ""
 "Given for having biggest score in the end of the session across the "
 "tournament."
 msgstr "授予在赛事中单场对局结束点数最高的玩家。"
 
-#: app/pages/Achievements.tsx:781:20
+#: app/pages/Achievements.tsx:732:20
 msgid ""
 "Given for largest chiitoitsu yaku count. You need to win more than twice "
 "with this yaku. Chiitoitsu nomi it is also not counted."
 msgstr ""
 "授予七对子和牌次数最多的玩家。需以此役和牌至少三次，仅七对子和牌不计入。"
 
-#: app/pages/Achievements.tsx:328:20
+#: app/pages/Achievements.tsx:279:20
 msgid "Given for largest count of dealer wins during the tournament."
 msgstr "授予在赛事中庄家和牌次数最多的玩家。"
 
-#: app/pages/Achievements.tsx:278:20
+#: app/pages/Achievements.tsx:229:20
 msgid "Given for largest count of feeding into ron during the tournament."
 msgstr "授予在赛事中放铳次数最多的玩家。"
 
-#: app/pages/Achievements.tsx:478:20
+#: app/pages/Achievements.tsx:429:20
 msgid "Given for losing largest amount of points as riichi bets."
 msgstr "授予因立直棒损失点数最多的玩家。"
 
-#: app/pages/Achievements.tsx:667:20
+#: app/pages/Achievements.tsx:618:20
 msgid "Given for losing the smallest number of riichi bets."
 msgstr "授予损失立直棒最少的玩家。"
 
-#: app/pages/Achievements.tsx:253:20
+#: app/pages/Achievements.tsx:204:20
 msgid "Given for smallest count of feeding into ron during the tournament."
 msgstr "授予在赛事中放铳次数最少的玩家。"
 
-#: app/pages/Achievements.tsx:612:20
+#: app/pages/Achievements.tsx:563:20
 msgid ""
 "Given for the largest amount of points received as ryuukyoku (draw) payments."
 msgstr "授予流局结算收入最多的玩家。"
 
-#: app/pages/Achievements.tsx:583:20
+#: app/pages/Achievements.tsx:534:20
 msgid ""
 "Given for the largest amount of unique yaku collected during the tournament."
 msgstr "授予在赛事中和出不同役种最多的玩家。"
 
-#: app/pages/Achievements.tsx:555:20
+#: app/pages/Achievements.tsx:506:20
 msgid "Given for the largest average count of dora in player's hand."
 msgstr "授予和牌时平均宝牌数最多的玩家。"
 
-#: app/pages/Achievements.tsx:353:20
+#: app/pages/Achievements.tsx:304:20
 msgid "Given for the most of 1/30 wins during tournament."
 msgstr "授予在赛事中 1 番 30 符和牌次数最多的玩家。"
 
-#: app/pages/Achievements.tsx:530:20
+#: app/pages/Achievements.tsx:481:20
 msgid ""
 "Given for the smallest average cost of opponents hand that player has dealt."
 msgstr "授予平均放铳点数最低的玩家。"
 
-#: app/pages/Achievements.tsx:695:20
+#: app/pages/Achievements.tsx:646:20
 msgid "Given for winning the largest number of hands with damaten."
 msgstr "授予默听和牌次数最多的玩家。"
 
-#: app/pages/Achievements.tsx:754:20
+#: app/pages/Achievements.tsx:705:20
 msgid "Given for winning the largest number riichi nomi hands."
 msgstr "授予仅立直和牌次数最多的玩家。"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:131:18
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:133:18
 msgid "Goal score"
 msgstr "目标点数"
 
-#: app/pages/Achievements.tsx:582:14
+#: app/pages/Achievements.tsx:533:14
 msgid "Gotta Catch'Em All"
 msgstr "集齐所有役种"
 
@@ -829,7 +830,7 @@ msgstr "集齐所有役种"
 msgid "Green dragon"
 msgstr "发财"
 
-#: app/pages/Achievements.tsx:302:14
+#: app/pages/Achievements.tsx:253:14
 msgid "Guest of honors"
 msgstr "字牌的贵客"
 
@@ -845,7 +846,7 @@ msgstr "和牌次数"
 msgid "Hands value"
 msgstr "手牌价值"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:193:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:195:22
 msgid "Hands valued as 4/30 and 3/60 are rounded to mangan."
 msgstr "4 番 30 符和 3 番 60 符按满贯计算。"
 
@@ -858,11 +859,11 @@ msgctxt "context"
 msgid "Hello %1"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:209:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:211:16
 msgid "Honba Value"
 msgstr "本场点数"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:170:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:172:22
 msgid ""
 "Honba payments will be given only to the first winner. If not checked, "
 "payment will be given to all winners."
@@ -872,7 +873,7 @@ msgstr "本场点数仅归首位和牌玩家。若未勾选，则所有和牌玩
 msgid "Honitsu"
 msgstr "混一色"
 
-#: app/pages/Achievements.tsx:477:14
+#: app/pages/Achievements.tsx:428:14
 msgid "Honored donor"
 msgstr "慷慨的捐赠者"
 
@@ -892,11 +893,11 @@ msgstr "赛事中对局的结束方式"
 msgid "How players on the same table are shuffled"
 msgstr "同桌玩家座风的分配方式"
 
-#: app/pages/Achievements.tsx:223:14
+#: app/pages/Achievements.tsx:174:14
 msgid "I saw them dancing"
 msgstr "我看见他们起舞"
 
-#: app/pages/EventRulesOverview/OnlineSettings.tsx:61:22
+#: app/pages/EventRulesOverview/OnlineSettings.tsx:63:22
 msgid ""
 "If checked, any player participating in event will be able to add new "
 "replays through user interface. Disable this if you have any external tool "
@@ -905,13 +906,13 @@ msgstr ""
 "若勾选，所有活动参与者均可通过界面添加新牌谱。若使用外部工具自动添加牌谱，请"
 "关闭此选项。"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:216:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:220:22
 msgid ""
 "If checked, players with equivalent score receive equivalent uma bonus. "
 "Otherwise, uma is assigned according to move order."
 msgstr "若勾选，同分玩家平分顺位分；否则按摸牌顺序决定顺位分。"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:120:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:122:22
 msgid ""
 "If nobody reaches the goal score at the last hand, the game continues to "
 "west rounds (in hanchan) or to south rounds (in tonpuusen), until someone "
@@ -920,17 +921,19 @@ msgstr ""
 "若最后一局结束时无人达到目标点数，半庄战进入西场，东风战进入南场，直到有人达"
 "到目标点数"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:98:22
+#: app/pages/EventRulesOverview/TournamentSettings.tsx:72:22
+msgid ""
+"If set, a chombo after timeout counts as one played hand. All selected "
+"players are penalized together. Applies to both timed ending policies."
+msgstr ""
+"启用后，超时发生的犯规计为已进行一局。所有选中的玩家将同时受到处罚。适用于两"
+"种计时结束方式。"
+
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:100:22
 msgid ""
 "If the dealer holds the 1st place after last hand in session, the game ends "
 "regardless of his winning hand or tempai."
 msgstr "若对局最后一局结束时庄家排名第一，则无论其是否和牌或听牌，对局均结束。"
-
-#: app/pages/EventRulesOverview/TournamentSettings.tsx:72:22
-msgid ""
-"If this is set, chombo will not allow players to play one more hand if time "
-"is out and it is final hand of the game"
-msgstr "若启用，在时间已到且为对局最后一局时，犯规后不会再加赛一局"
 
 #: app/helpers/yaku.ts:125:34
 msgid "Iipeikou"
@@ -944,7 +947,7 @@ msgstr "起始点数"
 msgid "Initial rating"
 msgstr "初始排名分"
 
-#: app/pages/EventRulesOverview/OnlineSettings.tsx:77:22
+#: app/pages/EventRulesOverview/OnlineSettings.tsx:79:22
 msgid ""
 "Interval of time when played online game is still considered valid and can "
 "be added to the rating. Set to 0 to disable expiration."
@@ -958,7 +961,7 @@ msgstr "一发"
 msgid "Ittsu"
 msgstr "一气通贯"
 
-#: app/pages/Achievements.tsx:377:14
+#: app/pages/Achievements.tsx:328:14
 msgid "Jewelry included"
 msgstr "自带珠宝"
 
@@ -966,16 +969,16 @@ msgstr "自带珠宝"
 msgid "Junchan"
 msgstr "纯全带幺九"
 
-#: app/pages/Achievements.tsx:502:14
+#: app/pages/Achievements.tsx:453:14
 msgid "Just as planned"
 msgstr "计划通"
 
-#: app/pages/Achievements.tsx:405:36
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:186:16
+#: app/pages/Achievements.tsx:356:36
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:188:16
 msgid "Kazoe yakuman"
 msgstr "累计役满"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:192:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:194:16
 msgid "Kiriage mangan"
 msgstr "切上满贯"
 
@@ -1000,12 +1003,12 @@ msgstr "语言"
 msgid "Last displayed game"
 msgstr "显示的末局"
 
-#: app/components/RecentPublicGames.tsx:26:12 app/pages/RecentGames.tsx:80:20
-#: app/pages/RecentGames.tsx:82:22 app/pages/RecentGames.tsx:93:31
+#: app/components/RecentPublicGames.tsx:26:12 app/pages/RecentGames.tsx:81:20
+#: app/pages/RecentGames.tsx:83:22 app/pages/RecentGames.tsx:94:31
 msgid "Last games"
 msgstr "最近对局"
 
-#: app/pages/RecentGames.tsx:85:24
+#: app/pages/RecentGames.tsx:86:24
 msgid "Last games of the event \"%1\", page %2, provided by Mahjong Pantheon"
 msgstr "由 Mahjong Pantheon 提供的活动“%1”最近对局，第 %2 页"
 
@@ -1013,15 +1016,15 @@ msgstr "由 Mahjong Pantheon 提供的活动“%1”最近对局，第 %2 页"
 msgid "Last series"
 msgstr "最近系列"
 
-#: app/pages/Achievements.tsx:852:18 app/pages/PlayerStats.tsx:441:18
+#: app/pages/Achievements.tsx:803:18 app/pages/PlayerStats.tsx:442:18
 msgid "Last update: %1"
 msgstr "最后更新：%1"
 
-#: app/pages/EventList.tsx:86:22
+#: app/pages/EventList.tsx:72:22
 msgid "List of all events registered with Mahjong Pantheon"
 msgstr "Mahjong Pantheon 中所有已注册活动的列表"
 
-#: app/pages/EventRulesOverview/OnlineSettings.tsx:68:16
+#: app/pages/EventRulesOverview/OnlineSettings.tsx:70:16
 msgid "Lobby ID"
 msgstr "大厅 ID"
 
@@ -1037,7 +1040,7 @@ msgstr "本地排名"
 msgid "Loss stats"
 msgstr "失分统计"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:226:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:230:16
 msgid "Max arbitrary penalty score"
 msgstr "额外处罚的最高罚分"
 
@@ -1053,18 +1056,18 @@ msgstr "菜单"
 msgid "Menzentsumo"
 msgstr "门前清自摸和"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:232:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:236:16
 msgid "Min arbitrary penalty score"
 msgstr "额外处罚的最低罚分"
 
 #: app/pages/EventRulesOverview/LocalSettings.tsx:47:22
-#: app/pages/EventRulesOverview/OnlineSettings.tsx:107:22
+#: app/pages/EventRulesOverview/OnlineSettings.tsx:109:22
 msgid ""
 "Minimal count of games the player should play to get into the rating table."
 msgstr "玩家进入排名表所需的最少对局场数。"
 
 #: app/pages/EventRulesOverview/LocalSettings.tsx:46:16
-#: app/pages/EventRulesOverview/OnlineSettings.tsx:106:16
+#: app/pages/EventRulesOverview/OnlineSettings.tsx:108:16
 msgid "Minimal games count"
 msgstr "最少对局场数"
 
@@ -1080,23 +1083,23 @@ msgstr "其他统计"
 msgid "Multiple yakumans"
 msgstr "多倍役满"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:154:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:156:16
 msgid "Nagashi mangan"
 msgstr "流局满贯"
 
-#: app/components/GameListing.tsx:240:16
+#: app/components/GameListing.tsx:241:16
 msgid "Nagashi: %1"
 msgstr "流局满贯：%1"
 
-#: app/pages/PlayerStats.tsx:273:20
+#: app/pages/PlayerStats.tsx:274:20
 msgid "Next game"
 msgstr "下一场对局"
 
-#: app/pages/Achievements.tsx:694:14
+#: app/pages/Achievements.tsx:645:14
 msgid "Ninja"
 msgstr "忍者"
 
-#: app/pages/Achievements.tsx:414:20
+#: app/pages/Achievements.tsx:365:20
 msgid "No yakumans have been collected"
 msgstr "尚未和出役满"
 
@@ -1112,11 +1115,11 @@ msgstr "自风：北"
 msgid "North wind"
 msgstr "北风"
 
-#: app/pages/EventRulesOverview/OnlineSettings.tsx:54:17
+#: app/pages/EventRulesOverview/OnlineSettings.tsx:56:19
 msgid "Not selected"
 msgstr "未选择"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:201:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:203:16
 msgid "Oka bonus"
 msgstr "头名奖励"
 
@@ -1128,7 +1131,7 @@ msgstr "在线活动"
 msgid "Online event settings"
 msgstr "在线活动设置"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:139:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:141:22
 msgid ""
 "Only first player by the order of the move from the loser would be "
 "considered a winner. If not checked, all players declaring Ron are "
@@ -1156,7 +1159,7 @@ msgstr "开立直"
 msgid "Otherwise"
 msgstr "其他情况"
 
-#: app/pages/Achievements.tsx:196:14
+#: app/pages/Achievements.tsx:147:14
 msgid "Over 9000 fu"
 msgstr "超过 9000 符"
 
@@ -1164,25 +1167,25 @@ msgstr "超过 9000 符"
 msgid "Pao rule enabled for:"
 msgstr "以下役种启用包牌规则："
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:242:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:246:16
 msgid "Pay chombo as reverse mangan"
 msgstr "犯规时按反向满贯支付"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:243:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:247:22
 msgid ""
 "Pay chombo right on occasion. If not checked, chombo is subtracted from "
 "player score after uma is applied."
 msgstr "犯规时立即支付罚分。若未勾选，则在对局结束并结算顺位分后扣除罚分。"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:169:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:171:16
 msgid "Pay for honba by atamahane"
 msgstr "按头跳规则分配本场点数"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:184:25
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:186:25
 msgid "Payments and scores"
 msgstr "支付与点数"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:222:25
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:226:25
 msgid "Penalties"
 msgstr "处罚"
 
@@ -1206,11 +1209,11 @@ msgstr "顺位 / 对局结果"
 msgid "Places stats"
 msgstr "顺位统计"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:119:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:121:16
 msgid "Play additional rounds"
 msgstr "允许延长对局"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:92:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:94:22
 msgid "Play only east rounds"
 msgstr "仅进行东风战"
 
@@ -1228,16 +1231,16 @@ msgstr "玩家 ID"
 msgid "Player name"
 msgstr "玩家名"
 
-#: app/pages/PlayerStats.tsx:415:22
+#: app/pages/PlayerStats.tsx:416:22
 msgid ""
 "Player statistics for %1 in the event \"%2\" provided by Mahjong Pantheon"
 msgstr "由 Mahjong Pantheon 提供的活动“%2”中玩家 %1 的统计"
 
-#: app/pages/PlayerStats.tsx:414:46
+#: app/pages/PlayerStats.tsx:415:46
 msgid "Player stats"
 msgstr "玩家统计"
 
-#: app/pages/RatingTable.tsx:414:30
+#: app/pages/RatingTable.tsx:416:30
 msgid "Players having a required minimum of games"
 msgstr "已达到最低对局场数的玩家"
 
@@ -1253,11 +1256,17 @@ msgid ""
 msgstr ""
 "请注意：排名设置应与游戏平台的赛事设置一致，否则提交牌谱时可能发生错误！"
 
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:212:22
+msgid ""
+"Points paid by each opponent per honba on tsumo. On ron, the discarder pays "
+"the total for all opponents."
+msgstr "自摸时每名对手每本场支付的点数。荣和时放铳者支付所有对手的总额。"
+
 #: app/pages/EventRulesOverview/TournamentSettings.tsx:110:22
 msgid "Prescripted wind shuffle"
 msgstr "预设座风分配"
 
-#: app/pages/PlayerStats.tsx:254:20
+#: app/pages/PlayerStats.tsx:255:20
 msgid "Previous game"
 msgstr "上一场对局"
 
@@ -1265,7 +1274,7 @@ msgstr "上一场对局"
 msgid "Random wind shuffle"
 msgstr "随机分配座风"
 
-#: app/components/RatingGraph.tsx:146:39 app/pages/RatingTable.tsx:275:20
+#: app/components/RatingGraph.tsx:146:39 app/pages/RatingTable.tsx:277:20
 msgid "Rating"
 msgstr "排名分"
 
@@ -1273,10 +1282,10 @@ msgstr "排名分"
 msgid "Rating points"
 msgstr "排名分"
 
-#: app/components/AppFooter.tsx:84:20 app/pages/Achievements.tsx:816:35
-#: app/pages/EventList.tsx:129:69 app/pages/RatingTable.tsx:143:35
-#: app/pages/RatingTable.tsx:185:20 app/pages/RatingTable.tsx:187:22
-#: app/pages/RatingTable.tsx:198:33
+#: app/components/AppFooter.tsx:84:20 app/pages/Achievements.tsx:767:35
+#: app/pages/EventList.tsx:112:69 app/pages/RatingTable.tsx:145:35
+#: app/pages/RatingTable.tsx:187:20 app/pages/RatingTable.tsx:189:22
+#: app/pages/RatingTable.tsx:200:33
 msgid "Rating table"
 msgstr "排名表"
 
@@ -1285,11 +1294,11 @@ msgctxt "Event menu"
 msgid "Rating table"
 msgstr "排名表"
 
-#: app/pages/RatingTable.tsx:146:12
+#: app/pages/RatingTable.tsx:148:12
 msgid "Rating table is hidden by tournament administrator"
 msgstr "赛事管理员已隐藏排名表"
 
-#: app/pages/RatingTable.tsx:190:24
+#: app/pages/RatingTable.tsx:192:24
 msgid "Rating table of the event \"%1\" provided by Mahjong Pantheon"
 msgstr "由 Mahjong Pantheon 提供的活动“%1”排名表"
 
@@ -1306,7 +1315,7 @@ msgstr "最近对局"
 msgid "Red dragon"
 msgstr "红中"
 
-#: app/pages/RegisteredPlayers.tsx:91:19 app/pages/RegisteredPlayers.tsx:98:27
+#: app/pages/RegisteredPlayers.tsx:92:19 app/pages/RegisteredPlayers.tsx:99:27
 msgid "Registered players"
 msgstr "已注册玩家"
 
@@ -1315,7 +1324,7 @@ msgctxt "Event menu"
 msgid "Registered players"
 msgstr "已注册玩家"
 
-#: app/pages/RegisteredPlayers.tsx:92:22
+#: app/pages/RegisteredPlayers.tsx:93:22
 msgid "Registered players of the event \"%1\" provided by Mahjong Pantheon"
 msgstr "由 Mahjong Pantheon 提供的活动“%1”已注册玩家列表"
 
@@ -1331,11 +1340,11 @@ msgstr "牌谱链接无效，请检查是否复制正确"
 msgid "Riichi"
 msgstr "立直"
 
-#: app/pages/Achievements.tsx:753:14
+#: app/pages/Achievements.tsx:704:14
 msgid "Riichi Nomi"
 msgstr "仅立直"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:159:25
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:161:25
 msgid "Riichi and honba"
 msgstr "立直与本场"
 
@@ -1343,17 +1352,17 @@ msgstr "立直与本场"
 msgid "Riichi bets: "
 msgstr "立直棒： "
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:161:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:163:16
 msgid "Riichi goes to winner"
 msgstr "剩余立直棒归第一名"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:162:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:164:22
 msgid ""
 "Riichi left on table in case of draw in the end of the session will be given "
 "to session winner"
 msgstr "对局最后一局流局时，桌上剩余立直棒归对局第一名"
 
-#: app/pages/EventList.tsx:89:12
+#: app/pages/EventList.tsx:75:12
 msgid "Riichi mahjong events list"
 msgstr "立直麻将活动列表"
 
@@ -1361,11 +1370,11 @@ msgstr "立直麻将活动列表"
 msgid "Rinshan kaihou"
 msgstr "岭上开花"
 
-#: app/components/GameListing.tsx:225:14
+#: app/components/GameListing.tsx:226:14
 msgid "Ron: %1"
 msgstr "荣和：%1"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:136:25
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:138:25
 msgid "Round outcomes"
 msgstr "局结果"
 
@@ -1428,7 +1437,7 @@ msgstr "三色同顺"
 msgid "Sanshoku doukou"
 msgstr "三色同刻"
 
-#: app/pages/RatingTable.tsx:217:18
+#: app/pages/RatingTable.tsx:219:18
 msgid "Save as CSV"
 msgstr "保存为 CSV"
 
@@ -1449,7 +1458,7 @@ msgid "Select uma bonus type"
 msgstr "选择顺位分类型"
 
 #: app/pages/EventRulesOverview/LocalSettings.tsx:36:16
-#: app/pages/EventRulesOverview/OnlineSettings.tsx:96:16
+#: app/pages/EventRulesOverview/OnlineSettings.tsx:98:16
 msgid "Series length"
 msgstr "系列长度"
 
@@ -1516,7 +1525,7 @@ msgstr "Sigrun：立直麻将排名与统计"
 msgid "Simple rank-based"
 msgstr "按顺位设置简单顺位分"
 
-#: app/pages/Game.tsx:67:24
+#: app/pages/Game.tsx:68:24
 msgid "Single game preview for the event \"%1\" provided by Mahjong Pantheon"
 msgstr "由 Mahjong Pantheon 提供的活动“%1”单场对局预览"
 
@@ -1532,7 +1541,7 @@ msgstr "自风：南"
 msgid "South wind"
 msgstr "南风"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:238:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:242:16
 msgid "Step of arbitrary penalty scores"
 msgstr "额外罚分步长"
 
@@ -1575,11 +1584,11 @@ msgid ""
 "open hand."
 msgstr "副露时断幺九计 1 番。若未勾选，则副露时断幺九不成立。"
 
-#: app/pages/RatingTable.tsx:251:22 app/pages/RatingTable.tsx:609:21
+#: app/pages/RatingTable.tsx:253:22 app/pages/RatingTable.tsx:609:21
 msgid "Team"
 msgstr "队伍"
 
-#: app/pages/EventRulesOverview/OnlineSettings.tsx:57:33
+#: app/pages/EventRulesOverview/OnlineSettings.tsx:59:33
 #: app/pages/EventRulesOverview/TournamentSettings.tsx:78:24
 msgid "Team tournament"
 msgstr "团队赛"
@@ -1588,27 +1597,27 @@ msgstr "团队赛"
 msgid "Tenhou"
 msgstr "天和"
 
-#: app/pages/Achievements.tsx:352:14
+#: app/pages/Achievements.tsx:303:14
 msgid "The 1k Flash"
 msgstr "千点闪电侠"
 
-#: app/pages/Achievements.tsx:666:14
+#: app/pages/Achievements.tsx:617:14
 msgid "The Covetous Knight"
 msgstr "贪婪骑士"
 
-#: app/pages/Achievements.tsx:611:14
+#: app/pages/Achievements.tsx:562:14
 msgid "The favorite apprentice of ASAPIN"
 msgstr "ASAPIN 的得意门生"
 
-#: app/pages/Achievements.tsx:780:14
+#: app/pages/Achievements.tsx:731:14
 msgid "The favorite apprentice of TSUCHIDA"
 msgstr "土田的得意门生"
 
-#: app/pages/Achievements.tsx:327:14
+#: app/pages/Achievements.tsx:278:14
 msgid "The great dealer"
 msgstr "大庄家"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:147:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:149:22
 msgid ""
 "There will be a separate \"Abortive draw\" outcome to record draws due to "
 "four riichi, four kans, suufon renda, kyuushu kyuuhai, etc."
@@ -1616,7 +1625,7 @@ msgstr ""
 "启用单独的“中途流局”结果，以记录四家立直、四杠散了、四风连打、九种九牌等流"
 "局。"
 
-#: app/pages/Achievements.tsx:425:14
+#: app/pages/Achievements.tsx:376:14
 msgid "This can't be your wait"
 msgstr "不可能听这张"
 
@@ -1680,7 +1689,7 @@ msgstr "切换柔和配色"
 msgid "Toitoi"
 msgstr "对对和"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:91:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:93:16
 msgid "Tonpuusen"
 msgstr "东风战"
 
@@ -1713,7 +1722,7 @@ msgstr "优先将玩家分配到此前较少使用的座风"
 msgid "Tsumo payments: "
 msgstr "自摸支付： "
 
-#: app/components/GameListing.tsx:228:14
+#: app/components/GameListing.tsx:229:14
 msgid "Tsumo: %1"
 msgstr "自摸：%1"
 
@@ -1737,27 +1746,23 @@ msgstr "第 3 名顺位分罚分"
 msgid "Uma penalty for 4th place"
 msgstr "第 4 名顺位分罚分"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:263:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:267:22
 msgid "Use yakitori rule"
 msgstr "启用烧鸡规则"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:210:22
-msgid "Points paid by each opponent per honba on tsumo. On ron, the discarder pays the total for all opponents."
-msgstr "自摸时每名对手每本场支付的点数。荣和时放铳者支付所有对手的总额。"
-
 #: app/components/RecentPublicGames.tsx:68:29
-#: app/components/RecentPublicGames.tsx:69:24 app/pages/Achievements.tsx:180:30
-#: app/pages/Achievements.tsx:207:30 app/pages/Achievements.tsx:234:30
-#: app/pages/Achievements.tsx:399:36 app/pages/Achievements.tsx:448:34
-#: app/pages/Achievements.tsx:736:34 app/pages/Game.tsx:74:35
+#: app/components/RecentPublicGames.tsx:69:24 app/pages/Achievements.tsx:131:30
+#: app/pages/Achievements.tsx:158:30 app/pages/Achievements.tsx:185:30
+#: app/pages/Achievements.tsx:350:36 app/pages/Achievements.tsx:399:34
+#: app/pages/Achievements.tsx:687:34 app/pages/Game.tsx:75:35
 msgid "View game"
 msgstr "查看对局"
 
-#: app/pages/PlayerStats.tsx:246:12
+#: app/pages/PlayerStats.tsx:247:12
 msgid "View selected game details"
 msgstr "查看所选对局详情"
 
-#: app/pages/Achievements.tsx:721:14
+#: app/pages/Achievements.tsx:672:14
 msgid "We need more gold"
 msgstr "我们需要更多金币"
 
@@ -1773,11 +1778,11 @@ msgstr "自风：西"
 msgid "West wind"
 msgstr "西风"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:114:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:116:22
 msgid "When a player runs out of score points, the game immediately ends"
 msgstr "当玩家点数低于零时立即结束对局"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:106:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:108:22
 msgid ""
 "When dealer wins, or stays tempai after draw, seat winds will be changed. "
 "Honba is added only after draw."
@@ -1815,7 +1820,7 @@ msgstr "座风分配方式"
 msgid "With damaten: "
 msgstr "默听： "
 
-#: app/pages/RatingTable.tsx:422:24
+#: app/pages/RatingTable.tsx:424:24
 msgid "With min games"
 msgstr "已达最低对局场数"
 
@@ -1836,11 +1841,11 @@ msgid "Without declared riichi: "
 msgstr "未宣告立直： "
 
 #: app/components/YakitoriIndicator.tsx:38:32
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:262:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:266:16
 msgid "Yakitori"
 msgstr "烧鸡"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:272:18
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:276:18
 msgid "Yakitori penalty"
 msgstr "烧鸡罚分"
 
@@ -1903,7 +1908,7 @@ msgctxt "Riichi bets count"
 msgid "none"
 msgstr "无"
 
-#: app/pages/Achievements.tsx:453:23
+#: app/pages/Achievements.tsx:404:23
 msgctxt "Achievements badge"
 msgid "yakuman (%1)"
 msgstr "役满 (%1)"
@@ -1917,11 +1922,19 @@ msgstr "役满！"
 #~ "tournament settings in Tenhou.net."
 #~ msgstr "每枚筹码的点数。筹码应在天凤赛事设置中配置。"
 
+#~ msgid "Chombo in last round ends game"
+#~ msgstr "最后一局犯规时结束对局"
+
 #~ msgid "Count of session in game series."
 #~ msgstr "系列中的对局场数。"
 
 #~ msgid "Double Yakuman:"
 #~ msgstr "双倍役满："
+
+#~ msgid ""
+#~ "If this is set, chombo will not allow players to play one more hand if "
+#~ "time is out and it is final hand of the game"
+#~ msgstr "若启用，在时间已到且为对局最后一局时，犯规后不会再加赛一局"
 
 #~ msgid ""
 #~ "Interval of time when played online game is still considered valid and "
@@ -1935,13 +1948,3 @@ msgstr "役满！"
 
 #~ msgid "Uma bonus type"
 #~ msgstr "顺位分类型"
-
-#: app/pages/EventRulesOverview/TournamentSettings.tsx:79:16
-msgid "Chombo after time is out counts as hand"
-msgstr "超时后的犯规计为一局"
-
-#: app/pages/EventRulesOverview/TournamentSettings.tsx:72:22
-msgid ""
-"If set, a chombo after timeout counts as one played hand. All selected "
-"players are penalized together. Applies to both timed ending policies."
-msgstr "启用后，超时发生的犯规计为已进行一局。所有选中的玩家将同时受到处罚。适用于两种计时结束方式。"

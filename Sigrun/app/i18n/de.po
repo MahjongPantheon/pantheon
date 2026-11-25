@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-30 00:32+0100\n"
+"POT-Creation-Date: 2026-11-25 17:24+0100\n"
 "PO-Revision-Date: 2026-10-06 23:44+0300\n"
 "Last-Translator: Jesterboxboy <github@jesterbox.org>\n"
 "Language-Team: \n"
@@ -19,33 +19,33 @@ msgstr ""
 "Generated-By: i18n-json2po\n"
 "X-Generator: Poedit 3.9\n"
 
-#: app/pages/Achievements.tsx:486:20
+#: app/pages/Achievements.tsx:437:20
 msgctxt "Achievements badge"
 msgid "%1 bet"
 msgid_plural "%1 bets"
 msgstr[0] "%1 Einsatz"
 msgstr[1] "%1 Einsätze"
 
-#: app/pages/Achievements.tsx:791:20
+#: app/pages/Achievements.tsx:742:20
 msgctxt "Achievements badge"
 msgid "%1 chiitoitsu"
 msgstr "%1 chiitoitsu"
 
-#: app/pages/Achievements.tsx:563:20
+#: app/pages/Achievements.tsx:514:20
 msgctxt "Achievements badge"
 msgid "%1 dora"
 msgid_plural "%1 dora"
 msgstr[0] "%1 dora"
 msgstr[1] "%1 dora"
 
-#: app/pages/Achievements.tsx:262:14 app/pages/Achievements.tsx:287:14
+#: app/pages/Achievements.tsx:213:14 app/pages/Achievements.tsx:238:14
 msgctxt "Achievements badge"
 msgid "%1 feed"
 msgid_plural "%1 feeds"
 msgstr[0] "%1 Mal in Ron gespielt"
 msgstr[1] "%1 Mal in Ron gespielt"
 
-#: app/pages/Achievements.tsx:213:14
+#: app/pages/Achievements.tsx:164:14
 msgctxt "Achievements badge"
 msgid "%1 fu"
 msgstr "%1 fu"
@@ -54,12 +54,12 @@ msgstr "%1 fu"
 msgid "%1 han"
 msgstr "%1 han"
 
-#: app/pages/Achievements.tsx:186:14
+#: app/pages/Achievements.tsx:137:14
 msgctxt "Achievements badge"
 msgid "%1 han"
 msgstr "%1 han"
 
-#: app/pages/Achievements.tsx:460:25
+#: app/pages/Achievements.tsx:411:25
 msgctxt "Achievements badge"
 msgid "%1 han (%2)"
 msgstr "%1 han (%2)"
@@ -68,12 +68,12 @@ msgstr "%1 han (%2)"
 msgid "%1 han, %2 fu"
 msgstr "%1 han, %2 fu"
 
-#: app/pages/Achievements.tsx:455:25
+#: app/pages/Achievements.tsx:406:25
 msgctxt "Achievements badge"
 msgid "%1 han, %2 fu (%3)"
 msgstr "%1 han, %2 fu (%3)"
 
-#: app/pages/Achievements.tsx:514:14
+#: app/pages/Achievements.tsx:465:14
 msgctxt "Achievements badge"
 msgid "%1 ippatsu"
 msgid_plural "%1 ippatsu"
@@ -93,39 +93,39 @@ msgid_plural "%1 items"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/pages/Achievements.tsx:540:20 app/pages/Achievements.tsx:622:20
-#: app/pages/Achievements.tsx:739:22
+#: app/pages/Achievements.tsx:491:20 app/pages/Achievements.tsx:573:20
+#: app/pages/Achievements.tsx:690:22
 msgctxt "Achievements badge"
 msgid "%1 points"
 msgstr "%1 Punkte"
 
-#: app/pages/Achievements.tsx:362:14
+#: app/pages/Achievements.tsx:313:14
 msgctxt "Achievements badge"
 msgid "%1 quickest hand"
 msgid_plural "%1 quickest hands"
 msgstr[0] "%1 schnellste Hand"
 msgstr[1] "%1 schnellste Hände"
 
-#: app/pages/Achievements.tsx:647:20 app/pages/Achievements.tsx:675:20
+#: app/pages/Achievements.tsx:598:20 app/pages/Achievements.tsx:626:20
 msgctxt "Achievements badge"
 msgid "%1 riichi bet"
 msgid_plural "%1 riichi bets"
 msgstr[0] "%1 Riichi Einsatz"
 msgstr[1] "%1 Riichi Einsätze"
 
-#: app/pages/Achievements.tsx:765:14
+#: app/pages/Achievements.tsx:716:14
 msgctxt "Achievements badge"
 msgid "%1 riichi nomi hand"
 msgid_plural "%1 riichi nomi hands"
 msgstr[0] "%1 Hand nur mit Riichi"
 msgstr[1] "%1 Hände nur mit Riichi"
 
-#: app/pages/Achievements.tsx:240:14
+#: app/pages/Achievements.tsx:191:14
 msgctxt "Achievements badge"
 msgid "%1 tsumo"
 msgstr "%1 tsumo"
 
-#: app/pages/Achievements.tsx:337:14 app/pages/Achievements.tsx:706:14
+#: app/pages/Achievements.tsx:288:14 app/pages/Achievements.tsx:657:14
 #: app/services/i18n.be.test.ts:52:12 app/services/i18n.test.ts:37:14
 msgctxt "Achievements badge"
 msgid "%1 win"
@@ -133,14 +133,14 @@ msgid_plural "%1 wins"
 msgstr[0] "%1 Sieg"
 msgstr[1] "%1 Siege"
 
-#: app/pages/Achievements.tsx:596:14
+#: app/pages/Achievements.tsx:547:14
 msgctxt "Achievements badge"
 msgid "%1 yaku"
 msgid_plural "%1 yaku"
 msgstr[0] "%1 yaku"
 msgstr[1] "%1 yaku"
 
-#: app/pages/Achievements.tsx:312:14
+#: app/pages/Achievements.tsx:263:14
 msgctxt "Achievements badge"
 msgid "%1 yakuhai"
 msgid_plural "%1 yakuhais"
@@ -196,7 +196,7 @@ msgstr "(tsumo, pao: <b>%1</b>)"
 msgid "1 player with score less than starting"
 msgstr "Ein Spieler ist unter den Startpunkten"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:187:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:189:22
 msgid "13+ han hands are considered yakuman, not sanbaiman."
 msgstr "13+ han Hände werden als Yakuman, nicht als sanbaiman, gewertet."
 
@@ -251,8 +251,8 @@ msgctxt "Multiron inner log item"
 msgid "<li>%1 - %2, %3</li>"
 msgstr "<li>%1 - %2, %3</li>"
 
-#: app/components/AppFooter.tsx:96:20 app/pages/Achievements.tsx:837:42
-#: app/pages/Achievements.tsx:845:35
+#: app/components/AppFooter.tsx:96:20 app/pages/Achievements.tsx:788:42
+#: app/pages/Achievements.tsx:796:35
 msgid "Achievements"
 msgstr "Auszeichnungen"
 
@@ -261,15 +261,15 @@ msgctxt "Event menu"
 msgid "Achievements"
 msgstr "Auszeichnungen"
 
-#: app/pages/Achievements.tsx:819:12
+#: app/pages/Achievements.tsx:770:12
 msgid "Achievements are hidden by tournament administrator"
 msgstr "Auszeichnung sind vom Administrator verborgen"
 
-#: app/pages/Achievements.tsx:829:29
+#: app/pages/Achievements.tsx:780:29
 msgid "Achievements are not available for aggregated events"
 msgstr "Keine Auszeichnungen für zusammengefasste Events verfügbar"
 
-#: app/pages/Achievements.tsx:838:22
+#: app/pages/Achievements.tsx:789:22
 msgid "Achievements list for the event \"%1\" provided by Mahjong Pantheon"
 msgstr ""
 "Auszeichnungsliste für das Event \"%1\" von Mahjong Pantheon zur Verfügung "
@@ -288,35 +288,35 @@ msgstr "Online Spiel hinzufügen"
 msgid "Add replay"
 msgstr "Replay hinzufügen"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:97:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:99:16
 msgid "Agariyame"
 msgstr "Agariyame"
 
-#: app/pages/EventInfo.tsx:60:20 app/pages/RatingTable.tsx:187:51
-#: app/pages/RecentGames.tsx:82:49
+#: app/pages/EventInfo.tsx:60:20 app/pages/RatingTable.tsx:189:51
+#: app/pages/RecentGames.tsx:83:49
 msgid "Aggregated event"
 msgstr "Zusammengefasstes Event"
 
-#: app/pages/RatingTable.tsx:403:24
+#: app/pages/RatingTable.tsx:405:24
 msgid "All players"
 msgstr "Alle Spieler"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:178:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:180:22
 msgid ""
 "All riichi bets on the table will be given to the first winner. If not "
 "checked, winning riichi bets will always be given back, lost bets would be "
 "given to the first winner."
 msgstr "Alle Riichieinsätze gehen an den ersten Gewinner."
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:146:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:148:16
 msgid "Allow abortive draws"
 msgstr "Abbruch durch Unentschieden erlauben"
 
-#: app/pages/EventRulesOverview/OnlineSettings.tsx:60:16
+#: app/pages/EventRulesOverview/OnlineSettings.tsx:62:16
 msgid "Allow adding of replays manually"
 msgstr "Manuelles Hinzufügen von Replays erlauben"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:113:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:115:16
 msgid "Allow bankruptcy"
 msgstr "Mit Tobi"
 
@@ -324,19 +324,19 @@ msgstr "Mit Tobi"
 msgid "Allow combination of yakumans, e.g. tsuuisou + daisangen"
 msgstr "Kombinationen aus Yakuman sind erlaubt, z.B.: Tsuuisou + Daisangen"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:254:18
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:258:18
 msgid "Amount of chombo penalty"
 msgstr "Höhe der Strafe für Chombo"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:255:24
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:259:24
 msgid "Amount of penalty applied in the end of the session after uma bonus."
 msgstr "Höhe der Strafe die ein Spieler nach Uma für einen Chombo erhält."
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:273:24
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:277:24
 msgid "Amount of penalty applied to those who didn't win once in game."
 msgstr "Strafe für diejenigen, die im Spiel kein einziges Mal gewonnen haben."
 
-#: app/pages/EventRulesOverview/OnlineSettings.tsx:87:22
+#: app/pages/EventRulesOverview/OnlineSettings.tsx:89:22
 msgid ""
 "Amount of points given for each chip. Chips should be set up in tournament "
 "settings in Tenhou.net. Set to 0 to disable chips."
@@ -350,25 +350,27 @@ msgid ""
 "Amount of points given to every player in the beginning of every session"
 msgstr "Startpunktzahl die alle Spieler am Anfang des Ratings bekommen"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:202:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:204:22
 msgid "Amount of points given to player at 1st place"
 msgstr "Punkte die der Gewinner zusätzlich erhält"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:81:26
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:82:28
 msgid ""
 "Amount of points paid by the offending player to each of the other players "
 "on a chombo"
-msgstr "Anzahl der Punkte, die der fehlbare Spieler bei einem Chombo an jeden der anderen Spieler zahlt"
+msgstr ""
+"Anzahl der Punkte, die der fehlbare Spieler bei einem Chombo an jeden der "
+"anderen Spieler zahlt"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:132:24
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:134:24
 msgid "Amount of score player should get to end the game."
 msgstr "Punkteanzahl die erreicht werden müssen damit das Spiel enden kann."
 
-#: app/pages/Achievements.tsx:636:14
+#: app/pages/Achievements.tsx:587:14
 msgid "And your riichi bet, please"
 msgstr "Ihre Einsätze, bitte"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:138:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:140:16
 msgid "Atamahane"
 msgstr "Atamahane"
 
@@ -380,7 +382,7 @@ msgstr "Durchschnittlicher Wert bei Deal-in:"
 msgid "Average dora per hand: "
 msgstr "durchschnittliche Dora:"
 
-#: app/pages/RatingTable.tsx:372:20 app/pages/RatingTable.tsx:612:7
+#: app/pages/RatingTable.tsx:374:20 app/pages/RatingTable.tsx:612:7
 msgid "Average place"
 msgstr "Durchschnittliche Platzierung"
 
@@ -392,7 +394,7 @@ msgstr "Durchschnittspunkte"
 msgid "Average points lost: "
 msgstr "Durchschnittliche verlorene Punkte:"
 
-#: app/pages/RatingTable.tsx:348:20
+#: app/pages/RatingTable.tsx:350:20
 msgid "Average score"
 msgstr "Durchschnittliche Gewinnpunkte"
 
@@ -420,7 +422,7 @@ msgstr "Ausgewogene Windverteilung"
 msgid "Because of riichi: "
 msgstr "Wegen Riichi:"
 
-#: app/pages/Achievements.tsx:167:14
+#: app/pages/Achievements.tsx:118:14
 msgid "Best hand"
 msgstr "Beste Hand"
 
@@ -436,7 +438,7 @@ msgstr "Einsätze verloren:"
 msgid "Bets won: "
 msgstr "Einsätze gewonnen:"
 
-#: app/pages/Achievements.tsx:277:14
+#: app/pages/Achievements.tsx:228:14
 msgid "Brave minesweeper"
 msgstr "Minenräumer"
 
@@ -448,7 +450,7 @@ msgstr "Durch Ron:"
 msgid "By tsumo: "
 msgstr "Durch Tsumo:"
 
-#: app/pages/Achievements.tsx:529:14
+#: app/pages/Achievements.tsx:480:14
 msgid "Careful planning"
 msgstr "Minutiös geplant"
 
@@ -476,20 +478,20 @@ msgstr "Chinitsu"
 msgid "Chinroutou"
 msgstr "Chinroutou"
 
-#: app/pages/RatingTable.tsx:322:22 app/pages/RatingTable.tsx:565:34
+#: app/pages/RatingTable.tsx:324:22 app/pages/RatingTable.tsx:565:34
 #: app/pages/RatingTable.tsx:610:24
 msgid "Chips"
 msgstr "Shuugi"
 
-#: app/pages/EventRulesOverview/OnlineSettings.tsx:86:16
+#: app/pages/EventRulesOverview/OnlineSettings.tsx:88:16
 msgid "Chips value"
 msgstr "Shuugi Wert"
 
 #: app/pages/EventRulesOverview/TournamentSettings.tsx:71:16
-msgid "Chombo in last round ends game"
-msgstr "Chombo in der letzten Hand beendet das Spiel"
+msgid "Chombo after time is out counts as hand"
+msgstr "Chombo nach Ablauf der Zeit zählt als gespielte Hand"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:80:20
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:81:22
 msgid "Chombo payments (sanma)"
 msgstr "Chombo-Zahlungen (Sanma)"
 
@@ -497,7 +499,7 @@ msgstr "Chombo-Zahlungen (Sanma)"
 msgid "Chombo penalties: "
 msgstr "Chombo Strafen:"
 
-#: app/components/GameListing.tsx:235:16
+#: app/components/GameListing.tsx:236:16
 msgid "Chombo: %1"
 msgstr "Chombo: %1"
 
@@ -509,11 +511,11 @@ msgstr "Chuuren poutou"
 msgid "Chuuren poutou 9-side"
 msgstr "Chuuren poutou mit 9-seitigem Warten"
 
-#: app/pages/PlayerStats.tsx:296:20
+#: app/pages/PlayerStats.tsx:297:20
 msgid "Close game preview"
 msgstr "Spiel Vorschau schließen"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:177:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:179:16
 msgid "Collect riichi bets by atamahane"
 msgstr "Riichieinsätze nach Atamahane verteilen"
 
@@ -529,22 +531,22 @@ msgstr "Allgemeine Statistiken:"
 msgid "Complex position-based"
 msgstr "Komplex Positionsbasiert"
 
-#: app/pages/Achievements.tsx:190:32 app/pages/Achievements.tsx:217:32
-#: app/pages/Achievements.tsx:246:32 app/pages/Achievements.tsx:271:32
-#: app/pages/Achievements.tsx:296:32 app/pages/Achievements.tsx:321:32
-#: app/pages/Achievements.tsx:346:32 app/pages/Achievements.tsx:371:32
-#: app/pages/Achievements.tsx:419:32 app/pages/Achievements.tsx:471:32
-#: app/pages/Achievements.tsx:496:32 app/pages/Achievements.tsx:523:32
-#: app/pages/Achievements.tsx:548:32 app/pages/Achievements.tsx:576:32
-#: app/pages/Achievements.tsx:605:32 app/pages/Achievements.tsx:630:32
-#: app/pages/Achievements.tsx:660:32 app/pages/Achievements.tsx:688:32
-#: app/pages/Achievements.tsx:715:32 app/pages/Achievements.tsx:747:32
-#: app/pages/Achievements.tsx:774:32 app/pages/Achievements.tsx:799:32
+#: app/pages/Achievements.tsx:141:32 app/pages/Achievements.tsx:168:32
+#: app/pages/Achievements.tsx:197:32 app/pages/Achievements.tsx:222:32
+#: app/pages/Achievements.tsx:247:32 app/pages/Achievements.tsx:272:32
+#: app/pages/Achievements.tsx:297:32 app/pages/Achievements.tsx:322:32
+#: app/pages/Achievements.tsx:370:32 app/pages/Achievements.tsx:422:32
+#: app/pages/Achievements.tsx:447:32 app/pages/Achievements.tsx:474:32
+#: app/pages/Achievements.tsx:499:32 app/pages/Achievements.tsx:527:32
+#: app/pages/Achievements.tsx:556:32 app/pages/Achievements.tsx:581:32
+#: app/pages/Achievements.tsx:611:32 app/pages/Achievements.tsx:639:32
+#: app/pages/Achievements.tsx:666:32 app/pages/Achievements.tsx:698:32
+#: app/pages/Achievements.tsx:725:32 app/pages/Achievements.tsx:750:32
 msgid "Couldn't get nomination details"
 msgstr "Details konnten nicht abgerufen werden"
 
 #: app/pages/EventRulesOverview/LocalSettings.tsx:37:22
-#: app/pages/EventRulesOverview/OnlineSettings.tsx:97:22
+#: app/pages/EventRulesOverview/OnlineSettings.tsx:99:22
 msgid ""
 "Count of session in game series. Set to 0 to disable series functionality."
 msgstr "Anzahl von Spielen in einer Serie. 0 deaktiviert Serienfunktion."
@@ -589,11 +591,11 @@ msgid "Description of the event \"%1\" provided by Mahjong Pantheon"
 msgstr ""
 "Beschreibung für das Event \"%1\" von Mahjong Pantheon zur Verfügung gestellt"
 
-#: app/pages/Achievements.tsx:252:14
+#: app/pages/Achievements.tsx:203:14
 msgid "Die Hard"
 msgstr "Stirb langsam"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:105:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:107:16
 msgid "Disable renchans"
 msgstr "Keine renchans"
 
@@ -605,7 +607,7 @@ msgstr "Match nicht unterbrechen bis zum Ablauf der Zeit"
 msgid "Dora collected: "
 msgstr "Gesammelte Dora:"
 
-#: app/pages/Achievements.tsx:554:14
+#: app/pages/Achievements.tsx:505:14
 msgid "Dora lord"
 msgstr "Dora Lord"
 
@@ -613,7 +615,7 @@ msgstr "Dora Lord"
 msgid "Double yakuman:"
 msgstr "Doppelter Yakuman:"
 
-#: app/components/GameListing.tsx:231:14
+#: app/components/GameListing.tsx:232:14
 msgid "Draw: %1"
 msgstr "Unentschieden: %1"
 
@@ -637,7 +639,7 @@ msgstr "Ostwind"
 msgid "Edit my profile"
 msgstr "Profil bearbeiten"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:155:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:157:22
 msgid "Enable \"Nagashi\" outcome to record this special draw"
 msgstr ""
 "Erlaube \"Nagashi Mangan\", wenn ein Spieler nur Ends oder Honors discarded, "
@@ -647,7 +649,7 @@ msgstr ""
 msgid "Enable aggregated yakuhai"
 msgstr "Aggregierte Yakuhai aktivieren"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:215:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:219:16
 msgid "Equalize uma"
 msgstr "Uma teilen"
 
@@ -659,7 +661,8 @@ msgstr "Adminbereich des Events"
 msgid "Event administrators: "
 msgstr "Event Administratoren:"
 
-#: app/pages/EventList.tsx:85:19 app/services/i18n.test.ts:35:12
+#: app/pages/EventList.tsx:71:19 app/server.test.tsx:38:16
+#: app/services/i18n.test.ts:35:12
 msgid "Event list"
 msgstr "Event Liste"
 
@@ -691,7 +694,7 @@ msgstr "Endergebnis des Spiels"
 msgid "First displayed game"
 msgstr "Erstes angezeigtes Spiel"
 
-#: app/pages/EventRulesOverview/OnlineSettings.tsx:127:22
+#: app/pages/EventRulesOverview/OnlineSettings.tsx:129:22
 #: app/pages/EventRulesOverview/TournamentSettings.tsx:131:22
 msgid ""
 "Fixed amount of rank penalty applied for each replacement player regardless "
@@ -700,7 +703,7 @@ msgstr ""
 "Fixe Strafpunkte der Ersatzspielern, unabhängig des Matchergebnisses, "
 "zugewiesen wird."
 
-#: app/pages/EventRulesOverview/OnlineSettings.tsx:117:22
+#: app/pages/EventRulesOverview/OnlineSettings.tsx:119:22
 #: app/pages/EventRulesOverview/TournamentSettings.tsx:121:22
 msgid ""
 "Fixed amount of result score applied for each replacement player regardless "
@@ -709,25 +712,25 @@ msgstr ""
 "Fixer Punktwert der Ersatzspielern, unabhängig des Matchergebnisses, "
 "zugewiesen wird."
 
-#: app/pages/EventRulesOverview/OnlineSettings.tsx:116:16
+#: app/pages/EventRulesOverview/OnlineSettings.tsx:118:16
 #: app/pages/EventRulesOverview/TournamentSettings.tsx:120:16
 msgid "Fixed score applied to replacement player"
 msgstr "Fixe Punktzahl für Ersatzspieler"
 
-#: app/pages/EventRulesOverview/OnlineSettings.tsx:126:16
+#: app/pages/EventRulesOverview/OnlineSettings.tsx:128:16
 #: app/pages/EventRulesOverview/TournamentSettings.tsx:130:16
 msgid "Fixed uma for replacement player"
 msgstr "Uma für Ersatzspieler"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:89:25
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:91:25
 msgid "Game duration"
 msgstr "Spieldauer"
 
-#: app/pages/EventRulesOverview/OnlineSettings.tsx:76:16
+#: app/pages/EventRulesOverview/OnlineSettings.tsx:78:16
 msgid "Game expiration time (in hours)"
 msgstr "Gültigkeitsdauer des Spiels(in Stunden)"
 
-#: app/pages/Game.tsx:66:44
+#: app/pages/Game.tsx:67:44
 msgid "Game preview"
 msgstr "Spielvorschau"
 
@@ -740,54 +743,54 @@ msgstr "Anzahl an Spielen"
 msgid "Games played: "
 msgstr "Gespielte Matches:"
 
-#: app/pages/RatingTable.tsx:298:20
+#: app/pages/RatingTable.tsx:300:20
 msgid "Games+Rating"
 msgstr "Spiele und Rangliste"
 
-#: app/pages/Achievements.tsx:378:20
+#: app/pages/Achievements.tsx:329:20
 msgid "Given for collecting a yakuman during tournament."
 msgstr "Ein Yakuman im Turnier gewonnen."
 
-#: app/pages/Achievements.tsx:168:20
+#: app/pages/Achievements.tsx:119:20
 msgid ""
 "Given for collecting the hand with biggest han count (independent of cost)."
 msgstr "Hand mit der größten Anzahl an Han."
 
-#: app/pages/Achievements.tsx:197:20
+#: app/pages/Achievements.tsx:148:20
 msgid "Given for collecting the hand with biggest minipoints (fu) count."
 msgstr "Hand mit den meisten Fu(Minipunkte)."
 
-#: app/pages/Achievements.tsx:637:20
+#: app/pages/Achievements.tsx:588:20
 msgid ""
 "Given for collecting the largest amount of other players' riichi bets during "
 "the tournament."
 msgstr "Am meisten Riichi Einsätze im Turnier gesammelt."
 
-#: app/pages/Achievements.tsx:224:20
+#: app/pages/Achievements.tsx:175:20
 msgid "Given for collecting the most of tsumo hands during single game."
 msgstr "Meisten Gewinne durch Tsumo in einem Spiel."
 
-#: app/pages/Achievements.tsx:303:20
+#: app/pages/Achievements.tsx:254:20
 msgid "Given for collecting the most of yakuhais during the tournament."
 msgstr "Im Turnier am meisten Han durch Yakuhai gesammelt."
 
-#: app/pages/Achievements.tsx:426:20
+#: app/pages/Achievements.tsx:377:20
 msgid ""
 "Given for feeding into largest hand during tournament (but not while in "
 "riichi)."
 msgstr "Größte ausbezahlte Hand des Turniers(während man nicht im Riichi war)"
 
-#: app/pages/Achievements.tsx:503:20
+#: app/pages/Achievements.tsx:454:20
 msgid "Given for getting largest number of ippatsu during tournament."
 msgstr "Am meisten Ippatsu im Turnier gewonnen."
 
-#: app/pages/Achievements.tsx:722:20
+#: app/pages/Achievements.tsx:673:20
 msgid ""
 "Given for having biggest score in the end of the session across the "
 "tournament."
 msgstr "Größter Gewinn eines Hanchans im Turnier."
 
-#: app/pages/Achievements.tsx:781:20
+#: app/pages/Achievements.tsx:732:20
 msgid ""
 "Given for largest chiitoitsu yaku count. You need to win more than twice "
 "with this yaku. Chiitoitsu nomi it is also not counted."
@@ -795,63 +798,63 @@ msgstr ""
 "Für die meisten Gewinne mit Chiitoitsu. Du musst mehr als zweimal mit diesem "
 "Yaku gewinnen. Hände nur mit Chiitoitsu werden nicht gezählt."
 
-#: app/pages/Achievements.tsx:328:20
+#: app/pages/Achievements.tsx:279:20
 msgid "Given for largest count of dealer wins during the tournament."
 msgstr "Im Turnier am öftesten als Osten gewonnen."
 
-#: app/pages/Achievements.tsx:278:20
+#: app/pages/Achievements.tsx:229:20
 msgid "Given for largest count of feeding into ron during the tournament."
 msgstr "Im Turnier am öftesten in Ron gespielt."
 
-#: app/pages/Achievements.tsx:478:20
+#: app/pages/Achievements.tsx:429:20
 msgid "Given for losing largest amount of points as riichi bets."
 msgstr "Am meisten Riichi Einsätze im Turnier verloren."
 
-#: app/pages/Achievements.tsx:667:20
+#: app/pages/Achievements.tsx:618:20
 msgid "Given for losing the smallest number of riichi bets."
 msgstr "Am wenigsten Riichi Bets im Turnier verloren."
 
-#: app/pages/Achievements.tsx:253:20
+#: app/pages/Achievements.tsx:204:20
 msgid "Given for smallest count of feeding into ron during the tournament."
 msgstr "Im Turnier am seltensten in Ron gespielt."
 
-#: app/pages/Achievements.tsx:612:20
+#: app/pages/Achievements.tsx:563:20
 msgid ""
 "Given for the largest amount of points received as ryuukyoku (draw) payments."
 msgstr "Meisten Punkte durch ryuukyoku(unentschieden) Zahlungen."
 
-#: app/pages/Achievements.tsx:583:20
+#: app/pages/Achievements.tsx:534:20
 msgid ""
 "Given for the largest amount of unique yaku collected during the tournament."
 msgstr "Meisten unterschiedlichen Yaku im Turnier gesammelt."
 
-#: app/pages/Achievements.tsx:555:20
+#: app/pages/Achievements.tsx:506:20
 msgid "Given for the largest average count of dora in player's hand."
 msgstr "Meisten Dora im Durchschnitt pro Hand."
 
-#: app/pages/Achievements.tsx:353:20
+#: app/pages/Achievements.tsx:304:20
 msgid "Given for the most of 1/30 wins during tournament."
 msgstr "Meisten 1/30 Gewinne im Turnier."
 
-#: app/pages/Achievements.tsx:530:20
+#: app/pages/Achievements.tsx:481:20
 msgid ""
 "Given for the smallest average cost of opponents hand that player has dealt."
 msgstr "Niedrigster Durchschnitt bei gezahlten Händen."
 
-#: app/pages/Achievements.tsx:695:20
+#: app/pages/Achievements.tsx:646:20
 msgid "Given for winning the largest number of hands with damaten."
 msgstr "Am meisten Hände mit Damaten gewonnen."
 
-#: app/pages/Achievements.tsx:754:20
+#: app/pages/Achievements.tsx:705:20
 msgid "Given for winning the largest number riichi nomi hands."
 msgstr ""
 "Für die meisten gewonnenen Hände, bei denen Riichi das einzige Yaku ist."
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:131:18
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:133:18
 msgid "Goal score"
 msgstr "Zielpunkte"
 
-#: app/pages/Achievements.tsx:582:14
+#: app/pages/Achievements.tsx:533:14
 msgid "Gotta Catch'Em All"
 msgstr "Ich muss Sie alle fangen!"
 
@@ -859,7 +862,7 @@ msgstr "Ich muss Sie alle fangen!"
 msgid "Green dragon"
 msgstr "Grüner Drache"
 
-#: app/pages/Achievements.tsx:302:14
+#: app/pages/Achievements.tsx:253:14
 msgid "Guest of honors"
 msgstr "Ehrengäste"
 
@@ -875,7 +878,7 @@ msgstr "Anzahl der Hände"
 msgid "Hands value"
 msgstr "Wert der Hand"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:193:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:195:22
 msgid "Hands valued as 4/30 and 3/60 are rounded to mangan."
 msgstr "Hände mit 4/30 und 3/60 werden auf Mangan aufgerundet."
 
@@ -888,11 +891,11 @@ msgctxt "context"
 msgid "Hello %1"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:209:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:211:16
 msgid "Honba Value"
 msgstr "Honba-Wert"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:170:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:172:22
 msgid ""
 "Honba payments will be given only to the first winner. If not checked, "
 "payment will be given to all winners."
@@ -902,7 +905,7 @@ msgstr "Honba gehen nur an den ersten Gewinner."
 msgid "Honitsu"
 msgstr "Honitsu"
 
-#: app/pages/Achievements.tsx:477:14
+#: app/pages/Achievements.tsx:428:14
 msgid "Honored donor"
 msgstr "Edler Spender"
 
@@ -922,11 +925,11 @@ msgstr "Wie Matches während eines Turniers beendet werden"
 msgid "How players on the same table are shuffled"
 msgstr "Wie die Spieler am selben Tisch verteilt werden"
 
-#: app/pages/Achievements.tsx:223:14
+#: app/pages/Achievements.tsx:174:14
 msgid "I saw them dancing"
 msgstr "Tanzt!"
 
-#: app/pages/EventRulesOverview/OnlineSettings.tsx:61:22
+#: app/pages/EventRulesOverview/OnlineSettings.tsx:63:22
 msgid ""
 "If checked, any player participating in event will be able to add new "
 "replays through user interface. Disable this if you have any external tool "
@@ -936,7 +939,7 @@ msgstr ""
 "Benutzeroberfläche hinzufügen. Deaktiviere diese Option, wenn ein externes "
 "Werkzeug die Replays automatisch hinzufügt."
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:216:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:220:22
 msgid ""
 "If checked, players with equivalent score receive equivalent uma bonus. "
 "Otherwise, uma is assigned according to move order."
@@ -944,7 +947,7 @@ msgstr ""
 "Uma wird bei gleichem Punktestand auf mehrere Spieler aufgeteilt, ansonsten "
 "nach Windreihenfolge."
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:120:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:122:22
 msgid ""
 "If nobody reaches the goal score at the last hand, the game continues to "
 "west rounds (in hanchan) or to south rounds (in tonpuusen), until someone "
@@ -953,21 +956,22 @@ msgstr ""
 "Wenn niemand die Zielpunkte erreicht, wird das Spiel in Süd(Ostrunden) oder "
 "West(Hanchan) weitergeführt, solange bis jemand die Zielpunkte erreicht."
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:98:22
+#: app/pages/EventRulesOverview/TournamentSettings.tsx:72:22
+msgid ""
+"If set, a chombo after timeout counts as one played hand. All selected "
+"players are penalized together. Applies to both timed ending policies."
+msgstr ""
+"Wenn aktiviert, zählt ein Chombo nach Ablauf der Zeit als eine gespielte "
+"Hand. Alle ausgewählten Spieler erhalten ihre Strafe gemeinsam. Gilt für "
+"beide zeitabhängigen Beendigungsregeln."
+
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:100:22
 msgid ""
 "If the dealer holds the 1st place after last hand in session, the game ends "
 "regardless of his winning hand or tempai."
 msgstr ""
 "Wenn Osten den ersten Platz nach der letzten Hand im Match hält, endet das "
 "Spiel."
-
-#: app/pages/EventRulesOverview/TournamentSettings.tsx:72:22
-msgid ""
-"If this is set, chombo will not allow players to play one more hand if time "
-"is out and it is final hand of the game"
-msgstr ""
-"Wenn aktiviert, wird nach einem Chombo keine weitere Hand gespielt, wenn die "
-"Zeit abgelaufen ist und es die letzte Hand des Spiels ist"
 
 #: app/helpers/yaku.ts:125:34
 msgid "Iipeikou"
@@ -981,7 +985,7 @@ msgstr "Startpunkte"
 msgid "Initial rating"
 msgstr "Startranking"
 
-#: app/pages/EventRulesOverview/OnlineSettings.tsx:77:22
+#: app/pages/EventRulesOverview/OnlineSettings.tsx:79:22
 msgid ""
 "Interval of time when played online game is still considered valid and can "
 "be added to the rating. Set to 0 to disable expiration."
@@ -996,7 +1000,7 @@ msgstr "Ippatsu"
 msgid "Ittsu"
 msgstr "Ittsu"
 
-#: app/pages/Achievements.tsx:377:14
+#: app/pages/Achievements.tsx:328:14
 msgid "Jewelry included"
 msgstr "Bling Bling"
 
@@ -1004,16 +1008,16 @@ msgstr "Bling Bling"
 msgid "Junchan"
 msgstr "Junchan"
 
-#: app/pages/Achievements.tsx:502:14
+#: app/pages/Achievements.tsx:453:14
 msgid "Just as planned"
 msgstr "Wie erwartet"
 
-#: app/pages/Achievements.tsx:405:36
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:186:16
+#: app/pages/Achievements.tsx:356:36
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:188:16
 msgid "Kazoe yakuman"
 msgstr "Kazoe yakuman"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:192:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:194:16
 msgid "Kiriage mangan"
 msgstr "Kiriage mangan"
 
@@ -1038,12 +1042,12 @@ msgstr "Sprache"
 msgid "Last displayed game"
 msgstr "Letztes angezeigtes Spiel"
 
-#: app/components/RecentPublicGames.tsx:26:12 app/pages/RecentGames.tsx:80:20
-#: app/pages/RecentGames.tsx:82:22 app/pages/RecentGames.tsx:93:31
+#: app/components/RecentPublicGames.tsx:26:12 app/pages/RecentGames.tsx:81:20
+#: app/pages/RecentGames.tsx:83:22 app/pages/RecentGames.tsx:94:31
 msgid "Last games"
 msgstr "Letzte Spiele"
 
-#: app/pages/RecentGames.tsx:85:24
+#: app/pages/RecentGames.tsx:86:24
 msgid "Last games of the event \"%1\", page %2, provided by Mahjong Pantheon"
 msgstr ""
 "Letzten Spiele des Turniers \"%1\", Seite %2, von Mahjong Pantheon zur "
@@ -1053,15 +1057,15 @@ msgstr ""
 msgid "Last series"
 msgstr "Letzte Serie:"
 
-#: app/pages/Achievements.tsx:852:18 app/pages/PlayerStats.tsx:441:18
+#: app/pages/Achievements.tsx:803:18 app/pages/PlayerStats.tsx:442:18
 msgid "Last update: %1"
 msgstr "Letztes Update: %1"
 
-#: app/pages/EventList.tsx:86:22
+#: app/pages/EventList.tsx:72:22
 msgid "List of all events registered with Mahjong Pantheon"
 msgstr "Liste aller bei Mahjong Pantheon registrierten Events"
 
-#: app/pages/EventRulesOverview/OnlineSettings.tsx:68:16
+#: app/pages/EventRulesOverview/OnlineSettings.tsx:70:16
 msgid "Lobby ID"
 msgstr "Lobby-ID"
 
@@ -1077,7 +1081,7 @@ msgstr "Rangliste"
 msgid "Loss stats"
 msgstr "Verluststatistik"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:226:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:230:16
 msgid "Max arbitrary penalty score"
 msgstr "Höchste Strafe"
 
@@ -1093,19 +1097,19 @@ msgstr "Menü"
 msgid "Menzentsumo"
 msgstr "Menzentsumo"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:232:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:236:16
 msgid "Min arbitrary penalty score"
 msgstr "Niedrigste Strafe"
 
 #: app/pages/EventRulesOverview/LocalSettings.tsx:47:22
-#: app/pages/EventRulesOverview/OnlineSettings.tsx:107:22
+#: app/pages/EventRulesOverview/OnlineSettings.tsx:109:22
 msgid ""
 "Minimal count of games the player should play to get into the rating table."
 msgstr ""
 "Minimalanzahl der benötigten Spiele um in die Wertung aufgenommen zu werden."
 
 #: app/pages/EventRulesOverview/LocalSettings.tsx:46:16
-#: app/pages/EventRulesOverview/OnlineSettings.tsx:106:16
+#: app/pages/EventRulesOverview/OnlineSettings.tsx:108:16
 msgid "Minimal games count"
 msgstr "Mindestanzahl an Spielen"
 
@@ -1121,23 +1125,23 @@ msgstr "Sonstige Statistiken"
 msgid "Multiple yakumans"
 msgstr "Mehrfach Yakuman"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:154:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:156:16
 msgid "Nagashi mangan"
 msgstr "Nagashi mangan"
 
-#: app/components/GameListing.tsx:240:16
+#: app/components/GameListing.tsx:241:16
 msgid "Nagashi: %1"
 msgstr "Nagashi: %1"
 
-#: app/pages/PlayerStats.tsx:273:20
+#: app/pages/PlayerStats.tsx:274:20
 msgid "Next game"
 msgstr "Nächstes Spiel"
 
-#: app/pages/Achievements.tsx:694:14
+#: app/pages/Achievements.tsx:645:14
 msgid "Ninja"
 msgstr "Ninja"
 
-#: app/pages/Achievements.tsx:414:20
+#: app/pages/Achievements.tsx:365:20
 msgid "No yakumans have been collected"
 msgstr "Kein Yakuman"
 
@@ -1153,11 +1157,11 @@ msgstr "Sitzwind: Nord"
 msgid "North wind"
 msgstr "Nordwind"
 
-#: app/pages/EventRulesOverview/OnlineSettings.tsx:54:17
+#: app/pages/EventRulesOverview/OnlineSettings.tsx:56:19
 msgid "Not selected"
 msgstr "Nicht ausgewählt"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:201:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:203:16
 msgid "Oka bonus"
 msgstr "Oka Bonus"
 
@@ -1169,7 +1173,7 @@ msgstr "Online Event"
 msgid "Online event settings"
 msgstr "Einstellungen für Online Events"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:139:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:141:22
 msgid ""
 "Only first player by the order of the move from the loser would be "
 "considered a winner. If not checked, all players declaring Ron are "
@@ -1198,7 +1202,7 @@ msgstr "Offenes Riichi"
 msgid "Otherwise"
 msgstr "Sonstiges"
 
-#: app/pages/Achievements.tsx:196:14
+#: app/pages/Achievements.tsx:147:14
 msgid "Over 9000 fu"
 msgstr "Über 9000 Fu"
 
@@ -1206,11 +1210,11 @@ msgstr "Über 9000 Fu"
 msgid "Pao rule enabled for:"
 msgstr "Pao Regel aktiv bei:"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:242:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:246:16
 msgid "Pay chombo as reverse mangan"
 msgstr "Chombo als umgekehrten Mangan werten."
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:243:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:247:22
 msgid ""
 "Pay chombo right on occasion. If not checked, chombo is subtracted from "
 "player score after uma is applied."
@@ -1218,15 +1222,15 @@ msgstr ""
 "Bei Chombo muss der Spieler der diesen verursacht hat, sofort einen "
 "umgekehrten Mangan an alle auszahlen."
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:169:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:171:16
 msgid "Pay for honba by atamahane"
 msgstr "Honba werden nach Atamahaneregel bezahlt"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:184:25
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:186:25
 msgid "Payments and scores"
 msgstr "Punkte und Bezahlen"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:222:25
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:226:25
 msgid "Penalties"
 msgstr "Strafen"
 
@@ -1250,11 +1254,11 @@ msgstr "Platzierung / Match Ergebniss"
 msgid "Places stats"
 msgstr "Platzierungsstatistiken"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:119:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:121:16
 msgid "Play additional rounds"
 msgstr "Weitere Runden erlauben"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:92:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:94:22
 msgid "Play only east rounds"
 msgstr "Nur Ostrunden"
 
@@ -1262,7 +1266,9 @@ msgstr "Nur Ostrunden"
 msgid ""
 "Play with 3 players instead of 4. The North seat is removed; uma and seating "
 "are adjusted accordingly."
-msgstr "Spiel mit 3 statt 4 Spielern. Der Nordplatz entfällt; Uma und Sitzordnung werden entsprechend angepasst."
+msgstr ""
+"Spiel mit 3 statt 4 Spielern. Der Nordplatz entfällt; Uma und Sitzordnung "
+"werden entsprechend angepasst."
 
 #: app/pages/RatingTable.tsx:607:7
 msgid "Player ID"
@@ -1272,18 +1278,18 @@ msgstr "Spieler ID"
 msgid "Player name"
 msgstr "Spielername"
 
-#: app/pages/PlayerStats.tsx:415:22
+#: app/pages/PlayerStats.tsx:416:22
 msgid ""
 "Player statistics for %1 in the event \"%2\" provided by Mahjong Pantheon"
 msgstr ""
 "Spieler Statistiken für %1 im Turnier \"%2\" von Mahjong Pantheon zur "
 "Verfügung gestellt"
 
-#: app/pages/PlayerStats.tsx:414:46
+#: app/pages/PlayerStats.tsx:415:46
 msgid "Player stats"
 msgstr "Spieler Statistiken"
 
-#: app/pages/RatingTable.tsx:414:30
+#: app/pages/RatingTable.tsx:416:30
 msgid "Players having a required minimum of games"
 msgstr "Spieler haben das Spielanzahlminimum erreicht"
 
@@ -1301,11 +1307,19 @@ msgstr ""
 "Spielplattform entsprechen, sonst können beim Einreichen von Replays Fehler "
 "auftreten!"
 
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:212:22
+msgid ""
+"Points paid by each opponent per honba on tsumo. On ron, the discarder pays "
+"the total for all opponents."
+msgstr ""
+"Punkte pro Honba, die jeder Gegner bei Tsumo zahlt. Bei Ron zahlt der "
+"abwerfende Spieler die Gesamtsumme für alle Gegner."
+
 #: app/pages/EventRulesOverview/TournamentSettings.tsx:110:22
 msgid "Prescripted wind shuffle"
 msgstr "Windverteilung nach manueller Sitzordnung"
 
-#: app/pages/PlayerStats.tsx:254:20
+#: app/pages/PlayerStats.tsx:255:20
 msgid "Previous game"
 msgstr "Letztes Spiel"
 
@@ -1313,7 +1327,7 @@ msgstr "Letztes Spiel"
 msgid "Random wind shuffle"
 msgstr "Zufällige Windverteilung"
 
-#: app/components/RatingGraph.tsx:146:39 app/pages/RatingTable.tsx:275:20
+#: app/components/RatingGraph.tsx:146:39 app/pages/RatingTable.tsx:277:20
 msgid "Rating"
 msgstr "Ranking"
 
@@ -1321,10 +1335,10 @@ msgstr "Ranking"
 msgid "Rating points"
 msgstr "Ranglistenpunkte"
 
-#: app/components/AppFooter.tsx:84:20 app/pages/Achievements.tsx:816:35
-#: app/pages/EventList.tsx:129:69 app/pages/RatingTable.tsx:143:35
-#: app/pages/RatingTable.tsx:185:20 app/pages/RatingTable.tsx:187:22
-#: app/pages/RatingTable.tsx:198:33
+#: app/components/AppFooter.tsx:84:20 app/pages/Achievements.tsx:767:35
+#: app/pages/EventList.tsx:112:69 app/pages/RatingTable.tsx:145:35
+#: app/pages/RatingTable.tsx:187:20 app/pages/RatingTable.tsx:189:22
+#: app/pages/RatingTable.tsx:200:33
 msgid "Rating table"
 msgstr "Rangliste"
 
@@ -1333,11 +1347,11 @@ msgctxt "Event menu"
 msgid "Rating table"
 msgstr "Rangliste"
 
-#: app/pages/RatingTable.tsx:146:12
+#: app/pages/RatingTable.tsx:148:12
 msgid "Rating table is hidden by tournament administrator"
 msgstr "Ranglistenansicht vom Administrator deaktiviert"
 
-#: app/pages/RatingTable.tsx:190:24
+#: app/pages/RatingTable.tsx:192:24
 msgid "Rating table of the event \"%1\" provided by Mahjong Pantheon"
 msgstr ""
 "Rangliste des Turniers \"%1\" von Mahjong Pantheon zu Verfügung gestellt"
@@ -1355,7 +1369,7 @@ msgstr "Letzte Spiele"
 msgid "Red dragon"
 msgstr "Roter Drache"
 
-#: app/pages/RegisteredPlayers.tsx:91:19 app/pages/RegisteredPlayers.tsx:98:27
+#: app/pages/RegisteredPlayers.tsx:92:19 app/pages/RegisteredPlayers.tsx:99:27
 msgid "Registered players"
 msgstr "Angemeldete Spieler"
 
@@ -1364,7 +1378,7 @@ msgctxt "Event menu"
 msgid "Registered players"
 msgstr "Angemeldete Spieler"
 
-#: app/pages/RegisteredPlayers.tsx:92:22
+#: app/pages/RegisteredPlayers.tsx:93:22
 msgid "Registered players of the event \"%1\" provided by Mahjong Pantheon"
 msgstr ""
 "Registrierte Spieler des Turniers \"%1\" von Mahjong Pantheon zur Verfügung "
@@ -1382,11 +1396,11 @@ msgstr "Replay link ist ungültig. Überprüfe ob du Ihn richtig kopiert hast"
 msgid "Riichi"
 msgstr "Riichi"
 
-#: app/pages/Achievements.tsx:753:14
+#: app/pages/Achievements.tsx:704:14
 msgid "Riichi Nomi"
 msgstr "Riichi Nomi"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:159:25
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:161:25
 msgid "Riichi and honba"
 msgstr "Riichi und Honba"
 
@@ -1394,11 +1408,11 @@ msgstr "Riichi und Honba"
 msgid "Riichi bets: "
 msgstr "Riichi Einsätze:"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:161:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:163:16
 msgid "Riichi goes to winner"
 msgstr "Übrige Riichieinsätze gehen an den Gewinner"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:162:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:164:22
 msgid ""
 "Riichi left on table in case of draw in the end of the session will be given "
 "to session winner"
@@ -1406,7 +1420,7 @@ msgstr ""
 "Im Falle eines Unentschieden in der letzten Hand, gehen übrige "
 "Riichieinsätze an den Gewinner"
 
-#: app/pages/EventList.tsx:89:12
+#: app/pages/EventList.tsx:75:12
 msgid "Riichi mahjong events list"
 msgstr "Riichi mahjong Eventliste"
 
@@ -1414,11 +1428,11 @@ msgstr "Riichi mahjong Eventliste"
 msgid "Rinshan kaihou"
 msgstr "Rinshan kaihou"
 
-#: app/components/GameListing.tsx:225:14
+#: app/components/GameListing.tsx:226:14
 msgid "Ron: %1"
 msgstr "Ron: %1"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:136:25
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:138:25
 msgid "Round outcomes"
 msgstr "Rundenergebniss"
 
@@ -1483,7 +1497,7 @@ msgstr "Sanshoku"
 msgid "Sanshoku doukou"
 msgstr "Sanshoku doukou"
 
-#: app/pages/RatingTable.tsx:217:18
+#: app/pages/RatingTable.tsx:219:18
 msgid "Save as CSV"
 msgstr "Als CSV speichern"
 
@@ -1504,7 +1518,7 @@ msgid "Select uma bonus type"
 msgstr "Uma Bonus Art auswählen"
 
 #: app/pages/EventRulesOverview/LocalSettings.tsx:36:16
-#: app/pages/EventRulesOverview/OnlineSettings.tsx:96:16
+#: app/pages/EventRulesOverview/OnlineSettings.tsx:98:16
 msgid "Series length"
 msgstr "Länge der Serie"
 
@@ -1572,7 +1586,7 @@ msgstr "Sigrun: Riichi Mahjong Wertung und Statistiken"
 msgid "Simple rank-based"
 msgstr "Rang basiert"
 
-#: app/pages/Game.tsx:67:24
+#: app/pages/Game.tsx:68:24
 msgid "Single game preview for the event \"%1\" provided by Mahjong Pantheon"
 msgstr "Spielvorschau \"%1\"  von Mahjong Pantheon zur Verfügung gestellt"
 
@@ -1588,7 +1602,7 @@ msgstr "Sitzwind: Süd"
 msgid "South wind"
 msgstr "Südwind"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:238:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:242:16
 msgid "Step of arbitrary penalty scores"
 msgstr "Schrittweite bei Strafen"
 
@@ -1631,11 +1645,11 @@ msgid ""
 "open hand."
 msgstr "Tanyao gilt bei geöffneter Hand."
 
-#: app/pages/RatingTable.tsx:251:22 app/pages/RatingTable.tsx:609:21
+#: app/pages/RatingTable.tsx:253:22 app/pages/RatingTable.tsx:609:21
 msgid "Team"
 msgstr "Team"
 
-#: app/pages/EventRulesOverview/OnlineSettings.tsx:57:33
+#: app/pages/EventRulesOverview/OnlineSettings.tsx:59:33
 #: app/pages/EventRulesOverview/TournamentSettings.tsx:78:24
 msgid "Team tournament"
 msgstr "Team Turnier"
@@ -1644,27 +1658,27 @@ msgstr "Team Turnier"
 msgid "Tenhou"
 msgstr "Tenhou"
 
-#: app/pages/Achievements.tsx:352:14
+#: app/pages/Achievements.tsx:303:14
 msgid "The 1k Flash"
 msgstr "Der 1k Blitz"
 
-#: app/pages/Achievements.tsx:666:14
+#: app/pages/Achievements.tsx:617:14
 msgid "The Covetous Knight"
 msgstr "Geiz ist geil"
 
-#: app/pages/Achievements.tsx:611:14
+#: app/pages/Achievements.tsx:562:14
 msgid "The favorite apprentice of ASAPIN"
 msgstr "ASAPINs bester Schüler"
 
-#: app/pages/Achievements.tsx:780:14
+#: app/pages/Achievements.tsx:731:14
 msgid "The favorite apprentice of TSUCHIDA"
 msgstr "TSUCHIDAs Lieblingsschüler"
 
-#: app/pages/Achievements.tsx:327:14
+#: app/pages/Achievements.tsx:278:14
 msgid "The great dealer"
 msgstr "Der größte Osten"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:147:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:149:22
 msgid ""
 "There will be a separate \"Abortive draw\" outcome to record draws due to "
 "four riichi, four kans, suufon renda, kyuushu kyuuhai, etc."
@@ -1672,7 +1686,7 @@ msgstr ""
 "Ein \"Abgebrochen durch Unentschieden\"  kann durch vier Riichi Ansagen, "
 "vier gleiche Winde, 9 Ends or Honors oder vier Kans hervorgerufen werden."
 
-#: app/pages/Achievements.tsx:425:14
+#: app/pages/Achievements.tsx:376:14
 msgid "This can't be your wait"
 msgstr "Das kann nicht wahr sein"
 
@@ -1740,7 +1754,7 @@ msgstr "Helligkeit"
 msgid "Toitoi"
 msgstr "Toitoi"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:91:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:93:16
 msgid "Tonpuusen"
 msgstr "Tonpuusen"
 
@@ -1775,7 +1789,7 @@ msgstr ""
 msgid "Tsumo payments: "
 msgstr "Tsumo Zahlungen:"
 
-#: app/components/GameListing.tsx:228:14
+#: app/components/GameListing.tsx:229:14
 msgid "Tsumo: %1"
 msgstr "Tsumo: %1"
 
@@ -1799,27 +1813,23 @@ msgstr "Uma Bonus für den dritten Platz"
 msgid "Uma penalty for 4th place"
 msgstr "Uma Bonus für den vierten Platz"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:263:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:267:22
 msgid "Use yakitori rule"
 msgstr "Verwende die Yakitori-Regel"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:210:22
-msgid "Points paid by each opponent per honba on tsumo. On ron, the discarder pays the total for all opponents."
-msgstr "Punkte pro Honba, die jeder Gegner bei Tsumo zahlt. Bei Ron zahlt der abwerfende Spieler die Gesamtsumme für alle Gegner."
-
 #: app/components/RecentPublicGames.tsx:68:29
-#: app/components/RecentPublicGames.tsx:69:24 app/pages/Achievements.tsx:180:30
-#: app/pages/Achievements.tsx:207:30 app/pages/Achievements.tsx:234:30
-#: app/pages/Achievements.tsx:399:36 app/pages/Achievements.tsx:448:34
-#: app/pages/Achievements.tsx:736:34 app/pages/Game.tsx:74:35
+#: app/components/RecentPublicGames.tsx:69:24 app/pages/Achievements.tsx:131:30
+#: app/pages/Achievements.tsx:158:30 app/pages/Achievements.tsx:185:30
+#: app/pages/Achievements.tsx:350:36 app/pages/Achievements.tsx:399:34
+#: app/pages/Achievements.tsx:687:34 app/pages/Game.tsx:75:35
 msgid "View game"
 msgstr "Spiel ansehen"
 
-#: app/pages/PlayerStats.tsx:246:12
+#: app/pages/PlayerStats.tsx:247:12
 msgid "View selected game details"
 msgstr "Details für ausgewähltes Spiel"
 
-#: app/pages/Achievements.tsx:721:14
+#: app/pages/Achievements.tsx:672:14
 msgid "We need more gold"
 msgstr "Gold, Gold, Gold"
 
@@ -1835,11 +1845,11 @@ msgstr "Sitzwind: West"
 msgid "West wind"
 msgstr "Westwind"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:114:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:116:22
 msgid "When a player runs out of score points, the game immediately ends"
 msgstr "Das Spiel endet wenn ein Spieler weniger als null Punkte hat."
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:106:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:108:22
 msgid ""
 "When dealer wins, or stays tempai after draw, seat winds will be changed. "
 "Honba is added only after draw."
@@ -1882,7 +1892,7 @@ msgstr "Modus der Windverteilung"
 msgid "With damaten: "
 msgstr "Mit Damaten:"
 
-#: app/pages/RatingTable.tsx:422:24
+#: app/pages/RatingTable.tsx:424:24
 msgid "With min games"
 msgstr "Mit min. Spielen"
 
@@ -1903,11 +1913,11 @@ msgid "Without declared riichi: "
 msgstr "Ohne Riichi:"
 
 #: app/components/YakitoriIndicator.tsx:38:32
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:262:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:266:16
 msgid "Yakitori"
 msgstr "Yakitori"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:272:18
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:276:18
 msgid "Yakitori penalty"
 msgstr "Yakitori Strafe"
 
@@ -1972,7 +1982,7 @@ msgctxt "Riichi bets count"
 msgid "none"
 msgstr "keine"
 
-#: app/pages/Achievements.tsx:453:23
+#: app/pages/Achievements.tsx:404:23
 msgctxt "Achievements badge"
 msgid "yakuman (%1)"
 msgstr "yakuman (%1)"
@@ -1988,6 +1998,9 @@ msgstr "yakuman!"
 #~ "Punktewert vn Shuugi. Shuugi können in den Turniereinstellungen von "
 #~ "tenhou.net konfiguriert werden."
 
+#~ msgid "Chombo in last round ends game"
+#~ msgstr "Chombo in der letzten Hand beendet das Spiel"
+
 #~ msgid "Count of session in game series."
 #~ msgstr "Anzahl von Matches in der Serie."
 
@@ -1996,6 +2009,13 @@ msgstr "yakuman!"
 
 #~ msgid "Game link"
 #~ msgstr "Link zum Spiel"
+
+#~ msgid ""
+#~ "If this is set, chombo will not allow players to play one more hand if "
+#~ "time is out and it is final hand of the game"
+#~ msgstr ""
+#~ "Wenn aktiviert, wird nach einem Chombo keine weitere Hand gespielt, wenn "
+#~ "die Zeit abgelaufen ist und es die letzte Hand des Spiels ist"
 
 #~ msgid ""
 #~ "Interval of time when played online game is still considered valid and "
@@ -2009,13 +2029,3 @@ msgstr "yakuman!"
 
 #~ msgid "Uma bonus type"
 #~ msgstr "Uma Variante"
-
-#: app/pages/EventRulesOverview/TournamentSettings.tsx:79:16
-msgid "Chombo after time is out counts as hand"
-msgstr "Chombo nach Ablauf der Zeit zählt als gespielte Hand"
-
-#: app/pages/EventRulesOverview/TournamentSettings.tsx:72:22
-msgid ""
-"If set, a chombo after timeout counts as one played hand. All selected "
-"players are penalized together. Applies to both timed ending policies."
-msgstr "Wenn aktiviert, zählt ein Chombo nach Ablauf der Zeit als eine gespielte Hand. Alle ausgewählten Spieler erhalten ihre Strafe gemeinsam. Gilt für beide zeitabhängigen Beendigungsregeln."

@@ -47,7 +47,7 @@ describe('Belarusian locale', () => {
     [102, 1],
     [111, 2],
   ])('selects the correct plural form for %i', (count: number, form: number) => {
-    const forms = ['Засталася %1 раздача', 'Засталіся %1 раздачы', 'Засталося %1 раздач'];
+    const forms = ['Засталася %1 раздача', 'Засталіся %1 раздачы', 'Засталіся %1 раздач'];
     expect(i18n._nt(['%1 deal left', '%1 deals left'], count, [count])).toBe(
       forms[form].replace('%1', String(count))
     );

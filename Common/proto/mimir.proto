@@ -89,6 +89,8 @@ service Mimir {
   rpc AddExtraTime(AddExtraTimePayload) returns (GenericSuccessResponse);
   rpc ListMyPenalties(GenericEventPayload) returns (PenaltiesResponse);
   rpc ListChombo(GenericEventPayload) returns (ChomboResponse);
+  rpc ListRefereeNotes(GenericEventPayload) returns (RefereeNotesResponse);
+  rpc AddRefereeNote(AddRefereeNotePayload) returns (GenericSuccessResponse);
   rpc GetCurrentStateForPlayer(GetCurrentStatePayload) returns (GetCurrentStateResponse);
 }
 
@@ -511,6 +513,26 @@ message CallRefereePayload {
 message PenaltiesResponse {
   repeated Penalty penalties = 1;
   repeated Player referees = 2;
+}
+
+message RefereeNote {
+  int32 id = 1;
+  string content = 2;
+  int32 author_id = 3;
+  string created_at = 4;
+  optional int32 player_id = 5;
+}
+
+message RefereeNotesResponse {
+  repeated RefereeNote notes = 1;
+  repeated Player authors = 2;
+  repeated Player players = 3;
+}
+
+message AddRefereeNotePayload {
+  int32 event_id = 1;
+  string content = 2;
+  optional int32 player_id = 3;
 }
 
 message CancelPenaltyPayload {

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-28 00:29+0100\n"
+"POT-Creation-Date: 2026-11-25 17:24+0100\n"
 "PO-Revision-Date: 2024-05-09 22:09+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -14,49 +14,60 @@ msgstr ""
 "Generated-By: i18n-json2po\n"
 "X-Generator: Poedit 3.4.2\n"
 
-#: app/components/base/TableStatus/TableStatus.tsx:106:16
+#: app/components/base/TableStatus/TableStatus.tsx:109:16
 #: app/services/i18n.be.test.ts:51:12
 msgid "%1 deal left"
 msgid_plural "%1 deals left"
 msgstr[0] "剩余 %1 局 "
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:193:28
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:202:28
 msgid "%1 fu"
 msgstr "%1 符"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:232:17
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:241:17
 #: app/store/selectors/round.ts:36:15
 msgid "%1 han"
 msgstr "%1 番"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:231:17
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:240:17
 #: app/store/selectors/round.ts:39:12
 msgid "%1 han %2 fu"
 msgstr "%1 番 %2 符"
+
+#: app/services/i18n.selection.test.ts:38:10
+msgid "%1 item"
+msgid_plural "%1 items"
+msgstr[0] ""
+
+#: app/services/i18n.selection.test.ts:39:10
+msgctxt "context"
+msgid "%1 item"
+msgid_plural "%1 items"
+msgstr[0] ""
 
 #: app/store/selectors/round.ts:92:14
 msgid "%1 ← %2"
 msgstr "%1 ← %2"
 
-#: app/store/selectors/table.ts:419:14
+#: app/store/selectors/table.ts:456:14
 msgid "Abort"
 msgstr "中途流局"
 
-#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:91:24
-#: app/store/selectors/round.ts:178:14 app/store/selectors/table.ts:136:25
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:92:24
+#: app/store/selectors/round.ts:178:14 app/store/selectors/table.ts:167:25
 msgid "Abortive draw"
 msgstr "中途流局"
 
-#: app/components/screens/TableCurrentGame/TableCurrentGame.tsx:116:31
+#: app/components/screens/TableCurrentGame/TableCurrentGame.tsx:121:31
 msgid "Call referee"
 msgstr "呼叫裁判"
 
-#: app/components/screens/TableCurrentGame/TableCurrentGame.tsx:124:12
+#: app/components/screens/TableCurrentGame/TableCurrentGame.tsx:129:12
 msgid "Call referee for your table?"
 msgstr "叫裁判到你的桌子来吗？"
 
 #: app/components/base/YakuAdviceDialog/YakuAdviceDialog.tsx:26:29
-#: app/components/screens/TableCurrentGame/TableCurrentGame.tsx:121:33
+#: app/components/screens/TableCurrentGame/TableCurrentGame.tsx:126:33
 msgid "Cancel"
 msgstr "取消"
 
@@ -85,13 +96,13 @@ msgid "Chinroutou"
 msgstr "清老头"
 
 #: app/components/base/Player/Player.tsx:59:58
-#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:97:22
-#: app/store/selectors/round.ts:191:14 app/store/selectors/table.ts:139:25
-#: app/store/selectors/table.ts:421:14
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:98:22
+#: app/store/selectors/round.ts:191:14 app/store/selectors/table.ts:170:25
+#: app/store/selectors/table.ts:458:14
 msgid "Chombo"
 msgstr "犯规"
 
-#: app/components/base/PopupMenu/PopupMenu.tsx:18:19
+#: app/components/base/PopupMenu/PopupMenu.tsx:45:19
 msgid "Choose an option"
 msgstr ""
 
@@ -103,7 +114,7 @@ msgstr "九莲宝灯"
 msgid "Chuuren poutou 9-side"
 msgstr "纯正九莲宝灯"
 
-#: app/components/pages/NewGame/NewGame.tsx:88:14
+#: app/components/pages/NewGame/NewGame.tsx:92:14
 msgid "Clear players"
 msgstr "清除玩家"
 
@@ -131,11 +142,11 @@ msgstr "大四喜"
 msgid "Decrease"
 msgstr ""
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:218:22
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:227:22
 msgid "Dora %1"
 msgstr "宝牌 %1"
 
-#: app/store/selectors/table.ts:417:14
+#: app/store/selectors/table.ts:454:14
 msgid "Draw"
 msgstr "流局"
 
@@ -163,8 +174,8 @@ msgstr "电子邮箱"
 msgid "Event title"
 msgstr "活动名称"
 
-#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:85:22
-#: app/store/selectors/round.ts:166:14 app/store/selectors/table.ts:142:25
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:86:22
+#: app/store/selectors/round.ts:166:14 app/store/selectors/table.ts:173:25
 msgid "Exhaustive draw"
 msgstr "流局"
 
@@ -177,11 +188,11 @@ msgstr "无法加载处罚记录，请检查网络连接。"
 msgid "Forgot password?"
 msgstr "忘记密码了吗?"
 
-#: app/components/screens/OtherTableView/OtherTableView.tsx:68:49
+#: app/components/screens/OtherTableView/OtherTableView.tsx:69:49
 msgid "Game has finished"
 msgstr "对局已结束"
 
-#: app/components/pages/LogView/LogView.tsx:91:46
+#: app/components/pages/LogView/LogView.tsx:93:46
 msgid "Game log"
 msgstr "对局记录"
 
@@ -200,6 +211,15 @@ msgstr "发财"
 #: app/helpers/yaku.ts:383:34 app/helpers/yaku.ts:384:39
 msgid "Haitei"
 msgstr "海底摸月"
+
+#: app/services/i18n.selection.test.ts:36:10
+msgid "Hello %1"
+msgstr ""
+
+#: app/services/i18n.selection.test.ts:37:10
+msgctxt "context"
+msgid "Hello %1"
+msgstr ""
 
 #: app/store/selectors/round.ts:49:10
 msgid "Honba: %1"
@@ -238,7 +258,7 @@ msgstr ""
 msgid "Ippatsu"
 msgstr "一发"
 
-#: app/components/App.tsx:224:16
+#: app/components/App.tsx:220:16
 msgid ""
 "It looks like there are issues with your network connection. Would you like "
 "to retry starting the application or clear the credentials and try logging "
@@ -262,7 +282,7 @@ msgid "Kokushi musou 13-side"
 msgstr "国士无双十三面听"
 
 #: app/components/pages/Settings/Settings.tsx:133:45
-#: app/services/i18n.be.test.ts:34:12
+#: app/services/i18n.be.test.ts:34:12 app/services/i18n.selection.test.ts:22:10
 msgid "Language"
 msgstr "语言"
 
@@ -282,12 +302,12 @@ msgstr "门前清自摸和"
 msgid "Multiron, from %1"
 msgstr "%1 放铳 一炮多响"
 
-#: app/store/selectors/table.ts:423:14
+#: app/store/selectors/table.ts:460:14
 msgid "Nagashi"
 msgstr "流局"
 
-#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:103:24
-#: app/store/selectors/round.ts:204:14 app/store/selectors/table.ts:151:25
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:104:24
+#: app/store/selectors/round.ts:204:14 app/store/selectors/table.ts:182:25
 msgid "Nagashi mangan"
 msgstr "流局满贯"
 
@@ -299,11 +319,11 @@ msgstr "开始新对局"
 msgid "Next tab"
 msgstr ""
 
-#: app/components/pages/GameResult/GameResult.tsx:84:14
+#: app/components/pages/GameResult/GameResult.tsx:95:14
 msgid "No games found"
 msgstr "未找到对局"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:239:18
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:248:18
 msgid "No pao"
 msgstr "无包牌"
 
@@ -311,11 +331,11 @@ msgstr "无包牌"
 msgid "No results found"
 msgstr "无结果"
 
-#: app/components/pages/OtherTablesList/OtherTablesList.tsx:50:14
+#: app/components/pages/OtherTablesList/OtherTablesList.tsx:66:14
 msgid "No tables are playing right now"
 msgstr "目前没有桌子在游戏中"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:175:30
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:184:30
 msgid "Nobody selected"
 msgstr "未选择任何玩家"
 
@@ -336,7 +356,7 @@ msgstr "自风：北"
 msgid "Notice"
 msgstr "提示"
 
-#: app/components/App.tsx:196:35
+#: app/components/App.tsx:192:35
 #: app/components/base/YakuAdviceDialog/YakuAdviceDialog.tsx:24:27
 #: app/components/pages/Login/LoginError.tsx:44:12
 msgid "OK"
@@ -358,7 +378,7 @@ msgstr "他人进行中的对局"
 msgid "Pantheon"
 msgstr "Pantheon"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:167:19
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:176:19
 msgid "Pao"
 msgstr "包牌"
 
@@ -382,7 +402,7 @@ msgstr "平和"
 msgid "Player name"
 msgstr "玩家名"
 
-#: app/components/App.tsx:198:16
+#: app/components/App.tsx:194:16
 msgid "Please return back and press riichi button for the winner"
 msgstr "请返回并为和牌玩家按下立直按钮"
 
@@ -399,7 +419,7 @@ msgstr "上一场对局"
 msgid "Red dragon"
 msgstr "红中"
 
-#: app/components/screens/TableCurrentGame/TableCurrentGame.tsx:128:10
+#: app/components/screens/TableCurrentGame/TableCurrentGame.tsx:133:10
 msgid "Referee has been requested to your table!"
 msgstr "已为本桌呼叫裁判！"
 
@@ -407,11 +427,12 @@ msgstr "已为本桌呼叫裁判！"
 msgid "Renhou"
 msgstr "人和"
 
-#: app/components/App.tsx:222:37
+#: app/components/App.tsx:218:37
 msgid "Reset & logout"
 msgstr "重置并退出登录"
 
-#: app/components/App.tsx:221:35
+#: app/components/App.tsx:217:35
+#: app/components/pages/OtherTablesList/OtherTablesList.tsx:60:16
 msgid "Retry"
 msgstr "重试"
 
@@ -431,8 +452,8 @@ msgstr "岭上"
 msgid "Rinshan kaihou"
 msgstr "岭上开花"
 
-#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:75:22
-#: app/store/selectors/table.ts:148:25 app/store/selectors/table.ts:413:14
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:76:22
+#: app/store/selectors/table.ts:179:25 app/store/selectors/table.ts:450:14
 msgid "Ron"
 msgstr "荣和"
 
@@ -472,7 +493,7 @@ msgstr "选择其他活动或比赛"
 msgid "Select event"
 msgstr "选择活动或比赛"
 
-#: app/components/screens/TableNagashiSelect/TableNagashiSelect.tsx:52:27
+#: app/components/screens/TableNagashiSelect/TableNagashiSelect.tsx:55:27
 msgid "Select nagashi"
 msgstr "选择流局满贯玩家"
 
@@ -484,7 +505,7 @@ msgstr "小三元"
 msgid "Shousuushii"
 msgstr "小四喜"
 
-#: app/components/pages/NewGame/NewGame.tsx:98:14
+#: app/components/pages/NewGame/NewGame.tsx:102:14
 msgid "Shuffle players"
 msgstr "洗牌玩家"
 
@@ -508,7 +529,7 @@ msgstr "场风：南"
 msgid "South seat wind"
 msgstr "自风：南"
 
-#: app/components/pages/NewGame/NewGame.tsx:109:14
+#: app/components/pages/NewGame/NewGame.tsx:113:14
 msgid "Start game"
 msgstr "开始游戏"
 
@@ -528,7 +549,7 @@ msgstr "四暗刻単騎"
 msgid "Suukantsu"
 msgstr "四杠子"
 
-#: app/components/base/TableStatus/TableStatus.tsx:48:45
+#: app/components/base/TableStatus/TableStatus.tsx:51:45
 msgid "Table #%1"
 msgstr "第 #%1 桌"
 
@@ -565,8 +586,8 @@ msgid ""
 "Toitoi in a closed hand won by tsumo is Suuankou. Select Suuankou instead?"
 msgstr "门前清的手牌以自摸和牌时，对对和应计为四暗刻。改为选择四暗刻吗？"
 
-#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:80:22
-#: app/store/selectors/table.ts:145:25 app/store/selectors/table.ts:415:14
+#: app/components/pages/TablePrimaryView/TablePrimaryView.tsx:81:22
+#: app/store/selectors/table.ts:176:25 app/store/selectors/table.ts:452:14
 msgid "Tsumo"
 msgstr "自摸"
 
@@ -583,6 +604,7 @@ msgid "Turn on if you use a single device for all players"
 msgstr "如果您为所有玩家使用单一设备，请开启此功能"
 
 #: app/components/pages/Login/LoginError.tsx:36:16
+#: app/components/screens/OtherTablesList/OtherTablesList.tsx:51:9
 msgid "Unexpected server error"
 msgstr "错误"
 
@@ -602,7 +624,7 @@ msgstr "自风：西"
 msgid "White dragon"
 msgstr "白板"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:137:25
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:144:27
 #: app/helpers/yaku.ts:234:39
 msgid "Yakuhai"
 msgstr "役牌"
@@ -623,8 +645,8 @@ msgstr "役牌 x3"
 msgid "Yakuhai x4"
 msgstr "役牌 x4"
 
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:228:20
-#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:229:17
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:237:20
+#: app/components/base/HandOfPlayer/HandOfPlayer.tsx:238:17
 msgid "Yakuman"
 msgstr "役满"
 
@@ -653,10 +675,10 @@ msgctxt "Name of registration link"
 msgid "register"
 msgstr "注册"
 
-#: app/components/pages/NewGame/NewGame.tsx:53:26
-#: app/components/pages/NewGame/NewGame.tsx:60:26
-#: app/components/pages/NewGame/NewGame.tsx:67:26
-#: app/components/pages/NewGame/NewGame.tsx:74:26
+#: app/components/pages/NewGame/NewGame.tsx:55:26
+#: app/components/pages/NewGame/NewGame.tsx:62:26
+#: app/components/pages/NewGame/NewGame.tsx:69:26
+#: app/components/pages/NewGame/NewGame.tsx:77:28
 msgid "select player"
 msgstr "选择玩家"
 

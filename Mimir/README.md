@@ -63,6 +63,15 @@ are cancelled. Failed batches are discarded without retries. Metrics are best
 effort and pending samples may be lost on worker shutdown; telemetry failures
 never change the RPC result.
 
+### Referee notes
+
+Apply `Migration20261125000000` before deploying referee notes. Event referees and
+administrators can append event-wide notes or link a note to a player currently
+registered in the event. Notes retain their author, creation time, and optional
+player link after unregistration. They are private to event referees and
+administrators and do not change penalties, ratings, or player notifications.
+There are no edit or delete endpoints. Notes are limited to 5,000 characters.
+
 ### Retry-safe mutations
 
 `DropLastRound` can undo a recently finished club game's results and final round
