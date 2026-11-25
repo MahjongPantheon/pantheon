@@ -181,6 +181,23 @@ it.each([{ loserIds: [] }, { loserIds: [1, 1] }, { loserIds: [1, 99] }, { loserI
   }
 );
 
+it('allows triple ron under the default RRC rules while retaining abortive draws', () => {
+  const rrc = RulesetEntity.createRuleset('rrc');
+  const session = Object.assign(new SessionEntity(), {
+    event: Object.assign(new EventEntity(), { ruleset: rrc }),
+  });
+  const round = validateAndCreateFromOnlineData(players, players, session, {
+    multiron: MultironResult.initialize({
+      loserId: 4,
+      multiRon: 3,
+      wins: [1, 2, 3].map((winnerId) => MultironWin.initialize({ ...win, winnerId })),
+    }),
+  });
+
+  expect(rrc.rules.withAbortives).toBe(true);
+  expect(() => checkRonWinners(rrc, players, round)).not.toThrow();
+});
+
 it('enforces ron winner policy only for newly submitted multiron outcomes', () => {
   const session = Object.assign(new SessionEntity(), {
     event: Object.assign(new EventEntity(), { ruleset }),

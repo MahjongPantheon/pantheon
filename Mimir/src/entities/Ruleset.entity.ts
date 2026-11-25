@@ -275,7 +275,7 @@ export class RulesetEntity {
           riichiGoesToWinner: true,
           tonpuusen: false,
           withAbortives: true,
-          allowTripleRonWithAbortives: false,
+          allowTripleRonWithAbortives: true,
           withAtamahane: false,
           withTobi: false,
           withKazoe: true,
