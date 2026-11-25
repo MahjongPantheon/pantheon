@@ -1,10 +1,17 @@
-import { GameConfig, PlayerInSession, RoundOutcome, RulesetConfig } from 'tsclients/proto/atoms.pb';
+import {
+  GameConfig,
+  PlayerInSession,
+  RoundOutcome,
+  RulesetConfig,
+  SessionState,
+} from 'tsclients/proto/atoms.pb';
 import { GHOST_PLAYER_ID } from '../../../../Common/constants';
 import { IAppState } from '../interfaces';
 import { initialState, initBlankOutcome } from '../state';
 import { outcomeReducer } from '../reducers/outcomeReducer';
-import { TOGGLE_LOSER, TOGGLE_WINNER } from '../actions/interfaces';
+import { GET_GAME_OVERVIEW_SUCCESS, TOGGLE_LOSER, TOGGLE_WINNER } from '../actions/interfaces';
 import { winDisabled } from './userItem';
+import { mimirReducer } from '../reducers/mimirReducer';
 
 function fixture(
   withAbortives: boolean,
@@ -66,4 +73,36 @@ it('limits sanma to two real winners even with a ghost seat', () => {
   for (const id of [1, 2]) state = outcomeReducer(state, { type: TOGGLE_WINNER, payload: id });
   expect(winDisabled(state, state.players![2])).toBe(true);
   expect(winDisabled(state, state.players![0])).toBe(false);
+});
+
+it.each([false, true])('applies refreshed triple-ron policy: %s', (allowTripleRon: boolean) => {
+  let state = fixture(true, !allowTripleRon);
+  for (const id of [1, 2]) state = outcomeReducer(state, { type: TOGGLE_WINNER, payload: id });
+  expect(winDisabled(state, state.players![2])).toBe(allowTripleRon);
+  const gameConfig = GameConfig.initialize({
+    rulesetConfig: RulesetConfig.initialize({
+      withAbortives: true,
+      allowTripleRonWithAbortives: allowTripleRon,
+    }),
+  });
+  const refreshed = mimirReducer(state, {
+    type: GET_GAME_OVERVIEW_SUCCESS,
+    payload: {
+      id: 1,
+      eventId: 1,
+      players: state.players!,
+      state: SessionState.initialize({}),
+      timerState: {
+        started: false,
+        finished: false,
+        timeRemaining: 0,
+        waitingForTimer: false,
+        hideSeatingAfter: 0,
+      },
+      gameConfig,
+    },
+  });
+  expect(refreshed.gameConfig).toBe(gameConfig);
+  expect(refreshed.currentOutcome).toBe(state.currentOutcome);
+  expect(winDisabled(refreshed, refreshed.players![2])).toBe(!allowTripleRon);
 });

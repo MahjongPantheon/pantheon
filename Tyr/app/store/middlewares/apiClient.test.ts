@@ -1,5 +1,5 @@
 import type { Dispatch } from 'redux';
-import { GameConfig } from 'tsclients/proto/atoms.pb';
+import { GameConfig, RulesetConfig } from 'tsclients/proto/atoms.pb';
 import { apiClient } from './apiClient';
 import type { IRiichiApi } from '../../services/IRiichiApi';
 import type { IAppState } from '../interfaces';
@@ -18,6 +18,7 @@ function fixture(extra: Partial<IAppState> = {}) {
     quickAuthorize: vi.fn().mockResolvedValue(true),
     getUserInfo: vi.fn().mockResolvedValue([{ id: 7 }]),
     getCurrentState: vi.fn().mockResolvedValue({ sessions: [], config: {} }),
+    getGameConfig: vi.fn().mockResolvedValue(GameConfig.initialize({})),
     getGameOverview: vi
       .fn()
       .mockResolvedValue({ timerState: { waitingForTimer: false, timeRemaining: 60 } }),
@@ -114,6 +115,47 @@ const loads = [
   ],
   [a.GET_PENALTIES_INIT, 'getPenalties', a.GET_PENALTIES_SUCCESS, a.GET_PENALTIES_FAIL, undefined],
 ] as const;
+
+it('waits for fresh event rules before publishing a session overview', async () => {
+  const f = fixture();
+  let resolveConfig!: (config: GameConfig) => void;
+  f.api.getGameConfig.mockReturnValueOnce(
+    new Promise<GameConfig>((resolve) => {
+      resolveConfig = resolve;
+    })
+  );
+  f.send(a.GET_GAME_OVERVIEW_INIT, 'hash');
+  await flush();
+  expect(f.api.getGameConfig).toHaveBeenCalledExactlyOnceWith(42);
+  expect(f.next).not.toHaveBeenCalledWith(
+    expect.objectContaining({ type: a.GET_GAME_OVERVIEW_SUCCESS })
+  );
+
+  const gameConfig = GameConfig.initialize({
+    rulesetConfig: RulesetConfig.initialize({
+      withAbortives: true,
+      allowTripleRonWithAbortives: true,
+    }),
+  });
+  resolveConfig(gameConfig);
+  await flush();
+  expect(f.next).toHaveBeenCalledWith({
+    type: a.GET_GAME_OVERVIEW_SUCCESS,
+    payload: expect.objectContaining({ gameConfig }),
+  });
+});
+
+it('fails the overview refresh when current event rules cannot be loaded', async () => {
+  const f = fixture();
+  const error = new Error('Rules unavailable');
+  f.api.getGameConfig.mockRejectedValueOnce(error);
+  f.send(a.GET_GAME_OVERVIEW_INIT, 'hash');
+  await flush();
+  expect(f.next).toHaveBeenCalledWith({ type: a.GET_GAME_OVERVIEW_FAIL, payload: error });
+  expect(f.next).not.toHaveBeenCalledWith(
+    expect.objectContaining({ type: a.GET_GAME_OVERVIEW_SUCCESS })
+  );
+});
 
 it.each(loads)(
   '%s reports successful and failed loads',

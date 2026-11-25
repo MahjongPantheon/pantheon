@@ -476,6 +476,10 @@ export function mimirReducer(state: IAppState, action: AppActionTypes): IAppStat
     case GET_GAME_OVERVIEW_SUCCESS:
       return {
         ...state,
+        gameConfig: action.payload.gameConfig ?? state.gameConfig,
+        yakuList: action.payload.gameConfig
+          ? makeYakuGraph(action.payload.gameConfig.rulesetConfig.withMultiYakumans)
+          : state.yakuList,
         gameOverviewReady: true,
         currentEventId: action.payload.eventId,
         tableIndex: action.payload.tableIndex,

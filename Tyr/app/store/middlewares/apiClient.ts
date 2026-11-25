@@ -133,7 +133,7 @@ export const apiClient =
           mw.dispatch({ type: RESET_STATE });
           return;
         }
-        getGameOverview(action.payload, api, next);
+        getGameOverview(action.payload, eventId, api, next);
         break;
       case GET_OTHER_TABLES_LIST_INIT:
         if (
@@ -308,13 +308,16 @@ function updateCurrentGames(
 
 function getGameOverview(
   currentSessionHash: string,
+  eventId: number,
   api: IRiichiApi,
   next: Dispatch<AppActionTypes>
 ) {
   next({ type: GET_GAME_OVERVIEW_INIT, payload: currentSessionHash });
-  api
-    .getGameOverview(currentSessionHash)
-    .then((overview) => next({ type: GET_GAME_OVERVIEW_SUCCESS, payload: overview }))
+  // Event rules may have changed while the assistant was already open.
+  Promise.all([api.getGameOverview(currentSessionHash), api.getGameConfig(eventId)])
+    .then(([overview, gameConfig]) =>
+      next({ type: GET_GAME_OVERVIEW_SUCCESS, payload: { ...overview, gameConfig } })
+    )
     .catch((error: RemoteError) => next({ type: GET_GAME_OVERVIEW_FAIL, payload: error }));
 }
 
