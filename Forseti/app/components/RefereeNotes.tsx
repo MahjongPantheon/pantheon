@@ -1,10 +1,12 @@
 import { useContext, useEffect, useState } from 'react';
-import { Alert, Button, Group, Paper, Select, Stack, Text, Textarea, Title } from '@mantine/core';
+import { Alert, Button, Group, Paper, Select, Stack, Text, Textarea } from '@mantine/core';
 import type { RefereeNotesResponse } from 'tsclients/proto/mimir.pb';
 import type { RegisteredPlayer } from 'tsclients/proto/atoms.pb';
 import { authCtx, PrivilegesLevel } from '../hooks/auth';
 import { useApi } from '../hooks/api';
 import { useI18n } from '../hooks/i18n';
+import { TopActionButton } from './TopActionButton';
+import { IconRefresh } from '@tabler/icons-react';
 
 export const RefereeNotes = ({
   eventId,
@@ -93,15 +95,15 @@ export const RefereeNotes = ({
   return (
     <Stack data-testid='forseti-referee-notes'>
       <Group justify='space-between'>
-        <Title order={2}>{i18n._t('Referee notes')}</Title>
-        <Button
-          variant='light'
+        <TopActionButton
+          testId='referee-notes-refresh'
+          icon={<IconRefresh />}
+          color='green'
           onClick={() => setRefresh((value) => value + 1)}
           disabled={saving}
           loading={loading}
-        >
-          {i18n._t('Refresh notes')}
-        </Button>
+          title={i18n._t('Refresh notes')}
+        />
       </Group>
       {error && <Alert color='red'>{error}</Alert>}
       {!linkedPlayersOnly && (

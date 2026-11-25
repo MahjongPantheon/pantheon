@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-30 00:53+0100\n"
+"POT-Creation-Date: 2026-11-25 17:24+0100\n"
 "PO-Revision-Date: 2026-10-20 00:34+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -33,7 +33,7 @@ msgid "%1 item"
 msgid_plural "%1 items"
 msgstr[0] ""
 
-#: app/pages/GamesControl/GamesList.tsx:219:53
+#: app/pages/GamesControl/GamesList.tsx:224:53
 #: app/pages/GamesControl/TournamentControls.tsx:314:45
 msgid "1 minute"
 msgstr "1 分"
@@ -50,7 +50,7 @@ msgstr "13 番以上の手は三倍満ではなく役満として扱います。
 msgid "1st"
 msgstr "1 位"
 
-#: app/pages/GamesControl/GamesList.tsx:220:54
+#: app/pages/GamesControl/GamesList.tsx:225:54
 #: app/pages/GamesControl/TournamentControls.tsx:315:46
 msgid "2 minutes"
 msgstr "2 分"
@@ -59,7 +59,7 @@ msgstr "2 分"
 msgid "2nd"
 msgstr "2 位"
 
-#: app/pages/GamesControl/GamesList.tsx:221:54
+#: app/pages/GamesControl/GamesList.tsx:226:54
 #: app/pages/GamesControl/TournamentControls.tsx:316:46
 msgid "3 minutes"
 msgstr "3 分"
@@ -72,7 +72,7 @@ msgstr "開始点未満のプレイヤーが 3 人"
 msgid "3rd"
 msgstr "3 位"
 
-#: app/pages/GamesControl/GamesList.tsx:222:54
+#: app/pages/GamesControl/GamesList.tsx:227:54
 #: app/pages/GamesControl/TournamentControls.tsx:317:46
 msgid "4 minutes"
 msgstr "4 分"
@@ -81,12 +81,12 @@ msgstr "4 分"
 msgid "4th"
 msgstr "4 位"
 
-#: app/pages/GamesControl/GamesList.tsx:223:54
+#: app/pages/GamesControl/GamesList.tsx:228:54
 #: app/pages/GamesControl/TournamentControls.tsx:318:46
 msgid "5 minutes"
 msgstr "5 分"
 
-#: app/pages/GamesControl/GamesList.tsx:224:54
+#: app/pages/GamesControl/GamesList.tsx:229:54
 #: app/pages/GamesControl/TournamentControls.tsx:319:46
 msgid "7 minutes"
 msgstr "7 分"
@@ -123,21 +123,25 @@ msgstr "操作"
 msgid "Add a penalty"
 msgstr "ペナルティを追加"
 
-#: app/pages/GamesControl/GamesList.tsx:210:29
+#: app/pages/GamesControl/GamesList.tsx:215:29
 #: app/pages/GamesControl/TournamentControls.tsx:304:22
 #: app/pages/GamesControl/TournamentControls.tsx:305:21
 msgid "Add extra time"
 msgstr "時間を追加"
 
-#: app/pages/GamesControl/GamesList.tsx:209:30
+#: app/pages/GamesControl/GamesList.tsx:214:30
 msgid "Add extra time for this table"
 msgstr "このテーブルに時間を追加"
+
+#: app/components/RefereeNotes.tsx:141:16
+msgid "Add referee note"
+msgstr ""
 
 #: app/pages/GamesControl/TournamentControls.tsx:323:26
 msgid "Add selected amount of extra time for all tables?"
 msgstr "すべてのテーブルに選択した時間を追加しますか？"
 
-#: app/pages/GamesControl/GamesList.tsx:229:30
+#: app/pages/GamesControl/GamesList.tsx:234:30
 msgid "Add selected amount of extra time for this table?"
 msgstr "このテーブルに選択した時間を追加しますか？"
 
@@ -154,7 +158,7 @@ msgid ""
 "All dates and time will be displayed according to the selected timezone."
 msgstr "すべての日時は選択したタイムゾーンで表示されます。"
 
-#: app/components/MainMenu.tsx:234:17
+#: app/components/MainMenu.tsx:244:17
 msgid "All events"
 msgstr "すべてのイベント"
 
@@ -162,7 +166,7 @@ msgstr "すべてのイベント"
 msgid "All my events"
 msgstr "自分のすべてのイベント"
 
-#: app/pages/ProfileManage.tsx:350:18
+#: app/pages/ProfileManage.tsx:367:18
 msgid "All player stats and achievements"
 msgstr "すべてのプレイヤー統計と実績"
 
@@ -175,12 +179,12 @@ msgstr ""
 "場の立直棒をすべて頭ハネの順で最初の和了者に渡します。無効の場合、和了者は自"
 "分の立直棒を回収し、残りは最初の和了者に渡します。"
 
-#: app/pages/ProfileManage.tsx:336:16
+#: app/pages/ProfileManage.tsx:353:16
 msgid ""
 "All your personal data including e-mail address, tenhou ID, name and surname"
 msgstr "メールアドレス、天鳳 ID、氏名を含むすべての個人情報"
 
-#: app/pages/ProfileManage.tsx:349:18
+#: app/pages/ProfileManage.tsx:366:18
 msgid "All your played games and events"
 msgstr "参加したすべての対局とイベント"
 
@@ -188,7 +192,7 @@ msgstr "参加したすべての対局とイベント"
 msgid "Allow abortive draws"
 msgstr "途中流局を有効にする"
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:89:16
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:93:16
 msgid "Allow adding of replays manually"
 msgstr "牌譜の手動追加を許可"
 
@@ -208,19 +212,19 @@ msgstr "対局中に他のテーブルの閲覧を許可"
 msgid "Already registered?"
 msgstr "登録済みですか？"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:299:18
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:301:18
 msgid "Amount of chombo penalty"
 msgstr "チョンボのペナルティ点"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:300:24
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:302:24
 msgid "Amount of penalty applied in the end of the session after uma bonus."
 msgstr "対局終了後、ウマを加算してから差し引くペナルティ点。"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:320:24
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:322:24
 msgid "Amount of penalty applied to those who didn't win once in game."
 msgstr "対局中に一度も和了しなかったプレイヤーへのペナルティ点。"
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:114:22
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:118:22
 msgid ""
 "Amount of points given for each chip. Chips should be set up in tournament "
 "settings in Tenhou.net. Set to 0 to disable chips."
@@ -284,7 +288,11 @@ msgstr "適用者："
 msgid "Atamahane"
 msgstr "頭ハネ"
 
-#: app/pages/ProfileManage.tsx:293:20 app/pages/ProfileManageAdmin.tsx:315:18
+#: app/components/RefereeNotes.tsx:165:18
+msgid "Author: %1"
+msgstr ""
+
+#: app/pages/ProfileManage.tsx:310:20 app/pages/ProfileManageAdmin.tsx:332:18
 msgid ""
 "Avatar should be an image file. It's recommended to upload a square-sized "
 "image, otherwise it will be cropped to center square. File size should not "
@@ -329,19 +337,23 @@ msgstr "座席表を生成できません：登録プレイヤー数が 4 の倍
 msgid "Cancel"
 msgstr "キャンセル"
 
-#: app/pages/GamesControl/GamesList.tsx:249:30
+#: app/pages/GamesControl/GamesList.tsx:254:30
 msgid "Cancel last played round"
 msgstr "直前の局を取り消す"
+
+#: app/pages/GamesControl/GamesList.tsx:304:30
+msgid "Cancel last round and game results"
+msgstr "最終局と対局結果を取り消す"
+
+#: app/pages/GamesControl/GamesList.tsx:305:29
+msgid "Cancel last round and results"
+msgstr "最終局と結果を取り消す"
 
 #: app/pages/Penalties/PenaltiesList.tsx:125:20
 msgid "Cancel penalty"
 msgstr "ペナルティを取り消す"
 
-#: app/pages/GamesControl/GamesList.tsx:300:29
-msgid "Cancel last round and results"
-msgstr "最終局と結果を取り消す"
-
-#: app/pages/GamesControl/GamesList.tsx:250:29
+#: app/pages/GamesControl/GamesList.tsx:255:29
 msgid "Cancel round"
 msgstr "局を取り消す"
 
@@ -352,7 +364,7 @@ msgstr "取消済み： "
 #: app/pages/OwnedEventsEdit/index.tsx:382:32
 #: app/pages/PlayersManage/LocalIdsTab.tsx:115:28
 #: app/pages/PlayersManage/TeamNamesTab.tsx:116:28
-#: app/pages/ProfileManage.tsx:311:32 app/pages/ProfileManageAdmin.tsx:326:21
+#: app/pages/ProfileManage.tsx:328:32 app/pages/ProfileManageAdmin.tsx:343:21
 msgid "Changes saved!"
 msgstr "変更を保存しました！"
 
@@ -380,13 +392,13 @@ msgstr "清一色"
 msgid "Chinroutou"
 msgstr "清老頭"
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:113:16
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:117:16
 msgid "Chips value"
 msgstr "チップの点数"
 
 #: app/pages/OwnedEventsEdit/TournamentSettings.tsx:78:16
-msgid "Chombo in last round ends game"
-msgstr "最終局のチョンボで対局を終了"
+msgid "Chombo after time is out counts as hand"
+msgstr "時間切れ後のチョンボを1局として数える"
 
 #: app/pages/OwnedEventsEdit/RulesetSettings.tsx:88:20
 msgid "Chombo payments (sanma)"
@@ -412,7 +424,7 @@ msgstr "九蓮宝燈"
 msgid "Chuuren poutou 9-side"
 msgstr "純正九蓮宝燈"
 
-#: app/pages/ProfileManage.tsx:243:22
+#: app/pages/ProfileManage.tsx:253:22
 msgid "City"
 msgstr "都市"
 
@@ -420,7 +432,7 @@ msgstr "都市"
 msgid "Collect riichi bets by atamahane"
 msgstr "立直棒を頭ハネで配分"
 
-#: app/components/MainMenu.tsx:226:18
+#: app/components/MainMenu.tsx:236:18
 msgid "Common actions"
 msgstr "よく使う操作"
 
@@ -454,16 +466,16 @@ msgid "Copy event"
 msgstr "イベントをコピー"
 
 #: app/pages/OwnedEventsEdit/LocalSettings.tsx:39:22
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:126:22
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:130:22
 msgid ""
 "Count of session in game series. Set to 0 to disable series functionality."
 msgstr "シリーズ内の対局数。0 にするとシリーズ機能を無効にします。"
 
-#: app/pages/ProfileManage.tsx:232:22 app/pages/ProfileManageAdmin.tsx:254:20
+#: app/pages/ProfileManage.tsx:242:22 app/pages/ProfileManageAdmin.tsx:264:20
 msgid "Country"
 msgstr "国"
 
-#: app/components/MainMenu.tsx:251:19
+#: app/components/MainMenu.tsx:261:19
 msgid "Create new event"
 msgstr "新しいイベントを作成"
 
@@ -471,7 +483,7 @@ msgstr "新しいイベントを作成"
 msgid "Current penalties"
 msgstr "現在のペナルティ"
 
-#: app/pages/GamesControl/GamesList.tsx:136:30
+#: app/pages/GamesControl/GamesList.tsx:139:30
 msgid "Current round"
 msgstr "現在の局"
 
@@ -492,8 +504,8 @@ msgstr "大三元"
 msgid "Daisuushii"
 msgstr "大四喜"
 
-#: app/components/MainMenu.tsx:156:24 app/pages/OwnedEvents.tsx:461:44
-#: app/pages/ProfileManage.tsx:300:29
+#: app/components/MainMenu.tsx:166:24 app/pages/OwnedEvents.tsx:461:44
+#: app/pages/ProfileManage.tsx:317:29
 msgid "Danger zone"
 msgstr "危険な操作"
 
@@ -541,7 +553,7 @@ msgstr "イベントを編集 :: %1"
 msgid "Edit event settings"
 msgstr "イベント設定を編集"
 
-#: app/components/MainMenu.tsx:296:19
+#: app/components/MainMenu.tsx:306:19
 msgid "Edit profile"
 msgstr "プロフィールを編集"
 
@@ -569,7 +581,7 @@ msgstr "役牌の集約を有効にする"
 msgid "Enter a reason for cancellation and confirm it."
 msgstr "取消の理由を入力し、確認してください。"
 
-#: app/pages/ProfileManageAdmin.tsx:264:26
+#: app/pages/ProfileManageAdmin.tsx:274:26
 msgid "Enter city of the player"
 msgstr "プレイヤーの都市を入力"
 
@@ -577,15 +589,15 @@ msgstr "プレイヤーの都市を入力"
 msgid "Enter new strong password"
 msgstr "新しい強力なパスワードを入力"
 
-#: app/pages/ProfileManageAdmin.tsx:225:26
+#: app/pages/ProfileManageAdmin.tsx:235:26
 msgid "Enter player's e-mail address"
 msgstr "プレイヤーのメールアドレスを入力"
 
-#: app/pages/ProfileManageAdmin.tsx:271:26
+#: app/pages/ProfileManageAdmin.tsx:281:26
 msgid "Enter player's phone"
 msgstr "プレイヤーの電話番号を入力"
 
-#: app/pages/ProfileManageAdmin.tsx:244:30 app/pages/ProfileSignup.tsx:141:26
+#: app/pages/ProfileManageAdmin.tsx:254:30 app/pages/ProfileSignup.tsx:141:26
 msgid "Enter strong password"
 msgstr "強力なパスワードを入力"
 
@@ -593,19 +605,19 @@ msgstr "強力なパスワードを入力"
 msgid "Enter your e-mail address"
 msgstr "メールアドレスを入力"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:248:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:250:16
 msgid "Equalize uma"
 msgstr "同点時にウマを均等にする"
 
 #: app/pages/EventPrescript.tsx:84:18 app/pages/EventPrescript.tsx:124:18
-#: app/pages/GamesControl/index.tsx:96:18
-#: app/pages/GamesControl/index.tsx:116:16 app/pages/OwnedEvents.tsx:96:16
+#: app/pages/GamesControl/index.tsx:100:18
+#: app/pages/GamesControl/index.tsx:120:16 app/pages/OwnedEvents.tsx:96:16
 #: app/pages/OwnedEventsEdit/index.tsx:269:18
-#: app/pages/OwnedEventsEdit/index.tsx:308:18 app/pages/Penalties.tsx:102:18
+#: app/pages/OwnedEventsEdit/index.tsx:308:18 app/pages/Penalties.tsx:103:18
 #: app/pages/Penalties/PenaltyForm.tsx:93:18
 #: app/pages/PlayersManage/index.tsx:89:18
 #: app/pages/PlayersManage/LocalIdsTab.tsx:74:18
-#: app/pages/PlayersManage/ManagementTab.tsx:85:18
+#: app/pages/PlayersManage/ManagementTab.tsx:86:18
 #: app/pages/PlayersManage/TeamNamesTab.tsx:74:18
 #: app/pages/PrivilegesManage/index.tsx:60:18
 #: app/pages/PrivilegesManage/ManagementTab.tsx:65:18
@@ -652,7 +664,11 @@ msgstr "イベント"
 msgid "Event visible in global list"
 msgstr "全体一覧でイベントを公開"
 
-#: app/components/MainMenu.tsx:82:22
+#: app/components/RefereeNotes.tsx:160:19
+msgid "Event-wide note"
+msgstr ""
+
+#: app/components/MainMenu.tsx:83:22
 msgid "Event: %1"
 msgstr "イベント：%1"
 
@@ -660,12 +676,12 @@ msgstr "イベント：%1"
 msgid "External gaming platform for the tournament"
 msgstr "大会に使用する外部ゲームプラットフォーム"
 
-#: app/pages/GamesControl/GamesList.tsx:191:24
+#: app/pages/GamesControl/GamesList.tsx:196:24
 msgid "Extra minutes: %1"
 msgstr "追加時間：%1 分"
 
-#: app/pages/GamesControl/index.tsx:220:29
-#: app/pages/GamesControl/index.tsx:235:29
+#: app/pages/GamesControl/index.tsx:224:29
+#: app/pages/GamesControl/index.tsx:239:29
 msgid "Failed to add extra time"
 msgstr "時間を追加できませんでした"
 
@@ -675,7 +691,7 @@ msgstr ""
 "ペナルティを適用できませんでした：サーバーエラー、またはネットワークに接続で"
 "きません"
 
-#: app/pages/GamesControl/index.tsx:272:27
+#: app/pages/GamesControl/index.tsx:276:27
 msgid "Failed to approve session results"
 msgstr "対局結果を承認できませんでした"
 
@@ -683,11 +699,11 @@ msgstr "対局結果を承認できませんでした"
 msgid "Failed to authorize. Please check your email and password."
 msgstr "認証に失敗しました。メールアドレスとパスワードをご確認ください。"
 
-#: app/pages/GamesControl/index.tsx:191:35
+#: app/pages/GamesControl/index.tsx:195:35
 msgid "Failed to cancel game"
 msgstr "対局を取り消せませんでした"
 
-#: app/pages/GamesControl/index.tsx:163:35
+#: app/pages/GamesControl/index.tsx:167:35
 msgid "Failed to cancel round"
 msgstr "局を取り消せませんでした"
 
@@ -703,7 +719,7 @@ msgstr ""
 "メールアドレスを確認できませんでした。リンクが期限切れか、使用済みの可能性が"
 "あります。再度登録してください。"
 
-#: app/pages/GamesControl/index.tsx:177:35
+#: app/pages/GamesControl/index.tsx:181:35
 msgid "Failed to definalize game"
 msgstr "対局の終了を取り消せませんでした"
 
@@ -712,27 +728,27 @@ msgstr "対局の終了を取り消せませんでした"
 msgid "Failed to fetch event data"
 msgstr "イベントデータを取得できませんでした"
 
-#: app/pages/GamesControl/index.tsx:373:29
+#: app/pages/GamesControl/index.tsx:377:29
 msgid "Failed to finish the game"
 msgstr "対局を終了できませんでした"
 
-#: app/pages/GamesControl/index.tsx:286:29
+#: app/pages/GamesControl/index.tsx:290:29
 msgid "Failed to generate interval seating"
 msgstr "間隔方式の座席表を生成できませんでした"
 
-#: app/pages/GamesControl/index.tsx:343:29
+#: app/pages/GamesControl/index.tsx:347:29
 msgid "Failed to generate prescripted seating"
 msgstr "事前指定の座席表を生成できませんでした"
 
-#: app/pages/GamesControl/index.tsx:305:29
+#: app/pages/GamesControl/index.tsx:309:29
 msgid "Failed to generate random seating"
 msgstr "ランダムな座席表を生成できませんでした"
 
-#: app/pages/GamesControl/index.tsx:324:29
+#: app/pages/GamesControl/index.tsx:328:29
 msgid "Failed to generate swiss seating"
 msgstr "スイス式の座席表を生成できませんでした"
 
-#: app/pages/GamesControl/index.tsx:249:27
+#: app/pages/GamesControl/index.tsx:253:27
 msgid "Failed to notify players"
 msgstr "プレイヤーに通知できませんでした"
 
@@ -744,7 +760,7 @@ msgstr ""
 "パスワードを再設定できませんでした。リンクが期限切れか、使用済みの可能性があ"
 "ります。再試行してください。"
 
-#: app/pages/ProfileManageAdmin.tsx:130:15
+#: app/pages/ProfileManageAdmin.tsx:140:32
 msgid "Failed to register player. Is your connection stable?"
 msgstr "プレイヤーを登録できませんでした。接続を確認してください。"
 
@@ -758,7 +774,7 @@ msgstr ""
 msgid "Failed to request registration. Is your connection stable?"
 msgstr "登録をリクエストできませんでした。接続を確認してください。"
 
-#: app/pages/GamesControl/index.tsx:360:27
+#: app/pages/GamesControl/index.tsx:364:27
 msgid "Failed to reset seating"
 msgstr "座席表をリセットできませんでした"
 
@@ -774,11 +790,15 @@ msgstr ""
 "イベントを保存できませんでした：サーバーエラー、またはネットワークに接続でき"
 "ません"
 
+#: app/components/RefereeNotes.tsx:83:37
+msgid "Failed to save referee note"
+msgstr ""
+
 #: app/pages/ProfileNotifications.tsx:95:36
 msgid "Failed to set notifications settings."
 msgstr "通知設定を保存できませんでした。"
 
-#: app/pages/GamesControl/index.tsx:204:27
+#: app/pages/GamesControl/index.tsx:208:27
 msgid "Failed to start timer"
 msgstr "タイマーを開始できませんでした"
 
@@ -786,15 +806,15 @@ msgstr "タイマーを開始できませんでした"
 msgid "Failed to toggle achievements visibility"
 msgstr "実績の公開設定を切り替えられませんでした"
 
-#: app/pages/GamesControl/index.tsx:260:27 app/pages/OwnedEvents.tsx:193:27
+#: app/pages/GamesControl/index.tsx:264:27 app/pages/OwnedEvents.tsx:193:27
 msgid "Failed to toggle results visibility"
 msgstr "結果の公開設定を切り替えられませんでした"
 
-#: app/pages/ProfileManageAdmin.tsx:169:15
+#: app/pages/ProfileManageAdmin.tsx:179:15
 msgid "Failed to update player details. Is your connection stable?"
 msgstr "プレイヤー情報を更新できませんでした。接続を確認してください。"
 
-#: app/pages/ProfileManage.tsx:153:13
+#: app/pages/ProfileManage.tsx:162:22
 msgid "Failed to update profile. Is your connection stable?"
 msgstr "プロフィールを更新できませんでした。接続を確認してください。"
 
@@ -806,7 +826,7 @@ msgstr "ファイルサイズが大きすぎます"
 msgid "Find and add administrator by name..."
 msgstr "名前で管理者を検索して追加..."
 
-#: app/pages/PlayersManage/ManagementTab.tsx:171:30
+#: app/pages/PlayersManage/ManagementTab.tsx:172:30
 msgid "Find and add player by name or ID..."
 msgstr "名前またはIDでプレーヤーを検索して追加..."
 
@@ -814,11 +834,11 @@ msgstr "名前またはIDでプレーヤーを検索して追加..."
 msgid "Find and add referee by name..."
 msgstr "名前で審判を検索して追加..."
 
-#: app/pages/PlayersManage/ManagementTab.tsx:154:24
+#: app/pages/PlayersManage/ManagementTab.tsx:155:24
 msgid "Find replacement player by name or ID..."
 msgstr "名前またはIDで代替プレーヤーを検索..."
 
-#: app/components/MainMenu.tsx:207:24 app/pages/OwnedEvents.tsx:476:40
+#: app/components/MainMenu.tsx:217:24 app/pages/OwnedEvents.tsx:476:40
 #: app/pages/OwnedEvents.tsx:484:34
 msgid "Finish event"
 msgstr "イベントを終了"
@@ -827,7 +847,7 @@ msgstr "イベントを終了"
 msgid "Finish event."
 msgstr "イベントを終了。"
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:161:22
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:165:22
 #: app/pages/OwnedEventsEdit/TournamentSettings.tsx:151:22
 msgid ""
 "Fixed amount of rank penalty applied for each replacement player regardless "
@@ -835,28 +855,28 @@ msgid ""
 msgstr ""
 "対局結果にかかわらず、各代打プレイヤーに適用する固定の順位ペナルティ点。"
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:150:22
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:154:22
 #: app/pages/OwnedEventsEdit/TournamentSettings.tsx:140:22
 msgid ""
 "Fixed amount of result score applied for each replacement player regardless "
 "of session results."
 msgstr "対局結果にかかわらず、各代打プレイヤーに適用する固定の結果点。"
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:149:16
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:153:16
 #: app/pages/OwnedEventsEdit/TournamentSettings.tsx:139:16
 msgid "Fixed score applied to replacement player"
 msgstr "代打プレイヤーの固定得点"
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:160:16
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:164:16
 #: app/pages/OwnedEventsEdit/TournamentSettings.tsx:150:16
 msgid "Fixed uma for replacement player"
 msgstr "代打プレイヤーの固定ウマ"
 
-#: app/pages/GamesControl/GamesList.tsx:284:29
+#: app/pages/GamesControl/GamesList.tsx:289:29
 msgid "Force finish game"
 msgstr "対局を強制終了"
 
-#: app/pages/GamesControl/GamesList.tsx:283:30
+#: app/pages/GamesControl/GamesList.tsx:288:30
 msgid "Forcefully finish the game"
 msgstr "対局を強制終了する"
 
@@ -878,11 +898,11 @@ msgstr "対局・プロフィール管理 - Forseti"
 msgid "Game duration"
 msgstr "対局時間"
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:102:16
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:106:16
 msgid "Game expiration time (in hours)"
 msgstr "対局の有効期間（時間）"
 
-#: app/pages/GamesControl/index.tsx:66:16
+#: app/pages/GamesControl/index.tsx:68:16
 msgid "Games management"
 msgstr "対局管理"
 
@@ -983,7 +1003,7 @@ msgstr ""
 "有効の場合、全員に実績を公開します。無効の場合、イベント管理者のみ閲覧できま"
 "す"
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:90:22
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:94:22
 msgid ""
 "If checked, any player participating in event will be able to add new "
 "replays through user interface. Disable this if you have any external tool "
@@ -1001,7 +1021,7 @@ msgstr ""
 "有効の場合、対局中でも他のテーブルの状況を閲覧できます。大会ではこの項目を無"
 "効にすることを強く推奨します。"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:249:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:251:22
 msgid ""
 "If checked, players with equivalent score receive equivalent uma bonus. "
 "Otherwise, uma is assigned according to move order."
@@ -1026,7 +1046,7 @@ msgstr ""
 "有効の場合、全員にランキング表を公開します。無効の場合、イベント管理者のみ閲"
 "覧できます"
 
-#: app/pages/ProfileManage.tsx:264:28 app/pages/ProfileManageAdmin.tsx:286:26
+#: app/pages/ProfileManage.tsx:281:28 app/pages/ProfileManageAdmin.tsx:303:26
 msgid ""
 "If checked, uploaded avatar will be shown instead of default circle with "
 "initials. If no avatar is uploaded, the default circle will be shown."
@@ -1043,6 +1063,15 @@ msgstr ""
 "最終局で目標点に達した人がいなければ、半荘は西入、東風戦は南入し、誰かが目標"
 "点に達するまで続行します"
 
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:79:22
+msgid ""
+"If set, a chombo after timeout counts as one played hand. All selected "
+"players are penalized together. Applies to both timed ending policies."
+msgstr ""
+"有効にすると、時間切れ後のチョンボを1局消化したものとして扱います。選択したす"
+"べてのプレイヤーに同時に罰則が適用されます。時間制限による終了方式の両方に適"
+"用されます。"
+
 #: app/pages/OwnedEventsEdit/RulesetSettings.tsx:114:22
 msgid ""
 "If the dealer holds the 1st place after last hand in session, the game ends "
@@ -1056,13 +1085,6 @@ msgid ""
 "widest privileges are applied, so the person will have administrator rights."
 msgstr ""
 "同じ人を審判と管理者の両方に登録した場合、より広い管理者権限を適用します。"
-
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:79:22
-msgid ""
-"If this is set, chombo will not allow players to play one more hand if time "
-"is out and it is final hand of the game"
-msgstr ""
-"有効の場合、制限時間経過後の最終局でチョンボがあっても、もう 1 局は行いません"
 
 #: app/helpers/yaku.ts:125:34
 msgid "Iipeikou"
@@ -1097,7 +1119,7 @@ msgstr "初期ランキング点"
 msgid "Instructions"
 msgstr "手順"
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:103:22
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:107:22
 msgid ""
 "Interval of time when played online game is still considered valid and can "
 "be added to the rating. Set to 0 to disable expiration."
@@ -1113,12 +1135,12 @@ msgstr "間隔方式の座席表"
 msgid "Interval seating can't be used for first session in tournament"
 msgstr "大会の最初の対局では間隔方式の座席表を使用できません"
 
-#: app/pages/ProfileLogin.tsx:46:63 app/pages/ProfileManageAdmin.tsx:84:63
+#: app/pages/ProfileLogin.tsx:46:63 app/pages/ProfileManageAdmin.tsx:86:63
 #: app/pages/ProfileResetPassword.tsx:42:63 app/pages/ProfileSignup.tsx:58:63
 msgid "Invalid email"
 msgstr "メールアドレスが無効です"
 
-#: app/pages/ProfileManage.tsx:91:70 app/pages/ProfileManageAdmin.tsx:85:70
+#: app/pages/ProfileManage.tsx:94:70 app/pages/ProfileManageAdmin.tsx:87:70
 #: app/pages/ProfileSignup.tsx:59:70
 msgid "Invalid title"
 msgstr "名前が無効です"
@@ -1155,7 +1177,7 @@ msgstr "国士無双十三面待ち"
 msgid "Kuitan"
 msgstr "喰いタン"
 
-#: app/components/MainMenu.tsx:332:18 app/services/i18n.be.test.ts:35:12
+#: app/components/MainMenu.tsx:342:18 app/services/i18n.be.test.ts:35:12
 #: app/services/i18n.selection.test.ts:23:10
 msgid "Language"
 msgstr "言語"
@@ -1172,7 +1194,15 @@ msgstr "過去 24 時間"
 msgid "Last 30d"
 msgstr "過去 30 日"
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:77:16
+#: app/components/RefereeNotes.tsx:126:28
+msgid "Leave empty for an event-wide note."
+msgstr ""
+
+#: app/components/RefereeNotes.tsx:125:22
+msgid "Linked player (optional)"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:81:16
 msgid "Lobby ID"
 msgstr "ロビー ID"
 
@@ -1222,7 +1252,7 @@ msgstr "進行中の対局を管理"
 msgid "Manage event settings: rename event, change yaku settings, etc."
 msgstr "イベント名や役の設定など、イベント設定を管理します。"
 
-#: app/components/MainMenu.tsx:135:29 app/pages/OwnedEvents.tsx:447:35
+#: app/components/MainMenu.tsx:145:29 app/pages/OwnedEvents.tsx:447:35
 msgid "Manage games"
 msgstr "対局を管理"
 
@@ -1236,11 +1266,11 @@ msgstr "大会タイマーの開始やリセット、局や対局の取消、座
 msgid "Manage my events"
 msgstr "自分のイベントを管理"
 
-#: app/pages/OwnedEvents.tsx:438:36 app/pages/Penalties.tsx:47:16
+#: app/pages/OwnedEvents.tsx:438:36 app/pages/Penalties.tsx:48:16
 msgid "Manage penalties"
 msgstr "ペナルティを管理"
 
-#: app/components/MainMenu.tsx:118:27 app/pages/OwnedEvents.tsx:431:36
+#: app/components/MainMenu.tsx:128:27 app/pages/OwnedEvents.tsx:431:36
 #: app/pages/OwnedEvents.tsx:433:35
 msgid "Manage players"
 msgstr "プレイヤーを管理"
@@ -1257,7 +1287,7 @@ msgstr "イベントのプレイヤーの追加、削除、座席割り当てか
 msgid "Manage predefined seating"
 msgstr "事前指定の座席表を管理"
 
-#: app/components/MainMenu.tsx:109:27 app/pages/OwnedEvents.tsx:425:37
+#: app/components/MainMenu.tsx:119:27 app/pages/OwnedEvents.tsx:425:37
 msgid "Manage privileges"
 msgstr "権限を管理"
 
@@ -1269,11 +1299,11 @@ msgstr "イベントの権限を管理"
 msgid "Manage privileges: assign referees and other administrators."
 msgstr "審判や他の管理者の指定など、権限を管理します。"
 
-#: app/pages/ProfileManage.tsx:61:16
+#: app/pages/ProfileManage.tsx:63:16
 msgid "Manage your account"
 msgstr "アカウントを管理"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:258:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:260:16
 msgid "Max arbitrary penalty score"
 msgstr "個別ペナルティの上限点"
 
@@ -1285,18 +1315,18 @@ msgstr "メニュー"
 msgid "Menzentsumo"
 msgstr "門前清自摸和"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:265:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:267:16
 msgid "Min arbitrary penalty score"
 msgstr "個別ペナルティの下限点"
 
 #: app/pages/OwnedEventsEdit/LocalSettings.tsx:51:22
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:138:22
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:142:22
 msgid ""
 "Minimal count of games the player should play to get into the rating table."
 msgstr "ランキング表に掲載されるために必要な最低対局数。"
 
 #: app/pages/OwnedEventsEdit/LocalSettings.tsx:50:16
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:137:16
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:141:16
 msgid "Minimal games count"
 msgstr "最低対局数"
 
@@ -1308,7 +1338,7 @@ msgstr "複数行入力と Markdown 記法に対応しています。"
 msgid "Multiple yakumans"
 msgstr "複合役満"
 
-#: app/components/MainMenu.tsx:242:19
+#: app/components/MainMenu.tsx:252:19
 msgid "My events"
 msgstr "自分のイベント"
 
@@ -1348,6 +1378,14 @@ msgstr "利用可能な事前設定セッションはもうありません"
 msgid "No penalties assigned yet"
 msgstr "ペナルティはまだありません"
 
+#: app/components/RefereeNotes.tsx:150:15
+msgid "No referee notes linked to players yet"
+msgstr ""
+
+#: app/components/RefereeNotes.tsx:151:15
+msgid "No referee notes yet"
+msgstr ""
+
 #: app/helpers/yaku.ts:297:34
 msgid "North round wind"
 msgstr "場風：北"
@@ -1372,12 +1410,16 @@ msgstr "未選択"
 msgid "Not started"
 msgstr "未開始"
 
+#: app/components/RefereeNotes.tsx:114:22
+msgid "Note"
+msgstr ""
+
 #: app/pages/PrivilegesManage/ManagementTab.tsx:246:27
 msgid "Notes on privileges"
 msgstr "権限について"
 
 #: app/pages/OwnedEventsEdit/BasicSettings.tsx:126:32
-#: app/pages/ProfileManage.tsx:234:36 app/pages/ProfileManageAdmin.tsx:256:34
+#: app/pages/ProfileManage.tsx:244:36 app/pages/ProfileManageAdmin.tsx:266:34
 msgid "Nothing found"
 msgstr "見つかりませんでした"
 
@@ -1385,7 +1427,7 @@ msgstr "見つかりませんでした"
 msgid "Notice"
 msgstr "お知らせ"
 
-#: app/components/MainMenu.tsx:305:19
+#: app/components/MainMenu.tsx:315:19
 msgid "Notifications"
 msgstr "通知"
 
@@ -1455,7 +1497,7 @@ msgstr "大会の対局終了時に通知（オンラインを除く）"
 msgid "Notify when you are requested as referee"
 msgstr "審判として呼ばれたら通知"
 
-#: app/pages/ProfileManage.tsx:226:28
+#: app/pages/ProfileManage.tsx:236:28
 msgid "Numerical identifier of your user profile."
 msgstr "プレイヤーのプロフィールの数値 ID。"
 
@@ -1493,11 +1535,11 @@ msgstr "進行中のイベントのみ"
 msgid "Open Pantheon bot"
 msgstr "Pantheon ボットを開く"
 
-#: app/components/MainMenu.tsx:323:17
+#: app/components/MainMenu.tsx:333:17
 msgid "Open assistant"
 msgstr "アシスタントを開く"
 
-#: app/components/MainMenu.tsx:90:21
+#: app/components/MainMenu.tsx:91:21
 msgid "Open event page"
 msgstr "イベントページを開く"
 
@@ -1529,11 +1571,11 @@ msgstr "パスワードの再設定に失敗しました"
 msgid "Password successfully updated"
 msgstr "パスワードを更新しました"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:279:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:281:16
 msgid "Pay chombo as reverse mangan"
 msgstr "チョンボを逆満貫で精算"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:280:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:282:22
 msgid ""
 "Pay chombo right on occasion. If not checked, chombo is subtracted from "
 "player score after uma is applied."
@@ -1549,8 +1591,8 @@ msgstr "本場の点数を頭ハネで配分"
 msgid "Payments and scores"
 msgstr "支払いと点数"
 
-#: app/components/MainMenu.tsx:128:29 app/pages/OwnedEvents.tsx:440:35
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:256:25
+#: app/components/MainMenu.tsx:138:29 app/pages/OwnedEvents.tsx:440:35
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:258:25
 msgid "Penalties"
 msgstr "ペナルティ"
 
@@ -1575,7 +1617,7 @@ msgstr "主審が承認していないペナルティ"
 msgid "Penalty reason"
 msgstr "ペナルティの理由"
 
-#: app/pages/ProfileManage.tsx:250:22
+#: app/pages/ProfileManage.tsx:260:22
 msgid "Phone number"
 msgstr "電話番号"
 
@@ -1605,23 +1647,23 @@ msgstr ""
 msgid "Player #%1"
 msgstr "プレイヤー #%1"
 
-#: app/pages/ProfileManageAdmin.tsx:155:26
+#: app/pages/ProfileManageAdmin.tsx:165:26
 msgid "Player details were successfully saved"
 msgstr "プレイヤー情報を保存しました"
 
-#: app/pages/PlayersManage/ManagementTab.tsx:248:27
+#: app/pages/PlayersManage/ManagementTab.tsx:255:27
 msgid "Player is excluded from next seating. Click to include"
 msgstr "次の座席割り当てから除外されています。クリックして含める"
 
-#: app/pages/PlayersManage/ManagementTab.tsx:249:27
+#: app/pages/PlayersManage/ManagementTab.tsx:256:27
 msgid "Player is included in next seating. Click to exclude"
 msgstr "次の座席割り当てに含まれています。クリックして除外する"
 
-#: app/pages/ProfileManage.tsx:214:22
+#: app/pages/ProfileManage.tsx:224:22
 msgid "Player title"
 msgstr "玩家名"
 
-#: app/pages/ProfileManageAdmin.tsx:118:26
+#: app/pages/ProfileManageAdmin.tsx:130:26
 msgid "Player was successfully registered"
 msgstr "プレイヤーを登録しました"
 
@@ -1633,7 +1675,7 @@ msgstr "プレイヤー"
 msgid "Please check your mailbox for the verification email."
 msgstr "確認メールをご確認ください。"
 
-#: app/pages/ProfileManage.tsx:324:18
+#: app/pages/ProfileManage.tsx:341:18
 msgid "Please confirm account removal"
 msgstr "アカウントの削除を確認してください"
 
@@ -1677,7 +1719,7 @@ msgstr "下のボタンを押してパスワードの再設定に進んでくだ
 msgid "Please select player"
 msgstr "プレイヤーを選んでください"
 
-#: app/pages/ProfileManage.tsx:359:20
+#: app/pages/ProfileManage.tsx:376:20
 msgid "Please type in your title to proceed with removal"
 msgstr "削除を続けるには玩家名を入力してください"
 
@@ -1685,7 +1727,15 @@ msgstr "削除を続けるには玩家名を入力してください"
 msgid "Please wait unit seating is ready"
 msgstr "座席表の準備ができるまでお待ちください"
 
-#: app/components/MainMenu.tsx:145:27 app/pages/OwnedEvents.tsx:455:37
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:240:22
+msgid ""
+"Points paid by each opponent per honba on tsumo. On ron, the discarder pays "
+"the total for all opponents."
+msgstr ""
+"ツモ時に各対戦相手が1本場につき支払う点数。ロン時は放銃者が全対戦相手分の合計"
+"を支払います。"
+
+#: app/components/MainMenu.tsx:155:27 app/pages/OwnedEvents.tsx:455:37
 msgid "Predefined seating"
 msgstr "事前指定の座席表"
 
@@ -1737,7 +1787,7 @@ msgstr "ランキング表を公開"
 msgid "Ready to approve"
 msgstr "承認待ち"
 
-#: app/components/MainMenu.tsx:163:24 app/pages/OwnedEvents.tsx:465:42
+#: app/components/MainMenu.tsx:173:24 app/pages/OwnedEvents.tsx:465:42
 #: app/pages/OwnedEvents.tsx:470:36
 msgid "Rebuild scoring"
 msgstr "得点を再計算"
@@ -1747,7 +1797,7 @@ msgstr "得点を再計算"
 msgid "Recalculate"
 msgstr "再計算"
 
-#: app/components/MainMenu.tsx:175:24
+#: app/components/MainMenu.tsx:185:24
 msgid "Recalculate achievements"
 msgstr "実績を再計算"
 
@@ -1763,7 +1813,7 @@ msgstr ""
 "イベント「%1」（ID #%2）の実績を再計算しますか？再計算を予約し、数分で完了し"
 "ます"
 
-#: app/components/MainMenu.tsx:191:24
+#: app/components/MainMenu.tsx:201:24
 msgid "Recalculate players stats"
 msgstr "プレイヤー統計を再計算"
 
@@ -1802,24 +1852,40 @@ msgstr "パスワードを再設定"
 msgid "Red dragon"
 msgstr "中"
 
+#: app/components/RefereeNotes.tsx:143:44
+msgid "Referee note saved"
+msgstr ""
+
+#: app/components/MainMenu.tsx:108:23 app/pages/RefereeNotes.tsx:14:16
+msgid "Referee notes"
+msgstr ""
+
+#: app/components/RefereeNotes.tsx:63:14
+msgid "Referee notes are available to event referees and administrators."
+msgstr ""
+
 #: app/pages/PrivilegesManage/ManagementTab.tsx:250:14
 msgid "Referee privileges include:"
 msgstr "審判の権限："
 
-#: app/pages/GamesControl/index.tsx:444:16
+#: app/pages/GamesControl/index.tsx:449:16
 msgid "Refresh data [%1]"
 msgstr "データを更新 [%1]"
 
-#: app/pages/ProfileManageAdmin.tsx:57:56 app/pages/ProfileSignup.tsx:43:16
+#: app/components/RefereeNotes.tsx:105:18
+msgid "Refresh notes"
+msgstr ""
+
+#: app/pages/ProfileManageAdmin.tsx:58:56 app/pages/ProfileSignup.tsx:43:16
 #: app/pages/ProfileSignup.tsx:159:16
 msgid "Register new account"
 msgstr "新しいアカウントを登録"
 
-#: app/components/MainMenu.tsx:278:19 app/pages/ProfileManageAdmin.tsx:330:21
+#: app/components/MainMenu.tsx:288:19 app/pages/ProfileManageAdmin.tsx:347:21
 msgid "Register player"
 msgstr "プレイヤーを登録"
 
-#: app/pages/ProfileManageAdmin.tsx:327:21
+#: app/pages/ProfileManageAdmin.tsx:344:21
 msgid "Registration done!"
 msgstr "登録が完了しました！"
 
@@ -1827,19 +1893,15 @@ msgstr "登録が完了しました！"
 msgid "Remove administrator from event"
 msgstr "イベントから管理者を削除"
 
-#: app/pages/GamesControl/GamesList.tsx:266:29
+#: app/pages/GamesControl/GamesList.tsx:271:29
 msgid "Remove game"
 msgstr "対局を削除"
 
-#: app/pages/GamesControl/GamesList.tsx:299:30
-msgid "Cancel last round and game results"
-msgstr "最終局と対局結果を取り消す"
-
-#: app/pages/ProfileManage.tsx:307:16 app/pages/ProfileManage.tsx:369:14
+#: app/pages/ProfileManage.tsx:324:16 app/pages/ProfileManage.tsx:386:14
 msgid "Remove my account"
 msgstr "自分のアカウントを削除"
 
-#: app/pages/PlayersManage/ManagementTab.tsx:264:28
+#: app/pages/PlayersManage/ManagementTab.tsx:271:28
 msgid "Remove player from event"
 msgstr "イベントからプレイヤーを削除"
 
@@ -1847,12 +1909,12 @@ msgstr "イベントからプレイヤーを削除"
 msgid "Remove referee from event"
 msgstr "イベントから審判を削除"
 
-#: app/pages/PlayersManage/ManagementTab.tsx:228:37
-#: app/pages/PlayersManage/ManagementTab.tsx:229:32
+#: app/pages/PlayersManage/ManagementTab.tsx:235:37
+#: app/pages/PlayersManage/ManagementTab.tsx:236:32
 msgid "Remove replacement"
 msgstr "代打を解除"
 
-#: app/pages/GamesControl/GamesList.tsx:265:30
+#: app/pages/GamesControl/GamesList.tsx:270:30
 msgid "Remove the game as it never existed"
 msgstr "対局をなかったことにして削除"
 
@@ -1860,11 +1922,11 @@ msgstr "対局をなかったことにして削除"
 msgid "Renhou"
 msgstr "人和"
 
-#: app/pages/PlayersManage/ManagementTab.tsx:204:28
+#: app/pages/PlayersManage/ManagementTab.tsx:211:28
 msgid "Replace player with someone else"
 msgstr "別のプレイヤーと交代"
 
-#: app/pages/PlayersManage/ManagementTab.tsx:220:28
+#: app/pages/PlayersManage/ManagementTab.tsx:227:28
 msgid "Replaced by %1"
 msgstr "%1 が代打"
 
@@ -1918,6 +1980,10 @@ msgstr "嶺上開花"
 msgid "Ron, %1 from %2 (%3), riichi: %4"
 msgstr "ロン：%1、放銃者：%2 (%3)、立直：%4"
 
+#: app/pages/ProfileManage.tsx:274:22 app/pages/ProfileManageAdmin.tsx:296:26
+msgid "Ronin nickname"
+msgstr "Roninのニックネーム"
+
 #: app/pages/OwnedEventsEdit/RulesetSettings.tsx:159:25
 msgid "Round outcomes"
 msgstr "局の結果"
@@ -1962,7 +2028,7 @@ msgstr "三色同刻"
 #: app/pages/OwnedEventsEdit/index.tsx:382:60
 #: app/pages/PlayersManage/LocalIdsTab.tsx:115:56
 #: app/pages/PlayersManage/TeamNamesTab.tsx:116:56
-#: app/pages/ProfileManage.tsx:311:60
+#: app/pages/ProfileManage.tsx:328:60
 msgid "Save changes"
 msgstr "変更を保存"
 
@@ -1994,7 +2060,7 @@ msgstr "アバターを選択"
 msgid "Select event type"
 msgstr "イベントの種類を選択"
 
-#: app/pages/GamesControl/GamesList.tsx:215:36
+#: app/pages/GamesControl/GamesList.tsx:220:36
 #: app/pages/GamesControl/TournamentControls.tsx:310:28
 msgid "Select extra time"
 msgstr "追加時間を選択"
@@ -2007,7 +2073,7 @@ msgstr "期間を選択"
 msgid "Select player"
 msgstr "プレイヤーを選ぶ"
 
-#: app/pages/PlayersManage/ManagementTab.tsx:148:16
+#: app/pages/PlayersManage/ManagementTab.tsx:149:16
 msgid "Select replacement player for %1"
 msgstr "%1 の代打プレイヤーを選ぶ"
 
@@ -2020,17 +2086,17 @@ msgid "Selected file is too big. Please select a file not bigger than 256KB"
 msgstr "選択したファイルが大きすぎます。256 KB 以下のファイルを選んでください"
 
 #: app/pages/OwnedEventsEdit/LocalSettings.tsx:38:16
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:125:16
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:129:16
 msgid "Series length"
 msgstr "シリーズの長さ"
 
-#: app/pages/ProfileManage.tsx:342:16
+#: app/pages/ProfileManage.tsx:359:16
 msgid ""
 "Server administrator will also be unable to restore your access to your "
 "removed account."
 msgstr "サーバー管理者も、削除されたアカウントへのアクセスを復元できません。"
 
-#: app/pages/GamesControl/GamesList.tsx:383:18
+#: app/pages/GamesControl/GamesList.tsx:388:18
 msgid "Session cancelled"
 msgstr "対局を取り消しました"
 
@@ -2042,23 +2108,23 @@ msgstr "対局時間（分）"
 msgid "Session ending policy"
 msgstr "対局の終了ルール"
 
-#: app/pages/GamesControl/GamesList.tsx:371:18
+#: app/pages/GamesControl/GamesList.tsx:376:18
 msgid "Session finished"
 msgstr "対局が終了しました"
 
-#: app/pages/GamesControl/GamesList.tsx:359:18
+#: app/pages/GamesControl/GamesList.tsx:364:18
 msgid "Session finished, but not confirmed"
 msgstr "対局終了、未承認"
 
-#: app/pages/GamesControl/GamesList.tsx:346:20
+#: app/pages/GamesControl/GamesList.tsx:351:20
 msgid "Session in progress"
 msgstr "対局中"
 
-#: app/pages/GamesControl/GamesList.tsx:334:20
+#: app/pages/GamesControl/GamesList.tsx:339:20
 msgid "Session is ready to start"
 msgstr "対局の開始準備ができました"
 
-#: app/pages/GamesControl/GamesList.tsx:395:18
+#: app/pages/GamesControl/GamesList.tsx:400:18
 msgid "Session is scheduled"
 msgstr "対局を予定しています"
 
@@ -2066,7 +2132,7 @@ msgstr "対局を予定しています"
 msgid "Session started"
 msgstr "対局が始まりました"
 
-#: app/components/MainMenu.tsx:98:23 app/pages/OwnedEvents.tsx:416:37
+#: app/components/MainMenu.tsx:99:23 app/pages/OwnedEvents.tsx:416:37
 msgid "Settings"
 msgstr "設定"
 
@@ -2113,7 +2179,7 @@ msgstr "結果表を公開"
 msgid "Show results table and achievements"
 msgstr "結果表と実績を公開"
 
-#: app/pages/ProfileManage.tsx:263:22 app/pages/ProfileManageAdmin.tsx:285:20
+#: app/pages/ProfileManage.tsx:280:22 app/pages/ProfileManageAdmin.tsx:302:20
 msgid "Show user avatar"
 msgstr "アバターを表示"
 
@@ -2121,15 +2187,15 @@ msgstr "アバターを表示"
 msgid "Shuffle players on the same table randomly"
 msgstr "同じテーブルのプレイヤーの座風をランダムに割り当てる"
 
-#: app/components/MainMenu.tsx:260:19
+#: app/components/MainMenu.tsx:270:19
 msgid "Sign in"
 msgstr "ログイン"
 
-#: app/components/MainMenu.tsx:314:19
+#: app/components/MainMenu.tsx:324:19
 msgid "Sign out"
 msgstr "ログアウト"
 
-#: app/components/MainMenu.tsx:269:19
+#: app/components/MainMenu.tsx:279:19
 msgid "Sign up"
 msgstr "登録"
 
@@ -2166,7 +2232,7 @@ msgstr "タイマーと対局を開始しますか？"
 msgid "Start timer and sessions"
 msgstr "タイマーと対局を開始"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:272:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:274:16
 msgid "Step of arbitrary penalty scores"
 msgstr "個別ペナルティ点の刻み幅"
 
@@ -2182,8 +2248,8 @@ msgstr "イベント「%1」（ID #%2）を終了しますか？この操作は�
 msgid "Subsystem"
 msgstr "サブシステム"
 
-#: app/pages/ProfileManageAdmin.tsx:117:24
-#: app/pages/ProfileManageAdmin.tsx:154:24 app/pages/ProfileSignup.tsx:109:20
+#: app/pages/ProfileManageAdmin.tsx:129:24
+#: app/pages/ProfileManageAdmin.tsx:164:24 app/pages/ProfileSignup.tsx:109:20
 msgid "Success"
 msgstr "成功"
 
@@ -2211,15 +2277,15 @@ msgstr "スイス式の座席表"
 msgid "Swiss seating can't be used for first session in tournament"
 msgstr "大会の最初の対局ではスイス式の座席表を使用できません"
 
-#: app/pages/ProfileManage.tsx:225:22
+#: app/pages/ProfileManage.tsx:235:22
 msgid "System ID"
 msgstr "システム ID"
 
-#: app/components/MainMenu.tsx:287:19 app/pages/SystemStats.tsx:104:16
+#: app/components/MainMenu.tsx:297:19 app/pages/SystemStats.tsx:104:16
 msgid "System stats"
 msgstr "システム統計"
 
-#: app/pages/GamesControl/GamesList.tsx:120:30
+#: app/pages/GamesControl/GamesList.tsx:123:30
 msgid "Table # %1"
 msgstr "第 # %1 卓"
 
@@ -2239,7 +2305,7 @@ msgstr ""
 msgid "Team names"
 msgstr "チーム名"
 
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:83:16
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:87:16
 #: app/pages/OwnedEventsEdit/TournamentSettings.tsx:87:16
 msgid "Team tournament"
 msgstr "チーム大会"
@@ -2252,19 +2318,11 @@ msgstr "チーム："
 msgid "Tenhou"
 msgstr "天和"
 
-#: app/pages/ProfileManage.tsx:257:22 app/pages/ProfileManageAdmin.tsx:279:26
+#: app/pages/ProfileManage.tsx:267:22 app/pages/ProfileManageAdmin.tsx:289:26
 msgid "Tenhou nickname"
 msgstr "天鳳のニックネーム"
 
-#: app/pages/ProfileManage.tsx:274:22 app/pages/ProfileManageAdmin.tsx:296:26
-msgid "Ronin nickname"
-msgstr "Roninのニックネーム"
-
-#: app/pages/ProfileManage.tsx:157:43 app/pages/ProfileManageAdmin.tsx:93:37
-msgid "This Ronin nickname is already taken"
-msgstr "このRoninのニックネームは既に使われています"
-
-#: app/pages/ProfileManage.tsx:94:13
+#: app/pages/ProfileManage.tsx:97:13
 msgid ""
 "Tenhou.net usernames can't be longer than 8 symbols. If you provided a login "
 "string instead, please note that you should NEVER do this again, in any "
@@ -2286,7 +2344,7 @@ msgstr ""
 "指定した点数をプレイヤーのランキング点から差し引き、このイベントのランキング"
 "表に適用します。0 点の場合は「お知らせ」として扱います。"
 
-#: app/pages/ProfileManage.tsx:353:14
+#: app/pages/ProfileManage.tsx:370:14
 msgid ""
 "The player name will be replaced with [Deleted account ####] everywhere."
 msgstr "すべての画面で玩家名を [Deleted account ####] に置き換えます。"
@@ -2299,8 +2357,12 @@ msgstr ""
 "四家立直、四開槓、四風連打、九種九牌などを記録するため、独立した「途中流局」"
 "の結果を有効にします。"
 
-#: app/pages/GamesControl/GamesList.tsx:251:32
-#: app/pages/GamesControl/GamesList.tsx:267:32
+#: app/pages/ProfileManage.tsx:157:43 app/pages/ProfileManageAdmin.tsx:93:37
+msgid "This Ronin nickname is already taken"
+msgstr "このRoninのニックネームは既に使われています"
+
+#: app/pages/GamesControl/GamesList.tsx:256:32
+#: app/pages/GamesControl/GamesList.tsx:272:32
 msgid "This action can't be undone. Continue?"
 msgstr "この操作は取り消せません。続行しますか？"
 
@@ -2308,7 +2370,7 @@ msgstr "この操作は取り消せません。続行しますか？"
 msgid "This is a player to be penalized"
 msgstr "ペナルティを適用するプレイヤー"
 
-#: app/pages/ProfileManage.tsx:215:28 app/pages/ProfileSignup.tsx:133:26
+#: app/pages/ProfileManage.tsx:225:28 app/pages/ProfileSignup.tsx:133:26
 msgid ""
 "This is a title that will be shown in rating table and in mobile assistant, "
 "also event administrators will use this title to find you and add to the "
@@ -2319,7 +2381,7 @@ msgstr ""
 "前で検索してイベントに追加します。重複を避けるため、名だけではなく氏名などを"
 "使用してください。"
 
-#: app/pages/ProfileManageAdmin.tsx:233:26
+#: app/pages/ProfileManageAdmin.tsx:243:26
 msgid ""
 "This is a title that will be shown in rating table and in mobile assistant. "
 "Please select some unique title, like nickname or name+surname."
@@ -2335,13 +2397,15 @@ msgstr ""
 "次の対局の進行表番号です（1 から開始）。新しい対局の開始時に自動的に増加しま"
 "す。"
 
-#: app/pages/GamesControl/GamesList.tsx:301:32
-msgid "This will remove the game results and the last round, and return the game to the state before that round. Continue?"
-msgstr "対局結果と最終局を削除し、その局の前の状態に戻します。続行しますか？"
-
 #: app/pages/GamesControl/TournamentControls.tsx:265:24
 msgid "This will remove generated seating. Continue?"
 msgstr "生成した座席表を削除します。続行しますか？"
+
+#: app/pages/GamesControl/GamesList.tsx:306:32
+msgid ""
+"This will remove the game results and the last round, and return the game to "
+"the state before that round. Continue?"
+msgstr "対局結果と最終局を削除し、その局の前の状態に戻します。続行しますか？"
 
 #: app/pages/OwnedEventsEdit/RulesetSettings.tsx:67:25
 #: app/pages/OwnedEventsEdit/RulesetSettings.tsx:69:16
@@ -2355,11 +2419,11 @@ msgid ""
 msgstr ""
 "タイマーの初期値。時間が経過すると、下記の対局の終了ルールを適用します。"
 
-#: app/components/MainMenu.tsx:416:18
+#: app/components/MainMenu.tsx:426:18
 msgid "Toggle color scheme"
 msgstr "配色を切り替える"
 
-#: app/components/MainMenu.tsx:406:18
+#: app/components/MainMenu.tsx:416:18
 msgid "Toggle dimmed colors"
 msgstr "落ち着いた配色に切り替える"
 
@@ -2428,11 +2492,11 @@ msgstr "4 位のウマ減点"
 msgid "Update password"
 msgstr "パスワードを更新"
 
-#: app/pages/ProfileManageAdmin.tsx:329:21
+#: app/pages/ProfileManageAdmin.tsx:346:21
 msgid "Update player"
 msgstr "プレイヤー情報を更新"
 
-#: app/pages/ProfileManageAdmin.tsx:57:21
+#: app/pages/ProfileManageAdmin.tsx:58:21
 msgid "Update player account"
 msgstr "プレイヤーのアカウントを更新"
 
@@ -2468,13 +2532,9 @@ msgstr "次の対局にスイス式の座席表を使用"
 msgid "Use swiss seating for next session?"
 msgstr "次の対局にスイス式の座席表を使用しますか？"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:311:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:313:22
 msgid "Use yakitori rule"
 msgstr "焼き鳥ルールを有効にする"
-
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:240:22
-msgid "Points paid by each opponent per honba on tsumo. On ron, the discarder pays the total for all opponents."
-msgstr "ツモ時に各対戦相手が1本場につき支払う点数。ロン時は放銃者が全対戦相手分の合計を支払います。"
 
 #: app/pages/OwnedEvents.tsx:497:32
 msgid "Visibility"
@@ -2483,6 +2543,10 @@ msgstr "公開設定"
 #: app/pages/OwnedEvents.tsx:511:36
 msgid "Visibility management"
 msgstr "公開設定の管理"
+
+#: app/components/RefereeNotes.tsx:115:28
+msgid "Visible only to event referees and administrators."
+msgstr ""
 
 #: app/helpers/yaku.ts:289:34
 msgid "West round wind"
@@ -2496,11 +2560,11 @@ msgstr "自風：西"
 msgid "West wind"
 msgstr "西風"
 
-#: app/pages/ProfileManage.tsx:347:18
+#: app/pages/ProfileManage.tsx:364:18
 msgid "What will NOT be deleted:"
 msgstr "削除されないもの："
 
-#: app/pages/ProfileManage.tsx:333:18
+#: app/pages/ProfileManage.tsx:350:18
 msgid "What will be deleted:"
 msgstr "削除されるもの："
 
@@ -2542,11 +2606,11 @@ msgstr "白"
 msgid "Wind shuffle mode"
 msgstr "座風の割り当て方法"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:310:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:312:16
 msgid "Yakitori"
 msgstr "焼き鳥"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:319:18
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:321:18
 msgid "Yakitori penalty"
 msgstr "焼き鳥のペナルティ"
 
@@ -2574,7 +2638,7 @@ msgstr "役牌 x3"
 msgid "Yakuhai x4"
 msgstr "役牌 x4"
 
-#: app/pages/ProfileManage.tsx:328:14
+#: app/pages/ProfileManage.tsx:345:14
 msgid ""
 "You are about to delete your account data from the system. Please confirm "
 "the action. You can close the window to cancel."
@@ -2582,7 +2646,7 @@ msgstr ""
 "システムからアカウント情報を削除します。確認してください。キャンセルするには"
 "ウィンドウを閉じてください。"
 
-#: app/pages/GamesControl/GamesList.tsx:285:32
+#: app/pages/GamesControl/GamesList.tsx:290:32
 msgid "You are going to forcefully finish this game. Continue?"
 msgstr "この対局を強制終了します。続行しますか？"
 
@@ -2605,12 +2669,12 @@ msgid ""
 msgstr ""
 "結果を承認すると直前の局を取り消せなくなります。対局結果を承認しますか？"
 
-#: app/pages/ProfileLogin.tsx:82:24 app/pages/ProfileManage.tsx:204:22
+#: app/pages/ProfileLogin.tsx:82:24 app/pages/ProfileManage.tsx:214:22
 #: app/pages/ProfileResetPassword.tsx:85:26
 msgid "Your e-mail address"
 msgstr "メールアドレス"
 
-#: app/pages/ProfileManage.tsx:205:28
+#: app/pages/ProfileManage.tsx:215:28
 msgid ""
 "Your e-mail will not be shared with anyone else and will not be visible "
 "anywhere. If you want to change your address, contact chief administrator."
@@ -2624,7 +2688,7 @@ msgid ""
 "page."
 msgstr "メールアドレスを確認しました。ログイン画面に進めます。"
 
-#: app/pages/ProfileManage.tsx:340:18
+#: app/pages/ProfileManage.tsx:357:18
 msgid "Your login credentials. YOU WON'T BE ABLE TO LOG IN AGAIN"
 msgstr "ログイン情報。再度ログインすることはできません"
 
@@ -2679,81 +2743,24 @@ msgstr "表示 / 非表示"
 msgid "yakuman!"
 msgstr "役満！"
 
+#~ msgid "Chombo in last round ends game"
+#~ msgstr "最終局のチョンボで対局を終了"
+
 #~ msgid "Disabled"
 #~ msgstr "無効"
 
 #~ msgid "Enabled"
 #~ msgstr "有効"
 
+#~ msgid ""
+#~ "If this is set, chombo will not allow players to play one more hand if "
+#~ "time is out and it is final hand of the game"
+#~ msgstr ""
+#~ "有効の場合、制限時間経過後の最終局でチョンボがあっても、もう 1 局は行いま"
+#~ "せん"
+
 #~ msgid "Use separate yakuhai names"
 #~ msgstr "役牌を個別に表示"
 
 #~ msgid "Yakuhai names"
 #~ msgstr "役牌の表示"
-
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:87:16
-msgid "Chombo after time is out counts as hand"
-msgstr "時間切れ後のチョンボを1局として数える"
-
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:79:22
-msgid ""
-"If set, a chombo after timeout counts as one played hand. All selected "
-"players are penalized together. Applies to both timed ending policies."
-msgstr "有効にすると、時間切れ後のチョンボを1局消化したものとして扱います。選択したすべてのプレイヤーに同時に罰則が適用されます。時間制限による終了方式の両方に適用されます。"
-
-#: app/components/RefereeNotes.tsx:141:16
-msgid "Add referee note"
-msgstr ""
-
-#: app/components/RefereeNotes.tsx:165:18
-msgid "Author: %1"
-msgstr ""
-
-#: app/components/RefereeNotes.tsx:160:19
-msgid "Event-wide note"
-msgstr ""
-
-#: app/components/RefereeNotes.tsx:83:37
-msgid "Failed to save referee note"
-msgstr ""
-
-#: app/components/RefereeNotes.tsx:126:28
-msgid "Leave empty for an event-wide note."
-msgstr ""
-
-#: app/components/RefereeNotes.tsx:125:22
-msgid "Linked player (optional)"
-msgstr ""
-
-#: app/components/RefereeNotes.tsx:150:15
-msgid "No referee notes linked to players yet"
-msgstr ""
-
-#: app/components/RefereeNotes.tsx:151:15
-msgid "No referee notes yet"
-msgstr ""
-
-#: app/components/RefereeNotes.tsx:114:22
-msgid "Note"
-msgstr ""
-
-#: app/components/RefereeNotes.tsx:143:44
-msgid "Referee note saved"
-msgstr ""
-
-#: app/components/MainMenu.tsx:108:23 app/components/RefereeNotes.tsx:98:27
-#: app/pages/RefereeNotes.tsx:11:16
-msgid "Referee notes"
-msgstr ""
-
-#: app/components/RefereeNotes.tsx:63:14
-msgid "Referee notes are available to event referees and administrators."
-msgstr ""
-
-#: app/components/RefereeNotes.tsx:105:12
-msgid "Refresh notes"
-msgstr ""
-
-#: app/components/RefereeNotes.tsx:115:28
-msgid "Visible only to event referees and administrators."
-msgstr ""
