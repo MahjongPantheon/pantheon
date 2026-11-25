@@ -628,6 +628,11 @@ export interface RulesetConfig {
    * (player_count - 1) shares on ron, including pao tsumo settled as ron.
    */
   honbaValuePerPlayer: number;
+  /**
+   * Allow triple ron while other abortive draws remain enabled.
+   * Ignored when with_abortives is false; unset preserves all abortive draws.
+   */
+  allowTripleRonWithAbortives: boolean;
 }
 
 export interface MajsoulSearchEx {
@@ -7155,6 +7160,7 @@ export const RulesetConfig = {
       sanmaChomboPayments: 0,
       chomboCountsAsHand: false,
       honbaValuePerPlayer: 0,
+      allowTripleRonWithAbortives: false,
       ...msg,
     };
   },
@@ -7297,6 +7303,9 @@ export const RulesetConfig = {
     }
     if (msg.honbaValuePerPlayer) {
       writer.writeInt32(46, msg.honbaValuePerPlayer);
+    }
+    if (msg.allowTripleRonWithAbortives) {
+      writer.writeBool(47, msg.allowTripleRonWithAbortives);
     }
     return writer;
   },
@@ -7497,6 +7506,10 @@ export const RulesetConfig = {
         }
         case 46: {
           msg.honbaValuePerPlayer = reader.readInt32();
+          break;
+        }
+        case 47: {
+          msg.allowTripleRonWithAbortives = reader.readBool();
           break;
         }
         default: {
@@ -13580,6 +13593,7 @@ export const RulesetConfigJSON = {
       sanmaChomboPayments: 0,
       chomboCountsAsHand: false,
       honbaValuePerPlayer: 0,
+      allowTripleRonWithAbortives: false,
       ...msg,
     };
   },
@@ -13728,6 +13742,9 @@ export const RulesetConfigJSON = {
     }
     if (msg.honbaValuePerPlayer) {
       json["honbaValuePerPlayer"] = msg.honbaValuePerPlayer;
+    }
+    if (msg.allowTripleRonWithAbortives) {
+      json["allowTripleRonWithAbortives"] = msg.allowTripleRonWithAbortives;
     }
     return json;
   },
@@ -13938,6 +13955,12 @@ export const RulesetConfigJSON = {
       json["honbaValuePerPlayer"] ?? json["honba_value_per_player"];
     if (_honbaValuePerPlayer_) {
       msg.honbaValuePerPlayer = protoscript.parseNumber(_honbaValuePerPlayer_);
+    }
+    const _allowTripleRonWithAbortives_ =
+      json["allowTripleRonWithAbortives"] ??
+      json["allow_triple_ron_with_abortives"];
+    if (_allowTripleRonWithAbortives_) {
+      msg.allowTripleRonWithAbortives = _allowTripleRonWithAbortives_;
     }
     return msg;
   },

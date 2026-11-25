@@ -18,12 +18,15 @@
 import { runtimeEnvironment } from '../Common/ContainerRuntime/vite-runtime-env.mjs';
 
 import { defineConfig } from 'vite';
+import { fileURLToPath } from 'node:url';
 import react from '@vitejs/plugin-react-swc';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import svgr from 'vite-plugin-svgr';
 import { VitePWA } from 'vite-plugin-pwa';
 
 export default defineConfig({
+  // Generated clients change without lockfile updates; do not cache an older wire schema.
+  optimizeDeps: { exclude: ['tsclients'] },
   plugins: [
     runtimeEnvironment(),
     svgr(),
@@ -58,6 +61,9 @@ export default defineConfig({
       },
     }),
   ],
+  resolve: {
+    alias: { tsclients: fileURLToPath(new URL('../Common/tsclients', import.meta.url)) },
+  },
   server: {
     watch: {
       ignored: [

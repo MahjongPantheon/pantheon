@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-25 17:24+0100\n"
+"POT-Creation-Date: 2026-11-25 19:21+0100\n"
 "PO-Revision-Date: 2024-05-09 22:02+0300\n"
 "Last-Translator: Geunmo Kim <kimgeunmo@gmail.com>\n"
 "Language-Team: \n"
@@ -323,7 +323,7 @@ msgstr "유국만관"
 msgid "New game"
 msgstr "신규 대국"
 
-#: app/components/base/TabbedView/TabbedView.tsx:95:23
+#: app/components/base/TabbedView/TabbedView.tsx:93:23
 msgid "Next tab"
 msgstr ""
 
@@ -418,7 +418,7 @@ msgstr "역: 리치를 선택/해제시 돌아가서 승자의 리치 버튼을 
 msgid "Previous game"
 msgstr "이전 대국"
 
-#: app/components/base/TabbedView/TabbedView.tsx:74:23
+#: app/components/base/TabbedView/TabbedView.tsx:72:23
 #, fuzzy
 msgid "Previous tab"
 msgstr "이전 대국"

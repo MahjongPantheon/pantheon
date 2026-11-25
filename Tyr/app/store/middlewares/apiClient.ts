@@ -101,6 +101,7 @@ export const apiClient =
           action.payload.personId,
           action.payload.sessionId,
           action.payload.token,
+          mw.getState,
           eventId,
           mw.getState().currentSessionHash
         );
@@ -117,7 +118,7 @@ export const apiClient =
           .catch((err) => mw.dispatch({ type: EVENTS_GET_LIST_FAIL, payload: err }));
         break;
       case LOGIN_INIT:
-        loginWithRetry(action.payload, api, mw.dispatch, next);
+        loginWithRetry(action.payload, api, mw.dispatch, next, mw.getState);
         break;
       case SET_CREDENTIALS:
         api.setCredentials(action.payload.personId, action.payload.authToken);
@@ -126,7 +127,7 @@ export const apiClient =
         if (!personId || !eventId) {
           return;
         }
-        updateCurrentGames(api, next, mw.dispatch, personId, eventId);
+        updateCurrentGames(api, next, mw.dispatch, personId, eventId, mw.getState);
         break;
       case GET_GAME_OVERVIEW_INIT:
         if (!action.payload || !eventId) {
@@ -232,7 +233,8 @@ function loginWithRetry(
   data: { email: string; password: string; sessionId: string },
   api: IRiichiApi,
   dispatch: Dispatch<AppActionTypes>,
-  next: Dispatch<AppActionTypes>
+  next: Dispatch<AppActionTypes>,
+  getState: () => IAppState
 ) {
   next({ type: LOGIN_INIT, payload: data });
 
@@ -243,7 +245,15 @@ function loginWithRetry(
       .then((auth) => {
         retriesCount = 0;
         dispatch({ type: LOGIN_SUCCESS, payload: auth });
-        startupWithAuth(api, dispatch, next, auth.personId, data.sessionId, auth.authToken);
+        startupWithAuth(
+          api,
+          dispatch,
+          next,
+          auth.personId,
+          data.sessionId,
+          auth.authToken,
+          getState
+        );
       })
       .catch((e) => {
         retriesCount++;
@@ -273,13 +283,15 @@ function updateCurrentGames(
   dispatchNext: Dispatch<AppActionTypes>,
   dispatchToStore: Dispatch<AppActionTypes>,
   currentPersonId: number,
-  eventId: number
+  eventId: number,
+  getState: () => IAppState
 ) {
   dispatchNext({ type: UPDATE_CURRENT_GAMES_INIT });
 
   api
     .getCurrentState(currentPersonId, eventId)
     .then((resp) => {
+      if (getState().currentEventId !== eventId) return;
       dispatchNext({
         type: UPDATE_CURRENT_GAMES_SUCCESS,
         payload: { games: resp.sessions, gameConfig: resp.config },
@@ -469,6 +481,7 @@ function startupWithAuth(
   personId: number,
   sessionId: string,
   token: string,
+  getState: () => IAppState,
   eventId?: number,
   sessionHash?: string
 ) {
@@ -488,7 +501,7 @@ function startupWithAuth(
         dispatchToStore({ type: GOTO_EVENT_SELECT });
       } else {
         dispatchToStore({ type: SELECT_EVENT, payload: eventId });
-        updateCurrentGames(api, dispatchNext, dispatchToStore, personId, eventId);
+        updateCurrentGames(api, dispatchNext, dispatchToStore, personId, eventId, getState);
         if (sessionHash) {
           dispatchToStore({ type: GET_GAME_OVERVIEW_INIT, payload: sessionHash });
         }

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-25 18:05+0100\n"
+"POT-Creation-Date: 2026-11-25 19:21+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -105,11 +105,11 @@ msgstr ""
 msgid "Choose an option"
 msgstr ""
 
-#: app/components/base/TabbedView/TabbedView.tsx:74:23
+#: app/components/base/TabbedView/TabbedView.tsx:72:23
 msgid "Previous tab"
 msgstr ""
 
-#: app/components/base/TabbedView/TabbedView.tsx:95:23
+#: app/components/base/TabbedView/TabbedView.tsx:93:23
 msgid "Next tab"
 msgstr ""
 

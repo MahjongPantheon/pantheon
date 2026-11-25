@@ -59,11 +59,9 @@ export const TabbedView = ({ tabs, onTabChange, testIdPrefix }: IProps) => {
 
   const scrollPrev = () => {
     emblaApi?.scrollPrev();
-    emblaApiContent?.scrollPrev();
   };
   const scrollNext = () => {
     emblaApi?.scrollNext();
-    emblaApiContent?.scrollNext();
   };
 
   return (

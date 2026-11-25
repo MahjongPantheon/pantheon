@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-25 18:05+0100\n"
+"POT-Creation-Date: 2026-11-25 19:21+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -69,7 +69,7 @@ msgstr ""
 
 #: app/components/MainMenu.tsx:138:29
 #: app/pages/OwnedEvents.tsx:440:35
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:258:25
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:234:25
 msgid "Penalties"
 msgstr ""
 
@@ -602,8 +602,8 @@ msgstr ""
 #: app/pages/GamesControl/index.tsx:100:18
 #: app/pages/GamesControl/index.tsx:120:16
 #: app/pages/OwnedEvents.tsx:96:16
-#: app/pages/OwnedEventsEdit/index.tsx:269:18
-#: app/pages/OwnedEventsEdit/index.tsx:308:18
+#: app/pages/OwnedEventsEdit/index.tsx:271:18
+#: app/pages/OwnedEventsEdit/index.tsx:310:18
 #: app/pages/Penalties.tsx:103:18
 #: app/pages/Penalties/PenaltyForm.tsx:93:18
 #: app/pages/PlayersManage/index.tsx:89:18
@@ -1242,20 +1242,20 @@ msgstr ""
 msgid "New event"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/index.tsx:167:15
+#: app/pages/OwnedEventsEdit/index.tsx:169:15
 msgid "Goal score must be at least the initial points"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/index.tsx:250:29
-#: app/pages/OwnedEventsEdit/index.tsx:261:29
+#: app/pages/OwnedEventsEdit/index.tsx:252:29
+#: app/pages/OwnedEventsEdit/index.tsx:263:29
 msgid "Failed to fetch event data"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/index.tsx:303:27
+#: app/pages/OwnedEventsEdit/index.tsx:305:27
 msgid "Failed to save event: server error or network unreachable"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/index.tsx:382:32
+#: app/pages/OwnedEventsEdit/index.tsx:384:32
 #: app/pages/PlayersManage/LocalIdsTab.tsx:115:28
 #: app/pages/PlayersManage/TeamNamesTab.tsx:116:28
 #: app/pages/ProfileManage.tsx:328:32
@@ -1263,7 +1263,7 @@ msgstr ""
 msgid "Changes saved!"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/index.tsx:382:60
+#: app/pages/OwnedEventsEdit/index.tsx:384:60
 #: app/pages/PlayersManage/LocalIdsTab.tsx:115:56
 #: app/pages/PlayersManage/TeamNamesTab.tsx:116:56
 #: app/pages/ProfileManage.tsx:328:60
@@ -1359,245 +1359,257 @@ msgstr ""
 msgid "Fixed amount of rank penalty applied for each replacement player regardless of session results."
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:52:16
+#: app/pages/OwnedEventsEdit/RoundOutcomeSettings.tsx:20:25
+msgid "Round outcomes"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/RoundOutcomeSettings.tsx:22:16
+msgid "Atamahane"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/RoundOutcomeSettings.tsx:23:22
+msgid "Only first player by the order of the move from the loser would be considered a winner. If not checked, all players declaring Ron are considered winners."
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/RoundOutcomeSettings.tsx:31:16
+msgid "Abortive draws"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/RoundOutcomeSettings.tsx:32:22
+msgid "There will be a separate \"Abortive draw\" outcome to record draws due to four riichi, four kans, suufon renda, kyuushu kyuuhai, etc."
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/RoundOutcomeSettings.tsx:39:39
+msgid "Disabled"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/RoundOutcomeSettings.tsx:40:34
+msgid "All"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/RoundOutcomeSettings.tsx:41:46
+msgid "All except triple ron"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/RoundOutcomeSettings.tsx:50:16
+msgid "Nagashi mangan"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/RoundOutcomeSettings.tsx:51:22
+msgid "Enable \"Nagashi\" outcome to record this special draw"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:53:16
 msgid "Initial rating"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:53:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:54:22
 msgid "Score given to all players in the beginning of the rating"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:61:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:62:16
 msgid "Initial points"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:62:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:63:22
 msgid "Amount of points given to every player in the beginning of every session"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:67:25
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:69:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:68:25
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:70:16
 msgid "Three-player game (sanma)"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:70:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:71:22
 msgid "Play with 3 players instead of 4. The North seat is removed; uma and seating are adjusted accordingly."
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:80:20
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:81:20
 msgid "Draw payments (sanma)"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:81:26
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:82:26
 msgid "Sum of points paid by players in noten to players in tenpai"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:88:20
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:89:20
 msgid "Chombo payments (sanma)"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:92:19
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:93:19
 msgid "Amount of points paid by the offending player to each of the other players on a chombo"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:95:19
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:96:19
 msgid "Requires extra chombo payments to be enabled."
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:104:25
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:105:25
 msgid "Game duration"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:106:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:107:16
 msgid "Tonpuusen"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:107:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:108:22
 msgid "Play only east rounds"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:113:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:114:16
 msgid "Agariyame"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:114:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:115:22
 msgid "If the dealer holds the 1st place after last hand in session, the game ends regardless of his winning hand or tempai."
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:122:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:123:16
 msgid "Disable renchans"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:123:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:124:22
 msgid "When dealer wins, or stays tempai after draw, seat winds will be changed. Honba is added only after draw."
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:133:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:134:16
 msgid "Allow bankruptcy"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:134:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:135:22
 msgid "When a player runs out of score points, the game immediately ends"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:140:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:141:16
 msgid "Play additional rounds"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:141:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:142:22
 msgid "If nobody reaches the goal score at the last hand, the game continues to west rounds (in hanchan) or to south rounds (in tonpuusen), until someone reaches the goal"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:151:18
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:152:18
 #: app/services/i18n.test.ts:35:12
 msgid "Goal score"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:152:24
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:153:24
 msgid "Amount of score player should get to end the game."
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:159:25
-msgid "Round outcomes"
-msgstr ""
-
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:161:16
-msgid "Atamahane"
-msgstr ""
-
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:162:22
-msgid "Only first player by the order of the move from the loser would be considered a winner. If not checked, all players declaring Ron are considered winners."
-msgstr ""
-
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:170:16
-msgid "Allow abortive draws"
-msgstr ""
-
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:171:22
-msgid "There will be a separate \"Abortive draw\" outcome to record draws due to four riichi, four kans, suufon renda, kyuushu kyuuhai, etc."
-msgstr ""
-
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:179:16
-msgid "Nagashi mangan"
-msgstr ""
-
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:180:22
-msgid "Enable \"Nagashi\" outcome to record this special draw"
-msgstr ""
-
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:185:25
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:161:25
 msgid "Riichi and honba"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:187:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:163:16
 msgid "Riichi goes to winner"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:188:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:164:22
 msgid "Riichi left on table in case of draw in the end of the session will be given to session winner"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:196:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:172:16
 msgid "Pay for honba by atamahane"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:197:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:173:22
 msgid "Honba payments will be given only to the first winner. If not checked, payment will be given to all winners."
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:205:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:181:16
 msgid "Collect riichi bets by atamahane"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:206:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:182:22
 msgid "All riichi bets on the table will be given to the first winner. If not checked, winning riichi bets will always be given back, lost bets would be given to the first winner."
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:213:25
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:189:25
 msgid "Payments and scores"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:215:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:191:16
 msgid "Kazoe yakuman"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:216:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:192:22
 msgid "13+ han hands are considered yakuman, not sanbaiman."
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:222:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:198:16
 msgid "Kiriage mangan"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:223:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:199:22
 msgid "Hands valued as 4/30 and 3/60 are rounded to mangan."
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:230:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:206:16
 msgid "Oka bonus"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:231:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:207:22
 msgid "Amount of points given to player at 1st place"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:239:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:215:16
 msgid "Honba Value"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:240:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:216:22
 msgid "Points paid by each opponent per honba on tsumo. On ron, the discarder pays the total for all opponents."
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:250:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:226:16
 msgid "Equalize uma"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:251:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:227:22
 msgid "If checked, players with equivalent score receive equivalent uma bonus. Otherwise, uma is assigned according to move order."
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:260:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:236:16
 msgid "Max arbitrary penalty score"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:267:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:243:16
 msgid "Min arbitrary penalty score"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:274:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:250:16
 msgid "Step of arbitrary penalty scores"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:281:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:257:16
 msgid "Pay chombo as reverse mangan"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:282:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:258:22
 msgid "Pay chombo right on occasion. If not checked, chombo is subtracted from player score after uma is applied."
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:301:18
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:277:18
 msgid "Amount of chombo penalty"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:302:24
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:278:24
 msgid "Amount of penalty applied in the end of the session after uma bonus."
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:312:16
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:288:16
 msgid "Yakitori"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:313:22
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:289:22
 msgid "Use yakitori rule"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:321:18
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:297:18
 msgid "Yakitori penalty"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:322:24
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:298:24
 msgid "Amount of penalty applied to those who didn't win once in game."
 msgstr ""
 

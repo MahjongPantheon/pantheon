@@ -5914,6 +5914,7 @@ export const RulesetConfig = {
       sanmaChomboPayments: 0,
       chomboCountsAsHand: false,
       honbaValuePerPlayer: 0,
+      allowTripleRonWithAbortives: false,
       ...msg
     };
   },
@@ -6052,6 +6053,9 @@ export const RulesetConfig = {
     }
     if (msg.honbaValuePerPlayer) {
       writer.writeInt32(46, msg.honbaValuePerPlayer);
+    }
+    if (msg.allowTripleRonWithAbortives) {
+      writer.writeBool(47, msg.allowTripleRonWithAbortives);
     }
     return writer;
   },
@@ -6248,6 +6252,10 @@ export const RulesetConfig = {
         }
         case 46: {
           msg.honbaValuePerPlayer = reader.readInt32();
+          break;
+        }
+        case 47: {
+          msg.allowTripleRonWithAbortives = reader.readBool();
           break;
         }
         default: {
@@ -11843,6 +11851,7 @@ export const RulesetConfigJSON = {
       sanmaChomboPayments: 0,
       chomboCountsAsHand: false,
       honbaValuePerPlayer: 0,
+      allowTripleRonWithAbortives: false,
       ...msg
     };
   },
@@ -11988,6 +11997,9 @@ export const RulesetConfigJSON = {
     }
     if (msg.honbaValuePerPlayer) {
       json["honbaValuePerPlayer"] = msg.honbaValuePerPlayer;
+    }
+    if (msg.allowTripleRonWithAbortives) {
+      json["allowTripleRonWithAbortives"] = msg.allowTripleRonWithAbortives;
     }
     return json;
   },
@@ -12174,6 +12186,10 @@ export const RulesetConfigJSON = {
     const _honbaValuePerPlayer_ = json["honbaValuePerPlayer"] ?? json["honba_value_per_player"];
     if (_honbaValuePerPlayer_) {
       msg.honbaValuePerPlayer = protoscript.parseNumber(_honbaValuePerPlayer_);
+    }
+    const _allowTripleRonWithAbortives_ = json["allowTripleRonWithAbortives"] ?? json["allow_triple_ron_with_abortives"];
+    if (_allowTripleRonWithAbortives_) {
+      msg.allowTripleRonWithAbortives = _allowTripleRonWithAbortives_;
     }
     return msg;
   }

@@ -127,7 +127,6 @@ const checkboxRules: Record<string, boolean> = {
   'with-tobi': false,
   'play-additional-rounds': false,
   'with-atamahane': false,
-  'with-abortives': true,
   'with-nagashi-mangan': true,
   'riichi-goes-to-winner': false,
   'doubleron-honba-atamahane': false,
@@ -147,6 +146,14 @@ const numericRules: Record<string, number> = {
 
 export async function checkRules(page: Page, configure: boolean) {
   await page.getByTestId('forseti-event-settings-tab-ruleset').click();
+  const abortives = page.getByTestId(
+    'forseti-event-settings-ruleset-settings-ruleset-with-abortives'
+  );
+  if (configure) {
+    await abortives.click();
+    await page.getByRole('option', { name: 'All', exact: true }).click();
+  }
+  await expect(abortives).toHaveValue('All');
   for (const [name, checked] of Object.entries(checkboxRules)) {
     const input = page.getByTestId(`forseti-event-settings-ruleset-settings-ruleset-${name}`);
     if (configure) await input.setChecked(checked);
@@ -270,17 +277,16 @@ export async function enterRound(
     const player = players[index];
     await expect(page.getByTestId('tyr-hand')).toBeVisible();
     if (winnerIndex > 0) {
-      // Use the hand carousel's swipe interaction, which also moves the title carousel.
-      const hand = page.getByTestId(`tyr-hand-player-${players[handOrder[winnerIndex - 1]].id}`);
-      const box = (await hand.boundingBox())!;
-      await page.mouse.move(box.x + box.width * 0.8, box.y + box.height - 20);
-      await page.mouse.down();
-      await page.mouse.move(box.x + box.width * 0.2, box.y + box.height - 20, { steps: 15 });
-      await page.mouse.up();
+      // Advance exactly one hand; drag inertia can skip the middle of three winners.
+      await page.getByTestId('tyr-hand-player-tab-next').click();
     }
     const spec = entry.hands?.[(entry.winners ?? []).indexOf(index)] ?? basicHand;
     const prefix = `tyr-hand-player-${player.id}`;
-    await expect(page.getByTestId(`${prefix}-yaku--1`)).toBeInViewport();
+    // Header names precede duplicate names in the hidden pao chooser.
+    await expect(
+      page.getByTestId('tyr-hand').getByText(player.title, { exact: true }).first()
+    ).toBeInViewport({ ratio: 0.9 });
+    await expect(page.getByTestId(`${prefix}-yaku--1`)).toBeInViewport({ ratio: 0.9 });
     // A double wind has two persisted awards and one visible button.
     const buttonYaku = spec.yaku.filter((id) => !(id === 49 && spec.yaku.includes(48)));
     if (spec.yaku.includes(48) && spec.yaku.includes(49)) {

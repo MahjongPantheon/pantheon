@@ -1,3 +1,4 @@
+import { GHOST_PLAYER_ID } from '../../../Common/constants.js';
 import {
   AbortResult,
   ChomboResult,
@@ -20,6 +21,7 @@ import {
   _checkTsumo,
   _checkMultiRon,
   checkRound,
+  checkRonWinners,
   validateAndCreateFromOnlineData,
 } from './roundValidation.js';
 
@@ -178,3 +180,34 @@ it.each([{ loserIds: [] }, { loserIds: [1, 1] }, { loserIds: [1, 99] }, { loserI
     ).toThrow();
   }
 );
+
+it('enforces ron winner policy only for newly submitted multiron outcomes', () => {
+  const session = Object.assign(new SessionEntity(), {
+    event: Object.assign(new EventEntity(), { ruleset }),
+  });
+  const round = validateAndCreateFromOnlineData(players, players, session, {
+    multiron: MultironResult.initialize({
+      loserId: 4,
+      multiRon: 3,
+      wins: [1, 2, 3].map((winnerId) => MultironWin.initialize({ ...win, winnerId })),
+    }),
+  });
+  const policy = RulesetEntity.createRuleset('ema');
+  policy.rules.withAbortives = true;
+  expect(() => checkRonWinners(policy, players, round)).toThrow('Triple ron is an abortive draw');
+  Reflect.deleteProperty(policy.rules, 'allowTripleRonWithAbortives');
+  expect(() => checkRonWinners(policy, players, round)).toThrow('Triple ron is an abortive draw');
+  policy.rules.allowTripleRonWithAbortives = true;
+  expect(() => checkRonWinners(policy, players, round)).not.toThrow();
+  policy.rules.withAtamahane = true;
+  expect(() => checkRonWinners(policy, players, round)).toThrow('Atamahane allows only one');
+  policy.rules.withAtamahane = false;
+  expect(() => checkRonWinners(policy, [1, 2, 3, GHOST_PLAYER_ID], round)).toThrow(
+    'Ron requires at least one non-winning player'
+  );
+  policy.rules.withAbortives = false;
+  policy.rules.allowTripleRonWithAbortives = false;
+  expect(() => checkRonWinners(policy, players, round)).not.toThrow();
+  round.outcome = RoundOutcome.ROUND_OUTCOME_RON;
+  expect(() => checkRonWinners(policy, players, round)).not.toThrow();
+});

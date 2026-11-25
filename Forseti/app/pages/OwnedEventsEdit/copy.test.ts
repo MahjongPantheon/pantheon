@@ -24,6 +24,8 @@ function fixture(type: EventType = EventType.EVENT_TYPE_TOURNAMENT) {
     allowManualAddReplay: false,
     rulesetConfig: RulesetConfig.initialize({
       startPoints: 35000,
+      withAbortives: true,
+      allowTripleRonWithAbortives: true,
       goalPoints: 40000,
       allowedYaku: [1, 2, 3],
       yakuWithPao: [37],

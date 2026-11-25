@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-25 17:24+0100\n"
+"POT-Creation-Date: 2026-11-25 19:21+0100\n"
 "PO-Revision-Date: 2024-05-09 22:07+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -317,7 +317,7 @@ msgstr "流し満貫"
 msgid "New game"
 msgstr "対局開始"
 
-#: app/components/base/TabbedView/TabbedView.tsx:95:23
+#: app/components/base/TabbedView/TabbedView.tsx:93:23
 msgid "Next tab"
 msgstr ""
 
@@ -412,7 +412,7 @@ msgstr "役：立直 を選択/解除する場合は、立直プレーヤーの�
 msgid "Previous game"
 msgstr "前の対局"
 
-#: app/components/base/TabbedView/TabbedView.tsx:74:23
+#: app/components/base/TabbedView/TabbedView.tsx:72:23
 #, fuzzy
 msgid "Previous tab"
 msgstr "前の対局"

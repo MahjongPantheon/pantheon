@@ -18,6 +18,7 @@ function fixture(extra: Partial<IAppState> = {}) {
     quickAuthorize: vi.fn().mockResolvedValue(true),
     getUserInfo: vi.fn().mockResolvedValue([{ id: 7 }]),
     getCurrentState: vi.fn().mockResolvedValue({ sessions: [], config: {} }),
+    getGameConfig: vi.fn().mockResolvedValue(GameConfig.initialize({})),
     getGameOverview: vi
       .fn()
       .mockResolvedValue({ timerState: { waitingForTimer: false, timeRemaining: 60 } }),
@@ -115,6 +116,22 @@ const loads = [
   [a.GET_PENALTIES_INIT, 'getPenalties', a.GET_PENALTIES_SUCCESS, a.GET_PENALTIES_FAIL, undefined],
 ] as const;
 
+it('refreshes the session overview without requesting event rules', async () => {
+  const f = fixture();
+  // An unavailable rules endpoint must not prevent entering another round.
+  f.api.getGameConfig.mockImplementation(() => {
+    throw new Error('Rules unavailable');
+  });
+  f.send(a.GET_GAME_OVERVIEW_INIT, 'hash');
+  await flush();
+  expect(f.api.getGameOverview).toHaveBeenCalledExactlyOnceWith('hash');
+  expect(f.api.getGameConfig).not.toHaveBeenCalled();
+  expect(f.next).toHaveBeenCalledWith({
+    type: a.GET_GAME_OVERVIEW_SUCCESS,
+    payload: { timerState: { waitingForTimer: false, timeRemaining: 60 } },
+  });
+});
+
 it.each(loads)(
   '%s reports successful and failed loads',
   async (
@@ -186,6 +203,17 @@ it('refreshes active-game overview and timer data', async () => {
   f.send(a.UPDATE_CURRENT_GAMES_INIT);
   await flush();
   expect(f.next).toHaveBeenCalledWith({ type: a.UPDATE_CURRENT_GAMES_FAIL, payload: error });
+});
+
+it('ignores a rules response for an event that is no longer selected', async () => {
+  const f = fixture();
+  f.send(a.UPDATE_CURRENT_GAMES_INIT);
+  f.state.currentEventId = 43;
+  await flush();
+  expect(f.next).not.toHaveBeenCalledWith(
+    expect.objectContaining({ type: a.UPDATE_CURRENT_GAMES_SUCCESS })
+  );
+  expect(f.dispatch).not.toHaveBeenCalled();
 });
 
 it.each([undefined, 0])(

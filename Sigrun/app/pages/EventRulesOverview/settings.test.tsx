@@ -175,3 +175,34 @@ it.each([false, true])(
     }
   }
 );
+
+it.each([
+  [false, false, 'Disabled'],
+  [false, true, 'Disabled'],
+  [true, false, 'All'],
+  [true, true, 'All except triple ron'],
+] as const)(
+  'displays abortive draw policy (%s, %s) in browser and SSR',
+  (withAbortives, allowTripleRonWithAbortives, label) => {
+    const component = (
+      <MantineProvider env='test'>
+        <RulesetSettings
+          config={{
+            ...config,
+            rulesetConfig: {
+              ...config.rulesetConfig,
+              withAbortives,
+              allowTripleRonWithAbortives,
+            },
+          }}
+          i18n={i18n}
+        />
+      </MantineProvider>
+    );
+    render(component);
+    const input = screen.getByLabelText<HTMLInputElement>('Abortive draws');
+    expect(input.value).toBe(label);
+    expect(input.readOnly).toBe(true);
+    expect(renderToString(component)).toContain(`value="${label}"`);
+  }
+);

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-25 17:24+0100\n"
+"POT-Creation-Date: 2026-11-25 19:20+0100\n"
 "PO-Revision-Date: 2026-10-20 00:34+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -179,7 +179,7 @@ msgstr "（自摸，包牌玩家：<b>%1</b>）"
 msgid "1 player with score less than starting"
 msgstr "1 名玩家低于起始点数"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:189:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:195:22
 msgid "13+ han hands are considered yakuman, not sanbaiman."
 msgstr "13 番及以上的手牌按役满计算，而非三倍满。"
 
@@ -234,6 +234,10 @@ msgctxt "Multiron inner log item"
 msgid "<li>%1 - %2, %3</li>"
 msgstr "<li>%1 - %2，%3</li>"
 
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:148:16
+msgid "Abortive draws"
+msgstr ""
+
 #: app/components/AppFooter.tsx:96:20 app/pages/Achievements.tsx:788:42
 #: app/pages/Achievements.tsx:796:35
 msgid "Achievements"
@@ -278,11 +282,19 @@ msgstr "和牌终局"
 msgid "Aggregated event"
 msgstr "合并活动"
 
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:157:17
+msgid "All"
+msgstr ""
+
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:156:17
+msgid "All except triple ron"
+msgstr ""
+
 #: app/pages/RatingTable.tsx:405:24
 msgid "All players"
 msgstr "所有玩家"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:180:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:186:22
 msgid ""
 "All riichi bets on the table will be given to the first winner. If not "
 "checked, winning riichi bets will always be given back, lost bets would be "
@@ -290,10 +302,6 @@ msgid ""
 msgstr ""
 "桌上所有立直棒归按摸牌顺序的首位和牌玩家。若未勾选，和牌玩家取回自己的立直"
 "棒，其余立直棒归首位和牌玩家。"
-
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:148:16
-msgid "Allow abortive draws"
-msgstr "允许中途流局"
 
 #: app/pages/EventRulesOverview/OnlineSettings.tsx:62:16
 msgid "Allow adding of replays manually"
@@ -307,15 +315,15 @@ msgstr "允许击飞"
 msgid "Allow combination of yakumans, e.g. tsuuisou + daisangen"
 msgstr "允许役满复合，例如字一色 + 大三元"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:258:18
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:264:18
 msgid "Amount of chombo penalty"
 msgstr "犯规罚分"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:259:24
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:265:24
 msgid "Amount of penalty applied in the end of the session after uma bonus."
 msgstr "对局结束后，在顺位分结算后扣除的罚分。"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:277:24
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:283:24
 msgid "Amount of penalty applied to those who didn't win once in game."
 msgstr "对整场对局中未和牌玩家扣除的罚分。"
 
@@ -330,7 +338,7 @@ msgid ""
 "Amount of points given to every player in the beginning of every session"
 msgstr "每场对局开始时发给每位玩家的点数"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:204:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:210:22
 msgid "Amount of points given to player at 1st place"
 msgstr "第 1 名获得的额外点数"
 
@@ -493,7 +501,7 @@ msgstr "纯正九莲宝灯"
 msgid "Close game preview"
 msgstr "关闭对局预览"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:179:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:185:16
 msgid "Collect riichi bets by atamahane"
 msgstr "按头跳规则分配立直棒"
 
@@ -575,6 +583,10 @@ msgstr "顽强不屈"
 msgid "Disable renchans"
 msgstr "禁用连庄"
 
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:154:15
+msgid "Disabled"
+msgstr ""
+
 #: app/pages/EventRulesOverview/TournamentSettings.tsx:53:20
 msgid "Do not interrupt session until it ends"
 msgstr "对局自然结束前不终止"
@@ -615,7 +627,7 @@ msgstr "东风"
 msgid "Edit my profile"
 msgstr "编辑我的个人资料"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:157:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:163:22
 msgid "Enable \"Nagashi\" outcome to record this special draw"
 msgstr "启用“流局满贯”结果以记录这种特殊流局"
 
@@ -623,7 +635,7 @@ msgstr "启用“流局满贯”结果以记录这种特殊流局"
 msgid "Enable aggregated yakuhai"
 msgstr "启用聚合役牌"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:219:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:225:16
 msgid "Equalize uma"
 msgstr "同分时平分顺位分"
 
@@ -846,7 +858,7 @@ msgstr "和牌次数"
 msgid "Hands value"
 msgstr "手牌价值"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:195:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:201:22
 msgid "Hands valued as 4/30 and 3/60 are rounded to mangan."
 msgstr "4 番 30 符和 3 番 60 符按满贯计算。"
 
@@ -859,11 +871,11 @@ msgctxt "context"
 msgid "Hello %1"
 msgstr ""
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:211:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:217:16
 msgid "Honba Value"
 msgstr "本场点数"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:172:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:178:22
 msgid ""
 "Honba payments will be given only to the first winner. If not checked, "
 "payment will be given to all winners."
@@ -906,7 +918,7 @@ msgstr ""
 "若勾选，所有活动参与者均可通过界面添加新牌谱。若使用外部工具自动添加牌谱，请"
 "关闭此选项。"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:220:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:226:22
 msgid ""
 "If checked, players with equivalent score receive equivalent uma bonus. "
 "Otherwise, uma is assigned according to move order."
@@ -974,11 +986,11 @@ msgid "Just as planned"
 msgstr "计划通"
 
 #: app/pages/Achievements.tsx:356:36
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:188:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:194:16
 msgid "Kazoe yakuman"
 msgstr "累计役满"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:194:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:200:16
 msgid "Kiriage mangan"
 msgstr "切上满贯"
 
@@ -1040,7 +1052,7 @@ msgstr "本地排名"
 msgid "Loss stats"
 msgstr "失分统计"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:230:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:236:16
 msgid "Max arbitrary penalty score"
 msgstr "额外处罚的最高罚分"
 
@@ -1056,7 +1068,7 @@ msgstr "菜单"
 msgid "Menzentsumo"
 msgstr "门前清自摸和"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:236:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:242:16
 msgid "Min arbitrary penalty score"
 msgstr "额外处罚的最低罚分"
 
@@ -1083,7 +1095,7 @@ msgstr "其他统计"
 msgid "Multiple yakumans"
 msgstr "多倍役满"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:156:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:162:16
 msgid "Nagashi mangan"
 msgstr "流局满贯"
 
@@ -1119,7 +1131,7 @@ msgstr "北风"
 msgid "Not selected"
 msgstr "未选择"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:203:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:209:16
 msgid "Oka bonus"
 msgstr "头名奖励"
 
@@ -1167,25 +1179,25 @@ msgstr "超过 9000 符"
 msgid "Pao rule enabled for:"
 msgstr "以下役种启用包牌规则："
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:246:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:252:16
 msgid "Pay chombo as reverse mangan"
 msgstr "犯规时按反向满贯支付"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:247:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:253:22
 msgid ""
 "Pay chombo right on occasion. If not checked, chombo is subtracted from "
 "player score after uma is applied."
 msgstr "犯规时立即支付罚分。若未勾选，则在对局结束并结算顺位分后扣除罚分。"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:171:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:177:16
 msgid "Pay for honba by atamahane"
 msgstr "按头跳规则分配本场点数"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:186:25
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:192:25
 msgid "Payments and scores"
 msgstr "支付与点数"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:226:25
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:232:25
 msgid "Penalties"
 msgstr "处罚"
 
@@ -1256,7 +1268,7 @@ msgid ""
 msgstr ""
 "请注意：排名设置应与游戏平台的赛事设置一致，否则提交牌谱时可能发生错误！"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:212:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:218:22
 msgid ""
 "Points paid by each opponent per honba on tsumo. On ron, the discarder pays "
 "the total for all opponents."
@@ -1344,7 +1356,7 @@ msgstr "立直"
 msgid "Riichi Nomi"
 msgstr "仅立直"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:161:25
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:167:25
 msgid "Riichi and honba"
 msgstr "立直与本场"
 
@@ -1352,11 +1364,11 @@ msgstr "立直与本场"
 msgid "Riichi bets: "
 msgstr "立直棒： "
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:163:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:169:16
 msgid "Riichi goes to winner"
 msgstr "剩余立直棒归第一名"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:164:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:170:22
 msgid ""
 "Riichi left on table in case of draw in the end of the session will be given "
 "to session winner"
@@ -1541,7 +1553,7 @@ msgstr "自风：南"
 msgid "South wind"
 msgstr "南风"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:242:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:248:16
 msgid "Step of arbitrary penalty scores"
 msgstr "额外罚分步长"
 
@@ -1746,7 +1758,7 @@ msgstr "第 3 名顺位分罚分"
 msgid "Uma penalty for 4th place"
 msgstr "第 4 名顺位分罚分"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:267:22
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:273:22
 msgid "Use yakitori rule"
 msgstr "启用烧鸡规则"
 
@@ -1841,11 +1853,11 @@ msgid "Without declared riichi: "
 msgstr "未宣告立直： "
 
 #: app/components/YakitoriIndicator.tsx:38:32
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:266:16
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:272:16
 msgid "Yakitori"
 msgstr "烧鸡"
 
-#: app/pages/EventRulesOverview/RulesetSettings.tsx:276:18
+#: app/pages/EventRulesOverview/RulesetSettings.tsx:282:18
 msgid "Yakitori penalty"
 msgstr "烧鸡罚分"
 
@@ -1916,6 +1928,9 @@ msgstr "役满 (%1)"
 #: app/helpers/gameLog.ts:154:12
 msgid "yakuman!"
 msgstr "役满！"
+
+#~ msgid "Allow abortive draws"
+#~ msgstr "允许中途流局"
 
 #~ msgid ""
 #~ "Amount of points given for each chip. Chips should be set up in "

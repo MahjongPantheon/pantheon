@@ -116,3 +116,40 @@ it('explains why sanma chombo payments are disabled and enables them with extra 
   expect(paymentInput().disabled).toBe(false);
   expect(container.textContent).not.toContain('Requires extra chombo payments to be enabled.');
 });
+
+it('keeps all abortive draw modes in sync with selection, preset updates and reset', () => {
+  const mode = () => input('ruleset-settings-ruleset-with-abortives')!;
+  expect(mode().value).toBe('Disabled');
+  for (const [label, withAbortives, allowTripleRonWithAbortives] of [
+    ['All', true, false],
+    ['All except triple ron', true, true],
+    ['Disabled', false, false],
+  ] as const) {
+    act(() => mode().click());
+    act(() => {
+      const option = [...document.querySelectorAll<HTMLElement>('[role="option"]')].find(
+        (element) => element.textContent === label
+      );
+      option!.click();
+    });
+    expect(form.getValues().ruleset).toMatchObject({ withAbortives, allowTripleRonWithAbortives });
+    expect(mode().value).toBe(label);
+  }
+  act(() =>
+    form.setValues({
+      ruleset: {
+        ...form.getValues().ruleset,
+        withAbortives: true,
+        allowTripleRonWithAbortives: true,
+      },
+    })
+  );
+  expect(mode().value).toBe('All except triple ron');
+  act(() => form.setFieldValue('ruleset.allowTripleRonWithAbortives', false));
+  expect(mode().value).toBe('All');
+  act(() => form.setFieldValue('ruleset.withAbortives', false));
+  act(() => form.setFieldValue('ruleset.allowTripleRonWithAbortives', true));
+  expect(mode().value).toBe('Disabled');
+  act(() => form.reset());
+  expect(mode().value).toBe('Disabled');
+});

@@ -85,3 +85,37 @@ it('keeps tab content attached to its player when tabs reorder', () => {
   view.render(<TabbedView tabs={[...tabs].reverse()} />);
   expect(view.container.querySelectorAll('input')[1]).toBe(input);
 });
+
+it('advances one of three tabs at a time when carousel selection fires synchronously', () => {
+  const indices = [0, 0];
+  const select = (carousel: number, target: number) => {
+    const next = Math.max(0, Math.min(2, target));
+    if (indices[carousel] === next) return;
+    indices[carousel] = next;
+    fixture.apis[carousel].listeners.get('select')?.forEach((handler: () => void) => handler());
+  };
+  fixture.apis.forEach((api: (typeof fixture.apis)[number], index: number) => {
+    api.selectedScrollSnap = () => indices[index];
+    api.canScrollNext = () => indices[index] < 2;
+    api.canScrollPrev = () => indices[index] > 0;
+    api.scrollTo.mockImplementation((target: number) => select(index, target));
+    api.scrollNext.mockImplementation(() => select(index, indices[index] + 1));
+    api.scrollPrev.mockImplementation(() => select(index, indices[index] - 1));
+  });
+  const onChange = vi.fn();
+  view.render(
+    <TabbedView
+      onTabChange={onChange}
+      tabs={[1, 2, 3].map((id) => ({ id, title: `Player ${id}`, content: <div>Hand {id}</div> }))}
+    />
+  );
+  for (const expected of [1, 2]) {
+    view.click('[aria-label="Next tab"]');
+    expect(indices).toEqual([expected, expected]);
+  }
+  for (const expected of [1, 0]) {
+    view.click('[aria-label="Previous tab"]');
+    expect(indices).toEqual([expected, expected]);
+  }
+  expect(onChange.mock.calls.map(([index]: [number]) => index)).toEqual([1, 2, 1, 0]);
+});

@@ -16,7 +16,7 @@
  */
 
 import * as React from 'react';
-import { Checkbox, NumberInput, Stack, Title } from '@mantine/core';
+import { Checkbox, NumberInput, Stack, TextInput, Title } from '@mantine/core';
 import {
   IconBrandStackoverflow,
   IconArrowBadgeDownFilled,
@@ -144,12 +144,18 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ config, i18n }
         checked={config.rulesetConfig.withAtamahane}
         readOnly
       />
-      <Checkbox
-        label={i18n._t('Allow abortive draws')}
+      <TextInput
+        label={i18n._t('Abortive draws')}
         description={i18n._t(
           'There will be a separate "Abortive draw" outcome to record draws due to four riichi, four kans, suufon renda, kyuushu kyuuhai, etc.'
         )}
-        checked={config.rulesetConfig.withAbortives}
+        value={
+          !config.rulesetConfig.withAbortives
+            ? i18n._t('Disabled')
+            : config.rulesetConfig.allowTripleRonWithAbortives
+              ? i18n._t('All except triple ron')
+              : i18n._t('All')
+        }
         readOnly
       />
       <Checkbox

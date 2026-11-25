@@ -80,6 +80,7 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string; copyId?: string 
   const form = useForm<FormFields>({
     mode: 'uncontrolled',
     cascadeUpdates: true,
+    onValuesChange: () => setIsSaved(false),
     initialValues: {
       event: {
         isListed: true,
@@ -113,6 +114,7 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string; copyId?: string 
         doubleronRiichiAtamahane: false,
         withAtamahane: false,
         withAbortives: false,
+        allowTripleRonWithAbortives: false,
         withTobi: false,
         withKazoe: false,
         withKiriageMangan: false,

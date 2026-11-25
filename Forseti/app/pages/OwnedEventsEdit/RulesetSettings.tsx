@@ -28,6 +28,7 @@ import {
   IconTargetArrow,
 } from '@tabler/icons-react';
 import { UmaSelect } from './UmaSelect';
+import { RoundOutcomeSettings } from './RoundOutcomeSettings';
 import { FormHandle } from './types';
 
 type RulesetSettingsProps = {
@@ -156,32 +157,7 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ form, i18n }) 
           {...form.getInputProps('ruleset.goalPoints')}
         />
       )}
-      <Title order={4}>{i18n._t('Round outcomes')}</Title>
-      <Checkbox
-        label={i18n._t('Atamahane')}
-        description={i18n._t(
-          'Only first player by the order of the move from the loser would be considered a winner. If not checked, all players declaring Ron are considered winners.'
-        )}
-        data-testid='forseti-event-settings-ruleset-settings-ruleset-with-atamahane'
-        key={form.key('ruleset.withAtamahane')}
-        {...form.getInputProps('ruleset.withAtamahane', { type: 'checkbox' })}
-      />
-      <Checkbox
-        label={i18n._t('Allow abortive draws')}
-        description={i18n._t(
-          'There will be a separate "Abortive draw" outcome to record draws due to four riichi, four kans, suufon renda, kyuushu kyuuhai, etc.'
-        )}
-        data-testid='forseti-event-settings-ruleset-settings-ruleset-with-abortives'
-        key={form.key('ruleset.withAbortives')}
-        {...form.getInputProps('ruleset.withAbortives', { type: 'checkbox' })}
-      />
-      <Checkbox
-        label={i18n._t('Nagashi mangan')}
-        description={i18n._t('Enable "Nagashi" outcome to record this special draw')}
-        data-testid='forseti-event-settings-ruleset-settings-ruleset-with-nagashi-mangan'
-        key={form.key('ruleset.withNagashiMangan')}
-        {...form.getInputProps('ruleset.withNagashiMangan', { type: 'checkbox' })}
-      />
+      <RoundOutcomeSettings form={form} i18n={i18n} />
       <Title order={4}>{i18n._t('Riichi and honba')}</Title>
       <Checkbox
         label={i18n._t('Riichi goes to winner')}

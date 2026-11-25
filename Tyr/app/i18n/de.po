@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-25 17:24+0100\n"
+"POT-Creation-Date: 2026-11-25 19:21+0100\n"
 "PO-Revision-Date: 2024-03-22 12:07+0100\n"
 "Last-Translator: Jesterboxboy <github@jesterbox.org>\n"
 "Language-Team: \n"
@@ -326,7 +326,7 @@ msgstr "Nagashi mangan"
 msgid "New game"
 msgstr "Neues Spiel"
 
-#: app/components/base/TabbedView/TabbedView.tsx:95:23
+#: app/components/base/TabbedView/TabbedView.tsx:93:23
 msgid "Next tab"
 msgstr ""
 
@@ -421,7 +421,7 @@ msgstr "Bitte gehe zurück und drücke die Riichi-Taste für den Gewinner"
 msgid "Previous game"
 msgstr "Letztes Spiel"
 
-#: app/components/base/TabbedView/TabbedView.tsx:74:23
+#: app/components/base/TabbedView/TabbedView.tsx:72:23
 #, fuzzy
 msgid "Previous tab"
 msgstr "Letztes Spiel"
