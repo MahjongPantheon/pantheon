@@ -32,6 +32,30 @@ export function checkRiichiPoints(
   }
 }
 
+// Apply event policy to new manual submissions, not historical replay/import.
+export function checkRonWinners(
+  ruleset: RulesetEntity,
+  playerIds: number[],
+  round: RoundEntity
+): void {
+  if (round.outcome !== RoundOutcome.ROUND_OUTCOME_MULTIRON) return;
+  const winnerCount = round.hands.length;
+  if (ruleset.rules.withAtamahane && winnerCount > 1) {
+    throw new Error('Atamahane allows only one ron winner');
+  }
+  const playerCount = playerIds.filter((id) => id !== GHOST_PLAYER_ID).length;
+  if (winnerCount > playerCount - 1) {
+    throw new Error('Ron requires at least one non-winning player');
+  }
+  if (
+    winnerCount === 3 &&
+    ruleset.rules.withAbortives &&
+    !ruleset.rules.allowTripleRonWithAbortives
+  ) {
+    throw new Error('Triple ron is an abortive draw under these rules');
+  }
+}
+
 export function checkRound(
   players: number[],
   allRegisteredPlayersIds: number[],

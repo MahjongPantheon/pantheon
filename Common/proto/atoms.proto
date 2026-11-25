@@ -637,6 +637,9 @@ message RulesetConfig {
   // Points paid by each opponent per honba on tsumo. The discarder pays
   // (player_count - 1) shares on ron, including pao tsumo settled as ron.
   int32 honba_value_per_player = 46;
+  // Allow triple ron while other abortive draws remain enabled.
+  // Ignored when with_abortives is false; unset preserves all abortive draws.
+  bool allow_triple_ron_with_abortives = 47;
 }
 
 message MajsoulSearchEx {

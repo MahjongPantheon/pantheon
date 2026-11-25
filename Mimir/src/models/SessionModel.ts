@@ -1,4 +1,4 @@
-import { checkRiichiPoints } from '../helpers/roundValidation.js';
+import { checkRiichiPoints, checkRonWinners } from '../helpers/roundValidation.js';
 import { GHOST_PLAYER_ID } from '../../../Common/constants.js';
 import { LockMode, TransactionPropagation } from '@mikro-orm/core';
 import { randomUUID } from 'node:crypto';
@@ -618,6 +618,7 @@ export class SessionModel extends Model {
     outcomeTimerSecondsRemaining?: number
   ) {
     checkRiichiPoints(event.ruleset, sessionState.getScores(), round);
+    checkRonWinners(event.ruleset, sessionState.state.playerIds, round);
 
     let payments: PaymentsInfo = {
       direct: {},

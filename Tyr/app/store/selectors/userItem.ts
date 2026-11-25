@@ -15,6 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import { GHOST_PLAYER_ID } from '../../../../Common/constants';
 import {
   getDeadhandUsers,
   getLosingUsers,
@@ -68,13 +69,20 @@ export function winDisabled(state: IAppState, userData: PlayerInSession) {
     state.currentOutcome.selectedOutcome === RoundOutcome.ROUND_OUTCOME_RON &&
     !state.gameConfig?.rulesetConfig.withAtamahane
   ) {
-    // In case of triple ron AND we have abortives enabled, disable win button if 1 or 2 winners already selected.
-    const disableTripleRon =
-      state.gameConfig?.rulesetConfig.withAbortives && getWinningUsers(state).length >= 2;
-    return -1 !== getLosingUsers(state).indexOf(userData) || disableTripleRon;
+    const rules = state.gameConfig?.rulesetConfig;
+    const playerCount =
+      state.players?.filter((player) => player.id !== GHOST_PLAYER_ID).length ?? 4;
+    const maxWinners =
+      rules?.withAbortives && !rules.allowTripleRonWithAbortives
+        ? Math.min(2, playerCount - 1)
+        : playerCount - 1;
+    return (
+      getLosingUsers(state).includes(userData) ||
+      (getWinningUsers(state).length >= maxWinners && !getWinningUsers(state).includes(userData))
+    );
   }
 
-  // for tsumo and ron without atamahane winner is only one
+  // Tsumo and atamahane allow only one winner.
   return (
     (getWinningUsers(state).length > 0 && -1 === getWinningUsers(state).indexOf(userData)) ||
     -1 !== getLosingUsers(state).indexOf(userData)

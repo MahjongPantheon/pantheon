@@ -96,6 +96,7 @@ export class TestSeeder extends Seeder {
       riichiGoesToWinner: true,
       tonpuusen: false,
       withAbortives: true,
+      allowTripleRonWithAbortives: false,
       withAtamahane: false,
       withTobi: false,
       withKiriageMangan: false,
