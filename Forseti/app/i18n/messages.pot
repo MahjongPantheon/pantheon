@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-25 19:20+0100\n"
+"POT-Creation-Date: 2026-11-25 19:21+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -602,8 +602,8 @@ msgstr ""
 #: app/pages/GamesControl/index.tsx:100:18
 #: app/pages/GamesControl/index.tsx:120:16
 #: app/pages/OwnedEvents.tsx:96:16
-#: app/pages/OwnedEventsEdit/index.tsx:270:18
-#: app/pages/OwnedEventsEdit/index.tsx:309:18
+#: app/pages/OwnedEventsEdit/index.tsx:271:18
+#: app/pages/OwnedEventsEdit/index.tsx:310:18
 #: app/pages/Penalties.tsx:103:18
 #: app/pages/Penalties/PenaltyForm.tsx:93:18
 #: app/pages/PlayersManage/index.tsx:89:18
@@ -1242,20 +1242,20 @@ msgstr ""
 msgid "New event"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/index.tsx:168:15
+#: app/pages/OwnedEventsEdit/index.tsx:169:15
 msgid "Goal score must be at least the initial points"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/index.tsx:251:29
-#: app/pages/OwnedEventsEdit/index.tsx:262:29
+#: app/pages/OwnedEventsEdit/index.tsx:252:29
+#: app/pages/OwnedEventsEdit/index.tsx:263:29
 msgid "Failed to fetch event data"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/index.tsx:304:27
+#: app/pages/OwnedEventsEdit/index.tsx:305:27
 msgid "Failed to save event: server error or network unreachable"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/index.tsx:383:32
+#: app/pages/OwnedEventsEdit/index.tsx:384:32
 #: app/pages/PlayersManage/LocalIdsTab.tsx:115:28
 #: app/pages/PlayersManage/TeamNamesTab.tsx:116:28
 #: app/pages/ProfileManage.tsx:328:32
@@ -1263,7 +1263,7 @@ msgstr ""
 msgid "Changes saved!"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/index.tsx:383:60
+#: app/pages/OwnedEventsEdit/index.tsx:384:60
 #: app/pages/PlayersManage/LocalIdsTab.tsx:115:56
 #: app/pages/PlayersManage/TeamNamesTab.tsx:116:56
 #: app/pages/ProfileManage.tsx:328:60

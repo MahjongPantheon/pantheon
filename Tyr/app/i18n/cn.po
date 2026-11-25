@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-25 17:24+0100\n"
+"POT-Creation-Date: 2026-11-25 19:21+0100\n"
 "PO-Revision-Date: 2024-05-09 22:09+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -315,7 +315,7 @@ msgstr "流局满贯"
 msgid "New game"
 msgstr "开始新对局"
 
-#: app/components/base/TabbedView/TabbedView.tsx:95:23
+#: app/components/base/TabbedView/TabbedView.tsx:93:23
 msgid "Next tab"
 msgstr ""
 
@@ -410,7 +410,7 @@ msgstr "请返回并为和牌玩家按下立直按钮"
 msgid "Previous game"
 msgstr "上一场对局"
 
-#: app/components/base/TabbedView/TabbedView.tsx:74:23
+#: app/components/base/TabbedView/TabbedView.tsx:72:23
 #, fuzzy
 msgid "Previous tab"
 msgstr "上一场对局"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-25 19:20+0100\n"
+"POT-Creation-Date: 2026-11-25 19:21+0100\n"
 "PO-Revision-Date: 2026-10-20 01:13+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -384,7 +384,7 @@ msgstr "Скасаваць раздачу"
 msgid "Cancelled: "
 msgstr "Скасавана: "
 
-#: app/pages/OwnedEventsEdit/index.tsx:383:32
+#: app/pages/OwnedEventsEdit/index.tsx:384:32
 #: app/pages/PlayersManage/LocalIdsTab.tsx:115:28
 #: app/pages/PlayersManage/TeamNamesTab.tsx:116:28
 #: app/pages/ProfileManage.tsx:328:32 app/pages/ProfileManageAdmin.tsx:343:21
@@ -639,8 +639,8 @@ msgstr "Параўну дзяліць ума пры роўных ачках"
 #: app/pages/EventPrescript.tsx:84:18 app/pages/EventPrescript.tsx:124:18
 #: app/pages/GamesControl/index.tsx:100:18
 #: app/pages/GamesControl/index.tsx:120:16 app/pages/OwnedEvents.tsx:96:16
-#: app/pages/OwnedEventsEdit/index.tsx:270:18
-#: app/pages/OwnedEventsEdit/index.tsx:309:18 app/pages/Penalties.tsx:103:18
+#: app/pages/OwnedEventsEdit/index.tsx:271:18
+#: app/pages/OwnedEventsEdit/index.tsx:310:18 app/pages/Penalties.tsx:103:18
 #: app/pages/Penalties/PenaltyForm.tsx:93:18
 #: app/pages/PlayersManage/index.tsx:89:18
 #: app/pages/PlayersManage/LocalIdsTab.tsx:74:18
@@ -748,8 +748,8 @@ msgstr ""
 msgid "Failed to definalize game"
 msgstr "Не ўдалося адмяніць завяршэнне гульні"
 
-#: app/pages/OwnedEventsEdit/index.tsx:251:29
-#: app/pages/OwnedEventsEdit/index.tsx:262:29
+#: app/pages/OwnedEventsEdit/index.tsx:252:29
+#: app/pages/OwnedEventsEdit/index.tsx:263:29
 msgid "Failed to fetch event data"
 msgstr "Не ўдалося атрымаць даныя падзеі"
 
@@ -806,7 +806,7 @@ msgid "Failed to save event script: server error or network unreachable"
 msgstr ""
 "Не ўдалося захаваць сцэнар падзеі: памылка сервера або сетка недаступная"
 
-#: app/pages/OwnedEventsEdit/index.tsx:304:27
+#: app/pages/OwnedEventsEdit/index.tsx:305:27
 msgid "Failed to save event: server error or network unreachable"
 msgstr "Не ўдалося захаваць падзею: памылка сервера або сетка недаступная"
 
@@ -949,7 +949,7 @@ msgstr "Перайсці да рэгістрацыі"
 msgid "Goal score"
 msgstr "Мэтавая колькасць ачкоў"
 
-#: app/pages/OwnedEventsEdit/index.tsx:168:15
+#: app/pages/OwnedEventsEdit/index.tsx:169:15
 msgid "Goal score must be at least the initial points"
 msgstr "Мэтавая колькасць ачкоў не можа быць меншай за пачатковыя ачкі"
 
@@ -2064,7 +2064,7 @@ msgstr "Сансёку"
 msgid "Sanshoku doukou"
 msgstr "Сансёку дока"
 
-#: app/pages/OwnedEventsEdit/index.tsx:383:60
+#: app/pages/OwnedEventsEdit/index.tsx:384:60
 #: app/pages/PlayersManage/LocalIdsTab.tsx:115:56
 #: app/pages/PlayersManage/TeamNamesTab.tsx:116:56
 #: app/pages/ProfileManage.tsx:328:60

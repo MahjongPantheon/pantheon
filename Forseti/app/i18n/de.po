@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-25 19:20+0100\n"
+"POT-Creation-Date: 2026-11-25 19:21+0100\n"
 "PO-Revision-Date: 2024-04-12 22:47+0300\n"
 "Last-Translator: Jesterboxboy <github@jesterbox.org>\n"
 "Language-Team: \n"
@@ -384,7 +384,7 @@ msgstr "Runde abbrechen"
 msgid "Cancelled: "
 msgstr "Aufgehoben: "
 
-#: app/pages/OwnedEventsEdit/index.tsx:383:32
+#: app/pages/OwnedEventsEdit/index.tsx:384:32
 #: app/pages/PlayersManage/LocalIdsTab.tsx:115:28
 #: app/pages/PlayersManage/TeamNamesTab.tsx:116:28
 #: app/pages/ProfileManage.tsx:328:32 app/pages/ProfileManageAdmin.tsx:343:21
@@ -641,8 +641,8 @@ msgstr "Uma teilen"
 #: app/pages/EventPrescript.tsx:84:18 app/pages/EventPrescript.tsx:124:18
 #: app/pages/GamesControl/index.tsx:100:18
 #: app/pages/GamesControl/index.tsx:120:16 app/pages/OwnedEvents.tsx:96:16
-#: app/pages/OwnedEventsEdit/index.tsx:270:18
-#: app/pages/OwnedEventsEdit/index.tsx:309:18 app/pages/Penalties.tsx:103:18
+#: app/pages/OwnedEventsEdit/index.tsx:271:18
+#: app/pages/OwnedEventsEdit/index.tsx:310:18 app/pages/Penalties.tsx:103:18
 #: app/pages/Penalties/PenaltyForm.tsx:93:18
 #: app/pages/PlayersManage/index.tsx:89:18
 #: app/pages/PlayersManage/LocalIdsTab.tsx:74:18
@@ -750,8 +750,8 @@ msgstr ""
 msgid "Failed to definalize game"
 msgstr "Spiel konnte nicht definalisiert werden"
 
-#: app/pages/OwnedEventsEdit/index.tsx:251:29
-#: app/pages/OwnedEventsEdit/index.tsx:262:29
+#: app/pages/OwnedEventsEdit/index.tsx:252:29
+#: app/pages/OwnedEventsEdit/index.tsx:263:29
 msgid "Failed to fetch event data"
 msgstr "Event Informationen konnten nicht abgerufen werden"
 
@@ -809,7 +809,7 @@ msgstr ""
 "Fehler beim Speichern  der Sitzordnung: Serverfehler oder Netzwerk nicht "
 "erreichbar"
 
-#: app/pages/OwnedEventsEdit/index.tsx:304:27
+#: app/pages/OwnedEventsEdit/index.tsx:305:27
 msgid "Failed to save event: server error or network unreachable"
 msgstr ""
 "Event konnte nicht gespeichert werden: Server Fehler oder Netzwerk nicht "
@@ -953,7 +953,7 @@ msgstr "Zur Anmeldeseite gehen"
 msgid "Goal score"
 msgstr "Zielpunkte"
 
-#: app/pages/OwnedEventsEdit/index.tsx:168:15
+#: app/pages/OwnedEventsEdit/index.tsx:169:15
 msgid "Goal score must be at least the initial points"
 msgstr "Die Zielpunkte müssen mindestens den Startpunkten entsprechen"
 
@@ -2087,7 +2087,7 @@ msgstr "Sanshoku"
 msgid "Sanshoku doukou"
 msgstr "Sanshoku doukou"
 
-#: app/pages/OwnedEventsEdit/index.tsx:383:60
+#: app/pages/OwnedEventsEdit/index.tsx:384:60
 #: app/pages/PlayersManage/LocalIdsTab.tsx:115:56
 #: app/pages/PlayersManage/TeamNamesTab.tsx:116:56
 #: app/pages/ProfileManage.tsx:328:60
