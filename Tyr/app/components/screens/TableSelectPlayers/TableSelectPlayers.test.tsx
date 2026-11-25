@@ -26,7 +26,7 @@ it.each([
   { players: undefined },
   { players: ready.players.slice(0, 3) },
 ])(
-  'waits for a complete overview and current rules before showing winner controls: %j',
+  'waits for a complete session overview before showing winner controls: %j',
   (pending: Partial<IAppState>) => {
     view.render(
       <TableSelectPlayers state={{ ...ready, ...pending }} dispatch={vi.fn()} newyear={false} />

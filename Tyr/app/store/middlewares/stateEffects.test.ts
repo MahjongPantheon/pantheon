@@ -19,7 +19,8 @@ afterEach(() => {
 
 function persistence() {
   const storage = new Storage();
-  storage.setStrategy(new StorageStrategyServer());
+  const strategy = new StorageStrategyServer();
+  storage.setStrategy(strategy);
   const dispatch = vi.fn((action: AppActionTypes) => action);
   const next = vi.fn((action: AppActionTypes) => action);
   const send = persistentMw(storage)({
@@ -28,6 +29,7 @@ function persistence() {
   })(next as Dispatch<AppActionTypes>);
   return {
     storage,
+    strategy,
     dispatch,
     next,
     send: (type: string, payload?: unknown) => send({ type, payload } as AppActionTypes),
@@ -50,6 +52,20 @@ it.each([undefined, 'existing-session'])(
     });
   }
 );
+
+it('persists only the selected event ID when rules are loaded', () => {
+  const f = persistence();
+  const set = vi.spyOn(f.strategy, 'set');
+  f.send(a.SELECT_EVENT, 42);
+  expect(set).toHaveBeenCalledOnce();
+  const writes = f.strategy.getCookies();
+  f.send(a.UPDATE_CURRENT_GAMES_SUCCESS, {
+    games: [],
+    gameConfig: GameConfig.initialize({}),
+  });
+  expect(set).toHaveBeenCalledOnce();
+  expect(f.strategy.getCookies()).toEqual(writes);
+});
 
 it('clears credentials for login and logout without discarding the analytics session', () => {
   const f = persistence();

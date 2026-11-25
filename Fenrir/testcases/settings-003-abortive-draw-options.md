@@ -4,6 +4,7 @@
 
 Verify that the three abortive-draw modes persist, appear on public rules, and
 allow a real triple ron to be previewed and recorded when explicitly selected.
+Tyr retains rules in memory until a different event is selected or the browser reloads.
 
 ## Scope
 
@@ -28,18 +29,20 @@ Forseti event settings, Mimir Twirp API, Sigrun public rules, and Tyr round entr
 
 ## Steps and expected results
 
-| Step | Action                                                                                        | Expected result                                                                                             |
-| ---- | --------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
-| 1    | Create event, register players, and start the session through real APIs                       | Every setup request succeeds                                                                                |
-| 2    | Open the player's session in Tyr, then save each mode through Forseti and reload its settings | Stored flags and the visible selected mode match the choice; Tyr stays open                                 |
-| 3    | Open the public rules page after every save                                                   | Read-only Abortive draws field shows the saved mode                                                         |
-| 4    | Start round entry in the already-open Tyr session after selecting the final mode              | Current rules are loaded; abortive draw remains available; three ron winners can be selected and deselected |
-| 5    | Enter all three hands, inspect preview, and submit                                            | Three 1,000-point transfers appear; PreviewRound and AddRound succeed                                       |
-| 6    | Inspect Tyr table and saved session/game through Mimir                                        | Expected four scores, East 2, zero honba, one multiron containing three hands                               |
+| Step | Action                                                                                        | Expected result                                                                                                                                    |
+| ---- | --------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1    | Create event, register players, and start the session through real APIs                       | Every setup request succeeds                                                                                                                       |
+| 2    | Open the player's session in Tyr, then save each mode through Forseti and reload its settings | Stored flags and the visible selected mode match the choice; Tyr stays open                                                                        |
+| 3    | Open the public rules page after every save                                                   | Read-only Abortive draws field shows the saved mode                                                                                                |
+| 4    | Refresh the table and home screen, then start round entry in the already-open Tyr session     | Previously loaded rules remain active; only two ron winners can be selected                                                                        |
+| 5    | Select another event in Tyr settings, then select the original event again                    | Fresh rules allow three ron winners                                                                                                                |
+| 6    | Save All in Forseti, check Tyr, reload it, then repeat with All except triple ron             | Rules remain unchanged until each browser reload; the winner limit then matches the saved mode; no GetGameConfig requests occur during round entry |
+| 7    | Enter all three hands, inspect preview, and submit                                            | Three 1,000-point transfers appear; PreviewRound and AddRound succeed                                                                              |
+| 8    | Inspect Tyr table and saved session/game through Mimir                                        | Expected four scores, East 2, zero honba, one multiron containing three hands                                                                      |
 
 ## Cleanup and isolation
 
-The uniquely named event, accounts, and session are retained in the isolated test
+The uniquely named events, accounts, and session are retained in the isolated test
 environment. Each attempt creates independent fixtures, including retries. The
 administrator and spectator contexts are closed on completion or failure. Failure screenshots use the
 shared helper.

@@ -321,7 +321,7 @@ interface GetGameOverviewActionInit {
 }
 interface GetGameOverviewActionSuccess {
   type: typeof GET_GAME_OVERVIEW_SUCCESS;
-  payload: GamesGetSessionOverviewResponse & { gameConfig?: GameConfig };
+  payload: GamesGetSessionOverviewResponse;
 }
 interface GetGameOverviewActionFail {
   type: typeof GET_GAME_OVERVIEW_FAIL;

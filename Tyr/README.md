@@ -60,3 +60,10 @@ Select every player who received chombo before confirming the round. The preview
 shows all penalties and the submission records them together, including after
 the timer expires. A group of penalties consumes one timed hand. Tapping a
 selected player removes only that player; at least one must remain selected.
+
+### Event rules in Tyr
+
+Tyr keeps the selected event's rules only in memory. It loads them when selecting
+a different event in settings or reloading the browser. Refreshing the current
+game, entering a round, and selecting winners retain the loaded rules. After an
+administrator changes event rules, switch events or reload Tyr to apply them.

@@ -189,14 +189,16 @@ export function mimirReducer(state: IAppState, action: AppActionTypes): IAppStat
         }
       }
 
+      // Keep the event configuration in memory until a different event is selected.
+      const gameConfig = state.gameConfig ?? action.payload.gameConfig;
       return {
         ...state,
-        gameConfig: action.payload.gameConfig,
+        gameConfig,
         currentSessionHash: action.payload.games[0] && action.payload.games[0].sessionHash,
         nextRoundToken: undefined,
         players,
         mapIdToPlayer,
-        yakuList: makeYakuGraph(action.payload.gameConfig.rulesetConfig.withMultiYakumans),
+        yakuList: state.yakuList ?? makeYakuGraph(gameConfig.rulesetConfig.withMultiYakumans),
         timer: {
           // setting zero timer, it will be set separately by SET_TIMER if required
           ...state.timer,
@@ -476,10 +478,6 @@ export function mimirReducer(state: IAppState, action: AppActionTypes): IAppStat
     case GET_GAME_OVERVIEW_SUCCESS:
       return {
         ...state,
-        gameConfig: action.payload.gameConfig ?? state.gameConfig,
-        yakuList: action.payload.gameConfig
-          ? makeYakuGraph(action.payload.gameConfig.rulesetConfig.withMultiYakumans)
-          : state.yakuList,
         gameOverviewReady: true,
         currentEventId: action.payload.eventId,
         tableIndex: action.payload.tableIndex,
@@ -654,6 +652,8 @@ export function mimirReducer(state: IAppState, action: AppActionTypes): IAppStat
       return {
         ...state,
         currentEventId: action.payload,
+        gameConfig: state.currentEventId === action.payload ? state.gameConfig : undefined,
+        yakuList: state.currentEventId === action.payload ? state.yakuList : undefined,
         currentScreen: 'overview',
       };
     case HISTORY_INIT:

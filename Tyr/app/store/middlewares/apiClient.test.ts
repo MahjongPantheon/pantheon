@@ -1,5 +1,5 @@
 import type { Dispatch } from 'redux';
-import { GameConfig, RulesetConfig } from 'tsclients/proto/atoms.pb';
+import { GameConfig } from 'tsclients/proto/atoms.pb';
 import { apiClient } from './apiClient';
 import type { IRiichiApi } from '../../services/IRiichiApi';
 import type { IAppState } from '../interfaces';
@@ -116,45 +116,20 @@ const loads = [
   [a.GET_PENALTIES_INIT, 'getPenalties', a.GET_PENALTIES_SUCCESS, a.GET_PENALTIES_FAIL, undefined],
 ] as const;
 
-it('waits for fresh event rules before publishing a session overview', async () => {
+it('refreshes the session overview without requesting event rules', async () => {
   const f = fixture();
-  let resolveConfig!: (config: GameConfig) => void;
-  f.api.getGameConfig.mockReturnValueOnce(
-    new Promise<GameConfig>((resolve) => {
-      resolveConfig = resolve;
-    })
-  );
+  // An unavailable rules endpoint must not prevent entering another round.
+  f.api.getGameConfig.mockImplementation(() => {
+    throw new Error('Rules unavailable');
+  });
   f.send(a.GET_GAME_OVERVIEW_INIT, 'hash');
   await flush();
-  expect(f.api.getGameConfig).toHaveBeenCalledExactlyOnceWith(42);
-  expect(f.next).not.toHaveBeenCalledWith(
-    expect.objectContaining({ type: a.GET_GAME_OVERVIEW_SUCCESS })
-  );
-
-  const gameConfig = GameConfig.initialize({
-    rulesetConfig: RulesetConfig.initialize({
-      withAbortives: true,
-      allowTripleRonWithAbortives: true,
-    }),
-  });
-  resolveConfig(gameConfig);
-  await flush();
+  expect(f.api.getGameOverview).toHaveBeenCalledExactlyOnceWith('hash');
+  expect(f.api.getGameConfig).not.toHaveBeenCalled();
   expect(f.next).toHaveBeenCalledWith({
     type: a.GET_GAME_OVERVIEW_SUCCESS,
-    payload: expect.objectContaining({ gameConfig }),
+    payload: { timerState: { waitingForTimer: false, timeRemaining: 60 } },
   });
-});
-
-it('fails the overview refresh when current event rules cannot be loaded', async () => {
-  const f = fixture();
-  const error = new Error('Rules unavailable');
-  f.api.getGameConfig.mockRejectedValueOnce(error);
-  f.send(a.GET_GAME_OVERVIEW_INIT, 'hash');
-  await flush();
-  expect(f.next).toHaveBeenCalledWith({ type: a.GET_GAME_OVERVIEW_FAIL, payload: error });
-  expect(f.next).not.toHaveBeenCalledWith(
-    expect.objectContaining({ type: a.GET_GAME_OVERVIEW_SUCCESS })
-  );
 });
 
 it.each(loads)(
@@ -228,6 +203,17 @@ it('refreshes active-game overview and timer data', async () => {
   f.send(a.UPDATE_CURRENT_GAMES_INIT);
   await flush();
   expect(f.next).toHaveBeenCalledWith({ type: a.UPDATE_CURRENT_GAMES_FAIL, payload: error });
+});
+
+it('ignores a rules response for an event that is no longer selected', async () => {
+  const f = fixture();
+  f.send(a.UPDATE_CURRENT_GAMES_INIT);
+  f.state.currentEventId = 43;
+  await flush();
+  expect(f.next).not.toHaveBeenCalledWith(
+    expect.objectContaining({ type: a.UPDATE_CURRENT_GAMES_SUCCESS })
+  );
+  expect(f.dispatch).not.toHaveBeenCalled();
 });
 
 it.each([undefined, 0])(

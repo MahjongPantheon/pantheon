@@ -2,6 +2,7 @@ import {
   GameConfig,
   PlayerInSession,
   RegisteredPlayer,
+  RulesetConfig,
   SessionState,
 } from 'tsclients/proto/atoms.pb';
 import * as a from '../actions/interfaces';
@@ -115,6 +116,42 @@ it('indexes active game players and invalidates a previous round token', () => {
   expect(result.players).toBe(players);
   expect(result.mapIdToPlayer).toEqual(Object.fromEntries(players.map((p) => [p.id, p])));
   expect(result.nextRoundToken).toBeUndefined();
+});
+
+it('retains loaded rules on game refresh and same-event selection, and reloads them for another event', () => {
+  const original = GameConfig.initialize({
+    rulesetConfig: RulesetConfig.initialize({ withMultiYakumans: false }),
+  });
+  const updated = GameConfig.initialize({
+    rulesetConfig: RulesetConfig.initialize({ withMultiYakumans: true }),
+  });
+  const selected = reduce(a.SELECT_EVENT, 7);
+  const loaded = reduce(
+    a.UPDATE_CURRENT_GAMES_SUCCESS,
+    { games: [], gameConfig: original },
+    selected
+  );
+  expect(loaded.gameConfig).toBe(original);
+  expect(loaded.yakuList).toBeDefined();
+  const sameEvent = reduce(a.SELECT_EVENT, 7, loaded);
+  expect(sameEvent.gameConfig).toBe(original);
+  const refreshed = reduce(
+    a.UPDATE_CURRENT_GAMES_SUCCESS,
+    { games: [], gameConfig: updated },
+    sameEvent
+  );
+  expect(refreshed.gameConfig).toBe(original);
+  expect(refreshed.yakuList).toBe(loaded.yakuList);
+  const otherEvent = reduce(a.SELECT_EVENT, 8, refreshed);
+  expect(otherEvent.gameConfig).toBeUndefined();
+  expect(otherEvent.yakuList).toBeUndefined();
+  const reloaded = reduce(
+    a.UPDATE_CURRENT_GAMES_SUCCESS,
+    { games: [], gameConfig: updated },
+    otherEvent
+  );
+  expect(reloaded.gameConfig).toBe(updated);
+  expect(reloaded.yakuList).not.toEqual(loaded.yakuList);
 });
 
 it('loads a session overview and clears optional tokens from old responses', () => {

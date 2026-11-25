@@ -56,12 +56,73 @@ test('SETTINGS-003: Administrator can allow triple ron while keeping other abort
   });
   await expect(started).toBeOK();
   const { sessionHash } = await started.json();
+  const alternate = await request.post(`${mimir}/CreateEvent`, {
+    headers,
+    data: {
+      requestId: randomUUID(),
+      title: `${title} alternate`,
+      type: 'EVENT_TYPE_LOCAL',
+      timezone: 'UTC',
+      rulesetConfig: rulesets[rulesetIds.indexOf('ema')],
+    },
+  });
+  await expect(alternate).toBeOK();
+  const { eventId: alternateEventId } = await alternate.json();
+  const registration = await request.post(`${mimir}/RegisterPlayer`, {
+    headers,
+    data: { eventId: alternateEventId, playerId: players[0].id },
+  });
+  await expect(registration).toBeOK();
+  const rulesRequests: string[] = [];
+  page.on('request', (req) => {
+    if (req.url().endsWith('/common.Mimir/GetGameConfig')) rulesRequests.push(req.url());
+  });
   const adminContext = await browser.newContext();
   adminContext.setDefaultTimeout(15_000);
   const admin = await adminContext.newPage();
   const spectatorContext = await browser.newContext();
   spectatorContext.setDefaultTimeout(15_000);
   const spectator = await spectatorContext.newPage();
+  const openCurrentGame = async () => {
+    await expect(page.getByTestId('tyr-table').or(page.getByTestId('tyr-home'))).toBeVisible();
+    if (await page.getByTestId('tyr-home').isVisible())
+      await page.getByTestId('tyr-home-current-game').click();
+    await expect(page.getByTestId('tyr-table')).toBeVisible();
+  };
+  const assertWinnerLimit = async (tripleRonAllowed: boolean) => {
+    await page.getByTestId('tyr-table-add-round').click();
+    await page.getByTestId('tyr-table-outcome-ron').click();
+    for (const player of players.slice(1, 3))
+      await playerPlace(page, 'tyr-select-player', player).getByTestId(/-win$/).click();
+    const thirdWinner = playerPlace(page, 'tyr-select-player', players[3]).getByTestId(/-win$/);
+    if (tripleRonAllowed) await expect(thirdWinner).toBeEnabled();
+    else await expect(thirdWinner).toBeDisabled();
+    await page.getByTestId('tyr-select-player-back').click();
+  };
+  const switchEvents = async () => {
+    await page.getByTestId('tyr-table-home').click();
+    await page.getByTestId('tyr-home-settings').click();
+    await page.getByTestId('tyr-settings-select-event').click();
+    await page.getByTestId(`tyr-event-select-event-${alternateEventId}`).click();
+    await expect(page.getByTestId('tyr-home')).toBeVisible();
+    await page.getByTestId('tyr-home-settings').click();
+    await page.getByTestId('tyr-settings-select-event').click();
+    await page.getByTestId(`tyr-event-select-event-${eventId}`).click();
+    await openCurrentGame();
+  };
+  const saveMode = async (label: string) => {
+    await admin.goto(`${process.env.FORSETI_URL}/ownedEvents/edit/${eventId}`);
+    await admin.getByTestId('forseti-event-settings-tab-ruleset').click();
+    await admin
+      .getByTestId('forseti-event-settings-ruleset-settings-ruleset-with-abortives')
+      .click();
+    await admin.getByRole('option', { name: label, exact: true }).click();
+    const [saved] = await Promise.all([
+      admin.waitForResponse((response) => response.url().endsWith('/common.Mimir/UpdateEvent')),
+      admin.getByTestId('forseti-event-settings-save').click(),
+    ]);
+    expect(saved.ok()).toBe(true);
+  };
   try {
     await test.step('Open Tyr before the administrator changes the rules', async () => {
       await page.setViewportSize({ width: 390, height: 844 });
@@ -123,6 +184,34 @@ test('SETTINGS-003: Administrator can allow triple ron while keeping other abort
         await expect(spectator.getByTestId('sigrun-rules-page')).toBeVisible({ timeout: 15_000 });
         await expect(spectator.getByLabel('Abortive draws', { exact: true })).toHaveValue(label);
       }
+    });
+
+    await test.step('Keep loaded rules during game refresh and round entry', async () => {
+      await page.getByTestId('tyr-table-refresh').click();
+      await assertWinnerLimit(false);
+      await page.getByTestId('tyr-table-home').click();
+      await page.getByTestId('tyr-home-refresh').click();
+      await openCurrentGame();
+      await assertWinnerLimit(false);
+    });
+
+    await test.step('Load new rules after selecting a different event in settings', async () => {
+      await switchEvents();
+      await assertWinnerLimit(true);
+    });
+
+    await test.step('Load new rules after browser reload without persisting them', async () => {
+      await saveMode('All');
+      await assertWinnerLimit(true);
+      await page.reload();
+      await openCurrentGame();
+      await assertWinnerLimit(false);
+      await saveMode('All except triple ron');
+      await assertWinnerLimit(false);
+      await page.reload();
+      await openCurrentGame();
+      await assertWinnerLimit(true);
+      expect(rulesRequests).toEqual([]);
     });
 
     await test.step('Select three winners and record matching preview and saved scores in Tyr', async () => {
